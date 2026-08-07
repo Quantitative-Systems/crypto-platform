@@ -1,6 +1,6 @@
 """
 Product 01: Crypto Platform - Institutional Performance Analytics Engine
-Calculates 18-point performance statistics including Profit Factor, Sharpe Ratio, Calmar, Streaks & Splits.
+Calculates 18-point performance statistics including Friction Drag Cost, Profit Factor, Sharpe, and Calmar Ratios.
 """
 
 from typing import List, Dict, Any
@@ -22,12 +22,11 @@ class PerformanceAnalytics:
         gross_profit = sum(t.get("pnl_usd", 0) for t in wins)
         gross_loss = abs(sum(t.get("pnl_usd", 0) for t in losses))
         net_pnl = gross_profit - gross_loss
+        total_friction_usd = sum(t.get("friction_cost_usd", 0.0) for t in trade_history)
 
-        # Profit Factor
         profit_factor = (gross_profit / gross_loss) if gross_loss > 0 else gross_profit
-
-        # Win Rate & Streaks
         win_rate_pct = (len(wins) / total_trades) * 100.0
+
         max_win_streak = 0
         max_loss_streak = 0
         curr_win = 0
@@ -43,7 +42,6 @@ class PerformanceAnalytics:
                 curr_win = 0
                 max_loss_streak = max(max_loss_streak, curr_loss)
 
-        # Long vs Short Split
         longs = [t for t in trade_history if t.get("action") == "BUY"]
         shorts = [t for t in trade_history if t.get("action") == "SELL"]
 
@@ -53,7 +51,6 @@ class PerformanceAnalytics:
         long_win_rate = (len(long_wins) / len(longs) * 100.0) if longs else 0.0
         short_win_rate = (len(short_wins) / len(shorts) * 100.0) if shorts else 0.0
 
-        # Equity Curve & Drawdown Tracking
         equity_curve = [starting_balance]
         peak = starting_balance
         max_drawdown_pct = 0.0
@@ -69,7 +66,6 @@ class PerformanceAnalytics:
         final_balance = equity_curve[-1]
         net_return_pct = ((final_balance - starting_balance) / starting_balance) * 100.0
 
-        # Return Ratios (Sharpe & Calmar)
         returns_pct = [(equity_curve[i] - equity_curve[i-1]) / equity_curve[i-1] for i in range(1, len(equity_curve))]
         avg_ret = sum(returns_pct) / len(returns_pct) if returns_pct else 0.0
         std_ret = math.sqrt(sum((r - avg_ret) ** 2 for r in returns_pct) / len(returns_pct)) if len(returns_pct) > 1 else 0.01
@@ -86,6 +82,7 @@ class PerformanceAnalytics:
             "final_balance": final_balance,
             "net_pnl_usd": net_pnl,
             "net_return_pct": net_return_pct,
+            "total_friction_usd": total_friction_usd,
             "gross_profit_usd": gross_profit,
             "gross_loss_usd": gross_loss,
             "profit_factor": profit_factor,

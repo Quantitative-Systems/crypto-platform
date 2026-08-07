@@ -1,13 +1,13 @@
 """
-Product 01: Crypto Platform - Math-Only Risk Firewall Engine
-Implements Part G of strategy_specification.md v1.1.
+Product 01: Crypto Platform - Dynamic Risk Engine & Position Sizing Calculus
+Calculates position size using 1.0% equity risk with hardcoded minimum stop distance floor.
 """
 
 from dataclasses import dataclass
 
 
 @dataclass
-class RiskCheckResult:
+class RiskValidationResult:
     is_approved: bool
     position_size_units: float
     dollar_risk_usd: float
@@ -24,42 +24,48 @@ class RiskEngine:
         stop_loss_price: float,
         target_tp_price: float,
         risk_pct: float = 0.01,
-        min_rr_floor: float = 4.0
-    ) -> RiskCheckResult:
-        """Validates 1.0% account risk sizing and >= 1:4 Reward-to-Risk floor."""
-        if account_balance <= 0 or entry_price <= 0 or stop_loss_price <= 0:
-            return RiskCheckResult(
+        min_rr_floor: float = 4.0,
+        min_stop_dist_pct: float = 0.0035  # 0.35% Minimum Stop Distance Floor
+    ) -> RiskValidationResult:
+        """
+        Enforces 1.0% equity risk sizing, 1:4 minimum RR floor, and 0.35% minimum stop distance floor.
+        Prevents position size explosions caused by micro-stops inside noise.
+        """
+        if account_balance <= 0 or entry_price <= 0:
+            return RiskValidationResult(
                 is_approved=False, position_size_units=0.0, dollar_risk_usd=0.0,
-                reward_to_risk_ratio=0.0, rejection_reason="Invalid financial inputs."
+                reward_to_risk_ratio=0.0, rejection_reason="Invalid account balance or entry price."
             )
 
-        risk_distance = abs(entry_price - stop_loss_price)
-        reward_distance = abs(target_tp_price - entry_price)
+        stop_distance = abs(entry_price - stop_loss_price)
+        stop_dist_pct = stop_distance / entry_price
 
-        if risk_distance == 0:
-            return RiskCheckResult(
+        # Micro-Stop Floor Guard: Prevents leverage spikes when SL is too close to entry
+        if stop_dist_pct < min_stop_dist_pct:
+            return RiskValidationResult(
                 is_approved=False, position_size_units=0.0, dollar_risk_usd=0.0,
-                reward_to_risk_ratio=0.0, rejection_reason="Risk distance is zero."
+                reward_to_risk_ratio=0.0,
+                rejection_reason=f"Stop loss distance ({stop_dist_pct*100:.3f}%) is below minimum 0.35% structural floor."
             )
 
-        rr_ratio = reward_distance / risk_distance
+        tp_distance = abs(target_tp_price - entry_price)
+        rr_ratio = tp_distance / stop_distance if stop_distance > 0 else 0.0
 
-        # Assert Reward-to-Risk Floor
+        # Enforce Minimum 1:4 Reward-to-Risk Floor
         if rr_ratio < min_rr_floor:
-            return RiskCheckResult(
+            return RiskValidationResult(
                 is_approved=False, position_size_units=0.0, dollar_risk_usd=0.0,
                 reward_to_risk_ratio=rr_ratio,
-                rejection_reason=f"True R:R ({rr_ratio:.2f}) is below mandatory 1:{min_rr_floor:.0f} floor."
+                rejection_reason=f"Reward-to-Risk ratio ({rr_ratio:.2f}) is below minimum {min_rr_floor:.1f} floor."
             )
 
-        # Dynamic 1.0% Position Sizing Calculus
-        dollar_risk_usd = account_balance * risk_pct
-        position_size_units = dollar_risk_usd / risk_distance
+        dollar_risk = account_balance * risk_pct
+        position_size_units = dollar_risk / stop_distance
 
-        return RiskCheckResult(
+        return RiskValidationResult(
             is_approved=True,
             position_size_units=position_size_units,
-            dollar_risk_usd=dollar_risk_usd,
+            dollar_risk_usd=dollar_risk,
             reward_to_risk_ratio=rr_ratio,
             rejection_reason=""
         )

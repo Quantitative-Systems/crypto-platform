@@ -1,18 +1,18 @@
 """
-Product 01: Crypto Platform - HTF Bias & Target Engine
-Implements Part C & Part F of strategy_specification.md v1.1 with Trend Persistence.
+Product 01: Crypto Platform - HTF Bias & Destination Engine (V2.1)
+Parses HTF MarketStatePayload to extract macro bias, target TP objective, and market phase.
 """
 
 from dataclasses import dataclass
 from typing import Optional
-from market_intelligence.primitives import MarketStatePayload, TrendDirection, EventType, MarketPhase
+from market_intelligence.primitives import MarketStatePayload, TrendDirection, MarketPhase
 
 
 @dataclass
 class HTFBiasResult:
     bias: TrendDirection
-    expected_phase: MarketPhase
     target_tp_price: Optional[float]
+    expected_phase: MarketPhase
     is_valid: bool
     rejection_reason: str = ""
 
@@ -21,88 +21,43 @@ class HTFBiasEngine:
 
     @staticmethod
     def evaluate_bias(htf_state: MarketStatePayload) -> HTFBiasResult:
-        """Determines macro directional bias and structural TP target from HTF state."""
-        if htf_state.trend in (TrendDirection.NEUTRAL, TrendDirection.RANGING):
+        """Determines macro bias and target price from HTF MarketStatePayload."""
+        trend = htf_state.structure_state.external_trend
+
+        # If trend is neutral or ranging, fallback to current price movement
+        if trend in (TrendDirection.NEUTRAL, TrendDirection.RANGING):
+            if htf_state.current_candle.is_bullish:
+                trend = TrendDirection.BULLISH
+            elif htf_state.current_candle.is_bearish:
+                trend = TrendDirection.BEARISH
+
+        if trend == TrendDirection.NEUTRAL:
             return HTFBiasResult(
                 bias=TrendDirection.NEUTRAL,
-                expected_phase=MarketPhase.RANGE,
                 target_tp_price=None,
+                expected_phase=htf_state.phase_state.current_phase,
                 is_valid=False,
-                rejection_reason=f"HTF trend is {htf_state.trend.value} (Requires BULLISH or BEARISH BOS/CHOCH close)."
+                rejection_reason="HTF trend is completely Neutral."
             )
 
-        # Rule: Last HTF event must align with current trend direction to confirm persistence
-        if htf_state.last_event and htf_state.last_event.direction != htf_state.trend:
-            return HTFBiasResult(
-                bias=htf_state.trend,
-                expected_phase=MarketPhase.RANGE,
-                target_tp_price=None,
-                is_valid=False,
-                rejection_reason=f"HTF event ({htf_state.last_event.direction.value}) opposes active HTF trend ({htf_state.trend.value})."
-            )
+        # Target TP selection based on protected swing anchors or 5% expansion target
+        target_tp = None
+        if trend == TrendDirection.BULLISH:
+            if htf_state.structure_state.protected_high:
+                target_tp = htf_state.structure_state.protected_high.price
+            else:
+                target_tp = htf_state.current_price * 1.05  # Default 5% expansion target
 
-        # Bullish Bias Assessment
-        if htf_state.trend == TrendDirection.BULLISH:
-            tp_target = htf_state.protected_high
-            
-            # Structural Fallback: Use highest active swing high if protected_high is None
-            if tp_target is None and htf_state.active_swings:
-                high_swings = [s.price for s in htf_state.active_swings if s.swing_type.value == "HIGH"]
-                if high_swings:
-                    tp_target = max(high_swings)
-
-            if tp_target is None:
-                return HTFBiasResult(
-                    bias=TrendDirection.BULLISH,
-                    expected_phase=MarketPhase.CONTINUATION,
-                    target_tp_price=None,
-                    is_valid=False,
-                    rejection_reason="HTF trend is BULLISH but target TP price is None."
-                )
-
-            expected_phase = MarketPhase.PULLBACK if (htf_state.last_event and htf_state.last_event.event_type == EventType.BOS) else MarketPhase.CONTINUATION
-
-            return HTFBiasResult(
-                bias=TrendDirection.BULLISH,
-                expected_phase=expected_phase,
-                target_tp_price=tp_target,
-                is_valid=True,
-                rejection_reason=""
-            )
-
-        # Bearish Bias Assessment
-        elif htf_state.trend == TrendDirection.BEARISH:
-            tp_target = htf_state.protected_low
-            
-            # Structural Fallback: Use lowest active swing low if protected_low is None
-            if tp_target is None and htf_state.active_swings:
-                low_swings = [s.price for s in htf_state.active_swings if s.swing_type.value == "LOW"]
-                if low_swings:
-                    tp_target = min(low_swings)
-
-            if tp_target is None:
-                return HTFBiasResult(
-                    bias=TrendDirection.BEARISH,
-                    expected_phase=MarketPhase.CONTINUATION,
-                    target_tp_price=None,
-                    is_valid=False,
-                    rejection_reason="HTF trend is BEARISH but target TP price is None."
-                )
-
-            expected_phase = MarketPhase.PULLBACK if (htf_state.last_event and htf_state.last_event.event_type == EventType.BOS) else MarketPhase.CONTINUATION
-
-            return HTFBiasResult(
-                bias=TrendDirection.BEARISH,
-                expected_phase=expected_phase,
-                target_tp_price=tp_target,
-                is_valid=True,
-                rejection_reason=""
-            )
+        elif trend == TrendDirection.BEARISH:
+            if htf_state.structure_state.protected_low:
+                target_tp = htf_state.structure_state.protected_low.price
+            else:
+                target_tp = htf_state.current_price * 0.95  # Default 5% contraction target
 
         return HTFBiasResult(
-            bias=TrendDirection.NEUTRAL,
-            expected_phase=MarketPhase.RANGE,
-            target_tp_price=None,
-            is_valid=False,
-            rejection_reason="Undefined HTF state."
+            bias=trend,
+            target_tp_price=target_tp,
+            expected_phase=htf_state.phase_state.current_phase,
+            is_valid=True,
+            rejection_reason=""
         )

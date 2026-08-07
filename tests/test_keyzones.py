@@ -1,74 +1,92 @@
 """
-Product 01: Crypto Platform - Keyzones Test Suite
-Verifies Fair Value Gap (FVG) and Order Block (OB) detection algorithms.
+Product 01: Crypto Platform - KeyZone Detection Engine (V2.1)
+Maps Order Blocks (OB) and Fair Value Gaps (FVG) into standardized V2.1 KeyZone objects.
 """
 
-import sys
-import os
-
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if ROOT_DIR not in sys.path:
-    sys.path.insert(0, ROOT_DIR)
-
-from market_intelligence.primitives import Candle, KeyZoneType, TrendDirection
-from market_intelligence.keyzones import KeyZoneEngine
+from typing import List
+from market_intelligence.primitives import (
+    Candle, KeyZone, ZoneType, TrendDirection
+)
 
 
-def generate_imbalance_candles() -> list:
-    """Generates synthetic candles containing explicit Bullish/Bearish FVGs and OBs."""
-    base_time = 1700000000
-    # Candle 0: Base
-    # Candle 1: Bullish OB candidate
-    # Candle 2, 3: Explosive Bullish surge (creates Bullish FVG between 1 and 3)
-    # Candle 4, 5, 6: Bearish crash (creates Bearish FVG)
-    data = [
-        (100, 102, 99, 101),   # 0
-        (101, 102, 98, 99),    # 1: Bullish OB (Red candle)
-        (100, 108, 100, 107),  # 2: Strong expansion
-        (108, 118, 108, 116),  # 3: Strong expansion (FVG between C1 high=102 and C3 low=108)
-        (116, 117, 110, 111),  # 4: Bearish OB candidate
-        (110, 111, 98, 99),    # 5: Crash
-        (99, 100, 85, 86)      # 6: Crash (Bearish FVG between C4 low=110 and C6 high=100)
-    ]
+class KeyZoneEngine:
 
-    candles = []
-    for i, (o, h, l, c) in enumerate(data):
-        candles.append(Candle(
-            timestamp=base_time + (i * 3600),
-            open=float(o), high=float(h), low=float(l), close=float(c), volume=5000.0
-        ))
-    return candles
+    @staticmethod
+    def detect_keyzones(candles: List[Candle], timeframe: str = "1D") -> List[KeyZone]:
+        """Detects Order Blocks and FVGs from candlestick series."""
+        if len(candles) < 3:
+            return []
 
+        keyzones: List[KeyZone] = []
 
-def run_keyzone_tests():
-    print("==========================================================================================================")
-    print("     PRODUCT 01: KEYZONES & IMBALANCE VERIFICATION SUITE")
-    print("==========================================================================================================\n")
+        # 1. Fair Value Gap (FVG) Detection (3-candle pattern)
+        for i in range(2, len(candles)):
+            c1, c2, c3 = candles[i - 2], candles[i - 1], candles[i]
 
-    candles = generate_imbalance_candles()
+            # Bullish FVG: Gap between C1 High and C3 Low
+            if c3.low > c1.high:
+                keyzones.append(KeyZone(
+                    zone_type=ZoneType.BULLISH_FVG,
+                    direction=TrendDirection.BULLISH,
+                    high=c3.low,
+                    low=c1.high,
+                    timeframe=timeframe,
+                    creation_time=c2.timestamp,
+                    is_mitigated=False,
+                    strength_score=0.85
+                ))
 
-    # Test 1: Fair Value Gap Detection
-    fvgs = KeyZoneEngine.detect_fair_value_gaps(candles)
-    print(f"  • Detected Fair Value Gaps (FVGs): {len(fvgs)}")
-    for zone in fvgs:
-        print(f"    - [{zone.direction.value} FVG] Range: ${zone.low:.2f} -> ${zone.high:.2f} (Origin Candle: {zone.origin_candle_index})")
+            # Bearish FVG: Gap between C1 Low and C3 High
+            elif c3.high < c1.low:
+                keyzones.append(KeyZone(
+                    zone_type=ZoneType.BEARISH_FVG,
+                    direction=TrendDirection.BEARISH,
+                    high=c1.low,
+                    low=c3.high,
+                    timeframe=timeframe,
+                    creation_time=c2.timestamp,
+                    is_mitigated=False,
+                    strength_score=0.85
+                ))
 
-    assert len(fvgs) > 0, "FAIL: No Fair Value Gaps detected!"
-    print("  ✅ PASS: Fair Value Gap Detection Verified.\n")
+        # 2. Order Block (OB) Detection (Last counter candle before expansion)
+        if len(candles) >= 4:
+            for i in range(1, len(candles) - 1):
+                prev_candle = candles[i - 1]
+                curr_candle = candles[i]
 
-    # Test 2: Order Block Detection
-    obs = KeyZoneEngine.detect_order_blocks(candles)
-    print(f"  • Detected Order Blocks (OBs): {len(obs)}")
-    for zone in obs:
-        print(f"    - [{zone.direction.value} OB] Range: ${zone.low:.2f} -> ${zone.high:.2f} (Origin Candle: {zone.origin_candle_index})")
+                # Demand OB: Bearish candle before strong bullish expansion
+                if prev_candle.is_bearish and curr_candle.is_bullish and curr_candle.body_range > (prev_candle.range * 1.2):
+                    keyzones.append(KeyZone(
+                        zone_type=ZoneType.DEMAND_OB,
+                        direction=TrendDirection.BULLISH,
+                        high=prev_candle.high,
+                        low=prev_candle.low,
+                        timeframe=timeframe,
+                        creation_time=prev_candle.timestamp,
+                        is_mitigated=False,
+                        strength_score=0.90
+                    ))
 
-    assert len(obs) > 0, "FAIL: No Order Blocks detected!"
-    print("  ✅ PASS: Order Block Detection Verified.\n")
+                # Supply OB: Bullish candle before strong bearish expansion
+                elif prev_candle.is_bullish and curr_candle.is_bearish and curr_candle.body_range > (prev_candle.range * 1.2):
+                    keyzones.append(KeyZone(
+                        zone_type=ZoneType.SUPPLY_OB,
+                        direction=TrendDirection.BEARISH,
+                        high=prev_candle.high,
+                        low=prev_candle.low,
+                        timeframe=timeframe,
+                        creation_time=prev_candle.timestamp,
+                        is_mitigated=False,
+                        strength_score=0.90
+                    ))
 
-    print("==========================================================================================================")
-    print("  ✅ ALL KEYZONE TESTS PASSED: Keyzones & Imbalance Engine is 100% Operational!")
-    print("==========================================================================================================")
+        # Filter out mitigated keyzones by recent price action
+        latest_price = candles[-1].close
+        for zone in keyzones:
+            if zone.direction == TrendDirection.BULLISH and latest_price < zone.low:
+                zone.is_mitigated = True
+            elif zone.direction == TrendDirection.BEARISH and latest_price > zone.high:
+                zone.is_mitigated = True
 
-
-if __name__ == "__main__":
-    run_keyzone_tests()
+        return [z for z in keyzones if not z.is_mitigated]

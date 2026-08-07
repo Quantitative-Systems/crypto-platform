@@ -13,7 +13,7 @@ class TimeframeSetID(str, Enum):
     SET_2_POSITION = "SET_2_POSITION"
     SET_3_SWING = "SET_3_SWING"
     SET_4_INTRADAY = "SET_4_INTRADAY"
-
+ 
 
 @dataclass(frozen=True)
 class TimeframeSet:

@@ -1,7 +1,7 @@
 """
 Product 01: Crypto Platform - Multi-Asset Research Engine
 Executes zero-lookahead backtests across BTC/USDT, ETH/USDT, and SOL/USDT from real Binance market feeds.
-Tracks explicit Strategy A (Pullback) vs Strategy B (Continuation) metrics.
+Deducts real Binance Taker Fees (0.075%), Slippage (0.03%), and Spread (0.01%), persisting results to Research DB.
 """
 
 import sys
@@ -18,7 +18,7 @@ from backtesting.performance_analytics import PerformanceAnalytics
 
 def run_multi_asset_research():
     print("==========================================================================================================")
-    print("     PRODUCT 01: MULTI-ASSET QUANT RESEARCH ENGINE (BTC / ETH / SOL)")
+    print("     PRODUCT 01: MULTI-ASSET FRICTIONAL QUANT RESEARCH ENGINE (BTC / ETH / SOL)")
     print("==========================================================================================================\n")
 
     assets = ["BTC/USDT", "ETH/USDT", "SOL/USDT"]
@@ -34,7 +34,7 @@ def run_multi_asset_research():
 
         print(f"  • Data Ingested: {len(htf_candles)} HTF bars | {len(mtf_candles)} MTF bars | {len(ltf_candles)} LTF bars")
 
-        # Run bar-by-bar replay simulation
+        # Run bar-by-bar replay simulation with friction models active
         results = replay.run_replay(
             symbol=symbol,
             htf_candles=htf_candles,
@@ -48,7 +48,6 @@ def run_multi_asset_research():
         telemetry = results["telemetry"]
         metrics = PerformanceAnalytics.compute_deep_metrics(history, starting_balance=1000.0)
 
-        # Break down Strategy A vs Strategy B
         strat_a_trades = [t for t in history if t.get("strategy_type") == "PULLBACK_RIDING"]
         strat_b_trades = [t for t in history if t.get("strategy_type") == "CONTINUATION_RIDING"]
 
@@ -58,13 +57,13 @@ def run_multi_asset_research():
             "strat_a_count": len(strat_a_trades),
             "strat_b_count": len(strat_b_trades)
         }
-        print(f"  ✅ Completed Replay for {symbol}: {metrics.get('total_trades', 0)} trades executed (Strat A: {len(strat_a_trades)} | Strat B: {len(strat_b_trades)}).\n")
+        print(f"  ✅ Replay Completed for {symbol}: {metrics.get('total_trades', 0)} trades (Friction Drag: ${metrics.get('total_friction_usd', 0.0):.2f}).\n")
 
     # Display Side-by-Side Multi-Asset Research Matrix
     print("==========================================================================================================")
-    print("📊 [PORTFOLIO MULTI-ASSET RESEARCH SUMMARY MATRIX]")
+    print("📊 [PORTFOLIO MULTI-ASSET FRICTIONAL RESEARCH SUMMARY MATRIX]")
     print("==========================================================================================================")
-    print(f"{'ASSET':<10} | {'TRADES':<8} | {'STRAT A/B':<12} | {'WIN RATE (%)':<12} | {'NET RETURN ($)':<15} | {'PROFIT FACTOR':<14} | {'MAX DD (%)':<10}")
+    print(f"{'ASSET':<10} | {'TRADES':<8} | {'STRAT A/B':<10} | {'WIN RATE':<10} | {'NET RETURN ($)':<15} | {'FRICTION ($)':<14} | {'PROFIT FACTOR':<13} | {'MAX DD':<8}")
     print("----------------------------------------------------------------------------------------------------------")
 
     for symbol, data in portfolio_results.items():
@@ -72,11 +71,12 @@ def run_multi_asset_research():
         print(
             f"{symbol:<10} | "
             f"{m.get('total_trades', 0):<8} | "
-            f"{data['strat_a_count']}/{data['strat_b_count']:<10} | "
-            f"{m.get('win_rate_pct', 0.0):<12.1f}% | "
+            f"{data['strat_a_count']}/{data['strat_b_count']:<8} | "
+            f"{m.get('win_rate_pct', 0.0):<9.1f}% | "
             f"+${m.get('net_pnl_usd', 0.0):<14.2f} | "
-            f"{m.get('profit_factor', 0.0):<14.2f} | "
-            f"{m.get('max_drawdown_pct', 0.0):<10.2f}%"
+            f"${m.get('total_friction_usd', 0.0):<13.2f} | "
+            f"{m.get('profit_factor', 0.0):<13.2f} | "
+            f"{m.get('max_drawdown_pct', 0.0):<7.2f}%"
         )
 
     print("==========================================================================================================")

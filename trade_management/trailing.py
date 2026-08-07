@@ -1,49 +1,61 @@
 """
-Product 01: Crypto Platform - Dynamic MTF Trailing Stop Manager
-Implements Part H of strategy_specification.md v1.1.
+Product 07: MTF Structural Trailing Engine
+Monitors active positions against MTF structure swings to lock in profits.
 """
 
 from dataclasses import dataclass
-from market_intelligence.primitives import MarketStatePayload
+from typing import Optional
+from market_intelligence.primitives import MarketStatePayload, TrendDirection, SequenceLabel
 
 
-@dataclass
-class TrailingUpdateResult:
+@dataclass(frozen=True)
+class TrailingUpdate:
+    position_id: str
+    should_update: bool
     new_stop_loss: float
-    is_updated: bool
     reason: str
 
 
-class TrailingEngine:
+class MTFTrailingEngine:
 
     @staticmethod
-    def update_trailing_stop(
-        action: str,  # "BUY" or "SELL"
-        current_stop_loss: float,
+    def evaluate_trailing_stop(
+        position_id: str,
+        direction: TrendDirection,
+        current_sl: float,
         mtf_state: MarketStatePayload
-    ) -> TrailingUpdateResult:
-        """Trails Stop Loss behind MTF protected structural swings."""
-        
-        # Long Position Trailing
-        if action == "BUY":
-            if mtf_state.protected_low and mtf_state.protected_low > current_stop_loss:
-                return TrailingUpdateResult(
-                    new_stop_loss=mtf_state.protected_low,
-                    is_updated=True,
-                    reason=f"Trailed SL up to new MTF protected low: ${mtf_state.protected_low:.2f}"
+    ) -> TrailingUpdate:
+        """
+        Trails stop-loss behind valid MTF Higher Lows (for Longs) or Lower Highs (for Shorts).
+        Exits or tightens when MTF CHOCH/reversal is detected.
+        """
+        if not mtf_state or not mtf_state.swings:
+            return TrailingUpdate(position_id, False, current_sl, "No MTF swing data available")
+
+        # Extract latest confirmed MTF swings
+        latest_low = mtf_state.structure_state.protected_low
+        latest_high = mtf_state.structure_state.protected_high
+
+        if direction == TrendDirection.BULLISH and latest_low:
+            new_sl_candidate = latest_low.raw_swing.price
+            # Only trail upwards
+            if new_sl_candidate > current_sl:
+                return TrailingUpdate(
+                    position_id=position_id,
+                    should_update=True,
+                    new_stop_loss=new_sl_candidate,
+                    reason=f"Trailed behind MTF Higher Low (${new_sl_candidate:.2f})"
                 )
 
-        # Short Position Trailing
-        elif action == "SELL":
-            if mtf_state.protected_high and mtf_state.protected_high < current_stop_loss:
-                return TrailingUpdateResult(
-                    new_stop_loss=mtf_state.protected_high,
-                    is_updated=True,
-                    reason=f"Trailed SL down to new MTF protected high: ${mtf_state.protected_high:.2f}"
+        elif direction == TrendDirection.BEARISH and latest_high:
+            new_sl_candidate = latest_high.raw_swing.price
+            # Only trail downwards
+            if new_sl_candidate < current_sl:
+                return TrailingUpdate(
+                    position_id=position_id,
+                    should_update=True,
+                    new_stop_loss=new_sl_candidate,
+                    reason=f"Trailed behind MTF Lower High (${new_sl_candidate:.2f})"
                 )
 
-        return TrailingUpdateResult(
-            new_stop_loss=current_stop_loss,
-            is_updated=False,
-            reason="Stop loss remains unchanged."
-        )
+        return TrailingUpdate(position_id, False, current_sl, "MTF structure unchanged; SL maintained")

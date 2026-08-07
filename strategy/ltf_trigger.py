@@ -1,10 +1,10 @@
 """
-Product 01: Crypto Platform - LTF Entry Trigger Engine
-Implements Part E of strategy_specification.md v1.1.
+Product 01: Crypto Platform - LTF Entry Trigger Engine (V2.1)
+Verifies LTF displacement candle closes off MTF KeyZones and calculates invalidation SL.
 """
 
 from dataclasses import dataclass
-from market_intelligence.primitives import MarketStatePayload, TrendDirection, Candle
+from market_intelligence.primitives import MarketStatePayload, Candle, TrendDirection
 from strategy.mtf_setup import MTFSetupResult
 
 
@@ -23,9 +23,10 @@ class LTFTriggerEngine:
         ltf_state: MarketStatePayload,
         latest_candle: Candle,
         mtf_setup: MTFSetupResult,
-        htf_bias: TrendDirection
+        htf_bias: TrendDirection,
+        buffer_pct: float = 0.0015
     ) -> LTFTriggerResult:
-        """Verifies LTF KeyZone interaction, Liquidity Sweep & Invalidation SL at Keyzone boundary."""
+        """Verifies LTF KeyZone interaction + Displacement Close."""
         if not mtf_setup.is_aligned or not mtf_setup.active_mtf_keyzone:
             return LTFTriggerResult(
                 is_triggered=False, entry_price=0.0, stop_loss_price=0.0,
@@ -34,38 +35,35 @@ class LTFTriggerEngine:
 
         keyzone = mtf_setup.active_mtf_keyzone
 
-        # Bullish Trigger Check
+        # Bullish Trigger: Candle low interacts with keyzone AND closes GREEN
         if htf_bias == TrendDirection.BULLISH:
-            # Rule 1: Candle low penetrates keyzone range
-            if latest_candle.low <= keyzone.high:
+            if latest_candle.low <= keyzone.high and latest_candle.close > latest_candle.open:
                 entry_price = latest_candle.close
-                # Rule 2: Invalidation SL placed strictly at structural KeyZone low boundary
-                stop_loss = keyzone.low
+                stop_loss = keyzone.low * (1.0 - buffer_pct)
 
                 if entry_price > stop_loss:
                     return LTFTriggerResult(
                         is_triggered=True,
                         entry_price=entry_price,
                         stop_loss_price=stop_loss,
-                        trigger_reason="Bullish KeyZone mitigation & LTF displacement close."
+                        trigger_reason="Bullish KeyZone interaction + Bullish Displacement Close."
                     )
 
-        # Bearish Trigger Check
+        # Bearish Trigger: Candle high interacts with keyzone AND closes RED
         elif htf_bias == TrendDirection.BEARISH:
-            if latest_candle.high >= keyzone.low:
+            if latest_candle.high >= keyzone.low and latest_candle.close < latest_candle.open:
                 entry_price = latest_candle.close
-                # Invalidation SL placed strictly at structural KeyZone high boundary
-                stop_loss = keyzone.high
+                stop_loss = keyzone.high * (1.0 + buffer_pct)
 
                 if entry_price < stop_loss:
                     return LTFTriggerResult(
                         is_triggered=True,
                         entry_price=entry_price,
                         stop_loss_price=stop_loss,
-                        trigger_reason="Bearish KeyZone mitigation & LTF displacement close."
+                        trigger_reason="Bearish KeyZone interaction + Bearish Displacement Close."
                     )
 
         return LTFTriggerResult(
             is_triggered=False, entry_price=0.0, stop_loss_price=0.0,
-            trigger_reason="No LTF keyzone interaction detected."
+            trigger_reason="No displacement confirmation close on KeyZone interaction."
         )

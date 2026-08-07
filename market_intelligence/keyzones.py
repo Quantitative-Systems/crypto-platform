@@ -1,104 +1,91 @@
 """
-Product 01: Crypto Platform - Keyzones & Imbalance Engine
-Detects Order Blocks (OB) and Fair Value Gaps (FVG) across candlestick series.
+Product 01: Crypto Platform - KeyZone Detection Engine (V2.1)
+Maps Order Blocks (OB) and Fair Value Gaps (FVG) into standardized V2.1 KeyZone objects.
 """
 
 from typing import List
 from market_intelligence.primitives import (
-    Candle, TrendDirection, KeyZone, KeyZoneType
+    Candle, KeyZone, ZoneType, TrendDirection
 )
 
 
 class KeyZoneEngine:
 
     @staticmethod
-    def detect_fair_value_gaps(candles: List[Candle]) -> List[KeyZone]:
-        """Detects 3-candle Fair Value Gap (FVG) market imbalances."""
-        fvgs: List[KeyZone] = []
-        total = len(candles)
+    def detect_keyzones(candles: List[Candle], timeframe: str = "1D") -> List[KeyZone]:
+        """Detects Order Blocks and FVGs from candlestick series."""
+        if len(candles) < 4:
+            return []
 
-        if total < 3:
-            return fvgs
+        keyzones: List[KeyZone] = []
 
-        for i in range(2, total):
-            c1 = candles[i - 2]
-            c2 = candles[i - 1]
-            c3 = candles[i]
+        # 1. Fair Value Gap (FVG) Detection (3-candle pattern)
+        for i in range(2, len(candles)):
+            c1, c2, c3 = candles[i - 2], candles[i - 1], candles[i]
 
-            # Bullish FVG: Low of Candle 3 is greater than High of Candle 1
+            # Bullish FVG: Gap between C1 High and C3 Low
             if c3.low > c1.high:
-                gap_size = c3.low - c1.high
-                if gap_size > 0:
-                    fvgs.append(KeyZone(
-                        zone_id=f"FVG_BULL_{c2.timestamp}",
-                        zone_type=KeyZoneType.FAIR_VALUE_GAP,
-                        direction=TrendDirection.BULLISH,
-                        high=c3.low,
-                        low=c1.high,
-                        origin_candle_index=i - 1,
-                        is_mitigated=False
-                    ))
+                keyzones.append(KeyZone(
+                    zone_type=ZoneType.BULLISH_FVG,
+                    direction=TrendDirection.BULLISH,
+                    high=c3.low,
+                    low=c1.high,
+                    timeframe=timeframe,
+                    creation_time=c2.timestamp,
+                    is_mitigated=False,
+                    strength_score=0.85
+                ))
 
-            # Bearish FVG: High of Candle 3 is lower than Low of Candle 1
+            # Bearish FVG: Gap between C1 Low and C3 High
             elif c3.high < c1.low:
-                gap_size = c1.low - c3.high
-                if gap_size > 0:
-                    fvgs.append(KeyZone(
-                        zone_id=f"FVG_BEAR_{c2.timestamp}",
-                        zone_type=KeyZoneType.FAIR_VALUE_GAP,
-                        direction=TrendDirection.BEARISH,
-                        high=c1.low,
-                        low=c3.high,
-                        origin_candle_index=i - 1,
-                        is_mitigated=False
-                    ))
+                keyzones.append(KeyZone(
+                    zone_type=ZoneType.BEARISH_FVG,
+                    direction=TrendDirection.BEARISH,
+                    high=c1.low,
+                    low=c3.high,
+                    timeframe=timeframe,
+                    creation_time=c2.timestamp,
+                    is_mitigated=False,
+                    strength_score=0.85
+                ))
 
-        return fvgs
+        # 2. Order Block (OB) Detection (Last counter candle before expansion)
+        for i in range(1, len(candles) - 1):
+            prev_candle = candles[i - 1]
+            curr_candle = candles[i]
 
-    @staticmethod
-    def detect_order_blocks(candles: List[Candle]) -> List[KeyZone]:
-        """
-        Detects Order Blocks (OB):
-        Bullish OB: Last bearish candle before an explosive bullish move.
-        Bearish OB: Last bullish candle before an explosive bearish move.
-        """
-        obs: List[KeyZone] = []
-        total = len(candles)
+            # Demand OB: Bearish candle before strong bullish expansion
+            if prev_candle.is_bearish and curr_candle.is_bullish and curr_candle.body_range > (prev_candle.range * 1.2):
+                keyzones.append(KeyZone(
+                    zone_type=ZoneType.DEMAND_OB,
+                    direction=TrendDirection.BULLISH,
+                    high=prev_candle.high,
+                    low=prev_candle.low,
+                    timeframe=timeframe,
+                    creation_time=prev_candle.timestamp,
+                    is_mitigated=False,
+                    strength_score=0.90
+                ))
 
-        if total < 4:
-            return obs
+            # Supply OB: Bullish candle before strong bearish expansion
+            elif prev_candle.is_bullish and curr_candle.is_bearish and curr_candle.body_range > (prev_candle.range * 1.2):
+                keyzones.append(KeyZone(
+                    zone_type=ZoneType.SUPPLY_OB,
+                    direction=TrendDirection.BEARISH,
+                    high=prev_candle.high,
+                    low=prev_candle.low,
+                    timeframe=timeframe,
+                    creation_time=prev_candle.timestamp,
+                    is_mitigated=False,
+                    strength_score=0.90
+                ))
 
-        for i in range(1, total - 2):
-            curr = candles[i]
-            next1 = candles[i + 1]
-            next2 = candles[i + 2]
+        # Filter out mitigated keyzones by recent price action
+        latest_price = candles[-1].close
+        for zone in keyzones:
+            if zone.direction == TrendDirection.BULLISH and latest_price < zone.low:
+                zone.is_mitigated = True
+            elif zone.direction == TrendDirection.BEARISH and latest_price > zone.high:
+                zone.is_mitigated = True
 
-            # Bullish OB Check: Red candle followed by strong green expansion
-            if curr.close < curr.open:
-                expansion = (next2.close - curr.close) / curr.close
-                if expansion > 0.02 and next1.close > curr.high:
-                    obs.append(KeyZone(
-                        zone_id=f"OB_BULL_{curr.timestamp}",
-                        zone_type=KeyZoneType.ORDER_BLOCK,
-                        direction=TrendDirection.BULLISH,
-                        high=curr.high,
-                        low=curr.low,
-                        origin_candle_index=i,
-                        is_mitigated=False
-                    ))
-
-            # Bearish OB Check: Green candle followed by strong red contraction
-            elif curr.close > curr.open:
-                contraction = (curr.close - next2.close) / curr.close
-                if contraction > 0.02 and next1.close < curr.low:
-                    obs.append(KeyZone(
-                        zone_id=f"OB_BEAR_{curr.timestamp}",
-                        zone_type=KeyZoneType.ORDER_BLOCK,
-                        direction=TrendDirection.BEARISH,
-                        high=curr.high,
-                        low=curr.low,
-                        origin_candle_index=i,
-                        is_mitigated=False
-                    ))
-
-        return obs
+        return [z for z in keyzones if not z.is_mitigated]

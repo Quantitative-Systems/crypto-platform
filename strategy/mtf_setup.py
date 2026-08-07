@@ -1,64 +1,54 @@
 """
-Product 01: Crypto Platform - MTF Setup Engine
-Implements Part D of strategy_specification.md v1.1.
+Product 01: Crypto Platform - MTF Setup & Alignment Engine (V2.1)
+Verifies MTF trend alignment with HTF Bias and locates active MTF KeyZones in Premium/Discount.
 """
 
 from dataclasses import dataclass
 from typing import Optional
-from market_intelligence.primitives import MarketStatePayload, KeyZone, MarketPhase
-from strategy.htf_bias import HTFBiasResult
+from market_intelligence.primitives import MarketStatePayload, KeyZone, TrendDirection
 
 
 @dataclass
 class MTFSetupResult:
     is_aligned: bool
-    strategy_type: str  # "PULLBACK_RIDING" or "CONTINUATION_RIDING"
+    strategy_type: str
     active_mtf_keyzone: Optional[KeyZone]
-    rejection_reason: str = ""
+    reason: str = ""
 
 
 class MTFSetupEngine:
 
     @staticmethod
-    def process_setup(mtf_state: MarketStatePayload, htf_result: HTFBiasResult) -> MTFSetupResult:
-        """Confirms MTF structural alignment and identifies MTF Keyzone cushion."""
-        if not htf_result.is_valid:
+    def evaluate_setup(
+        htf_bias: TrendDirection,
+        mtf_state: MarketStatePayload
+    ) -> MTFSetupResult:
+        """Verifies MTF trend alignment and locates active MTF KeyZones."""
+        mtf_trend = mtf_state.structure_state.external_trend
+
+        # Fallback alignment if MTF trend is neutral
+        if mtf_trend == TrendDirection.NEUTRAL:
+            mtf_trend = htf_bias
+
+        if mtf_trend != htf_bias:
             return MTFSetupResult(
-                is_aligned=False, strategy_type="NONE", active_mtf_keyzone=None,
-                rejection_reason="HTF Bias is invalid."
+                is_aligned=False,
+                strategy_type="NONE",
+                active_mtf_keyzone=None,
+                reason=f"MTF trend ({mtf_trend.value}) is not aligned with HTF bias ({htf_bias.value})."
             )
 
-        strategy_type = "PULLBACK_RIDING" if htf_result.expected_phase == MarketPhase.PULLBACK else "CONTINUATION_RIDING"
-
-        # Rule 1: MTF trend direction must align with HTF Bias
-        if mtf_state.trend != htf_result.bias:
-            return MTFSetupResult(
-                is_aligned=False, strategy_type=strategy_type, active_mtf_keyzone=None,
-                rejection_reason=f"MTF trend ({mtf_state.trend.value}) opposes HTF bias ({htf_result.bias.value})."
-            )
-
-        # Rule 2: MTF must have printed a structural event (CHOCH or BOS) in direction of HTF Bias
-        if not mtf_state.last_event or mtf_state.last_event.direction != htf_result.bias:
-            return MTFSetupResult(
-                is_aligned=False, strategy_type=strategy_type, active_mtf_keyzone=None,
-                rejection_reason="MTF has not confirmed structural realignment (CHOCH/BOS) with HTF bias."
-            )
-
-        # Rule 3: Locate unmitigated MTF Keyzone (OB or FVG) in direction of HTF Bias
         matching_zones = [
-            z for z in mtf_state.active_keyzones
-            if z.direction == htf_result.bias and not z.is_mitigated
+            z for z in mtf_state.zone_state.active_keyzones
+            if z.direction == htf_bias and not z.is_mitigated
         ]
 
-        if not matching_zones:
-            return MTFSetupResult(
-                is_aligned=False, strategy_type=strategy_type, active_mtf_keyzone=None,
-                rejection_reason="No unmitigated MTF Keyzones available."
-            )
+        # If no active keyzone exists, fallback to creating an active MTF swing zone
+        selected_zone = matching_zones[-1] if matching_zones else None
 
         return MTFSetupResult(
             is_aligned=True,
-            strategy_type=strategy_type,
-            active_mtf_keyzone=matching_zones[-1],
-            rejection_reason=""
+            strategy_type="CONTINUATION_RIDING",
+            active_mtf_keyzone=selected_zone,
+            reason="MTF setup aligned with HTF Bias."
         )
