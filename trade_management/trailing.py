@@ -15,6 +15,10 @@ class TrailingUpdate:
     new_stop_loss: float
     reason: str
 
+    @property
+    def is_updated(self) -> bool:
+        return self.should_update
+
 
 class MTFTrailingEngine:
 
@@ -33,8 +37,8 @@ class MTFTrailingEngine:
             return TrailingUpdate(position_id, False, current_sl, "No MTF swing data available")
 
         # Extract latest confirmed MTF swings
-        latest_low = mtf_state.structure_state.protected_low
-        latest_high = mtf_state.structure_state.protected_high
+        latest_low = mtf_state.structure_state.protected_low if mtf_state.structure_state else None
+        latest_high = mtf_state.structure_state.protected_high if mtf_state.structure_state else None
 
         if direction == TrendDirection.BULLISH and latest_low:
             new_sl_candidate = latest_low.raw_swing.price
@@ -59,3 +63,27 @@ class MTFTrailingEngine:
                 )
 
         return TrailingUpdate(position_id, False, current_sl, "MTF structure unchanged; SL maintained")
+
+    @classmethod
+    def update_trailing_stop(
+        cls,
+        action: str,
+        current_stop_loss: float,
+        entry_price: float,
+        current_close: float,
+        mtf_state: MarketStatePayload
+    ) -> TrailingUpdate:
+        """
+        Adapter method matching StrategyOrchestrator's expected contract.
+        """
+        direction = TrendDirection.BULLISH if action.upper() in ("BUY", "LONG") else TrendDirection.BEARISH
+        return cls.evaluate_trailing_stop(
+            position_id="ORCHESTrated_PLAN",
+            direction=direction,
+            current_sl=current_stop_loss,
+            mtf_state=mtf_state
+        )
+
+
+# Public API Alias for Strategy Orchestrator Compatibility
+TrailingEngine = MTFTrailingEngine
