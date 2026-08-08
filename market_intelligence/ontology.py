@@ -58,7 +58,10 @@ class MarketOntology:
         """
         events: List[MarketEvent] = []
         if not candles or not raw_swings:
-            return StructureState(external_trend_seq="NEUTRAL", internal_trend_seq="NEUTRAL"), events
+            structure_state = StructureState(external_trend_seq="NEUTRAL", internal_trend_seq="NEUTRAL")
+            structure_state.external_trend = TrendDirection.RANGING
+            structure_state.internal_trend = TrendDirection.RANGING
+            return structure_state, events
 
         high_swings = [s for s in raw_swings if s.swing_type == SwingType.SWING_HIGH]
         low_swings = [s for s in raw_swings if s.swing_type == SwingType.SWING_LOW]
@@ -70,7 +73,6 @@ class MarketOntology:
         last_external_bos = None
         last_external_choch = None
 
-        # Determine dynamic structural breaks
         if last_high and latest_candle.close > last_high.price:
             last_external_bos = MarketEvent(
                 timestamp=latest_candle.timestamp,
@@ -93,7 +95,6 @@ class MarketOntology:
             )
             events.append(last_external_choch)
 
-        # Dynamic Sequence Formatting based on recent swings
         high_prices = [s.price for s in high_swings[-3:]]
         low_prices = [s.price for s in low_swings[-3:]]
 
@@ -106,10 +107,27 @@ class MarketOntology:
             external_trend_seq=ext_seq,
             internal_trend_seq=ext_seq,
             last_external_bos=last_external_bos,
-            last_external_choch=last_external_choch
+            last_external_choch=last_external_choch,
+            active_swings=raw_swings,
         )
 
+        if ext_seq == "HH-HL":
+            structure_state.external_trend = TrendDirection.BULLISH
+            structure_state.internal_trend = TrendDirection.BULLISH
+        elif ext_seq == "LH-LL":
+            structure_state.external_trend = TrendDirection.BEARISH
+            structure_state.internal_trend = TrendDirection.BEARISH
+        else:
+            structure_state.external_trend = TrendDirection.RANGING
+            structure_state.internal_trend = TrendDirection.RANGING
+
         return structure_state, events
+
+    def evaluate_structure(self, candles: List[Candle], timeframe: str = "1D") -> StructureState:
+        raw_swings = self.detect_raw_swings(candles, timeframe=timeframe)
+        structure_state, _ = self.build_structure(candles, raw_swings, timeframe=timeframe)
+        structure_state.active_swings = raw_swings
+        return structure_state
 
     def classify_swings(self, raw_swings: List[RawSwing], structure_state: StructureState) -> List[ClassifiedSwing]:
         """
@@ -122,7 +140,6 @@ class MarketOntology:
             scope = SwingScope.EXTERNAL if rs.candle_index % 2 == 0 else SwingScope.INTERNAL
             magnitude = SwingMagnitude.MAJOR if scope == SwingScope.EXTERNAL else SwingMagnitude.MINOR
 
-            # A swing is STRONG only if an active BOS/CHOCH event originated from its direction
             if structure_state.last_external_bos and rs.swing_type == SwingType.SWING_LOW:
                 character = SwingCharacter.STRONG
                 status = SwingStatus.PROTECTED
@@ -141,7 +158,6 @@ class MarketOntology:
                 status=status
             )
 
-            # Assign protected anchors back to structure state
             if cs.character == SwingCharacter.STRONG and cs.raw_swing.swing_type == SwingType.SWING_HIGH:
                 structure_state.protected_high = cs
                 structure_state.strong_high = cs

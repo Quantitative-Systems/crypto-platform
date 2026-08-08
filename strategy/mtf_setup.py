@@ -24,10 +24,9 @@ class MTFSetupEngine:
         mtf_state: MarketStatePayload
     ) -> MTFSetupResult:
         """Verifies MTF trend alignment and locates active MTF KeyZones."""
-        mtf_trend = mtf_state.structure_state.external_trend
+        mtf_trend = mtf_state.structure_state.external_trend or mtf_state.trend_state.direction or mtf_state.trend
 
-        # Fallback alignment if MTF trend is neutral
-        if mtf_trend == TrendDirection.NEUTRAL:
+        if mtf_trend in (TrendDirection.NEUTRAL, TrendDirection.RANGING):
             mtf_trend = htf_bias
 
         if mtf_trend != htf_bias:
@@ -39,11 +38,10 @@ class MTFSetupEngine:
             )
 
         matching_zones = [
-            z for z in mtf_state.zone_state.active_keyzones
+            z for z in mtf_state.active_keyzones
             if z.direction == htf_bias and not z.is_mitigated
         ]
 
-        # If no active keyzone exists, fallback to creating an active MTF swing zone
         selected_zone = matching_zones[-1] if matching_zones else None
 
         return MTFSetupResult(

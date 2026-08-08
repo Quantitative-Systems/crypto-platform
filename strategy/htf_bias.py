@@ -22,9 +22,8 @@ class HTFBiasEngine:
     @staticmethod
     def evaluate_bias(htf_state: MarketStatePayload) -> HTFBiasResult:
         """Determines macro bias and target price from HTF MarketStatePayload."""
-        trend = htf_state.structure_state.external_trend
+        trend = htf_state.structure_state.external_trend or htf_state.trend_state.direction or htf_state.trend
 
-        # If trend is neutral or ranging, fallback to current price movement
         if trend in (TrendDirection.NEUTRAL, TrendDirection.RANGING):
             if htf_state.current_candle.is_bullish:
                 trend = TrendDirection.BULLISH
@@ -40,24 +39,26 @@ class HTFBiasEngine:
                 rejection_reason="HTF trend is completely Neutral."
             )
 
-        # Target TP selection based on protected swing anchors or 5% expansion target
         target_tp = None
         if trend == TrendDirection.BULLISH:
             if htf_state.structure_state.protected_high:
-                target_tp = htf_state.structure_state.protected_high.price
+                target_tp = htf_state.structure_state.protected_high.raw_swing.price
             else:
-                target_tp = htf_state.current_price * 1.05  # Default 5% expansion target
-
+                target_tp = htf_state.current_price * 1.05
         elif trend == TrendDirection.BEARISH:
             if htf_state.structure_state.protected_low:
-                target_tp = htf_state.structure_state.protected_low.price
+                target_tp = htf_state.structure_state.protected_low.raw_swing.price
             else:
-                target_tp = htf_state.current_price * 0.95  # Default 5% contraction target
+                target_tp = htf_state.current_price * 0.95
+
+        expected_phase = htf_state.phase_state.current_phase
+        if expected_phase in (MarketPhase.EXPANSION, MarketPhase.AWAITING_CONFIRMATION):
+            expected_phase = MarketPhase.PULLBACK if trend == TrendDirection.BULLISH else MarketPhase.CONTINUATION
 
         return HTFBiasResult(
             bias=trend,
             target_tp_price=target_tp,
-            expected_phase=htf_state.phase_state.current_phase,
+            expected_phase=expected_phase,
             is_valid=True,
             rejection_reason=""
         )

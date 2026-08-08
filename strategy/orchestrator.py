@@ -11,6 +11,7 @@ from strategy.strategy_b_continuation import StrategyBContinuationEngine
 from strategy.ltf_trigger import LTFTriggerEngine
 from strategy.mtf_setup import MTFSetupResult
 from risk.risk_engine import RiskEngine
+from trade_management.trailing import TrailingEngine
 
 
 @dataclass
@@ -24,9 +25,10 @@ class TradePlan:
     position_size_units: float
     dollar_risk_usd: float
     reward_to_risk_ratio: float
-    confluence_score: float
     status: str  # "APPROVED" or "REJECTED"
     reason: str = ""
+    trailing_stop_price: float = 0.0
+    confluence_score: float = 0.0
 
 
 class StrategyOrchestrator:
@@ -73,7 +75,8 @@ class StrategyOrchestrator:
         mtf_setup_obj = MTFSetupResult(
             is_aligned=True,
             strategy_type=strategy_type,
-            active_mtf_keyzone=strat_res.mtf_keyzone
+            active_mtf_keyzone=strat_res.mtf_keyzone,
+            reason=strat_res.reason
         )
 
         # Gate 3: LTF Entry Trigger
@@ -145,6 +148,14 @@ class StrategyOrchestrator:
                 reason=f"Gate 4 Fail: {risk_res.rejection_reason}"
             )
 
+        trailing_res = TrailingEngine.update_trailing_stop(
+            action=action,
+            current_stop_loss=stop_loss,
+            entry_price=entry_price,
+            current_close=latest_candle.close,
+            mtf_state=mtf_state
+        )
+
         # Gate 5: Approved Trade Plan Creation
         return TradePlan(
             symbol=symbol,
@@ -156,6 +167,7 @@ class StrategyOrchestrator:
             position_size_units=risk_res.position_size_units,
             dollar_risk_usd=risk_res.dollar_risk_usd,
             reward_to_risk_ratio=risk_res.reward_to_risk_ratio,
+            trailing_stop_price=trailing_res.new_stop_loss if trailing_res.is_updated else stop_loss,
             confluence_score=score,
             status="APPROVED",
             reason=f"All Gates Cleared (Score: {score:.1f}/100 | {strategy_type})."

@@ -1,0 +1,10 @@
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local Databases & Research Artifacts
+*.db
+*.sqlite3
+research/swing_chart.html

@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from market_intelligence.primitives import (
     Candle, MarketStatePayload, PhaseState, TrendState, ValuationState,
     ValidationScorecard, EngineMetadata, TrendDirection, MarketPhase,
-    SessionType, VolatilityRegime, SessionState, VolatilityState
+    SessionType, VolatilityRegime, SessionState, VolatilityState, TrendStrength
 )
 from market_intelligence.ontology import MarketOntology
 from market_intelligence.keyzones import KeyZoneEngine
@@ -118,6 +118,14 @@ class MarketStateEngine:
             trend_str = 40.0
 
         trend_state = TrendState(
+            direction=ext_trend,
+            strength=TrendStrength.STRONG_BULLISH if ext_trend == TrendDirection.BULLISH else TrendStrength.STRONG_BEARISH if ext_trend == TrendDirection.BEARISH else TrendStrength.RANGING,
+            confidence=trend_str,
+            reasoning="Dynamic trend derived from price structure",
+            latest_high_label=None,
+            latest_low_label=None,
+            timestamp=latest_candle.timestamp,
+            timeframe=timeframe,
             external_trend=ext_trend,
             internal_trend=ext_trend,
             trend_strength=trend_str,

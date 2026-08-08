@@ -18,11 +18,11 @@ class SwingType(Enum):
 
 
 class SwingStatus(Enum):
-    CANDIDATE = "CANDIDATE"      # Peak formed, awaiting right-side confirmation candles
-    CONFIRMED = "CONFIRMED"      # Fully confirmed with N right-side closes
-    INVALIDATED = "INVALIDATED"  # Overridden by price expansion
-    PROTECTED = "PROTECTED"      # Defended anchor point
-    TARGET = "TARGET"         # Target liquidity level
+    CANDIDATE = "CANDIDATE"
+    CONFIRMED = "CONFIRMED"
+    INVALIDATED = "INVALIDATED"
+    PROTECTED = "PROTECTED"
+    TARGET = "TARGET"
     UNASSIGNED = "UNASSIGNED"
 
 
@@ -52,6 +52,9 @@ class EventType(Enum):
     LIQUIDITY_SWEEP = "LIQUIDITY_SWEEP"
     KEYZONE_CREATED = "KEYZONE_CREATED"
     KEYZONE_MITIGATED = "KEYZONE_MITIGATED"
+    BOS = "BOS"
+    CHOCH = "CHOCH"
+    SWEEP = "SWEEP"
 
 
 class ZoneType(Enum):
@@ -75,6 +78,54 @@ class LiquidityType(Enum):
     BSL = "BSL"
     SSL = "SSL"
     INDUCEMENT = "INDUCEMENT"
+
+
+class SwingScope(Enum):
+    EXTERNAL = "EXTERNAL"
+    INTERNAL = "INTERNAL"
+
+
+class SwingMagnitude(Enum):
+    MAJOR = "MAJOR"
+    MINOR = "MINOR"
+
+
+class SwingCharacter(Enum):
+    STRONG = "STRONG"
+    WEAK = "WEAK"
+
+
+class SequenceLabel(Enum):
+    HH = "HH"
+    HL = "HL"
+    LH = "LH"
+    LL = "LL"
+    EQH = "EQH"
+    EQL = "EQL"
+    UNKNOWN = "UNKNOWN"
+
+
+class TrendStrength(Enum):
+    STRONG_BULLISH = "STRONG_BULLISH"
+    WEAK_BULLISH = "WEAK_BULLISH"
+    RANGING = "RANGING"
+    WEAK_BEARISH = "WEAK_BEARISH"
+    STRONG_BEARISH = "STRONG_BEARISH"
+    NEUTRAL = "NEUTRAL"
+
+
+class SessionType(Enum):
+    ASIA = "ASIA"
+    LONDON = "LONDON"
+    NEW_YORK = "NEW_YORK"
+    OFF_HOURS = "OFF_HOURS"
+
+
+class VolatilityRegime(Enum):
+    NORMAL = "NORMAL"
+    EXPANSION = "EXPANSION"
+    COMPRESSION = "COMPRESSION"
+    HIGH_VOLATILITY_SHOCK = "HIGH_VOLATILITY_SHOCK"
 
 
 @dataclass(frozen=True)
@@ -105,12 +156,12 @@ class Candle:
 
 @dataclass
 class RawSwing:
-    swing_id: str
-    timestamp: int
-    price: float
-    swing_type: SwingType
-    candle_index: int
-    timeframe: str
+    swing_id: str = ""
+    timestamp: int = 0
+    price: float = 0.0
+    swing_type: SwingType = SwingType.SWING_HIGH
+    candle_index: int = 0
+    timeframe: str = "1D"
     status: SwingStatus = SwingStatus.CONFIRMED
     is_equal_extreme: bool = False
     cluster_id: Optional[str] = None
@@ -134,25 +185,6 @@ class MarketEvent:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 
-# ============================================================================
-# ENGINE 02 CONTRACTS (APPENDED)
-# ============================================================================
-
-class SwingScope(Enum):
-    EXTERNAL = "EXTERNAL"
-    INTERNAL = "INTERNAL"
-
-
-class SwingMagnitude(Enum):
-    MAJOR = "MAJOR"
-    MINOR = "MINOR"
-
-
-class SwingCharacter(Enum):
-    STRONG = "STRONG"
-    WEAK = "WEAK"
-
-
 @dataclass
 class ClassifiedSwing:
     raw_swing: RawSwing
@@ -174,19 +206,14 @@ class StructureState:
     last_internal_choch: Optional[MarketEvent] = None
     protected_high: Optional[ClassifiedSwing] = None
     protected_low: Optional[ClassifiedSwing] = None
+    external_trend: Optional[TrendDirection] = None
+    internal_trend: Optional[TrendDirection] = None
+    strong_high: Optional[ClassifiedSwing] = None
+    strong_low: Optional[ClassifiedSwing] = None
+    weak_high: Optional[ClassifiedSwing] = None
+    weak_low: Optional[ClassifiedSwing] = None
+    active_swings: List[RawSwing] = field(default_factory=list)
 
-
-# Backward-compatibility alias
-SwingPoint = RawSwing
-
-class SequenceLabel(Enum):
-    HH = "HH"  # Higher High
-    HL = "HL"  # Higher Low
-    LH = "LH"  # Lower High
-    LL = "LL"  # Lower Low
-    EQH = "EQH" # Equal High
-    EQL = "EQL" # Equal Low
-    UNKNOWN = "UNKNOWN" # First swing in a dataset lacks a predecessor
 
 @dataclass
 class SequenceSwing:
@@ -194,13 +221,6 @@ class SequenceSwing:
     raw_swing: RawSwing
     label: SequenceLabel
 
-    class TrendStrength(Enum):
-    STRONG_BULLISH = "STRONG_BULLISH"
-    WEAK_BULLISH = "WEAK_BULLISH"
-    RANGING = "RANGING"
-    WEAK_BEARISH = "WEAK_BEARISH"
-    STRONG_BEARISH = "STRONG_BEARISH"
-    NEUTRAL = "NEUTRAL"
 
 @dataclass
 class SequenceState:
@@ -212,6 +232,7 @@ class SequenceState:
     latest_higher_low: Optional[SequenceSwing] = None
     total_swings: int = 0
 
+
 @dataclass
 class TrendState:
     """Engine 03 Output Contract: Future-proof structural trend metadata."""
@@ -219,9 +240,150 @@ class TrendState:
     strength: TrendStrength
     confidence: float
     reasoning: str
-    latest_high_label: SequenceLabel
-    latest_low_label: SequenceLabel
+    latest_high_label: Optional[SequenceLabel]
+    latest_low_label: Optional[SequenceLabel]
     timestamp: int
     timeframe: str
     source_engine: str = "Engine_03_Trend"
     version: str = "1.0.0"
+    external_trend: Optional[TrendDirection] = None
+    internal_trend: Optional[TrendDirection] = None
+    trend_strength: float = 0.0
+    trend_age_bars: int = 0
+    is_aligned: bool = True
+
+
+@dataclass
+class PhaseState:
+    current_phase: MarketPhase
+    expected_next_phase: MarketPhase
+    bars_in_phase: int
+
+
+@dataclass
+class ValuationState:
+    range_high: float
+    range_low: float
+    equilibrium: float
+    premium_boundary: float
+    discount_boundary: float
+    current_distance_from_eq: float
+
+
+@dataclass
+class ValidationScorecard:
+    structure_score: float
+    liquidity_score: float
+    zone_score: float
+    trend_score: float
+    phase_score: float
+    validation_score: float
+
+    @property
+    def overall_score(self) -> float:
+        return (self.structure_score + self.liquidity_score + self.zone_score + self.trend_score + self.phase_score) / 5.0
+
+
+@dataclass
+class EngineMetadata:
+    engine_version: str
+    processing_time_ms: float
+    confidence: float
+
+
+@dataclass
+class SessionState:
+    active_session: SessionType
+    session_high: float
+    session_low: float
+    is_killzone: bool
+
+
+@dataclass
+class VolatilityState:
+    atr_value: float
+    regime: VolatilityRegime
+    relative_volume_ratio: float
+
+
+@dataclass
+class KeyZone:
+    zone_type: ZoneType
+    direction: TrendDirection
+    high: float
+    low: float
+    timeframe: str
+    creation_time: int
+    is_mitigated: bool = False
+    strength_score: float = 0.0
+
+
+@dataclass
+class LiquidityPool:
+    liquidity_type: LiquidityType
+    direction: TrendDirection
+    price_level: float
+    high_bound: float
+    low_bound: float
+    timeframe: str
+    creation_time: int
+    is_swept: bool = False
+    sweep_count: int = 0
+
+
+@dataclass
+class StructureEvent:
+    event_type: EventType
+    direction: TrendDirection
+    price_level: float
+    timestamp: int
+    timeframe: str
+
+
+@dataclass
+class ZoneState:
+    active_keyzones: List[KeyZone] = field(default_factory=list)
+
+
+@dataclass
+class MarketStatePayload:
+    symbol: str
+    timeframe: str
+    timestamp: int
+    current_price: float
+    current_candle: Candle
+    events: List[MarketEvent]
+    swings: List[ClassifiedSwing]
+    structure_state: StructureState
+    liquidity_pools: List[LiquidityPool]
+    keyzones: List[KeyZone]
+    phase_state: PhaseState
+    trend_state: TrendState
+    valuation_state: ValuationState
+    scorecard: ValidationScorecard
+    metadata: EngineMetadata
+    zone_state: ZoneState = field(default_factory=ZoneState)
+
+    @property
+    def trend(self) -> TrendDirection:
+        return self.trend_state.direction if self.trend_state else TrendDirection.NEUTRAL
+
+    @property
+    def last_event(self) -> Optional[MarketEvent]:
+        return self.events[-1] if self.events else None
+
+    @property
+    def active_keyzones(self) -> List[KeyZone]:
+        return self.zone_state.active_keyzones if self.zone_state else self.keyzones
+
+    @property
+    def protected_high(self) -> Optional[float]:
+        return self.structure_state.protected_high.raw_swing.price if self.structure_state and self.structure_state.protected_high else None
+
+    @property
+    def protected_low(self) -> Optional[float]:
+        return self.structure_state.protected_low.raw_swing.price if self.structure_state and self.structure_state.protected_low else None
+
+
+# Backward-compatibility alias
+SwingPoint = RawSwing

@@ -26,7 +26,7 @@ class LTFTriggerEngine:
         htf_bias: TrendDirection,
         buffer_pct: float = 0.0015
     ) -> LTFTriggerResult:
-        """Verifies LTF KeyZone interaction + Displacement Close."""
+        """Verifies LTF keyzone interaction and displacement confirmation."""
         if not mtf_setup.is_aligned or not mtf_setup.active_mtf_keyzone:
             return LTFTriggerResult(
                 is_triggered=False, entry_price=0.0, stop_loss_price=0.0,
@@ -35,12 +35,10 @@ class LTFTriggerEngine:
 
         keyzone = mtf_setup.active_mtf_keyzone
 
-        # Bullish Trigger: Candle low interacts with keyzone AND closes GREEN
         if htf_bias == TrendDirection.BULLISH:
             if latest_candle.low <= keyzone.high and latest_candle.close > latest_candle.open:
                 entry_price = latest_candle.close
                 stop_loss = keyzone.low * (1.0 - buffer_pct)
-
                 if entry_price > stop_loss:
                     return LTFTriggerResult(
                         is_triggered=True,
@@ -48,13 +46,10 @@ class LTFTriggerEngine:
                         stop_loss_price=stop_loss,
                         trigger_reason="Bullish KeyZone interaction + Bullish Displacement Close."
                     )
-
-        # Bearish Trigger: Candle high interacts with keyzone AND closes RED
         elif htf_bias == TrendDirection.BEARISH:
             if latest_candle.high >= keyzone.low and latest_candle.close < latest_candle.open:
                 entry_price = latest_candle.close
                 stop_loss = keyzone.high * (1.0 + buffer_pct)
-
                 if entry_price < stop_loss:
                     return LTFTriggerResult(
                         is_triggered=True,
