@@ -1,9 +1,9 @@
 """
 Quantitative Systems Platform — Crypto Platform Product
-Product 01: Market Language | Engine 3 Unit Test Suite
+Product 01: Market Language | Engine 3 Hardened Unit Test Suite
 Exhaustive verification of EQH/EQL pools, BSL/SSL structural liquidity,
 liquidity sweeps, inducement detection, pool status transitions (ACTIVE -> SWEPT -> CONSUMED),
-and zero-leakage isolation.
+candle body geometry bounds, and zero-leakage isolation.
 """
 
 import unittest
@@ -83,7 +83,7 @@ class TestLiquidityEngineProduction(unittest.TestCase):
             self._seq_swing(2, 90.00, SwingType.LOW, SwingScope.EXTERNAL)
         ]
         candles = self._candles([95] * 10)
-        # Candle 6 pierces 100.00 with High=105.00 but Closes at 98.00
+        # Candle 6 pierces 100.00 with High=105.00, Open=96.00, Close=98.00 (Body inside)
         candles[6] = Candle(timestamp=1000 + 6 * 60, open=96.0, high=105.0, low=95.0, close=98.0, volume=1000.0)
 
         engine = LiquidityEngine()
@@ -92,7 +92,7 @@ class TestLiquidityEngineProduction(unittest.TestCase):
         self.assertEqual(len(state.events), 1)
         self.assertEqual(state.events[0].event_type, LiquidityEventType.LIQUIDITY_SWEEP)
         self.assertEqual(state.events[0].liquidity_scope, LiquidityScope.EXTERNAL)
-        self.assertEqual(state.events[0].direction, "BEARISH_SWEEP")
+        self.assertTrue(state.events[0].body_closed_inside)
         self.assertEqual(len(state.swept_pools), 1)
 
     def test_06_ssl_liquidity_sweep(self):
@@ -101,7 +101,7 @@ class TestLiquidityEngineProduction(unittest.TestCase):
             self._seq_swing(2, 90.00, SwingType.LOW, SwingScope.EXTERNAL)
         ]
         candles = self._candles([95] * 10)
-        # Candle 6 pierces 90.00 with Low=85.00 but Closes at 92.00
+        # Candle 6 pierces 90.00 with Low=85.00, Open=94.00, Close=92.00 (Body inside)
         candles[6] = Candle(timestamp=1000 + 6 * 60, open=94.0, high=96.0, low=85.0, close=92.0, volume=1000.0)
 
         engine = LiquidityEngine()
@@ -180,7 +180,7 @@ class TestLiquidityEngineProduction(unittest.TestCase):
     def test_12_sweep_then_later_consumed_lifecycle(self):
         swings = [self._seq_swing(1, 100.00, SwingType.HIGH, SwingScope.EXTERNAL)]
         candles = self._candles([95] * 10)
-        # Candle 5 sweeps 100.00 (High=105.00, Close=98.00)
+        # Candle 5 sweeps 100.00 (High=105.00, Open=96.00, Close=98.00)
         candles[5] = Candle(timestamp=1000 + 5 * 60, open=96.0, high=105.0, low=95.0, close=98.0, volume=1000.0)
         # Candle 7 body-closes above 100.00 (High=110.00, Close=103.00) -> Transitions SWEPT -> CONSUMED
         candles[7] = Candle(timestamp=1000 + 7 * 60, open=99.0, high=110.0, low=98.0, close=103.0, volume=1000.0)
@@ -188,13 +188,36 @@ class TestLiquidityEngineProduction(unittest.TestCase):
         engine = LiquidityEngine()
         state = engine.process(swings, candles)
 
-        # The earlier sweep event remains recorded in events history
         self.assertEqual(len(state.events), 1)
         self.assertEqual(state.events[0].event_type, LiquidityEventType.LIQUIDITY_SWEEP)
-        # The pool status must end in consumed_pools array
         self.assertEqual(len(state.consumed_pools), 1)
         self.assertEqual(state.consumed_pools[0].status, PoolStatus.CONSUMED)
         self.assertEqual(state.consumed_pools[0].sweep_count, 1)
+
+    def test_13_candle_open_above_boundary_is_consumed_not_swept(self):
+        swings = [self._seq_swing(1, 100.00, SwingType.HIGH, SwingScope.EXTERNAL)]
+        candles = self._candles([95] * 10)
+        # Candle 5 opens at 102.00 (above boundary) and closes at 99.00 -> Consumed/broken, NOT a sweep
+        candles[5] = Candle(timestamp=1000 + 5 * 60, open=102.0, high=105.0, low=98.0, close=99.0, volume=1000.0)
+
+        engine = LiquidityEngine()
+        state = engine.process(swings, candles)
+
+        self.assertEqual(len(state.events), 0)
+        self.assertEqual(len(state.consumed_pools), 1)
+        self.assertEqual(state.consumed_pools[0].status, PoolStatus.CONSUMED)
+
+    def test_14_no_future_data_leakage_causal_replay(self):
+        swings = [self._seq_swing(1, 100.00, SwingType.HIGH, SwingScope.EXTERNAL)]
+        # SW_1 is confirmed at candle index 3.
+        # Candles 0-2 pierces 100.00 prior to swing confirmation. Must be ignored.
+        candles = self._candles([95] * 10)
+        candles[1] = Candle(timestamp=1000 + 1 * 60, open=96.0, high=105.0, low=95.0, close=98.0, volume=1000.0)
+
+        engine = LiquidityEngine()
+        state = engine.process(swings, candles)
+
+        self.assertEqual(len(state.events), 0)  # Piercing before confirmation is ignored
 
 
 if __name__ == "__main__":

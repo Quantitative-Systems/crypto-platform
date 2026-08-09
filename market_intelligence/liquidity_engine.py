@@ -1,6 +1,6 @@
 """
 Quantitative Systems Platform — Crypto Platform Product
-Product 01: Market Language | Engine 3: Liquidity Intelligence Engine
+Product 01: Market Language | Engine 3: Liquidity Intelligence Engine (Hardened)
 
 RESPONSIBILITY
 --------------
@@ -9,7 +9,7 @@ Consumes confirmed SequenceSwings from Engine 2 and sequential Candle history.
 Produces ONLY:
     - Equal Highs (EQH) & Equal Lows (EQL) liquidity pools (0.05% relative tolerance)
     - Buy-Side Liquidity (BSL) & Sell-Side Liquidity (SSL) pool anchors (External & Internal)
-    - Liquidity Sweeps (Wick pierces pool boundary, candle body closes inside)
+    - Liquidity Sweeps (Wick pierces pool boundary, candle body sits strictly inside)
     - Inducement Events (Internal liquidity swept in direction of macro trend)
     - Complete Pool Lifecycle Tracking:
           ACTIVE -> SWEPT -> CONSUMED
@@ -81,8 +81,8 @@ class LiquidityEvent:
     price_level: float
     direction: str
     candle_index: int
-    swept_by_wick: bool = True
-    body_closed_inside: bool = True
+    swept_by_wick: bool
+    body_closed_inside: bool
 
 
 @dataclass
@@ -97,13 +97,16 @@ class LiquidityEngine:
     """
     Deterministic, stateful Liquidity Intelligence Engine.
     Tracks complete liquidity pool lifecycles (ACTIVE -> SWEPT -> CONSUMED)
-    and emits deduplicated sweep and inducement events.
+    with strict candlestick body-inside geometry checks.
     """
 
-    def __init__(self, eq_tolerance_pct: float = 0.0005) -> None:
+    def __init__(self, eq_tolerance_pct: float = 0.0005, boundary_epsilon: float = 0.0) -> None:
         if eq_tolerance_pct < 0:
             raise ValueError("eq_tolerance_pct must be >= 0")
+        if boundary_epsilon < 0:
+            raise ValueError("boundary_epsilon must be >= 0")
         self.eq_tolerance_pct = eq_tolerance_pct
+        self.boundary_epsilon = boundary_epsilon
         self._emitted_event_keys: Set[Tuple] = set()
 
     def reset(self) -> None:
@@ -256,16 +259,17 @@ class LiquidityEngine:
 
                 # High-Side Liquidity (BSL / EQH)
                 if pool.pool_type in (LiquidityPoolType.BSL, LiquidityPoolType.EQH):
-                    if candle.close > pool.high_boundary:
-                        # Body Close Above -> Pool Consumed / Broken (Permanently invalidates pool)
+                    upper = pool.high_boundary + self.boundary_epsilon
+                    body_top = max(candle.open, candle.close)
+
+                    if candle.close > upper or candle.open > upper:
+                        # Body Closed or Opened Above -> Pool Consumed / Broken
                         final_status = PoolStatus.CONSUMED
                         break
-                    elif candle.high > pool.high_boundary and candle.close <= pool.high_boundary:
-                        # Wick Pierces, Body Closes Inside -> Liquidity Sweep / Inducement
+                    elif candle.high > upper and body_top <= upper:
+                        # High Pierces, Body Sits Entirely Below -> True Wick Sweep
                         sweeps += 1
-                        if final_status == PoolStatus.ACTIVE:
-                            final_status = PoolStatus.SWEPT
-
+                        final_status = PoolStatus.SWEPT
                         is_internal = (pool.scope == LiquidityScope.INTERNAL) or any(s.scope == SwingScope.INTERNAL for s in pool.swings)
                         event_type = (
                             LiquidityEventType.INDUCEMENT
@@ -278,22 +282,24 @@ class LiquidityEngine:
                             pool=pool,
                             event_type=event_type,
                             direction="BEARISH_SWEEP",
-                            candle_index=idx
+                            candle_index=idx,
+                            swept_by_wick=True,
+                            body_closed_inside=True
                         )
-                        # Continuation scanning allows observing subsequent body closes (SWEPT -> CONSUMED)
 
                 # Low-Side Liquidity (SSL / EQL)
                 elif pool.pool_type in (LiquidityPoolType.SSL, LiquidityPoolType.EQL):
-                    if candle.close < pool.low_boundary:
-                        # Body Close Below -> Pool Consumed / Broken (Permanently invalidates pool)
+                    lower = pool.low_boundary - self.boundary_epsilon
+                    body_bottom = min(candle.open, candle.close)
+
+                    if candle.close < lower or candle.open < lower:
+                        # Body Closed or Opened Below -> Pool Consumed / Broken
                         final_status = PoolStatus.CONSUMED
                         break
-                    elif candle.low < pool.low_boundary and candle.close >= pool.low_boundary:
-                        # Wick Pierces, Body Closes Inside -> Liquidity Sweep / Inducement
+                    elif candle.low < lower and body_bottom >= lower:
+                        # Low Pierces, Body Sits Entirely Above -> True Wick Sweep
                         sweeps += 1
-                        if final_status == PoolStatus.ACTIVE:
-                            final_status = PoolStatus.SWEPT
-
+                        final_status = PoolStatus.SWEPT
                         is_internal = (pool.scope == LiquidityScope.INTERNAL) or any(s.scope == SwingScope.INTERNAL for s in pool.swings)
                         event_type = (
                             LiquidityEventType.INDUCEMENT
@@ -306,9 +312,10 @@ class LiquidityEngine:
                             pool=pool,
                             event_type=event_type,
                             direction="BULLISH_SWEEP",
-                            candle_index=idx
+                            candle_index=idx,
+                            swept_by_wick=True,
+                            body_closed_inside=True
                         )
-                        # Continuation scanning allows observing subsequent body closes (SWEPT -> CONSUMED)
 
             updated_pool = LiquidityPool(
                 pool_id=pool.pool_id,
@@ -339,7 +346,9 @@ class LiquidityEngine:
         pool: LiquidityPool,
         event_type: LiquidityEventType,
         direction: str,
-        candle_index: int
+        candle_index: int,
+        swept_by_wick: bool = True,
+        body_closed_inside: bool = True
     ) -> None:
         event_key = (event_type.value, pool.pool_id, candle_index)
         if event_key in self._emitted_event_keys:
@@ -355,6 +364,6 @@ class LiquidityEngine:
             price_level=pool.price_level,
             direction=direction,
             candle_index=candle_index,
-            swept_by_wick=True,
-            body_closed_inside=True
+            swept_by_wick=swept_by_wick,
+            body_closed_inside=body_closed_inside
         ))
