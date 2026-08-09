@@ -2,14 +2,15 @@
 Quantitative Systems Platform — Crypto Platform Product
 Product 01: Market Language | Engine 3 Unit Test Suite
 Exhaustive verification of EQH/EQL pools, BSL/SSL structural liquidity,
-liquidity sweeps, inducement detection, pool status transitions, and zero-leakage isolation.
+liquidity sweeps, inducement detection, pool status transitions (ACTIVE -> SWEPT -> CONSUMED),
+and zero-leakage isolation.
 """
 
 import unittest
 from market_intelligence.raw_swing_engine import Candle, RawSwing, SwingType, SwingStatus
 from market_intelligence.structure_builder_engine import SequenceSwing, SequenceLabel, SwingScope, TrendDirection
 from market_intelligence.liquidity_engine import (
-    LiquidityEngine, LiquidityPoolType, PoolStatus, LiquidityEventType
+    LiquidityEngine, LiquidityPoolType, LiquidityScope, PoolStatus, LiquidityEventType
 )
 
 
@@ -90,6 +91,7 @@ class TestLiquidityEngineProduction(unittest.TestCase):
 
         self.assertEqual(len(state.events), 1)
         self.assertEqual(state.events[0].event_type, LiquidityEventType.LIQUIDITY_SWEEP)
+        self.assertEqual(state.events[0].liquidity_scope, LiquidityScope.EXTERNAL)
         self.assertEqual(state.events[0].direction, "BEARISH_SWEEP")
         self.assertEqual(len(state.swept_pools), 1)
 
@@ -120,7 +122,7 @@ class TestLiquidityEngineProduction(unittest.TestCase):
         engine = LiquidityEngine()
         state = engine.process(swings, candles)
 
-        self.assertEqual(len(state.events), 0)  # No sweep event
+        self.assertEqual(len(state.events), 0)  # No sweep event emitted
         self.assertEqual(len(state.swept_pools), 0)
         self.assertEqual(len(state.consumed_pools), 1)
         self.assertEqual(state.consumed_pools[0].status, PoolStatus.CONSUMED)
@@ -174,6 +176,25 @@ class TestLiquidityEngineProduction(unittest.TestCase):
         forbidden = ["buy_signal", "sell_signal", "stop_loss", "position_size", "order_block"]
         for field in forbidden:
             self.assertFalse(hasattr(state, field))
+
+    def test_12_sweep_then_later_consumed_lifecycle(self):
+        swings = [self._seq_swing(1, 100.00, SwingType.HIGH, SwingScope.EXTERNAL)]
+        candles = self._candles([95] * 10)
+        # Candle 5 sweeps 100.00 (High=105.00, Close=98.00)
+        candles[5] = Candle(timestamp=1000 + 5 * 60, open=96.0, high=105.0, low=95.0, close=98.0, volume=1000.0)
+        # Candle 7 body-closes above 100.00 (High=110.00, Close=103.00) -> Transitions SWEPT -> CONSUMED
+        candles[7] = Candle(timestamp=1000 + 7 * 60, open=99.0, high=110.0, low=98.0, close=103.0, volume=1000.0)
+
+        engine = LiquidityEngine()
+        state = engine.process(swings, candles)
+
+        # The earlier sweep event remains recorded in events history
+        self.assertEqual(len(state.events), 1)
+        self.assertEqual(state.events[0].event_type, LiquidityEventType.LIQUIDITY_SWEEP)
+        # The pool status must end in consumed_pools array
+        self.assertEqual(len(state.consumed_pools), 1)
+        self.assertEqual(state.consumed_pools[0].status, PoolStatus.CONSUMED)
+        self.assertEqual(state.consumed_pools[0].sweep_count, 1)
 
 
 if __name__ == "__main__":

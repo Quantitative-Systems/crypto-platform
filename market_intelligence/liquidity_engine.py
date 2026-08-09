@@ -11,7 +11,8 @@ Produces ONLY:
     - Buy-Side Liquidity (BSL) & Sell-Side Liquidity (SSL) pool anchors (External & Internal)
     - Liquidity Sweeps (Wick pierces pool boundary, candle body closes inside)
     - Inducement Events (Internal liquidity swept in direction of macro trend)
-    - Stateful pool lifecycle tracking (ACTIVE, SWEPT, CONSUMED)
+    - Complete Pool Lifecycle Tracking:
+          ACTIVE -> SWEPT -> CONSUMED
 
 STRICT BOUNDARY
 ---------------
@@ -67,6 +68,7 @@ class LiquidityPool:
     creation_timestamp: int
     status: PoolStatus = PoolStatus.ACTIVE
     scope: LiquidityScope = LiquidityScope.EXTERNAL
+    sweep_count: int = 0
 
 
 @dataclass(frozen=True)
@@ -75,6 +77,7 @@ class LiquidityEvent:
     event_type: LiquidityEventType
     pool_id: str
     pool_type: LiquidityPoolType
+    liquidity_scope: LiquidityScope
     price_level: float
     direction: str
     candle_index: int
@@ -93,7 +96,8 @@ class LiquidityState:
 class LiquidityEngine:
     """
     Deterministic, stateful Liquidity Intelligence Engine.
-    Tracks liquidity pool lifecycles and identifies sweep and inducement events.
+    Tracks complete liquidity pool lifecycles (ACTIVE -> SWEPT -> CONSUMED)
+    and emits deduplicated sweep and inducement events.
     """
 
     def __init__(self, eq_tolerance_pct: float = 0.0005) -> None:
@@ -114,7 +118,7 @@ class LiquidityEngine:
     ) -> LiquidityState:
         """
         Main Engine 3 processing loop.
-        Constructs liquidity pools and evaluates candle streams for sweep/breakout events.
+        Constructs liquidity pools and evaluates candle streams for complete lifecycles.
         """
         if not swings:
             return LiquidityState(active_pools=[], swept_pools=[], consumed_pools=[], events=[])
@@ -122,12 +126,12 @@ class LiquidityEngine:
         # 1. Detect EQH / EQL Pools
         eq_pools = self._detect_eq_pools(swings)
 
-        # 2. Detect BSL / SSL Structural Pools (Both External and Internal)
+        # 2. Detect BSL / SSL Structural Pools (External and Internal)
         structural_pools = self._detect_structural_pools(swings)
 
         all_pools = self._deduplicate_pools(eq_pools + structural_pools)
 
-        # 3. Evaluate Sweeps and Consumed Pools across Candle Stream
+        # 3. Evaluate Sweeps and Complete Lifecycles across Candle Stream
         active_pools, swept_pools, consumed_pools, events = self._evaluate_pool_sweeps(
             all_pools=all_pools,
             candles=candles,
@@ -245,18 +249,23 @@ class LiquidityEngine:
             start_index = latest_swing.raw_swing.confirmation_index
 
             final_status = PoolStatus.ACTIVE
+            sweeps = 0
+
             for idx in range(start_index, len(candles)):
                 candle = candles[idx]
 
                 # High-Side Liquidity (BSL / EQH)
                 if pool.pool_type in (LiquidityPoolType.BSL, LiquidityPoolType.EQH):
                     if candle.close > pool.high_boundary:
-                        # Body Close Above -> Pool Consumed / Broken (Not a sweep)
+                        # Body Close Above -> Pool Consumed / Broken (Permanently invalidates pool)
                         final_status = PoolStatus.CONSUMED
                         break
                     elif candle.high > pool.high_boundary and candle.close <= pool.high_boundary:
                         # Wick Pierces, Body Closes Inside -> Liquidity Sweep / Inducement
-                        final_status = PoolStatus.SWEPT
+                        sweeps += 1
+                        if final_status == PoolStatus.ACTIVE:
+                            final_status = PoolStatus.SWEPT
+
                         is_internal = (pool.scope == LiquidityScope.INTERNAL) or any(s.scope == SwingScope.INTERNAL for s in pool.swings)
                         event_type = (
                             LiquidityEventType.INDUCEMENT
@@ -271,17 +280,20 @@ class LiquidityEngine:
                             direction="BEARISH_SWEEP",
                             candle_index=idx
                         )
-                        break
+                        # Continuation scanning allows observing subsequent body closes (SWEPT -> CONSUMED)
 
                 # Low-Side Liquidity (SSL / EQL)
                 elif pool.pool_type in (LiquidityPoolType.SSL, LiquidityPoolType.EQL):
                     if candle.close < pool.low_boundary:
-                        # Body Close Below -> Pool Consumed / Broken (Not a sweep)
+                        # Body Close Below -> Pool Consumed / Broken (Permanently invalidates pool)
                         final_status = PoolStatus.CONSUMED
                         break
                     elif candle.low < pool.low_boundary and candle.close >= pool.low_boundary:
                         # Wick Pierces, Body Closes Inside -> Liquidity Sweep / Inducement
-                        final_status = PoolStatus.SWEPT
+                        sweeps += 1
+                        if final_status == PoolStatus.ACTIVE:
+                            final_status = PoolStatus.SWEPT
+
                         is_internal = (pool.scope == LiquidityScope.INTERNAL) or any(s.scope == SwingScope.INTERNAL for s in pool.swings)
                         event_type = (
                             LiquidityEventType.INDUCEMENT
@@ -296,7 +308,7 @@ class LiquidityEngine:
                             direction="BULLISH_SWEEP",
                             candle_index=idx
                         )
-                        break
+                        # Continuation scanning allows observing subsequent body closes (SWEPT -> CONSUMED)
 
             updated_pool = LiquidityPool(
                 pool_id=pool.pool_id,
@@ -307,7 +319,8 @@ class LiquidityEngine:
                 swings=pool.swings,
                 creation_timestamp=pool.creation_timestamp,
                 status=final_status,
-                scope=pool.scope
+                scope=pool.scope,
+                sweep_count=sweeps
             )
 
             if final_status == PoolStatus.SWEPT:
@@ -338,6 +351,7 @@ class LiquidityEngine:
             event_type=event_type,
             pool_id=pool.pool_id,
             pool_type=pool.pool_type,
+            liquidity_scope=pool.scope,
             price_level=pool.price_level,
             direction=direction,
             candle_index=candle_index,
