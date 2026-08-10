@@ -55,15 +55,6 @@ class TestPhaseEngine(unittest.TestCase):
             high_boundary=102.0, low_boundary=98.0, candle_index=idx,
         )
 
-    def liquidity_sweep(self, idx, pool_type):
-        return LiquidityEvent(
-            timestamp=1_000_000 + idx * 60,
-            event_type=LiquidityEventType.LIQUIDITY_SWEEP, pool_id=f"POOL_{idx}",
-            pool_type=pool_type, liquidity_scope=LiquidityScope.EXTERNAL, price_level=100.0,
-            direction="BULLISH_SWEEP" if pool_type in (LiquidityPoolType.SSL, LiquidityPoolType.EQL) else "BEARISH_SWEEP",
-            candle_index=idx, swept_by_wick=True, body_closed_inside=True,
-        )
-
     def liquidity_state(self, events):
         return LiquidityState(active_pools=[], swept_pools=[], consumed_pools=[], events=events)
 
@@ -81,56 +72,46 @@ class TestPhaseEngine(unittest.TestCase):
         self.assertEqual(state.current_phase, MarketPhase.EXPANSION)
         self.assertEqual(state.current_trend.value, "BULLISH")
 
-    def test_03_liquidity_sweep_alone_does_not_create_pullback(self):
-        candles = [self.candle(i, 100+i, 102+i, 98+i, 101+i) for i in range(6)]
-        liq = self.liquidity_state([self.liquidity_sweep(5, LiquidityPoolType.SSL)])
-        state = PhaseEngine().process(candles, [self.bos(3, "BULLISH")], liquidity_state=liq)
-        self.assertNotEqual(state.current_phase, MarketPhase.PULLBACK)
-
-    def test_04_keyzone_created_alone_does_not_trigger_pullback(self):
+    def test_03_counter_trend_internal_choch_triggers_pullback(self):
         candles = [self.candle(i, 100, 102 + i, 98, 101 + i) for i in range(8)]
-        structure = [self.bos(3, "BULLISH")]
-        # KEYZONE_CREATED event at candle 6 must NOT trigger pullback without mitigation or counter-structure
-        zones = self.keyzone_state([self.bullish_zone(6, KeyZoneEventType.KEYZONE_CREATED)])
-        state = PhaseEngine().process(candles, structure, keyzone_state=zones)
-        self.assertEqual(state.current_phase, MarketPhase.EXPANSION)
-
-    def test_05_keyzone_mitigated_triggers_pullback(self):
-        candles = [self.candle(i, 100, 102 + i, 98, 101 + i) for i in range(8)]
-        structure = [self.bos(3, "BULLISH")]
-        # KEYZONE_MITIGATED event at candle 6 cleanly triggers pullback
-        zones = self.keyzone_state([self.bullish_zone(6, KeyZoneEventType.KEYZONE_MITIGATED)])
-        state = PhaseEngine().process(candles, structure, keyzone_state=zones)
+        structure = [self.bos(3, "BULLISH"), self.internal_choch(6, "BEARISH")]
+        state = PhaseEngine().process(candles, structure)
         self.assertEqual(state.current_phase, MarketPhase.PULLBACK)
 
-    def test_06_continuation_requires_aligned_internal_shift(self):
-        candles = [self.candle(i, 100, 103 + i, 97, 101) for i in range(10)]
-        structure = [self.bos(3, "BULLISH"), self.internal_choch(6, "BEARISH"), self.internal_choch(9, "BULLISH")]
-        zones = self.keyzone_state([
-            self.bullish_zone(6, KeyZoneEventType.KEYZONE_MITIGATED),
-        ])
-        state = PhaseEngine().process(candles, structure, keyzone_state=zones)
-        self.assertIn(MarketPhase.CONTINUATION, [event.new_phase for event in state.phase_history])
+    def test_04_internal_choch_does_not_cause_reversal(self):
+        candles = [self.candle(i, 100, 102 + i, 98, 101 + i) for i in range(8)]
+        structure = [self.bos(3, "BULLISH"), self.internal_choch(6, "BEARISH")]
+        state = PhaseEngine().process(candles, structure)
+        self.assertNotEqual(state.current_phase, MarketPhase.REVERSAL)
+        self.assertEqual(state.current_trend.value, "BULLISH")  # Macro trend preserved!
 
-    def test_07_external_choch_creates_reversal(self):
+    def test_05_continuation_requires_mitigated_zone_and_aligned_shift(self):
+        candles = [self.candle(i, 100, 103 + i, 97, 101) for i in range(12)]
+        structure = [self.bos(3, "BULLISH"), self.internal_choch(6, "BEARISH"), self.internal_choch(10, "BULLISH")]
+        zones = self.keyzone_state([self.bullish_zone(8, KeyZoneEventType.KEYZONE_MITIGATED)])
+        state = PhaseEngine().process(candles, structure, keyzone_state=zones)
+        phases = [e.new_phase for e in state.phase_history]
+        self.assertIn(MarketPhase.CONTINUATION, phases)
+
+    def test_06_external_choch_creates_reversal(self):
         candles = [self.candle(i, 100, 103, 97, 101) for i in range(7)]
         state = PhaseEngine().process(candles, [self.bos(3, "BULLISH"), self.external_choch(6, "BEARISH")])
         self.assertEqual(state.current_phase, MarketPhase.REVERSAL)
+        self.assertEqual(state.current_trend.value, "BEARISH")
 
-    def test_08_bearish_external_bos(self):
+    def test_07_bearish_external_bos(self):
         candles = [self.candle(i, 100-i, 102, 98-i, 99-i) for i in range(6)]
         state = PhaseEngine().process(candles, [self.bos(5, "BEARISH")])
         self.assertEqual(state.current_phase, MarketPhase.EXPANSION)
         self.assertEqual(state.current_trend.value, "BEARISH")
 
-    def test_09_bearish_zone_is_directionally_recognised(self):
+    def test_08_bearish_counter_internal_choch_pullback(self):
         candles = [self.candle(i, 100, 103, 97, 99) for i in range(8)]
-        structure = [self.bos(3, "BEARISH")]
-        zones = self.keyzone_state([self.bearish_zone(6, KeyZoneEventType.KEYZONE_MITIGATED)])
-        state = PhaseEngine().process(candles, structure, keyzone_state=zones)
-        self.assertIn(MarketPhase.PULLBACK, [event.new_phase for event in state.phase_history])
+        structure = [self.bos(3, "BEARISH"), self.internal_choch(6, "BULLISH")]
+        state = PhaseEngine().process(candles, structure)
+        self.assertEqual(state.current_phase, MarketPhase.PULLBACK)
 
-    def test_10_deterministic_replay(self):
+    def test_09_deterministic_replay(self):
         candles = [self.candle(i, 100+i, 103+i, 97+i, 102+i) for i in range(10)]
         structure = [self.bos(5, "BULLISH")]
         engine = PhaseEngine()
@@ -140,35 +121,37 @@ class TestPhaseEngine(unittest.TestCase):
         self.assertEqual(first.current_phase, second.current_phase)
         self.assertEqual(first.current_trend, second.current_trend)
 
-    def test_11_no_strategy_or_execution_fields(self):
+    def test_10_no_strategy_or_execution_fields(self):
         state = PhaseEngine().process([], [])
         forbidden = {"buy_signal", "sell_signal", "entry_price", "stop_loss", "take_profit", "position_size", "account_equity", "order_id", "broker"}
         for field in forbidden:
             self.assertFalse(hasattr(state, field), field)
 
-    def test_12_non_chronological_candles_rejected(self):
+    def test_11_non_chronological_candles_rejected(self):
         candles = [self.candle(0, 100, 102, 98, 101), self.candle(1, 100, 102, 98, 101)]
         candles[1] = Candle(timestamp=candles[0].timestamp - 1, open=100, high=102, low=98, close=101, volume=1000)
         with self.assertRaises(ValueError):
             PhaseEngine().process(candles, [])
 
-    def test_13_invalid_parameters_rejected(self):
+    def test_12_invalid_parameters_rejected(self):
         with self.assertRaises(ValueError):
             PhaseEngine(atr_period=1)
         with self.assertRaises(ValueError):
             PhaseEngine(compression_ratio=0)
-        with self.assertRaises(ValueError):
-            PhaseEngine(range_lookback=2)
 
-    def test_14_full_phase_transition_chain(self):
-        # Accumulation -> Expansion -> Pullback -> Continuation
+    def test_13_aligned_choch_without_keyzone_mitigation_remains_pullback(self):
+        # Pullback started by counter CHOCH, but no KeyZone mitigated -> aligned CHOCH alone does NOT yield CONTINUATION
         candles = [self.candle(i, 100, 103 + i, 97, 101) for i in range(12)]
         structure = [self.bos(3, "BULLISH"), self.internal_choch(6, "BEARISH"), self.internal_choch(10, "BULLISH")]
-        zones = self.keyzone_state([
-            self.bullish_zone(6, KeyZoneEventType.KEYZONE_MITIGATED),
-        ])
+        state = PhaseEngine().process(candles, structure)  # No keyzones provided
+        self.assertEqual(state.current_phase, MarketPhase.PULLBACK)
+
+    def test_14_full_phase_transition_chain(self):
+        candles = [self.candle(i, 100, 103 + i, 97, 101) for i in range(12)]
+        structure = [self.bos(3, "BULLISH"), self.internal_choch(6, "BEARISH"), self.internal_choch(10, "BULLISH")]
+        zones = self.keyzone_state([self.bullish_zone(8, KeyZoneEventType.KEYZONE_MITIGATED)])
         state = PhaseEngine().process(candles, structure, keyzone_state=zones)
-        phases = [event.new_phase for event in state.phase_history]
+        phases = [e.new_phase for e in state.phase_history]
         self.assertIn(MarketPhase.EXPANSION, phases)
         self.assertIn(MarketPhase.PULLBACK, phases)
         self.assertIn(MarketPhase.CONTINUATION, phases)
