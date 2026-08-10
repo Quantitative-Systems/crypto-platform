@@ -1,6 +1,6 @@
 """
 APEX Quantitative Systems Platform
-Product 01 — Market Language | Engine 5 — Market Phase Engine (Hardened Core v2)
+Product 01 — Market Language | Engine 5 — Market Phase Engine (Hardened Core v2.1)
 
 PURPOSE
 -------
@@ -13,6 +13,8 @@ SEMANTIC CONTRACT
 2. Aligned INTERNAL_CHOCH / INTERNAL_BOS (post KeyZone Mitigation) -> Triggers CONTINUATION.
 3. EXTERNAL_CHOCH (breaking External Protected Anchor) -> Triggers Macro REVERSAL.
 4. INTERNAL_CHOCH NEVER causes a Macro REVERSAL.
+5. Reversal evidence captures prior parent trend before trend update.
+6. Causal KeyZone Mitigation before aligned shift strictly required for CONTINUATION.
 
 STRICT BOUNDARY
 ---------------
@@ -180,28 +182,23 @@ class PhaseEngine:
             candle_liquidity = liquidity_by_idx.get(idx, [])
             candle_keyzones = keyzone_by_idx.get(idx, [])
 
-            # 1. Update Macro Trend Causally from External Events
-            for ev in candle_structure:
-                direction = self._parse_direction(ev.direction)
-                if ev.event_type == EventType.EXTERNAL_BOS:
-                    if direction != TrendDirection.NEUTRAL:
-                        current_trend = direction
-                elif ev.event_type == EventType.EXTERNAL_CHOCH:
-                    if direction != TrendDirection.NEUTRAL:
-                        current_trend = direction
+            # Capture prior parent trend BEFORE updating trend state for this candle
+            prior_trend_before_candle = current_trend
+
+            # 1. Evaluate Reversal Priority FIRST (Check if candle contains EXTERNAL_CHOCH)
+            reversal_event = self._find_external_reversal_event(candle_structure)
 
             previous_phase = current_phase
             transition_reason: Optional[PhaseReason] = None
             transition_evidence: Optional[PhaseEvidence] = None
 
-            # 2. Reversal Priority (EXTERNAL_CHOCH Breaking Protected Anchor ONLY)
-            reversal_event = self._find_external_reversal_event(candle_structure)
             if reversal_event is not None:
-                direction = self._parse_direction(reversal_event.direction)
-                old_trend = current_trend
-                if direction != TrendDirection.NEUTRAL:
-                    current_trend = direction
-                    expansion_direction = direction
+                new_direction = self._parse_direction(reversal_event.direction)
+                old_trend = prior_trend_before_candle
+
+                if new_direction != TrendDirection.NEUTRAL:
+                    current_trend = new_direction
+                    expansion_direction = new_direction
 
                 current_phase = MarketPhase.REVERSAL
                 transition_reason = PhaseReason.EXTERNAL_CHOCH_REVERSAL
@@ -210,104 +207,112 @@ class PhaseEngine:
                     structure_event_type=reversal_event.event_type,
                     structure_candle_index=reversal_event.candle_index,
                     structure_broken_swing_id=reversal_event.broken_swing_id,
-                    parent_trend=old_trend,
+                    parent_trend=old_trend,  # Accurately records prior trend!
                 )
 
-            # 3. External BOS -> Expansion Phase
-            elif self._has_external_bos(candle_structure):
-                bos = self._first_event(candle_structure, EventType.EXTERNAL_BOS)
-                direction = self._parse_direction(bos.direction)
-                if direction != TrendDirection.NEUTRAL:
-                    current_trend = direction
-                    expansion_direction = direction
+            else:
+                # Update Macro Trend Causally from External Events if no reversal override
+                for ev in candle_structure:
+                    direction = self._parse_direction(ev.direction)
+                    if ev.event_type == EventType.EXTERNAL_BOS:
+                        if direction != TrendDirection.NEUTRAL:
+                            current_trend = direction
 
-                current_phase = MarketPhase.EXPANSION
-                pullback_zone_seen = False
-                transition_reason = PhaseReason.EXTERNAL_BOS_EXPANSION
-                transition_evidence = PhaseEvidence(
-                    reason=transition_reason,
-                    structure_event_type=bos.event_type,
-                    structure_candle_index=bos.candle_index,
-                    structure_broken_swing_id=bos.broken_swing_id,
-                    parent_trend=current_trend,
+                # 2. External BOS -> Expansion Phase
+                if self._has_external_bos(candle_structure):
+                    bos = self._first_event(candle_structure, EventType.EXTERNAL_BOS)
+                    direction = self._parse_direction(bos.direction)
+                    if direction != TrendDirection.NEUTRAL:
+                        current_trend = direction
+                        expansion_direction = direction
+
+                    current_phase = MarketPhase.EXPANSION
+                    pullback_zone_seen = False
+                    transition_reason = PhaseReason.EXTERNAL_BOS_EXPANSION
+                    transition_evidence = PhaseEvidence(
+                        reason=transition_reason,
+                        structure_event_type=bos.event_type,
+                        structure_candle_index=bos.candle_index,
+                        structure_broken_swing_id=bos.broken_swing_id,
+                        parent_trend=current_trend,
+                    )
+
+                # 3. Check KeyZone Mitigation Context
+                relevant_mitigated_zone = self._find_mitigated_keyzone_event(
+                    candle_keyzones, expansion_direction or current_trend
                 )
+                if relevant_mitigated_zone is not None:
+                    pullback_zone_seen = True
 
-            # 4. Check KeyZone Mitigation Context
-            relevant_mitigated_zone = self._find_mitigated_keyzone_event(
-                candle_keyzones, expansion_direction or current_trend
-            )
-            if relevant_mitigated_zone is not None:
-                pullback_zone_seen = True
-
-            # 5. Counter-Trend INTERNAL_CHOCH -> Initiates PULLBACK
-            counter_internal_choch = self._find_counter_trend_internal_shift(
-                candle_structure, expansion_direction or current_trend
-            )
-            if (
-                counter_internal_choch is not None
-                and current_phase in (MarketPhase.EXPANSION, MarketPhase.CONTINUATION)
-            ):
-                current_phase = MarketPhase.PULLBACK
-                transition_reason = PhaseReason.COUNTER_TREND_INTERNAL_CHOCH
-                transition_evidence = PhaseEvidence(
-                    reason=transition_reason,
-                    structure_event_type=counter_internal_choch.event_type,
-                    structure_candle_index=counter_internal_choch.candle_index,
-                    structure_broken_swing_id=counter_internal_choch.broken_swing_id,
-                    parent_trend=expansion_direction or current_trend,
+                # 4. Counter-Trend INTERNAL_CHOCH -> Initiates PULLBACK
+                counter_internal_choch = self._find_counter_trend_internal_shift(
+                    candle_structure, expansion_direction or current_trend
                 )
+                if (
+                    counter_internal_choch is not None
+                    and current_phase in (MarketPhase.EXPANSION, MarketPhase.CONTINUATION)
+                ):
+                    current_phase = MarketPhase.PULLBACK
+                    transition_reason = PhaseReason.COUNTER_TREND_INTERNAL_CHOCH
+                    transition_evidence = PhaseEvidence(
+                        reason=transition_reason,
+                        structure_event_type=counter_internal_choch.event_type,
+                        structure_candle_index=counter_internal_choch.candle_index,
+                        structure_broken_swing_id=counter_internal_choch.broken_swing_id,
+                        parent_trend=expansion_direction or current_trend,
+                    )
 
-            # 6. Aligned INTERNAL_CHOCH / INTERNAL_BOS + KeyZone Mitigation -> Triggers CONTINUATION
-            aligned_internal_shift = self._find_aligned_internal_shift(
-                candle_structure, expansion_direction or current_trend
-            )
-            if (
-                current_phase == MarketPhase.PULLBACK
-                and pullback_zone_seen
-                and aligned_internal_shift is not None
-            ):
-                current_phase = MarketPhase.CONTINUATION
-                transition_reason = PhaseReason.ALIGNED_INTERNAL_CHOCH if aligned_internal_shift.event_type == EventType.INTERNAL_CHOCH else PhaseReason.ALIGNED_INTERNAL_BOS
-                transition_evidence = PhaseEvidence(
-                    reason=transition_reason,
-                    structure_event_type=aligned_internal_shift.event_type,
-                    structure_candle_index=aligned_internal_shift.candle_index,
-                    structure_broken_swing_id=aligned_internal_shift.broken_swing_id,
-                    parent_trend=expansion_direction or current_trend,
+                # 5. Aligned INTERNAL_CHOCH / INTERNAL_BOS + KeyZone Mitigation -> Triggers CONTINUATION
+                aligned_internal_shift = self._find_aligned_internal_shift(
+                    candle_structure, expansion_direction or current_trend
                 )
-                pullback_zone_seen = False
+                if (
+                    current_phase == MarketPhase.PULLBACK
+                    and pullback_zone_seen
+                    and aligned_internal_shift is not None
+                ):
+                    current_phase = MarketPhase.CONTINUATION
+                    transition_reason = PhaseReason.ALIGNED_INTERNAL_CHOCH if aligned_internal_shift.event_type == EventType.INTERNAL_CHOCH else PhaseReason.ALIGNED_INTERNAL_BOS
+                    transition_evidence = PhaseEvidence(
+                        reason=transition_reason,
+                        structure_event_type=aligned_internal_shift.event_type,
+                        structure_candle_index=aligned_internal_shift.candle_index,
+                        structure_broken_swing_id=aligned_internal_shift.broken_swing_id,
+                        parent_trend=expansion_direction or current_trend,
+                    )
+                    pullback_zone_seen = False
 
-            # 7. Distribution Context
-            if (
-                current_phase in (MarketPhase.EXPANSION, MarketPhase.CONTINUATION)
-                and self._distribution_context(candles, idx, expansion_direction, candle_liquidity)
-            ):
-                current_phase = MarketPhase.DISTRIBUTION
-                transition_reason = PhaseReason.DISTRIBUTION_FAILURE_TO_EXTEND
-                transition_evidence = self._build_distribution_evidence(candle_liquidity, expansion_direction)
+                # 6. Distribution Context
+                if (
+                    current_phase in (MarketPhase.EXPANSION, MarketPhase.CONTINUATION)
+                    and self._distribution_context(candles, idx, expansion_direction, candle_liquidity)
+                ):
+                    current_phase = MarketPhase.DISTRIBUTION
+                    transition_reason = PhaseReason.DISTRIBUTION_FAILURE_TO_EXTEND
+                    transition_evidence = self._build_distribution_evidence(candle_liquidity, expansion_direction)
 
-            # 8. Compression Check
-            if self._is_compressed(atr, idx):
-                if current_phase not in (MarketPhase.EXPANSION, MarketPhase.REVERSAL):
-                    current_phase = MarketPhase.COMPRESSION
-                    transition_reason = PhaseReason.VOLATILITY_COMPRESSION
+                # 7. Compression Check
+                if self._is_compressed(atr, idx):
+                    if current_phase not in (MarketPhase.EXPANSION, MarketPhase.REVERSAL):
+                        current_phase = MarketPhase.COMPRESSION
+                        transition_reason = PhaseReason.VOLATILITY_COMPRESSION
+                        transition_evidence = PhaseEvidence(
+                            reason=transition_reason,
+                            parent_trend=current_trend,
+                        )
+
+                # 8. Range / Accumulation Check
+                if (
+                    current_phase in (MarketPhase.ACCUMULATION, MarketPhase.COMPRESSION)
+                    and self._is_bounded_range(candles, idx)
+                    and not self._has_recent_external_bos(structure_events, idx)
+                ):
+                    current_phase = MarketPhase.ACCUMULATION
+                    transition_reason = PhaseReason.RANGE_CONSOLIDATION
                     transition_evidence = PhaseEvidence(
                         reason=transition_reason,
                         parent_trend=current_trend,
                     )
-
-            # 9. Range / Accumulation Check
-            if (
-                current_phase in (MarketPhase.ACCUMULATION, MarketPhase.COMPRESSION)
-                and self._is_bounded_range(candles, idx)
-                and not self._has_recent_external_bos(structure_events, idx)
-            ):
-                current_phase = MarketPhase.ACCUMULATION
-                transition_reason = PhaseReason.RANGE_CONSOLIDATION
-                transition_evidence = PhaseEvidence(
-                    reason=transition_reason,
-                    parent_trend=current_trend,
-                )
 
             # Emit Phase Transition Events
             if current_phase != previous_phase:
@@ -468,8 +473,8 @@ class PhaseEngine:
         start = idx - self.compression_baseline_period + 1
         if start < 0:
             return False
-        baseline = [v for v in atr[start : idx + 1] if v is not None]
-        if len(baseline) < self.compression_baseline_period:
+        baseline = [v for v in atr[start : idx] if v is not None]  # Exclude current ATR from its baseline!
+        if len(baseline) < self.compression_baseline_period - 1:
             return False
         avg_base = sum(baseline) / len(baseline)
         return avg_base > 0 and atr[idx] < (avg_base * self.compression_ratio)

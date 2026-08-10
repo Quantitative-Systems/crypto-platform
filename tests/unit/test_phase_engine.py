@@ -1,7 +1,7 @@
 import unittest
 
 from market_intelligence.raw_swing_engine import Candle
-from market_intelligence.structure_builder_engine import EventType, StructureEvent
+from market_intelligence.structure_builder_engine import EventType, StructureEvent, TrendDirection
 from market_intelligence.liquidity_engine import LiquidityEvent, LiquidityEventType, LiquidityPoolType, LiquidityScope, LiquidityState
 from market_intelligence.keyzone_engine import KeyZoneEvent, KeyZoneEventType, KeyZoneState, KeyZoneType
 from market_intelligence.phase_engine import PhaseEngine, MarketPhase, PhaseReason
@@ -140,7 +140,6 @@ class TestPhaseEngine(unittest.TestCase):
             PhaseEngine(compression_ratio=0)
 
     def test_13_aligned_choch_without_keyzone_mitigation_remains_pullback(self):
-        # Pullback started by counter CHOCH, but no KeyZone mitigated -> aligned CHOCH alone does NOT yield CONTINUATION
         candles = [self.candle(i, 100, 103 + i, 97, 101) for i in range(12)]
         structure = [self.bos(3, "BULLISH"), self.internal_choch(6, "BEARISH"), self.internal_choch(10, "BULLISH")]
         state = PhaseEngine().process(candles, structure)  # No keyzones provided
@@ -155,6 +154,25 @@ class TestPhaseEngine(unittest.TestCase):
         self.assertIn(MarketPhase.EXPANSION, phases)
         self.assertIn(MarketPhase.PULLBACK, phases)
         self.assertIn(MarketPhase.CONTINUATION, phases)
+
+    def test_15_aligned_choch_before_keyzone_mitigation_does_not_trigger_continuation(self):
+        # Aligned shift at candle 5, but KeyZone mitigation happens LATER at candle 8
+        candles = [self.candle(i, 100, 103 + i, 97, 101) for i in range(12)]
+        structure = [self.bos(3, "BULLISH"), self.internal_choch(4, "BEARISH"), self.internal_choch(5, "BULLISH")]
+        zones = self.keyzone_state([self.bullish_zone(8, KeyZoneEventType.KEYZONE_MITIGATED)])
+        state = PhaseEngine().process(candles, structure, keyzone_state=zones)
+        # At candle 5, KeyZone mitigation has NOT occurred yet -> Must remain PULLBACK!
+        phase_at_candle_5 = [e for e in state.events if e.candle_index == 5]
+        self.assertEqual(len(phase_at_candle_5), 0)  # No transition to CONTINUATION at candle 5
+
+    def test_16_reversal_evidence_captures_prior_parent_trend(self):
+        candles = [self.candle(i, 100, 103, 97, 101) for i in range(8)]
+        structure = [self.bos(3, "BULLISH"), self.external_choch(6, "BEARISH")]
+        state = PhaseEngine().process(candles, structure)
+        reversal_events = [e for e in state.events if e.new_phase == MarketPhase.REVERSAL]
+        self.assertEqual(len(reversal_events), 1)
+        # Evidence parent_trend MUST accurately record BULLISH (the trend BEFORE the reversal)
+        self.assertEqual(reversal_events[0].evidence.parent_trend, TrendDirection.BULLISH)
 
 
 if __name__ == "__main__":
