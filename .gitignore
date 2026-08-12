@@ -1,11 +1,38 @@
-
 # Python Bytecode & Cache
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
+*.so
+
+# Environment
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Testing
+.pytest_cache/
+.tox/
+.coverage
+htmlcov/
+pytestdebug.log
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
 
 # Local Databases & Research Artifacts
 *.db
 *.sqlite3
 research/swing_chart.html
-*.pyc
+*.parquet
+*.csv
+data/
+datasets/
+logs/
+*.log
