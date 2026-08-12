@@ -1,428 +1,1605 @@
-   APEX Quantitative Systems Platform
+# APEX Quantitative Systems Platform
 
-> **An institutional-grade, research-driven quantitative systems engineering platform for deterministic market intelligence, multi-horizon state parsing, risk-first portfolio control, and automated execution infrastructure.**
+> **A research-first quantitative systems engineering platform for deterministic market intelligence, multi-horizon strategy research, risk-controlled capital allocation, and automated execution infrastructure.**
 
-[![Build Status](https://img.shields.io/badge/build-99%2F99%20passing-brightgreen.svg)](#05--verification--regression-matrix)
-[![Architecture](https://img.shields.io/badge/architecture-event--driven%20%7C%20causal%20%7C%20stateful-blue.svg)](#03--system-architecture--domain-separation)
-[![Domain Isolation](https://img.shields.io/badge/domain-strict%20unidirectional%20decoupling-orange.svg)](#04--domain-boundary-rules)
-[![Domain](https://img.shields.io/badge/domain-cryptocurrency%20markets-purple.svg)](#01--executive-summary)
+**APEX is not a trading script.**
+It is a modular quantitative research and execution platform designed to transform raw market data into causal market state, test explicit trading hypotheses, constrain capital risk, and eventually automate only strategies that survive rigorous statistical and operational validation.
 
 ---
 
-## Technical Metadata
+## Platform Status
 
-| Parameter | Platform Specification |
-| :--- | :--- |
-| **System Architecture** | Decoupled Event-Driven Multi-Timeframe State Machine |
-| **Platform Name** | APEX Quantitative Systems Platform |
-| **Repository Name** | `crypto-platform` |
-| **Primary Production Domain** | Cryptocurrency Markets (`BTC/USDT`, `ETH/USDT`, `SOL/USDT`) |
-| **Active Product** | **Product 01 — Market Language Engine** |
-| **Verification Gate** | **99 / 99 Unit & Integration Tests Passing (100% Deterministic OK)** |
-| **Locked Sub-Systems** | Engine 1 (Raw Swings), Engine 2 (Structure), Engine 3 (Liquidity), Engine 4 (KeyZones) |
-| **Next Engine Target** | Engine 5 (Market Phase Classifier) |
+| Layer                     | Component                                    | Status                              |
+| ------------------------- | -------------------------------------------- | ----------------------------------- |
+| **P01**                   | Market Intelligence / Market Language Engine | 🔒 Locked                           |
+| **P02**                   | Strategy Alignment & Alpha Research Engine   | 🔒 Acceptance Passed                |
+| **P03**                   | Risk & Capital Firewall                      | 🟢 Implemented / Acceptance Pending |
+| **P04**                   | Research & Backtesting Laboratory            | ⏳ Next                              |
+| **P05**                   | Portfolio & Exposure Orchestration           | ⏳ Planned                           |
+| **P06**                   | Execution & Broker/Exchange Infrastructure   | ⏳ Planned                           |
+| **P07**                   | Production Operations & Monitoring           | ⏳ Planned                           |
+| **Repository Regression** | Full automated suite                         | **145 / 145 passing**               |
+| **Alpha Validation**      | Out-of-sample evidence                       | **Not yet established**             |
+
+> **Important:** Software verification is not financial validation. A passing test suite proves that the implementation satisfies defined software contracts; it does not prove that a trading strategy is profitable.
 
 ---
 
-## 01 — Executive Summary
+# 01 — Executive Mission
 
-The **APEX Quantitative Systems Platform** is a research and execution infrastructure designed to process financial market data streams into machine-readable market intelligence, statistically validated strategy hypotheses, risk-bounded execution models, and autonomous capital allocation systems.
+APEX is being engineered around one principle:
 
-While cryptocurrency markets serve as the initial liquid deployment domain, the platform architecture is strictly domain-agnostic, built to generalize across equities, foreign exchange, and derivative asset classes.
+> **Observe → Translate → Hypothesize → Test → Control Risk → Execute → Measure → Improve**
 
-### The Quantitative Core Imperative
-Retail trading scripts frequently fail due to **architectural contamination**—mixing market data parsing, technical indicators, signal generation, risk budgeting, and broker execution into tightly coupled procedural scripts. APEX enforces strict **Domain-Driven Design (DDD)** and **Unidirectional Dependency Trees**.
+The platform separates market interpretation from strategy logic, strategy logic from capital allocation, and capital allocation from execution.
+
+The objective is not to create a collection of indicators or a collection of trading signals.
+
+The objective is to build a **deterministic, auditable research machine** capable of answering:
+
+1. What is the market doing?
+2. What structural state exists across multiple horizons?
+3. Does a defined strategy hypothesis produce an exploitable distribution of outcomes?
+4. Under what market regimes does the hypothesis fail?
+5. How much capital can safely be exposed?
+6. Can the strategy survive transaction costs, slippage, latency and drawdown?
+7. Can the entire process be reproduced from historical data?
+8. Only after all previous questions are answered: **can it be automated?**
+
+---
+
+# 02 — Design Philosophy
+
+APEX deliberately avoids the architecture of conventional retail trading bots.
+
+A typical script often becomes:
 
 ```text
-               RAW OHLCV MARKET DATA STREAMS
-                             │
-                             ▼
- ┌───────────────────────────────────────────────────────┐
- │          PRODUCT 01: MARKET LANGUAGE ENGINE          │
- │  • Zero-Lookahead Extrema Detection                   │
- │  • Causal Market Structure State Machine              │
- │  • Liquidity Pool & Sweep Tracking                    │
- │  • Order Block & Fair Value Gap Location Mapping      │
- └───────────────────────────┬───────────────────────────┘
-                             │
-                     MarketStatePayload
-                             │
-                             ▼
- ┌───────────────────────────────────────────────────────┐
- │          PRODUCT 02: STRATEGY INTELLIGENCE            │
- │  • HTF Context & Directional Bias                     │
- │  • MTF Setup & Alignment Coordination                 │
- │  • LTF Trigger & Microstructure Invalidation          │
- └───────────────────────────┬───────────────────────────┘
-                             │
-                      Order Proposal
-                             │
-                             ▼
- ┌───────────────────────────────────────────────────────┐
- │            PRODUCT 03: RISK & CAPITAL GATE            │
- │  • Hard Equity Risk Ceiling (≤ 1.0% per trade)        │
- │  • Asymmetric Reward-to-Risk Floor Verification (≥ 1:4)│
- │  • Max Cumulative Drawdown Circuit Breakers           │
- └───────────────────────────┬───────────────────────────┘
-                             │
-                     Validated Intent
-                             │
-                             ▼
- ┌───────────────────────────────────────────────────────┐
- │       PRODUCT 04: EXECUTION & ROUTING ADAPTERS        │
- │  • Pluggable Broker Abstraction (Binance/Bybit/MT5)   │
- │  • Execution Drag & Slippage Accounting               │
- │  • Dynamic Structural Trailing Management             │
- └───────────────────────────────────────────────────────┘
-
+Market Data
+    ↓
+Indicators
+    ↓
+Signal
+    ↓
+Order
 ```
 
----
-
-## 02 — Formal System Invariants
-
-Every engine, calculator, and pipeline within APEX adheres to five immutable engineering laws:
-
-1. **Zero-Lookahead Temporal Isolation:**
-Calculations at timestamp $T$ consume strictly historical data $t \le T$. Future candles or unconfirmed swing extrema are physically inaccessible to the evaluation loop.
-2. **Deterministic Reproducibility:**
-For any dataset $D$, executing state pipeline $P(D)$ produces identical payload outputs $S$:
-
-$$P(D_t)_{\text{Run A}} \equiv P(D_t)_{\text{Run B}}$$
-
-
-3. **Pure State Isolation:**
-Market Intelligence sub-systems describe market state; they do not calculate lot sizing, access account equity, query exchange websocket balances, or construct execution orders.
-4. **Causal Event Derivation:**
-Events (`BOS`, `CHOCH`, `LIQUIDITY_SWEEP`, `KEYZONE_MITIGATED`) are derived strictly through verified geometric and price action state transitions, never through caller-asserted booleans or arbitrary heuristics.
-5. **Fail-Safe Defensive Protection:**
-Sitting in an unexposed state (`WAIT` / `NO_TRADE`) is treated as a first-class, high-value decision state that preserves risk capital during adverse volatility or illiquid market regimes.
-
----
-
-## 03 — System Architecture & Domain Separation
-
-The platform is partitioned into autonomous products. Higher layers consume contracts from lower layers. Lower layers remain oblivious to higher-level decision models.
+APEX instead follows a stratified system:
 
 ```text
-                         APEX PLATFORM
-                               │
-        ┌──────────────────────┼──────────────────────┐
-        │                      │                      │
-        ▼                      ▼                      ▼
-   MARKET DATA         MARKET INTELLIGENCE        RESEARCH &
-  INFRASTRUCTURE       (PRODUCT 01 ENGINE)       BACKTESTING
-        │                      │                      │
-        │                      ▼                      │
-        │             MarketStatePayload              │
-        │                      │                      │
-        └──────────────────────┼──────────────────────┘
-                               ▼
-                     STRATEGY INTELLIGENCE
-                          (PRODUCT 02)
-                               │
-                               ▼
-                     RISK & CAPITAL GATES
-                          (PRODUCT 03)
-                               │
-                               ▼
-                     EXECUTION INFRASTRUCTURE
-                          (PRODUCT 04)
-                               │
-                               ▼
-                    PORTFOLIO TELEMETRY &
-                    PERFORMANCE ATTRIBUTION
-
+                    RAW MARKET DATA
+                           │
+                           ▼
+              ┌─────────────────────────┐
+              │ P01 MARKET INTELLIGENCE │
+              │                         │
+              │ Structure               │
+              │ Liquidity               │
+              │ KeyZones                │
+              │ Phases                  │
+              │ Trend                   │
+              │ Validation              │
+              └────────────┬────────────┘
+                           │
+                    MarketStatePayload
+                           │
+                           ▼
+              ┌─────────────────────────┐
+              │ P02 STRATEGY ENGINE     │
+              │                         │
+              │ HTF Bias                │
+              │ MTF Setup               │
+              │ LTF Entry               │
+              │ Trade Lifecycle         │
+              │ Hypothesis Research     │
+              └────────────┬────────────┘
+                           │
+                     Trade Proposal
+                           │
+                           ▼
+              ┌─────────────────────────┐
+              │ P03 RISK FIREWALL       │
+              │                         │
+              │ RR Validation           │
+              │ Position Sizing         │
+              │ Exposure Control        │
+              │ Drawdown Circuits       │
+              └────────────┬────────────┘
+                           │
+                    RiskApprovedPlan
+                           │
+                           ▼
+              ┌─────────────────────────┐
+              │ P04 RESEARCH LAB        │
+              │                         │
+              │ Historical Replay       │
+              │ Backtesting             │
+              │ Walk-Forward            │
+              │ OOS Validation          │
+              │ Monte Carlo             │
+              │ Attribution             │
+              └────────────┬────────────┘
+                           │
+                           ▼
+              ┌─────────────────────────┐
+              │ P05 PORTFOLIO ENGINE    │
+              └────────────┬────────────┘
+                           │
+                           ▼
+              ┌─────────────────────────┐
+              │ P06 EXECUTION           │
+              │                         │
+              │ Exchange/Broker Adapters│
+              │ Orders / Fills / Stops  │
+              │ Execution Reconciliation│
+              └────────────┬────────────┘
+                           │
+                           ▼
+              ┌─────────────────────────┐
+              │ P07 PRODUCTION OPS      │
+              │                         │
+              │ Monitoring              │
+              │ Reliability             │
+              │ Alerts                  │
+              │ Kill Switches           │
+              │ Audit / Telemetry       │
+              └─────────────────────────┘
 ```
 
 ---
 
-## 04 — Product 01: Market Language Engine
+# 03 — Core Engineering Laws
 
-### Mission Statement
+These principles govern every product.
 
-To convert raw OHLCV market streams into a deterministic, machine-readable market ontology. Product 01 provides the analytical foundation that eliminates visual subjectivity from technical price action analysis.
+## LAW 01 — Temporal Causality
+
+At timestamp `T`, no component may consume information that was unavailable at `T`.
 
 ```text
-                               RAW OHLCV
-                                   │
-                                   ▼
-                         ┌───────────────────┐
-                         │     ENGINE 1      │
-                         │    RAW SWING      │
-                         └─────────┬─────────┘
-                                   │
-                                   ▼
-                         ┌───────────────────┐
-                         │     ENGINE 2      │
-                         │ MARKET STRUCTURE  │
-                         └─────────┬─────────┘
-                                   │
-            ┌──────────────────────┼──────────────────────┐
-            ▼                      ▼                      ▼
-  ┌───────────────────┐  ┌───────────────────┐  ┌───────────────────┐
-  │     ENGINE 3      │  │     ENGINE 4      │  │     ENGINE 6      │
-  │    LIQUIDITY      │  │     KEYZONE       │  │      TREND        │
-  └─────────┬─────────┘  └─────────┬─────────┘  └─────────┬─────────┘
-            │                      │                      │
-            └──────────────────────┼──────────────────────┘
-                                   ▼
-                         ┌───────────────────┐
-                         │     ENGINE 5      │
-                         │   MARKET PHASE    │
-                         └─────────┬─────────┘
-                                   │
-                                   ▼
-                         ┌───────────────────┐
-                         │     ENGINE 7      │
-                         │    VALIDATION     │
-                         └─────────┬─────────┘
-                                   │
-                                   ▼
-                         ┌───────────────────┐
-                         │     ENGINE 8      │
-                         │   MARKET STATE    │
-                         └─────────┬─────────┘
-                                   │
-                                   ▼
-                         ┌───────────────────┐
-                         │     ENGINE 9      │
-                         │    COORDINATOR    │
-                         └─────────┬─────────┘
-                                   │
-                                   ▼
-                           MarketStatePayload
+Allowed:
 
+Data[t] where t <= T
+
+Forbidden:
+
+Data[t] where t > T
 ```
 
----
-
-### Sub-System Specifications & Status
-
-#### Engine 1 — Raw Swing Engine (`raw_swing_engine.py`)
-
-* **Responsibility:** Establishes confirmed structural extrema (Swing Highs and Swing Lows) from raw candlestick streams.
-* **Formal Properties:**
-* Explicit separation of Extreme Index ($i$) and Confirmation Index ($i + N_{\text{right}}$).
-* Strict geometric bounds: Rejects flat-top and flat-bottom candles to eliminate arbitrary pivot assignments.
-* Timeframe-preserving chronological execution.
-
-
-* **Status:** 🔒 **LOCKED** (15 / 15 Unit Tests Passing)
-
-#### Engine 2 — Stateful Market Structure Engine (`structure_builder_engine.py`)
-
-* **Responsibility:** Constructs causal, stateful market structure from confirmed raw swings.
-* **Formal Properties:**
-* **Sequence Labelling:** `HH`, `HL`, `LH`, `LL`, `EQH`, `EQL`.
-* **Scope Classification:** Separates macro External Structural Legs from nested Internal Retracements.
-* **Role Linking:** Links Protected Swings directly to the causal origin of new structural expansions (`EXTERNAL_BOS`).
-* **State Transitions:** Emits deduplicated events (`EXTERNAL_BOS`, `EXTERNAL_CHOCH`, `INTERNAL_BOS`, `INTERNAL_CHOCH`, `MSS`, `FAILED_BOS`).
-* **Active Dealing Range:** Computes dynamic Equilibrium Bounds ($P_{\text{eq}} = P_{\text{low}} + \frac{P_{\text{high}} - P_{\text{low}}}{2}$).
-
-
-* **Status:** 🔒 **LOCKED** (40 / 40 Unit Tests Passing)
-
-#### Engine 3 — Liquidity Intelligence Engine (`liquidity_engine.py`)
-
-* **Responsibility:** Detects retail liquidity concentrations and tracks multi-candle liquidity pool lifecycles.
-* **Formal Properties:**
-* **Pool Types:** Equal Highs (`EQH`), Equal Lows (`EQL`), Buy-Side Liquidity (`BSL`), Sell-Side Liquidity (`SSL`).
-* **Scope:** Differentiates External Major Liquidity from Internal Minor Liquidity.
-* **Candle Geometry Bounds:** Validates wick sweeps where $P_{\text{wick}} > \text{Boundary}$ while $\max(P_{\text{open}}, P_{\text{close}}) \le \text{Boundary}$.
-* **Stateful Lifecycle:** Manages state transitions across:
-
-$$\text{ACTIVE} \longrightarrow \text{SWEPT (Wick Rejection)} \longrightarrow \text{CONSUMED (Body Breakout)}$$
-
-
-* **Inducement Classification:** Maps sweeps of internal liquidity aligned with macro structural trend as inducement.
-
-
-* **Status:** 🔒 **LOCKED** (14 / 14 Unit Tests Passing)
-
-#### Engine 4 — KeyZone Location Engine (`keyzone_engine.py`)
-
-* **Responsibility:** Maps institutional supply/demand footprints and tracks price imbalance retests.
-* **Formal Properties:**
-* **Zone Types:** Bullish & Bearish Order Blocks (`OB`), Bullish & Bearish Fair Value Gaps (`FVG`).
-* **Causal Alignment:** OB creation index maps to the confirming structural break index (`break_idx`); FVG creation index maps to the third confirming imbalance candle ($i$).
-* **Lifecycle State Machine:**
-
-$$\text{UNMITIGATED} \longrightarrow \text{MITIGATED (Price Retest)} \longrightarrow \text{INVALIDATED (Body Close Beyond)}$$
-
-
-* **Liquidity-Enhanced Scoring:** Dynamically boosts zone probability score when origin candles align with Engine 3 sweep events.
-
-
-* **Status:** 🔒 **LOCKED** (18 / 18 Unit Tests Passing)
-
-#### Engine 5 — Market Phase Engine (`phase_engine.py`)
-
-* **Responsibility:** Classifies market dynamics into canonical market regimes:
-
-$$\text{ACCUMULATION} \to \text{EXPANSION} \to \text{PULLBACK} \to \text{CONTINUATION} \to \text{DISTRIBUTION} \to \text{REVERSAL} \to \text{COMPRESSION}$$
-
-
-* **Status:** 🎯 **ACTIVE IMPLEMENTATION TARGET**
-
-#### Engines 6–9 (Planned Foundation Modules)
-
-* **Engine 6 (Trend Engine):** Standardized multi-timeframe trend state contract (`BULLISH`, `BEARISH`, `RANGING`).
-* **Engine 7 (Validation Engine):** Quality-control verification gate analyzing displacement velocity, candle body metrics, and ATR ratios.
-* **Engine 8 (Market State Engine):** Aggregator compiling Engines 1–7 outputs into a single immutable payload.
-* **Engine 9 (Market Language Coordinator):** Interface adapter exposing standardized contracts to Product 02.
+Historical future information must never leak into a historical decision.
 
 ---
 
-## 05 — Verification & Regression Matrix
+## LAW 02 — Deterministic Reproducibility
 
-APEX enforces strict **Test-Driven Development (TDD)**. No engine or component is merged or tagged without passing a 100% regression gate.
+For identical input data and configuration:
 
 ```text
-========================================================================================
-                      QUANTITATIVE SYSTEMS PLATFORM — CRYPTO PLATFORM
-              Product 01: Market Language Engine | Component Scorecard
-========================================================================================
-
-  Engine 1: Raw Swing Engine        ████████████████████ 15/15 PASS  [🔒 LOCKED]
-  Engine 2: Causal Structure Engine ████████████████████ 40/40 PASS  [🔒 LOCKED]
-  Engine 3: Liquidity Engine        ████████████████████ 14/14 PASS  [🔒 LOCKED]
-  Engine 4: KeyZone Engine          ████████████████████ 18/18 PASS  [🔒 LOCKED]
-  Engine 5: Market Phase Engine     ░░░░░░░░░░░░░░░░░░░░ 00/00       [🎯 NEXT TARGET]
-  Engine 6: Trend Engine            ░░░░░░░░░░░░░░░░░░░░ 00/00       [⏳ PLANNED]
-  Engine 7: Validation Engine       ░░░░░░░░░░░░░░░░░░░░ 00/00       [⏳ PLANNED]
-  Engine 8: Market State Engine     ░░░░░░░░░░░░░░░░░░░░ 00/00       [⏳ PLANNED]
-  Engine 9: Language Coordinator    ░░░░░░░░░░░░░░░░░░░░ 00/00       [⏳ PLANNED]
-
-----------------------------------------------------------------------------------------
-  TOTAL REPOSITORY REGRESSION SUITE: 99 / 99 TESTS PASSING (100% OK)
-========================================================================================
-
+P(D, Config) Run A
+        ≡
+P(D, Config) Run B
 ```
 
-### Full Test Suite Execution Command
+The same historical dataset must produce the same state and decision outputs.
 
-```bash
-python3 -m unittest discover -s tests -p "test*.py" -v
+---
 
-```
+## LAW 03 — Domain Isolation
+
+Higher-level systems may consume lower-level contracts.
+
+Lower-level systems must never depend on higher-level decisions.
 
 ```text
-Ran 99 tests in 0.034s
+Market Intelligence
+        ↓
+Strategy
+        ↓
+Risk
+        ↓
+Research / Execution
+```
 
-OK
+Market intelligence does not know about account balances.
 
+Strategy does not calculate portfolio risk.
+
+Risk does not reinterpret market structure.
+
+Execution does not redefine strategy.
+
+---
+
+## LAW 04 — State Provenance
+
+Every important decision must be traceable to its originating market events.
+
+Examples:
+
+```text
+BOS
+CHOCH
+Liquidity Sweep
+KeyZone Creation
+KeyZone Mitigation
+Trend Shift
+Entry Trigger
+Trade Exit
+```
+
+The system should be able to answer:
+
+> **Why did this trade exist?**
+
+---
+
+## LAW 05 — Fail Closed
+
+When information is ambiguous, incomplete or invalid:
+
+```text
+NO_TRADE
+```
+
+is preferable to an unsupported assumption.
+
+APEX treats `WAIT`, `NO_TRADE`, and rejection states as legitimate outputs rather than failures.
+
+---
+
+## LAW 06 — Rejected Information Is Still Research Data
+
+Rejected setups are not discarded.
+
+Examples:
+
+```text
+RR < 4
+Bias misalignment
+Missing KeyZone
+Missing trigger
+Invalid structure
+Risk circuit open
+Exposure violation
+```
+
+These observations become research telemetry.
+
+---
+
+## LAW 07 — Hypotheses Must Remain Isolated
+
+A strategy hypothesis must be independently measurable.
+
+```text
+Hypothesis A
+    ≠
+Hypothesis B
+```
+
+No hidden cross-contamination of rules, parameters or outcome attribution.
+
+---
+
+## LAW 08 — No Optimization Before Evidence
+
+APEX does not add indicators, filters or parameters simply because a backtest looks weak.
+
+The process is:
+
+```text
+Baseline
+   ↓
+Measure Failure
+   ↓
+Form Hypothesis
+   ↓
+Change One Variable
+   ↓
+Re-test
+   ↓
+OOS Validation
 ```
 
 ---
 
-## 06 — Quantitative Research & Validation Lifecycle
+# 04 — Product Architecture
 
-APEX maintains a strict separation between **Software Verification** and **Financial Alpha Validation**.
+APEX is divided into independently testable products.
 
-```text
-  SOFTWARE VERIFICATION          RESEARCH & REPLAY              PRODUCTION STAGING
- ┌──────────────────────┐      ┌──────────────────────┐      ┌──────────────────────┐
- │ • Unit Test Suite    │      │ • Historical Replay  │      │ • Paper Sandbox      │
- │ • Integration Suite  │ ───► │ • Out-of-Sample Test │ ───► │ • Friction Drag Audit│ ───► PRODUCTION
- │ • Causal Replay Gate │      │ • Walk-Forward Sweep │      │ • Micro-Capital Live │
- │ • Determinism Gate   │      │ • Monte Carlo Permut │      │ • Slippage Modeling  │
- └──────────────────────┘      └──────────────────────┘      └──────────────────────┘
+| Product | Responsibility           |
+| ------- | ------------------------ |
+| **P01** | Market Intelligence      |
+| **P02** | Strategy Intelligence    |
+| **P03** | Risk & Capital Control   |
+| **P04** | Research & Backtesting   |
+| **P05** | Portfolio Management     |
+| **P06** | Execution Infrastructure |
+| **P07** | Production Operations    |
 
-```
-
-1. **Software Verification:** Asserts that code behaves according to formal specification contracts (e.g., 99/99 unit tests).
-2. **Historical Replay & Out-of-Sample (OOS):** Replays multi-year native datasets ($5\text{--}10\text{ years}$) with strict exchange friction injection:
-* Taker Fee Drag: $0.075\%$
-* Simulated Order Slippage: $0.02\%\text{--}0.05\%$
-* Spread Widening during macro volatility events.
-
-
-3. **Walk-Forward Matrix Analysis:** Validates strategy parameter stability across non-overlapping historical regimes to prevent over-fitting.
-4. **Micro-Capital Production Staging:** Validates live exchange WebSocket latency, order fill latency, and real-world execution drag before scaling leverage.
+Each product has its own contracts, tests, telemetry and acceptance criteria.
 
 ---
 
-## 07 — Strategy Architecture Target (Product 02)
+# 05 — Product 01: Market Intelligence Engine
 
-When Product 01 reaches complete lockdown, Product 02 will consume `MarketStatePayload` objects to execute two primary multi-timeframe strategy models across parameterised Timeframe Horizons:
+## Mission
+
+Transform raw OHLCV data into a deterministic market ontology.
 
 ```text
-               PULLBACK RIDING                         CONTINUATION RIDING
-        (HTF BOS -> Retracement Phase)           (HTF KeyZone Retest Complete)
-                      │                                        │
-                      ▼                                        ▼
-         MTF Counter-Trend Retracement            MTF Re-alignment with HTF Bias
-                      │                                        │
-                      ▼                                        ▼
-          MTF Structural Alignment                 MTF KeyZone Setup Formed
-                      │                                        │
-                      └───────────────────┬────────────────────┘
-                                          │
-                                          ▼
-                             LTF Execution Trigger
-                       (Liquidity Sweep + Displacement)
-                                          │
-                                          ▼
-                             Risk Firewall Gate
-                     (Risk <= 1.0%, Reward-to-Risk >= 1:4)
-
+OHLCV
+  ↓
+Raw Swings
+  ↓
+Market Structure
+  ↓
+Liquidity
+  ↓
+KeyZones
+  ↓
+Market Phase
+  ↓
+Trend
+  ↓
+Validation
+  ↓
+Market State
 ```
 
-### Timeframe Horizon Configurations
+The resulting interface is:
 
-* **Set 1 (Macro / Position):** $1\text{M} \to 1\text{W} \to 1\text{D}$
-* **Set 2 (Position / Swing):** $1\text{W} \to 1\text{D} \to 4\text{H}$
-* **Set 3 (Swing / Intraday):** $1\text{D} \to 4\text{H} \to 1\text{H}$
-* **Set 4 (Intraday Scaling):** $4\text{H} \to 1\text{H} \to 15\text{M}$
+```text
+MarketStatePayload
+```
 
 ---
 
-## 08 — Repository Structure
+## Engine 1 — Raw Swing Engine
+
+**Responsibility**
+
+Detect causal structural extrema.
+
+Capabilities include:
+
+* swing highs/lows
+* confirmation indices
+* temporal separation of extreme and confirmation
+* geometric validation
+* chronological processing
+
+**Status:** 🔒 Locked
+
+**Verification:** 15/15
+
+---
+
+## Engine 2 — Market Structure Engine
+
+Constructs causal structure from confirmed swings.
+
+Supports:
+
+```text
+HH
+HL
+LH
+LL
+EQH
+EQL
+```
+
+and structural events including:
+
+```text
+EXTERNAL_BOS
+EXTERNAL_CHOCH
+INTERNAL_BOS
+INTERNAL_CHOCH
+MSS
+FAILED_BOS
+```
+
+Also maintains protected structural levels and dealing-range information.
+
+**Status:** 🔒 Locked
+
+**Verification:** 40/40
+
+---
+
+## Engine 3 — Liquidity Intelligence
+
+Models liquidity pools and their lifecycle.
+
+```text
+ACTIVE
+   ↓
+SWEPT
+   ↓
+CONSUMED
+```
+
+Supports:
+
+* EQH
+* EQL
+* BSL
+* SSL
+* internal liquidity
+* external liquidity
+* sweep detection
+* inducement classification
+
+**Status:** 🔒 Locked
+
+**Verification:** 14/14
+
+---
+
+## Engine 4 — KeyZone Engine
+
+Models:
+
+* Order Blocks
+* Fair Value Gaps
+* mitigation
+* invalidation
+* causal creation
+* liquidity-enhanced zone provenance
+
+Lifecycle:
+
+```text
+UNMITIGATED
+      ↓
+MITIGATED
+      ↓
+INVALIDATED
+```
+
+**Status:** 🔒 Locked
+
+**Verification:** 18/18
+
+---
+
+## Engines 5–9
+
+The completed Product 01 architecture additionally contains:
+
+### Engine 5 — Market Phase
+
+Canonical regime classification:
+
+```text
+ACCUMULATION
+EXPANSION
+PULLBACK
+CONTINUATION
+DISTRIBUTION
+REVERSAL
+COMPRESSION
+```
+
+### Engine 6 — Trend
+
+Standardized directional state:
+
+```text
+BULLISH
+BEARISH
+RANGING
+```
+
+### Engine 7 — Validation
+
+Validates structural quality and displacement characteristics.
+
+### Engine 8 — Market State
+
+Aggregates the intelligence layer into a standardized immutable state payload.
+
+### Engine 9 — Coordinator
+
+Provides the controlled interface between Product 01 and downstream products.
+
+**Product 01:** 🔒 **FORMALLY LOCKED**
+
+**Acceptance:** 100/100
+
+**Regression:** 131/131
+
+---
+
+# 06 — Product 02: Strategy Alignment & Alpha Research
+
+Product 02 translates market state into explicit, testable trading hypotheses.
+
+The canonical strategy architecture is:
+
+```text
+HTF BIAS
+   ↓
+MTF SETUP
+   ↓
+LTF ENTRY
+   ↓
+LTF INVALIDATION
+   ↓
+HTF TARGET
+   ↓
+MTF STRUCTURAL TRAILING
+```
+
+This architecture is applied independently across multiple timeframe configurations.
+
+---
+
+# 07 — Multi-Timeframe Strategy Model
+
+## Timeframe Sets
+
+### Set 1 — Macro / Position
+
+```text
+HTF = 1M
+MTF = 1W
+LTF = 1D
+```
+
+### Set 2 — Position / Swing
+
+```text
+HTF = 1W
+MTF = 1D
+LTF = 4H
+```
+
+### Set 3 — Swing / Intraday
+
+```text
+HTF = 1D
+MTF = 4H
+LTF = 1H
+```
+
+### Set 4 — Intraday
+
+```text
+HTF = 4H
+MTF = 1H
+LTF = 15M
+```
+
+The same strategy logic is evaluated independently across these horizons.
+
+---
+
+# 08 — Hypothesis A: Pullback Riding
+
+The system begins with HTF directional context.
+
+Example:
+
+```text
+HTF bullish BOS
+        ↓
+Bullish HTF bias
+        ↓
+Expect pullback
+        ↓
+Price approaches HTF KeyZone
+        ↓
+MTF temporarily countertrend
+        ↓
+Wait for MTF structural/trend realignment
+        ↓
+MTF setup forms
+        ↓
+MTF OB / FVG / KeyZone
+        ↓
+MTF retest
+        ↓
+LTF entry model
+        ↓
+LTF structural invalidation
+        ↓
+HTF structural target
+        ↓
+MTF structural trailing
+```
+
+The system does **not** assume the entire setup occurs on one candle.
+
+It maintains candidate state chronologically.
+
+---
+
+# 09 — Hypothesis B: Continuation Riding
+
+The second hypothesis begins when HTF structure indicates continuation conditions.
+
+```text
+HTF bias
+    ↓
+HTF continuation context
+    ↓
+MTF setup
+    ↓
+MTF structural/trend alignment
+    ↓
+MTF KeyZone
+    ↓
+MTF retest
+    ↓
+LTF structural alignment
+    ↓
+LTF entry model
+    ↓
+LTF invalidation
+    ↓
+HTF target
+    ↓
+MTF trailing
+```
+
+Both hypotheses remain independently measurable.
+
+---
+
+# 10 — Stateful Strategy Lifecycle
+
+The strategy engine is not a single-candle signal generator.
+
+It operates as a chronological lifecycle:
+
+```text
+HTF_BIAS_IDENTIFIED
+        ↓
+WAIT_MTF_ALIGNMENT
+        ↓
+WAIT_MTF_KEYZONE
+        ↓
+WAIT_MTF_RETEST
+        ↓
+WAIT_LTF_TRIGGER
+        ↓
+TRADE_PROPOSED
+        ↓
+RISK_REVIEW
+        ↓
+ACTIVE_POSITION
+        ↓
+MTF_TRAILING
+        ↓
+EXIT
+```
+
+Candidate setups can also terminate through:
+
+```text
+EXPIRED
+INVALIDATED
+BIAS_CHANGED
+RR_REJECTED
+TRIGGER_FAILED
+RISK_REJECTED
+```
+
+This allows research to distinguish:
+
+> **No setup**
+
+from
+
+> **Setup existed but failed at a specific lifecycle stage.**
+
+---
+
+# 11 — Trade Construction
+
+A valid structural trade contains:
+
+```text
+Entry
+LTF Invalidation
+HTF Target
+Raw Reward/Risk
+Provenance
+Hypothesis
+Timeframe Set
+Asset
+Timestamp
+```
+
+The minimum structural reward/risk requirement is:
+
+```text
+RR >= 4.0
+```
+
+There is no maximum RR requirement.
+
+A valid setup may produce:
+
+```text
+4R
+5R
+8R
+10R
+12R
+...
+```
+
+provided the structural calculation is causal and valid.
+
+---
+
+# 12 — MTF Structural Trailing
+
+One of the core research hypotheses of APEX is that the MTF structure can be used to manage an open position after LTF execution.
+
+Conceptually:
+
+```text
+HTF
+ └── defines destination
+
+LTF
+ └── defines execution + initial invalidation
+
+MTF
+ └── manages position lifecycle
+```
+
+If MTF structure materially reverses against the position:
+
+```text
+MTF structural reversal
+        ↓
+alignment invalidated
+        ↓
+position exit
+```
+
+The system therefore measures three primary outcome classes:
+
+```text
+HTF TARGET
+MTF TRAIL
+LTF STOP
+```
+
+This distribution is central to evaluating the strategy's actual expectancy.
+
+---
+
+# 13 — Product 03: Risk & Capital Firewall
+
+Product 03 is the capital protection boundary.
+
+It consumes strategy proposals without redefining their market logic.
+
+### Core controls
+
+```text
+Structural RR
+     ↓
+Exposure
+     ↓
+Account Equity
+     ↓
+Position Size
+     ↓
+Drawdown State
+     ↓
+Risk Approval
+```
+
+---
+
+## Capital Risk Ceiling
+
+Maximum intended risk per trade:
+
+```text
+≤ 1.0% of account equity
+```
+
+The actual implementation may choose less than the ceiling.
+
+The firewall must never authorize more than the configured maximum.
+
+---
+
+## Drawdown Circuits
+
+Current architecture includes:
+
+```text
+Daily Drawdown
+Weekly Drawdown
+Systemic Drawdown
+```
+
+When a circuit is violated:
+
+```text
+NEW TRADE PERMISSION
+        ↓
+        BLOCKED
+```
+
+---
+
+## Risk Telemetry
+
+Rejected trades remain observable:
+
+```text
+REJECT_RR_BELOW_FLOOR
+REJECT_EXPOSURE_LIMIT
+REJECT_DRAWDOWN_LIMIT
+REJECT_SYSTEMIC_CIRCUIT_BREAKER
+...
+```
+
+This allows the research layer to determine whether risk controls themselves materially affect strategy expectancy.
+
+---
+
+# 14 — Product 04: Research & Backtesting Laboratory
+
+**Next major development target.**
+
+Product 04 answers the most important question:
+
+> **Does the defined system possess a statistically defensible edge after realistic trading friction?**
+
+The research pipeline will be:
+
+```text
+Historical Data
+      ↓
+P01 Market Intelligence
+      ↓
+P02 Strategy Engine
+      ↓
+P03 Risk Firewall
+      ↓
+Simulated Execution
+      ↓
+Trade Ledger
+      ↓
+Performance Attribution
+```
+
+---
+
+## Research Matrix
+
+Initial baseline:
+
+```text
+2 Strategies
+×
+4 Timeframe Sets
+×
+3 Assets
+=
+24 configurations
+```
+
+Initial assets:
+
+```text
+BTC/USDT
+ETH/USDT
+SOL/USDT
+```
+
+The platform remains extensible to additional assets after the baseline research is established.
+
+---
+
+# 15 — Research Validation Framework
+
+APEX separates:
+
+### Software verification
+
+```text
+Unit Tests
+Integration Tests
+Causality Tests
+Determinism Tests
+Contract Tests
+```
+
+from:
+
+### Financial validation
+
+```text
+Historical Replay
+Backtesting
+Transaction Costs
+Slippage
+Spread
+Out-of-Sample Testing
+Walk-Forward Analysis
+Monte Carlo Analysis
+Parameter Stability
+Regime Analysis
+```
+
+and finally:
+
+### Production validation
+
+```text
+Paper Trading
+Execution-Friction Audit
+Micro-Capital Deployment
+Forward Performance
+Operational Stability
+```
+
+No single backtest is considered sufficient evidence.
+
+---
+
+# 16 — Performance Metrics
+
+The research engine should evaluate more than win rate.
+
+Primary metrics include:
+
+```text
+Net Return
+Expectancy
+Average R
+Profit Factor
+Win Rate
+Loss Rate
+Maximum Drawdown
+Recovery Factor
+Sharpe Ratio
+Sortino Ratio
+Trade Frequency
+Exposure
+Turnover
+MFE
+MAE
+```
+
+Strategy-specific attribution:
+
+```text
+HTF TP exits
+MTF trail exits
+LTF SL exits
+```
+
+and:
+
+```text
+Asset
+Timeframe Set
+Hypothesis
+Market Phase
+Direction
+RR Distribution
+Entry Model
+Exit Reason
+```
+
+---
+
+# 17 — Anti-Overfitting Architecture
+
+APEX is explicitly designed to prevent research from becoming curve-fitting.
+
+The research lifecycle is:
+
+```text
+BASELINE
+   ↓
+OBSERVE FAILURE
+   ↓
+FORM HYPOTHESIS
+   ↓
+CHANGE ONE VARIABLE
+   ↓
+RESEARCH
+   ↓
+COMPARE
+   ↓
+OUT-OF-SAMPLE
+   ↓
+WALK-FORWARD
+   ↓
+ROBUSTNESS TEST
+```
+
+No optimization is accepted merely because:
+
+```text
+Backtest Return ↑
+```
+
+A change must demonstrate robustness across appropriate unseen periods and regimes.
+
+---
+
+# 18 — Product 05: Portfolio & Exposure Engine
+
+Future portfolio infrastructure will coordinate simultaneous strategies.
+
+Example:
+
+```text
+BTC — Set 1 — Pullback
+ETH — Set 3 — Continuation
+SOL — Set 4 — Pullback
+```
+
+The portfolio layer evaluates:
+
+* aggregate exposure
+* correlated positions
+* directional concentration
+* simultaneous risk
+* strategy overlap
+* portfolio drawdown
+* capital allocation
+* portfolio-level circuit breakers
+
+This prevents independent strategy-level limits from accidentally creating excessive portfolio-level exposure.
+
+---
+
+# 19 — Product 06: Execution Infrastructure
+
+Product 06 converts validated intent into exchange/broker operations.
+
+Planned architecture:
+
+```text
+RiskApprovedPlan
+       ↓
+Execution Router
+       ↓
+Broker / Exchange Adapter
+       ↓
+Order
+       ↓
+Acknowledgement
+       ↓
+Fill
+       ↓
+Position
+       ↓
+Protective Orders
+       ↓
+MTF Trail Updates
+```
+
+Adapters are intended to remain replaceable.
+
+Potential integration domains include:
+
+```text
+Crypto Exchanges
+Broker APIs
+MT5
+Other supported execution venues
+```
+
+Execution infrastructure must account for:
+
+* slippage
+* spread
+* partial fills
+* order rejection
+* latency
+* retry policies
+* position reconciliation
+* protective-order verification
+
+---
+
+# 20 — Product 07: Production Operations
+
+The final production layer provides operational control.
+
+Monitoring includes:
+
+```text
+Market Data Health
+Exchange Connectivity
+WebSocket Health
+Order Latency
+Execution Failures
+Position Reconciliation
+Risk State
+Drawdown
+Strategy State
+System Heartbeat
+Data Gaps
+```
+
+Production controls include:
+
+```text
+Emergency Kill Switch
+Trading Halt
+Risk Lock
+Position Reconciliation
+Automatic Recovery
+Audit Logging
+Alerting
+```
+
+The objective is not merely:
+
+> **Can the strategy trade automatically?**
+
+It is:
+
+> **Can the entire system operate safely when something goes wrong?**
+
+---
+
+# 21 — Domain Boundary Model
+
+APEX enforces unidirectional dependency.
+
+```text
+             ┌─────────────────────┐
+             │     MARKET DATA     │
+             └──────────┬──────────┘
+                        ↓
+             ┌─────────────────────┐
+             │ P01 MARKET STATE    │
+             └──────────┬──────────┘
+                        ↓
+             ┌─────────────────────┐
+             │ P02 STRATEGY        │
+             └──────────┬──────────┘
+                        ↓
+             ┌─────────────────────┐
+             │ P03 RISK            │
+             └──────────┬──────────┘
+                        ↓
+             ┌─────────────────────┐
+             │ P04 RESEARCH        │
+             └──────────┬──────────┘
+                        ↓
+             ┌─────────────────────┐
+             │ P05 PORTFOLIO       │
+             └──────────┬──────────┘
+                        ↓
+             ┌─────────────────────┐
+             │ P06 EXECUTION       │
+             └──────────┬──────────┘
+                        ↓
+             ┌─────────────────────┐
+             │ P07 OPERATIONS      │
+             └─────────────────────┘
+```
+
+No lower layer is allowed to reach upward and reinterpret downstream decisions.
+
+---
+
+# 22 — Repository Architecture
+
+The repository is organized around bounded domains rather than one monolithic trading script.
 
 ```text
 crypto-platform/
 │
-├── config/                      # System parameters, timeframes & asset configs
-├── market_intelligence/         # Product 01: Market Language Engine
-│   ├── primitives.py            # Immutable domain primitives & dataclasses
-│   ├── raw_swing_engine.py      # Engine 1: Zero-lookahead swing extrema
-│   ├── structure_builder_engine.py # Engine 2: Stateful market structure builder
-│   ├── liquidity_engine.py      # Engine 3: Liquidity pool & sweep engine
-│   └── keyzone_engine.py        # Engine 4: Order Block & FVG location engine
+├── config/
+│   └── system configuration and timeframe definitions
 │
-├── strategy/                    # Product 02: HTF / MTF / LTF Strategy Orchestration
-├── risk/                        # Product 03: Account equity gates & RR floor calculators
-├── execution/                   # Product 04: Pluggable exchange/broker adapters
-├── backtesting/                 # Historical replay, friction simulation & walk-forward
-├── data/                        # Native candlestick database storage (.sqlite3)
-├── logs/                        # System runtime audit logs
-└── tests/                       # Complete regression test suite
-    └── unit/                    # Unit tests for core market engines
-
+├── market_intelligence/
+│   ├── primitives.py
+│   ├── raw_swing_engine.py
+│   ├── structure_builder_engine.py
+│   ├── liquidity_engine.py
+│   ├── keyzone_engine.py
+│   ├── phase_engine.py
+│   ├── trend_engine.py
+│   ├── validation_engine.py
+│   ├── market_state.py
+│   └── coordinator.py
+│
+├── strategy_engine/
+│   ├── contracts/
+│   ├── classifiers/
+│   ├── hypotheses/
+│   ├── entry/
+│   ├── lifecycle/
+│   └── coordinator/
+│
+├── risk_engine/
+│   ├── contracts/
+│   ├── validators/
+│   ├── sizing/
+│   └── risk_coordinator.py
+│
+├── research/
+│   ├── datasets/
+│   ├── replay/
+│   ├── backtesting/
+│   ├── attribution/
+│   └── validation/
+│
+├── portfolio/
+│
+├── execution/
+│   ├── adapters/
+│   ├── orders/
+│   ├── fills/
+│   └── reconciliation/
+│
+├── operations/
+│   ├── monitoring/
+│   ├── alerts/
+│   ├── health/
+│   └── kill_switch/
+│
+├── market_data/
+│
+├── logs/
+│
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   ├── causality/
+│   ├── determinism/
+│   └── research/
+│
+├── README.md
+├── LICENSE
+└── ...
 ```
 
 ---
 
-## 09 — Git Version Control & Checkpoint History
+# 23 — Verification Philosophy
 
-The codebase progresses through immutable semantic checkpoint tags:
+APEX uses multiple verification layers.
 
-* `product-01-v0-baseline`: Initial repository chassis and data pipeline.
-* `product-01-engine-1-green`: Locked Raw Swing Engine (15/15 tests).
-* `product-01-engine-2-green`: Locked Market Structure Builder (40/40 tests).
-* `product-01-engine-3-hardened-green`: Locked Liquidity Intelligence Engine (14/14 tests).
-* `product-01-engine-4-green`: **Locked KeyZone Location Engine (18/18 tests, commit `ef2e184`).**
+### Layer 1 — Unit Verification
+
+Does each component satisfy its local contract?
+
+### Layer 2 — Integration Verification
+
+Do components exchange valid contracts?
+
+### Layer 3 — Causal Verification
+
+Can future information influence historical decisions?
+
+### Layer 4 — Determinism Verification
+
+Does repeated execution produce identical results?
+
+### Layer 5 — Architectural Verification
+
+Are domain boundaries preserved?
+
+### Layer 6 — Research Verification
+
+Does the strategy survive unseen historical data?
+
+### Layer 7 — Production Verification
+
+Does the system behave correctly under real execution conditions?
+
+A system does not graduate merely because Layer 1 is green.
 
 ---
 
-## 10 — Disclaimers & Maturity Model
+# 24 — Current Verification State
 
-1. **Development Maturity:** APEX is currently at **Level 2 (Unit & Repository Software Verification)** within its 7-stage engineering maturity lifecycle.
-2. **No Alpha Guarantee:** Unit test passes certify software correctness against explicit contracts. They do not constitute a guarantee of future financial returns or trading alpha.
-3. **Research First:** Live trading execution and capital allocation are strictly locked until out-of-sample forward research gates are satisfied.
+```text
+==============================================================
+              APEX QUANTITATIVE SYSTEMS PLATFORM
+==============================================================
+
+PRODUCT 01 — MARKET INTELLIGENCE
+    Regression                  131 / 131
+    Independent Acceptance      100 / 100
+    Status                      🔒 LOCKED
+
+PRODUCT 02 — STRATEGY ENGINE
+    Platform Regression         Included
+    Lifecycle Architecture      Implemented
+    Hypothesis Isolation        Verified
+    Causality                   Verified
+    Acceptance                  6 / 6 PASS
+    Status                      🔒 ACCEPTED
+
+PRODUCT 03 — RISK FIREWALL
+    Risk Engine                 Implemented
+    Integration                 Verified
+    Full Regression             145 / 145
+    Independent Acceptance      NEXT
+    Status                      🟢 IMPLEMENTED
+
+PRODUCT 04 — RESEARCH LAB
+    Status                      ⏳ NEXT
+
+==============================================================
+FULL REPOSITORY REGRESSION
+                    145 / 145 PASSING
+==============================================================
+```
 
 ---
 
-> **APEX QUANTITATIVE SYSTEMS PLATFORM** > *Observe the market. Translate the market. Validate the hypothesis. Protect the capital. Automate only what has earned the right to be automated.*
+# 25 — Development Maturity Model
 
+APEX uses a staged maturity model.
+
+```text
+LEVEL 0
+Repository / Architecture
+        ↓
+LEVEL 1
+Deterministic Software Foundations
+        ↓
+LEVEL 2
+Unit + Integration Verification
+        ↓
+LEVEL 3
+Historical Research Validation
+        ↓
+LEVEL 4
+Out-of-Sample + Walk-Forward Validation
+        ↓
+LEVEL 5
+Paper Execution
+        ↓
+LEVEL 6
+Micro-Capital Deployment
+        ↓
+LEVEL 7
+Production-Grade Autonomous Operations
+```
+
+**Current development objective:**
+
+> Transition from software verification into quantitative research validation.
+
+---
+
+# 26 — What APEX Does Not Claim
+
+APEX does **not** currently claim:
+
+* guaranteed profitability
+* guaranteed future returns
+* guaranteed win rate
+* guaranteed 1:4 realization
+* market prediction certainty
+* immunity from regime changes
+* immunity from execution failures
+* production readiness
+
+A passing software test is not an alpha certificate.
+
+A profitable backtest is not proof of future profitability.
+
+A successful paper-trading period is not proof of production robustness.
+
+The system must earn each maturity transition through evidence.
+
+---
+
+# 27 — Development Roadmap
+
+```text
+                         APEX ROADMAP
+
+P01  MARKET INTELLIGENCE
+     ████████████████████
+     LOCKED
+             ↓
+P02  STRATEGY ENGINE
+     ████████████████████
+     ACCEPTED
+             ↓
+P03  RISK FIREWALL
+     █████████████████░░░
+     IMPLEMENTED
+             ↓
+P04  RESEARCH LAB
+     ░░░░░░░░░░░░░░░░░░░░
+     NEXT
+             ↓
+P05  PORTFOLIO ENGINE
+     ░░░░░░░░░░░░░░░░░░░░
+             ↓
+P06  EXECUTION ENGINE
+     ░░░░░░░░░░░░░░░░░░░░
+             ↓
+P07  PRODUCTION OPERATIONS
+     ░░░░░░░░░░░░░░░░░░░░
+```
+
+---
+
+# 28 — Immediate Research Objective
+
+The next milestone is **not another indicator**.
+
+It is the first controlled research experiment.
+
+### Baseline matrix
+
+```text
+                 Pullback     Continuation
+                 Riding       Riding
+                    │             │
+                    └──────┬──────┘
+                           │
+                ┌──────────┴──────────┐
+                │                     │
+             4 Timeframe Sets     3 Assets
+                │                     │
+                └──────────┬──────────┘
+                           │
+                    24 Baselines
+```
+
+The first objective is to discover:
+
+```text
+Does the canonical architecture
+produce positive expectancy after
+realistic trading friction?
+```
+
+Only then should optimization begin.
+
+---
+
+# 29 — Research Governance
+
+Every strategy modification should have a research record:
+
+```text
+Experiment ID
+Hypothesis
+Baseline
+Variable Changed
+Reason for Change
+Dataset
+Training Period
+Validation Period
+OOS Period
+Metrics
+Result
+Decision
+```
+
+This creates an auditable research history rather than an undocumented collection of backtest tweaks.
+
+---
+
+# 30 — Long-Term Vision
+
+The long-term APEX system is:
+
+```text
+                 MARKET
+                   │
+                   ▼
+              OBSERVATION
+                   │
+                   ▼
+             MARKET STATE
+                   │
+                   ▼
+              HYPOTHESES
+                   │
+                   ▼
+              STRATEGIES
+                   │
+                   ▼
+            RISK FIREWALL
+                   │
+                   ▼
+             RESEARCH LAB
+                   │
+                   ▼
+          PORTFOLIO DECISION
+                   │
+                   ▼
+             EXECUTION
+                   │
+                   ▼
+          LIVE TELEMETRY
+                   │
+                   ▼
+             ATTRIBUTION
+                   │
+                   ▼
+              RESEARCH
+                   │
+                   └──────────────► NEXT HYPOTHESIS
+```
+
+This creates a closed quantitative development loop:
+
+> **Market → Model → Research → Risk → Execution → Measurement → Improvement**
+
+---
+
+# 31 — Engineering Standard
+
+APEX is being developed according to the standards expected from serious quantitative software:
+
+* deterministic computation
+* causal data processing
+* explicit contracts
+* immutable boundaries
+* stateful lifecycle management
+* hypothesis isolation
+* rejection telemetry
+* reproducible research
+* automated regression testing
+* walk-forward validation
+* transaction-cost modeling
+* portfolio-level risk controls
+* execution reconciliation
+* production observability
+* versioned releases
+* auditability
+
+The objective is not to make the code *look institutional*.
+
+The objective is to make the **engineering process institutional**.
+
+---
+
+# 32 — Final Principle
+
+> **APEX does not automate a belief.**
+>
+> **APEX formalizes a hypothesis, measures it against reality, protects capital while doing so, and only automates what survives the evidence.**
+
+```text
+OBSERVE
+   ↓
+TRANSLATE
+   ↓
+FORMALIZE
+   ↓
+TEST
+   ↓
+REJECT / REFINE
+   ↓
+VALIDATE
+   ↓
+PROTECT
+   ↓
+EXECUTE
+   ↓
+MEASURE
+   ↓
+IMPROVE
+```
+
+**APEX Quantitative Systems Platform**
+
+*Research before optimization.
+Risk before execution.
+Evidence before automation.*
