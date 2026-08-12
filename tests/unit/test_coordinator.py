@@ -53,3 +53,29 @@ def test_coordinator_engine_error():
     
     with pytest.raises(CoordinatorError, match="Pipeline execution failed"):
         coordinator.run([bad_candle, bad_candle])
+
+def test_coordinator_sequential_determinism():
+    import dataclasses
+    coordinator = LanguageCoordinator(buffer_size=50)
+    candles = generate_candles(100)
+    
+    payload1 = coordinator.run(candles)
+    payload2 = coordinator.run(candles)
+    
+    assert dataclasses.asdict(payload1) == dataclasses.asdict(payload2)
+
+def test_coordinator_cross_run_isolation():
+    import dataclasses
+    coordinator1 = LanguageCoordinator(buffer_size=50)
+    candles_A = generate_candles(50)
+    candles_B = generate_candles(100)
+    
+    # Run A then B on coordinator1
+    coordinator1.run(candles_A)
+    payload_1B = coordinator1.run(candles_B)
+    
+    # Run only B on coordinator2
+    coordinator2 = LanguageCoordinator(buffer_size=50)
+    payload_2B = coordinator2.run(candles_B)
+    
+    assert dataclasses.asdict(payload_1B) == dataclasses.asdict(payload_2B)

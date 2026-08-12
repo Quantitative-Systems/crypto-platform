@@ -2,6 +2,13 @@ import pytest
 from market_intelligence.validation_engine import ValidationEngine, ValidationStatus
 from market_intelligence.primitives import Candle, RawSwing, StructureState, KeyZone, MarketEvent, EventType, ZoneType, TrendDirection
 
+from collections import namedtuple
+from market_intelligence.keyzone_engine import ZoneStatus
+
+MockStructureState = namedtuple('MockStructureState', ['events'])
+MockKeyZone = namedtuple('MockKeyZone', ['status'])
+MockEvent = namedtuple('MockEvent', ['event_type'])
+
 @pytest.fixture
 def base_candles():
     # 14 candles to satisfy ATR and displacement rules
@@ -12,27 +19,12 @@ def base_candles():
 
 @pytest.fixture
 def mitigated_keyzone():
-    return KeyZone(
-        zone_id="KZ_1",
-        zone_type=ZoneType.BULLISH_OB,
-        direction=TrendDirection.BULLISH,
-        high=102.0,
-        low=99.0,
-        timeframe="1H",
-        creation_timestamp=1000,
-        is_mitigated=True
-    )
+    return MockKeyZone(status=ZoneStatus.MITIGATED)
 
 def test_validation_engine_all_valid(base_candles, mitigated_keyzone):
     engine = ValidationEngine()
-    structure = StructureState(
-        last_event=MarketEvent(
-            timestamp=14000,
-            timeframe="1H",
-            symbol="BTCUSD",
-            event_type=EventType.INTERNAL_BOS,
-            price_level=115.0
-        )
+    structure = MockStructureState(
+        events=[MockEvent(event_type="INTERNAL_BOS")]
     )
     
     result = engine.evaluate(
@@ -52,7 +44,7 @@ def test_validation_engine_all_valid(base_candles, mitigated_keyzone):
 
 def test_validation_engine_invalid(base_candles):
     engine = ValidationEngine()
-    structure = StructureState()
+    structure = MockStructureState(events=[])
     
     # Intentionally missing KeyZone mitigation and recent BOS event
     result = engine.evaluate(

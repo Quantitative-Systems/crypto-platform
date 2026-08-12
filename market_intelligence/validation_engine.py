@@ -96,17 +96,14 @@ class ValidationEngine:
             reasons.append("INSUFFICIENT_ATR_DATA")
 
         # 4. BOS distance
-        if hasattr(structure_state, 'events') and structure_state.events and "BOS" in str(structure_state.events[-1].event_type):
-            passed_flags += 1
-            reasons.append("BOS_CONFIRMED")
-        elif hasattr(structure_state, 'last_event') and structure_state.last_event and "BOS" in str(structure_state.last_event.event_type):
+        if structure_state.events and "BOS" in str(structure_state.events[-1].event_type):
             passed_flags += 1
             reasons.append("BOS_CONFIRMED")
         else:
             reasons.append("NO_RECENT_BOS")
 
         # 5. KeyZone mitigation quality
-        mitigated = [kz for kz in keyzones if getattr(kz, 'is_mitigated', False) or (hasattr(kz, 'status') and 'MITIGATED' in str(getattr(kz, 'status')))]
+        mitigated = [kz for kz in keyzones if "MITIGATED" in str(kz.status)]
         if mitigated:
             passed_flags += 1
             reasons.append("KEYZONE_MITIGATION_VALID")

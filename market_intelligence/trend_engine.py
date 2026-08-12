@@ -49,14 +49,11 @@ class TrendEngine:
 
         # 2. Derive causal evidence from structure
         evidence = []
-        if hasattr(structure_state, 'broken_protected_swing_id') and getattr(structure_state, 'broken_protected_swing_id'):
-            evidence.append(structure_state.broken_protected_swing_id)
-            
-        if hasattr(structure_state, 'events') and structure_state.events:
+        # Engine 2 emits CHOCH events when structural swings are broken.
+        if structure_state.events:
             for event in reversed(structure_state.events):
                 if "CHOCH" in str(event.event_type):
-                    if hasattr(event, 'broken_swing_id'):
-                        evidence.append(event.broken_swing_id)
+                    evidence.append(event.broken_swing_id)
                     break
 
         

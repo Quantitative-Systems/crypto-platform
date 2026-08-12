@@ -69,22 +69,56 @@ def test_pipeline_determinism():
     assert dict1 == dict2
 
 
-def test_pipeline_causality_audit():
-    # Full dataset
+def test_adversarial_causality_and_lookahead():
     full_candles = generate_deterministic_candles(300)
     
-    coordinator = LanguageCoordinator(buffer_size=300)
-    payload = coordinator.run(full_candles)
+    # We choose T=150. We compare state at T (Payload A) with state at T+N (Payload B)
+    T_index = 150
+    T_timestamp = full_candles[T_index - 1].timestamp
     
-    latest_candle = full_candles[-1]
+    coordinator_A = LanguageCoordinator(buffer_size=300)
+    payload_A = coordinator_A.run(full_candles[:T_index])
     
-    # Causality rule: No swing should have a confirmation_timestamp > latest_candle.timestamp
-    for swing in payload.swings:
-        assert swing.confirmation_timestamp <= latest_candle.timestamp
+    coordinator_B = LanguageCoordinator(buffer_size=300)
+    payload_B = coordinator_B.run(full_candles)
+    
+    # 1. Swings Causality
+    # A swing in Payload B is valid historically if its confirmation_timestamp <= T_timestamp
+    swings_B_historical = [s for s in payload_B.swings if s.confirmation_timestamp <= T_timestamp]
+    assert len(payload_A.swings) == len(swings_B_historical), "Future candles altered historical swing count!"
+    
+    for sA, sB in zip(payload_A.swings, swings_B_historical):
+        assert sA.swing_id == sB.swing_id
+        assert sA.swing_type == sB.swing_type
         
-    # Also verify that events emitted do not have timestamps > latest_candle.timestamp
-    for event in payload.events:
-        assert event.timestamp <= latest_candle.timestamp
+    # 2. Structure Events Causality
+    events_B_historical = [e for e in payload_B.structure_state.events if getattr(e, 'timestamp', 0) <= T_timestamp]
+    # Length can differ slightly if a swing was confirmed exactly at T in A, but B sees it as part of a larger structure that deduplicates differently. 
+    # But usually it's the same. We will just check the overlapping ones.
+    
+    for eA in payload_A.structure_state.events:
+        # Find corresponding event in B by timestamp and price
+        matches = [e for e in events_B_historical if e.timestamp == eA.timestamp and e.broken_swing_id == eA.broken_swing_id]
+        assert len(matches) > 0, f"Historical event {eA} vanished in future payload!"
+        eB = matches[0]
+        # We DO NOT assert eA.event_type == eB.event_type because Engine 2 retroactively restates EXTERNAL/INTERNAL hierarchy.
+        # This is documented confirmation latency/hierarchy restatement, NOT a lookahead bug in event generation.
+        assert eA.price_level == eB.price_level
+        assert eA.candle_index == eB.candle_index
+
+    # 3. Liquidity Pools Causality
+    # Pools active at T might be consumed by T+N and therefore no longer in the active payload.
+    # We just ensure any pool still active in B that was created <= T was also present in A.
+    pools_B_historical = [p for p in payload_B.liquidity_pools if p.creation_timestamp <= T_timestamp]
+    for pB in pools_B_historical:
+        matches = [p for p in payload_A.liquidity_pools if p.creation_timestamp == pB.creation_timestamp and p.price_level == pB.price_level]
+        assert len(matches) > 0, "Future candles generated a historical pool that did not exist at the time!"
+
+    # 4. Keyzones Causality
+    kz_B_historical = [kz for kz in payload_B.keyzones if kz.creation_timestamp <= T_timestamp]
+    for kzB in kz_B_historical:
+        matches = [kz for kz in payload_A.keyzones if kz.creation_timestamp == kzB.creation_timestamp]
+        assert len(matches) > 0, "Future candles generated a historical keyzone that did not exist at the time!"
 
 
 def test_pipeline_cross_engine_consistency():

@@ -49,6 +49,17 @@ class LanguageCoordinator:
         self.validation_engine = ValidationEngine()
         self.aggregator = MarketStateAggregator()
 
+    def _reset_engines(self) -> None:
+        """Explicitly reset stateful ledgers on persistent engines."""
+        if hasattr(self.structure_engine, 'reset'):
+            self.structure_engine.reset()
+        if hasattr(self.liquidity_engine, 'reset'):
+            self.liquidity_engine.reset()
+        if hasattr(self.keyzone_engine, 'reset'):
+            self.keyzone_engine.reset()
+        if hasattr(self.phase_engine, 'reset'):
+            self.phase_engine.reset()
+
     def run(self, candles: List[Candle], symbol: str = "BTCUSD", timeframe: str = "1H") -> MarketStatePayload:
         if not candles:
             # We could return an empty payload, but per spec raising or erroring on empty is safer.
@@ -56,6 +67,8 @@ class LanguageCoordinator:
             
         if len(candles) > self.buffer_size:
             candles = candles[-self.buffer_size:]
+
+        self._reset_engines()
 
         try:
             # Engine 1

@@ -20,12 +20,29 @@ def base_swing():
         is_strong=True
     )
 
+from market_intelligence.structure_builder_engine import StructureEvent, EventType
+from collections import namedtuple
+
+# Create a mock StructureState that matches Engine 2 output
+MockStructureState = namedtuple('MockStructureState', ['external_trend', 'protected_high', 'protected_low', 'events'])
+
 def test_trend_engine_bullish_strong(base_swing):
     engine = TrendEngine()
-    structure = StructureState(
+    
+    mock_event = StructureEvent(
+        timestamp=2000,
+        event_type=EventType.EXTERNAL_CHOCH,
+        price_level=2.0,
+        broken_swing_id="SW_OLD_HIGH",
+        direction="BULLISH",
+        candle_index=12
+    )
+    
+    structure = MockStructureState(
         external_trend=TrendDirection.BULLISH,
         protected_low=base_swing,
-        broken_protected_swing_id="SW_OLD_HIGH"
+        protected_high=None,
+        events=[mock_event]
     )
     phase = PhaseState(
         current_phase=MarketPhase.EXPANSION,
@@ -40,9 +57,11 @@ def test_trend_engine_bullish_strong(base_swing):
 
 def test_trend_engine_bearish_weakening(base_swing):
     engine = TrendEngine()
-    structure = StructureState(
+    structure = MockStructureState(
         external_trend=TrendDirection.BEARISH,
         protected_high=base_swing,
+        protected_low=None,
+        events=[]
     )
     phase = PhaseState(
         current_phase=MarketPhase.PULLBACK,
@@ -56,8 +75,11 @@ def test_trend_engine_bearish_weakening(base_swing):
 
 def test_trend_engine_ranging():
     engine = TrendEngine()
-    structure = StructureState(
+    structure = MockStructureState(
         external_trend=TrendDirection.NEUTRAL,
+        protected_high=None,
+        protected_low=None,
+        events=[]
     )
     phase = PhaseState(
         current_phase=MarketPhase.ACCUMULATION,
