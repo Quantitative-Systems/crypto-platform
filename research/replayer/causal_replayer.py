@@ -32,12 +32,30 @@ class CausalReplayer:
         maker_fee_rate: float = 0.0000,
         taker_fee_rate: float = 0.0005,
         slippage_bps: float = 5.0,
-        enable_mtf_trailing: bool = True
+        enable_mtf_trailing: bool = True,
+        cache_htf_mtf: bool = True
     ):
         self.timeframe_set: TimeframeSet = TimeframeAligner.get_set(timeframe_set_id)
         self.initial_balance = initial_balance
         self.enable_mtf_trailing = enable_mtf_trailing
-        
+        # RESEARCH ENGINE PERFORMANCE FLAG (no trading-logic impact):
+        # When True, the point-in-time HTF/MTF incremental state is cached and only
+        # recomputed when a NEW higher/middle timeframe candle becomes causally
+        # visible (i.e. closes). This preserves identical canonical decisions while
+        # removing the redundant full-window P01 rebuild on every LTF tick.
+        # When False, the replayer reproduces the original recompute-every-tick path
+        # and is used as the reference for equivalence auditing.
+        self.cache_htf_mtf = cache_htf_mtf
+
+        # Incremental P01 state caches (keyed by the last visible candle timestamp).
+        self._htf_cache: Dict[str, Any] = {"key": None, "state": None}
+        self._mtf_cache: Dict[str, Any] = {"key": None, "state": None}
+
+        # P01 invocation counters for performance benchmarking / auditability.
+        self._htf_runs: int = 0
+        self._mtf_runs: int = 0
+        self._ltf_runs: int = 0
+
         self.language_coordinator = LanguageCoordinator(buffer_size=300)
         self.strategy_coordinator = StrategyCoordinator()
         self.execution_simulator = ExecutionSimulator(
@@ -68,6 +86,10 @@ class CausalReplayer:
                 "equity_curve": self.ledger.equity_curve
             }
 
+        # Reset incremental caches at the start of a fresh replay stream.
+        self._htf_cache = {"key": None, "state": None}
+        self._mtf_cache = {"key": None, "state": None}
+
         # Step chronologically forward through LTF candles
         for i in range(min_lookback_bars, len(ltf_candles)):
             current_bar = ltf_candles[i]
@@ -90,10 +112,38 @@ class CausalReplayer:
                 continue
 
             try:
-                # 3. Compute deterministic Market Intelligence state (P01)
-                htf_state = self.language_coordinator.run(htf_slice, symbol=symbol, timeframe=self.timeframe_set.htf)
-                mtf_state = self.language_coordinator.run(mtf_slice, symbol=symbol, timeframe=self.timeframe_set.mtf)
+                # 3. Compute deterministic Market Intelligence state (P01).
+                #    HTF/MTF state is only rebuilt when a NEW higher-timeframe candle
+                #    becomes causally visible (its closing timestamp enters the window).
+                #    Within a window the higher-timeframe state is unchanged, so the
+                #    cached payload is reused -> identical decisions, fewer rebuilds.
+                if self.cache_htf_mtf:
+                    htf_key = htf_slice[-1].timestamp if htf_slice else None
+                    if self._htf_cache["key"] != htf_key:
+                        htf_state = self.language_coordinator.run(htf_slice, symbol=symbol, timeframe=self.timeframe_set.htf)
+                        self._htf_cache = {"key": htf_key, "state": htf_state}
+                        self._htf_runs += 1
+                    else:
+                        htf_state = self._htf_cache["state"]
+                else:
+                    htf_state = self.language_coordinator.run(htf_slice, symbol=symbol, timeframe=self.timeframe_set.htf)
+                    self._htf_runs += 1
+
+                if self.cache_htf_mtf:
+                    mtf_key = mtf_slice[-1].timestamp if mtf_slice else None
+                    if self._mtf_cache["key"] != mtf_key:
+                        mtf_state = self.language_coordinator.run(mtf_slice, symbol=symbol, timeframe=self.timeframe_set.mtf)
+                        self._mtf_cache = {"key": mtf_key, "state": mtf_state}
+                        self._mtf_runs += 1
+                    else:
+                        mtf_state = self._mtf_cache["state"]
+                else:
+                    mtf_state = self.language_coordinator.run(mtf_slice, symbol=symbol, timeframe=self.timeframe_set.mtf)
+                    self._mtf_runs += 1
+
+                # LTF always recomputes: each LTF tick closes a new bar (the strategy tick).
                 ltf_state = self.language_coordinator.run(ltf_slice, symbol=symbol, timeframe=self.timeframe_set.ltf)
+                self._ltf_runs += 1
 
                 # 4. Evaluate Strategy Lifecycle Engine (P02)
                 trade_plans = self.strategy_coordinator.evaluate(htf_state, mtf_state, ltf_state)
@@ -160,5 +210,11 @@ class CausalReplayer:
             "exit_attribution": exit_attribution,
             "failure_modes": failure_modes,
             "closed_trades": [t.to_dict() for t in closed_trades],
-            "equity_curve": self.ledger.equity_curve
+            "equity_curve": self.ledger.equity_curve,
+            "engine_runs": {
+                "htf": self._htf_runs,
+                "mtf": self._mtf_runs,
+                "ltf": self._ltf_runs,
+                "ltf_ticks": max(0, len(ltf_candles) - min_lookback_bars)
+            }
         }
