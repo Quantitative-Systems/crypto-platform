@@ -12,7 +12,7 @@ from market_data.binance_fetcher import BinanceFetcher
 class WarehouseLoader:
 
     @staticmethod
-    def load_history(symbol: str = "BTC/USDT", timeframe: str = "1H", limit: int = 1000) -> List[Candle]:
+    def load_history(symbol: str = "BTC/USDT", timeframe: str = "1H", limit: int = 50000) -> List[Candle]:
         """Loads real historical market data from Binance or cached warehouse storage."""
         real_candles = BinanceFetcher.fetch_real_candles(symbol=symbol, timeframe=timeframe, limit=limit)
         

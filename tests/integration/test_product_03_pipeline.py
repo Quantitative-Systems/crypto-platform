@@ -11,8 +11,8 @@ def create_high_rr_payload() -> MarketStatePayload:
     # Entry = 100, Stop = 95, Target = 130 => RR = 30 / 5 = 6.0
     
     pl = SequenceSwing(RawSwing("sw1", 12340, 95.0, SwingType.SWING_LOW, 1, 12345, 2), SequenceLabel.HL, StructuralRole.PROTECTED_LOW, True, True, False)
-    ph = SequenceSwing(RawSwing("sw2", 12342, 110.0, SwingType.SWING_HIGH, 1, 12345, 2), SequenceLabel.HH, StructuralRole.PROTECTED_HIGH, True, True, False)
-    wl = SequenceSwing(RawSwing("sw3", 12343, 98.0, SwingType.SWING_LOW, 1, 12345, 2), SequenceLabel.HL, StructuralRole.WEAK_LOW, False, False, True)
+    ph = SequenceSwing(RawSwing("sw2", 12342, 130.0, SwingType.SWING_HIGH, 1, 12345, 2), SequenceLabel.HH, StructuralRole.PROTECTED_HIGH, True, True, False)
+    wl = SequenceSwing(RawSwing("sw3", 12343, 95.0, SwingType.SWING_LOW, 1, 12345, 2), SequenceLabel.HL, StructuralRole.WEAK_LOW, False, False, True)
     wh = SequenceSwing(RawSwing("sw4", 12344, 130.0, SwingType.SWING_HIGH, 1, 12345, 2), SequenceLabel.HH, StructuralRole.WEAK_HIGH, False, False, True)
     
     return MarketStatePayload(

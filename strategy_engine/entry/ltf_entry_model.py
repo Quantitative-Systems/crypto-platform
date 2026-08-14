@@ -12,7 +12,10 @@ class LTFEntryModel:
     def evaluate(ltf_payload: MarketStatePayload, req_event_dir: str) -> bool:
         # 1. Sweep check
         ltf_all_events = ltf_payload.events
-        sweeps = [e for e in ltf_all_events if "LIQUIDITY_SWEEP" in str(e.event_type) and req_event_dir in str(e.direction)]
+        sweeps = [
+            e for e in ltf_all_events 
+            if "LIQUIDITY_SWEEP" in str(e.event_type) and req_event_dir in str(getattr(e, 'direction', None) or (e.metadata.get('direction', '') if hasattr(e, 'metadata') else ''))
+        ]
         
         if not sweeps:
             return False

@@ -35,9 +35,23 @@ class ActiveTradeManager:
                 del self.active_trades[trade_id]
                 continue
                 
-            # 2. Check MTF Structural Trailing
-            # If MTF structure prints a CHOCH against the trade bias, exit.
-            mtf_events = mtf_payload.structure_state.events
+            # 2. Update MTF Structural Trailing Stop (Ratcheting)
+            try:
+                if is_long:
+                    mtf_prot_low = mtf_payload.structure_state.protected_low.raw_swing.price
+                    # Stop can only ratchet upward, never widen
+                    if mtf_prot_low > plan.stop_invalidation_price:
+                        plan.stop_invalidation_price = mtf_prot_low
+                else:
+                    mtf_prot_high = mtf_payload.structure_state.protected_high.raw_swing.price
+                    # Stop can only ratchet downward, never widen
+                    if mtf_prot_high < plan.stop_invalidation_price:
+                        plan.stop_invalidation_price = mtf_prot_high
+            except AttributeError:
+                pass  # No protected swing established yet
+
+            # 3. Check MTF Structural Reversal (Adverse CHOCH Exit)
+            mtf_events = getattr(mtf_payload.structure_state, 'events', None) or mtf_payload.events
             if mtf_events:
                 last_event = mtf_events[-1]
                 if "CHOCH" in str(last_event.event_type):
@@ -49,7 +63,7 @@ class ActiveTradeManager:
                         del self.active_trades[trade_id]
                         continue
                         
-            # 3. Check LTF Initial SL
+            # 4. Check LTF / Trailed SL Trigger
             if is_long and ltf_payload.current_price <= plan.stop_invalidation_price:
                 plan.position_status = PositionState.LTF_SL_EXIT.value
                 plan.exit_timestamp = ltf_payload.timestamp

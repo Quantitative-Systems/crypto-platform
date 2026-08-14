@@ -31,12 +31,13 @@ class ContinuationRidingHypothesis(BaseHypothesis):
         
         # 1. WAIT_MTF_ALIGNMENT
         if candidate.state == CandidateState.WAIT_MTF_ALIGNMENT:
-            mtf_events = mtf_payload.structure_state.events
+            mtf_events = getattr(mtf_payload.structure_state, 'events', None) or mtf_payload.events
             if mtf_events:
                 last_event = mtf_events[-1]
-                if "BOS" in str(last_event.event_type) and req_event_dir in str(last_event.direction):
+                event_dir = getattr(last_event, 'direction', None) or (last_event.metadata.get('direction', '') if hasattr(last_event, 'metadata') else '')
+                if "BOS" in str(last_event.event_type) and req_event_dir in str(event_dir):
                     # Alignment confirmed (Continuation uses BOS)
-                    candidate.mtf_choch_id = last_event.broken_swing_id
+                    candidate.mtf_choch_id = getattr(last_event, 'broken_swing_id', None) or (last_event.metadata.get('broken_swing_id', '') if hasattr(last_event, 'metadata') else '')
                     candidate.transition_to(CandidateState.WAIT_MTF_RETEST)
             return None # Still pending
             

@@ -302,15 +302,24 @@ PRODUCT 03 — RISK FIREWALL
     Risk Engine                 Implemented
     Integration                 Verified
     Full Regression             145 / 145
-    Independent Acceptance      NEXT
-    Status                      🟢 IMPLEMENTED / AWAITING ACCEPTANCE
+    Acceptance                  Passed
+    Status                      🔒 ACCEPTED
 
 PRODUCT 04 — RESEARCH LAB
+    Causal Replayer             Implemented (Sets 1-4)
+    Execution & Friction        Verified (Adverse-First)
+    24-Baseline Matrix          Implemented
+    MTF Trailing A/B            Implemented
+    Metrics & Attribution       Verified (Zero-Division Safe)
+    Full Regression             155 / 155
+    Status                      🟢 IMPLEMENTED & VERIFIED
+
+PRODUCT 05 — LIVE EXECUTION GATEWAY
     Status                      ⏳ NEXT
 
 ==============================================================
 FULL REPOSITORY REGRESSION
-                    145 / 145 PASSING
+                    155 / 155 PASSING
 ==============================================================
 ```
 

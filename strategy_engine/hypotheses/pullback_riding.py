@@ -31,12 +31,13 @@ class PullbackRidingHypothesis(BaseHypothesis):
         
         # 1. WAIT_MTF_ALIGNMENT
         if candidate.state == CandidateState.WAIT_MTF_ALIGNMENT:
-            mtf_events = mtf_payload.structure_state.events
+            mtf_events = getattr(mtf_payload.structure_state, 'events', None) or mtf_payload.events
             if mtf_events:
                 last_event = mtf_events[-1]
-                if "CHOCH" in str(last_event.event_type) and req_event_dir in str(last_event.direction):
+                event_dir = getattr(last_event, 'direction', None) or (last_event.metadata.get('direction', '') if hasattr(last_event, 'metadata') else '')
+                if "CHOCH" in str(last_event.event_type) and req_event_dir in str(event_dir):
                     # Alignment confirmed. 
-                    candidate.mtf_choch_id = last_event.broken_swing_id
+                    candidate.mtf_choch_id = getattr(last_event, 'broken_swing_id', None) or (last_event.metadata.get('broken_swing_id', '') if hasattr(last_event, 'metadata') else '')
                     candidate.transition_to(CandidateState.WAIT_MTF_RETEST)
             return None # Still pending or just transitioned
             
@@ -62,15 +63,13 @@ class PullbackRidingHypothesis(BaseHypothesis):
             try:
                 if is_long:
                     stop_price = ltf_payload.structure_state.protected_low.raw_swing.price
-                    target_price = htf_payload.structure_state.weak_high.raw_swing.price
+                    target_price = htf_payload.structure_state.protected_high.raw_swing.price
                     raw_rr = (target_price - entry_price) / (entry_price - stop_price) if entry_price > stop_price else 0.0
                 else:
                     stop_price = ltf_payload.structure_state.protected_high.raw_swing.price
-                    target_price = htf_payload.structure_state.weak_low.raw_swing.price
+                    target_price = htf_payload.structure_state.protected_low.raw_swing.price
                     raw_rr = (entry_price - target_price) / (stop_price - entry_price) if stop_price > entry_price else 0.0
             except AttributeError as e:
-                import traceback
-                traceback.print_exc()
                 candidate.transition_to(CandidateState.REJECTED)
                 return TelemetryHelper.reject(
                     candidate.candidate_id, self.hypothesis_id, candidate.symbol, candidate.directional_permission, ltf_payload.timestamp, 
