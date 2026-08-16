@@ -1,436 +1,261 @@
-# Crypto Quantitative Systems Platform
+# Crypto Platform
 
-> **A research-first quantitative trading systems platform for deterministic cryptocurrency market intelligence, multi-timeframe strategy research, risk-controlled capital allocation, and automated execution.**
-
-**Repository:** `crypto-platform`  
-**Domain:** Cryptocurrency Markets  
-**Initial Assets:** BTC/USDT · ETH/USDT · SOL/USDT  
-**Architecture:** Event-driven · causal · stateful · modular  
-**Primary Objective:** Research, validate, risk-control, and eventually automate systematic cryptocurrency trading strategies.
-
----
-
-## 01 — Platform Overview
-
-The Crypto Quantitative Systems Platform is a modular research and execution infrastructure for systematic cryptocurrency trading.
-
-The platform converts raw OHLCV market data into deterministic market-state information, evaluates explicit multi-timeframe trading hypotheses, constructs structural trade plans, applies independent capital-risk controls, and provides the foundation for historical research, execution simulation, and eventual automated deployment.
-
-The current implementation is purpose-built for cryptocurrency markets. Its internal contracts and domain boundaries are designed for extensibility, but no non-crypto market support is claimed at this stage.
-
-It does **not** claim profitability, predictive certainty, or production readiness.
-
-Its purpose is to establish a rigorous engineering and research environment in which those claims can be tested rather than assumed.
-
----
-
-## 02 — Core Trading Architecture
-
-The primary strategy architecture is:
+A research-first cryptocurrency trading platform for deterministic market intelligence, multi-timeframe strategy research, risk-controlled trade planning, historical replay, execution simulation, and automated execution.
 
 ```text
-                CRYPTO MARKET DATA
-                       │
-                       ▼
-              MARKET INTELLIGENCE
-                       │
-                       ▼
-                  HTF BIAS
-                       │
-                       ▼
-                  MTF SETUP
-                       │
-                       ▼
-                  MTF RETEST
-                       │
-                       ▼
-                  LTF ENTRY
-                       │
-                       ▼
-               LTF INVALIDATION
-                       │
-                       ▼
-                  HTF TARGET
-                       │
-                       ▼
-              MTF STRUCTURAL TRAIL
-                       │
-                       ▼
-                 RISK CONTROL
-                       │
-                       ▼
-              RESEARCH / REPLAY
+Domain:            Cryptocurrency Markets
+Initial Assets:    BTC/USDT · ETH/USDT · SOL/USDT
+Architecture:      Event-driven · Causal · Stateful · Modular
+Primary Objective: Research, validate, risk-control, and automate systematic trading strategies
 ```
-
-The strategy operates on three coordinated horizons:
-
-* **HTF — Higher Timeframe:** establishes directional bias and structural destination.
-* **MTF — Middle Timeframe:** identifies setup formation, structural realignment, KeyZones, retests, and manages the open trade.
-* **LTF — Lower Timeframe:** provides the execution trigger and initial structural invalidation.
-
-The system therefore follows:
-
-> **HTF Bias → MTF Setup → MTF Retest → LTF Entry → LTF Invalidation → HTF Target → MTF Structural Trailing**
 
 ---
 
-## 03 — Strategy Hypotheses
+## 1. System Pipeline
 
-The platform currently researches two independent hypotheses.
+Crypto Platform evaluates market state causally across multi-timeframe hierarchies to produce risk-approved execution plans and research telemetry:
+
+```mermaid
+flowchart TD
+    MD[Market Data<br/>OHLCV Feeds] --> P01[Market Intelligence<br/>P01 Engine]
+    P01 -->|MarketStatePayload| HTF[HTF Context<br/>Bias & Direction]
+    HTF --> MTF_S[MTF Setup<br/>Alignment & KeyZone]
+    MTF_S --> MTF_R[MTF Retest<br/>Causal Zone Test]
+    MTF_R --> LTF_E[LTF Entry<br/>Sweep + Displacement]
+    LTF_E --> ANCH[Structural Anchors<br/>LTF Invalidation & HTF Target]
+    ANCH --> P03[Risk Firewall<br/>P03 Engine]
+    P03 -->|RiskApprovedPlan| SIM[Research & Replay<br/>P04 Causal Simulator]
+    SIM --> LEDGER[Trade Ledger &<br/>Performance Analytics]
+    SIM -.->|Future| EXEC[Execution Gateway<br/>P06 Gateway]
+```
+
+---
+
+## 2. Core Trading Model
+
+The trading architecture coordinates three discrete analytical horizons:
+
+$$\text{HTF Bias} \longrightarrow \text{MTF Setup} \longrightarrow \text{LTF Entry}$$
+
+with structural execution boundaries:
+* **Initial Invalidation (Stop Loss)**: Derived from the LTF structural swing.
+* **Target Destination (Take Profit)**: Derived from the HTF structural expansion target.
+* **Open Position Management**: Managed dynamically via MTF structural trailing.
+
+```
+HTF (Higher Timeframe)
+├─ Establishes directional bias from external market structure (BOS / CHOCH).
+├─ Identifies structural phase (Expansion vs. Pullback vs. Compression).
+└─ Defines macro structural destination / target context.
+
+MTF (Middle Timeframe)
+├─ Identifies setup formation and structural realignment toward HTF bias.
+├─ Discovers causal MTF KeyZones (Order Blocks, Fair Value Gaps).
+├─ Verifies causal KeyZone retest.
+└─ Manages active positions using MTF structural trailing.
+
+LTF (Lower Timeframe)
+├─ Generates point-in-time micro execution triggers (Liquidity Sweep + Displacement).
+└─ Establishes the initial structural invalidation anchor (Stop Loss).
+```
+
+---
+
+## 3. Strategy Hypotheses
+
+The platform formalizes and evaluates trading hypotheses as independent, isolated research modules:
 
 ### Hypothesis A — Pullback Riding
-
-The HTF establishes directional bias through market structure.
-
-Price subsequently retraces toward an HTF structural KeyZone.
-
-The MTF may temporarily move counter to the HTF direction during the retracement.
-
-The system waits for MTF structural/trend realignment toward the HTF bias, identifies a new MTF setup and KeyZone, waits for the MTF retest, and then searches for an LTF execution model.
-
-```text
-HTF BOS / Directional Bias
-        ↓
-HTF Pullback
-        ↓
-HTF KeyZone Interaction
-        ↓
-MTF Countertrend Retracement
-        ↓
-MTF Structural Realignment
-        ↓
-MTF KeyZone / FVG / OB
-        ↓
-MTF Retest
-        ↓
-LTF Entry Model
-        ↓
-LTF Structural Invalidation
-        ↓
-HTF Structural Target
-        ↓
-MTF Structural Trailing
-```
+* **Concept**: HTF establishes a directional bias. During an expected retracement toward an HTF KeyZone, MTF structure temporarily moves counter to the HTF bias. The system waits for MTF structure to realign with the HTF bias, discovers the causal MTF KeyZone, waits for a retest, and executes upon an LTF micro-trigger.
+* **Causal Flow**:
+  $$\text{HTF Bias} \rightarrow \text{HTF Pullback} \rightarrow \text{HTF KeyZone} \rightarrow \text{MTF Realignment} \rightarrow \text{MTF KeyZone} \rightarrow \text{MTF Retest} \rightarrow \text{LTF Entry} \rightarrow \text{Risk Gate} \rightarrow \text{MTF Trailing}$$
 
 ### Hypothesis B — Continuation Riding
+* **Concept**: HTF has interacted with a structural zone and continuation in the HTF direction is expected. The system waits for MTF setup formation aligned with the HTF bias, waits for an MTF KeyZone retest, and triggers on LTF confirmation.
+* **Causal Flow**:
+  $$\text{HTF Bias} \rightarrow \text{HTF Continuation} \rightarrow \text{MTF Setup} \rightarrow \text{MTF Realignment} \rightarrow \text{MTF KeyZone} \rightarrow \text{MTF Retest} \rightarrow \text{LTF Entry} \rightarrow \text{Risk Gate} \rightarrow \text{MTF Trailing}$$
 
-The HTF has already interacted with the relevant structural zone and continuation is expected.
+> [!NOTE]
+> All strategy hypotheses are strictly isolated in code and telemetry to maintain independent measurement and prevent cross-contamination.
 
-The system waits for MTF structural/trend alignment with the HTF bias, establishes the MTF setup, waits for its retest, and then searches for an LTF execution trigger.
+---
+
+## 4. Multi-Timeframe Configurations
+
+Strategy hypotheses are tested across four standardized timeframe configurations representing independent research populations:
+
+| Timeframe Set | HTF | MTF | LTF | Trading Horizon |
+|:---|:---:|:---:|:---:|:---|
+| **Set 1** | 1M | 1W | 1D | Macro / Position |
+| **Set 2** | 1W | 1D | 4H | Position / Swing |
+| **Set 3** | 1D | 4H | 1H | Swing |
+| **Set 4** | 4H | 1H | 15M | Intraday |
+
+Empirical results from one timeframe set are not assumed to transfer to others.
+
+---
+
+## 5. Market Intelligence (P01)
+
+Product 01 converts raw OHLCV candle streams into a deterministic, point-in-time domain ontology:
+
+* **Market Structure**: Raw geometric swings, sequence labeling (`HH`, `HL`, `LH`, `LL`, `EQH`, `EQL`), internal and external swing hierarchy.
+* **Structural Shifts**: Break of Structure (`BOS`), Change of Character (`CHOCH`), Market Structure Shift (`MSS`), and Failed Breakouts / Wick Rejections.
+* **Structural Anchors**: Dynamic assignment of protected and weak swings.
+* **Liquidity Dynamics**: Buy-Side Liquidity (`BSL`), Sell-Side Liquidity (`SSL`), Liquidity Sweeps, and Inducements.
+* **KeyZones**: Order Blocks (`OB`), Fair Value Gaps (`FVG`), Breaker Blocks, and Mitigation tracking.
+* **Ontological State**: Market Phase classification (Accumulation, Expansion, Pullback, Reversal, Compression, Distribution) and Trend state derivation.
+
+All market intelligence outputs are encapsulated in a single immutable contract: `MarketStatePayload`.
+
+---
+
+## 6. Risk Engine & Firewall (P03)
+
+Risk controls operate as an independent verification gate between strategy generation and trade execution:
+
+* **Capital Allocation**: Maximum 1.0% account risk per trade calculated against structural invalidation distance.
+* **Planned Geometry Gate**: Minimum planned Risk-to-Reward ratio ($\ge 4.0\text{R}$) evaluated against directional structural anchors.
+* **Domain Separation**: Strategy generation (`TradePlanPayload`) is decoupled from risk approval (`RiskApprovedPlan`).
+* **Fail-Closed Principle**: Incomplete, ambiguous, or directionally invalid trade geometries fail closed and are rejected as diagnostic telemetry.
+
+> [!IMPORTANT]
+> The $4.0\text{R}$ threshold is an architectural constraint under active empirical evaluation to measure valid geometry occurrence and historical expectancy.
+
+---
+
+## 7. Research & Simulation Methodology
+
+The research platform follows a strict evidence-driven validation pipeline:
 
 ```text
-HTF Directional Bias
-        ↓
-HTF Continuation Context
-        ↓
-MTF Setup
-        ↓
-MTF Structural Realignment
-        ↓
-MTF KeyZone / FVG / OB
-        ↓
-MTF Retest
-        ↓
-LTF Structural Alignment
-        ↓
-LTF Entry Model
-        ↓
-LTF Structural Invalidation
-        ↓
-HTF Structural Target
-        ↓
-MTF Structural Trailing
+1. Deterministic Historical Replay
+   ↓
+2. Causal Point-in-Time State Reconstruction (Zero-Lookahead)
+   ↓
+3. Strategy Hypothesis Evaluation
+   ↓
+4. Risk Firewall Validation
+   ↓
+5. Execution Simulation (Adverse-First Intrabar Collision & Friction Modeling)
+   ↓
+6. Trade Ledger Generation
+   ↓
+7. Performance Attribution & Failure Mode Diagnostics
+   ↓
+8. Out-of-Sample Validation
+   ↓
+9. Walk-Forward Analysis
+   ↓
+10. Robustness & Permutation Testing
+   ↓
+11. Paper Trading
+   ↓
+12. Automated Production Execution (Upon empirical verification)
 ```
 
-The two hypotheses remain independently testable and attributable.
+**Core Policy**: Evidence before optimization. Indicators and filters are never added to mask strategy defects without causal empirical validation.
 
 ---
 
-## 04 — Multi-Timeframe Strategy Configurations
+## 8. Engineering Principles
 
-The same strategy hypotheses are evaluated across four independent
-timeframe configurations.
-
-| Set | HTF | MTF | LTF | Trading Horizon |
-|---|---|---|---|---|
-| Set 1 | 1M | 1W | 1D | Macro / Position |
-| Set 2 | 1W | 1D | 4H | Position / Swing |
-| Set 3 | 1D | 4H | 1H | Swing / Intraday |
-| Set 4 | 4H | 1H | 15M | Intraday |
-
-Each configuration is treated as a separate research population.
-
-The system does not assume that performance on one timeframe configuration
-transfers automatically to another.
+* **Temporal Causality**: At decision timestamp $T$, no component may consume information timestamped $> T$.
+* **Deterministic Reproducibility**: Identical data and configuration must produce bit-for-bit identical state and execution records across runs.
+* **Domain Isolation**: Subsystems communicate strictly via explicit data contracts (`MarketStatePayload`, `TradePlanPayload`, `RiskApprovedPlan`).
+* **State Provenance**: Every trade plan and state change is traceable to its originating market events and swing IDs.
+* **Fail Closed**: Incomplete or directionally invalid geometry yields `NO_TRADE` rejection rather than assumption.
+* **Hypothesis Isolation**: Strategies remain independently measurable without shared state or blended metrics.
+* **Evidence Before Optimization**: Parameters, indicators, and rules are modified only when supported by raw empirical evidence.
 
 ---
 
-## 05 — Market Intelligence
+## 9. Platform Architecture & Status
 
-Product 01 transforms cryptocurrency OHLCV data into a deterministic,
-causal market-state representation.
+```mermaid
+flowchart LR
+    P01[P01 Market Intelligence<br/><b>Verified</b>] --> P02[P02 Strategy Engine<br/><b>Verified</b>]
+    P02 --> P03[P03 Risk Firewall<br/><b>Verified</b>]
+    P03 --> P04[P04 Research & Sim<br/><b>Under Research</b>]
+    P04 -.-> P05[P05 Portfolio Control<br/><b>Planned</b>]
+    P05 -.-> P06[P06 Execution Gateway<br/><b>Planned</b>]
+    P06 -.-> P07[P07 Operations & Monitor<br/><b>Planned</b>]
+```
 
-The intelligence layer models:
-
-- Market Structure
-- External and Internal Structure
-- BOS / CHOCH / MSS
-- Protected Highs and Lows
-- Liquidity Pools
-- Liquidity Sweeps
-- Inducement
-- Order Blocks
-- Fair Value Gaps
-- KeyZone Mitigation
-- Market Phase
-- Trend State
-- Structural Validation
-
-The output is exposed through a controlled:
-
-`MarketStatePayload`
-
-Product 02 consumes this contract rather than independently recreating
-market intelligence.
+| Component | Responsibility | Current Status |
+|:---|:---|:---:|
+| **P01 — Market Intelligence** | Deterministic market structure, keyzones, phases, trends | `VERIFIED` |
+| **P02 — Strategy Engine** | Multi-timeframe candidate lifecycle & hypotheses | `VERIFIED` |
+| **P03 — Risk Firewall** | Position sizing, drawdown validation, RR gates | `VERIFIED` |
+| **P04 — Research Laboratory** | Causal replay, execution simulation, telemetry forensics | `UNDER RESEARCH` |
+| **P05 — Portfolio Control** | Multi-asset exposure management & correlation gates | `PLANNED` |
+| **P06 — Execution Gateway** | Exchange connectivity, order routing, fill reconciliation | `PLANNED` |
+| **P07 — Operations** | Real-time monitoring, heartbeat, circuit breakers | `PLANNED` |
 
 ---
 
-## 06 — Core Engineering Laws
+## 10. Verification Status
 
-These principles govern every product.
-
-### LAW 01 — Temporal Causality
-
-At timestamp `T`, no component may consume information that was unavailable at `T`.
-
-Historical future information must never leak into a historical decision.
-
-### LAW 02 — Deterministic Reproducibility
-
-For identical input data and configuration:
+Verified repository test suite metrics (as of Day 34 checkpoint `7fef77d`):
 
 ```text
-P(D, Config) Run A
-        ≡
-P(D, Config) Run B
+PYTHONPATH=. pytest -q
+============================= 189 passed in 49.90s =============================
 ```
 
-### LAW 03 — Domain Isolation
-
-Higher-level systems may consume lower-level contracts. Lower-level systems must never depend on higher-level decisions.
-
-### LAW 04 — State Provenance
-
-Every important decision must be traceable to its originating market events.
-
-### LAW 05 — Fail Closed
-
-When information is ambiguous, incomplete or invalid, `NO_TRADE` is preferable to an unsupported assumption.
-
-### LAW 06 — Rejected Information Is Still Research Data
-
-Rejected setups are not discarded. These observations become research telemetry.
-
-### LAW 07 — Hypotheses Must Remain Isolated
-
-A strategy hypothesis must be independently measurable. No hidden cross-contamination of rules, parameters or outcome attribution.
-
-### LAW 08 — No Optimization Before Evidence
-
-The platform does not add indicators, filters or parameters simply because a backtest looks weak.
+* **Canonical Conformance Suite**: `14 / 14 PASS` (`tests/integration/test_canonical_conformance.py`)
+* **Contract & Type Identity**: `6 / 6 PASS` (`tests/unit/market_intelligence/test_enum_contract_identity.py`)
+* **Pipeline Integration**: `1 / 1 PASS` (`tests/integration/test_product_03_pipeline.py`)
 
 ---
 
-## 07 — Platform Product Architecture
+## 11. Current Research Status
 
-```text
-P01 — MARKET INTELLIGENCE
-      ↓
-      MarketStatePayload
-      ↓
-P02 — STRATEGY ENGINE
-      ↓
-      TradePlanPayload
-      ↓
-P03 — RISK FIREWALL
-      ↓
-      RiskApprovedPlan
-      ↓
-P04 — RESEARCH & BACKTESTING
-      ↓
-      Validated Research Evidence
-      ↓
-P05 — PORTFOLIO CONTROL
-      ↓
-      Portfolio Decision
-      ↓
-P06 — EXECUTION
-      ↓
-      Live Orders / Fills
-      ↓
-P07 — PRODUCTION OPERATIONS
-      ↓
-      Monitoring / Reconciliation / Kill Switch
-```
+Empirical findings from the Vertical Slice 001 (`BTCUSDT` S3: `1D` $\rightarrow$ `4H` $\rightarrow$ `1H`) forensic diagnostic:
 
-Each product owns a distinct responsibility and communicates through
-explicit contracts.
+* [x] **Market Intelligence Causality**: P01 produces zero-lookahead structural state across 50,000 historical 1H candles.
+* [x] **HTF Directional Bias**: Causal bias propagates through the pipeline (12,090 active bias observations).
+* [x] **MTF Alignment & Retest**: Causal MTF KeyZones activate and register valid retests (1,867 retests).
+* [x] **LTF Entry Model**: Micro-triggers (Liquidity Sweep + Displacement) activate within retest windows (2,572 candidate residency ticks).
+* [x] **Forensic Root Cause Identified**: A forensic audit discovered that `PullbackRidingHypothesis` mapped Long targets to `protected_high` (which is `None` or an obsolete cycle anchor during bullish trends) and Short targets to `protected_low`, resulting in inverted geometry.
+* [ ] **Genuine RR Distribution**: Directional geometry validation is being corrected before measuring true $RR \ge 4.0$ empirical feasibility.
+* [ ] **Profitability**: Strategy profitability and expectancy have **not** yet been established.
+* [ ] **Live Trading**: Live execution is **not** authorized.
 
 ---
 
-## 08 — Product Verification State
-
-```text
-==============================================================
-            CRYPTO QUANTITATIVE SYSTEMS PLATFORM
-==============================================================
-
-PRODUCT 01 — MARKET INTELLIGENCE
-    Regression                  131 / 131
-    Independent Acceptance      100 / 100
-    Status                      🔒 LOCKED
-
-PRODUCT 02 — STRATEGY ENGINE
-    Platform Regression         Included
-    Lifecycle Architecture      Implemented
-    Hypothesis Isolation        Verified
-    Causality                   Verified
-    Acceptance                  6 / 6 PASS
-    Status                      🔒 ACCEPTED
-
-PRODUCT 03 — RISK FIREWALL
-    Risk Engine                 Implemented
-    Integration                 Verified
-    Full Regression             145 / 145
-    Acceptance                  Passed
-    Status                      🔒 ACCEPTED
-
-PRODUCT 04 — RESEARCH LAB
-    Causal Replayer             Implemented (Sets 1-4)
-    Execution & Friction        Verified (Adverse-First)
-    24-Baseline Matrix          Implemented
-    MTF Trailing A/B            Implemented
-    Metrics & Attribution       Verified (Zero-Division Safe)
-    Full Regression             155 / 155
-    Status                      🟢 IMPLEMENTED & VERIFIED
-
-PRODUCT 05 — LIVE EXECUTION GATEWAY
-    Status                      ⏳ NEXT
-
-==============================================================
-FULL REPOSITORY REGRESSION
-                    155 / 155 PASSING
-==============================================================
-```
-
----
-
-## 09 — Product 04: Research & Backtesting Laboratory
-
-**Next major development target.**
-
-The research pipeline:
-
-```text
-                    HISTORICAL DATA
-                          │
-                          ▼
-                  MARKET REPLAY
-                          │
-                          ▼
-                 PRODUCT 01
-                          │
-                          ▼
-                 PRODUCT 02
-                          │
-                          ▼
-                 PRODUCT 03
-                          │
-                          ▼
-              SIMULATED EXECUTION
-                          │
-                          ▼
-                    TRADE LEDGER
-                          │
-                          ▼
-              PERFORMANCE ATTRIBUTION
-                          │
-              ┌───────────┴───────────┐
-              ▼                       ▼
-        IN-SAMPLE                 OUT-OF-SAMPLE
-              │                       │
-              └───────────┬───────────┘
-                          ▼
-                  WALK-FORWARD
-                          │
-                          ▼
-                    ROBUSTNESS
-                          │
-                          ▼
-                 PAPER TRADING
-```
-
----
-
-## 10 — Research Matrix
-
-Initial baseline:
-
-```text
-2 Strategies
-×
-4 Timeframe Sets
-×
-3 Assets
-=
-24 configurations
-```
-
-The first objective is to discover:
-
-```text
-Does the canonical architecture
-produce positive expectancy after
-realistic trading friction?
-```
-
-Only then should optimization begin.
-
----
-
-## 11 — Repository Architecture
+## 12. Repository Structure
 
 ```text
 crypto-platform/
-│
-├── config/
-├── market_intelligence/
-├── strategy_engine/
-├── risk_engine/
-├── research/
-├── portfolio/
-├── execution/
-├── operations/
-├── market_data/
-├── logs/
-├── tests/
-├── README.md
-└── LICENSE
+├── config/                  # Timeframe sets and platform configuration
+├── market_data/             # Historical data loaders, caches, and exchange fetchers
+├── market_intelligence/     # P01: Swings, structure, liquidity, keyzones, phase, trend
+├── strategy_engine/         # P02: Candidate lifecycle, hypotheses, entry models
+├── risk_engine/             # P03: Position sizing, drawdown validation, risk plans
+├── research/                # P04: Causal replayer, execution simulator, metrics engine
+├── docs/                    # Technical architecture specifications and research logs
+├── scratch/                 # Diagnostic probes and forensic audit scripts
+└── tests/                   # Conformance, integration, and unit test suites
+    ├── integration/
+    └── unit/
 ```
 
 ---
 
-## Engineering Principle
+## 13. Technical Roadmap
 
-> **The platform does not assume an edge.**
->
-> It formalizes trading hypotheses, subjects them to deterministic
-> historical research, measures their failure modes, constrains capital
-> risk, and only permits automation after sufficient evidence has been
-> established.
+### Current Focus
+- Correct structural target mapping for Pullback Riding (aligning targets with expansion extremes).
+- Enforce strict directional geometry validation ($SL < Entry < TP$ for Longs, $TP < Entry < SL$ for Shorts).
+- Empirically measure genuine RR distribution across 50,000-bar datasets.
 
-**Crypto Quantitative Systems Platform**
+### Next Milestones
+- Validate strategy performance across all 4 Timeframe Sets (Sets 1–4).
+- Multi-asset baseline evaluation across universe (`BTC/USDT`, `ETH/USDT`, `SOL/USDT`).
+- Out-of-sample partition testing and walk-forward parameter stability analysis.
 
-*Research before optimization.*  
-*Risk before execution.*  
-*Evidence before automation.*
+### Future Infrastructure
+- Portfolio exposure controller (P05).
+- Exchange execution gateway with dry-run paper trading (P06).
+- Operational monitoring, health metrics, and kill-switch architecture (P07).
