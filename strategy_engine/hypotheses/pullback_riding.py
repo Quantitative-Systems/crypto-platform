@@ -33,21 +33,51 @@ class PullbackRidingHypothesis(BaseHypothesis):
         if candidate.state == CandidateState.WAIT_MTF_ALIGNMENT:
             mtf_events = getattr(mtf_payload.structure_state, 'events', None) or mtf_payload.events
             if mtf_events:
-                last_event = mtf_events[-1]
-                event_dir = getattr(last_event, 'direction', None) or (last_event.metadata.get('direction', '') if hasattr(last_event, 'metadata') else '')
-                if "CHOCH" in str(last_event.event_type) and req_event_dir in str(event_dir):
-                    # Alignment confirmed. 
-                    candidate.mtf_choch_id = getattr(last_event, 'broken_swing_id', None) or (last_event.metadata.get('broken_swing_id', '') if hasattr(last_event, 'metadata') else '')
-                    candidate.transition_to(CandidateState.WAIT_MTF_RETEST)
+                for event in reversed(mtf_events):
+                    event_dir = getattr(event, 'direction', None) or (event.metadata.get('direction', '') if hasattr(event, 'metadata') else '')
+                    if "CHOCH" in str(event.event_type) and req_event_dir in str(event_dir):
+                        # Alignment confirmed. Record causal timestamp and swing ID.
+                        candidate.mtf_choch_id = getattr(event, 'broken_swing_id', None) or (event.metadata.get('broken_swing_id', '') if hasattr(event, 'metadata') else '')
+                        candidate.mtf_alignment_timestamp = getattr(event, 'timestamp', mtf_payload.timestamp)
+                        candidate.transition_to(CandidateState.WAIT_MTF_RETEST)
+                        break
             return None # Still pending or just transitioned
             
         # 2. WAIT_MTF_RETEST
         if candidate.state == CandidateState.WAIT_MTF_RETEST:
-            # Check if any MTF KeyZone is mitigated (retest)
-            mtf_mitigated = [kz for kz in mtf_payload.keyzones if "MITIGATED" in str(kz.status)]
-            if mtf_mitigated:
-                candidate.mtf_keyzone_id = mtf_mitigated[-1].zone_id
-                candidate.transition_to(CandidateState.WAIT_LTF_TRIGGER)
+            # Filter MTF KeyZones to only those causally created at or after the MTF alignment event
+            causal_zones = []
+            for kz in mtf_payload.keyzones:
+                kz_type_str = str(getattr(kz, 'zone_type', ''))
+                if is_long and ("BULLISH" not in kz_type_str):
+                    continue
+                if (not is_long) and ("BEARISH" not in kz_type_str):
+                    continue
+                
+                # Causal timestamp check: Must be created at or after alignment event
+                creation_ts = getattr(kz, 'creation_timestamp', None)
+                if candidate.mtf_alignment_timestamp and creation_ts is not None and creation_ts > 0:
+                    if creation_ts < candidate.mtf_alignment_timestamp:
+                        continue  # Stale historical keyzone rejected
+                
+                causal_zones.append(kz)
+                
+            # Check if any causal MTF KeyZone is mitigated or retested
+            for kz in causal_zones:
+                is_mitigated = "MITIGATED" in str(getattr(kz, 'status', ''))
+                price_in_zone = False
+                high_bound = getattr(kz, 'high_boundary', getattr(kz, 'high', None))
+                low_bound = getattr(kz, 'low_boundary', getattr(kz, 'low', None))
+                if high_bound is not None and low_bound is not None:
+                    if mtf_payload.current_candle:
+                        price_in_zone = (mtf_payload.current_candle.low <= high_bound and mtf_payload.current_candle.high >= low_bound)
+                    else:
+                        price_in_zone = (low_bound <= mtf_payload.current_price <= high_bound)
+                
+                if is_mitigated or price_in_zone:
+                    candidate.mtf_keyzone_id = getattr(kz, 'zone_id', '')
+                    candidate.transition_to(CandidateState.WAIT_LTF_TRIGGER)
+                    break
             return None # Still pending
             
         # 3. WAIT_LTF_TRIGGER
@@ -96,8 +126,10 @@ class PullbackRidingHypothesis(BaseHypothesis):
                 raw_rr=raw_rr,
                 status=CandidateState.ENTERED.value,
                 structural_provenance={
+                    "htf_kz_id": candidate.htf_keyzone_id or "",
                     "mtf_choch_id": candidate.mtf_choch_id or "",
-                    "mtf_kz_id": candidate.mtf_keyzone_id or ""
+                    "mtf_kz_id": candidate.mtf_keyzone_id or "",
+                    "mtf_alignment_ts": candidate.mtf_alignment_timestamp or 0
                 },
                 source_timeframes=timeframes
             )

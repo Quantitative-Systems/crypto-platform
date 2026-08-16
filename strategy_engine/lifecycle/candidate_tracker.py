@@ -20,7 +20,9 @@ class CandidateSetup:
     
     # Anchor provenance
     htf_keyzone_id: Optional[str] = None
+    htf_interaction_timestamp: Optional[int] = None
     mtf_keyzone_id: Optional[str] = None
+    mtf_alignment_timestamp: Optional[int] = None
     mtf_choch_id: Optional[str] = None
     
     # Tracked Structural Boundaries

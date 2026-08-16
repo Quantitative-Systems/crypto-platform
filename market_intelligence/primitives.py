@@ -20,6 +20,8 @@ from typing import List, Optional, Dict, Any
 class SwingType(Enum):
     SWING_HIGH = "SWING_HIGH"
     SWING_LOW = "SWING_LOW"
+    HIGH = "SWING_HIGH"
+    LOW = "SWING_LOW"
 
 
 class SwingScope(Enum):
@@ -146,6 +148,7 @@ class SequenceSwing:
     label: SequenceLabel
 
     role: StructuralRole = StructuralRole.NONE
+    scope: SwingScope = SwingScope.INTERNAL
 
     is_protected: bool = False
     is_strong: bool = False
@@ -177,6 +180,8 @@ class DealingRange:
     low_swing: Optional[SequenceSwing] = None
 
     equilibrium_price: float = 0.0
+    high_price: float = 0.0
+    low_price: float = 0.0
 
 
 @dataclass
@@ -209,6 +214,18 @@ class MarketEvent:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 
+@dataclass(frozen=True)
+class StructureEvent:
+    timestamp: int
+    event_type: EventType
+    price_level: float
+    broken_swing_id: str
+    direction: str
+    candle_index: int
+    confirmation: str = "BODY_CLOSE"
+    structural_epoch: int = 0
+
+
 @dataclass
 class StructureState:
     """
@@ -218,11 +235,10 @@ class StructureState:
     """
 
     external_trend: TrendDirection = TrendDirection.NEUTRAL
-
     internal_trend: TrendDirection = TrendDirection.NEUTRAL
 
+    sequence_swings: List[SequenceSwing] = field(default_factory=list)
     external_swings: List[SequenceSwing] = field(default_factory=list)
-
     internal_swings: List[SequenceSwing] = field(default_factory=list)
 
     protected_high: Optional[SequenceSwing] = None
@@ -232,10 +248,11 @@ class StructureState:
     weak_low: Optional[SequenceSwing] = None
 
     dealing_range: Optional[DealingRange] = None
+    events: List[StructureEvent] = field(default_factory=list)
 
     last_event: Optional[MarketEvent] = None
-
     broken_protected_swing_id: Optional[str] = None
+    structural_epoch: int = 0
 
 
 @dataclass

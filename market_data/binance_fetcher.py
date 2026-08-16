@@ -40,8 +40,9 @@ class BinanceFetcher:
             try:
                 with open(cache_filepath, "r") as f:
                     cached_raw = json.load(f)
-                if len(cached_raw) >= limit:
-                    print(f"✅ Loaded {limit} {timeframe} candles for {symbol} from cache.")
+                if cached_raw and len(cached_raw) >= 10:
+                    selected = cached_raw[-limit:] if len(cached_raw) >= limit else cached_raw
+                    print(f"✅ Loaded {len(selected)} {timeframe} candles for {symbol} from cache.")
                     return [
                         Candle(
                             timestamp=int(bar[0] // 1000),
@@ -51,11 +52,8 @@ class BinanceFetcher:
                             close=float(bar[4]),
                             volume=float(bar[5])
                         )
-                        for bar in cached_raw[-limit:]
+                        for bar in selected
                     ]
-                else:
-                    # We have cache, but it's not enough. We could append, but for simplicity, we'll refetch.
-                    print(f"⚠️ Cache has {len(cached_raw)} candles, but {limit} requested. Refetching...")
             except Exception:
                 pass  # Fallback to API if cache reading fails
 

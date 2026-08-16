@@ -33,41 +33,12 @@ __module_name__ = "raw_swing_engine"
 __build_version__ = "1.0.0"
 
 
-class SwingType(Enum):
-    HIGH = "SWING_HIGH"
-    LOW = "SWING_LOW"
-
-
-class SwingStatus(Enum):
-    CONFIRMED = "CONFIRMED"
-
-
-@dataclass(frozen=True)
-class Candle:
-    timestamp: int
-    open: float
-    high: float
-    low: float
-    close: float
-    volume: float
-
-
-@dataclass(frozen=True)
-class RawSwing:
-    swing_id: str
-
-    # Time/price of the actual geometric extreme.
-    timestamp: int
-    candle_index: int
-    price: float
-    swing_type: SwingType
-
-    # Time at which enough future candles have closed to confirm it.
-    confirmation_timestamp: int
-    confirmation_index: int
-
-    timeframe: str
-    status: SwingStatus = SwingStatus.CONFIRMED
+from market_intelligence.primitives import (
+    Candle,
+    RawSwing,
+    SwingType,
+    SwingStatus,
+)
 
 
 @dataclass(frozen=True)

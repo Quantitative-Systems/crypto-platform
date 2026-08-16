@@ -12,7 +12,7 @@ from strategy_engine.contracts.strategy_state import CandidateState, PositionSta
 from risk_engine.risk_coordinator import RiskCoordinator
 from risk_engine.contracts.account_state import AccountState
 from risk_engine.contracts.risk_plan import RiskApprovedPlan
-from research.replayer.timeframe_aligner import TimeframeAligner, TimeframeSet
+from research.replayer.timeframe_aligner import TimeframeAligner, TimeframeSet, TIMEFRAME_DURATIONS_MS
 from research.simulation.trade_ledger import TradeLedger, SimulatedTrade
 from research.simulation.execution_simulator import ExecutionSimulator
 from research.metrics.metrics_engine import MetricsEngine
@@ -148,6 +148,11 @@ class CausalReplayer:
                 # 4. Evaluate Strategy Lifecycle Engine (P02)
                 trade_plans = self.strategy_coordinator.evaluate(htf_state, mtf_state, ltf_state)
 
+                # Synchronize MTF Structural Trailing Stop with Ledger
+                if self.enable_mtf_trailing:
+                    for t_id, active_plan in self.strategy_coordinator.active_manager.active_trades.items():
+                        self.ledger.update_trailing_stop(t_id, active_plan.stop_invalidation_price)
+
                 # 5. Process emitted trade plans through Risk Firewall (P03)
                 for plan in trade_plans:
                     # Case A: New Entry Proposal
@@ -199,6 +204,14 @@ class CausalReplayer:
                 # Isolate unexpected calculation exceptions to avoid aborting the entire replay stream
                 continue
 
+        # Calculate suspended intervals count in the LTF stream
+        expected_ltf_interval = TIMEFRAME_DURATIONS_MS.get(self.timeframe_set.ltf, 3600000)
+        suspended_intervals_count = 0
+        for idx in range(1, len(ltf_candles)):
+            gap = ltf_candles[idx].timestamp - ltf_candles[idx-1].timestamp
+            if gap > expected_ltf_interval:
+                suspended_intervals_count += 1
+
         # Post-replay analytics
         closed_trades = self.ledger.closed_trades
         metrics = MetricsEngine.calculate_metrics(closed_trades, self.ledger)
@@ -211,6 +224,12 @@ class CausalReplayer:
             "failure_modes": failure_modes,
             "closed_trades": [t.to_dict() for t in closed_trades],
             "equity_curve": self.ledger.equity_curve,
+            "suspended_intervals_count": suspended_intervals_count,
+            "replayed_candles_count": max(0, len(ltf_candles) - min_lookback_bars),
+            "date_range": {
+                "start": ltf_candles[0].timestamp if ltf_candles else 0,
+                "end": ltf_candles[-1].timestamp if ltf_candles else 0
+            },
             "engine_runs": {
                 "htf": self._htf_runs,
                 "mtf": self._mtf_runs,

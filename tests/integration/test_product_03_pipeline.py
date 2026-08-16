@@ -1,6 +1,7 @@
 import pytest
 from market_intelligence.primitives import MarketStatePayload, TrendDirection, RawSwing, SwingType, SequenceSwing, SequenceLabel, StructuralRole
 from market_intelligence.phase_engine import MarketPhase
+from market_intelligence.keyzone_engine import KeyZone, KeyZoneType, ZoneScope, ZoneStatus
 from market_intelligence.structure_builder_engine import StructureState
 from strategy_engine.coordinator.strategy_coordinator import StrategyCoordinator
 from risk_engine.risk_coordinator import RiskCoordinator
@@ -35,7 +36,19 @@ def create_high_rr_payload() -> MarketStatePayload:
             events=[]
         ),
         liquidity_pools=[],
-        keyzones=[],
+        keyzones=[
+            KeyZone(
+                zone_id="kz_1",
+                zone_type=KeyZoneType.BULLISH_OB,
+                scope=ZoneScope.INTERNAL,
+                price_level=100.0,
+                high_boundary=105.0,
+                low_boundary=95.0,
+                creation_timestamp=1000,
+                creation_candle_index=1,
+                status=ZoneStatus.MITIGATED
+            )
+        ],
         phase_state=MarketPhase.EXPANSION,
         trend_state=TrendDirection.BULLISH
     )

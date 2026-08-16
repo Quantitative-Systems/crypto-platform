@@ -44,106 +44,22 @@ No future structural information is used to create an earlier event.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from enum import Enum
 from typing import List, Optional, Set, Tuple
 
-from market_intelligence.raw_swing_engine import (
+from market_intelligence.primitives import (
     Candle,
+    DealingRange,
+    EventType,
     RawSwing,
+    SequenceLabel,
+    SequenceSwing,
+    StructuralRole,
+    StructureEvent,
+    StructureState,
+    SwingScope,
     SwingType,
+    TrendDirection,
 )
-
-
-# ============================================================================
-# ENUMS
-# ============================================================================
-
-
-class SequenceLabel(Enum):
-    HH = "HH"
-    HL = "HL"
-    LH = "LH"
-    LL = "LL"
-    EQH = "EQH"
-    EQL = "EQL"
-    UNKNOWN = "UNKNOWN"
-
-
-class SwingScope(Enum):
-    EXTERNAL = "EXTERNAL"
-    INTERNAL = "INTERNAL"
-
-
-class TrendDirection(Enum):
-    BULLISH = "BULLISH"
-    BEARISH = "BEARISH"
-    RANGING = "RANGING"
-    NEUTRAL = "NEUTRAL"
-
-
-class EventType(Enum):
-    EXTERNAL_BOS = "EXTERNAL_BOS"
-    EXTERNAL_CHOCH = "EXTERNAL_CHOCH"
-    INTERNAL_BOS = "INTERNAL_BOS"
-    INTERNAL_CHOCH = "INTERNAL_CHOCH"
-    MSS = "MSS"
-    FAILED_BOS = "FAILED_BOS"
-
-
-# ============================================================================
-# DATA CONTRACTS
-# ============================================================================
-
-
-@dataclass(frozen=True)
-class SequenceSwing:
-    raw_swing: RawSwing
-    label: SequenceLabel
-    scope: SwingScope
-
-    is_protected: bool = False
-    is_strong: bool = False
-    is_weak: bool = False
-
-
-@dataclass(frozen=True)
-class StructureEvent:
-    timestamp: int
-    event_type: EventType
-    price_level: float
-    broken_swing_id: str
-    direction: str
-    candle_index: int
-    confirmation: str = "BODY_CLOSE"
-    structural_epoch: int = 0
-
-
-@dataclass(frozen=True)
-class DealingRange:
-    high_price: float
-    low_price: float
-    equilibrium_price: float
-
-
-@dataclass
-class StructureState:
-    sequence_swings: List[SequenceSwing]
-
-    external_trend: TrendDirection
-    internal_trend: TrendDirection
-
-    protected_high: Optional[SequenceSwing]
-    protected_low: Optional[SequenceSwing]
-
-    weak_high: Optional[SequenceSwing]
-    weak_low: Optional[SequenceSwing]
-
-    dealing_range: Optional[DealingRange]
-
-    events: List[StructureEvent]
-
-    structural_epoch: int = 0
 
 
 # ============================================================================

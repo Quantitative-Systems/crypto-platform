@@ -364,3 +364,73 @@ def test_scenario_8_zero_lookahead_filtering():
     # Only Bar 1 has closed! Bar 2 and Bar 3 MUST be hidden
     assert len(visible) == 1
     assert visible[0].timestamp == 0
+
+
+def test_scenario_9_stale_mtf_keyzone_rejected():
+    """Scenario 9: Stale historical MTF KeyZones created before MTF alignment are rejected."""
+    hyp = PullbackRidingHypothesis()
+    candidate = CandidateSetup(
+        candidate_id="cand_9",
+        hypothesis_id="HYP_A_PULLBACK_RIDING",
+        symbol="BTCUSD",
+        htf="1D", mtf="4H", ltf="1H",
+        state=CandidateState.WAIT_MTF_RETEST,
+        directional_permission=DirectionalPermission.PERMIT_LONG,
+        mtf_alignment_timestamp=2000  # Alignment occurred at T=2000
+    )
+    
+    # MTF payload contains a stale keyzone created at T=1000 (< 2000)
+    mtf_stale = make_dummy_payload(timeframe="4H", timestamp=2100)
+    mtf_stale.keyzones = [
+        KeyZone(
+            zone_id="stale_kz",
+            zone_type=KeyZoneType.BULLISH_OB,
+            scope=ZoneScope.INTERNAL,
+            price_level=95.0,
+            high_boundary=96.0,
+            low_boundary=94.0,
+            creation_timestamp=1000,  # STALE: Created before alignment
+            creation_candle_index=1,
+            status=ZoneStatus.MITIGATED
+        )
+    ]
+    
+    hyp.evaluate(candidate, make_dummy_payload("1D"), mtf_stale, make_dummy_payload("1H"))
+    # Candidate MUST NOT transition to WAIT_LTF_TRIGGER because keyzone is stale
+    assert candidate.state == CandidateState.WAIT_MTF_RETEST
+    assert candidate.mtf_keyzone_id is None
+
+
+def test_scenario_10_intrabar_collision_adverse_precedence():
+    """Scenario 10: When both SL and TP are touched in the same bar, SL takes precedence (adverse-first)."""
+    from research.simulation.execution_simulator import ExecutionSimulator
+    from research.simulation.trade_ledger import TradeLedger, SimulatedTrade
+
+    sim = ExecutionSimulator()
+    ledger = TradeLedger()
+    trade = SimulatedTrade(
+        trade_id="t_collision",
+        hypothesis_id="HYP_A_PULLBACK_RIDING",
+        symbol="BTCUSD",
+        timeframe_set="SET_3",
+        directional_permission="PERMIT_LONG",
+        setup_timestamp=1000,
+        entry_price=100.0,
+        fill_entry_price=100.0,
+        initial_stop_price=90.0,
+        current_stop_price=90.0,
+        target_price=150.0,
+        position_units=1.0,
+        dollar_risk=10.0,
+        status="ACTIVE"
+    )
+    ledger.trades["t_collision"] = trade
+
+    # Ambiguous candle: Low touches SL (85 <= 90), High touches TP (160 >= 150)
+    ambiguous_bar = Candle(timestamp=2000, open=100.0, high=160.0, low=85.0, close=110.0, volume=100.0)
+    closed = sim.process_candle(ambiguous_bar, ledger)
+
+    assert len(closed) == 1
+    assert closed[0].status == "CLOSED"
+    assert closed[0].exit_reason == "INITIAL_LTF_SL"  # Must exit via SL, NOT TP
+
