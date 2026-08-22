@@ -18,7 +18,7 @@ def test_limit_entry_and_tp_exit():
 
     trade = SimulatedTrade(
         trade_id="trade-1",
-        hypothesis_id="HYP_A_PULLBACK_RIDING",
+        hypothesis_id="UNIFIED_STRATEGY",
         symbol="BTCUSDT",
         timeframe_set="SET_4",
         directional_permission="PERMIT_LONG",
@@ -57,7 +57,7 @@ def test_adverse_first_collision_resolution():
 
     trade = SimulatedTrade(
         trade_id="trade-2",
-        hypothesis_id="HYP_B_CONTINUATION_RIDING",
+        hypothesis_id="UNIFIED_STRATEGY",
         symbol="ETHUSDT",
         timeframe_set="SET_4",
         directional_permission="PERMIT_LONG",

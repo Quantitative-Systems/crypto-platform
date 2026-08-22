@@ -48,14 +48,19 @@ CANONICAL_TIMEFRAME_SETS: Dict[str, TimeframeSet] = {
     ),
 }
 
+# Seconds per canonical timeframe for precise alignment
+TIMEFRAME_DURATIONS_SEC: Dict[str, int] = {
+    "15M": 15 * 60,
+    "1H": 60 * 60,
+    "4H": 4 * 60 * 60,
+    "1D": 24 * 60 * 60,
+    "1W": 7 * 24 * 60 * 60,
+    "1M": 30 * 24 * 60 * 60,  # Approximate standard month
+}
+
 # Milliseconds per canonical timeframe for precise alignment
 TIMEFRAME_DURATIONS_MS: Dict[str, int] = {
-    "15M": 15 * 60 * 1000,
-    "1H": 60 * 60 * 1000,
-    "4H": 4 * 60 * 60 * 1000,
-    "1D": 24 * 60 * 60 * 1000,
-    "1W": 7 * 24 * 60 * 60 * 1000,
-    "1M": 30 * 24 * 60 * 60 * 1000,  # Approximate standard month
+    k: v * 1000 for k, v in TIMEFRAME_DURATIONS_SEC.items()
 }
 
 
@@ -82,7 +87,10 @@ class TimeframeAligner:
         Returns only the historical candles that closed at or before decision_timestamp.
         Strictly excludes any open/unfinalized candle.
         """
-        duration = TIMEFRAME_DURATIONS_MS.get(timeframe, 0)
+        if decision_timestamp < 100_000_000_000:
+            duration = TIMEFRAME_DURATIONS_SEC.get(timeframe.upper(), 0)
+        else:
+            duration = TIMEFRAME_DURATIONS_MS.get(timeframe.upper(), 0)
         
         # A candle with start timestamp is closed when (timestamp + duration) <= decision_timestamp
         # which is equivalent to timestamp <= (decision_timestamp - duration)

@@ -18,11 +18,17 @@ class ExecutionSimulator:
         self,
         maker_fee_rate: float = 0.0000,   # 0.00% maker fee
         taker_fee_rate: float = 0.0005,   # 0.05% taker fee
-        slippage_bps: float = 5.0         # 5.0 basis points slippage on stop-loss market orders
+        slippage_bps: float = 5.0,        # 5.0 basis points slippage on stop-loss market orders
+        enable_profit_lock: bool = False,
+        lockin_r: float = 1.0,
+        giveback_r: float = 0.75
     ):
         self.maker_fee_rate = maker_fee_rate
         self.taker_fee_rate = taker_fee_rate
         self.slippage_bps = slippage_bps
+        self.enable_profit_lock = enable_profit_lock
+        self.lockin_r = lockin_r
+        self.giveback_r = giveback_r
 
     def _apply_slippage(self, base_price: float, is_buy: bool) -> float:
         """
@@ -70,9 +76,40 @@ class ExecutionSimulator:
         # 2. Process Active Open Trades (Intrabar SL/TP Evaluation)
         for trade in ledger.get_active_trades():
             is_long = trade.directional_permission == "PERMIT_LONG"
-            current_stop = trade.current_stop_price
             target_price = trade.target_price
 
+            # Track Excursions (MFE / MAE)
+            if is_long:
+                trade.metadata["mfe_price"] = max(trade.metadata.get("mfe_price", trade.fill_entry_price), candle.high)
+                trade.metadata["mae_price"] = min(trade.metadata.get("mae_price", trade.fill_entry_price), candle.low)
+            else:
+                trade.metadata["mfe_price"] = min(trade.metadata.get("mfe_price", trade.fill_entry_price), candle.low)
+                trade.metadata["mae_price"] = max(trade.metadata.get("mae_price", trade.fill_entry_price), candle.high)
+
+            # Profit-Lock Ratchet (+1.0R Excursion Protection)
+            if self.enable_profit_lock:
+                entry_p = trade.fill_entry_price
+                init_sl = trade.initial_stop_price
+                risk_dist = abs(entry_p - init_sl)
+                if risk_dist > 0:
+                    if is_long:
+                        fav_p = trade.metadata.get("mfe_price", entry_p)
+                        fav_r = (fav_p - entry_p) / risk_dist
+                        if fav_r >= self.lockin_r:
+                            floor_stop = fav_p - (self.giveback_r * risk_dist)
+                            if floor_stop > trade.current_stop_price:
+                                ledger.update_trailing_stop(trade.trade_id, floor_stop)
+                                trade.metadata["profit_locked"] = True
+                    else:
+                        fav_p = trade.metadata.get("mfe_price", entry_p)
+                        fav_r = (entry_p - fav_p) / risk_dist
+                        if fav_r >= self.lockin_r:
+                            floor_stop = fav_p + (self.giveback_r * risk_dist)
+                            if floor_stop < trade.current_stop_price:
+                                ledger.update_trailing_stop(trade.trade_id, floor_stop)
+                                trade.metadata["profit_locked"] = True
+
+            current_stop = trade.current_stop_price
             hit_sl = False
             hit_tp = False
 
@@ -94,8 +131,10 @@ class ExecutionSimulator:
                 notional = exit_price * trade.position_units
                 exit_fee = notional * self.taker_fee_rate
                 
-                # Tag whether it was initial structural SL or MTF Trailed stop
-                if abs(current_stop - trade.initial_stop_price) < 1e-6:
+                # Tag whether it was initial structural SL or MTF/Profit-Lock Trailed stop
+                if trade.metadata.get("profit_locked", False) and abs(current_stop - trade.initial_stop_price) >= 1e-6:
+                    exit_reason = "PROFIT_LOCK_TRAIL"
+                elif abs(current_stop - trade.initial_stop_price) < 1e-6:
                     exit_reason = "INITIAL_LTF_SL"
                 else:
                     exit_reason = "MTF_STRUCTURAL_TRAIL"

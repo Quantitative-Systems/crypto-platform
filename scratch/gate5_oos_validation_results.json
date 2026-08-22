@@ -1,0 +1,1128 @@
+[
+  {
+    "symbol": "BTCUSDT",
+    "tf_set_id": "SET_3",
+    "tf_set_label": "SET_3_SWING (1D -> 4H -> 1H)",
+    "start_dt": "2020-11-29 12:00:00 UTC",
+    "split_dt": "2024-11-27 16:00:00 UTC",
+    "end_dt": "2026-08-14 15:00:00 UTC",
+    "total_candles": 50000,
+    "is_candles": 35000,
+    "oos_candles": 15000,
+    "execution_time_sec": 316.79271507263184,
+    "status": "OOS_SUPPORTED",
+    "is_stats": {
+      "combined": {
+        "total_trades": 113,
+        "wins": 61,
+        "losses": 52,
+        "win_rate_pct": 53.98230088495575,
+        "gross_profit": 8519.20965851201,
+        "gross_loss": 5642.092069571943,
+        "profit_factor": 1.5099380785465186,
+        "net_pnl": 2877.1175889400674,
+        "total_realized_r": 29.075573916221387,
+        "expectancy_r": 0.2573059638603663,
+        "median_r": 0.24662245481077283,
+        "avg_win_r": 1.3476190169916589,
+        "avg_loss_r": -1.0217151176974963,
+        "max_drawdown_usd": 1500.889492105036,
+        "long_trades": 53,
+        "short_trades": 60,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 74,
+          "PROFIT_LOCK_TRAIL": 39
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": -0.4079755893116347,
+          "PROFIT_LOCK_TRAIL": 1.5196350647508299
+        }
+      },
+      "strategy_a": {
+        "total_trades": 91,
+        "wins": 47,
+        "losses": 44,
+        "win_rate_pct": 51.64835164835166,
+        "gross_profit": 7455.274843940686,
+        "gross_loss": 4800.82725146999,
+        "profit_factor": 1.5529146235490803,
+        "net_pnl": 2654.4475924706962,
+        "total_realized_r": 26.968439356515585,
+        "expectancy_r": 0.2963564764452263,
+        "median_r": 0.1760113226428563,
+        "avg_win_r": 1.5307821629199847,
+        "avg_loss_r": -1.0222345977437204,
+        "max_drawdown_usd": 1123.7563671221433,
+        "long_trades": 45,
+        "short_trades": 46,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 58,
+          "PROFIT_LOCK_TRAIL": 33
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": -0.5251048446400661,
+          "PROFIT_LOCK_TRAIL": 1.7401369801708917
+        }
+      },
+      "strategy_b": {
+        "total_trades": 22,
+        "wins": 14,
+        "losses": 8,
+        "win_rate_pct": 63.63636363636363,
+        "gross_profit": 1063.9348145713238,
+        "gross_loss": 841.2648181019531,
+        "profit_factor": 1.264684783766133,
+        "net_pnl": 222.66999646937086,
+        "total_realized_r": 2.1071345597058024,
+        "expectancy_r": 0.09577884362299104,
+        "median_r": 0.4779770910409999,
+        "avg_win_r": 0.732714169946566,
+        "avg_loss_r": -1.0188579774432653,
+        "max_drawdown_usd": 300.9584249108727,
+        "long_trades": 8,
+        "short_trades": 14,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 16,
+          "PROFIT_LOCK_TRAIL": 6
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": 0.016617961253929413,
+          "PROFIT_LOCK_TRAIL": 0.3068745299404886
+        }
+      }
+    },
+    "oos_stats": {
+      "combined": {
+        "total_trades": 120,
+        "wins": 70,
+        "losses": 50,
+        "win_rate_pct": 58.333333333333336,
+        "gross_profit": 9522.183410959788,
+        "gross_loss": 6892.96675166951,
+        "profit_factor": 1.3814346933638508,
+        "net_pnl": 2629.2166592902777,
+        "total_realized_r": 19.70512003099415,
+        "expectancy_r": 0.1642093335916179,
+        "median_r": 0.6269013082752373,
+        "avg_win_r": 1.0354875228830862,
+        "avg_loss_r": -1.0555801314164375,
+        "max_drawdown_usd": 2271.5074718481583,
+        "long_trades": 59,
+        "short_trades": 61,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 37,
+          "INITIAL_LTF_SL": 81,
+          "MTF_STRUCTURAL_TRAIL": 2
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 1.086954174850297,
+          "INITIAL_LTF_SL": -0.23935541976168498,
+          "MTF_STRUCTURAL_TRAIL": -0.5621977188851842
+        }
+      },
+      "strategy_a": {
+        "total_trades": 74,
+        "wins": 40,
+        "losses": 34,
+        "win_rate_pct": 54.054054054054056,
+        "gross_profit": 5246.91869524058,
+        "gross_loss": 4539.382513137963,
+        "profit_factor": 1.1558661734398574,
+        "net_pnl": 707.5361821026172,
+        "total_realized_r": 3.717078699929747,
+        "expectancy_r": 0.0502307932422939,
+        "median_r": 0.45047255690745847,
+        "avg_win_r": 0.9505325742846151,
+        "avg_loss_r": -1.0089477726898488,
+        "max_drawdown_usd": 1571.1747286511948,
+        "long_trades": 38,
+        "short_trades": 36,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 21,
+          "INITIAL_LTF_SL": 51,
+          "MTF_STRUCTURAL_TRAIL": 2
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 0.9108258014227653,
+          "INITIAL_LTF_SL": -0.2801150527878031,
+          "MTF_STRUCTURAL_TRAIL": -0.5621977188851842
+        }
+      },
+      "strategy_b": {
+        "total_trades": 46,
+        "wins": 30,
+        "losses": 16,
+        "win_rate_pct": 65.21739130434783,
+        "gross_profit": 4275.264715719208,
+        "gross_loss": 2353.5842385315473,
+        "profit_factor": 1.8164910546760964,
+        "net_pnl": 1921.6804771876602,
+        "total_realized_r": 15.9880413310644,
+        "expectancy_r": 0.34756611589270436,
+        "median_r": 0.7946406668467285,
+        "avg_win_r": 1.1487607876810473,
+        "avg_loss_r": -1.1546738937104382,
+        "max_drawdown_usd": 1325.1350696082818,
+        "long_trades": 21,
+        "short_trades": 25,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 16,
+          "INITIAL_LTF_SL": 30
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 1.3181226649739328,
+          "INITIAL_LTF_SL": -0.17006404361728417
+        }
+      }
+    },
+    "retention": {
+      "wr_retention": 1.080601092896175,
+      "pf_retention": 0.9148949304554486,
+      "exp_retention": 0.6381870483217028
+    },
+    "setup_lifecycle": {
+      "mean_setup_age_hours": 107.07725321888412,
+      "max_setup_age_hours": 1704.0,
+      "total_trades_analyzed": 233
+    }
+  },
+  {
+    "symbol": "BTCUSDT",
+    "tf_set_id": "SET_4",
+    "tf_set_label": "SET_4_INTRADAY (4H -> 1H -> 15M)",
+    "start_dt": "2025-03-11 19:45:00 UTC",
+    "split_dt": "2026-03-11 09:45:00 UTC",
+    "end_dt": "2026-08-14 15:30:00 UTC",
+    "total_candles": 50000,
+    "is_candles": 35000,
+    "oos_candles": 15000,
+    "execution_time_sec": 314.8603947162628,
+    "status": "OOS_FAILED",
+    "is_stats": {
+      "combined": {
+        "total_trades": 133,
+        "wins": 67,
+        "losses": 66,
+        "win_rate_pct": 50.37593984962406,
+        "gross_profit": 92811.99645957025,
+        "gross_loss": 45885.24441052171,
+        "profit_factor": 2.0226980950391975,
+        "net_pnl": 46926.75204904855,
+        "total_realized_r": 528.3523433022064,
+        "expectancy_r": 3.972574009791025,
+        "median_r": 0.040671998854566925,
+        "avg_win_r": 9.091366423043596,
+        "avg_loss_r": -1.223775864268402,
+        "max_drawdown_usd": 15581.469941558928,
+        "long_trades": 73,
+        "short_trades": 60,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 39,
+          "INITIAL_LTF_SL": 92,
+          "MTF_STRUCTURAL_TRAIL": 2
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 14.923006979147463,
+          "INITIAL_LTF_SL": -0.5677230020841476,
+          "MTF_STRUCTURAL_TRAIL": -0.7072063464016074
+        }
+      },
+      "strategy_a": {
+        "total_trades": 94,
+        "wins": 49,
+        "losses": 45,
+        "win_rate_pct": 52.12765957446809,
+        "gross_profit": 19550.287221562816,
+        "gross_loss": 31798.1154187581,
+        "profit_factor": 0.6148253430777177,
+        "net_pnl": -12247.82819719529,
+        "total_realized_r": -18.77824294277096,
+        "expectancy_r": -0.1997685419443719,
+        "median_r": 0.11057246345683223,
+        "avg_win_r": 0.743476801626905,
+        "avg_loss_r": -1.2268579160553177,
+        "max_drawdown_usd": 16689.23028998872,
+        "long_trades": 55,
+        "short_trades": 39,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 27,
+          "INITIAL_LTF_SL": 67
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 0.5023121745434278,
+          "INITIAL_LTF_SL": -0.48269659187229114
+        }
+      },
+      "strategy_b": {
+        "total_trades": 39,
+        "wins": 18,
+        "losses": 21,
+        "win_rate_pct": 46.15384615384615,
+        "gross_profit": 73261.70923800745,
+        "gross_loss": 14087.128991763606,
+        "profit_factor": 5.200613217983717,
+        "net_pnl": 59174.58024624384,
+        "total_realized_r": 547.1305862449773,
+        "expectancy_r": 14.028989390896854,
+        "median_r": -0.4465031441663134,
+        "avg_win_r": 31.816177059122367,
+        "avg_loss_r": -1.2171714675821539,
+        "max_drawdown_usd": 5965.546130984701,
+        "long_trades": 18,
+        "short_trades": 21,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 12,
+          "INITIAL_LTF_SL": 25,
+          "MTF_STRUCTURAL_TRAIL": 2
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 47.369570289506555,
+          "INITIAL_LTF_SL": -0.7955937814519228,
+          "MTF_STRUCTURAL_TRAIL": -0.7072063464016074
+        }
+      }
+    },
+    "oos_stats": {
+      "combined": {
+        "total_trades": 36,
+        "wins": 20,
+        "losses": 16,
+        "win_rate_pct": 55.55555555555556,
+        "gross_profit": 7577.021336627647,
+        "gross_loss": 11370.981075219976,
+        "profit_factor": 0.6663471943630042,
+        "net_pnl": -3793.9597385923284,
+        "total_realized_r": -6.639594253498287,
+        "expectancy_r": -0.1844331737082857,
+        "median_r": 0.1656787998307989,
+        "avg_win_r": 0.6920620224616951,
+        "avg_loss_r": -1.2800521689207618,
+        "max_drawdown_usd": 7657.268241223605,
+        "long_trades": 10,
+        "short_trades": 26,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 23,
+          "PROFIT_LOCK_TRAIL": 13
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": -0.7055355793433492,
+          "PROFIT_LOCK_TRAIL": 0.7375172362614418
+        }
+      },
+      "strategy_a": {
+        "total_trades": 36,
+        "wins": 20,
+        "losses": 16,
+        "win_rate_pct": 55.55555555555556,
+        "gross_profit": 7577.021336627647,
+        "gross_loss": 11370.981075219976,
+        "profit_factor": 0.6663471943630042,
+        "net_pnl": -3793.9597385923284,
+        "total_realized_r": -6.639594253498287,
+        "expectancy_r": -0.1844331737082857,
+        "median_r": 0.1656787998307989,
+        "avg_win_r": 0.6920620224616951,
+        "avg_loss_r": -1.2800521689207618,
+        "max_drawdown_usd": 7657.268241223605,
+        "long_trades": 10,
+        "short_trades": 26,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 23,
+          "PROFIT_LOCK_TRAIL": 13
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": -0.7055355793433492,
+          "PROFIT_LOCK_TRAIL": 0.7375172362614418
+        }
+      },
+      "strategy_b": {
+        "total_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "win_rate_pct": 0.0,
+        "gross_profit": 0.0,
+        "gross_loss": 0.0,
+        "profit_factor": 0.0,
+        "net_pnl": 0.0,
+        "total_realized_r": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "avg_win_r": 0.0,
+        "avg_loss_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "long_trades": 0,
+        "short_trades": 0,
+        "exit_attribution": {},
+        "exit_avg_r": {}
+      }
+    },
+    "retention": {
+      "wr_retention": 1.1028192371475953,
+      "pf_retention": 0.329434825690134,
+      "exp_retention": -0.04642661741574142
+    },
+    "setup_lifecycle": {
+      "mean_setup_age_hours": 27.72041420118343,
+      "max_setup_age_hours": 446.5,
+      "total_trades_analyzed": 169
+    }
+  },
+  {
+    "symbol": "ETHUSDT",
+    "tf_set_id": "SET_3",
+    "tf_set_label": "SET_3_SWING (1D -> 4H -> 1H)",
+    "start_dt": "2020-11-29 12:00:00 UTC",
+    "split_dt": "2024-11-27 16:00:00 UTC",
+    "end_dt": "2026-08-14 15:00:00 UTC",
+    "total_candles": 50000,
+    "is_candles": 35000,
+    "oos_candles": 15000,
+    "execution_time_sec": 290.46532940864563,
+    "status": "OOS_FAILED",
+    "is_stats": {
+      "combined": {
+        "total_trades": 124,
+        "wins": 69,
+        "losses": 55,
+        "win_rate_pct": 55.64516129032258,
+        "gross_profit": 17999.67253377765,
+        "gross_loss": 6736.660133623557,
+        "profit_factor": 2.671898563494233,
+        "net_pnl": 11263.012400154093,
+        "total_realized_r": 105.24783005195304,
+        "expectancy_r": 0.8487728229996212,
+        "median_r": 0.30989623974282965,
+        "avg_win_r": 2.416523989453558,
+        "avg_loss_r": -1.1180422767335,
+        "max_drawdown_usd": 1565.9846147164212,
+        "long_trades": 48,
+        "short_trades": 76,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 85,
+          "PROFIT_LOCK_TRAIL": 38,
+          "MTF_STRUCTURAL_TRAIL": 1
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": -0.3623715116161148,
+          "PROFIT_LOCK_TRAIL": 3.597235667089018,
+          "MTF_STRUCTURAL_TRAIL": -0.6455468100599252
+        }
+      },
+      "strategy_a": {
+        "total_trades": 104,
+        "wins": 53,
+        "losses": 51,
+        "win_rate_pct": 50.96153846153846,
+        "gross_profit": 5038.385642028277,
+        "gross_loss": 6284.444053595173,
+        "profit_factor": 0.8017233663089011,
+        "net_pnl": -1246.0584115668948,
+        "total_realized_r": -14.913115756886247,
+        "expectancy_r": -0.14339534381621394,
+        "median_r": 0.20181701534015933,
+        "avg_win_r": 0.7879306746318328,
+        "avg_loss_r": -1.1112439512230075,
+        "max_drawdown_usd": 2232.759809150694,
+        "long_trades": 28,
+        "short_trades": 76,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 76,
+          "PROFIT_LOCK_TRAIL": 27,
+          "MTF_STRUCTURAL_TRAIL": 1
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": -0.4021475590474735,
+          "PROFIT_LOCK_TRAIL": 0.6035424274363579,
+          "MTF_STRUCTURAL_TRAIL": -0.6455468100599252
+        }
+      },
+      "strategy_b": {
+        "total_trades": 20,
+        "wins": 16,
+        "losses": 4,
+        "win_rate_pct": 80.0,
+        "gross_profit": 12961.286891749372,
+        "gross_loss": 452.216080028385,
+        "profit_factor": 28.661711655489583,
+        "net_pnl": 12509.070811720987,
+        "total_realized_r": 120.16094580883929,
+        "expectancy_r": 6.008047290441963,
+        "median_r": 0.897868045588581,
+        "avg_win_r": 7.8112393448005255,
+        "avg_loss_r": -1.2047209269922792,
+        "max_drawdown_usd": 239.86281575317201,
+        "long_trades": 20,
+        "short_trades": 0,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 9,
+          "PROFIT_LOCK_TRAIL": 11
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": -0.026484888862419398,
+          "PROFIT_LOCK_TRAIL": 10.945391800781914
+        }
+      }
+    },
+    "oos_stats": {
+      "combined": {
+        "total_trades": 110,
+        "wins": 50,
+        "losses": 60,
+        "win_rate_pct": 45.45454545454545,
+        "gross_profit": 9759.932903401688,
+        "gross_loss": 12061.796457667686,
+        "profit_factor": 0.8091608026760638,
+        "net_pnl": -2301.863554265999,
+        "total_realized_r": -10.287589835848864,
+        "expectancy_r": -0.09352354396226242,
+        "median_r": -1.0172623530409564,
+        "avg_win_r": 1.0965313238049845,
+        "avg_loss_r": -1.0852359337683013,
+        "max_drawdown_usd": 4377.603117144319,
+        "long_trades": 59,
+        "short_trades": 51,
+        "exit_attribution": {
+          "MTF_STRUCTURAL_TRAIL": 2,
+          "INITIAL_LTF_SL": 81,
+          "PROFIT_LOCK_TRAIL": 27
+        },
+        "exit_avg_r": {
+          "MTF_STRUCTURAL_TRAIL": -0.5432056577967823,
+          "INITIAL_LTF_SL": -0.5234968389089651,
+          "PROFIT_LOCK_TRAIL": 1.22970612708781
+        }
+      },
+      "strategy_a": {
+        "total_trades": 70,
+        "wins": 39,
+        "losses": 31,
+        "win_rate_pct": 55.714285714285715,
+        "gross_profit": 7157.875691163088,
+        "gross_loss": 6299.306308985361,
+        "profit_factor": 1.1362958618083168,
+        "net_pnl": 858.5693821777265,
+        "total_realized_r": 6.8797196112589125,
+        "expectancy_r": 0.09828170873227017,
+        "median_r": 0.2709077067110457,
+        "avg_win_r": 1.0401428664585366,
+        "avg_loss_r": -1.0866403929233548,
+        "max_drawdown_usd": 1447.6891351371653,
+        "long_trades": 32,
+        "short_trades": 38,
+        "exit_attribution": {
+          "MTF_STRUCTURAL_TRAIL": 2,
+          "INITIAL_LTF_SL": 46,
+          "PROFIT_LOCK_TRAIL": 22
+        },
+        "exit_avg_r": {
+          "MTF_STRUCTURAL_TRAIL": -0.5432056577967823,
+          "INITIAL_LTF_SL": -0.3636017197466263,
+          "PROFIT_LOCK_TRAIL": 1.1223550015998764
+        }
+      },
+      "strategy_b": {
+        "total_trades": 40,
+        "wins": 11,
+        "losses": 29,
+        "win_rate_pct": 27.500000000000004,
+        "gross_profit": 2602.0572122385997,
+        "gross_loss": 5762.4901486823255,
+        "profit_factor": 0.4515508304744949,
+        "net_pnl": -3160.4329364437253,
+        "total_realized_r": -17.167309447107776,
+        "expectancy_r": -0.4291827361776944,
+        "median_r": -1.0600656957002026,
+        "avg_win_r": 1.2964540362151191,
+        "avg_loss_r": -1.0837346153611755,
+        "max_drawdown_usd": 4384.054989109025,
+        "long_trades": 27,
+        "short_trades": 13,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 35,
+          "PROFIT_LOCK_TRAIL": 5
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": -0.7336447098080391,
+          "PROFIT_LOCK_TRAIL": 1.7020510792347174
+        }
+      }
+    },
+    "retention": {
+      "wr_retention": 0.8168642951251647,
+      "pf_retention": 0.3028411384067913,
+      "exp_retention": -0.11018677958107073
+    },
+    "setup_lifecycle": {
+      "mean_setup_age_hours": 227.66666666666666,
+      "max_setup_age_hours": 10950.0,
+      "total_trades_analyzed": 234
+    }
+  },
+  {
+    "symbol": "ETHUSDT",
+    "tf_set_id": "SET_4",
+    "tf_set_label": "SET_4_INTRADAY (4H -> 1H -> 15M)",
+    "start_dt": "2025-03-11 19:45:00 UTC",
+    "split_dt": "2026-03-11 09:45:00 UTC",
+    "end_dt": "2026-08-14 15:30:00 UTC",
+    "total_candles": 50000,
+    "is_candles": 35000,
+    "oos_candles": 15000,
+    "execution_time_sec": 302.61742067337036,
+    "status": "OOS_FAILED",
+    "is_stats": {
+      "combined": {
+        "total_trades": 91,
+        "wins": 56,
+        "losses": 35,
+        "win_rate_pct": 61.53846153846154,
+        "gross_profit": 5542.542332418968,
+        "gross_loss": 3962.569260938621,
+        "profit_factor": 1.3987244051618408,
+        "net_pnl": 1579.973071480347,
+        "total_realized_r": 15.683709462017791,
+        "expectancy_r": 0.1723484556265691,
+        "median_r": 0.3241707151243166,
+        "avg_win_r": 0.9562065698875915,
+        "avg_loss_r": -1.0818245271910663,
+        "max_drawdown_usd": 877.3955470115824,
+        "long_trades": 46,
+        "short_trades": 45,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 31,
+          "INITIAL_LTF_SL": 59,
+          "MTF_STRUCTURAL_TRAIL": 1
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 1.02190693610101,
+          "INITIAL_LTF_SL": -0.26061075765661307,
+          "MTF_STRUCTURAL_TRAIL": -0.6193708553733384
+        }
+      },
+      "strategy_a": {
+        "total_trades": 61,
+        "wins": 43,
+        "losses": 18,
+        "win_rate_pct": 70.49180327868852,
+        "gross_profit": 4809.828106649549,
+        "gross_loss": 2053.7864814558257,
+        "profit_factor": 2.341931914577656,
+        "net_pnl": 2756.0416251937236,
+        "total_realized_r": 26.41007108100094,
+        "expectancy_r": 0.43295198493444165,
+        "median_r": 0.5716802129899361,
+        "avg_win_r": 1.0801861035292102,
+        "avg_loss_r": -1.1132184094863942,
+        "max_drawdown_usd": 717.6954533257439,
+        "long_trades": 38,
+        "short_trades": 23,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 22,
+          "INITIAL_LTF_SL": 38,
+          "MTF_STRUCTURAL_TRAIL": 1
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 1.3526720015215452,
+          "INITIAL_LTF_SL": -0.07182479202893992,
+          "MTF_STRUCTURAL_TRAIL": -0.6193708553733384
+        }
+      },
+      "strategy_b": {
+        "total_trades": 30,
+        "wins": 13,
+        "losses": 17,
+        "win_rate_pct": 43.333333333333336,
+        "gross_profit": 732.7142257694188,
+        "gross_loss": 1908.7827794827954,
+        "profit_factor": 0.3838646459121741,
+        "net_pnl": -1176.0685537133766,
+        "total_realized_r": -10.72636161898315,
+        "expectancy_r": -0.35754538729943824,
+        "median_r": -0.23065648591100352,
+        "avg_win_r": 0.5461204201499291,
+        "avg_loss_r": -1.04858394593719,
+        "max_drawdown_usd": 1319.5628177420951,
+        "long_trades": 8,
+        "short_trades": 22,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 9,
+          "INITIAL_LTF_SL": 21
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 0.21337010951747892,
+          "INITIAL_LTF_SL": -0.6022234573638314
+        }
+      }
+    },
+    "oos_stats": {
+      "combined": {
+        "total_trades": 34,
+        "wins": 19,
+        "losses": 15,
+        "win_rate_pct": 55.88235294117647,
+        "gross_profit": 1389.8513985626944,
+        "gross_loss": 2241.0360850608345,
+        "profit_factor": 0.6201825163939588,
+        "net_pnl": -851.18468649814,
+        "total_realized_r": -7.354853141135551,
+        "expectancy_r": -0.21631921003339852,
+        "median_r": 0.27344493329673647,
+        "avg_win_r": 0.6650250857670365,
+        "avg_loss_r": -1.3326886513806164,
+        "max_drawdown_usd": 859.6733585059694,
+        "long_trades": 22,
+        "short_trades": 12,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 24,
+          "PROFIT_LOCK_TRAIL": 10
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": -0.31475864394349623,
+          "PROFIT_LOCK_TRAIL": 0.01993543135083593
+        }
+      },
+      "strategy_a": {
+        "total_trades": 24,
+        "wins": 15,
+        "losses": 9,
+        "win_rate_pct": 62.5,
+        "gross_profit": 1062.3882503401906,
+        "gross_loss": 1213.7654788012308,
+        "profit_factor": 0.8752829676697124,
+        "net_pnl": -151.37722846104015,
+        "total_realized_r": -1.0773038414880858,
+        "expectancy_r": -0.044887660062003565,
+        "median_r": 0.32685061201322496,
+        "avg_win_r": 0.6423446676539426,
+        "avg_loss_r": -1.190274872921914,
+        "max_drawdown_usd": 558.0548306459234,
+        "long_trades": 15,
+        "short_trades": 9,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 17,
+          "PROFIT_LOCK_TRAIL": 7
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": -0.23506945983509117,
+          "PROFIT_LOCK_TRAIL": 0.41698242510120903
+        }
+      },
+      "strategy_b": {
+        "total_trades": 10,
+        "wins": 4,
+        "losses": 6,
+        "win_rate_pct": 40.0,
+        "gross_profit": 327.46314822250366,
+        "gross_loss": 1027.2706062596035,
+        "profit_factor": 0.3187700944883746,
+        "net_pnl": -699.8074580370998,
+        "total_realized_r": -6.277549299647465,
+        "expectancy_r": -0.6277549299647465,
+        "median_r": -0.9142206298914295,
+        "avg_win_r": 0.7500766536911383,
+        "avg_loss_r": -1.5463093190686694,
+        "max_drawdown_usd": 765.899488525932,
+        "long_trades": 7,
+        "short_trades": 3,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 3,
+          "INITIAL_LTF_SL": 7
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": -0.9065075540667014,
+          "INITIAL_LTF_SL": -0.5082895196353373
+        }
+      }
+    },
+    "retention": {
+      "wr_retention": 0.9080882352941176,
+      "pf_retention": 0.44339150307611885,
+      "exp_retention": -1.2551270578374183
+    },
+    "setup_lifecycle": {
+      "mean_setup_age_hours": 30.454,
+      "max_setup_age_hours": 774.0,
+      "total_trades_analyzed": 125
+    }
+  },
+  {
+    "symbol": "SOLUSDT",
+    "tf_set_id": "SET_3",
+    "tf_set_label": "SET_3_SWING (1D -> 4H -> 1H)",
+    "start_dt": "2020-11-29 12:00:00 UTC",
+    "split_dt": "2024-11-27 16:00:00 UTC",
+    "end_dt": "2026-08-14 15:00:00 UTC",
+    "total_candles": 50000,
+    "is_candles": 35000,
+    "oos_candles": 15000,
+    "execution_time_sec": 357.89003252983093,
+    "status": "OOS_SUPPORTED",
+    "is_stats": {
+      "combined": {
+        "total_trades": 186,
+        "wins": 101,
+        "losses": 85,
+        "win_rate_pct": 54.3010752688172,
+        "gross_profit": 11323.593937520525,
+        "gross_loss": 9843.54008498857,
+        "profit_factor": 1.1503578834193038,
+        "net_pnl": 1480.053852531956,
+        "total_realized_r": 15.405932860570156,
+        "expectancy_r": 0.08282759602457071,
+        "median_r": 0.3123713057661047,
+        "avg_win_r": 1.0289645751401302,
+        "avg_loss_r": -1.0414057556303884,
+        "max_drawdown_usd": 1540.9650666224024,
+        "long_trades": 75,
+        "short_trades": 111,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 45,
+          "MTF_STRUCTURAL_TRAIL": 4,
+          "INITIAL_LTF_SL": 137
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 1.1765662728099566,
+          "MTF_STRUCTURAL_TRAIL": -0.10493799756739833,
+          "INITIAL_LTF_SL": -0.2709474264642941
+        }
+      },
+      "strategy_a": {
+        "total_trades": 113,
+        "wins": 65,
+        "losses": 48,
+        "win_rate_pct": 57.52212389380531,
+        "gross_profit": 6541.9038914874445,
+        "gross_loss": 5464.579582977955,
+        "profit_factor": 1.1971467872597794,
+        "net_pnl": 1077.3243085094894,
+        "total_realized_r": 10.297864295221597,
+        "expectancy_r": 0.09113154243558935,
+        "median_r": 0.4000249941588786,
+        "avg_win_r": 0.9195028018657273,
+        "avg_loss_r": -1.030621204709389,
+        "max_drawdown_usd": 1378.1585517316385,
+        "long_trades": 33,
+        "short_trades": 80,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 27,
+          "INITIAL_LTF_SL": 83,
+          "MTF_STRUCTURAL_TRAIL": 3
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 0.9171171716935788,
+          "INITIAL_LTF_SL": -0.16489783538778288,
+          "MTF_STRUCTURAL_TRAIL": -0.25925966777301696
+        }
+      },
+      "strategy_b": {
+        "total_trades": 73,
+        "wins": 36,
+        "losses": 37,
+        "win_rate_pct": 49.31506849315068,
+        "gross_profit": 4781.690046033081,
+        "gross_loss": 4378.960502010615,
+        "profit_factor": 1.0919692113773467,
+        "net_pnl": 402.7295440224666,
+        "total_realized_r": 5.1080685653485585,
+        "expectancy_r": 0.06997354199107614,
+        "median_r": -1.0129911334269648,
+        "avg_win_r": 1.2266038879966918,
+        "avg_loss_r": -1.055396524392766,
+        "max_drawdown_usd": 1474.203085883943,
+        "long_trades": 42,
+        "short_trades": 31,
+        "exit_attribution": {
+          "MTF_STRUCTURAL_TRAIL": 1,
+          "INITIAL_LTF_SL": 54,
+          "PROFIT_LOCK_TRAIL": 18
+        },
+        "exit_avg_r": {
+          "MTF_STRUCTURAL_TRAIL": 0.35802701304945767,
+          "INITIAL_LTF_SL": -0.4339495757115243,
+          "PROFIT_LOCK_TRAIL": 1.5657399244845231
+        }
+      }
+    },
+    "oos_stats": {
+      "combined": {
+        "total_trades": 64,
+        "wins": 45,
+        "losses": 19,
+        "win_rate_pct": 70.3125,
+        "gross_profit": 7551.07683331539,
+        "gross_loss": 2896.3798231855526,
+        "profit_factor": 2.607074104324625,
+        "net_pnl": 4654.697010129838,
+        "total_realized_r": 35.34127360033568,
+        "expectancy_r": 0.5522074000052449,
+        "median_r": 0.7219463283564895,
+        "avg_win_r": 1.2235019217452923,
+        "avg_loss_r": -1.0377006778001305,
+        "max_drawdown_usd": 682.1218630544081,
+        "long_trades": 34,
+        "short_trades": 30,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 23,
+          "INITIAL_LTF_SL": 40,
+          "MTF_STRUCTURAL_TRAIL": 1
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 1.516012709472223,
+          "INITIAL_LTF_SL": 0.019873465110688725,
+          "MTF_STRUCTURAL_TRAIL": -0.3219573219530099
+        }
+      },
+      "strategy_a": {
+        "total_trades": 38,
+        "wins": 28,
+        "losses": 10,
+        "win_rate_pct": 73.68421052631578,
+        "gross_profit": 4795.855538594223,
+        "gross_loss": 1493.1002758815114,
+        "profit_factor": 3.2120116887412653,
+        "net_pnl": 3302.755262712711,
+        "total_realized_r": 26.477751283777433,
+        "expectancy_r": 0.6967829285204588,
+        "median_r": 0.6705834355763627,
+        "avg_win_r": 1.2967100574275086,
+        "avg_loss_r": -0.9830130324192806,
+        "max_drawdown_usd": 433.23680258307877,
+        "long_trades": 26,
+        "short_trades": 12,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 17,
+          "INITIAL_LTF_SL": 20,
+          "MTF_STRUCTURAL_TRAIL": 1
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 1.538440374103492,
+          "INITIAL_LTF_SL": 0.0323111122985539,
+          "MTF_STRUCTURAL_TRAIL": -0.3219573219530099
+        }
+      },
+      "strategy_b": {
+        "total_trades": 26,
+        "wins": 17,
+        "losses": 9,
+        "win_rate_pct": 65.38461538461539,
+        "gross_profit": 2755.221294721168,
+        "gross_loss": 1403.2795473040412,
+        "profit_factor": 1.9634158425628423,
+        "net_pnl": 1351.9417474171269,
+        "total_realized_r": 8.863522316558246,
+        "expectancy_r": 0.3409047044830094,
+        "median_r": 0.7219463283564895,
+        "avg_win_r": 1.1029238159157602,
+        "avg_loss_r": -1.098464728223297,
+        "max_drawdown_usd": 551.0617073997637,
+        "long_trades": 8,
+        "short_trades": 18,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 20,
+          "PROFIT_LOCK_TRAIL": 6
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": 0.0074358179228235285,
+          "PROFIT_LOCK_TRAIL": 1.4524676596836292
+        }
+      }
+    },
+    "retention": {
+      "wr_retention": 1.2948638613861387,
+      "pf_retention": 2.2663156761054246,
+      "exp_retention": 6.666949501243924
+    },
+    "setup_lifecycle": {
+      "mean_setup_age_hours": 152.088,
+      "max_setup_age_hours": 16736.0,
+      "total_trades_analyzed": 250
+    }
+  },
+  {
+    "symbol": "SOLUSDT",
+    "tf_set_id": "SET_4",
+    "tf_set_label": "SET_4_INTRADAY (4H -> 1H -> 15M)",
+    "start_dt": "2025-03-11 19:45:00 UTC",
+    "split_dt": "2026-03-11 09:45:00 UTC",
+    "end_dt": "2026-08-14 15:30:00 UTC",
+    "total_candles": 50000,
+    "is_candles": 35000,
+    "oos_candles": 15000,
+    "execution_time_sec": 375.19773387908936,
+    "status": "OOS_MARGINAL",
+    "is_stats": {
+      "combined": {
+        "total_trades": 124,
+        "wins": 58,
+        "losses": 66,
+        "win_rate_pct": 46.774193548387096,
+        "gross_profit": 5716.438531738071,
+        "gross_loss": 6857.107152544745,
+        "profit_factor": 0.8336516266362617,
+        "net_pnl": -1140.6686208066744,
+        "total_realized_r": -10.262823458890438,
+        "expectancy_r": -0.08276470531363256,
+        "median_r": -0.5113029038758816,
+        "avg_win_r": 1.0693168898628216,
+        "avg_loss_r": -1.0952000465293044,
+        "max_drawdown_usd": 3779.2392952051664,
+        "long_trades": 57,
+        "short_trades": 67,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 30,
+          "INITIAL_LTF_SL": 93,
+          "MTF_STRUCTURAL_TRAIL": 1
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 1.2339771166268663,
+          "INITIAL_LTF_SL": -0.5028763440775198,
+          "MTF_STRUCTURAL_TRAIL": -0.5146369584870846
+        }
+      },
+      "strategy_a": {
+        "total_trades": 97,
+        "wins": 42,
+        "losses": 55,
+        "win_rate_pct": 43.29896907216495,
+        "gross_profit": 4682.889104334077,
+        "gross_loss": 5605.307624149831,
+        "profit_factor": 0.8354383770407857,
+        "net_pnl": -922.4185198157536,
+        "total_realized_r": -7.954469566270362,
+        "expectancy_r": -0.08200484088938519,
+        "median_r": -1.0336483063471473,
+        "avg_win_r": 1.1990611209547768,
+        "avg_loss_r": -1.0602733935703812,
+        "max_drawdown_usd": 3397.2530639927368,
+        "long_trades": 51,
+        "short_trades": 46,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 23,
+          "INITIAL_LTF_SL": 73,
+          "MTF_STRUCTURAL_TRAIL": 1
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 1.4034288780761124,
+          "INITIAL_LTF_SL": -0.5440917370347104,
+          "MTF_STRUCTURAL_TRAIL": -0.5146369584870846
+        }
+      },
+      "strategy_b": {
+        "total_trades": 27,
+        "wins": 16,
+        "losses": 11,
+        "win_rate_pct": 59.25925925925925,
+        "gross_profit": 1033.5494274039936,
+        "gross_loss": 1251.7995283949144,
+        "profit_factor": 0.8256509161089348,
+        "net_pnl": -218.2501009909208,
+        "total_realized_r": -2.308353892620077,
+        "expectancy_r": -0.08549458861555838,
+        "median_r": 0.38986146845238545,
+        "avg_win_r": 0.7287382832464396,
+        "avg_loss_r": -1.269833311323919,
+        "max_drawdown_usd": 498.18882652485695,
+        "long_trades": 6,
+        "short_trades": 21,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 7,
+          "INITIAL_LTF_SL": 20
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 0.6772070432936284,
+          "INITIAL_LTF_SL": -0.3524401597837738
+        }
+      }
+    },
+    "oos_stats": {
+      "combined": {
+        "total_trades": 31,
+        "wins": 15,
+        "losses": 16,
+        "win_rate_pct": 48.38709677419355,
+        "gross_profit": 1739.3701680829295,
+        "gross_loss": 1541.986481965535,
+        "profit_factor": 1.128006106685056,
+        "net_pnl": 197.38368611739446,
+        "total_realized_r": 2.989367005237511,
+        "expectancy_r": 0.09643119371733908,
+        "median_r": -0.2214376319442973,
+        "avg_win_r": 1.27785862367316,
+        "avg_loss_r": -1.0111570218662431,
+        "max_drawdown_usd": 898.2105660125201,
+        "long_trades": 11,
+        "short_trades": 20,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 11,
+          "INITIAL_LTF_SL": 20
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 1.1953179678896153,
+          "INITIAL_LTF_SL": -0.5079565320774129
+        }
+      },
+      "strategy_a": {
+        "total_trades": 21,
+        "wins": 11,
+        "losses": 10,
+        "win_rate_pct": 52.38095238095239,
+        "gross_profit": 552.0257669524137,
+        "gross_loss": 969.4222043930516,
+        "profit_factor": 0.5694379233845104,
+        "net_pnl": -417.39643744063795,
+        "total_realized_r": -4.201861292894677,
+        "expectancy_r": -0.20008863299498456,
+        "median_r": 0.02991378124994287,
+        "avg_win_r": 0.549112016969413,
+        "avg_loss_r": -1.0242093479558219,
+        "max_drawdown_usd": 541.7366570012744,
+        "long_trades": 7,
+        "short_trades": 14,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 7,
+          "INITIAL_LTF_SL": 14
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 0.36659656213968955,
+          "INITIAL_LTF_SL": -0.4834312305623217
+        }
+      },
+      "strategy_b": {
+        "total_trades": 10,
+        "wins": 4,
+        "losses": 6,
+        "win_rate_pct": 40.0,
+        "gross_profit": 1187.3444011305157,
+        "gross_loss": 572.5642775724833,
+        "profit_factor": 2.073731190783562,
+        "net_pnl": 614.7801235580324,
+        "total_realized_r": 7.191228298132187,
+        "expectancy_r": 0.7191228298132186,
+        "median_r": -0.5649043524305017,
+        "avg_win_r": 3.281911792108465,
+        "avg_loss_r": -0.989403145050279,
+        "max_drawdown_usd": 443.3633551297421,
+        "long_trades": 4,
+        "short_trades": 6,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 4,
+          "INITIAL_LTF_SL": 6
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 2.645580427951985,
+          "INITIAL_LTF_SL": -0.5651822356126255
+        }
+      }
+    },
+    "retention": {
+      "wr_retention": 1.0344827586206897,
+      "pf_retention": 1.353090512444027,
+      "exp_retention": 0.0
+    },
+    "setup_lifecycle": {
+      "mean_setup_age_hours": 48.285483870967745,
+      "max_setup_age_hours": 3339.25,
+      "total_trades_analyzed": 155
+    }
+  }
+]
