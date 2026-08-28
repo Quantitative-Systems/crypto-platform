@@ -86,7 +86,7 @@ class ExecutionSimulator:
                 trade.metadata["mfe_price"] = min(trade.metadata.get("mfe_price", trade.fill_entry_price), candle.low)
                 trade.metadata["mae_price"] = max(trade.metadata.get("mae_price", trade.fill_entry_price), candle.high)
 
-            # Profit-Lock Ratchet (+1.0R Excursion Protection)
+            # Profit-Lock & Break-Even Ratchet
             if self.enable_profit_lock:
                 entry_p = trade.fill_entry_price
                 init_sl = trade.initial_stop_price
@@ -95,6 +95,13 @@ class ExecutionSimulator:
                     if is_long:
                         fav_p = trade.metadata.get("mfe_price", entry_p)
                         fav_r = (fav_p - entry_p) / risk_dist
+                        # Tier 1: Break-even at +1.5R excursion (+0.1R buffer)
+                        if fav_r >= 1.5:
+                            be_stop = entry_p + (0.1 * risk_dist)
+                            if be_stop > trade.current_stop_price:
+                                ledger.update_trailing_stop(trade.trade_id, be_stop)
+                                trade.metadata["profit_locked"] = True
+                        # Tier 2: Ratchet trailing floor at lockin_r
                         if fav_r >= self.lockin_r:
                             floor_stop = fav_p - (self.giveback_r * risk_dist)
                             if floor_stop > trade.current_stop_price:
@@ -103,6 +110,13 @@ class ExecutionSimulator:
                     else:
                         fav_p = trade.metadata.get("mfe_price", entry_p)
                         fav_r = (entry_p - fav_p) / risk_dist
+                        # Tier 1: Break-even at +1.5R excursion (-0.1R buffer)
+                        if fav_r >= 1.5:
+                            be_stop = entry_p - (0.1 * risk_dist)
+                            if be_stop < trade.current_stop_price:
+                                ledger.update_trailing_stop(trade.trade_id, be_stop)
+                                trade.metadata["profit_locked"] = True
+                        # Tier 2: Ratchet trailing floor at lockin_r
                         if fav_r >= self.lockin_r:
                             floor_stop = fav_p + (self.giveback_r * risk_dist)
                             if floor_stop < trade.current_stop_price:

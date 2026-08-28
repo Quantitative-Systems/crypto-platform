@@ -142,10 +142,6 @@ class UnifiedStrategy(BaseHypothesis):
                     is_bos = "BOS" in str(event.event_type)
                     
                     if (is_choch or is_bos) and req_setup_dir in str(event_dir):
-                        context = "PULLBACK" if is_choch else "CONTINUATION"
-                        candidate.metadata = candidate.metadata or {}
-                        candidate.metadata["context"] = context
-                        
                         candidate.mtf_setup_id = f"mtf_align_{candidate.symbol}_{event_ts}"
                         candidate.mtf_setup_timestamp = event_ts
                         candidate.mtf_setup_direction = req_setup_dir
@@ -169,15 +165,12 @@ class UnifiedStrategy(BaseHypothesis):
                 if (not is_long) and ("BEARISH" not in kz_type_str):
                     continue
                 
-                # Strict causality check for PULLBACK contexts: KeyZone MUST be created at or after MTF alignment timestamp
-                # For CONTINUATION contexts, the keyzone can predate the most recent BOS.
+                # Strict causality check: KeyZone MUST be created at or after MTF alignment timestamp
                 creation_ts = getattr(kz, 'creation_timestamp', None)
-                context = candidate.metadata.get("context", "UNKNOWN") if candidate.metadata else "UNKNOWN"
                 
-                if context == "PULLBACK":
-                    if candidate.mtf_alignment_timestamp and creation_ts is not None and creation_ts > 0:
-                        if creation_ts < candidate.mtf_alignment_timestamp:
-                            continue  # Zombie historical keyzone rejected
+                if candidate.mtf_alignment_timestamp and creation_ts is not None and creation_ts > 0:
+                    if creation_ts < candidate.mtf_alignment_timestamp:
+                        continue  # Zombie historical keyzone rejected
                 
                 causal_zones.append(kz)
                 
@@ -280,7 +273,6 @@ class UnifiedStrategy(BaseHypothesis):
                 
             candidate.transition_to(CandidateState.ENTERED)
             provenance = candidate.to_provenance_dict()
-            provenance["context"] = candidate.metadata.get("context", "UNKNOWN") if candidate.metadata else "UNKNOWN"
             
             return TradePlanPayload(
                 trade_plan_id=candidate.candidate_id,

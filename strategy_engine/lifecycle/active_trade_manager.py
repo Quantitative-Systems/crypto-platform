@@ -62,17 +62,29 @@ class ActiveTradeManager:
                 del self.active_trades[trade_id]
                 continue
                 
-            # 2. Profit-Lock Ratchet (+1.0R Excursion Protection)
+            # 2. Profit-Lock & Break-Even Ratchet
             if self.enable_profit_lock and hasattr(plan, 'metadata') and plan.metadata is not None:
                 max_fav = plan.metadata.get("max_favorable_price", entry_price)
                 if is_long:
                     fav_r = (max_fav - entry_price) / entry_risk_dist
+                    # Tier 1: Break-even at +1.5R excursion
+                    if fav_r >= 1.5:
+                        be_stop = entry_price + (0.1 * entry_risk_dist)
+                        if be_stop > plan.stop_invalidation_price:
+                            plan.stop_invalidation_price = be_stop
+                    # Tier 2: Ratchet trailing floor at lockin_r
                     if fav_r >= self.lockin_r:
                         floor_stop = max_fav - (self.giveback_r * entry_risk_dist)
                         if floor_stop > plan.stop_invalidation_price:
                             plan.stop_invalidation_price = floor_stop
                 else:
                     fav_r = (entry_price - max_fav) / entry_risk_dist
+                    # Tier 1: Break-even at +1.5R excursion
+                    if fav_r >= 1.5:
+                        be_stop = entry_price - (0.1 * entry_risk_dist)
+                        if be_stop < plan.stop_invalidation_price:
+                            plan.stop_invalidation_price = be_stop
+                    # Tier 2: Ratchet trailing floor at lockin_r
                     if fav_r >= self.lockin_r:
                         floor_stop = max_fav + (self.giveback_r * entry_risk_dist)
                         if floor_stop < plan.stop_invalidation_price:

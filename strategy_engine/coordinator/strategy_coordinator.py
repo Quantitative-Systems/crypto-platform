@@ -10,6 +10,7 @@ from market_intelligence.primitives import MarketStatePayload, MarketPhase, Tren
 from strategy_engine.contracts.trade_plan import TradePlanPayload, DirectionalPermission
 from strategy_engine.contracts.strategy_state import CandidateState
 from strategy_engine.classifiers.bias_classifier import BiasClassifier
+from strategy_engine.classifiers.regime_filter import RegimeFilter
 from strategy_engine.context.htf_context_engine import HTFContextEngine, HTFContext
 from strategy_engine.hypotheses.unified_strategy import UnifiedStrategy
 from strategy_engine.lifecycle.candidate_tracker import CandidateTracker, CandidateSetup
@@ -44,9 +45,10 @@ class StrategyCoordinator:
         self,
         news_provider: Optional[NewsProvider] = None,
         enable_mtf_trailing: bool = True,
-        enable_profit_lock: bool = False,
+        enable_profit_lock: bool = True,
         lockin_r: float = 1.0,
-        giveback_r: float = 0.75
+        giveback_r: float = 0.75,
+        regime_filter: Optional[RegimeFilter] = None
     ):
         self.hypotheses = {
             "UNIFIED_STRATEGY": UnifiedStrategy()
@@ -59,6 +61,7 @@ class StrategyCoordinator:
             giveback_r=giveback_r
         )
         self.news_provider = news_provider or NullNewsProvider()
+        self.regime_filter = regime_filter
         
     def evaluate(
         self,
@@ -82,6 +85,12 @@ class StrategyCoordinator:
         phase_str = str(htf_payload.phase_state) if htf_payload.phase_state is not None else ""
         max_lifespan = get_max_lifespan_seconds(mtf_payload.timeframe)
         
+        # Check Alpha Regime Filter
+        if self.regime_filter and bias != DirectionalPermission.NO_TRADE:
+            regime_dec = self.regime_filter.evaluate(htf_payload)
+            if not regime_dec.is_permitted:
+                bias = DirectionalPermission.NO_TRADE
+
         if bias != DirectionalPermission.NO_TRADE:
             is_bullish = htf_payload.trend_state == TrendDirection.BULLISH
             

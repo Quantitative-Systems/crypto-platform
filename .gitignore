@@ -40,3 +40,4 @@ logs/
 # Cache & Results
 market_data/cache/*.json
 research/results/*.json
+scratch/

@@ -49,7 +49,7 @@ class RiskCoordinator:
                 return RiskCoordinator._reject(plan, RiskRejectionReason.REJECT_NEWS_BLACKOUT)
 
         # 1. Structural Validation (R:R Floor)
-        rr_rejection = RRValidator.validate(plan)
+        rr_rejection = RRValidator.validate(plan, cfg)
         if rr_rejection:
             return RiskCoordinator._reject(plan, rr_rejection)
             
@@ -66,7 +66,7 @@ class RiskCoordinator:
                 return RiskCoordinator._reject(plan, exp_rejection)
             
         # 4. Position Sizing Calculation (<=1% max risk)
-        position_units, dollar_risk, sizing_rejection = PositionSizer.calculate(plan, account_state)
+        position_units, dollar_risk, sizing_rejection = PositionSizer.calculate(plan, account_state, cfg)
         if sizing_rejection:
             return RiskCoordinator._reject(plan, sizing_rejection)
             

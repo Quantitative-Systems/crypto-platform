@@ -7,6 +7,7 @@ and P03 (Risk Firewall) in a strict, zero-lookahead, point-in-time chronological
 from typing import List, Dict, Any, Optional
 from market_intelligence.primitives import Candle
 from market_intelligence.coordinator import LanguageCoordinator
+from strategy_engine.classifiers.regime_filter import RegimeFilter
 from strategy_engine.coordinator.strategy_coordinator import StrategyCoordinator
 from strategy_engine.contracts.strategy_state import CandidateState, PositionState
 from risk_engine.risk_coordinator import RiskCoordinator
@@ -39,6 +40,7 @@ class CausalReplayer:
         enable_profit_lock: bool = False,
         lockin_r: float = 1.0,
         giveback_r: float = 0.75,
+        enable_regime_filter: bool = False,
         cache_htf_mtf: bool = True,
         risk_config: Optional[RiskConfig] = None
     ):
@@ -48,6 +50,7 @@ class CausalReplayer:
         self.enable_profit_lock = enable_profit_lock
         self.lockin_r = lockin_r
         self.giveback_r = giveback_r
+        self.enable_regime_filter = enable_regime_filter
         self.risk_config = risk_config
         # RESEARCH ENGINE PERFORMANCE FLAG (no trading-logic impact):
         # When True, the point-in-time HTF/MTF incremental state is cached and only
@@ -68,11 +71,13 @@ class CausalReplayer:
         self._ltf_runs: int = 0
 
         self.language_coordinator = LanguageCoordinator(buffer_size=300)
+        self.regime_filter = RegimeFilter(enable_filter=True) if self.enable_regime_filter else None
         self.strategy_coordinator = StrategyCoordinator(
             enable_mtf_trailing=self.enable_mtf_trailing,
             enable_profit_lock=self.enable_profit_lock,
             lockin_r=self.lockin_r,
-            giveback_r=self.giveback_r
+            giveback_r=self.giveback_r,
+            regime_filter=self.regime_filter
         )
         self.execution_simulator = ExecutionSimulator(
             maker_fee_rate=maker_fee_rate,

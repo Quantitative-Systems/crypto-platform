@@ -107,21 +107,40 @@ def execute_matrix_replay() -> Dict[str, Any]:
     matrix_data = []
     
     total_trades_all = 0
-    total_trades_pullback = 0
-    total_trades_continuation = 0
     
     print("=" * 100)
     print("RUNNING UNIFIED MATRIX: 3 ASSETS x 4 TIMEFRAMES")
     print("=" * 100)
+    
+    from market_data.data_certifier import DataCertifier
+    
+    # Base simulation period (LTF start)
+    ltf_start_time_ms = int(datetime(2023, 1, 1, tzinfo=timezone.utc).timestamp() * 1000)
+    end_time_ms = int(datetime(2024, 1, 1, tzinfo=timezone.utc).timestamp() * 1000)
     
     for asset in ASSETS:
         for tf_set_id in TF_SETS:
             symbol = f"{asset}USDT"
             tf_set = TimeframeAligner.get_set(tf_set_id)
             
-            htf_candles = WarehouseLoader.load_history(f"{asset}/USDT", tf_set.htf, limit=50000)
-            mtf_candles = WarehouseLoader.load_history(f"{asset}/USDT", tf_set.mtf, limit=50000)
-            ltf_candles = WarehouseLoader.load_history(f"{asset}/USDT", tf_set.ltf, limit=50000)
+            print(f"Loading certified dataset for {symbol} | {tf_set_id}...")
+            
+            # Fetch all available warmup data for HTF and MTF
+            htf_candles = WarehouseLoader.load_history(f"{asset}/USDT", tf_set.htf, limit=1_000_000, start_time_ms=None, end_time_ms=end_time_ms)
+            mtf_candles = WarehouseLoader.load_history(f"{asset}/USDT", tf_set.mtf, limit=1_000_000, start_time_ms=None, end_time_ms=end_time_ms)
+            
+            # LTF is tightly bounded to the simulation period
+            ltf_candles = WarehouseLoader.load_history(f"{asset}/USDT", tf_set.ltf, limit=1_000_000, start_time_ms=ltf_start_time_ms, end_time_ms=end_time_ms)
+            
+            # Certification Check
+            try:
+                DataCertifier.certify_dataset(htf_candles, tf_set.htf, symbol, allow_gaps=True)
+                DataCertifier.certify_dataset(mtf_candles, tf_set.mtf, symbol, allow_gaps=True)
+                DataCertifier.certify_dataset(ltf_candles, tf_set.ltf, symbol, allow_gaps=True)
+                DataCertifier.certify_overlap(htf_candles, mtf_candles, ltf_candles, min_lookback_bars=30)
+            except ValueError as e:
+                print(f"❌ Data Certification Failed for {symbol} {tf_set_id}: {e}")
+                continue
             
             research_risk_cfg = RiskConfig(
                 enable_circuit_breakers=False,
@@ -136,7 +155,7 @@ def execute_matrix_replay() -> Dict[str, Any]:
                 taker_fee_rate=0.0005,
                 slippage_bps=5.0,
                 enable_mtf_trailing=True,
-                enable_profit_lock=False,
+                enable_profit_lock=True,
                 cache_htf_mtf=True,
                 risk_config=research_risk_cfg
             )
@@ -151,32 +170,21 @@ def execute_matrix_replay() -> Dict[str, Any]:
             elapsed = time.time() - t0
             
             closed_trades = results["closed_trades"]
-            
-            # Split contexts
-            pullback_trades = [t for t in closed_trades if t.get("metadata", {}).get("structural_provenance", {}).get("context") == "PULLBACK"]
-            continuation_trades = [t for t in closed_trades if t.get("metadata", {}).get("structural_provenance", {}).get("context") == "CONTINUATION"]
-            
             comb_metrics = compute_stream_metrics(closed_trades)
-            pb_metrics = compute_stream_metrics(pullback_trades)
-            cont_metrics = compute_stream_metrics(continuation_trades)
             
             total_trades_all += len(closed_trades)
-            total_trades_pullback += len(pullback_trades)
-            total_trades_continuation += len(continuation_trades)
             
             stream_entry = {
                 "symbol": symbol,
                 "tf_set_id": tf_set_id,
                 "execution_time_sec": elapsed,
-                "combined": comb_metrics,
-                "pullback": pb_metrics,
-                "continuation": cont_metrics
+                "combined": comb_metrics
             }
             matrix_data.append(stream_entry)
-            print(f"  [{symbol} | {tf_set_id}] {elapsed:.1f}s | All: {comb_metrics['total_trades']} | Pullback: {pb_metrics['total_trades']} | Cont: {cont_metrics['total_trades']}")
+            print(f"  [{symbol} | {tf_set_id}] {elapsed:.1f}s | Trades: {comb_metrics['total_trades']}")
             
     print("-" * 100)
-    print(f"TOTAL TRADES ACROSS MATRIX: {total_trades_all} (Pullback: {total_trades_pullback}, Continuation: {total_trades_continuation})")
+    print(f"TOTAL TRADES ACROSS MATRIX: {total_trades_all}")
     
     return matrix_data
 

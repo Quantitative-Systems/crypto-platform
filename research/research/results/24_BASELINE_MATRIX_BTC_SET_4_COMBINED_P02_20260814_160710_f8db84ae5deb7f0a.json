@@ -1,4 +1,4 @@
-{
+python3 -m json.tool PATH_TO_RESULT.json | less{
   "provenance": {
     "experiment_name": "24_BASELINE_MATRIX",
     "asset": "BTC",

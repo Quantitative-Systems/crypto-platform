@@ -67,7 +67,7 @@ def run_baseline():
     print(f"  -> Stream A completed in {t_dur_a:.2f}s | Closed Trades: {len(result_a['closed_trades'])}")
 
     # 3. Run Stream B: HTF Target + MTF Structural Trailing
-    print("\n[3/4] Executing Stream B (Same Entries + HTF Target + MTF Structural Trailing)...")
+    print("\n[3/5] Executing Stream B (Same Entries + HTF Target + MTF Structural Trailing)...")
     t_start_b = time.time()
     replayer_b = CausalReplayer(
         timeframe_set_id="SET_3",
@@ -76,6 +76,7 @@ def run_baseline():
         taker_fee_rate=0.0005,
         slippage_bps=5.0,
         enable_mtf_trailing=True,
+        enable_profit_lock=False,
         cache_htf_mtf=True,
         risk_config=risk_config
     )
@@ -88,11 +89,35 @@ def run_baseline():
     t_dur_b = time.time() - t_start_b
     print(f"  -> Stream B completed in {t_dur_b:.2f}s | Closed Trades: {len(result_b['closed_trades'])}")
 
-    # 4. Forensic Analysis & Metric Computation
-    print("\n[4/4] Computing full metric suite, trade provenance, and forensic distributions...")
+    # 4. Run Stream C: Upgraded Full Engine (MTF Trailing + Profit Lock / Break-Even Ratchet)
+    print("\n[4/5] Executing Stream C (Upgraded: MTF Trailing + Profit Lock & Break-Even Ratchet)...")
+    t_start_c = time.time()
+    replayer_c = CausalReplayer(
+        timeframe_set_id="SET_3",
+        initial_balance=10000.0,
+        maker_fee_rate=0.0000,
+        taker_fee_rate=0.0005,
+        slippage_bps=5.0,
+        enable_mtf_trailing=True,
+        enable_profit_lock=True,
+        cache_htf_mtf=True,
+        risk_config=risk_config
+    )
+    result_c = replayer_c.run(
+        symbol="BTCUSDT",
+        htf_candles=htf_candles,
+        mtf_candles=mtf_candles,
+        ltf_candles=ltf_candles
+    )
+    t_dur_c = time.time() - t_start_c
+    print(f"  -> Stream C completed in {t_dur_c:.2f}s | Closed Trades: {len(result_c['closed_trades'])}")
+
+    # 5. Forensic Analysis & Metric Computation
+    print("\n[5/5] Computing full metric suite, trade provenance, and forensic distributions...")
     
     analytics_a = compute_stream_analytics(result_a, ltf_candles)
     analytics_b = compute_stream_analytics(result_b, ltf_candles)
+    analytics_c = compute_stream_analytics(result_c, ltf_candles)
 
     # Save to scratch results JSON
     os.makedirs("scratch", exist_ok=True)
@@ -107,14 +132,15 @@ def run_baseline():
             "duration_days": round((ltf_candles[-1].timestamp - ltf_candles[0].timestamp) / 86400, 2)
         },
         "stream_a_fixed_tp": analytics_a,
-        "stream_b_mtf_trailing": analytics_b
+        "stream_b_mtf_trailing": analytics_b,
+        "stream_c_upgraded_profit_lock": analytics_c
     }
 
     with open("scratch/canonical_btc_s3_baseline_results.json", "w") as f:
         json.dump(out_payload, f, indent=2)
 
     # Output Complete Formatted Report
-    print_report(analytics_a, analytics_b, out_payload["dataset"])
+    print_report(analytics_a, analytics_b, analytics_c, out_payload["dataset"])
 
 
 def compute_stream_analytics(raw_result: Dict[str, Any], ltf_candles: List[Candle]) -> Dict[str, Any]:
@@ -318,47 +344,46 @@ def compute_stream_analytics(raw_result: Dict[str, Any], ltf_candles: List[Candl
     }
 
 
-def print_report(res_a: Dict[str, Any], res_b: Dict[str, Any], dataset: Dict[str, Any]):
-    print("\n" + "=" * 80)
-    print("CANONICAL HISTORICAL BASELINE RESULTS — RAW AUDIT REPORT")
-    print("=" * 80)
+def print_report(res_a: Dict[str, Any], res_b: Dict[str, Any], res_c: Dict[str, Any], dataset: Dict[str, Any]):
+    print("\n" + "=" * 105)
+    print("CANONICAL HISTORICAL BASELINE RESULTS — THREE-STREAM COMPARATIVE AUDIT REPORT")
+    print("=" * 105)
     print(f"Asset:            {dataset['symbol']}")
     print(f"Timeframe Set:    {dataset['timeframe_set']}")
     print(f"Data Window:      {dataset['start_date']} -> {dataset['end_date']} ({dataset['duration_days']:.1f} days, {dataset['ltf_candles_count']:,} bars)")
     print(f"Risk Parameters:  Risk = 1.0% equity ($100 base) | Floor = >= 4.0R | Friction = 0.00% Maker, 0.05% Taker, 5.0 bps Slip")
-    print("=" * 80)
+    print("=" * 105)
 
     # 1. Comparison Table
-    print("\n" + "-" * 80)
-    print(f"{'METRIC':<32} | {'STREAM A (Fixed TP)':<20} | {'STREAM B (MTF Trailing)':<20}")
-    print("-" * 80)
+    print("\n" + "-" * 105)
+    print(f"{'METRIC':<30} | {'STREAM A (Fixed TP)':<22} | {'STREAM B (MTF Trail)':<22} | {'STREAM C (Upgraded Ratchet)':<26}")
+    print("-" * 105)
     
     rows = [
-        ("Total Trades Closed", f"{res_a['total_trades']}", f"{res_b['total_trades']}"),
-        ("Win Rate (%)", f"{res_a['win_rate_pct']:.2f}%", f"{res_b['win_rate_pct']:.2f}%"),
-        ("Profit Factor", f"{res_a['profit_factor']:.3f}", f"{res_b['profit_factor']:.3f}"),
-        ("Expectancy E[R]", f"{res_a['expectancy_r']:+.3f}R", f"{res_b['expectancy_r']:+.3f}R"),
-        ("Cumulative R", f"{res_a['cumulative_r']:+.3f}R", f"{res_b['cumulative_r']:+.3f}R"),
-        ("Net Profit ($)", f"${res_a['net_profit_usd']:+,.2f} ({res_a['net_profit_pct']:+.2f}%)", f"${res_b['net_profit_usd']:+,.2f} ({res_b['net_profit_pct']:+.2f}%)"),
-        ("Average R / Trade", f"{res_a['average_r']:+.3f}R", f"{res_b['average_r']:+.3f}R"),
-        ("Median R / Trade", f"{res_a['median_r']:+.3f}R", f"{res_b['median_r']:+.3f}R"),
-        ("Average Winner", f"{res_a['avg_win_r']:+.3f}R", f"{res_b['avg_win_r']:+.3f}R"),
-        ("Average Loser", f"{res_a['avg_loss_r']:+.3f}R", f"{res_b['avg_loss_r']:+.3f}R"),
-        ("Max Drawdown (%)", f"{res_a['max_drawdown_pct']:.2f}%", f"{res_b['max_drawdown_pct']:.2f}%"),
-        ("Max Drawdown (R)", f"{res_a['max_drawdown_r']:.2f}R", f"{res_b['max_drawdown_r']:.2f}R"),
-        ("Max Consecutive Losses", f"{res_a['max_consecutive_losses']}", f"{res_b['max_consecutive_losses']}"),
-        ("Mean MFE (Max Fav Excursion)", f"{res_a['mfe_r_mean']:.2f}R", f"{res_b['mfe_r_mean']:.2f}R"),
-        ("Mean MAE (Max Adv Excursion)", f"{res_a['mae_r_mean']:.2f}R", f"{res_b['mae_r_mean']:.2f}R"),
-        ("Mean Setup Age", f"{res_a['setup_age_hours_mean']:.1f} hrs ({res_a['setup_age_hours_mean']/24:.1f}d)", f"{res_b['setup_age_hours_mean']:.1f} hrs ({res_b['setup_age_hours_mean']/24:.1f}d)"),
-        ("Median Setup Age", f"{res_a['setup_age_hours_median']:.1f} hrs", f"{res_b['setup_age_hours_median']:.1f} hrs"),
-        ("Mean Trade Duration", f"{res_a['trade_duration_hours_mean']:.1f} hrs", f"{res_b['trade_duration_hours_mean']:.1f} hrs"),
-        ("Total Fees & Friction ($)", f"${res_a['total_friction_usd']:.2f}", f"${res_b['total_friction_usd']:.2f}"),
-        ("Market Exposure (%)", f"{res_a['market_exposure_pct']:.2f}%", f"{res_b['market_exposure_pct']:.2f}%")
+        ("Total Trades Closed", f"{res_a['total_trades']}", f"{res_b['total_trades']}", f"{res_c['total_trades']}"),
+        ("Win Rate (%)", f"{res_a['win_rate_pct']:.2f}%", f"{res_b['win_rate_pct']:.2f}%", f"{res_c['win_rate_pct']:.2f}%"),
+        ("Profit Factor", f"{res_a['profit_factor']:.3f}", f"{res_b['profit_factor']:.3f}", f"{res_c['profit_factor']:.3f}"),
+        ("Expectancy E[R]", f"{res_a['expectancy_r']:+.3f}R", f"{res_b['expectancy_r']:+.3f}R", f"{res_c['expectancy_r']:+.3f}R"),
+        ("Cumulative R", f"{res_a['cumulative_r']:+.3f}R", f"{res_b['cumulative_r']:+.3f}R", f"{res_c['cumulative_r']:+.3f}R"),
+        ("Net Profit ($)", f"${res_a['net_profit_usd']:+,.2f} ({res_a['net_profit_pct']:+.2f}%)", f"${res_b['net_profit_usd']:+,.2f} ({res_b['net_profit_pct']:+.2f}%)", f"${res_c['net_profit_usd']:+,.2f} ({res_c['net_profit_pct']:+.2f}%)"),
+        ("Average R / Trade", f"{res_a['average_r']:+.3f}R", f"{res_b['average_r']:+.3f}R", f"{res_c['average_r']:+.3f}R"),
+        ("Median R / Trade", f"{res_a['median_r']:+.3f}R", f"{res_b['median_r']:+.3f}R", f"{res_c['median_r']:+.3f}R"),
+        ("Average Winner", f"{res_a['avg_win_r']:+.3f}R", f"{res_b['avg_win_r']:+.3f}R", f"{res_c['avg_win_r']:+.3f}R"),
+        ("Average Loser", f"{res_a['avg_loss_r']:+.3f}R", f"{res_b['avg_loss_r']:+.3f}R", f"{res_c['avg_loss_r']:+.3f}R"),
+        ("Max Drawdown (%)", f"{res_a['max_drawdown_pct']:.2f}%", f"{res_b['max_drawdown_pct']:.2f}%", f"{res_c['max_drawdown_pct']:.2f}%"),
+        ("Max Drawdown (R)", f"{res_a['max_drawdown_r']:.2f}R", f"{res_b['max_drawdown_r']:.2f}R", f"{res_c['max_drawdown_r']:.2f}R"),
+        ("Max Consecutive Losses", f"{res_a['max_consecutive_losses']}", f"{res_b['max_consecutive_losses']}", f"{res_c['max_consecutive_losses']}"),
+        ("Mean MFE (Max Fav Excursion)", f"{res_a['mfe_r_mean']:.2f}R", f"{res_b['mfe_r_mean']:.2f}R", f"{res_c['mfe_r_mean']:.2f}R"),
+        ("Mean MAE (Max Adv Excursion)", f"{res_a['mae_r_mean']:.2f}R", f"{res_b['mae_r_mean']:.2f}R", f"{res_c['mae_r_mean']:.2f}R"),
+        ("Mean Setup Age", f"{res_a['setup_age_hours_mean']:.1f} hrs", f"{res_b['setup_age_hours_mean']:.1f} hrs", f"{res_c['setup_age_hours_mean']:.1f} hrs"),
+        ("Mean Trade Duration", f"{res_a['trade_duration_hours_mean']:.1f} hrs", f"{res_b['trade_duration_hours_mean']:.1f} hrs", f"{res_c['trade_duration_hours_mean']:.1f} hrs"),
+        ("Total Fees & Friction ($)", f"${res_a['total_friction_usd']:.2f}", f"${res_b['total_friction_usd']:.2f}", f"${res_c['total_friction_usd']:.2f}"),
+        ("Market Exposure (%)", f"{res_a['market_exposure_pct']:.2f}%", f"{res_b['market_exposure_pct']:.2f}%", f"{res_c['market_exposure_pct']:.2f}%")
     ]
     
-    for label, val_a, val_b in rows:
-        print(f"{label:<32} | {val_a:<20} | {val_b:<20}")
-    print("-" * 80)
+    for label, val_a, val_b, val_c in rows:
+        print(f"{label:<30} | {val_a:<22} | {val_b:<22} | {val_c:<26}")
+    print("-" * 105)
 
     # 2. Exit Reason Breakdown
     print("\n" + "=" * 80)
