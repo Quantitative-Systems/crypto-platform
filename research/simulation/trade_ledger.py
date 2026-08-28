@@ -49,7 +49,10 @@ class SimulatedTrade:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        return asdict(self)
+        d = asdict(self)
+        d["net_r"] = self.realized_rr if self.realized_rr is not None else 0.0
+        d["net_pnl"] = self.realized_pnl if self.realized_pnl is not None else 0.0
+        return d
 
 
 class TradeLedger:

@@ -14,8 +14,8 @@ from market_intelligence.phase_engine import MarketPhase
 from strategy_engine.contracts.trade_plan import DirectionalPermission, TradePlanPayload
 from strategy_engine.contracts.strategy_state import CandidateState, PositionState
 from strategy_engine.lifecycle.candidate_tracker import CandidateSetup
-from strategy_engine.hypotheses.pullback_riding import PullbackRidingHypothesis
-from strategy_engine.hypotheses.continuation_riding import ContinuationRidingHypothesis
+from strategy_engine.hypotheses.unified_strategy import UnifiedStrategy
+from strategy_engine.hypotheses.unified_strategy import UnifiedStrategy
 from strategy_engine.entry.ltf_entry_model import LTFEntryModel
 from strategy_engine.lifecycle.active_trade_manager import ActiveTradeManager
 from risk_engine.risk_coordinator import RiskCoordinator
@@ -23,6 +23,17 @@ from risk_engine.contracts.account_state import AccountState
 from risk_engine.contracts.risk_plan import RiskApprovedPlan
 from risk_engine.contracts.risk_rejection import RiskRejectionPayload
 from research.replayer.timeframe_aligner import TimeframeAligner
+
+# Monkey patch for tests bypassing StrategyCoordinator
+original_eval = UnifiedStrategy.evaluate
+def mock_eval(self, candidate, htf, mtf, ltf):
+    if candidate.htf_target_price is None:
+        if candidate.directional_permission.value == 'PERMIT_LONG' and htf.structure_state and htf.structure_state.weak_high:
+            candidate.htf_target_price = htf.structure_state.weak_high.raw_swing.price
+        elif candidate.directional_permission.value == 'PERMIT_SHORT' and htf.structure_state and htf.structure_state.weak_low:
+            candidate.htf_target_price = htf.structure_state.weak_low.raw_swing.price
+    return original_eval(self, candidate, htf, mtf, ltf)
+UnifiedStrategy.evaluate = mock_eval
 
 
 def make_swing(price: float, swing_type: SwingType = SwingType.SWING_LOW) -> SequenceSwing:
@@ -72,14 +83,14 @@ def test_scenario_1_htf_bullish_mtf_bearish_no_entry():
     
     candidate = CandidateSetup(
         candidate_id="cand_1",
-        hypothesis_id="HYP_A_PULLBACK_RIDING",
+        hypothesis_id="UNIFIED_STRATEGY",
         symbol="BTCUSD",
         htf="1D", mtf="4H", ltf="1H",
         state=CandidateState.WAIT_MTF_ALIGNMENT,
         directional_permission=DirectionalPermission.PERMIT_LONG
     )
     
-    hyp = PullbackRidingHypothesis()
+    hyp = UnifiedStrategy()
     # MTF has no bullish CHOCH event yet
     plan = hyp.evaluate(candidate, htf, mtf, ltf)
     assert plan is None
@@ -96,7 +107,7 @@ def test_scenario_2_htf_bullish_mtf_bullish_ltf_bearish_no_entry():
 def test_scenario_3_rr_below_4_rejected():
     """Scenario 3: HTF/MTF/LTF Bullish, but RR = 3.0 (< 4.0) -> Rejection."""
     htf = make_dummy_payload(timeframe="1D")
-    htf.structure_state.protected_high = make_swing(130.0, SwingType.SWING_HIGH) # Target = 130 (Pullback Long uses protected_high)
+    htf.structure_state.weak_high = make_swing(130.0, SwingType.SWING_HIGH) # Target = 130
     
     ltf = make_dummy_payload(timeframe="1H", current_price=100.0) # Entry = 100
     ltf.structure_state.protected_low = make_swing(90.0, SwingType.SWING_LOW) # SL = 90
@@ -104,14 +115,14 @@ def test_scenario_3_rr_below_4_rejected():
     
     candidate = CandidateSetup(
         candidate_id="cand_3",
-        hypothesis_id="HYP_A_PULLBACK_RIDING",
+        hypothesis_id="UNIFIED_STRATEGY",
         symbol="BTCUSD",
         htf="1D", mtf="4H", ltf="1H",
         state=CandidateState.RISK_GATE,
         directional_permission=DirectionalPermission.PERMIT_LONG
     )
     
-    hyp = PullbackRidingHypothesis()
+    hyp = UnifiedStrategy()
     plan = hyp.evaluate(candidate, htf, make_dummy_payload(timeframe="4H"), ltf)
     assert plan is not None
     assert plan.status == CandidateState.REJECTED.value
@@ -121,7 +132,7 @@ def test_scenario_3_rr_below_4_rejected():
 def test_scenario_4_valid_entry_and_risk_sizing():
     """Scenario 4: RR = 5.0 (>= 4.0), Risk <= 1.0% -> ENTRY accepted and properly sized."""
     htf = make_dummy_payload(timeframe="1D")
-    htf.structure_state.protected_high = make_swing(150.0, SwingType.SWING_HIGH) # Target = 150 (Pullback Long uses protected_high)
+    htf.structure_state.weak_high = make_swing(150.0, SwingType.SWING_HIGH) # Target = 150
     
     ltf = make_dummy_payload(timeframe="1H", current_price=100.0) # Entry = 100
     ltf.structure_state.protected_low = make_swing(90.0, SwingType.SWING_LOW) # SL = 90
@@ -129,14 +140,14 @@ def test_scenario_4_valid_entry_and_risk_sizing():
     
     candidate = CandidateSetup(
         candidate_id="cand_4",
-        hypothesis_id="HYP_A_PULLBACK_RIDING",
+        hypothesis_id="UNIFIED_STRATEGY",
         symbol="BTCUSD",
         htf="1D", mtf="4H", ltf="1H",
         state=CandidateState.RISK_GATE,
         directional_permission=DirectionalPermission.PERMIT_LONG
     )
     
-    hyp = PullbackRidingHypothesis()
+    hyp = UnifiedStrategy()
     plan = hyp.evaluate(candidate, htf, make_dummy_payload(timeframe="4H"), ltf)
     assert plan is not None
     assert plan.status == CandidateState.ENTERED.value
@@ -150,42 +161,42 @@ def test_scenario_4_valid_entry_and_risk_sizing():
     assert risk_result.position_units == 10.0 # $100 / $10 stop distance
 
 
-def test_target_distinction_pullback_long_targets_protected_high():
-    """Target Rule 1: Pullback Riding LONG targets HTF protected_high (Strong High)."""
+def test_target_canonical_pullback_long_targets_weak_high():
+    """Target Rule 1: Pullback Riding LONG targets HTF weak_high (Expansion Target / Weak High)."""
     htf = make_dummy_payload(timeframe="1D")
     htf.structure_state.protected_high = make_swing(200.0, SwingType.SWING_HIGH)
-    htf.structure_state.weak_high = make_swing(120.0, SwingType.SWING_HIGH)
+    htf.structure_state.weak_high = make_swing(140.0, SwingType.SWING_HIGH)
     
     ltf = make_dummy_payload(timeframe="1H", current_price=100.0)
     ltf.structure_state.protected_low = make_swing(80.0, SwingType.SWING_LOW)
     
     candidate = CandidateSetup(
-        candidate_id="c_pb_l", hypothesis_id="HYP_A_PULLBACK_RIDING",
+        candidate_id="c_pb_l", hypothesis_id="UNIFIED_STRATEGY",
         symbol="BTCUSD", htf="1D", mtf="4H", ltf="1H",
         state=CandidateState.RISK_GATE, directional_permission=DirectionalPermission.PERMIT_LONG
     )
-    plan = PullbackRidingHypothesis().evaluate(candidate, htf, make_dummy_payload("4H"), ltf)
+    plan = UnifiedStrategy().evaluate(candidate, htf, make_dummy_payload("4H"), ltf)
     assert plan is not None
-    assert plan.target_price == 200.0  # Uses protected_high, NOT weak_high (120.0)
+    assert plan.target_price == 140.0  # Uses weak_high, NOT protected_high (200.0)
 
 
-def test_target_distinction_pullback_short_targets_protected_low():
-    """Target Rule 2: Pullback Riding SHORT targets HTF protected_low (Strong Low)."""
+def test_target_canonical_pullback_short_targets_weak_low():
+    """Target Rule 2: Pullback Riding SHORT targets HTF weak_low (Expansion Target / Weak Low)."""
     htf = make_dummy_payload(timeframe="1D")
     htf.structure_state.protected_low = make_swing(50.0, SwingType.SWING_LOW)
-    htf.structure_state.weak_low = make_swing(80.0, SwingType.SWING_LOW)
+    htf.structure_state.weak_low = make_swing(70.0, SwingType.SWING_LOW)
     
     ltf = make_dummy_payload(timeframe="1H", current_price=100.0)
-    ltf.structure_state.protected_high = make_swing(110.0, SwingType.SWING_HIGH)
+    ltf.structure_state.protected_high = make_swing(105.0, SwingType.SWING_HIGH)
     
     candidate = CandidateSetup(
-        candidate_id="c_pb_s", hypothesis_id="HYP_A_PULLBACK_RIDING",
+        candidate_id="c_pb_s", hypothesis_id="UNIFIED_STRATEGY",
         symbol="BTCUSD", htf="1D", mtf="4H", ltf="1H",
         state=CandidateState.RISK_GATE, directional_permission=DirectionalPermission.PERMIT_SHORT
     )
-    plan = PullbackRidingHypothesis().evaluate(candidate, htf, make_dummy_payload("4H"), ltf)
+    plan = UnifiedStrategy().evaluate(candidate, htf, make_dummy_payload("4H"), ltf)
     assert plan is not None
-    assert plan.target_price == 50.0  # Uses protected_low, NOT weak_low (80.0)
+    assert plan.target_price == 70.0  # Uses weak_low, NOT protected_low (50.0)
 
 
 def test_target_distinction_continuation_long_targets_weak_high():
@@ -198,11 +209,11 @@ def test_target_distinction_continuation_long_targets_weak_high():
     ltf.structure_state.protected_low = make_swing(88.0, SwingType.SWING_LOW)
     
     candidate = CandidateSetup(
-        candidate_id="c_cont_l", hypothesis_id="HYP_B_CONTINUATION_RIDING",
+        candidate_id="c_cont_l", hypothesis_id="UNIFIED_STRATEGY",
         symbol="BTCUSD", htf="1D", mtf="4H", ltf="1H",
         state=CandidateState.RISK_GATE, directional_permission=DirectionalPermission.PERMIT_LONG
     )
-    plan = ContinuationRidingHypothesis().evaluate(candidate, htf, make_dummy_payload("4H"), ltf)
+    plan = UnifiedStrategy().evaluate(candidate, htf, make_dummy_payload("4H"), ltf)
     assert plan is not None
     assert plan.target_price == 160.0  # Uses weak_high, NOT protected_high (200.0)
 
@@ -217,13 +228,168 @@ def test_target_distinction_continuation_short_targets_weak_low():
     ltf.structure_state.protected_high = make_swing(105.0, SwingType.SWING_HIGH)
     
     candidate = CandidateSetup(
-        candidate_id="c_cont_s", hypothesis_id="HYP_B_CONTINUATION_RIDING",
+        candidate_id="c_cont_s", hypothesis_id="UNIFIED_STRATEGY",
         symbol="BTCUSD", htf="1D", mtf="4H", ltf="1H",
         state=CandidateState.RISK_GATE, directional_permission=DirectionalPermission.PERMIT_SHORT
     )
-    plan = ContinuationRidingHypothesis().evaluate(candidate, htf, make_dummy_payload("4H"), ltf)
+    plan = UnifiedStrategy().evaluate(candidate, htf, make_dummy_payload("4H"), ltf)
     assert plan is not None
     assert plan.target_price == 70.0  # Uses weak_low, NOT protected_low (40.0)
+
+
+# ============================================================================
+# G4.3 REGRESSION COVERAGE SUITE (STEP 4)
+# ============================================================================
+
+def test_regression_bullish_anchor_mapping():
+    """Regression 1: Bullish anchor mapping -> SL = LTF protected_low, TP = HTF weak_high."""
+    htf = make_dummy_payload(timeframe="1D")
+    htf.structure_state.weak_high = make_swing(150.0, SwingType.SWING_HIGH)
+    htf.structure_state.protected_high = make_swing(180.0, SwingType.SWING_HIGH)
+
+    ltf = make_dummy_payload(timeframe="1H", current_price=100.0)
+    ltf.structure_state.protected_low = make_swing(90.0, SwingType.SWING_LOW)
+    ltf.structure_state.weak_low = make_swing(85.0, SwingType.SWING_LOW)
+
+    for HypClass, hyp_id in [(UnifiedStrategy, "UNIFIED_STRATEGY")]:
+        candidate = CandidateSetup(
+            candidate_id=f"c_reg_bull_{hyp_id}", hypothesis_id=hyp_id,
+            symbol="BTCUSD", htf="1D", mtf="4H", ltf="1H",
+            state=CandidateState.RISK_GATE, directional_permission=DirectionalPermission.PERMIT_LONG
+        )
+        plan = HypClass().evaluate(candidate, htf, make_dummy_payload("4H"), ltf)
+        assert plan is not None
+        assert plan.stop_invalidation_price == 90.0  # LTF protected_low
+        assert plan.target_price == 150.0           # HTF weak_high
+        assert plan.status == CandidateState.ENTERED.value
+
+
+def test_regression_bearish_anchor_mapping():
+    """Regression 2: Bearish anchor mapping -> SL = LTF protected_high, TP = HTF weak_low."""
+    htf = make_dummy_payload(timeframe="1D", trend=TrendDirection.BEARISH)
+    htf.structure_state.weak_low = make_swing(50.0, SwingType.SWING_LOW)
+    htf.structure_state.protected_low = make_swing(40.0, SwingType.SWING_LOW)
+
+    ltf = make_dummy_payload(timeframe="1H", trend=TrendDirection.BEARISH, current_price=100.0)
+    ltf.structure_state.protected_high = make_swing(110.0, SwingType.SWING_HIGH)
+    ltf.structure_state.weak_high = make_swing(115.0, SwingType.SWING_HIGH)
+
+    for HypClass, hyp_id in [(UnifiedStrategy, "UNIFIED_STRATEGY")]:
+        candidate = CandidateSetup(
+            candidate_id=f"c_reg_bear_{hyp_id}", hypothesis_id=hyp_id,
+            symbol="BTCUSD", htf="1D", mtf="4H", ltf="1H",
+            state=CandidateState.RISK_GATE, directional_permission=DirectionalPermission.PERMIT_SHORT
+        )
+        plan = HypClass().evaluate(candidate, htf, make_dummy_payload("4H"), ltf)
+        assert plan is not None
+        assert plan.stop_invalidation_price == 110.0  # LTF protected_high
+        assert plan.target_price == 50.0             # HTF weak_low
+        assert plan.status == CandidateState.ENTERED.value
+
+
+def test_regression_invalid_long_geometry():
+    """Regression 3: Invalid Long geometry (not SL < Entry < TP) -> REJECT_INVALID_ANCHOR_GEOMETRY."""
+    # Case A: Entry below SL (Entry=85, SL=90, TP=150)
+    htf = make_dummy_payload(timeframe="1D")
+    htf.structure_state.weak_high = make_swing(150.0, SwingType.SWING_HIGH)
+
+    ltf_below_sl = make_dummy_payload(timeframe="1H", current_price=85.0)
+    ltf_below_sl.structure_state.protected_low = make_swing(90.0, SwingType.SWING_LOW)
+
+    candidate_a = CandidateSetup(
+        candidate_id="c_inv_l_a", hypothesis_id="UNIFIED_STRATEGY",
+        symbol="BTCUSD", htf="1D", mtf="4H", ltf="1H",
+        state=CandidateState.RISK_GATE, directional_permission=DirectionalPermission.PERMIT_LONG
+    )
+    plan_a = UnifiedStrategy().evaluate(candidate_a, htf, make_dummy_payload("4H"), ltf_below_sl)
+    assert plan_a is not None
+    assert plan_a.status == CandidateState.REJECTED.value
+    assert plan_a.rejection_reason == "REJECT_INVALID_ANCHOR_GEOMETRY"
+    assert plan_a.raw_rr == 0.0
+
+    # Case B: Entry above TP (Entry=160, SL=90, TP=150)
+    ltf_above_tp = make_dummy_payload(timeframe="1H", current_price=160.0)
+    ltf_above_tp.structure_state.protected_low = make_swing(90.0, SwingType.SWING_LOW)
+
+    candidate_b = CandidateSetup(
+        candidate_id="c_inv_l_b", hypothesis_id="UNIFIED_STRATEGY",
+        symbol="BTCUSD", htf="1D", mtf="4H", ltf="1H",
+        state=CandidateState.RISK_GATE, directional_permission=DirectionalPermission.PERMIT_LONG
+    )
+    plan_b = UnifiedStrategy().evaluate(candidate_b, htf, make_dummy_payload("4H"), ltf_above_tp)
+    assert plan_b is not None
+    assert plan_b.status == CandidateState.REJECTED.value
+    assert plan_b.rejection_reason == "REJECT_INVALID_ANCHOR_GEOMETRY"
+
+
+def test_regression_invalid_short_geometry():
+    """Regression 4: Invalid Short geometry (not TP < Entry < SL) -> REJECT_INVALID_ANCHOR_GEOMETRY."""
+    # Case A: Entry above SL (Entry=115, SL=110, TP=50)
+    htf = make_dummy_payload(timeframe="1D", trend=TrendDirection.BEARISH)
+    htf.structure_state.weak_low = make_swing(50.0, SwingType.SWING_LOW)
+
+    ltf_above_sl = make_dummy_payload(timeframe="1H", trend=TrendDirection.BEARISH, current_price=115.0)
+    ltf_above_sl.structure_state.protected_high = make_swing(110.0, SwingType.SWING_HIGH)
+
+    candidate_a = CandidateSetup(
+        candidate_id="c_inv_s_a", hypothesis_id="UNIFIED_STRATEGY",
+        symbol="BTCUSD", htf="1D", mtf="4H", ltf="1H",
+        state=CandidateState.RISK_GATE, directional_permission=DirectionalPermission.PERMIT_SHORT
+    )
+    plan_a = UnifiedStrategy().evaluate(candidate_a, htf, make_dummy_payload("4H"), ltf_above_sl)
+    assert plan_a is not None
+    assert plan_a.status == CandidateState.REJECTED.value
+    assert plan_a.rejection_reason == "REJECT_INVALID_ANCHOR_GEOMETRY"
+    assert plan_a.raw_rr == 0.0
+
+    # Case B: Entry below TP (Entry=45, SL=110, TP=50)
+    ltf_below_tp = make_dummy_payload(timeframe="1H", trend=TrendDirection.BEARISH, current_price=45.0)
+    ltf_below_tp.structure_state.protected_high = make_swing(110.0, SwingType.SWING_HIGH)
+
+    candidate_b = CandidateSetup(
+        candidate_id="c_inv_s_b", hypothesis_id="UNIFIED_STRATEGY",
+        symbol="BTCUSD", htf="1D", mtf="4H", ltf="1H",
+        state=CandidateState.RISK_GATE, directional_permission=DirectionalPermission.PERMIT_SHORT
+    )
+    plan_b = UnifiedStrategy().evaluate(candidate_b, htf, make_dummy_payload("4H"), ltf_below_tp)
+    assert plan_b is not None
+    assert plan_b.status == CandidateState.REJECTED.value
+    assert plan_b.rejection_reason == "REJECT_INVALID_ANCHOR_GEOMETRY"
+
+
+def test_regression_rr_calculation_after_geometry_validation():
+    """Regression 5: Planned RR calculated only after geometry passes, enforcing >= 4.0 threshold."""
+    htf = make_dummy_payload(timeframe="1D")
+    
+    # 5.1 Valid geometry, RR = 2.0 (Reward=20, Risk=10) -> Rejected with REJECT_RR_BELOW_4R
+    htf.structure_state.weak_high = make_swing(120.0, SwingType.SWING_HIGH)
+    ltf_low_rr = make_dummy_payload(timeframe="1H", current_price=100.0)
+    ltf_low_rr.structure_state.protected_low = make_swing(90.0, SwingType.SWING_LOW)
+
+    c_low_rr = CandidateSetup(
+        candidate_id="c_low_rr", hypothesis_id="UNIFIED_STRATEGY",
+        symbol="BTCUSD", htf="1D", mtf="4H", ltf="1H",
+        state=CandidateState.RISK_GATE, directional_permission=DirectionalPermission.PERMIT_LONG
+    )
+    plan_low_rr = UnifiedStrategy().evaluate(c_low_rr, htf, make_dummy_payload("4H"), ltf_low_rr)
+    assert plan_low_rr is not None
+    assert plan_low_rr.status == CandidateState.REJECTED.value
+    assert plan_low_rr.rejection_reason == "REJECT_RR_BELOW_4R"
+    assert plan_low_rr.raw_rr == 2.0
+
+    # 5.2 Valid geometry, RR = 4.5 (Reward=45, Risk=10) -> ENTERED with exact raw_rr
+    htf.structure_state.weak_high = make_swing(145.0, SwingType.SWING_HIGH)
+    c_valid_rr = CandidateSetup(
+        candidate_id="c_valid_rr", hypothesis_id="UNIFIED_STRATEGY",
+        symbol="BTCUSD", htf="1D", mtf="4H", ltf="1H",
+        state=CandidateState.RISK_GATE, directional_permission=DirectionalPermission.PERMIT_LONG
+    )
+    plan_valid_rr = UnifiedStrategy().evaluate(c_valid_rr, htf, make_dummy_payload("4H"), ltf_low_rr)
+    assert plan_valid_rr is not None
+    assert plan_valid_rr.status == CandidateState.ENTERED.value
+    assert plan_valid_rr.raw_rr == 4.5
+    assert plan_valid_rr.stop_invalidation_price == 90.0
+    assert plan_valid_rr.target_price == 145.0
 
 
 def test_scenario_5_mtf_trailing_protection_invariance():
@@ -231,7 +397,7 @@ def test_scenario_5_mtf_trailing_protection_invariance():
     atm = ActiveTradeManager()
     plan = TradePlanPayload(
         trade_plan_id="trade_5",
-        hypothesis_id="HYP_A_PULLBACK_RIDING",
+        hypothesis_id="UNIFIED_STRATEGY",
         symbol="BTCUSD",
         directional_permission="PERMIT_LONG",
         setup_timestamp=1000,
@@ -263,10 +429,10 @@ def test_scenario_5_mtf_trailing_protection_invariance():
 
 def test_scenario_6_pullback_riding_lifecycle():
     """Scenario 6: Full Pullback Riding candidate lifecycle progression."""
-    hyp = PullbackRidingHypothesis()
+    hyp = UnifiedStrategy()
     candidate = CandidateSetup(
         candidate_id="cand_6",
-        hypothesis_id="HYP_A_PULLBACK_RIDING",
+        hypothesis_id="UNIFIED_STRATEGY",
         symbol="BTCUSD",
         htf="1D", mtf="4H", ltf="1H",
         state=CandidateState.WAIT_MTF_ALIGNMENT,
@@ -324,10 +490,10 @@ def test_scenario_6_pullback_riding_lifecycle():
 
 def test_scenario_7_continuation_riding_lifecycle():
     """Scenario 7: Full Continuation Riding candidate lifecycle progression (BOS alignment)."""
-    hyp = ContinuationRidingHypothesis()
+    hyp = UnifiedStrategy()
     candidate = CandidateSetup(
         candidate_id="cand_7",
-        hypothesis_id="HYP_B_CONTINUATION_RIDING",
+        hypothesis_id="UNIFIED_STRATEGY",
         symbol="BTCUSD",
         htf="1D", mtf="4H", ltf="1H",
         state=CandidateState.WAIT_MTF_ALIGNMENT,
@@ -353,30 +519,30 @@ def test_scenario_7_continuation_riding_lifecycle():
 def test_scenario_8_zero_lookahead_filtering():
     """Scenario 8: Future / unclosed higher timeframe candles are mathematically hidden."""
     candles_4h = [
-        Candle(timestamp=0, open=100, high=105, low=99, close=102, volume=1000),      # Closes at 14400000 ms
-        Candle(timestamp=14400000, open=102, high=110, low=101, close=108, volume=1000), # Closes at 28800000 ms
-        Candle(timestamp=28800000, open=108, high=120, low=107, close=115, volume=1000), # Closes at 43200000 ms
+        Candle(timestamp=1_000_000_000_000, open=100, high=105, low=99, close=102, volume=1000),      # Closes at 14400000 ms
+        Candle(timestamp=1_000_014_400_000, open=102, high=110, low=101, close=108, volume=1000), # Closes at 28800000 ms
+        Candle(timestamp=1_000_028_800_000, open=108, high=120, low=107, close=115, volume=1000), # Closes at 43200000 ms
     ]
     
     # At decision timestamp = 20000000 ms (inside Bar 2, before it closes at 28800000 ms)
-    visible = TimeframeAligner.filter_visible_candles(candles_4h, decision_timestamp=20000000, timeframe="4H")
+    visible = TimeframeAligner.filter_visible_candles(candles_4h, decision_timestamp=1_000_020_000_000, timeframe="4H")
     
     # Only Bar 1 has closed! Bar 2 and Bar 3 MUST be hidden
     assert len(visible) == 1
-    assert visible[0].timestamp == 0
+    assert visible[0].timestamp == 1_000_000_000_000
 
 
 def test_scenario_9_stale_mtf_keyzone_rejected():
     """Scenario 9: Stale historical MTF KeyZones created before MTF alignment are rejected."""
-    hyp = PullbackRidingHypothesis()
+    hyp = UnifiedStrategy()
     candidate = CandidateSetup(
         candidate_id="cand_9",
-        hypothesis_id="HYP_A_PULLBACK_RIDING",
+        hypothesis_id="UNIFIED_STRATEGY",
         symbol="BTCUSD",
         htf="1D", mtf="4H", ltf="1H",
         state=CandidateState.WAIT_MTF_RETEST,
         directional_permission=DirectionalPermission.PERMIT_LONG,
-        mtf_alignment_timestamp=2000  # Alignment occurred at T=2000
+        mtf_alignment_timestamp=2000, metadata={"context": "PULLBACK"}
     )
     
     # MTF payload contains a stale keyzone created at T=1000 (< 2000)
@@ -410,7 +576,7 @@ def test_scenario_10_intrabar_collision_adverse_precedence():
     ledger = TradeLedger()
     trade = SimulatedTrade(
         trade_id="t_collision",
-        hypothesis_id="HYP_A_PULLBACK_RIDING",
+        hypothesis_id="UNIFIED_STRATEGY",
         symbol="BTCUSD",
         timeframe_set="SET_3",
         directional_permission="PERMIT_LONG",

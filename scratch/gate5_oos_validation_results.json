@@ -1,0 +1,442 @@
+[
+  {
+    "symbol": "BTCUSDT",
+    "tf_set_id": "SET_3",
+    "tf_set_label": "SET_3_SWING (1D -> 4H -> 1H)",
+    "start_dt": "2020-12-07 15:00:00 UTC",
+    "split_dt": "2024-12-05 18:00:00 UTC",
+    "end_dt": "2026-08-22 17:00:00 UTC",
+    "total_candles": 50000,
+    "is_candles": 35000,
+    "oos_candles": 15000,
+    "execution_time_sec": 300.1965775489807,
+    "status": "INSUFFICIENT_SAMPLE",
+    "is_stats": {
+      "combined": {
+        "total_trades": 5,
+        "wins": 3,
+        "losses": 2,
+        "win_rate_pct": 60.0,
+        "gross_profit": 113.67353891123626,
+        "gross_loss": 212.63371268399965,
+        "profit_factor": 0.5345979124212038,
+        "net_pnl": -98.96017377276338,
+        "total_realized_r": -0.9810287537032989,
+        "expectancy_r": -0.19620575074065977,
+        "median_r": 0.2532555145818623,
+        "avg_win_r": 0.3775258484875767,
+        "avg_loss_r": -1.0568031495830144,
+        "max_drawdown_usd": 212.63371268399965,
+        "long_trades": 0,
+        "short_trades": 5,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 3,
+          "INITIAL_LTF_SL": 2
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 0.3775258484875767,
+          "INITIAL_LTF_SL": -1.0568031495830144
+        }
+      }
+    },
+    "oos_stats": {
+      "combined": {
+        "total_trades": 9,
+        "wins": 3,
+        "losses": 6,
+        "win_rate_pct": 33.33333333333333,
+        "gross_profit": 318.046375460862,
+        "gross_loss": 631.7465718419468,
+        "profit_factor": 0.503439812160045,
+        "net_pnl": -313.7001963810848,
+        "total_realized_r": -3.1631905956228272,
+        "expectancy_r": -0.35146562173586965,
+        "median_r": -1.0640469448235268,
+        "avg_win_r": 1.1073937678044912,
+        "avg_loss_r": -1.08089531650605,
+        "max_drawdown_usd": 315.9413594817993,
+        "long_trades": 2,
+        "short_trades": 7,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 6,
+          "PROFIT_LOCK_TRAIL": 3
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": -1.08089531650605,
+          "PROFIT_LOCK_TRAIL": 1.1073937678044912
+        }
+      }
+    },
+    "retention": {
+      "wr_retention": 0.5555555555555555,
+      "pf_retention": 0.94171675658058,
+      "exp_retention": 0.0
+    },
+    "setup_lifecycle": {
+      "mean_setup_age_hours": 53.5,
+      "max_setup_age_hours": 121.0,
+      "total_trades_analyzed": 14
+    }
+  },
+  {
+    "symbol": "BTCUSDT",
+    "tf_set_id": "SET_4",
+    "tf_set_label": "SET_4_INTRADAY (4H -> 1H -> 15M)",
+    "start_dt": "2025-03-19 21:15:00 UTC",
+    "split_dt": "2026-03-19 11:15:00 UTC",
+    "end_dt": "2026-08-22 17:00:00 UTC",
+    "total_candles": 50000,
+    "is_candles": 35000,
+    "oos_candles": 15000,
+    "execution_time_sec": 297.55131459236145,
+    "status": "INSUFFICIENT_SAMPLE",
+    "is_stats": {
+      "combined": {
+        "total_trades": 2,
+        "wins": 0,
+        "losses": 2,
+        "win_rate_pct": 0.0,
+        "gross_profit": 0,
+        "gross_loss": 215.56214158995812,
+        "profit_factor": 0.0,
+        "net_pnl": -215.56214158995812,
+        "total_realized_r": -2.167365094413835,
+        "expectancy_r": -1.0836825472069176,
+        "median_r": -1.0836825472069176,
+        "avg_win_r": 0.0,
+        "avg_loss_r": -1.0836825472069176,
+        "max_drawdown_usd": 107.20470143243907,
+        "long_trades": 0,
+        "short_trades": 2,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 2
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": -1.0836825472069176
+        }
+      }
+    },
+    "oos_stats": {
+      "combined": {
+        "total_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "win_rate_pct": 0.0,
+        "gross_profit": 0.0,
+        "gross_loss": 0.0,
+        "profit_factor": 0.0,
+        "net_pnl": 0.0,
+        "total_realized_r": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "avg_win_r": 0.0,
+        "avg_loss_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "long_trades": 0,
+        "short_trades": 0,
+        "exit_attribution": {},
+        "exit_avg_r": {}
+      }
+    },
+    "retention": {
+      "wr_retention": 0.0,
+      "pf_retention": 0.0,
+      "exp_retention": 0.0
+    },
+    "setup_lifecycle": {
+      "mean_setup_age_hours": 22.125,
+      "max_setup_age_hours": 26.5,
+      "total_trades_analyzed": 2
+    }
+  },
+  {
+    "symbol": "ETHUSDT",
+    "tf_set_id": "SET_3",
+    "tf_set_label": "SET_3_SWING (1D -> 4H -> 1H)",
+    "start_dt": "2020-12-07 15:00:00 UTC",
+    "split_dt": "2024-12-05 18:00:00 UTC",
+    "end_dt": "2026-08-22 17:00:00 UTC",
+    "total_candles": 50000,
+    "is_candles": 35000,
+    "oos_candles": 15000,
+    "execution_time_sec": 466.68749237060547,
+    "status": "OOS_FAILED",
+    "is_stats": {
+      "combined": {
+        "total_trades": 2,
+        "wins": 2,
+        "losses": 0,
+        "win_rate_pct": 100.0,
+        "gross_profit": 225.7161714834197,
+        "gross_loss": 0,
+        "profit_factor": 225.7161714834197,
+        "net_pnl": 225.7161714834197,
+        "total_realized_r": 2.2456353965038836,
+        "expectancy_r": 1.1228176982519418,
+        "median_r": 1.1228176982519418,
+        "avg_win_r": 1.1228176982519418,
+        "avg_loss_r": 0.0,
+        "max_drawdown_usd": 0.0,
+        "long_trades": 2,
+        "short_trades": 0,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 2
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 1.1228176982519418
+        }
+      }
+    },
+    "oos_stats": {
+      "combined": {
+        "total_trades": 17,
+        "wins": 1,
+        "losses": 16,
+        "win_rate_pct": 5.88235294117647,
+        "gross_profit": 77.9073469977846,
+        "gross_loss": 1607.2138133140115,
+        "profit_factor": 0.048473542444948704,
+        "net_pnl": -1529.306466316227,
+        "total_realized_r": -16.10478130944321,
+        "expectancy_r": -0.9473400770260713,
+        "median_r": -1.0441803698107093,
+        "avg_win_r": 0.8842154938229514,
+        "avg_loss_r": -1.0618123002041353,
+        "max_drawdown_usd": 1418.6267786361277,
+        "long_trades": 9,
+        "short_trades": 8,
+        "exit_attribution": {
+          "INITIAL_LTF_SL": 16,
+          "PROFIT_LOCK_TRAIL": 1
+        },
+        "exit_avg_r": {
+          "INITIAL_LTF_SL": -1.0618123002041353,
+          "PROFIT_LOCK_TRAIL": 0.8842154938229514
+        }
+      }
+    },
+    "retention": {
+      "wr_retention": 0.0588235294117647,
+      "pf_retention": 0.00021475440650254603,
+      "exp_retention": -0.8437167302411934
+    },
+    "setup_lifecycle": {
+      "mean_setup_age_hours": 44.26315789473684,
+      "max_setup_age_hours": 66.0,
+      "total_trades_analyzed": 19
+    }
+  },
+  {
+    "symbol": "ETHUSDT",
+    "tf_set_id": "SET_4",
+    "tf_set_label": "SET_4_INTRADAY (4H -> 1H -> 15M)",
+    "start_dt": "2022-12-21 23:00:00 UTC",
+    "split_dt": "2023-09-10 12:15:00 UTC",
+    "end_dt": "2024-01-01 00:00:00 UTC",
+    "total_candles": 36000,
+    "is_candles": 25200,
+    "oos_candles": 10800,
+    "execution_time_sec": 345.90472507476807,
+    "status": "INSUFFICIENT_SAMPLE",
+    "is_stats": {
+      "combined": {
+        "total_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "win_rate_pct": 0.0,
+        "gross_profit": 0.0,
+        "gross_loss": 0.0,
+        "profit_factor": 0.0,
+        "net_pnl": 0.0,
+        "total_realized_r": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "avg_win_r": 0.0,
+        "avg_loss_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "long_trades": 0,
+        "short_trades": 0,
+        "exit_attribution": {},
+        "exit_avg_r": {}
+      }
+    },
+    "oos_stats": {
+      "combined": {
+        "total_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "win_rate_pct": 0.0,
+        "gross_profit": 0.0,
+        "gross_loss": 0.0,
+        "profit_factor": 0.0,
+        "net_pnl": 0.0,
+        "total_realized_r": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "avg_win_r": 0.0,
+        "avg_loss_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "long_trades": 0,
+        "short_trades": 0,
+        "exit_attribution": {},
+        "exit_avg_r": {}
+      }
+    },
+    "retention": {
+      "wr_retention": 0.0,
+      "pf_retention": 0.0,
+      "exp_retention": 0.0
+    },
+    "setup_lifecycle": {
+      "mean_setup_age_hours": 0.0,
+      "max_setup_age_hours": 0.0,
+      "total_trades_analyzed": 0
+    }
+  },
+  {
+    "symbol": "SOLUSDT",
+    "tf_set_id": "SET_3",
+    "tf_set_label": "SET_3_SWING (1D -> 4H -> 1H)",
+    "start_dt": "2022-12-22 00:00:00 UTC",
+    "split_dt": "2023-09-10 13:00:00 UTC",
+    "end_dt": "2024-01-01 00:00:00 UTC",
+    "total_candles": 9000,
+    "is_candles": 6300,
+    "oos_candles": 2700,
+    "execution_time_sec": 74.2466995716095,
+    "status": "INSUFFICIENT_SAMPLE",
+    "is_stats": {
+      "combined": {
+        "total_trades": 6,
+        "wins": 1,
+        "losses": 5,
+        "win_rate_pct": 16.666666666666664,
+        "gross_profit": 49.721454496215365,
+        "gross_loss": 511.598837924765,
+        "profit_factor": 0.0971883648092401,
+        "net_pnl": -461.8773834285496,
+        "total_realized_r": -4.7004006832793745,
+        "expectancy_r": -0.7834001138798957,
+        "median_r": -1.0404663909417189,
+        "avg_win_r": 0.49721454496215367,
+        "avg_loss_r": -1.0395230456483056,
+        "max_drawdown_usd": 511.598837924765,
+        "long_trades": 4,
+        "short_trades": 2,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 1,
+          "INITIAL_LTF_SL": 5
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 0.49721454496215367,
+          "INITIAL_LTF_SL": -1.0395230456483056
+        }
+      }
+    },
+    "oos_stats": {
+      "combined": {
+        "total_trades": 8,
+        "wins": 2,
+        "losses": 6,
+        "win_rate_pct": 25.0,
+        "gross_profit": 153.7024156847819,
+        "gross_loss": 596.9846235373094,
+        "profit_factor": 0.257464614036539,
+        "net_pnl": -443.2822078525275,
+        "total_realized_r": -4.718901720166878,
+        "expectancy_r": -0.5898627150208597,
+        "median_r": -1.0348583478953999,
+        "avg_win_r": 0.8025296301856457,
+        "avg_loss_r": -1.0539934967563616,
+        "max_drawdown_usd": 596.9846235373095,
+        "long_trades": 8,
+        "short_trades": 0,
+        "exit_attribution": {
+          "PROFIT_LOCK_TRAIL": 2,
+          "INITIAL_LTF_SL": 6
+        },
+        "exit_avg_r": {
+          "PROFIT_LOCK_TRAIL": 0.8025296301856457,
+          "INITIAL_LTF_SL": -1.0539934967563616
+        }
+      }
+    },
+    "retention": {
+      "wr_retention": 1.5000000000000002,
+      "pf_retention": 2.6491300120326824,
+      "exp_retention": 0.0
+    },
+    "setup_lifecycle": {
+      "mean_setup_age_hours": 67.07142857142857,
+      "max_setup_age_hours": 176.0,
+      "total_trades_analyzed": 14
+    }
+  },
+  {
+    "symbol": "SOLUSDT",
+    "tf_set_id": "SET_4",
+    "tf_set_label": "SET_4_INTRADAY (4H -> 1H -> 15M)",
+    "start_dt": "2022-12-21 23:00:00 UTC",
+    "split_dt": "2023-09-10 12:15:00 UTC",
+    "end_dt": "2024-01-01 00:00:00 UTC",
+    "total_candles": 36000,
+    "is_candles": 25200,
+    "oos_candles": 10800,
+    "execution_time_sec": 283.5416851043701,
+    "status": "INSUFFICIENT_SAMPLE",
+    "is_stats": {
+      "combined": {
+        "total_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "win_rate_pct": 0.0,
+        "gross_profit": 0.0,
+        "gross_loss": 0.0,
+        "profit_factor": 0.0,
+        "net_pnl": 0.0,
+        "total_realized_r": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "avg_win_r": 0.0,
+        "avg_loss_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "long_trades": 0,
+        "short_trades": 0,
+        "exit_attribution": {},
+        "exit_avg_r": {}
+      }
+    },
+    "oos_stats": {
+      "combined": {
+        "total_trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "win_rate_pct": 0.0,
+        "gross_profit": 0.0,
+        "gross_loss": 0.0,
+        "profit_factor": 0.0,
+        "net_pnl": 0.0,
+        "total_realized_r": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "avg_win_r": 0.0,
+        "avg_loss_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "long_trades": 0,
+        "short_trades": 0,
+        "exit_attribution": {},
+        "exit_avg_r": {}
+      }
+    },
+    "retention": {
+      "wr_retention": 0.0,
+      "pf_retention": 0.0,
+      "exp_retention": 0.0
+    },
+    "setup_lifecycle": {
+      "mean_setup_age_hours": 0.0,
+      "max_setup_age_hours": 0.0,
+      "total_trades_analyzed": 0
+    }
+  }
+]

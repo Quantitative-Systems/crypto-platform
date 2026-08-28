@@ -7,12 +7,16 @@ and P03 (Risk Firewall) in a strict, zero-lookahead, point-in-time chronological
 from typing import List, Dict, Any, Optional
 from market_intelligence.primitives import Candle
 from market_intelligence.coordinator import LanguageCoordinator
+from strategy_engine.classifiers.regime_filter import RegimeFilter
 from strategy_engine.coordinator.strategy_coordinator import StrategyCoordinator
 from strategy_engine.contracts.strategy_state import CandidateState, PositionState
 from risk_engine.risk_coordinator import RiskCoordinator
 from risk_engine.contracts.account_state import AccountState
 from risk_engine.contracts.risk_plan import RiskApprovedPlan
-from research.replayer.timeframe_aligner import TimeframeAligner, TimeframeSet, TIMEFRAME_DURATIONS_MS
+from risk_engine.contracts.risk_config import RiskConfig
+from research.replayer.timeframe_aligner import (
+    TimeframeAligner, TimeframeSet, TIMEFRAME_DURATIONS_MS, TIMEFRAME_DURATIONS_SEC
+)
 from research.simulation.trade_ledger import TradeLedger, SimulatedTrade
 from research.simulation.execution_simulator import ExecutionSimulator
 from research.metrics.metrics_engine import MetricsEngine
@@ -33,11 +37,21 @@ class CausalReplayer:
         taker_fee_rate: float = 0.0005,
         slippage_bps: float = 5.0,
         enable_mtf_trailing: bool = True,
-        cache_htf_mtf: bool = True
+        enable_profit_lock: bool = False,
+        lockin_r: float = 1.0,
+        giveback_r: float = 0.75,
+        enable_regime_filter: bool = False,
+        cache_htf_mtf: bool = True,
+        risk_config: Optional[RiskConfig] = None
     ):
         self.timeframe_set: TimeframeSet = TimeframeAligner.get_set(timeframe_set_id)
         self.initial_balance = initial_balance
         self.enable_mtf_trailing = enable_mtf_trailing
+        self.enable_profit_lock = enable_profit_lock
+        self.lockin_r = lockin_r
+        self.giveback_r = giveback_r
+        self.enable_regime_filter = enable_regime_filter
+        self.risk_config = risk_config
         # RESEARCH ENGINE PERFORMANCE FLAG (no trading-logic impact):
         # When True, the point-in-time HTF/MTF incremental state is cached and only
         # recomputed when a NEW higher/middle timeframe candle becomes causally
@@ -57,11 +71,21 @@ class CausalReplayer:
         self._ltf_runs: int = 0
 
         self.language_coordinator = LanguageCoordinator(buffer_size=300)
-        self.strategy_coordinator = StrategyCoordinator()
+        self.regime_filter = RegimeFilter(enable_filter=True) if self.enable_regime_filter else None
+        self.strategy_coordinator = StrategyCoordinator(
+            enable_mtf_trailing=self.enable_mtf_trailing,
+            enable_profit_lock=self.enable_profit_lock,
+            lockin_r=self.lockin_r,
+            giveback_r=self.giveback_r,
+            regime_filter=self.regime_filter
+        )
         self.execution_simulator = ExecutionSimulator(
             maker_fee_rate=maker_fee_rate,
             taker_fee_rate=taker_fee_rate,
-            slippage_bps=slippage_bps
+            slippage_bps=slippage_bps,
+            enable_profit_lock=self.enable_profit_lock,
+            lockin_r=self.lockin_r,
+            giveback_r=self.giveback_r
         )
         self.ledger = TradeLedger(initial_equity=initial_balance)
 
@@ -89,6 +113,8 @@ class CausalReplayer:
         # Reset incremental caches at the start of a fresh replay stream.
         self._htf_cache = {"key": None, "state": None}
         self._mtf_cache = {"key": None, "state": None}
+        
+        rejected_candidates = []
 
         # Step chronologically forward through LTF candles
         for i in range(min_lookback_bars, len(ltf_candles)):
@@ -159,15 +185,14 @@ class CausalReplayer:
                     if plan.status == CandidateState.ENTERED.value:
                         account_state = AccountState(
                             current_equity=self.ledger.current_equity,
-                            starting_equity=self.ledger.initial_equity,
                             peak_equity=self.ledger.peak_equity,
-                            current_daily_drawdown=0.0,
-                            current_weekly_drawdown=0.0,
-                            open_positions_count=len(self.ledger.get_active_trades()),
-                            active_symbols=[t.symbol for t in self.ledger.get_active_trades()]
+                            daily_pnl=0.0,
+                            weekly_pnl=0.0,
+                            open_position_count=len(self.ledger.get_active_trades()),
+                            active_assets={t.symbol: 1.0 for t in self.ledger.get_active_trades()}
                         )
 
-                        risk_result = RiskCoordinator.evaluate(plan, account_state)
+                        risk_result = RiskCoordinator.evaluate(plan, account_state, config=self.risk_config)
 
                         if isinstance(risk_result, RiskApprovedPlan):
                             simulated_trade = SimulatedTrade(
@@ -199,13 +224,20 @@ class CausalReplayer:
                                 exit_reason="MTF_STRUCTURAL_TRAIL",
                                 ledger=self.ledger
                             )
+                    else:
+                        if plan.status != CandidateState.ENTERED.value:
+                            rejected_candidates.append(plan)
 
             except Exception as e:
                 # Isolate unexpected calculation exceptions to avoid aborting the entire replay stream
+                import traceback
+                traceback.print_exc()
                 continue
 
         # Calculate suspended intervals count in the LTF stream
-        expected_ltf_interval = TIMEFRAME_DURATIONS_MS.get(self.timeframe_set.ltf, 3600000)
+        is_sec = (ltf_candles[0].timestamp < 100_000_000_000) if ltf_candles else True
+        durations = TIMEFRAME_DURATIONS_SEC if is_sec else TIMEFRAME_DURATIONS_MS
+        expected_ltf_interval = durations.get(self.timeframe_set.ltf.upper(), 3600 if is_sec else 3600000)
         suspended_intervals_count = 0
         for idx in range(1, len(ltf_candles)):
             gap = ltf_candles[idx].timestamp - ltf_candles[idx-1].timestamp
@@ -224,6 +256,7 @@ class CausalReplayer:
             "failure_modes": failure_modes,
             "closed_trades": [t.to_dict() for t in closed_trades],
             "equity_curve": self.ledger.equity_curve,
+            "rejected_candidates": [p.__dict__ for p in rejected_candidates],
             "suspended_intervals_count": suspended_intervals_count,
             "replayed_candles_count": max(0, len(ltf_candles) - min_lookback_bars),
             "date_range": {

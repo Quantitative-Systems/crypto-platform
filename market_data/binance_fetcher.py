@@ -18,7 +18,7 @@ class BinanceFetcher:
     BINANCE_URL = "https://api.binance.com/api/v3/klines"
 
     @staticmethod
-    def fetch_real_candles(symbol: str = "BTC/USDT", timeframe: str = "1h", limit: int = 1000) -> List[Candle]:
+    def fetch_real_candles(symbol: str = "BTC/USDT", timeframe: str = "1h", limit: int = 50000, start_time_ms: int = None, end_time_ms: int = None) -> List[Candle]:
         """
         Fetches real OHLCV candlestick data directly from Binance API without API keys.
         Supports paginated fetching for limits > 1000.
@@ -41,7 +41,14 @@ class BinanceFetcher:
                 with open(cache_filepath, "r") as f:
                     cached_raw = json.load(f)
                 if cached_raw and len(cached_raw) >= 10:
-                    selected = cached_raw[-limit:] if len(cached_raw) >= limit else cached_raw
+                    # Filter by timestamp bounds if provided
+                    filtered = cached_raw
+                    if start_time_ms is not None:
+                        filtered = [b for b in filtered if b[0] >= start_time_ms]
+                    if end_time_ms is not None:
+                        filtered = [b for b in filtered if b[0] <= end_time_ms]
+                        
+                    selected = filtered[-limit:] if len(filtered) >= limit else filtered
                     print(f"✅ Loaded {len(selected)} {timeframe} candles for {symbol} from cache.")
                     return [
                         Candle(
@@ -57,14 +64,14 @@ class BinanceFetcher:
             except Exception:
                 pass  # Fallback to API if cache reading fails
 
-        print(f"📥 Fetching {limit} {timeframe} candles for {symbol} from Binance API...")
+        print(f"📥 Fetching {timeframe} candles for {symbol} from Binance API...")
         
         all_bars = []
-        end_time_ms = int(time.time() * 1000)
+        current_end_time = end_time_ms if end_time_ms is not None else int(time.time() * 1000)
         
         while len(all_bars) < limit:
             fetch_limit = min(1000, limit - len(all_bars))
-            url = f"{BinanceFetcher.BINANCE_URL}?symbol={binance_symbol}&interval={binance_tf}&limit={fetch_limit}&endTime={end_time_ms}"
+            url = f"{BinanceFetcher.BINANCE_URL}?symbol={binance_symbol}&interval={binance_tf}&limit={fetch_limit}&endTime={current_end_time}"
             req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
             
             try:
@@ -74,11 +81,18 @@ class BinanceFetcher:
                     if not raw_json:
                         break
                         
-                    # Binance returns oldest to newest. Prepend to our list.
+                    # Binance returns oldest to newest in each batch. Prepend to our list.
                     all_bars = raw_json + all_bars
                     
+                    # Oldest candle in this chunk
+                    oldest_ts = raw_json[0][0]
+                    
+                    # Stop fetching if we've gone back far enough
+                    if start_time_ms is not None and oldest_ts <= start_time_ms:
+                        break
+                        
                     # Next request's endTime is just before the oldest candle in this chunk
-                    end_time_ms = raw_json[0][0] - 1
+                    current_end_time = oldest_ts - 1
                     
                     # Respect rate limit
                     time.sleep(0.2)
@@ -93,6 +107,12 @@ class BinanceFetcher:
                     json.dump(all_bars, f)
             except Exception as e:
                 print(f"⚠️ Failed to write cache: {e}")
+                
+        filtered = all_bars
+        if start_time_ms is not None:
+            filtered = [b for b in filtered if b[0] >= start_time_ms]
+        if end_time_ms is not None:
+            filtered = [b for b in filtered if b[0] <= end_time_ms]
 
         candles = [
             Candle(
@@ -103,6 +123,6 @@ class BinanceFetcher:
                 close=float(bar[4]),
                 volume=float(bar[5])
             )
-            for bar in all_bars[-limit:]
+            for bar in filtered[-limit:]
         ]
         return candles

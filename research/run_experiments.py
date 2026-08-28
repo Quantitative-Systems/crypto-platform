@@ -180,13 +180,19 @@ def run():
     print("-" * len(ab_header))
     for res in ab_results:
         cfg = f"{res['asset']}_{res['timeframe_set']}"
-        t_a = res["baseline_a_no_trailing"]["total_trades"]
-        t_b = res["baseline_b_with_trailing"]["total_trades"]
-        d = res["deltas"]
-        wr_d = f"{d['win_rate_delta']*100:+.1f}%"
-        exp_d = f"{d['expectancy_r_delta']:+.2f}R" if isinstance(d['expectancy_r_delta'], float) else str(d['expectancy_r_delta'])
-        pnl_d = f"${d['net_profit_delta_usd']:+.2f}"
-        dd_d = f"{d['max_drawdown_delta_pct']*100:+.2f}%"
+        base_a = res.get("baseline_a_no_trail", res.get("baseline_a_no_trailing", {}))
+        base_b = res.get("baseline_b_with_trail", res.get("baseline_b_with_trailing", {}))
+        t_a = base_a.get("total_trades", 0)
+        t_b = base_b.get("total_trades", 0)
+        d = res.get("deltas", {})
+        wr_d_val = d.get("win_rate_delta", 0.0)
+        wr_d = f"{wr_d_val*100:+.1f}%" if isinstance(wr_d_val, float) else str(wr_d_val)
+        exp_d_val = d.get("expectancy_r_delta", 0.0)
+        exp_d = f"{exp_d_val:+.2f}R" if isinstance(exp_d_val, float) else str(exp_d_val)
+        pnl_d_val = d.get("net_profit_delta_usd", 0.0)
+        pnl_d = f"${pnl_d_val:+.2f}" if isinstance(pnl_d_val, float) else str(pnl_d_val)
+        dd_d_val = d.get("max_drawdown_delta_pct", 0.0)
+        dd_d = f"{dd_d_val*100:+.2f}%" if isinstance(dd_d_val, float) else str(dd_d_val)
         print(f"{cfg:<20} | {f'{t_a}/{t_b}':<12} | {wr_d:<10} | {exp_d:<14} | {pnl_d:<14} | {dd_d:<12}")
 
     print("\n================================================================================")

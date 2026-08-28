@@ -74,13 +74,11 @@ def test_full_p01_to_p03_pipeline():
     # Step 3: Trigger Entry
     trade_plans = strategy_coord.evaluate(htf, mtf, ltf)
     
-    # We should have 2 ENTERED plans (one for Pullback, one for Continuation since both mock states matched blindly)
-    assert len(trade_plans) == 2
-    for plan in trade_plans:
-        if plan.status == "REJECTED":
-            print(f"Plan rejected: {plan.rejection_reason}")
-        assert plan.status == CandidateState.ENTERED.value
-        assert plan.raw_rr == 6.0
+    # Filter for ENTERED plans (Continuation Riding clears >=4.0R, while Pullback with 0.16R is rejected)
+    entered_plans = [p for p in trade_plans if p.status == CandidateState.ENTERED.value]
+    assert len(entered_plans) == 1
+    plan_to_execute = entered_plans[0]
+    assert plan_to_execute.raw_rr == 6.0
         
     # 3. Product 03 Risk Firewall
     account_state = AccountState(
@@ -92,8 +90,7 @@ def test_full_p01_to_p03_pipeline():
         active_assets={}
     )
     
-    # Test first plan through the firewall
-    plan_to_execute = trade_plans[0]
+    # Test plan through the firewall
     result = RiskCoordinator.evaluate(plan_to_execute, account_state)
     
     # Assert Risk Firewall Approves
