@@ -54,9 +54,21 @@ class TrailingABExperiment:
             ltf_candles=ltf_candles
         )
 
-        # 3. Compute Delta Comparison
+        # 3. Compute Delta Comparison safely with potential None values on zero-trade streams
         metrics_a = result_a["metrics"]
         metrics_b = result_b["metrics"]
+
+        wr_a = metrics_a.get("win_rate")
+        wr_b = metrics_b.get("win_rate")
+        wr_delta = round(wr_b - wr_a, 4) if (wr_a is not None and wr_b is not None) else None
+
+        np_a = metrics_a.get("net_profit_usd") if metrics_a.get("net_profit_usd") is not None else 0.0
+        np_b = metrics_b.get("net_profit_usd") if metrics_b.get("net_profit_usd") is not None else 0.0
+        np_delta = round(np_b - np_a, 2)
+
+        dd_a = metrics_a.get("max_drawdown_pct") if metrics_a.get("max_drawdown_pct") is not None else 0.0
+        dd_b = metrics_b.get("max_drawdown_pct") if metrics_b.get("max_drawdown_pct") is not None else 0.0
+        dd_delta = round(dd_b - dd_a, 4)
 
         delta_report = {
             "asset": asset,
@@ -80,9 +92,9 @@ class TrailingABExperiment:
                 "exit_attribution": result_b["exit_attribution"]
             },
             "deltas": {
-                "win_rate_delta": round(metrics_b["win_rate"] - metrics_a["win_rate"], 4),
-                "net_profit_delta_usd": round(metrics_b["net_profit_usd"] - metrics_a["net_profit_usd"], 2),
-                "max_drawdown_delta_pct": round(metrics_b["max_drawdown_pct"] - metrics_a["max_drawdown_pct"], 4)
+                "win_rate_delta": wr_delta,
+                "net_profit_delta_usd": np_delta,
+                "max_drawdown_delta_pct": dd_delta
             }
         }
 

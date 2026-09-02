@@ -1,6 +1,6 @@
 """
-Product 04 — Research Laboratory: 24-Baseline Research Matrix Runner
-Executes 24 isolated baseline streams (2 Hypotheses x 4 Timeframe Sets x 3 Assets)
+Product 04 — Research Laboratory: 15-Stream Baseline Research Matrix Runner
+Executes 15 isolated baseline streams (1 Unified Strategy x 5 Timeframe Sets x 3 Assets)
 with complete memory and state quarantine.
 """
 
@@ -12,12 +12,11 @@ from research.exporters.artifact_exporter import ArtifactExporter
 
 
 ASSETS = ["BTC", "ETH", "SOL"]
-HYPOTHESES = ["HYP_A_PULLBACK_RIDING", "HYP_B_CONTINUATION_RIDING"]
 
 
 class MatrixRunner:
     """
-    Orchestrates the execution of all 24 baseline research streams.
+    Orchestrates the execution of all 15 baseline research streams.
     """
 
     def __init__(self, exporter: Optional[ArtifactExporter] = None):
@@ -67,10 +66,10 @@ class MatrixRunner:
 
                 # Export individual stream artifact
                 self.exporter.export_run(
-                    experiment_name="24_BASELINE_MATRIX",
+                    experiment_name="15_BASELINE_MATRIX",
                     asset=asset,
                     timeframe_set=set_id,
-                    hypothesis_id="COMBINED_P02",
+                    hypothesis_id="UNIFIED_STRATEGY",
                     metrics=run_output["metrics"],
                     exit_attribution=run_output["exit_attribution"],
                     failure_modes=run_output["failure_modes"],
