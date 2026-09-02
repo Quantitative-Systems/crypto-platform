@@ -20,7 +20,7 @@ import pytest
 from market_intelligence.primitives import Candle
 from research.replayer.causal_replayer import CausalReplayer
 
-CANONICAL_SETS = ["SET_1", "SET_2", "SET_3", "SET_4"]
+CANONICAL_SETS = ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5"]
 
 # Mappings of canonical set -> (htf_ms, mtf_ms, ltf_ms) candle alignment step
 SET_STEPS_MS = {
@@ -28,6 +28,7 @@ SET_STEPS_MS = {
     "SET_2": (7 * 24 * 3600 * 1000, 24 * 3600 * 1000, 4 * 3600 * 1000),
     "SET_3": (24 * 3600 * 1000, 4 * 3600 * 1000, 3600 * 1000),
     "SET_4": (4 * 3600 * 1000, 3600 * 1000, 15 * 60 * 1000),
+    "SET_5": (15 * 60 * 1000, 5 * 60 * 1000, 60 * 1000),
 }
 
 LTF_COUNTS = {
@@ -35,6 +36,7 @@ LTF_COUNTS = {
     "SET_2": 460,
     "SET_3": 900,
     "SET_4": 900,
+    "SET_5": 900,
 }
 
 

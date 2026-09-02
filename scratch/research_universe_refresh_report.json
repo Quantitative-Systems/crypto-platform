@@ -1,0 +1,149 @@
+{
+  "timestamp_utc": "2026-09-01T17:58:18.484155+00:00",
+  "universe": {
+    "BTCUSDT_15m": {
+      "status": "FETCHED",
+      "rows": 316482,
+      "duplicates": 0,
+      "missing_bars_est": 565,
+      "first": "2017-08-17 04:00",
+      "last": "2026-09-01 17:30"
+    },
+    "BTCUSDT_1h": {
+      "status": "FETCHED",
+      "rows": 79134,
+      "duplicates": 0,
+      "missing_bars_est": 128,
+      "first": "2017-08-17 04:00",
+      "last": "2026-09-01 17:00"
+    },
+    "BTCUSDT_4h": {
+      "status": "FETCHED",
+      "rows": 19800,
+      "duplicates": 0,
+      "missing_bars_est": 16,
+      "first": "2017-08-17 04:00",
+      "last": "2026-09-01 16:00"
+    },
+    "BTCUSDT_1d": {
+      "status": "FETCHED",
+      "rows": 3303,
+      "duplicates": 0,
+      "missing_bars_est": 0,
+      "first": "2017-08-17 00:00",
+      "last": "2026-09-01 00:00"
+    },
+    "BTCUSDT_1w": {
+      "status": "FETCHED",
+      "rows": 473,
+      "duplicates": 0,
+      "missing_bars_est": 0,
+      "first": "2017-08-14 00:00",
+      "last": "2026-08-31 00:00"
+    },
+    "BTCUSDT_1M": {
+      "status": "FETCHED",
+      "rows": 110,
+      "duplicates": 0,
+      "missing_bars_est": 0,
+      "first": "2017-08-01 00:00",
+      "last": "2026-09-01 00:00"
+    },
+    "ETHUSDT_15m": {
+      "status": "FETCHED",
+      "rows": 316482,
+      "duplicates": 0,
+      "missing_bars_est": 565,
+      "first": "2017-08-17 04:00",
+      "last": "2026-09-01 17:30"
+    },
+    "ETHUSDT_1h": {
+      "status": "FETCHED",
+      "rows": 79134,
+      "duplicates": 0,
+      "missing_bars_est": 128,
+      "first": "2017-08-17 04:00",
+      "last": "2026-09-01 17:00"
+    },
+    "ETHUSDT_4h": {
+      "status": "FETCHED",
+      "rows": 19800,
+      "duplicates": 0,
+      "missing_bars_est": 16,
+      "first": "2017-08-17 04:00",
+      "last": "2026-09-01 16:00"
+    },
+    "ETHUSDT_1d": {
+      "status": "FETCHED",
+      "rows": 3303,
+      "duplicates": 0,
+      "missing_bars_est": 0,
+      "first": "2017-08-17 00:00",
+      "last": "2026-09-01 00:00"
+    },
+    "ETHUSDT_1w": {
+      "status": "FETCHED",
+      "rows": 473,
+      "duplicates": 0,
+      "missing_bars_est": 0,
+      "first": "2017-08-14 00:00",
+      "last": "2026-08-31 00:00"
+    },
+    "ETHUSDT_1M": {
+      "status": "FETCHED",
+      "rows": 110,
+      "duplicates": 0,
+      "missing_bars_est": 0,
+      "first": "2017-08-01 00:00",
+      "last": "2026-09-01 00:00"
+    },
+    "SOLUSDT_15m": {
+      "status": "FETCHED",
+      "rows": 211973,
+      "duplicates": 0,
+      "missing_bars_est": 94,
+      "first": "2020-08-14 17:00",
+      "last": "2026-09-01 17:30"
+    },
+    "SOLUSDT_1h": {
+      "status": "FETCHED",
+      "rows": 52997,
+      "duplicates": 0,
+      "missing_bars_est": 20,
+      "first": "2020-08-14 17:00",
+      "last": "2026-09-01 17:00"
+    },
+    "SOLUSDT_4h": {
+      "status": "FETCHED",
+      "rows": 13254,
+      "duplicates": 0,
+      "missing_bars_est": 0,
+      "first": "2020-08-14 20:00",
+      "last": "2026-09-01 16:00"
+    },
+    "SOLUSDT_1d": {
+      "status": "FETCHED",
+      "rows": 2209,
+      "duplicates": 0,
+      "missing_bars_est": 0,
+      "first": "2020-08-15 00:00",
+      "last": "2026-09-01 00:00"
+    },
+    "SOLUSDT_1w": {
+      "status": "FETCHED",
+      "rows": 316,
+      "duplicates": 0,
+      "missing_bars_est": 0,
+      "first": "2020-08-17 00:00",
+      "last": "2026-08-31 00:00"
+    },
+    "SOLUSDT_1M": {
+      "status": "FETCHED",
+      "rows": 73,
+      "duplicates": 0,
+      "missing_bars_est": 0,
+      "first": "2020-09-01 00:00",
+      "last": "2026-09-01 00:00"
+    }
+  }
+}

@@ -20,6 +20,7 @@ def test_universal_broker_exness_mt5_loop(tmp_path):
         # 1. Configure Exness MT5 Gateway with $10 Micro Account & Whitelist
         broker_cfg = BrokerConfig(
             broker_type=BrokerType.EXNESS_MT5,
+            is_simulated=True,
             symbol_suffix="m",
             allowed_symbols=["BTC/USD", "ETH/USD", "EUR/USD", "XAU/USD"],
             min_lot_size=0.01,
