@@ -28,14 +28,14 @@ class MetricsEngine:
                 "win_count": 0,
                 "loss_count": 0,
                 "breakeven_count": 0,
-                "win_rate": 0.0,
-                "loss_rate": 0.0,
+                "win_rate": None,
+                "loss_rate": None,
                 "gross_profit_usd": 0.0,
                 "gross_loss_usd": 0.0,
                 "net_profit_usd": 0.0,
                 "total_friction_usd": 0.0,
-                "avg_win_usd": 0.0,
-                "avg_loss_usd": 0.0,
+                "avg_win_usd": None,
+                "avg_loss_usd": None,
                 "profit_factor": "NOT_AVAILABLE",
                 "expectancy_usd": "NOT_AVAILABLE",
                 "expectancy_r": "NOT_AVAILABLE",
@@ -44,6 +44,14 @@ class MetricsEngine:
                 "sortino_ratio": "NOT_AVAILABLE",
                 "average_r": "NOT_AVAILABLE",
                 "median_r": "NOT_AVAILABLE",
+                "max_consecutive_losses": 0,
+                "max_consecutive_wins": 0,
+                "avg_trade_duration_sec": 0.0,
+                "avg_mfe_r": 0.0,
+                "avg_mae_r": 0.0,
+                "max_mfe_r": 0.0,
+                "max_mae_r": 0.0,
+                "sample_confidence": "INSUFFICIENT_SAMPLE",
                 "r_multiples": []
             }
 
@@ -92,6 +100,54 @@ class MetricsEngine:
         # Max Drawdown from ledger
         max_drawdown = ledger.max_drawdown_pct
 
+        # Consecutive streaks
+        max_cons_wins = 0
+        max_cons_losses = 0
+        curr_wins = 0
+        curr_losses = 0
+        for p in pnls:
+            if p > 0:
+                curr_wins += 1
+                curr_losses = 0
+            elif p < 0:
+                curr_losses += 1
+                curr_wins = 0
+            else:
+                curr_wins = 0
+                curr_losses = 0
+            max_cons_wins = max(max_cons_wins, curr_wins)
+            max_cons_losses = max(max_cons_losses, curr_losses)
+
+        # Trade Durations
+        durations = [
+            (t.exit_timestamp - t.entry_timestamp)
+            for t in closed_trades
+            if t.exit_timestamp is not None and t.entry_timestamp is not None and t.exit_timestamp >= t.entry_timestamp
+        ]
+        avg_duration_sec = sum(durations) / len(durations) if durations else 0.0
+
+        # MFE / MAE in R-multiples
+        mfe_r_list = []
+        mae_r_list = []
+        for t in closed_trades:
+            entry_p = t.fill_entry_price or t.entry_price
+            risk_dist = abs(entry_p - t.initial_stop_price)
+            if risk_dist > 0 and t.metadata:
+                is_long = t.directional_permission == "PERMIT_LONG"
+                mfe_p = t.metadata.get("mfe_price", entry_p)
+                mae_p = t.metadata.get("mae_price", entry_p)
+                if is_long:
+                    mfe_r_list.append((mfe_p - entry_p) / risk_dist)
+                    mae_r_list.append((entry_p - mae_p) / risk_dist)
+                else:
+                    mfe_r_list.append((entry_p - mfe_p) / risk_dist)
+                    mae_r_list.append((mae_p - entry_p) / risk_dist)
+
+        avg_mfe_r = sum(mfe_r_list) / len(mfe_r_list) if mfe_r_list else 0.0
+        avg_mae_r = sum(mae_r_list) / len(mae_r_list) if mae_r_list else 0.0
+        max_mfe_r = max(mfe_r_list) if mfe_r_list else 0.0
+        max_mae_r = max(mae_r_list) if mae_r_list else 0.0
+
         # Sharpe & Sortino Ratios (per trade return distribution)
         mean_pnl = net_profit / total_trades
         variance = sum((p - mean_pnl) ** 2 for p in pnls) / total_trades if total_trades > 1 else 0.0
@@ -110,8 +166,11 @@ class MetricsEngine:
         else:
             sortino_ratio = (mean_pnl - risk_free_rate) / downside_std_dev
 
+        sample_confidence = "STATISTICALLY_EVALUABLE" if total_trades >= 30 else ("PRELIMINARY_SAMPLE" if total_trades >= 10 else "SAMPLE_TOO_SMALL")
+
         return {
             "total_trades": total_trades,
+            "sample_confidence": sample_confidence,
             "win_count": win_count,
             "loss_count": loss_count,
             "breakeven_count": breakeven_count,
@@ -127,6 +186,13 @@ class MetricsEngine:
             "expectancy_usd": round(expectancy_usd, 2),
             "expectancy_r": round(expectancy_r, 4),
             "max_drawdown_pct": round(max_drawdown, 4),
+            "max_consecutive_losses": max_cons_losses,
+            "max_consecutive_wins": max_cons_wins,
+            "avg_trade_duration_sec": round(avg_duration_sec, 2),
+            "avg_mfe_r": round(avg_mfe_r, 4),
+            "avg_mae_r": round(avg_mae_r, 4),
+            "max_mfe_r": round(max_mfe_r, 4),
+            "max_mae_r": round(max_mae_r, 4),
             "sharpe_ratio": sharpe_ratio if isinstance(sharpe_ratio, str) else round(sharpe_ratio, 4),
             "sortino_ratio": sortino_ratio if isinstance(sortino_ratio, str) else round(sortino_ratio, 4),
             "average_r": round(avg_r, 4),

@@ -1,266 +1,1876 @@
 [
   {
-    "symbol": "BTCUSDT",
-    "tf_set_id": "SET_1",
-    "execution_time_sec": 2.2809791564941406,
-    "combined": {
+    "stream_id": "BTC_SET_1",
+    "identity": {
+      "asset": "BTC",
+      "timeframe_set": "SET_1",
+      "label": "SET_1 (1M -> 1W -> 1D)",
+      "htf": "1M",
+      "mtf": "1W",
+      "ltf": "1D",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 78,
+      "mtf_candles": 334,
+      "ltf_candles": 366
+    },
+    "execution_time_sec": 2.14,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 244,
+      "mtf_structural_alignments": 0,
+      "mtf_causal_retests": 0,
+      "ltf_triggers": 0,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_SETUP_LIFESPAN_EXPIRED": 4
+    },
+    "performance": {
       "total_trades": 0,
       "wins": 0,
       "losses": 0,
       "win_rate_pct": 0.0,
-      "gross_profit": 0.0,
-      "gross_loss": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
       "profit_factor": 0.0,
-      "net_pnl": 0.0,
-      "total_realized_r": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
       "expectancy_r": 0.0,
       "median_r": 0.0,
-      "avg_win_r": 0.0,
-      "avg_loss_r": 0.0,
       "max_drawdown_usd": 0.0,
       "max_drawdown_pct": 0.0,
       "avg_mfe_r": 0.0,
-      "avg_mae_r": 0.0
-    }
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
   },
   {
-    "symbol": "BTCUSDT",
-    "tf_set_id": "SET_2",
-    "execution_time_sec": 20.1196129322052,
-    "combined": {
+    "stream_id": "BTC_SET_2",
+    "identity": {
+      "asset": "BTC",
+      "timeframe_set": "SET_2",
+      "label": "SET_2 (1W -> 1D -> 4H)",
+      "htf": "1W",
+      "mtf": "1D",
+      "ltf": "4H",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 334,
+      "mtf_candles": 2036,
+      "ltf_candles": 2191
+    },
+    "execution_time_sec": 21.11,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 0,
+      "mtf_structural_alignments": 0,
+      "mtf_causal_retests": 0,
+      "ltf_triggers": 0,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {},
+    "performance": {
       "total_trades": 0,
       "wins": 0,
       "losses": 0,
       "win_rate_pct": 0.0,
-      "gross_profit": 0.0,
-      "gross_loss": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
       "profit_factor": 0.0,
-      "net_pnl": 0.0,
-      "total_realized_r": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
       "expectancy_r": 0.0,
       "median_r": 0.0,
-      "avg_win_r": 0.0,
-      "avg_loss_r": 0.0,
       "max_drawdown_usd": 0.0,
       "max_drawdown_pct": 0.0,
       "avg_mfe_r": 0.0,
-      "avg_mae_r": 0.0
-    }
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
   },
   {
-    "symbol": "BTCUSDT",
-    "tf_set_id": "SET_3",
-    "execution_time_sec": 60.72190856933594,
-    "combined": {
+    "stream_id": "BTC_SET_3",
+    "identity": {
+      "asset": "BTC",
+      "timeframe_set": "SET_3",
+      "label": "SET_3 (1D -> 4H -> 1H)",
+      "htf": "1D",
+      "mtf": "4H",
+      "ltf": "1H",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 2036,
+      "mtf_candles": 7212,
+      "ltf_candles": 8760
+    },
+    "execution_time_sec": 95.85,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 843,
+      "mtf_structural_alignments": 295,
+      "mtf_causal_retests": 187,
+      "ltf_triggers": 126,
+      "risk_evaluations": 2,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 45,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 72,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 24,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 12,
+      "REJECT_RR_BELOW_4R": 6,
+      "REJECT_MIN_STOP_DISTANCE_VIOLATION": 1,
+      "REJECT_NEGATIVE_STOP_DISTANCE": 1
+    },
+    "performance": {
       "total_trades": 0,
       "wins": 0,
       "losses": 0,
       "win_rate_pct": 0.0,
-      "gross_profit": 0.0,
-      "gross_loss": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
       "profit_factor": 0.0,
-      "net_pnl": 0.0,
-      "total_realized_r": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
       "expectancy_r": 0.0,
       "median_r": 0.0,
-      "avg_win_r": 0.0,
-      "avg_loss_r": 0.0,
       "max_drawdown_usd": 0.0,
       "max_drawdown_pct": 0.0,
       "avg_mfe_r": 0.0,
-      "avg_mae_r": 0.0
-    }
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
   },
   {
-    "symbol": "BTCUSDT",
-    "tf_set_id": "SET_4",
-    "execution_time_sec": 222.51120448112488,
-    "combined": {
+    "stream_id": "BTC_SET_4",
+    "identity": {
+      "asset": "BTC",
+      "timeframe_set": "SET_4",
+      "label": "SET_4 (4H -> 1H -> 15M)",
+      "htf": "4H",
+      "mtf": "1H",
+      "ltf": "15M",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 7212,
+      "mtf_candles": 26847,
+      "ltf_candles": 35036
+    },
+    "execution_time_sec": 340.14,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 4593,
+      "mtf_structural_alignments": 1032,
+      "mtf_causal_retests": 729,
+      "ltf_triggers": 317,
+      "risk_evaluations": 26,
+      "risk_approved_plans": 1,
+      "submitted_orders": 1,
+      "filled_trades": 1,
+      "closed_trades": 1
+    },
+    "rejection_attribution": {
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 66,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 140,
+      "REJECT_RR_BELOW_4R": 36,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 43,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 122,
+      "REJECT_MIN_STOP_DISTANCE_VIOLATION": 3,
+      "REJECT_NEGATIVE_STOP_DISTANCE": 8,
+      "REJECT_MAX_LEVERAGE_VIOLATION": 14
+    },
+    "performance": {
       "total_trades": 1,
       "wins": 1,
       "losses": 0,
       "win_rate_pct": 100.0,
-      "gross_profit": 23.849705685194618,
-      "gross_loss": 0,
-      "profit_factor": 23.849705685194618,
-      "net_pnl": 23.849705685194618,
-      "total_realized_r": 0.23849705685194617,
-      "expectancy_r": 0.23849705685194617,
-      "median_r": 0.23849705685194617,
-      "avg_win_r": 0.23849705685194617,
-      "avg_loss_r": 0.0,
+      "gross_profit_usd": 23.85,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 23.85,
+      "profit_factor": 23.8497,
+      "gross_realized_r": 0.2671,
+      "total_friction_r": 0.0286,
+      "net_realized_r": 0.2385,
+      "expectancy_r": 0.2385,
+      "median_r": 0.2385,
       "max_drawdown_usd": 0.0,
       "max_drawdown_pct": 0.0,
-      "avg_mfe_r": 1.045758438013276,
-      "avg_mae_r": 0.5550234806949399
-    }
+      "avg_mfe_r": 1.0458,
+      "median_mfe_r": 1.0458,
+      "avg_mae_r": 0.555,
+      "median_mae_r": 0.555
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 1,
+        "net_r": 0.2385,
+        "net_pnl": 23.85
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 1,
+        "pct": 100.0,
+        "avg_gross_r": 0.2671,
+        "avg_net_r": 0.2385
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": [
+      {
+        "stream": "BTC_SET_4",
+        "trade_id": "cand_BTC/USDT_UNIFIED_1678911300",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1678953600,
+        "entry_price": 24614.27,
+        "stop": 24182.0,
+        "target": 26386.87,
+        "planned_rr": 4.100677817105042,
+        "exit_timestamp": 1678966200,
+        "exit_price": 24729.74644125,
+        "exit_reason": "PROFIT_LOCK_TRAIL",
+        "gross_r": 0.2671,
+        "friction": 2.86,
+        "friction_r": 0.0286,
+        "net_r": 0.2385,
+        "net_pnl": 23.85
+      }
+    ]
   },
   {
-    "symbol": "ETHUSDT",
-    "tf_set_id": "SET_1",
-    "execution_time_sec": 1.4261889457702637,
-    "combined": {
+    "stream_id": "BTC_SET_5",
+    "identity": {
+      "asset": "BTC",
+      "timeframe_set": "SET_5",
+      "label": "SET_5 (15M -> 5M -> 1M)",
+      "htf": "15M",
+      "mtf": "5M",
+      "ltf": "1m",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "INSUFFICIENT_HISTORY",
+      "htf_status": "AVAILABLE",
+      "mtf_status": "MISSING",
+      "ltf_status": "MISSING",
+      "htf_candles": 35036,
+      "mtf_candles": 0,
+      "ltf_candles": 0
+    },
+    "execution_time_sec": 0.0,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 0,
+      "mtf_structural_alignments": 0,
+      "mtf_causal_retests": 0,
+      "ltf_triggers": 0,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {},
+    "performance": {
       "total_trades": 0,
       "wins": 0,
       "losses": 0,
       "win_rate_pct": 0.0,
-      "gross_profit": 0.0,
-      "gross_loss": 0.0,
+      "gross_profit_usd": 0.0,
+      "gross_loss_usd": 0.0,
+      "net_pnl_usd": 0.0,
       "profit_factor": 0.0,
-      "net_pnl": 0.0,
-      "total_realized_r": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
       "expectancy_r": 0.0,
       "median_r": 0.0,
-      "avg_win_r": 0.0,
-      "avg_loss_r": 0.0,
       "max_drawdown_usd": 0.0,
       "max_drawdown_pct": 0.0,
       "avg_mfe_r": 0.0,
-      "avg_mae_r": 0.0
-    }
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
   },
   {
-    "symbol": "ETHUSDT",
-    "tf_set_id": "SET_2",
-    "execution_time_sec": 11.561506271362305,
-    "combined": {
+    "stream_id": "ETH_SET_1",
+    "identity": {
+      "asset": "ETH",
+      "timeframe_set": "SET_1",
+      "label": "SET_1 (1M -> 1W -> 1D)",
+      "htf": "1M",
+      "mtf": "1W",
+      "ltf": "1D",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 78,
+      "mtf_candles": 334,
+      "ltf_candles": 366
+    },
+    "execution_time_sec": 2.48,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 0,
+      "mtf_structural_alignments": 0,
+      "mtf_causal_retests": 0,
+      "ltf_triggers": 0,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {},
+    "performance": {
       "total_trades": 0,
       "wins": 0,
       "losses": 0,
       "win_rate_pct": 0.0,
-      "gross_profit": 0.0,
-      "gross_loss": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
       "profit_factor": 0.0,
-      "net_pnl": 0.0,
-      "total_realized_r": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
       "expectancy_r": 0.0,
       "median_r": 0.0,
-      "avg_win_r": 0.0,
-      "avg_loss_r": 0.0,
       "max_drawdown_usd": 0.0,
       "max_drawdown_pct": 0.0,
       "avg_mfe_r": 0.0,
-      "avg_mae_r": 0.0
-    }
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
   },
   {
-    "symbol": "ETHUSDT",
-    "tf_set_id": "SET_3",
-    "execution_time_sec": 54.466468334198,
-    "combined": {
+    "stream_id": "ETH_SET_2",
+    "identity": {
+      "asset": "ETH",
+      "timeframe_set": "SET_2",
+      "label": "SET_2 (1W -> 1D -> 4H)",
+      "htf": "1W",
+      "mtf": "1D",
+      "ltf": "4H",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 334,
+      "mtf_candles": 2036,
+      "ltf_candles": 2191
+    },
+    "execution_time_sec": 21.16,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 53,
+      "mtf_structural_alignments": 31,
+      "mtf_causal_retests": 7,
+      "ltf_triggers": 7,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_OPPOSING_MTF_STRUCTURE": 13,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 2,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 2,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 2,
+      "REJECT_RR_BELOW_4R": 2
+    },
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "ETH_SET_3",
+    "identity": {
+      "asset": "ETH",
+      "timeframe_set": "SET_3",
+      "label": "SET_3 (1D -> 4H -> 1H)",
+      "htf": "1D",
+      "mtf": "4H",
+      "ltf": "1H",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 2036,
+      "mtf_candles": 7212,
+      "ltf_candles": 8760
+    },
+    "execution_time_sec": 94.39,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 1578,
+      "mtf_structural_alignments": 382,
+      "mtf_causal_retests": 193,
+      "ltf_triggers": 146,
+      "risk_evaluations": 8,
+      "risk_approved_plans": 1,
+      "submitted_orders": 1,
+      "filled_trades": 1,
+      "closed_trades": 1
+    },
+    "rejection_attribution": {
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 43,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 87,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 16,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 15,
+      "REJECT_NEGATIVE_STOP_DISTANCE": 3,
+      "REJECT_MAX_LEVERAGE_VIOLATION": 3,
+      "REJECT_RR_BELOW_4R": 10,
+      "REJECT_MIN_STOP_DISTANCE_VIOLATION": 1
+    },
+    "performance": {
       "total_trades": 1,
       "wins": 1,
       "losses": 0,
       "win_rate_pct": 100.0,
-      "gross_profit": 79.40586985633041,
-      "gross_loss": 0,
-      "profit_factor": 79.40586985633041,
-      "net_pnl": 79.40586985633041,
-      "total_realized_r": 0.7940586985633041,
-      "expectancy_r": 0.7940586985633041,
-      "median_r": 0.7940586985633041,
-      "avg_win_r": 0.7940586985633041,
-      "avg_loss_r": 0.0,
+      "gross_profit_usd": 79.41,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 79.41,
+      "profit_factor": 79.4059,
+      "gross_realized_r": 0.8092,
+      "total_friction_r": 0.0152,
+      "net_realized_r": 0.7941,
+      "expectancy_r": 0.7941,
+      "median_r": 0.7941,
       "max_drawdown_usd": 0.0,
       "max_drawdown_pct": 0.0,
-      "avg_mfe_r": 1.5743605936217264,
-      "avg_mae_r": 0.10656772971266196
-    }
+      "avg_mfe_r": 1.5744,
+      "median_mfe_r": 1.5744,
+      "avg_mae_r": 0.1066,
+      "median_mae_r": 0.1066
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 1,
+        "net_r": 0.7941,
+        "net_pnl": 79.41
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 1,
+        "pct": 100.0,
+        "avg_gross_r": 0.8092,
+        "avg_net_r": 0.7941
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": [
+      {
+        "stream": "ETH_SET_3",
+        "trade_id": "cand_ETH/USDT_UNIFIED_1682470800",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1682485200,
+        "entry_price": 1865.0,
+        "stop": 1801.66,
+        "target": 2141.54,
+        "planned_rr": 4.365961477739191,
+        "exit_timestamp": 1682510400,
+        "exit_price": 1916.2563925000002,
+        "exit_reason": "PROFIT_LOCK_TRAIL",
+        "gross_r": 0.8092,
+        "friction": 1.5126,
+        "friction_r": 0.0152,
+        "net_r": 0.7941,
+        "net_pnl": 79.41
+      }
+    ]
   },
   {
-    "symbol": "ETHUSDT",
-    "tf_set_id": "SET_4",
-    "execution_time_sec": 217.11524486541748,
-    "combined": {
+    "stream_id": "ETH_SET_4",
+    "identity": {
+      "asset": "ETH",
+      "timeframe_set": "SET_4",
+      "label": "SET_4 (4H -> 1H -> 15M)",
+      "htf": "4H",
+      "mtf": "1H",
+      "ltf": "15M",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 7212,
+      "mtf_candles": 26847,
+      "ltf_candles": 35036
+    },
+    "execution_time_sec": 341.98,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 4522,
+      "mtf_structural_alignments": 1255,
+      "mtf_causal_retests": 768,
+      "ltf_triggers": 357,
+      "risk_evaluations": 28,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_MAX_LEVERAGE_VIOLATION": 17,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 160,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 83,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 72,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 123,
+      "REJECT_RR_BELOW_4R": 53,
+      "REJECT_NEGATIVE_STOP_DISTANCE": 7,
+      "REJECT_MIN_STOP_DISTANCE_VIOLATION": 4
+    },
+    "performance": {
       "total_trades": 0,
       "wins": 0,
       "losses": 0,
       "win_rate_pct": 0.0,
-      "gross_profit": 0.0,
-      "gross_loss": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
       "profit_factor": 0.0,
-      "net_pnl": 0.0,
-      "total_realized_r": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
       "expectancy_r": 0.0,
       "median_r": 0.0,
-      "avg_win_r": 0.0,
-      "avg_loss_r": 0.0,
       "max_drawdown_usd": 0.0,
       "max_drawdown_pct": 0.0,
       "avg_mfe_r": 0.0,
-      "avg_mae_r": 0.0
-    }
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
   },
   {
-    "symbol": "SOLUSDT",
-    "tf_set_id": "SET_2",
-    "execution_time_sec": 11.664637565612793,
-    "combined": {
+    "stream_id": "ETH_SET_5",
+    "identity": {
+      "asset": "ETH",
+      "timeframe_set": "SET_5",
+      "label": "SET_5 (15M -> 5M -> 1M)",
+      "htf": "15M",
+      "mtf": "5M",
+      "ltf": "1m",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "INSUFFICIENT_HISTORY",
+      "htf_status": "AVAILABLE",
+      "mtf_status": "MISSING",
+      "ltf_status": "MISSING",
+      "htf_candles": 35036,
+      "mtf_candles": 0,
+      "ltf_candles": 0
+    },
+    "execution_time_sec": 0.0,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 0,
+      "mtf_structural_alignments": 0,
+      "mtf_causal_retests": 0,
+      "ltf_triggers": 0,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {},
+    "performance": {
       "total_trades": 0,
       "wins": 0,
       "losses": 0,
       "win_rate_pct": 0.0,
-      "gross_profit": 0.0,
-      "gross_loss": 0.0,
+      "gross_profit_usd": 0.0,
+      "gross_loss_usd": 0.0,
+      "net_pnl_usd": 0.0,
       "profit_factor": 0.0,
-      "net_pnl": 0.0,
-      "total_realized_r": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
       "expectancy_r": 0.0,
       "median_r": 0.0,
-      "avg_win_r": 0.0,
-      "avg_loss_r": 0.0,
       "max_drawdown_usd": 0.0,
       "max_drawdown_pct": 0.0,
       "avg_mfe_r": 0.0,
-      "avg_mae_r": 0.0
-    }
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
   },
   {
-    "symbol": "SOLUSDT",
-    "tf_set_id": "SET_3",
-    "execution_time_sec": 75.67917037010193,
-    "combined": {
-      "total_trades": 14,
-      "wins": 3,
-      "losses": 11,
-      "win_rate_pct": 21.428571428571427,
-      "gross_profit": 203.42387018099728,
-      "gross_loss": 1108.5834614620744,
-      "profit_factor": 0.18349892205022453,
-      "net_pnl": -905.1595912810772,
-      "total_realized_r": -9.419302403446252,
-      "expectancy_r": -0.672807314531875,
-      "median_r": -1.0404663909417189,
-      "avg_win_r": 0.7007579351111484,
-      "avg_loss_r": -1.0474160189799724,
-      "max_drawdown_usd": 954.8810457772926,
-      "max_drawdown_pct": 9.501567283241284,
-      "avg_mfe_r": 0.52294007106594,
-      "avg_mae_r": 1.4268807985657086
-    }
-  },
-  {
-    "symbol": "SOLUSDT",
-    "tf_set_id": "SET_4",
-    "execution_time_sec": 302.4568386077881,
-    "combined": {
+    "stream_id": "SOL_SET_1",
+    "identity": {
+      "asset": "SOL",
+      "timeframe_set": "SET_1",
+      "label": "SET_1 (1M -> 1W -> 1D)",
+      "htf": "1M",
+      "mtf": "1W",
+      "ltf": "1D",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 42,
+      "mtf_candles": 178,
+      "ltf_candles": 366
+    },
+    "execution_time_sec": 2.49,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 170,
+      "mtf_structural_alignments": 64,
+      "mtf_causal_retests": 25,
+      "ltf_triggers": 22,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_OPPOSING_MTF_STRUCTURE": 15,
+      "REJECT_SETUP_LIFESPAN_EXPIRED": 3,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 9,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 12,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 1
+    },
+    "performance": {
       "total_trades": 0,
       "wins": 0,
       "losses": 0,
       "win_rate_pct": 0.0,
-      "gross_profit": 0.0,
-      "gross_loss": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
       "profit_factor": 0.0,
-      "net_pnl": 0.0,
-      "total_realized_r": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
       "expectancy_r": 0.0,
       "median_r": 0.0,
-      "avg_win_r": 0.0,
-      "avg_loss_r": 0.0,
       "max_drawdown_usd": 0.0,
       "max_drawdown_pct": 0.0,
       "avg_mfe_r": 0.0,
-      "avg_mae_r": 0.0
-    }
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "SOL_SET_2",
+    "identity": {
+      "asset": "SOL",
+      "timeframe_set": "SET_2",
+      "label": "SET_2 (1W -> 1D -> 4H)",
+      "htf": "1W",
+      "mtf": "1D",
+      "ltf": "4H",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 178,
+      "mtf_candles": 1000,
+      "ltf_candles": 2191
+    },
+    "execution_time_sec": 19.97,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 120,
+      "mtf_structural_alignments": 205,
+      "mtf_causal_retests": 28,
+      "ltf_triggers": 28,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_OPPOSING_MTF_STRUCTURE": 2,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 4,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 18,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 9
+    },
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "SOL_SET_3",
+    "identity": {
+      "asset": "SOL",
+      "timeframe_set": "SET_3",
+      "label": "SET_3 (1D -> 4H -> 1H)",
+      "htf": "1D",
+      "mtf": "4H",
+      "ltf": "1H",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 1000,
+      "mtf_candles": 3000,
+      "ltf_candles": 8760
+    },
+    "execution_time_sec": 81.92,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 1453,
+      "mtf_structural_alignments": 372,
+      "mtf_causal_retests": 166,
+      "ltf_triggers": 156,
+      "risk_evaluations": 26,
+      "risk_approved_plans": 18,
+      "submitted_orders": 18,
+      "filled_trades": 17,
+      "closed_trades": 17
+    },
+    "rejection_attribution": {
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 74,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 50,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 24,
+      "REJECT_SETUP_LIFESPAN_EXPIRED": 2,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 10,
+      "REJECT_NEGATIVE_STOP_DISTANCE": 6,
+      "REJECT_RR_BELOW_4R": 18,
+      "REJECT_MAX_LEVERAGE_VIOLATION": 2
+    },
+    "performance": {
+      "total_trades": 17,
+      "wins": 4,
+      "losses": 13,
+      "win_rate_pct": 23.53,
+      "gross_profit_usd": 265.18,
+      "gross_loss_usd": 1307.54,
+      "net_pnl_usd": -1042.36,
+      "profit_factor": 0.2028,
+      "gross_realized_r": -10.436,
+      "total_friction_r": 0.4728,
+      "net_realized_r": -10.9088,
+      "expectancy_r": -0.6417,
+      "median_r": -1.0405,
+      "max_drawdown_usd": 1092.09,
+      "max_drawdown_pct": 10.87,
+      "avg_mfe_r": 0.5325,
+      "median_mfe_r": 0.2857,
+      "avg_mae_r": 1.3948,
+      "median_mae_r": 1.1404
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 17,
+        "net_r": -10.908900000000001,
+        "net_pnl": -1042.36
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 4,
+        "pct": 23.5,
+        "avg_gross_r": 0.7282,
+        "avg_net_r": 0.6973
+      },
+      "INITIAL_LTF_SL": {
+        "count": 13,
+        "pct": 76.5,
+        "avg_gross_r": -1.0268,
+        "avg_net_r": -1.0537
+      }
+    },
+    "trade_ledger": [
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1689811200",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1689825600,
+        "entry_price": 26.49,
+        "stop": 25.83,
+        "target": 32.13,
+        "planned_rr": 8.54545454545455,
+        "exit_timestamp": 1689840000,
+        "exit_price": 26.8315775,
+        "exit_reason": "PROFIT_LOCK_TRAIL",
+        "gross_r": 0.5175,
+        "friction": 2.0327,
+        "friction_r": 0.0203,
+        "net_r": 0.4972,
+        "net_pnl": 49.72
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1689843600",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1689858000,
+        "entry_price": 26.96,
+        "stop": 26.31,
+        "target": 32.13,
+        "planned_rr": 7.95384615384613,
+        "exit_timestamp": 1689861600,
+        "exit_price": 26.296845,
+        "exit_reason": "INITIAL_LTF_SL",
+        "gross_r": -1.0202,
+        "friction": 2.0329,
+        "friction_r": 0.0202,
+        "net_r": -1.0405,
+        "net_pnl": -104.56
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1689843600",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1689865200,
+        "entry_price": 26.96,
+        "stop": 26.31,
+        "target": 32.13,
+        "planned_rr": 7.95384615384613,
+        "exit_timestamp": 1689865200,
+        "exit_price": 26.296845,
+        "exit_reason": "INITIAL_LTF_SL",
+        "gross_r": -1.0202,
+        "friction": 2.0117,
+        "friction_r": 0.0202,
+        "net_r": -1.0405,
+        "net_pnl": -103.48
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1689987600",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1690534800,
+        "entry_price": 24.91,
+        "stop": 23.13,
+        "target": 32.13,
+        "planned_rr": 4.0561797752808975,
+        "exit_timestamp": 1690855200,
+        "exit_price": 23.118435,
+        "exit_reason": "INITIAL_LTF_SL",
+        "gross_r": -1.0065,
+        "friction": 0.6391,
+        "friction_r": 0.0065,
+        "net_r": -1.013,
+        "net_pnl": -99.7
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1691985600",
+        "direction": "PERMIT_SHORT",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1692000000,
+        "entry_price": 24.41,
+        "stop": 24.69,
+        "target": 22.23,
+        "planned_rr": 7.785714285714253,
+        "exit_timestamp": 1692021600,
+        "exit_price": 24.702345,
+        "exit_reason": "INITIAL_LTF_SL",
+        "gross_r": -1.0441,
+        "friction": 4.2973,
+        "friction_r": 0.0441,
+        "net_r": -1.0882,
+        "net_pnl": -106.01
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1691888400",
+        "direction": "PERMIT_SHORT",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1691985600,
+        "entry_price": 24.4,
+        "stop": 24.88,
+        "target": 22.23,
+        "planned_rr": 4.520833333333325,
+        "exit_timestamp": 1692025200,
+        "exit_price": 24.892439999999997,
+        "exit_reason": "INITIAL_LTF_SL",
+        "gross_r": -1.0259,
+        "friction": 2.5261,
+        "friction_r": 0.0259,
+        "net_r": -1.0518,
+        "net_pnl": -102.47
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1691985600",
+        "direction": "PERMIT_SHORT",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1692025200,
+        "entry_price": 24.41,
+        "stop": 24.69,
+        "target": 22.23,
+        "planned_rr": 7.785714285714253,
+        "exit_timestamp": 1692025200,
+        "exit_price": 24.702345,
+        "exit_reason": "INITIAL_LTF_SL",
+        "gross_r": -1.0441,
+        "friction": 4.2506,
+        "friction_r": 0.0441,
+        "net_r": -1.0882,
+        "net_pnl": -104.86
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1691888400",
+        "direction": "PERMIT_SHORT",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1692028800,
+        "entry_price": 24.4,
+        "stop": 24.88,
+        "target": 22.23,
+        "planned_rr": 4.520833333333325,
+        "exit_timestamp": 1692028800,
+        "exit_price": 24.892439999999997,
+        "exit_reason": "INITIAL_LTF_SL",
+        "gross_r": -1.0259,
+        "friction": 2.4448,
+        "friction_r": 0.0259,
+        "net_r": -1.0518,
+        "net_pnl": -99.17
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1699441200",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1699455600,
+        "entry_price": 42.78,
+        "stop": 42.25,
+        "target": 46.9,
+        "planned_rr": 7.773584905660356,
+        "exit_timestamp": 1699470000,
+        "exit_price": 43.19089375,
+        "exit_reason": "PROFIT_LOCK_TRAIL",
+        "gross_r": 0.7753,
+        "friction": 3.8014,
+        "friction_r": 0.0407,
+        "net_r": 0.7345,
+        "net_pnl": 68.53
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1699470000",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1699488000,
+        "entry_price": 43.13,
+        "stop": 42.25,
+        "target": 46.9,
+        "planned_rr": 4.284090909090892,
+        "exit_timestamp": 1699506000,
+        "exit_price": 43.91803,
+        "exit_reason": "PROFIT_LOCK_TRAIL",
+        "gross_r": 0.8955,
+        "friction": 2.3451,
+        "friction_r": 0.025,
+        "net_r": 0.8705,
+        "net_pnl": 81.81
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1700449200",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1700463600,
+        "entry_price": 59.88,
+        "stop": 59.08,
+        "target": 68.2,
+        "planned_rr": 10.399999999999945,
+        "exit_timestamp": 1700478000,
+        "exit_price": 60.45975500000001,
+        "exit_reason": "PROFIT_LOCK_TRAIL",
+        "gross_r": 0.7247,
+        "friction": 3.5822,
+        "friction_r": 0.0378,
+        "net_r": 0.6869,
+        "net_pnl": 65.12
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1700434800",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1700449200,
+        "entry_price": 60.4,
+        "stop": 59.08,
+        "target": 68.2,
+        "planned_rr": 5.909090909090911,
+        "exit_timestamp": 1700488800,
+        "exit_price": 59.05046,
+        "exit_reason": "INITIAL_LTF_SL",
+        "gross_r": -1.0224,
+        "friction": 2.1204,
+        "friction_r": 0.0224,
+        "net_r": -1.0447,
+        "net_pnl": -99.04
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1700434800",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1700492400,
+        "entry_price": 60.4,
+        "stop": 59.08,
+        "target": 68.2,
+        "planned_rr": 5.909090909090911,
+        "exit_timestamp": 1700492400,
+        "exit_price": 59.05046,
+        "exit_reason": "INITIAL_LTF_SL",
+        "gross_r": -1.0224,
+        "friction": 2.1128,
+        "friction_r": 0.0224,
+        "net_r": -1.0447,
+        "net_pnl": -98.69
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1700528400",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1700910000,
+        "entry_price": 57.93,
+        "stop": 55.7,
+        "target": 68.2,
+        "planned_rr": 4.60538116591929,
+        "exit_timestamp": 1701068400,
+        "exit_price": 55.67215000000001,
+        "exit_reason": "INITIAL_LTF_SL",
+        "gross_r": -1.0125,
+        "friction": 1.1668,
+        "friction_r": 0.0125,
+        "net_r": -1.025,
+        "net_pnl": -95.81
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1700528400",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1701072000,
+        "entry_price": 57.93,
+        "stop": 55.7,
+        "target": 68.2,
+        "planned_rr": 4.60538116591929,
+        "exit_timestamp": 1701072000,
+        "exit_price": 55.67215000000001,
+        "exit_reason": "INITIAL_LTF_SL",
+        "gross_r": -1.0125,
+        "friction": 1.1548,
+        "friction_r": 0.0125,
+        "net_r": -1.025,
+        "net_pnl": -94.82
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1702972800",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1702987200,
+        "entry_price": 74.63,
+        "stop": 73.83,
+        "target": 79.5,
+        "planned_rr": 6.087500000000027,
+        "exit_timestamp": 1702994400,
+        "exit_price": 73.793085,
+        "exit_reason": "INITIAL_LTF_SL",
+        "gross_r": -1.0461,
+        "friction": 4.2231,
+        "friction_r": 0.0461,
+        "net_r": -1.0923,
+        "net_pnl": -100.01
+      },
+      {
+        "stream": "SOL_SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_1702972800",
+        "direction": "PERMIT_LONG",
+        "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+        "htf_context": "CONTINUATION",
+        "entry_timestamp": 1702998000,
+        "entry_price": 74.63,
+        "stop": 73.83,
+        "target": 79.5,
+        "planned_rr": 6.087500000000027,
+        "exit_timestamp": 1702998000,
+        "exit_price": 73.793085,
+        "exit_reason": "INITIAL_LTF_SL",
+        "gross_r": -1.0461,
+        "friction": 4.1769,
+        "friction_r": 0.0461,
+        "net_r": -1.0923,
+        "net_pnl": -98.92
+      }
+    ]
+  },
+  {
+    "stream_id": "SOL_SET_4",
+    "identity": {
+      "asset": "SOL",
+      "timeframe_set": "SET_4",
+      "label": "SET_4 (4H -> 1H -> 15M)",
+      "htf": "4H",
+      "mtf": "1H",
+      "ltf": "15M",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 3000,
+      "mtf_candles": 9000,
+      "ltf_candles": 35036
+    },
+    "execution_time_sec": 280.01,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 5461,
+      "mtf_structural_alignments": 1149,
+      "mtf_causal_retests": 555,
+      "ltf_triggers": 405,
+      "risk_evaluations": 14,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 135,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 61,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 213,
+      "REJECT_RR_BELOW_4R": 46,
+      "REJECT_MAX_LEVERAGE_VIOLATION": 8,
+      "REJECT_NEGATIVE_STOP_DISTANCE": 6,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 33,
+      "REJECT_SETUP_LIFESPAN_EXPIRED": 1
+    },
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "SOL_SET_5",
+    "identity": {
+      "asset": "SOL",
+      "timeframe_set": "SET_5",
+      "label": "SET_5 (15M -> 5M -> 1M)",
+      "htf": "15M",
+      "mtf": "5M",
+      "ltf": "1m",
+      "strategy_id": "UNIFIED_HTF_TREND_STRATEGY",
+      "period_start": "2023-01-01 00:00:00 UTC",
+      "period_end": "2024-01-01 00:00:00 UTC",
+      "total_days": 365.0
+    },
+    "data": {
+      "data_status": "INSUFFICIENT_HISTORY",
+      "htf_status": "AVAILABLE",
+      "mtf_status": "MISSING",
+      "ltf_status": "MISSING",
+      "htf_candles": 35036,
+      "mtf_candles": 0,
+      "ltf_candles": 0
+    },
+    "execution_time_sec": 0.0,
+    "lifecycle_funnel": {
+      "htf_qualified_contexts": 0,
+      "mtf_structural_alignments": 0,
+      "mtf_causal_retests": 0,
+      "ltf_triggers": 0,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {},
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0.0,
+      "gross_loss_usd": 0.0,
+      "net_pnl_usd": 0.0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
   }
 ]

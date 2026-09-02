@@ -14,13 +14,14 @@ class ExitAttributionEngine:
 
     @staticmethod
     def analyze(closed_trades: List[SimulatedTrade]) -> Dict[str, Any]:
-        categories = ["HTF_TP", "MTF_STRUCTURAL_TRAIL", "INITIAL_LTF_SL", "OTHER"]
+        categories = ["HTF_TP", "MTF_STRUCTURAL_TRAIL", "PROFIT_LOCK_TRAIL", "INITIAL_LTF_SL", "OTHER"]
         breakdown: Dict[str, Dict[str, Any]] = {}
 
+        known_exits = ["HTF_TP", "MTF_STRUCTURAL_TRAIL", "PROFIT_LOCK_TRAIL", "INITIAL_LTF_SL"]
         for cat in categories:
             matching = [
                 t for t in closed_trades 
-                if (t.exit_reason == cat) or (cat == "OTHER" and t.exit_reason not in ["HTF_TP", "MTF_STRUCTURAL_TRAIL", "INITIAL_LTF_SL"])
+                if (t.exit_reason == cat) or (cat == "OTHER" and t.exit_reason not in known_exits)
             ]
             count = len(matching)
             pnls = [t.realized_pnl for t in matching if t.realized_pnl is not None]
