@@ -126,18 +126,14 @@ class LiveTradingDaemon:
                     
                     # Fetch latest live price
                     try:
-                        ticker_data = fetcher.get_ticker(binance_pair)
-                        if ticker_data and "lastPrice" in ticker_data:
-                            live_price = float(ticker_data["lastPrice"])
-                            high_price = float(ticker_data.get("highPrice", live_price))
-                            low_price = float(ticker_data.get("lowPrice", live_price))
-                            
+                        live_price = fetcher.get_ticker(binance_pair)
+                        if isinstance(live_price, (int, float)) and live_price > 0:
                             # Feed tick to engine (audits profit-locks and stops)
                             await self.engine.on_tick(
                                 symbol=canon_symbol,
-                                current_price=live_price,
-                                high=high_price,
-                                low=low_price
+                                current_price=float(live_price),
+                                high=float(live_price),
+                                low=float(live_price)
                             )
                     except Exception:
                         pass

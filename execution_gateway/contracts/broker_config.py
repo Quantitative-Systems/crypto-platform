@@ -29,6 +29,7 @@ class BrokerConfig:
     Configuration parameters for connecting to any crypto exchange or Forex broker.
     """
     broker_type: BrokerType = BrokerType.PAPER
+    is_simulated: bool = False                # Explicit simulation flag (must be explicitly enabled for non-paper brokers)
     account_id: Optional[str] = None          # MT5 login or exchange Subaccount
     api_key: Optional[str] = None             # Exchange API key
     api_secret: Optional[str] = None          # Exchange API secret / MT5 password

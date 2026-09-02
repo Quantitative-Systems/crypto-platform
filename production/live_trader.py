@@ -26,6 +26,7 @@ from execution_gateway.contracts.order_contracts import LiveOrder, ExecutionFill
 from production.persistence.state_store import StateStore
 from production.reconciliation.eod_reconciler import EODReconciler, ReconciliationReport
 from production.telemetry.alert_manager import AlertManager
+from platform_core.capital_barrier import CapitalBarrier, CapitalBarrierEvaluation
 
 
 class LiveTradingEngine:
@@ -42,11 +43,15 @@ class LiveTradingEngine:
         lockin_r: float = 1.0,
         giveback_r: float = 0.75,
         state_db_path: str = "production_state.db",
-        portfolio_config: Optional[PortfolioRiskConfig] = None
+        portfolio_config: Optional[PortfolioRiskConfig] = None,
+        capital_barrier_evaluation: Optional[CapitalBarrierEvaluation] = None,
+        allow_research_sandbox: bool = True
     ):
         self.gateway = gateway
         self.state_store = StateStore(db_path=state_db_path)
         self.alert_manager = AlertManager()
+        self.capital_barrier_evaluation = capital_barrier_evaluation
+        self.allow_research_sandbox = allow_research_sandbox
         
         # P01 Market Intelligence
         self.language_coordinator = LanguageCoordinator(buffer_size=300)
@@ -84,6 +89,10 @@ class LiveTradingEngine:
         """
         Initializes exchange connectivity, recovers state from disk, and starts 24/7 engine.
         """
+        # Enforce Capital Barrier
+        if self.capital_barrier_evaluation is not None:
+            CapitalBarrier.enforce_barrier(self.capital_barrier_evaluation, allow_research_sandbox=self.allow_research_sandbox)
+
         await self.gateway.connect()
         live_bal = await self.gateway.get_account_balance()
         if live_bal > 0:
@@ -132,13 +141,19 @@ class LiveTradingEngine:
 
         for raw_plan in plans:
             # 3. Evaluate Risk Firewall (P03)
+            curr_nav = self.portfolio_coordinator.state.nav
+            peak_nav = self.portfolio_coordinator.state.peak_nav if self.portfolio_coordinator.state.peak_nav > 0 else curr_nav
+            active_assets_map = {
+                sym: (exp.total_dollar_risk / curr_nav) if curr_nav > 0 else 0.0
+                for sym, exp in self.portfolio_coordinator.state.asset_exposures.items()
+            }
             acc_state = AccountState(
-                balance=self.portfolio_coordinator.state.nav,
-                equity=self.portfolio_coordinator.state.nav,
-                open_positions=[],
-                open_risk_ratio=self.portfolio_coordinator.state.total_risk_committed_pct,
-                daily_drawdown_ratio=self.portfolio_coordinator.state.current_drawdown_pct,
-                weekly_drawdown_ratio=self.portfolio_coordinator.state.current_drawdown_pct
+                current_equity=curr_nav,
+                peak_equity=peak_nav,
+                daily_pnl=0.0,
+                weekly_pnl=0.0,
+                open_position_count=len(self.portfolio_coordinator.state.active_positions),
+                active_assets=active_assets_map
             )
 
             risk_eval = RiskCoordinator.evaluate(raw_plan, acc_state)

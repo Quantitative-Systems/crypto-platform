@@ -9,13 +9,14 @@ class DataCertifier:
 
     @staticmethod
     def _tf_to_seconds(tf: str) -> int:
-        tf = tf.upper()
-        if tf == "15M": return 15 * 60
-        if tf == "1H": return 3600
-        if tf == "4H": return 4 * 3600
-        if tf == "1D": return 24 * 3600
-        if tf == "1W": return 7 * 24 * 3600
-        if tf == "1M": return 30 * 24 * 3600
+        if tf in ["1m", "1min", "1MIN"]: return 60
+        if tf in ["5m", "5M", "5min", "5MIN"]: return 5 * 60
+        if tf in ["15m", "15M", "15min", "15MIN"]: return 15 * 60
+        if tf in ["1h", "1H", "1hr", "1HR"]: return 3600
+        if tf in ["4h", "4H"]: return 4 * 3600
+        if tf in ["1d", "1D"]: return 24 * 3600
+        if tf in ["1w", "1W"]: return 7 * 24 * 3600
+        if tf in ["1M", "1MO", "1MONTH"]: return 30 * 24 * 3600
         raise ValueError(f"Unknown timeframe: {tf}")
 
     @staticmethod

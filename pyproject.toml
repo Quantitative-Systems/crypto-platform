@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crypto-platform"
+version = "0.4.0"
+description = "Institutional Quantitative Systems Platform - Product 01 Crypto Platform"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    { name = "Quantitative Systems Platform Architecture Team" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+dependencies = [
+    "numpy==2.2.6",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==9.1.1",
+    "anyio==4.13.0",
+]
+gateways = [
+    "ccxt>=4.0.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "config*",
+    "execution_gateway*",
+    "market_data*",
+    "market_intelligence*",
+    "portfolio_engine*",
+    "production*",
+    "research*",
+    "risk_engine*",
+    "strategy_engine*",
+    "trade_management*",
+]
+
+[tool.pytest.ini_options]
+minversion = "9.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

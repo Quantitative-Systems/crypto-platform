@@ -1,0 +1,7 @@
+# Canonical requirements derived from pyproject.toml
+# Core runtime
+numpy==2.2.6
+
+# Development and testing
+pytest==9.1.1
+anyio==4.13.0

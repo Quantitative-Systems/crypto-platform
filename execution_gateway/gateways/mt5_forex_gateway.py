@@ -38,9 +38,29 @@ class MT5ForexGateway(BaseGateway):
         self._sim_balance = initial_balance
 
     async def connect(self) -> bool:
+        # If explicitly configured for simulation/paper mode
+        if self.config.broker_type == BrokerType.PAPER or self.config.is_simulated:
+            print(f"ℹ️ [MT5_GATEWAY]: Running in explicit simulation/sandbox mode for {self.config.broker_type.value}.")
+            self.is_connected = True
+            return True
+
+        # LIVE MODE: Enforce fail-closed behavior
         try:
             import MetaTrader5 as mt5  # type: ignore
-            login = int(self.config.account_id) if self.config.account_id and self.config.account_id.isdigit() else 0
+        except ImportError:
+            self.is_connected = False
+            raise RuntimeError(
+                f"[MT5_GATEWAY]: MetaTrader5 Python package not installed. Live MT5 gateway for {self.config.broker_type.value} cannot connect (fail closed)."
+            )
+
+        if not self.config.account_id:
+            self.is_connected = False
+            raise RuntimeError(
+                f"[MT5_GATEWAY]: Missing account_id credentials for live {self.config.broker_type.value} gateway (fail closed)."
+            )
+
+        try:
+            login = int(self.config.account_id) if self.config.account_id.isdigit() else 0
             password = self.config.api_secret or ""
             server = self.config.server_name or ""
             
@@ -49,21 +69,19 @@ class MT5ForexGateway(BaseGateway):
             else:
                 initialized = mt5.initialize()
                 
-            if initialized:
-                self.mt5_client = mt5
-                print(f"✅ [MT5_GATEWAY]: Connected to {self.config.broker_type.value} on {server or 'Local Terminal'}.")
-            else:
-                print(f"ℹ️ [MT5_GATEWAY]: MT5 Terminal initialization pending. Starting Bridge Driver.")
-            self.is_connected = True
-            return True
-        except ImportError:
-            print(f"ℹ️ [MT5_GATEWAY]: MetaTrader5 Python package not loaded. Starting Universal IPC Bridge for {self.config.broker_type.value}.")
+            if not initialized:
+                self.is_connected = False
+                error_code = mt5.last_error() if hasattr(mt5, "last_error") else "Unknown"
+                raise ConnectionError(f"[MT5_GATEWAY]: MT5 Terminal initialization failed for {self.config.broker_type.value} (Error: {error_code}).")
+
+            self.mt5_client = mt5
+            print(f"✅ [MT5_GATEWAY]: Connected to live {self.config.broker_type.value} on {server or 'Local Terminal'}.")
             self.is_connected = True
             return True
         except Exception as e:
-            print(f"⚠️ [MT5_GATEWAY]: Connection setup warning: {e}")
-            self.is_connected = True
-            return True
+            self.is_connected = False
+            print(f"❌ [MT5_GATEWAY]: Connection setup failed: {e}")
+            raise ConnectionError(f"[MT5_GATEWAY]: Live connection setup failed for {self.config.broker_type.value}: {e}")
 
     async def disconnect(self) -> None:
         if self.mt5_client:
@@ -127,7 +145,12 @@ class MT5ForexGateway(BaseGateway):
                 order.status = OrderStatus.REJECTED
                 return order
 
-        # Standalone mock handler
+        if not (self.config.broker_type == BrokerType.PAPER or self.config.is_simulated):
+            print(f"❌ [MT5_GATEWAY]: Order rejected: Cannot submit live order without active MT5 terminal connection (fail closed).")
+            order.status = OrderStatus.REJECTED
+            return order
+
+        # Explicit simulation/sandbox handler
         order.order_id = f"mt5_ticket_{int(time.time()*1000)}"
         order.quantity = actual_units
         order.status = OrderStatus.NEW

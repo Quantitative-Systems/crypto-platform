@@ -35,33 +35,51 @@ class CCXTUniversalGateway(BaseGateway):
         self._sim_balance = initial_balance
 
     async def connect(self) -> bool:
-        b_name = self.config.broker_type.value.lower()
-        try:
-            # Check if ccxt package is available dynamically
-            import ccxt.async_support as ccxt  # type: ignore
-            if hasattr(ccxt, b_name):
-                exchange_class = getattr(ccxt, b_name)
-                params = {
-                    "apiKey": self.config.api_key or "",
-                    "secret": self.config.api_secret or "",
-                    "enableRateLimit": True
-                }
-                if self.config.api_passphrase:
-                    params["password"] = self.config.api_passphrase
-                self.exchange_client = exchange_class(params)
-                if self.config.testnet:
-                    self.exchange_client.set_sandbox_mode(True)
-                print(f"✅ [CCXT_GATEWAY]: Initialized {self.config.broker_type.value} client.")
+        # If explicitly configured for simulation/paper mode
+        if self.config.broker_type == BrokerType.PAPER or self.config.is_simulated:
+            print(f"ℹ️ [CCXT_GATEWAY]: Running in explicit simulation/sandbox mode for {self.config.broker_type.value}.")
             self.is_connected = True
             return True
+
+        # LIVE MODE: Enforce fail-closed behavior
+        b_name = self.config.broker_type.value.lower()
+        try:
+            import ccxt.async_support as ccxt  # type: ignore
         except ImportError:
-            print(f"ℹ️ [CCXT_GATEWAY]: CCXT library not installed in environment. Initializing Unified Driver for {self.config.broker_type.value}.")
+            self.is_connected = False
+            raise RuntimeError(
+                f"[CCXT_GATEWAY]: CCXT library not installed. Live gateway for {self.config.broker_type.value} cannot connect (fail closed)."
+            )
+
+        if not self.config.api_key or not self.config.api_secret:
+            self.is_connected = False
+            raise RuntimeError(
+                f"[CCXT_GATEWAY]: Missing API credentials for live {self.config.broker_type.value} gateway (fail closed)."
+            )
+
+        try:
+            if not hasattr(ccxt, b_name):
+                self.is_connected = False
+                raise ValueError(f"[CCXT_GATEWAY]: Broker {b_name} not supported by CCXT.")
+
+            exchange_class = getattr(ccxt, b_name)
+            params = {
+                "apiKey": self.config.api_key,
+                "secret": self.config.api_secret,
+                "enableRateLimit": True
+            }
+            if self.config.api_passphrase:
+                params["password"] = self.config.api_passphrase
+            self.exchange_client = exchange_class(params)
+            if self.config.testnet:
+                self.exchange_client.set_sandbox_mode(True)
+            print(f"✅ [CCXT_GATEWAY]: Initialized live {self.config.broker_type.value} client.")
             self.is_connected = True
             return True
         except Exception as e:
-            print(f"⚠️ [CCXT_GATEWAY]: Connection setup warning: {e}")
-            self.is_connected = True
-            return True
+            self.is_connected = False
+            print(f"❌ [CCXT_GATEWAY]: Connection setup failed: {e}")
+            raise ConnectionError(f"[CCXT_GATEWAY]: Live connection setup failed for {self.config.broker_type.value}: {e}")
 
     async def disconnect(self) -> None:
         if self.exchange_client:
@@ -100,7 +118,12 @@ class CCXTUniversalGateway(BaseGateway):
                 order.status = OrderStatus.REJECTED
                 return order
 
-        # Standalone mock handler
+        if not (self.config.broker_type == BrokerType.PAPER or self.config.is_simulated):
+            print(f"❌ [CCXT_GATEWAY]: Order rejected: Cannot submit live order without active exchange connection (fail closed).")
+            order.status = OrderStatus.REJECTED
+            return order
+
+        # Explicit simulation/sandbox handler
         order.order_id = f"ccxt_ord_{int(time.time()*1000)}"
         order.status = OrderStatus.NEW
         self._mock_orders[order.order_id] = order

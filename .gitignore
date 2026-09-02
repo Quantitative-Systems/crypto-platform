@@ -1,43 +1,50 @@
-# Python Bytecode & Cache
+# Python Bytecode & Compilation Cache
 __pycache__/
 *.py[cod]
 *$py.class
 *.pyc
 *.so
 
-# Environment
+# Environments & Dependencies
 .env
-.venv
-env/
+.env.*
+.venv/
 venv/
 ENV/
+env/
+pip-log.txt
+pip-delete-this-directory.txt
 
-# Testing
+# Testing & Coverage
 .pytest_cache/
 .tox/
 .coverage
 htmlcov/
 pytestdebug.log
+.mypy_cache/
+.ruff_cache/
 
-# IDEs
+# IDE & OS Junk
 .idea/
 .vscode/
 *.swp
 *.swo
 .DS_Store
+*.tmp
 
-# Local Databases & Research Artifacts
+# Local Databases & Process Logs
 *.db
 *.sqlite3
-research/swing_chart.html
-*.parquet
-*.csv
-data/
-datasets/
 logs/
 *.log
 
-# Cache & Results
+# Ephemeral Large Raw Data (Preserves manifests and small samples)
 market_data/cache/*.json
-research/results/*.json
-scratch/
+data/
+datasets/
+research/results/BASELINE_002_*/
+research/results/EXP_H1_1_*/
+
+# Large temporary scratch runs (Preserves authoritative JSON reports)
+scratch/*.tmp
+scratch/temp_*
