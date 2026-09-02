@@ -29,6 +29,7 @@ class TradePlan:
     reason: str = ""
     trailing_stop_price: float = 0.0
     confluence_score: float = 0.0
+    htf_context: str = "PULLBACK_CONTEXT"
 
 
 class StrategyOrchestrator:
@@ -50,31 +51,34 @@ class StrategyOrchestrator:
         htf_res = HTFBiasEngine.evaluate_bias(htf_state)
         if not htf_res.is_valid or not htf_res.target_tp_price:
             return TradePlan(
-                symbol=symbol, action="NONE", strategy_type="NONE", entry_price=0.0,
+                symbol=symbol, action="NONE", strategy_type="UNIFIED_HTF_TREND_STRATEGY", entry_price=0.0,
                 stop_loss_price=0.0, target_tp_price=0.0, position_size_units=0.0,
                 dollar_risk_usd=0.0, reward_to_risk_ratio=0.0, confluence_score=0.0,
-                status="REJECTED", reason=f"Gate 1 Fail: {htf_res.rejection_reason}"
+                status="REJECTED", reason=f"Gate 1 Fail: {htf_res.rejection_reason}",
+                htf_context="UNKNOWN"
             )
 
-        # Gate 2: Strategy Routing
+        # Gate 2: HTF Context Classification & MTF Setup
         if htf_res.expected_phase == MarketPhase.PULLBACK:
             strat_res = StrategyAPullbackEngine.evaluate_pullback_setup(htf_state, mtf_state)
-            strategy_type = "PULLBACK_RIDING"
+            htf_context = "PULLBACK_CONTEXT"
         else:
             strat_res = StrategyBContinuationEngine.evaluate_continuation_setup(htf_state, mtf_state)
-            strategy_type = "CONTINUATION_RIDING"
+            htf_context = "CONTINUATION_CONTEXT"
+        strategy_type = "UNIFIED_HTF_TREND_STRATEGY"
 
         if not strat_res.is_valid_setup or not strat_res.mtf_keyzone:
             return TradePlan(
                 symbol=symbol, action="NONE", strategy_type=strategy_type, entry_price=0.0,
                 stop_loss_price=0.0, target_tp_price=0.0, position_size_units=0.0,
                 dollar_risk_usd=0.0, reward_to_risk_ratio=0.0, confluence_score=0.0,
-                status="REJECTED", reason=f"Gate 2 Fail ({strategy_type}): {strat_res.reason}"
+                status="REJECTED", reason=f"Gate 2 Fail ({htf_context}): {strat_res.reason}",
+                htf_context=htf_context
             )
 
         mtf_setup_obj = MTFSetupResult(
             is_aligned=True,
-            strategy_type=strategy_type,
+            strategy_type=htf_context,
             active_mtf_keyzone=strat_res.mtf_keyzone,
             reason=strat_res.reason
         )
@@ -86,7 +90,8 @@ class StrategyOrchestrator:
                 symbol=symbol, action="NONE", strategy_type=strategy_type, entry_price=0.0,
                 stop_loss_price=0.0, target_tp_price=0.0, position_size_units=0.0,
                 dollar_risk_usd=0.0, reward_to_risk_ratio=0.0, confluence_score=0.0,
-                status="REJECTED", reason=f"Gate 3 Fail: {ltf_res.trigger_reason}"
+                status="REJECTED", reason=f"Gate 3 Fail: {ltf_res.trigger_reason}",
+                htf_context=htf_context
             )
 
         action = "BUY" if htf_res.bias == TrendDirection.BULLISH else "SELL"

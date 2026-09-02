@@ -42,7 +42,9 @@ class CausalReplayer:
         giveback_r: float = 0.75,
         enable_regime_filter: bool = False,
         cache_htf_mtf: bool = True,
-        risk_config: Optional[RiskConfig] = None
+        risk_config: Optional[RiskConfig] = None,
+        htf_context_filter: Optional[str] = None,
+        hypothesis: Optional[Any] = None
     ):
         self.timeframe_set: TimeframeSet = TimeframeAligner.get_set(timeframe_set_id)
         self.initial_balance = initial_balance
@@ -77,7 +79,9 @@ class CausalReplayer:
             enable_profit_lock=self.enable_profit_lock,
             lockin_r=self.lockin_r,
             giveback_r=self.giveback_r,
-            regime_filter=self.regime_filter
+            regime_filter=self.regime_filter,
+            htf_context_filter=htf_context_filter,
+            hypothesis=hypothesis
         )
         self.execution_simulator = ExecutionSimulator(
             maker_fee_rate=maker_fee_rate,
@@ -224,8 +228,14 @@ class CausalReplayer:
                                 exit_reason="MTF_STRUCTURAL_TRAIL",
                                 ledger=self.ledger
                             )
+                    # Case C: SL/TP exits are executed by ExecutionSimulator inside the
+                    # per-candle loop (adverse-first). The ActiveTradeManager may still
+                    # emit TP_EXIT / LTF_SL_EXIT *plans* for trades already closed by the
+                    # simulator in the same bar or on later bars (ghost plans). Those are
+                    # NOT rejections and MUST NOT pollute the counterfactual funnel.
+                    # Only genuinely rejected candidates (status == REJECTED) count.
                     else:
-                        if plan.status != CandidateState.ENTERED.value:
+                        if plan.status == CandidateState.REJECTED.value:
                             rejected_candidates.append(plan)
 
             except Exception as e:

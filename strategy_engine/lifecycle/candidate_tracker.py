@@ -20,6 +20,7 @@ class CandidateSetup:
     directional_permission: DirectionalPermission
     
     # 1. HTF Context Provenance
+    htf_context: Optional[str] = None  # PULLBACK or CONTINUATION
     htf_context_id: Optional[str] = None
     htf_context_timestamp: Optional[int] = None
     htf_macro_direction: Optional[str] = None
@@ -67,6 +68,7 @@ class CandidateSetup:
 
     def to_provenance_dict(self) -> Dict[str, Any]:
         return {
+            "htf_context": self.htf_context or ("PULLBACK" if "PULLBACK" in str(self.htf_phase) else "CONTINUATION"),
             "htf_context_id": self.htf_context_id or "",
             "htf_context_timestamp": self.htf_context_timestamp or 0,
             "htf_macro_direction": self.htf_macro_direction or "",

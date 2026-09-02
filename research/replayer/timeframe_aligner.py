@@ -46,16 +46,34 @@ CANONICAL_TIMEFRAME_SETS: Dict[str, TimeframeSet] = {
         ltf="15M",
         description="Tactical Intraday (4 Hours -> 1 Hour -> 15 Minutes)"
     ),
+    "SET_5": TimeframeSet(
+        set_id="SET_5",
+        htf="15M",
+        mtf="5M",
+        ltf="1m",
+        description="Intraday Scalping (15 Minutes -> 5 Minutes -> 1 Minute)"
+    ),
 }
 
 # Seconds per canonical timeframe for precise alignment
 TIMEFRAME_DURATIONS_SEC: Dict[str, int] = {
-    "15M": 15 * 60,
-    "1H": 60 * 60,
-    "4H": 4 * 60 * 60,
-    "1D": 24 * 60 * 60,
-    "1W": 7 * 24 * 60 * 60,
     "1M": 30 * 24 * 60 * 60,  # Approximate standard month
+    "1MO": 30 * 24 * 60 * 60,
+    "1W": 7 * 24 * 60 * 60,
+    "1D": 24 * 60 * 60,
+    "4H": 4 * 60 * 60,
+    "1H": 60 * 60,
+    "15M": 15 * 60,
+    "5M": 5 * 60,
+    "1m": 60,
+    "1min": 60,
+    "1MIN": 60,
+    "5m": 5 * 60,
+    "15m": 15 * 60,
+    "1h": 60 * 60,
+    "4h": 4 * 60 * 60,
+    "1d": 24 * 60 * 60,
+    "1w": 7 * 24 * 60 * 60,
 }
 
 # Milliseconds per canonical timeframe for precise alignment
@@ -88,9 +106,9 @@ class TimeframeAligner:
         Strictly excludes any open/unfinalized candle.
         """
         if decision_timestamp < 100_000_000_000:
-            duration = TIMEFRAME_DURATIONS_SEC.get(timeframe.upper(), 0)
+            duration = TIMEFRAME_DURATIONS_SEC.get(timeframe, TIMEFRAME_DURATIONS_SEC.get(timeframe.upper(), 0))
         else:
-            duration = TIMEFRAME_DURATIONS_MS.get(timeframe.upper(), 0)
+            duration = TIMEFRAME_DURATIONS_MS.get(timeframe, TIMEFRAME_DURATIONS_MS.get(timeframe.upper(), 0))
         
         # A candle with start timestamp is closed when (timestamp + duration) <= decision_timestamp
         # which is equivalent to timestamp <= (decision_timestamp - duration)

@@ -72,10 +72,8 @@ class PositionSizer:
         estimated_slippage = intended_notional * slippage_rate
         worst_case_loss = dollar_risk + estimated_fees + estimated_slippage
         
-        # If the total worst case loss exceeds the intended fraction (e.g. 1%), reject it.
-        # We allow a small tolerance for friction, but if friction itself doubles the risk, reject.
-        # Let's say worst_case_loss cannot exceed 1.25x the intended risk.
-        if worst_case_loss > dollar_risk * 1.5:
+        # Canonical rule: Worst-case loss including friction (fees + slippage) cannot exceed 1.20x dollar_risk (20% friction limit)
+        if worst_case_loss > dollar_risk * 1.2:
             return None, None, RiskRejectionReason.REJECT_FRICTION_ADJUSTED_RISK_VIOLATION
             
         return position_units, dollar_risk, None
