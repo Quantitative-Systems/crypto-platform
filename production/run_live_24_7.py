@@ -53,7 +53,7 @@ class LiveTradingDaemon:
         self.engine = LiveTradingEngine(
             gateway=self.gateway,
             enable_regime_filter=True,
-            enable_profit_lock=True,
+            enable_profit_lock=False,
             lockin_r=1.0,
             giveback_r=0.75,
             portfolio_config=portfolio_cfg,

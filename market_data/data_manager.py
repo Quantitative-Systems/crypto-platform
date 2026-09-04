@@ -43,7 +43,17 @@ class DataManager:
     @staticmethod
     def get_cache_filepath(symbol: str, timeframe: str) -> str:
         clean_sym = symbol.replace("/", "").replace("-", "").upper()
-        clean_tf = timeframe.lower()
+        tf_map = {
+            "1M": "1M", "1MO": "1M", "1MONTH": "1M",
+            "1w": "1w", "1W": "1w", "1week": "1w",
+            "1d": "1d", "1D": "1d", "1day": "1d",
+            "4h": "4h", "4H": "4h",
+            "1h": "1h", "1H": "1h",
+            "15m": "15m", "15M": "15m",
+            "5m": "5m", "5M": "5m",
+            "1m": "1m", "1min": "1m", "1MIN": "1m",
+        }
+        clean_tf = tf_map.get(timeframe, tf_map.get(timeframe.upper(), timeframe.lower()))
         return os.path.join(CACHE_DIR, f"binance_{clean_sym}_{clean_tf}.json")
 
     @staticmethod
@@ -172,19 +182,11 @@ class DataManager:
             symbol = f"{asset}/USDT"
             clean_sym = symbol.replace("/", "").upper()
             for tf in ALL_TIMEFRAMES:
-                candidates = [
-                    os.path.join(CACHE_DIR, f"binance_{clean_sym}_{tf.lower()}.json"),
-                    os.path.join(CACHE_DIR, f"binance_{clean_sym}_{tf}.json"),
-                    os.path.join(CACHE_DIR, f"binance_{clean_sym}_{tf.upper()}.json")
-                ]
-                if tf == "1m":
-                    candidates.insert(0, os.path.join(CACHE_DIR, f"binance_{clean_sym}_1min.json"))
-
-                fpath = None
-                for c in candidates:
-                    if os.path.exists(c):
-                        fpath = c
-                        break
+                fpath = DataManager.get_cache_filepath(symbol, tf)
+                if not os.path.exists(fpath):
+                    alt = os.path.join(CACHE_DIR, f"binance_{clean_sym}_{tf}.json")
+                    if os.path.exists(alt):
+                        fpath = alt
 
                 if not fpath or not os.path.exists(fpath):
                     inventory.append({

@@ -129,20 +129,16 @@ class DatasetManifestManager:
             symbol = f"{asset}/USDT"
             clean_sym = symbol.replace("/", "").upper()
             for tf in ALL_TIMEFRAMES:
-                candidates = [
-                    os.path.join(CACHE_DIR, f"binance_{clean_sym}_{tf.lower()}.json"),
-                    os.path.join(CACHE_DIR, f"binance_{clean_sym}_{tf}.json"),
-                    os.path.join(CACHE_DIR, f"binance_{clean_sym}_{tf.upper()}.json")
-                ]
-                if tf == "1m":
-                    candidates.insert(0, os.path.join(CACHE_DIR, f"binance_{clean_sym}_1min.json"))
+                fpath = DataManager.get_cache_filepath(symbol, tf)
+                if not os.path.exists(fpath):
+                    alt = os.path.join(CACHE_DIR, f"binance_{clean_sym}_{tf}.json")
+                    if os.path.exists(alt):
+                        fpath = alt
 
-                for c in candidates:
-                    if os.path.exists(c):
-                        m = DatasetManifestManager.generate_manifest_for_file(symbol, tf, c)
-                        if m:
-                            manifests.append(m)
-                        break
+                if fpath and os.path.exists(fpath):
+                    m = DatasetManifestManager.generate_manifest_for_file(symbol, tf, fpath)
+                    if m:
+                        manifests.append(m)
 
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
         data = {

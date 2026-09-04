@@ -20,27 +20,56 @@ from strategy_engine.news.news_provider import NewsProvider, NullNewsProvider
 
 
 def get_max_lifespan_seconds(mtf_timeframe: str) -> int:
-    mtf_upper = str(mtf_timeframe).upper()
-    if "1M" == str(mtf_timeframe) or "1MIN" in mtf_upper or "1M" in str(mtf_timeframe) and "15" not in mtf_upper and "MO" not in mtf_upper and "1MO" not in mtf_upper:
-        # Note: check if 1 minute vs 1 month
-        if str(mtf_timeframe) in ["1m", "1min", "1MIN"]:
-            return 3600 # 1 hour
-    if "5M" in mtf_upper or "5MIN" in mtf_upper or "5m" in str(mtf_timeframe):
-        return 4 * 3600 # 4 hours
-    elif "15M" in mtf_upper or "15MIN" in mtf_upper or "15m" in str(mtf_timeframe):
-        return 12 * 3600 # 12 hours
-    elif "1H" in mtf_upper or "1h" in str(mtf_timeframe):
-        return 48 * 3600 # 48 hours
-    elif "4H" in mtf_upper or "4h" in str(mtf_timeframe):
-        return 7 * 86400 # 7 days
-    elif "1D" in mtf_upper or "1d" in str(mtf_timeframe) or "D" in mtf_upper:
-        return 21 * 86400 # 21 days
-    elif "1W" in mtf_upper or "1w" in str(mtf_timeframe) or "W" in mtf_upper:
-        return 60 * 86400 # 60 days
-    elif "1M" in mtf_upper or "MO" in mtf_upper:
-        return 180 * 86400 # 180 days
-    else:
-        return 7 * 86400
+    """
+    Returns max lifespan in seconds for a candidate based on MTF timeframe.
+    Strictly disambiguates 1m (minute) vs 1M (month) without substring collisions.
+    """
+    tf_str = str(mtf_timeframe).strip()
+    
+    # Exact case-sensitive mappings for ambiguous single-letter suffixes
+    exact_map = {
+        "1m": 3600,             # 1 hour (60 bars of 1m)
+        "1min": 3600,
+        "1MIN": 3600,
+        "5m": 4 * 3600,         # 4 hours (48 bars of 5m)
+        "5min": 4 * 3600,
+        "5MIN": 4 * 3600,
+        "15m": 12 * 3600,       # 12 hours (48 bars of 15m)
+        "15min": 12 * 3600,
+        "15MIN": 12 * 3600,
+        "1h": 48 * 3600,        # 48 hours (48 bars of 1h)
+        "1H": 48 * 3600,
+        "60m": 48 * 3600,
+        "60min": 48 * 3600,
+        "4h": 7 * 86400,        # 7 days (42 bars of 4h)
+        "4H": 7 * 86400,
+        "240m": 7 * 86400,
+        "1d": 21 * 86400,       # 21 days (21 bars of 1d)
+        "1D": 21 * 86400,
+        "D": 21 * 86400,
+        "1day": 21 * 86400,
+        "1DAY": 21 * 86400,
+        "1w": 60 * 86400,       # 60 days (~8.5 bars of 1w)
+        "1W": 60 * 86400,
+        "W": 60 * 86400,
+        "1week": 60 * 86400,
+        "1WEEK": 60 * 86400,
+        "1M": 180 * 86400,      # 180 days (6 bars of 1M month)
+        "1MO": 180 * 86400,
+        "1mo": 180 * 86400,
+        "1MONTH": 180 * 86400,
+        "1month": 180 * 86400,
+        "MO": 180 * 86400,
+    }
+    
+    if tf_str in exact_map:
+        return exact_map[tf_str]
+        
+    tf_upper = tf_str.upper()
+    if tf_upper in exact_map:
+        return exact_map[tf_upper]
+        
+    return 7 * 86400
 
 
 class StrategyCoordinator:
@@ -52,7 +81,7 @@ class StrategyCoordinator:
         self,
         news_provider: Optional[NewsProvider] = None,
         enable_mtf_trailing: bool = True,
-        enable_profit_lock: bool = True,
+        enable_profit_lock: bool = False,
         lockin_r: float = 1.0,
         giveback_r: float = 0.75,
         regime_filter: Optional[RegimeFilter] = None,

@@ -39,7 +39,7 @@ class LiveTradingEngine:
         gateway: BaseGateway,
         initial_balance: float = 10000.0,
         enable_regime_filter: bool = True,
-        enable_profit_lock: bool = True,
+        enable_profit_lock: bool = False,
         lockin_r: float = 1.0,
         giveback_r: float = 0.75,
         state_db_path: str = "production_state.db",

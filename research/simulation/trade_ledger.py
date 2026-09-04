@@ -174,7 +174,7 @@ class TradeLedger:
         else:
             gross_pnl = (trade.fill_entry_price - exit_price) * trade.position_units
             
-        net_pnl = gross_pnl - exit_fee
+        net_pnl = gross_pnl - trade.entry_fee - exit_fee
         trade.realized_pnl = net_pnl
         
         # Realized R-Multiple
@@ -183,7 +183,9 @@ class TradeLedger:
         else:
             trade.realized_rr = 0.0
             
-        self.current_equity += net_pnl
+        # Entry fee was deducted in activate_trade; add remaining cashflow (gross_pnl - exit_fee)
+        # Total equity change for the trade is: -entry_fee + (gross_pnl - exit_fee) == net_pnl
+        self.current_equity += (gross_pnl - exit_fee)
         self._update_drawdown(exit_timestamp)
         
         self.closed_trades.append(trade)

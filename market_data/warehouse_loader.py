@@ -19,20 +19,5 @@ class WarehouseLoader:
         if real_candles and len(real_candles) >= 10:
             return real_candles
 
-        # Synthetic fallback only if internet/API is completely disconnected
-        return WarehouseLoader._generate_fallback_candles(symbol, timeframe)
-
-    @staticmethod
-    def _generate_fallback_candles(symbol: str, timeframe: str) -> List[Candle]:
-        """Generates fallback simulation candles if offline."""
-        candles = []
-        base_time = 1700000000
-        base_price = 50000.0 if "BTC" in symbol else 3000.0
-
-        for i in range(100):
-            p = base_price + (i * 50.0)
-            candles.append(Candle(
-                timestamp=base_time + (i * 3600),
-                open=p, high=p + 100.0, low=p - 50.0, close=p + 80.0, volume=1000.0
-            ))
-        return candles
+        # Fail closed: never fabricate synthetic market data
+        raise RuntimeError(f"Dataset unavailable for symbol={symbol}, timeframe={timeframe}")
