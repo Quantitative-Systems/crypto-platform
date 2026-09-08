@@ -1,7 +1,7 @@
 # Quantitative Systems Platform (QSP) · Product 01: Crypto Trading Engine
 
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
-[![Tests](https://img.shields.io/badge/Tests-346%20Unit%20%26%20Integration%20Passing-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/Tests-358%20Unit%20%26%20Integration%20Passing-brightgreen.svg)]()
 [![Architecture](https://img.shields.io/badge/Architecture-3--Plane%2012--Layer%20Stack-orange.svg)]()
 [![Methodology](https://img.shields.io/badge/Methodology-Empirical%20Falsification-purple.svg)]()
 [![Governance](https://img.shields.io/badge/Governance-Capital%20Barrier%20Enforced-red.svg)]()
@@ -24,6 +24,11 @@
    - [Phase 10.1: Multi-Dimensional Regime Failure Forensics](#42-phase-101-multi-dimensional-regime-failure-forensics)
    - [Phase 10.2: HTF KeyZone Freshness Isolation (`H_KZ_FRESH_01`)](#43-phase-102-htf-keyzone-freshness-isolation-h_kz_fresh_01)
    - [Phase 10.3: Minimum ATR Stop Distance Floor Sweep (`H_SL_ATR_01`)](#44-phase-103-minimum-atr-stop-distance-floor-sweep-h_sl_atr_01)
+   - [Phase 10.4: Infrastructure Repair & Clean Development Control ($N=23$)](#45-phase-104-infrastructure-repair-replayer-defect--clean-control-n23)
+   - [Phase 10.5: Structural SL Geometry Forensics (`HYP_RISK_MAX_SL_DISTANCE_01`)](#46-phase-105-structural-sl-geometry-forensics-hyp_risk_max_sl_distance_01)
+   - [Phase 10.6: LTF Entry Quality Forensics & Directional Displacement Defect](#47-phase-106-ltf-entry-quality-forensics--directional-displacement-defect)
+   - [Phase 10.7: Trade Management Forensics & Local Structural Trail Diagnostic](#48-phase-107-trade-management-forensics--local-structural-trail-diagnostic)
+   - [Phase 10.8: The 3-Pillar Causal Synthesis & Pre-Registered Roadmap](#49-phase-108-the-3-pillar-causal-synthesis--pre-registered-roadmap)
 5. [Repository Structure & Codebase Navigation](#5-repository-structure--codebase-navigation)
 6. [Operational Manual: Setup, Testing & Execution](#6-operational-manual-setup-testing--execution)
 7. [Artifacts, Data Outputs & Provenance Ledgers](#7-artifacts-data-outputs--provenance-ledgers)
@@ -250,10 +255,133 @@ Phase 10.3 evaluated whether rejecting candidates with tight micro stops ($\text
 
 ---
 
+### 4.5 Phase 10.4: Infrastructure Repair, Replayer Defect & Clean Control ($N=23$)
+
+During full-population alpha forensics, an infrastructure defect was identified in `CausalReplayer`: closed terminal trades (`INITIAL_LTF_SL`, `MTF_TRAIL_LOSS`) were able to re-enter downstream bars if candidate tracking was not explicitly scrubbed upon terminal state resolution. This corrupted historical trade counts with phantom duplicate entries.
+
+#### Infrastructure Remediation & Regression Invariant:
+- An explicit lifecycle invariant check (`test_terminal_candidate_never_reenters_regression_invariant`) was integrated into the platform regression test suite.
+- Re-running the 15-stream matrix across the 2021-01-01 to 2022-12-31 Development partition established the **clean, genuine executed market population of $N=23$ trades**.
+
+#### Clean Development Control Baseline ($N=23$):
+| Metric | Clean H0 Value |
+|---|:---:|
+| **Sample Size ($N$)** | **23 Genuine Executed Opportunities** |
+| **Wins / Losses** | 2 Wins / 21 Losses |
+| **Win Rate** | **8.70%** |
+| **Gross Realized R** | $-6.2955\text{R}$ |
+| **Total Friction Drag** | $1.0000\text{R}$ |
+| **Net Realized R** | **$-7.2955\text{R}$** |
+| **Expectancy / Trade** | **$-0.3172\text{R}$** |
+| **Profit Factor** | **0.3812** |
+| **Max Drawdown** | **$8.43\text{R}$** |
+| **Initial Stop-Out Rate** | **69.6%** (16 of 23) |
+
+#### Target Statistics Reconciliation:
+The reconciliation audit resolved the apparent divergence between earlier reporting:
+1. **0/35 Target Hits in ANCHOR_2**: ANCHOR_2 tested forward dealing-range expansions; none achieved their macro expansion targets before trailing exits or reversals.
+2. **4/59 Winners in Baseline**: In the legacy baseline, the 4 winning trades were closed via **MTF structural trailing exits** (+4.0R to +5.7R), not HTF target hits. Zero trades reached canonical structural HTF targets across the entire 2-year dataset.
+
+---
+
+### 4.6 Phase 10.5: Structural SL Geometry Forensics (`HYP_RISK_MAX_SL_DISTANCE_01`)
+
+This forensic audit evaluated whether excessive initial structural stop distance caused negative expectancy, testing candidate percentage caps (2% to 10%) on the clean $N=23$ population.
+
+#### Empirical Evidence & Cohort Decomposition:
+- **Tight Stops ($<2.0\%$ SL Distance)**: 12 trades. Generated **$-6.76\text{R}$ in losses** (**92.6% of all observed strategy loss**). Median holding time was only 2.5 hours before being swept by micro-structure noise.
+- **Wide Stops ($>5.0\%$ SL Distance)**: 5 trades. Generated only **$-0.17\text{R}$ in losses**. 100% of wide-stop trades survived initial volatility and exited safely via monotonic MTF structural trailing.
+- **Fixed Cap Failure**: Simulating hard percentage caps (2.0% to 4.0%) pruned the Trade 05 winner ($+2.47\text{R}$ on SOL), directly worsening strategy expectancy.
+- **Negative Target Geometry**: On short trades with wide stops, enforcing the canonical $\ge 4.0\text{R}$ floor resulted in mathematically impossible negative absolute target prices—confirming target geometry as an engineering defect rather than an alpha issue.
+
+> [!WARNING]
+> **Phase 10.5 Scientific Verdict: `REJECTED AS ALPHA FILTER`**  
+> Wide initial stops do not cause losses; tight stops suffer micro-noise failure while wide stops exit safely via MTF trailing. Fixed percentage SL caps destroy legitimate winners. No SL percentage filter is adopted into canonical strategy code.
+
+---
+
+### 4.7 Phase 10.6: LTF Entry Quality Forensics & Directional Displacement Defect
+
+Forensic inspection of micro-structure triggers across all 23 clean trades revealed a critical directional-integrity defect in the entry qualification engine:
+
+#### The Defect:
+In `validation_engine.py`, candle displacement was validated purely by magnitude without checking directional polarity:
+```python
+# DEFECTIVE LOGIC (Checked magnitude only):
+abs(candle.close - candle.open) / candle.open >= 0.001
+```
+Because the sign was not checked (`close > open` for long, `close < open` for short), **9 trades triggered on adverse dumping/pumping candles** directly into opposing momentum.
+
+#### Counterfactual Impact:
+| Population | Trades | Wins / Losses | Win Rate | Net Realized R | Expectancy | Profit Factor |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Full Clean H0** | 23 | 2 / 21 | 8.7% | -7.2955R | -0.3172R | 0.3812 |
+| **Adverse Inverted Entries** | 9 | 0 / 9 | 0.0% | -5.9900R | -0.6656R | 0.0000 |
+| **Directionally Aligned Only** | **14** | **2 / 12** | **14.3%** | **-1.3055R** | **-0.0933R** | **0.7810** |
+
+- **Zero Winner Elimination**: Both canonical winners (Trade 01: $+4.08\text{R}$, Trade 05: $+2.47\text{R}$) possessed strong directional displacement and were 100% preserved.
+- **Pre-Registration**: Formally pre-registered as **`HYP_ENTRY_DISPLACEMENT_DIRECTION_01`** for controlled testing.
+
+---
+
+### 4.8 Phase 10.7: Trade Management Forensics & Local Structural Trail Diagnostic
+
+Analysis of favorable excursion revealed severe management latency:
+- **Excursion Bleed**: Multiple trades achieved $+1.0\text{R}$ to $+1.5\text{R}$ favorable excursion before reversing to a full $-1.0\text{R}$ loss because the MTF trailing bar (4H or 1D) had not yet closed.
+- **Diagnostic Evaluation (`HYP_MGT_LOCAL_TRAIL_01`)**: Introducing a +1.0R local structural ratchet recovered $+3.25\text{R}$ from excursion decay on the development dataset.
+- **Governance Status**: Retained as an exploratory **NON-CANONICAL RESEARCH DIAGNOSTIC**. Not promoted to production.
+
+---
+
+### 4.9 Phase 10.8: The 3-Pillar Causal Synthesis & Pre-Registered Roadmap
+
+Comprehensive forensic reconciliation synthesizes the root economic causes of performance into three complementary, orthogonal pillars:
+
+```mermaid
+flowchart TD
+    subgraph Pillar1 ["PILLAR 1: ENTRY INTEGRITY"]
+        E1["Directional Displacement Sign Enforcement<br/>HYP_ENTRY_DISPLACEMENT_DIRECTION_01"]
+        E2["Prunes 9 Adverse Losses (-5.99R)<br/>Lifts H0 Expectancy to -0.0933R"]
+        E1 --> E2
+    end
+
+    subgraph Pillar2 ["PILLAR 2: MANAGEMENT LATENCY"]
+        M1["Local Structural Trail / +1.0R Ratchet<br/>HYP_MGT_LOCAL_TRAIL_01"]
+        M2["Recovers +3.25R Excursion Bleed<br/>Lifts Aligned Setups to +0.0699R (PF 1.24)"]
+        M1 --> M2
+    end
+
+    subgraph Pillar3 ["PILLAR 3: TARGET REALISM"]
+        T1["Realistic Opposing MTF KeyZone Anchoring<br/>HYP_TARGET_REALISM_01"]
+        T2["1.5R–2.5R Primary Target + HTF Runner<br/>Cures Unreachable Macro 4R Floor"]
+        T1 --> T2
+    end
+
+    Pillar1 --> SYN["Causal Alpha Synthesis"]
+    Pillar2 --> SYN
+    Pillar3 --> SYN
+    SYN --> GOV["RESEARCH GOVERNANCE:<br/>Pre-Registered Hypotheses for Controlled Day 41 Testing"]
+```
+
+> [!IMPORTANT]
+> **Repository Governance Statement:**  
+> All three pillars remain pre-registered research hypotheses. Canonical `main` remains strictly frozen with zero strategy changes. Validation (2023) and OOS (2024–2026) data partitions remain strictly locked.
+
+---
+
 ## 5. Repository Structure & Codebase Navigation
 
 ```text
 crypto-platform/
+├── docs/                                  # Canonical Specifications & Forensic Research Reports
+│   ├── CANONICAL_STRATEGY_SPECIFICATION.md# Universal Multi-Timeframe Structural Strategy Specification
+│   ├── ALPHA_FORENSICS_DEVELOPMENT_2021_2022.md # Master 15-Stream Development Alpha Forensics Report
+│   ├── ALPHA_FORENSICS_RECONCILIATION_REPORT.md # Forensic Reconciliation of Target Stats & Sample Sizes
+│   ├── CLEAN_POPULATION_ENTRY_TARGET_FORENSICS.md # Clean Population (N=23) Baseline Report
+│   ├── SL_GEOMETRY_FORENSICS.md           # Structural SL Geometry & Percentage Cap Forensic Audit
+│   ├── ENTRY_QUALITY_FORENSICS.md         # LTF Entry Quality & Directional Displacement Audit
+│   └── HYP_MGT_LOCAL_TRAIL_01_DEVELOPMENT.md # Pre-Registration & Diagnostic Analysis of H1.1 Ratchet
+│
 ├── market_intelligence/                   # PRODUCT 01: Market Language & SMC Primitives
 │   ├── primitives.py                      # Core contracts: Swings, KeyZones, Events, Payloads
 │   ├── structure_engine.py                # BOS / CHOCH / Protected & Weak Swing Builder
@@ -294,19 +422,24 @@ crypto-platform/
 ├── platform_core/                         # Systemic Risk Governance
 │   └── capital_barrier.py                 # 5-Tier Programmatic Capital Authorization Barrier
 │
-├── scratch/                               # Permanent Authoritative Research Artifacts
-│   ├── canonical_rebuild_dev_results.json # Authoritative Baseline Results (59 Trades)
-│   ├── phase10_1_regime_forensics.json    # Phase 10.1 Loss Forensics Ledger & Classification
+├── scratch/                               # Permanent Authoritative Research Artifacts & Audits
+│   ├── analyze_clean_population_23.py     # Deterministic Clean Population 23 Audit Script
+│   ├── audit_sl_geometry.py               # Structural SL Geometry Forensic Audit Script
+│   ├── audit_entry_quality.py             # LTF Entry Displacement Forensic Audit Script
+│   ├── canonical_35_trade_audit_ledger.json # Complete 35-Trade Ledger with Phantom Re-Entry Flags
+│   ├── sl_geometry_forensics_summary.json # SL Geometry Metrics & Cap Simulation Results
+│   ├── entry_quality_forensics_summary.json # Entry Quality Metrics & Displacement Sign Breakdown
+│   ├── alpha_forensics_summary.json       # Master Alpha Forensics JSON Summary
+│   ├── paired_counterfactual_comparison.json # Trade-by-Trade Counterfactual Management Ledger
+│   ├── canonical_rebuild_dev_results.json # Historical Baseline Results (59 Trades)
 │   ├── phase10_1_regime_forensics.md      # Comprehensive Phase 10.1 Diagnostic Report
-│   ├── phase10_2_kz_freshness_dev_results.json # Phase 10.2 Freshness Sweep Audit (7d-90d)
-│   ├── phase10_2_kz_freshness_dev_results.md   # Comprehensive Phase 10.2 Report & Ledger
-│   ├── phase10_3_sl_atr_dev_results.json  # Phase 10.3 ATR Floor Sweep Audit (0.50-1.00 ATR)
+│   ├── phase10_2_kz_freshness_dev_results.md # Comprehensive Phase 10.2 Freshness Report
 │   └── phase10_3_sl_atr_dev_results.md    # Comprehensive Phase 10.3 Evaluation Report
 │
-└── tests/                                 # 346 Tests: Unit, Synthetic & Integration Suites
+└── tests/                                 # 358 Tests: Unit, Synthetic & Integration Suites
     ├── unit/
     │   └── strategy_engine/               # Strategy State Machine & Component Unit Tests
-    └── integration/                       # Replayer Reference Equivalence & Broker Loop Tests
+    └── integration/                       # Replayer Reference Equivalence & Regression Invariants
 ```
 
 ---
@@ -331,48 +464,62 @@ pip install -e .
 
 ### 6.2 Running the Full Verification Test Suite
 
-The platform maintains **346 unit, integration, and conformance tests**:
+The platform maintains **358 unit, integration, and conformance tests**:
 
 ```bash
 # Run all strategy engine and conformance unit tests
-pytest tests/unit/strategy_engine/ -v
+pytest tests/unit/ -v
 
 # Run integration and reference equivalence tests
 pytest tests/integration/ -v
 
 # Run the complete test suite
-pytest -q
+pytest tests/
 ```
 
-### 6.3 Reproducing Empirical Research Experiments
+### 6.3 Reproducing Empirical Research Experiments & Audits
 
-#### 1. Replay the Frozen Canonical Rebuild Baseline (15 Streams, 2021–2022)
+#### 1. Analyze the Clean Development Population ($N=23$)
+```bash
+python3 scratch/analyze_clean_population_23.py
+```
+*Output*: Reconciles clean H0 baseline ($-7.2955\text{R}$, $8.70\%$ WR, 2 wins, 21 losses).
+
+#### 2. Run Structural SL Geometry & Percentage Cap Forensics
+```bash
+python3 scratch/audit_sl_geometry.py
+```
+*Output*: Evaluates tight vs. wide SL loss attribution and simulates 2%–10% caps.
+
+#### 3. Run LTF Entry Quality & Directional Displacement Forensics
+```bash
+python3 scratch/audit_entry_quality.py
+```
+*Output*: Classifies displacement directionality and calculates counterfactual aligned performance.
+
+#### 4. Replay the Frozen Canonical Rebuild Baseline (15 Streams, 2021–2022)
 ```bash
 python3 research/experiments/run_canonical_rebuild_replay.py
 ```
-*Output*: [`scratch/canonical_rebuild_dev_results.json`](file:///home/mrcn2/crypto-platform/scratch/canonical_rebuild_dev_results.json) (Exact Baseline: 59 trades, 4 wins, 55 losses, -36.7023R).
+*Output*: [`scratch/canonical_rebuild_dev_results.json`](file:///home/mrcn2/crypto-platform/scratch/canonical_rebuild_dev_results.json).
 
-#### 2. Execute Phase 10.2 KeyZone Freshness Sensitivity Sweep
+#### 5. Execute Phase 10.2 KeyZone Freshness Sensitivity Sweep
 ```bash
 python3 research/experiments/run_phase10_2_kz_freshness_experiment.py
 ```
-*Outputs*:
-- [`scratch/phase10_2_kz_freshness_dev_results.json`](file:///home/mrcn2/crypto-platform/scratch/phase10_2_kz_freshness_dev_results.json)
-- [`scratch/phase10_2_kz_freshness_dev_results.md`](file:///home/mrcn2/crypto-platform/scratch/phase10_2_kz_freshness_dev_results.md)
+*Outputs*: [`scratch/phase10_2_kz_freshness_dev_results.md`](file:///home/mrcn2/crypto-platform/scratch/phase10_2_kz_freshness_dev_results.md).
 
-#### 3. Execute Phase 10.3 ATR Stop Distance Floor Evaluation
+#### 6. Execute Phase 10.3 ATR Stop Distance Floor Evaluation
 ```bash
 python3 research/experiments/run_phase10_3_sl_atr_evaluation.py
 ```
-*Outputs*:
-- [`scratch/phase10_3_sl_atr_dev_results.json`](file:///home/mrcn2/crypto-platform/scratch/phase10_3_sl_atr_dev_results.json)
-- [`scratch/phase10_3_sl_atr_dev_results.md`](file:///home/mrcn2/crypto-platform/scratch/phase10_3_sl_atr_dev_results.md)
+*Outputs*: [`scratch/phase10_3_sl_atr_dev_results.md`](file:///home/mrcn2/crypto-platform/scratch/phase10_3_sl_atr_dev_results.md).
 
 ---
 
 ## 7. Artifacts, Data Outputs & Provenance Ledgers
 
-Every experiment executed by the platform produces immutable JSON and Markdown audit artifacts stored in [`scratch/`](file:///home/mrcn2/crypto-platform/scratch):
+Every experiment executed by the platform produces immutable JSON and Markdown audit artifacts stored in [`docs/`](file:///home/mrcn2/crypto-platform/docs) and [`scratch/`](file:///home/mrcn2/crypto-platform/scratch):
 
 ### Trade Ledger Format
 Each executed trade record contains complete structural provenance:
