@@ -1,0 +1,151 @@
+{
+  "hypothesis_id": "H1.4_DYNAMIC_PROFIT_LOCK_0_75R",
+  "parent_id": "HTF_TREND_CONTINUATION_V1",
+  "code_commit": "cf11aa9fe056230b5587a9e2131cceaee0a907b1",
+  "evaluation_timestamp_utc": "2026-09-08T03:46:15.342433+00:00",
+  "partition": "Development (2021-01-01 to 2022-12-31)",
+  "dataset_hashes": {
+    "btc_1d": "804cea4165e59a4fcd9e76a0502c16aa3fb35720733a5b577daa0d9659772e9c",
+    "btc_4h": "585633ad47d6062f86a5ea838fcf27f31dc5e444f2a6c196aa66e521cc9a6f3a",
+    "btc_1h": "ace1fd19d1e006ca7bde4f6b43ada8a98c9be09cc36689b47f494d792b22358d"
+  },
+  "sample_metrics": {
+    "n_trades": 59,
+    "unique_economic_setups": 31,
+    "wins": 20,
+    "losses": 39,
+    "win_rate_pct": 33.9
+  },
+  "financial_metrics": {
+    "gross_r": -13.7954,
+    "net_r": -18.5226,
+    "expectancy_r": -0.3139,
+    "profit_factor": 0.55,
+    "sharpe_ratio": -1.4363,
+    "sortino_ratio": -2.2557,
+    "max_drawdown_r": 32.0874,
+    "recovery_factor": -0.5773
+  },
+  "excursion_metrics": {
+    "avg_mfe_r": 1.0001,
+    "avg_mae_r": 1.68,
+    "avg_holding_time_hours": 5.81
+  },
+  "statistical_validation": {
+    "bootstrap_ci_95": [
+      -0.64,
+      0.041
+    ],
+    "bootstrap_prob_positive_edge_pct": 7.2,
+    "is_statistically_significant": false
+  },
+  "cost_stress_testing": {
+    "1.0x": {
+      "multiplier": 1.0,
+      "n_trades": 59,
+      "net_r": -18.5226,
+      "expectancy_r": -0.3139,
+      "profit_factor": 0.55,
+      "survived": false
+    },
+    "1.2x": {
+      "multiplier": 1.2,
+      "n_trades": 59,
+      "net_r": -19.4937,
+      "expectancy_r": -0.3304,
+      "profit_factor": 0.54,
+      "survived": false
+    },
+    "1.5x": {
+      "multiplier": 1.5,
+      "n_trades": 59,
+      "net_r": -20.9502,
+      "expectancy_r": -0.3551,
+      "profit_factor": 0.51,
+      "survived": false
+    },
+    "2.0x": {
+      "multiplier": 2.0,
+      "n_trades": 59,
+      "net_r": -23.3778,
+      "expectancy_r": -0.3962,
+      "profit_factor": 0.48,
+      "survived": false
+    },
+    "3.0x": {
+      "multiplier": 3.0,
+      "n_trades": 59,
+      "net_r": -28.233,
+      "expectancy_r": -0.4785,
+      "profit_factor": 0.43,
+      "survived": false
+    }
+  },
+  "breakdowns": {
+    "assets": {
+      "BTC": {
+        "n": 12,
+        "win_rate_pct": 58.33,
+        "net_r": 10.1354,
+        "expectancy_r": 0.8446
+      },
+      "ETH": {
+        "n": 18,
+        "win_rate_pct": 38.89,
+        "net_r": -4.7614,
+        "expectancy_r": -0.2645
+      },
+      "SOL": {
+        "n": 29,
+        "win_rate_pct": 20.69,
+        "net_r": -23.8966,
+        "expectancy_r": -0.824
+      }
+    },
+    "timeframe_sets": {
+      "SET_1": {
+        "n": 8,
+        "win_rate_pct": 37.5,
+        "net_r": -5.062,
+        "expectancy_r": -0.6328
+      },
+      "SET_2": {
+        "n": 5,
+        "win_rate_pct": 40.0,
+        "net_r": -3.1652,
+        "expectancy_r": -0.633
+      },
+      "SET_3": {
+        "n": 33,
+        "win_rate_pct": 30.3,
+        "net_r": -8.2894,
+        "expectancy_r": -0.2512
+      },
+      "SET_4": {
+        "n": 13,
+        "win_rate_pct": 38.46,
+        "net_r": -2.006,
+        "expectancy_r": -0.1543
+      }
+    },
+    "regimes": {
+      "CONTINUATION": {
+        "n": 59,
+        "win_rate_pct": 33.9,
+        "net_r": -18.5226,
+        "expectancy_r": -0.3139
+      }
+    }
+  },
+  "governance": {
+    "rejection_reasons": [
+      "DIM_2_ALPHA_EXPECTANCY: Negative post-friction expectancy (-0.3139R <= 0.0R)",
+      "DIM_3_STATISTICAL_CI: Bootstrap 95% lower bound (-0.6400R <= 0.0R)",
+      "DIM_5_WALK_FORWARD: Generalization ratio None < 0.70",
+      "DIM_7_COST_SHOCK: Edge destroyed under transaction cost shock (-0.3962R <= 0.0R)",
+      "DIM_8_RISK_LIMITS: Max Drawdown 32.1% > 20.0%",
+      "DIM_10_EXECUTION_REALISM: Strategy has not completed Paper/Shadow validation"
+    ],
+    "promotion_status": "REJECTED_RESEARCH_ONLY"
+  }
+}

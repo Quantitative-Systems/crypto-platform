@@ -1,0 +1,333 @@
+{
+  "metadata": {
+    "title": "SCIENTIFIC HYPOTHESIS REGISTRY",
+    "last_updated_utc": "2026-09-08T03:43:47.847073+00:00",
+    "total_hypotheses": 8,
+    "governance_standard": "Anti-Overfitting Single-Variable Modification Protocol"
+  },
+  "hypotheses": {
+    "HTF_TREND_CONTINUATION_V1": {
+      "hypothesis_id": "HTF_TREND_CONTINUATION_V1",
+      "parent_hypothesis": "NONE_ROOT_CONTROL",
+      "exact_economic_rationale": "Canonical institutional trend-following baseline trading in direction of HTF structure.",
+      "one_structural_modification": "None (Frozen negative control benchmark).",
+      "affected_component": "SystemRoot",
+      "pre_registered_parameter": {
+        "min_rr": 4.0,
+        "risk_fraction": 0.01
+      },
+      "development_dataset": {
+        "period": "2021-01-01 to 2022-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "timeframe_sets": "SET_1, SET_2, SET_3, SET_4, SET_5",
+        "role": "Development & Hypothesis Refinement"
+      },
+      "validation_dataset": {
+        "period": "2023-01-01 to 2023-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Frozen Institutional Validation Gate"
+      },
+      "untouched_oos_dataset": {
+        "period": "2024-01-01 to 2026-06-30",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Blind Out-of-Sample Quarantine"
+      },
+      "expected_failure_mechanism": "Extreme target unreachability, stale zone decay, and micro-stop noise liquidation.",
+      "acceptance_criteria": {
+        "expectancy_r": "> 0.0R",
+        "profit_factor": "> 1.0"
+      },
+      "rejection_criteria": {
+        "expectancy_r": "<= 0.0R"
+      },
+      "status": "REJECTED_RESEARCH_ONLY",
+      "created_at_utc": "2026-09-08T03:43:47.836420+00:00",
+      "verdict": "REJECTED_RESEARCH_ONLY",
+      "verdict_notes": "Empirical control result: N=128, E[R]=-0.5998R, Net Realized Return=-76.77R, PF=0.38, 95% CI=[-0.7137R, -0.4683R]."
+    },
+    "H1.1_EARLIER_MTF_ENTRY": {
+      "hypothesis_id": "H1.1_EARLIER_MTF_ENTRY",
+      "parent_hypothesis": "HTF_TREND_CONTINUATION_V1",
+      "exact_economic_rationale": "Forensic Phase 1 demonstrated that trades delayed > 1h lose -0.8699R (59.5% of losses). Entering on immediate close of the MTF realignment/retest bar captures initial impulse momentum before local exhaustion.",
+      "one_structural_modification": "Trigger entry on immediate MTF confirmation bar close, eliminating secondary delayed LTF consolidation lag.",
+      "affected_component": "StrategyCoordinator / LTFTriggerEngine",
+      "pre_registered_parameter": {
+        "mtf_entry_trigger": "IMMEDIATE_MTF_CONFIRMATION",
+        "max_ltf_lag_bars": 0
+      },
+      "development_dataset": {
+        "period": "2021-01-01 to 2022-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "timeframe_sets": "SET_1, SET_2, SET_3, SET_4, SET_5",
+        "role": "Development & Hypothesis Refinement"
+      },
+      "validation_dataset": {
+        "period": "2023-01-01 to 2023-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Frozen Institutional Validation Gate"
+      },
+      "untouched_oos_dataset": {
+        "period": "2024-01-01 to 2026-06-30",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Blind Out-of-Sample Quarantine"
+      },
+      "expected_failure_mechanism": "Potential increase in false breakouts without secondary micro-sweep confirmation.",
+      "acceptance_criteria": {
+        "dev_expectancy_r": "> 0.0R",
+        "profit_factor": "> 1.0",
+        "cost_stress_1_5x_e_r": "> 0.0R"
+      },
+      "rejection_criteria": {
+        "dev_expectancy_r": "<= -0.20R",
+        "win_rate_pct": "< 25.0%"
+      },
+      "status": "REGISTERED_QUEUED",
+      "created_at_utc": "2026-09-08T03:43:47.836911+00:00",
+      "verdict": null,
+      "verdict_notes": null
+    },
+    "H1.2_MTF_STRUCTURAL_SL_ANCHOR": {
+      "hypothesis_id": "H1.2_MTF_STRUCTURAL_SL_ANCHOR",
+      "parent_hypothesis": "HTF_TREND_CONTINUATION_V1",
+      "exact_economic_rationale": "Forensic Phase 1 revealed that 41.8% of losses stem from sub-0.5% micro-stops swept by high-frequency spread/noise. Anchoring stop to confirmed MTF swing extreme places invalidation outside noise bands, while position sizing inversely scales to hold dollar risk constant at 1%.",
+      "one_structural_modification": "Anchor initial structural stop loss to confirmed MTF Swing Extreme instead of micro LTF wick.",
+      "affected_component": "RiskEngine / PositionSizer",
+      "pre_registered_parameter": {
+        "sl_anchor_timeframe": "MTF",
+        "buffer_atr_mult": 0.1
+      },
+      "development_dataset": {
+        "period": "2021-01-01 to 2022-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "timeframe_sets": "SET_1, SET_2, SET_3, SET_4, SET_5",
+        "role": "Development & Hypothesis Refinement"
+      },
+      "validation_dataset": {
+        "period": "2023-01-01 to 2023-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Frozen Institutional Validation Gate"
+      },
+      "untouched_oos_dataset": {
+        "period": "2024-01-01 to 2026-06-30",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Blind Out-of-Sample Quarantine"
+      },
+      "expected_failure_mechanism": "Wider stops reduce trade reward-to-risk ratio, requiring higher win rate to maintain profitability.",
+      "acceptance_criteria": {
+        "dev_expectancy_r": "> 0.0R",
+        "win_rate_pct": "> 35.0%",
+        "profit_factor": "> 1.0"
+      },
+      "rejection_criteria": {
+        "dev_net_r": "< -36.70R",
+        "dev_expectancy_r": "< -0.40R"
+      },
+      "status": "REGISTERED_QUEUED",
+      "created_at_utc": "2026-09-08T03:43:47.837479+00:00",
+      "verdict": null,
+      "verdict_notes": null
+    },
+    "H1.3_DYNAMIC_STRUCTURAL_TARGET": {
+      "hypothesis_id": "H1.3_DYNAMIC_STRUCTURAL_TARGET",
+      "parent_hypothesis": "HTF_TREND_CONTINUATION_V1",
+      "exact_economic_rationale": "Forensic Phase 1 proved that 52.4% of loss velocity was target unreachability drag: 0/128 trades reached fixed 4.0R, but 44.5% reached +0.5R to +2.58R before reversing. Anchoring target dynamically to nearest opposing MTF liquidity pool (min 1.5R) monetizes real market moves.",
+      "one_structural_modification": "Set structural profit target to nearest opposing MTF swing pivot (min 1.5R) rather than rigid 4.0R macro extreme.",
+      "affected_component": "HTFDestinationEngine / TradePlan",
+      "pre_registered_parameter": {
+        "target_mode": "NEAREST_OPPOSING_MTF_SWING",
+        "min_rr_floor": 1.5
+      },
+      "development_dataset": {
+        "period": "2021-01-01 to 2022-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "timeframe_sets": "SET_1, SET_2, SET_3, SET_4, SET_5",
+        "role": "Development & Hypothesis Refinement"
+      },
+      "validation_dataset": {
+        "period": "2023-01-01 to 2023-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Frozen Institutional Validation Gate"
+      },
+      "untouched_oos_dataset": {
+        "period": "2024-01-01 to 2026-06-30",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Blind Out-of-Sample Quarantine"
+      },
+      "expected_failure_mechanism": "Reduced payoff ratio per winning trade may fail to outpace round-trip fees if win rate does not increase.",
+      "acceptance_criteria": {
+        "dev_expectancy_r": "> 0.0R",
+        "target_reach_rate_pct": "> 20.0%",
+        "profit_factor": "> 1.10"
+      },
+      "rejection_criteria": {
+        "dev_expectancy_r": "<= 0.0R",
+        "profit_factor": "< 1.0"
+      },
+      "status": "REGISTERED_QUEUED",
+      "created_at_utc": "2026-09-08T03:43:47.839873+00:00",
+      "verdict": null,
+      "verdict_notes": null
+    },
+    "H1.4_DYNAMIC_PROFIT_LOCK_0_75R": {
+      "hypothesis_id": "H1.4_DYNAMIC_PROFIT_LOCK_0_75R",
+      "parent_hypothesis": "HTF_TREND_CONTINUATION_V1",
+      "exact_economic_rationale": "Forensic Phase 1 showed trades reaching +0.5R to +0.9R had 38.6% failure rate because baseline trailing only engaged at +1.0R. Engaging break-even lock at +0.75R MFE protects +0.5R moves from collapsing into full losses.",
+      "one_structural_modification": "Activate break-even stop ratchet at +0.75R MFE with +0.05R buffer for fees.",
+      "affected_component": "ExecutionSimulator / TradeManagement",
+      "pre_registered_parameter": {
+        "profit_lock_trigger_r": 0.75,
+        "profit_lock_stop_r": 0.05
+      },
+      "development_dataset": {
+        "period": "2021-01-01 to 2022-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "timeframe_sets": "SET_1, SET_2, SET_3, SET_4, SET_5",
+        "role": "Development & Hypothesis Refinement"
+      },
+      "validation_dataset": {
+        "period": "2023-01-01 to 2023-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Frozen Institutional Validation Gate"
+      },
+      "untouched_oos_dataset": {
+        "period": "2024-01-01 to 2026-06-30",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Blind Out-of-Sample Quarantine"
+      },
+      "expected_failure_mechanism": "Premature break-even stop-outs on natural counter-trend wicks, truncating larger multi-R continuation runs.",
+      "acceptance_criteria": {
+        "dev_net_r_delta": ">= +10.0R",
+        "dev_expectancy_r": "> 0.0R",
+        "profit_factor": "> 1.0"
+      },
+      "rejection_criteria": {
+        "winner_retention_pct": "< 70.0%",
+        "dev_net_r_delta": "< 0.0R"
+      },
+      "status": "REGISTERED_QUEUED",
+      "created_at_utc": "2026-09-08T03:43:47.841235+00:00",
+      "verdict": null,
+      "verdict_notes": null
+    },
+    "H1.5_HTF_KEYZONE_FRESHNESS_7D": {
+      "hypothesis_id": "H1.5_HTF_KEYZONE_FRESHNESS_7D",
+      "parent_hypothesis": "HTF_TREND_CONTINUATION_V1",
+      "exact_economic_rationale": "Forensic Phase 1 proved that KeyZones > 7 days old generated 0 winners and accounted for -18.6R in losses. Older zones represent re-auctioned retail inventory rather than fresh institutional liquidity.",
+      "one_structural_modification": "Quarantine candidate qualification to HTF KeyZones where (interaction_time - creation_time) <= 7 days.",
+      "affected_component": "KeyZoneEngine / CandidateTracker",
+      "pre_registered_parameter": {
+        "max_keyzone_age_days": 7.0
+      },
+      "development_dataset": {
+        "period": "2021-01-01 to 2022-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "timeframe_sets": "SET_1, SET_2, SET_3, SET_4, SET_5",
+        "role": "Development & Hypothesis Refinement"
+      },
+      "validation_dataset": {
+        "period": "2023-01-01 to 2023-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Frozen Institutional Validation Gate"
+      },
+      "untouched_oos_dataset": {
+        "period": "2024-01-01 to 2026-06-30",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Blind Out-of-Sample Quarantine"
+      },
+      "expected_failure_mechanism": "Throughput compression from rejecting valid structural levels.",
+      "acceptance_criteria": {
+        "winner_retention_pct": "100.0%",
+        "loss_removal_count": ">= 20",
+        "dev_net_r_delta": ">= +15.0R"
+      },
+      "rejection_criteria": {
+        "winner_retention_pct": "< 100.0%",
+        "dev_net_r_delta": "< +5.0R"
+      },
+      "status": "REGISTERED_QUEUED",
+      "created_at_utc": "2026-09-08T03:43:47.843205+00:00",
+      "verdict": null,
+      "verdict_notes": null
+    },
+    "H1.6_VOLATILITY_EXPANSION_QUALIFICATION": {
+      "hypothesis_id": "H1.6_VOLATILITY_EXPANSION_QUALIFICATION",
+      "parent_hypothesis": "HTF_TREND_CONTINUATION_V1",
+      "exact_economic_rationale": "Forensic Phase 1 demonstrated compression regimes produce frequent false breakouts. Requiring MTF ATR > 50-period SMA(ATR) filters out dead-market chop.",
+      "one_structural_modification": "Require MTF ATR_14 > SMA_50(ATR_14) at entry qualification.",
+      "affected_component": "MarketIntelligenceCoordinator",
+      "pre_registered_parameter": {
+        "volatility_metric": "ATR_14",
+        "volatility_threshold": "SMA_50_ATR"
+      },
+      "development_dataset": {
+        "period": "2021-01-01 to 2022-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "timeframe_sets": "SET_1, SET_2, SET_3, SET_4, SET_5",
+        "role": "Development & Hypothesis Refinement"
+      },
+      "validation_dataset": {
+        "period": "2023-01-01 to 2023-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Frozen Institutional Validation Gate"
+      },
+      "untouched_oos_dataset": {
+        "period": "2024-01-01 to 2026-06-30",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Blind Out-of-Sample Quarantine"
+      },
+      "expected_failure_mechanism": "Entering at the tail end of volatility expansion cycles, buying local top of volatility.",
+      "acceptance_criteria": {
+        "dev_expectancy_r": "> 0.0R",
+        "profit_factor": "> 1.0"
+      },
+      "rejection_criteria": {
+        "dev_expectancy_r": "<= 0.0R",
+        "throughput_retention_pct": "< 40.0%"
+      },
+      "status": "REGISTERED_QUEUED",
+      "created_at_utc": "2026-09-08T03:43:47.844362+00:00",
+      "verdict": null,
+      "verdict_notes": null
+    },
+    "H1.7_FAST_MTF_RETEST_24H": {
+      "hypothesis_id": "H1.7_FAST_MTF_RETEST_24H",
+      "parent_hypothesis": "HTF_TREND_CONTINUATION_V1",
+      "exact_economic_rationale": "Forensic Phase 1 showed fast retests (<=4h) produced +0.4377R expectancy (PF 1.65), whereas slow grinds (>24h) produced 0% win rate (-1.06R avg, 41.7% of losses). Filtering out stale retests eliminates exhausted setups.",
+      "one_structural_modification": "Reject setups where MTF retest occurs > 24 hours after MTF alignment event.",
+      "affected_component": "MTFAlignmentEngine / CandidateTracker",
+      "pre_registered_parameter": {
+        "max_retest_delay_hours": 24.0
+      },
+      "development_dataset": {
+        "period": "2021-01-01 to 2022-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "timeframe_sets": "SET_1, SET_2, SET_3, SET_4, SET_5",
+        "role": "Development & Hypothesis Refinement"
+      },
+      "validation_dataset": {
+        "period": "2023-01-01 to 2023-12-31",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Frozen Institutional Validation Gate"
+      },
+      "untouched_oos_dataset": {
+        "period": "2024-01-01 to 2026-06-30",
+        "symbols": "BTC/USDT, ETH/USDT, SOL/USDT",
+        "role": "Blind Out-of-Sample Quarantine"
+      },
+      "expected_failure_mechanism": "Missing multi-day accumulator pullbacks in high-timeframe trends.",
+      "acceptance_criteria": {
+        "loss_removal_count": ">= 15",
+        "dev_expectancy_r": "> 0.0R",
+        "profit_factor": "> 1.0"
+      },
+      "rejection_criteria": {
+        "winner_retention_pct": "< 80.0%",
+        "dev_net_r_delta": "< +5.0R"
+      },
+      "status": "REGISTERED_QUEUED",
+      "created_at_utc": "2026-09-08T03:43:47.845831+00:00",
+      "verdict": null,
+      "verdict_notes": null
+    }
+  }
+}
