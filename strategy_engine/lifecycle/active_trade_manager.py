@@ -13,13 +13,17 @@ class ActiveTradeManager:
         enable_mtf_trailing: bool = True,
         enable_profit_lock: bool = False,
         lockin_r: float = 1.0,
-        giveback_r: float = 0.75
+        giveback_r: float = 0.75,
+        profit_lock_trigger_r: float = 1.0,
+        profit_lock_stop_r: float = 0.10
     ):
         self.active_trades: Dict[str, TradePlanPayload] = {}
         self.enable_mtf_trailing = enable_mtf_trailing
         self.enable_profit_lock = enable_profit_lock
         self.lockin_r = lockin_r
         self.giveback_r = giveback_r
+        self.profit_lock_trigger_r = profit_lock_trigger_r
+        self.profit_lock_stop_r = profit_lock_stop_r
         
     def register_trade(self, trade_id: str, plan: TradePlanPayload):
         plan.position_status = PositionState.ACTIVE_POSITION.value
@@ -62,66 +66,47 @@ class ActiveTradeManager:
                 del self.active_trades[trade_id]
                 continue
                 
-            # 2. Profit-Lock & Break-Even Ratchet
+            # 2. Profit-Lock & Break-Even Ratchet (Preserved for historical ablation, disabled in canonical H0)
             if self.enable_profit_lock and hasattr(plan, 'metadata') and plan.metadata is not None:
                 max_fav = plan.metadata.get("max_favorable_price", entry_price)
                 if is_long:
                     fav_r = (max_fav - entry_price) / entry_risk_dist
-                    # Tier 1: Break-even at +1.5R excursion
-                    if fav_r >= 1.5:
-                        be_stop = entry_price + (0.1 * entry_risk_dist)
+                    if fav_r >= self.profit_lock_trigger_r:
+                        be_stop = entry_price + (self.profit_lock_stop_r * entry_risk_dist)
                         if be_stop > plan.stop_invalidation_price:
                             plan.stop_invalidation_price = be_stop
-                    # Tier 2: Ratchet trailing floor at lockin_r
                     if fav_r >= self.lockin_r:
                         floor_stop = max_fav - (self.giveback_r * entry_risk_dist)
                         if floor_stop > plan.stop_invalidation_price:
                             plan.stop_invalidation_price = floor_stop
                 else:
                     fav_r = (entry_price - max_fav) / entry_risk_dist
-                    # Tier 1: Break-even at +1.5R excursion
-                    if fav_r >= 1.5:
-                        be_stop = entry_price - (0.1 * entry_risk_dist)
+                    if fav_r >= self.profit_lock_trigger_r:
+                        be_stop = entry_price - (self.profit_lock_stop_r * entry_risk_dist)
                         if be_stop < plan.stop_invalidation_price:
                             plan.stop_invalidation_price = be_stop
-                    # Tier 2: Ratchet trailing floor at lockin_r
                     if fav_r >= self.lockin_r:
                         floor_stop = max_fav + (self.giveback_r * entry_risk_dist)
                         if floor_stop < plan.stop_invalidation_price:
                             plan.stop_invalidation_price = floor_stop
 
-            # 3. Update MTF Structural Trailing Stop (Ratcheting behind MTF Protected Swings)
+            # 3. Canonical MTF Structural Trailing Stop & Adverse CHOCH Exit
             if self.enable_mtf_trailing:
-                try:
-                    if is_long:
-                        mtf_prot_low = mtf_payload.structure_state.protected_low.raw_swing.price
-                        # Stop can only ratchet upward, never widen
-                        if mtf_prot_low > plan.stop_invalidation_price:
-                            plan.stop_invalidation_price = mtf_prot_low
-                    else:
-                        mtf_prot_high = mtf_payload.structure_state.protected_high.raw_swing.price
-                        # Stop can only ratchet downward, never widen
-                        if mtf_prot_high < plan.stop_invalidation_price:
-                            plan.stop_invalidation_price = mtf_prot_high
-                except AttributeError:
-                    pass  # No protected swing established yet
+                from strategy_engine.lifecycle.mtf_trailing_engine import MTFStructuralTrailingEngine
+                decision = MTFStructuralTrailingEngine.evaluate(plan, mtf_payload, ltf_payload)
 
-                # 4. Check MTF Structural Reversal (Adverse CHOCH Exit)
-                mtf_events = getattr(mtf_payload.structure_state, 'events', None) or mtf_payload.events
-                if mtf_events:
-                    last_event = mtf_events[-1]
-                    event_ts = getattr(last_event, 'timestamp', 0)
-                    
-                    # Causal Filter: only exit if the adverse event occurred after our setup began unfolding
-                    if event_ts > getattr(plan, 'setup_timestamp', 0):
-                        if "CHOCH" in str(last_event.event_type):
-                            event_is_bullish = "BULLISH" in str(last_event.direction)
-                            if (is_long and not event_is_bullish) or (not is_long and event_is_bullish):
-                                plan.position_status = PositionState.MTF_TRAIL_EXIT.value
-                                plan.exit_timestamp = mtf_payload.timestamp
-                                exited_trades.append(plan)
-                                del self.active_trades[trade_id]
-                                continue
+                if decision.should_exit_structural:
+                    plan.position_status = PositionState.MTF_TRAIL_EXIT.value
+                    plan.exit_timestamp = ltf_payload.timestamp
+                    exited_trades.append(plan)
+                    del self.active_trades[trade_id]
+                    continue
+
+                if decision.should_update_stop and decision.new_stop_price is not None:
+                    if is_long and decision.new_stop_price > plan.stop_invalidation_price:
+                        plan.stop_invalidation_price = decision.new_stop_price
+                    elif (not is_long) and decision.new_stop_price < plan.stop_invalidation_price:
+                        plan.stop_invalidation_price = decision.new_stop_price
                         
             # 5. Check LTF / Trailed SL Trigger
             if is_long and cur_low <= plan.stop_invalidation_price:

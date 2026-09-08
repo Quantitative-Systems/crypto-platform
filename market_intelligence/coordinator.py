@@ -109,6 +109,16 @@ class LanguageCoordinator:
                 + phase_state.events
             )
 
+            # Dynamic Valuation State derived from StructureState dealing range
+            valuation_state = "EQUILIBRIUM"
+            if structure_state and structure_state.dealing_range and structure_state.dealing_range.equilibrium_price > 0:
+                cur_close = candles[-1].close
+                eq_price = structure_state.dealing_range.equilibrium_price
+                if cur_close > eq_price:
+                    valuation_state = "PREMIUM"
+                elif cur_close < eq_price:
+                    valuation_state = "DISCOUNT"
+
             # Engine 8
             inputs = {
                 "symbol": symbol,
@@ -123,7 +133,7 @@ class LanguageCoordinator:
                 "keyzones": all_keyzones,
                 "phase_state": phase_state.current_phase,
                 "trend_state": trend_state.direction,
-                "valuation_state": "EQUILIBRIUM",
+                "valuation_state": valuation_state,
                 "scorecard": {
                     "validation_score": validation_result.score,
                     "reason_codes": validation_result.reason_codes,

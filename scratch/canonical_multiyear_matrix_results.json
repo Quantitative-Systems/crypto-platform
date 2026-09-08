@@ -1,0 +1,2249 @@
+[
+  {
+    "stream_id": "BTC_SET_1",
+    "identity": {
+      "asset": "BTC/USDT",
+      "timeframe_set": "SET_1",
+      "label": "SET_1 (1M -> 1W -> 1D, Macro)",
+      "htf": "1M",
+      "mtf": "1w",
+      "ltf": "1d",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2023-01-01 to 2024-01-01 (Certified Annual Benchmark)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 78,
+      "mtf_candles": 334,
+      "ltf_candles": 366
+    },
+    "execution_time_sec": 2.96,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 351,
+      "htf_qualified_contexts": 244,
+      "mtf_structural_alignments": 0,
+      "mtf_causal_retests": 0,
+      "ltf_triggers": 0,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_SETUP_LIFESPAN_EXPIRED": 4
+    },
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "avg_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "max_consecutive_losses": 0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "ETH_SET_1",
+    "identity": {
+      "asset": "ETH/USDT",
+      "timeframe_set": "SET_1",
+      "label": "SET_1 (1M -> 1W -> 1D, Macro)",
+      "htf": "1M",
+      "mtf": "1w",
+      "ltf": "1d",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2023-01-01 to 2024-01-01 (Certified Annual Benchmark)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 78,
+      "mtf_candles": 334,
+      "ltf_candles": 366
+    },
+    "execution_time_sec": 3.22,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 351,
+      "htf_qualified_contexts": 0,
+      "mtf_structural_alignments": 0,
+      "mtf_causal_retests": 0,
+      "ltf_triggers": 0,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {},
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "avg_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "max_consecutive_losses": 0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "SOL_SET_1",
+    "identity": {
+      "asset": "SOL/USDT",
+      "timeframe_set": "SET_1",
+      "label": "SET_1 (1M -> 1W -> 1D, Macro)",
+      "htf": "1M",
+      "mtf": "1w",
+      "ltf": "1d",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2023-01-01 to 2024-01-01 (Certified Annual Benchmark)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 41,
+      "mtf_candles": 177,
+      "ltf_candles": 366
+    },
+    "execution_time_sec": 1.59,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 351,
+      "htf_qualified_contexts": 170,
+      "mtf_structural_alignments": 64,
+      "mtf_causal_retests": 25,
+      "ltf_triggers": 22,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_OPPOSING_MTF_STRUCTURE": 15,
+      "REJECT_SETUP_LIFESPAN_EXPIRED": 3,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 9,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 12,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 1
+    },
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "avg_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "max_consecutive_losses": 0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "BTC_SET_2",
+    "identity": {
+      "asset": "BTC/USDT",
+      "timeframe_set": "SET_2",
+      "label": "SET_2 (1W -> 1D -> 4H, Position)",
+      "htf": "1w",
+      "mtf": "1d",
+      "ltf": "4h",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2023-01-01 to 2024-01-01 (Certified Annual Benchmark)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 334,
+      "mtf_candles": 2329,
+      "ltf_candles": 2191
+    },
+    "execution_time_sec": 14.58,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 2176,
+      "htf_qualified_contexts": 0,
+      "mtf_structural_alignments": 0,
+      "mtf_causal_retests": 0,
+      "ltf_triggers": 0,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {},
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "avg_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "max_consecutive_losses": 0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "ETH_SET_2",
+    "identity": {
+      "asset": "ETH/USDT",
+      "timeframe_set": "SET_2",
+      "label": "SET_2 (1W -> 1D -> 4H, Position)",
+      "htf": "1w",
+      "mtf": "1d",
+      "ltf": "4h",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2023-01-01 to 2024-01-01 (Certified Annual Benchmark)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 334,
+      "mtf_candles": 2329,
+      "ltf_candles": 2191
+    },
+    "execution_time_sec": 12.9,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 2176,
+      "htf_qualified_contexts": 53,
+      "mtf_structural_alignments": 31,
+      "mtf_causal_retests": 7,
+      "ltf_triggers": 7,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_OPPOSING_MTF_STRUCTURE": 13,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 2,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 2,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 2,
+      "REJECT_RR_BELOW_4R": 2
+    },
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "avg_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "max_consecutive_losses": 0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "SOL_SET_2",
+    "identity": {
+      "asset": "SOL/USDT",
+      "timeframe_set": "SET_2",
+      "label": "SET_2 (1W -> 1D -> 4H, Position)",
+      "htf": "1w",
+      "mtf": "1d",
+      "ltf": "4h",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2023-01-01 to 2024-01-01 (Certified Annual Benchmark)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 177,
+      "mtf_candles": 1235,
+      "ltf_candles": 2191
+    },
+    "execution_time_sec": 13.53,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 2176,
+      "htf_qualified_contexts": 120,
+      "mtf_structural_alignments": 205,
+      "mtf_causal_retests": 28,
+      "ltf_triggers": 28,
+      "risk_evaluations": 0,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_OPPOSING_MTF_STRUCTURE": 2,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 4,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 18,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 9
+    },
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "avg_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "max_consecutive_losses": 0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "BTC_SET_3",
+    "identity": {
+      "asset": "BTC/USDT",
+      "timeframe_set": "SET_3",
+      "label": "SET_3 (1D -> 4H -> 1H, Swing)",
+      "htf": "1d",
+      "mtf": "4h",
+      "ltf": "1h",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2023-01-01 to 2024-01-01 (Certified Annual Benchmark)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 2329,
+      "mtf_candles": 13952,
+      "ltf_candles": 8760
+    },
+    "execution_time_sec": 61.95,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 8745,
+      "htf_qualified_contexts": 843,
+      "mtf_structural_alignments": 295,
+      "mtf_causal_retests": 187,
+      "ltf_triggers": 126,
+      "risk_evaluations": 2,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 45,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 72,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 24,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 12,
+      "REJECT_RR_BELOW_4R": 6,
+      "REJECT_MIN_STOP_DISTANCE_VIOLATION": 2
+    },
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "avg_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "max_consecutive_losses": 0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "ETH_SET_3",
+    "identity": {
+      "asset": "ETH/USDT",
+      "timeframe_set": "SET_3",
+      "label": "SET_3 (1D -> 4H -> 1H, Swing)",
+      "htf": "1d",
+      "mtf": "4h",
+      "ltf": "1h",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2023-01-01 to 2024-01-01 (Certified Annual Benchmark)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 2329,
+      "mtf_candles": 13952,
+      "ltf_candles": 8760
+    },
+    "execution_time_sec": 60.94,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 8745,
+      "htf_qualified_contexts": 1578,
+      "mtf_structural_alignments": 382,
+      "mtf_causal_retests": 193,
+      "ltf_triggers": 146,
+      "risk_evaluations": 8,
+      "risk_approved_plans": 2,
+      "submitted_orders": 2,
+      "filled_trades": 2,
+      "closed_trades": 2
+    },
+    "rejection_attribution": {
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 43,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 87,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 16,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 15,
+      "REJECT_MAX_LEVERAGE_VIOLATION": 4,
+      "REJECT_RR_BELOW_4R": 10,
+      "REJECT_MIN_STOP_DISTANCE_VIOLATION": 2
+    },
+    "performance": {
+      "total_trades": 2,
+      "wins": 0,
+      "losses": 2,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 205.79,
+      "net_pnl_usd": -205.79,
+      "profit_factor": 0.0,
+      "gross_realized_r": -2.0284,
+      "total_friction_r": 0.0401,
+      "net_realized_r": -2.0686,
+      "expectancy_r": -1.0343,
+      "avg_r": -1.0343,
+      "median_r": -1.0343,
+      "max_drawdown_usd": 205.79,
+      "max_drawdown_pct": 2.06,
+      "max_consecutive_losses": 2,
+      "avg_mfe_r": 2.0028,
+      "median_mfe_r": 2.0028,
+      "avg_mae_r": 1.2195,
+      "median_mae_r": 1.2195,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 2,
+        "net_r": -2.0686,
+        "net_pnl": -205.79000000000002
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 2,
+        "pct": 100.0,
+        "avg_gross_r": -1.0142,
+        "avg_net_r": -1.0343
+      }
+    },
+    "trade_ledger": [
+      {
+        "candidate_timestamp": 1682481600,
+        "stream": "ETH_SET_3",
+        "asset": "ETH/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1682470800",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 2141.54,
+        "mtf_realignment": "mtf_align_ETH/USDT_1682452800",
+        "mtf_keyzone": "OB_BULLISH_OB_1682424000_SW_HIGH_94",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 1865.0,
+        "sl": 1801.66,
+        "tp": 2141.54,
+        "planned_rr": 4.365961477739191,
+        "risk_amount": 100.0,
+        "entry_fee": 0.5888551000000001,
+        "exit_fee": 1.4214292508395001,
+        "gross_pnl": -201.79,
+        "net_pnl": -103.43,
+        "realized_r": -1.0343,
+        "gross_r": -1.0142,
+        "exit_price": 1800.7591700000003,
+        "exit_timestamp": 1682539200,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1682481600,
+        "stream": "ETH_SET_3",
+        "asset": "ETH/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1682470800",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 2141.54,
+        "mtf_realignment": "mtf_align_ETH/USDT_1682452800",
+        "mtf_keyzone": "OB_BULLISH_OB_1682424000_SW_HIGH_94",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 1865.0,
+        "sl": 1801.66,
+        "tp": 2141.54,
+        "planned_rr": 4.365961477739191,
+        "risk_amount": 98.96572717328159,
+        "entry_fee": 0.5827752,
+        "exit_fee": 1.4067530636040004,
+        "gross_pnl": -201.79,
+        "net_pnl": -102.36,
+        "realized_r": -1.0343,
+        "gross_r": -1.0142,
+        "exit_price": 1800.7591700000003,
+        "exit_timestamp": 1683738000,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      }
+    ]
+  },
+  {
+    "stream_id": "SOL_SET_3",
+    "identity": {
+      "asset": "SOL/USDT",
+      "timeframe_set": "SET_3",
+      "label": "SET_3 (1D -> 4H -> 1H, Swing)",
+      "htf": "1d",
+      "mtf": "4h",
+      "ltf": "1h",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2023-01-01 to 2024-01-01 (Certified Annual Benchmark)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 1235,
+      "mtf_candles": 7406,
+      "ltf_candles": 8760
+    },
+    "execution_time_sec": 59.01,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 8745,
+      "htf_qualified_contexts": 1453,
+      "mtf_structural_alignments": 372,
+      "mtf_causal_retests": 166,
+      "ltf_triggers": 156,
+      "risk_evaluations": 26,
+      "risk_approved_plans": 22,
+      "submitted_orders": 22,
+      "filled_trades": 21,
+      "closed_trades": 21
+    },
+    "rejection_attribution": {
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 74,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 50,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 24,
+      "REJECT_SETUP_LIFESPAN_EXPIRED": 2,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 10,
+      "REJECT_RR_BELOW_4R": 18,
+      "REJECT_MAX_LEVERAGE_VIOLATION": 4
+    },
+    "performance": {
+      "total_trades": 21,
+      "wins": 2,
+      "losses": 19,
+      "win_rate_pct": 9.52,
+      "gross_profit_usd": 1089.93,
+      "gross_loss_usd": 1961.5,
+      "net_pnl_usd": -871.57,
+      "profit_factor": 0.5557,
+      "gross_realized_r": -7.4682,
+      "total_friction_r": 0.7926,
+      "net_realized_r": -8.2608,
+      "expectancy_r": -0.3934,
+      "avg_r": -0.3934,
+      "median_r": -1.0539,
+      "max_drawdown_usd": 1042.5,
+      "max_drawdown_pct": 10.25,
+      "max_consecutive_losses": 10,
+      "avg_mfe_r": 1.448,
+      "median_mfe_r": 0.325,
+      "avg_mae_r": 1.6744,
+      "median_mae_r": 1.7143,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 21,
+        "net_r": -8.2609,
+        "net_pnl": -871.5599999999998
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 2,
+        "pct": 9.5,
+        "avg_gross_r": 6.0288,
+        "avg_net_r": 6.0017
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 19,
+        "pct": 90.5,
+        "avg_gross_r": -1.0277,
+        "avg_net_r": -1.0665
+      }
+    },
+    "trade_ledger": [
+      {
+        "candidate_timestamp": 1689854400,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1689843600",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 32.13,
+        "mtf_realignment": "mtf_align_SOL/USDT_1689782400",
+        "mtf_keyzone": "OB_BULLISH_OB_1689768000_SW_HIGH_92",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 26.96,
+        "sl": 26.31,
+        "tp": 32.13,
+        "planned_rr": 7.95384615384613,
+        "risk_amount": 99.991972730002,
+        "entry_fee": 0.8294718496,
+        "exit_fee": 2.0226717971805,
+        "gross_pnl": -795.36,
+        "net_pnl": -104.87,
+        "realized_r": -1.0488,
+        "gross_r": -1.0202,
+        "exit_price": 26.296845,
+        "exit_timestamp": 1689861600,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1689822000,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1689811200",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 32.13,
+        "mtf_realignment": "mtf_align_SOL/USDT_1689782400",
+        "mtf_keyzone": "OB_BULLISH_OB_1689768000_SW_HIGH_94",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 26.49,
+        "sl": 25.83,
+        "tp": 32.13,
+        "planned_rr": 8.54545454545455,
+        "risk_amount": 100.0,
+        "entry_fee": 0.8027269998000001,
+        "exit_fee": 1.9558391077417503,
+        "gross_pnl": -795.36,
+        "net_pnl": -104.72,
+        "realized_r": -1.0472,
+        "gross_r": -1.0196,
+        "exit_price": 25.817085,
+        "exit_timestamp": 1689865200,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1689854400,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1689843600",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 32.13,
+        "mtf_realignment": "mtf_align_SOL/USDT_1689782400",
+        "mtf_keyzone": "OB_BULLISH_OB_1689768000_SW_HIGH_92",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 26.96,
+        "sl": 26.31,
+        "tp": 32.13,
+        "planned_rr": 7.95384615384613,
+        "risk_amount": 98.9432947571442,
+        "entry_fee": 0.8207723968,
+        "exit_fee": 2.001458132319,
+        "gross_pnl": -795.36,
+        "net_pnl": -103.77,
+        "realized_r": -1.0488,
+        "gross_r": -1.0202,
+        "exit_price": 26.296845,
+        "exit_timestamp": 1689865200,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1689822000,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1689811200",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 32.13,
+        "mtf_realignment": "mtf_align_SOL/USDT_1689782400",
+        "mtf_keyzone": "OB_BULLISH_OB_1689768000_SW_HIGH_94",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 26.49,
+        "sl": 25.83,
+        "tp": 32.13,
+        "planned_rr": 8.54545454545455,
+        "risk_amount": 96.86648903199057,
+        "entry_fee": 0.7775736852,
+        "exit_fee": 1.8945532205145001,
+        "gross_pnl": -795.36,
+        "net_pnl": -101.43,
+        "realized_r": -1.0472,
+        "gross_r": -1.0196,
+        "exit_price": 25.817085,
+        "exit_timestamp": 1689868800,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1690383600,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1689987600",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 32.13,
+        "mtf_realignment": "mtf_align_SOL/USDT_1690358400",
+        "mtf_keyzone": "OB_BULLISH_OB_1690344000_SW_HIGH_94",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 24.91,
+        "sl": 23.13,
+        "tp": 32.13,
+        "planned_rr": 4.0561797752808975,
+        "risk_amount": 95.84946513113343,
+        "entry_fee": 0.26827073600000007,
+        "exit_fee": 0.62244074394,
+        "gross_pnl": -795.36,
+        "net_pnl": -97.36,
+        "realized_r": -1.0158,
+        "gross_r": -1.0065,
+        "exit_price": 23.118435,
+        "exit_timestamp": 1690855200,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1691996400,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1691985600",
+        "htf_bias": "PERMIT_SHORT",
+        "htf_destination": 22.23,
+        "mtf_realignment": "mtf_align_SOL/USDT_1691956800",
+        "mtf_keyzone": "OB_BEARISH_OB_1691942400_SW_LOW_85",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 24.41,
+        "sl": 24.69,
+        "tp": 22.23,
+        "planned_rr": 7.785714285714253,
+        "risk_amount": 94.86619038961402,
+        "entry_fee": 1.6540596796000002,
+        "exit_fee": 4.184673582145501,
+        "gross_pnl": -795.36,
+        "net_pnl": -104.89,
+        "realized_r": -1.1056,
+        "gross_r": -1.0441,
+        "exit_price": 24.702345,
+        "exit_timestamp": 1692021600,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1691982000,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1691888400",
+        "htf_bias": "PERMIT_SHORT",
+        "htf_destination": 22.23,
+        "mtf_realignment": "mtf_align_SOL/USDT_1691956800",
+        "mtf_keyzone": "OB_BEARISH_OB_1691942400_SW_LOW_86",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 24.4,
+        "sl": 24.88,
+        "tp": 22.23,
+        "planned_rr": 4.520833333333325,
+        "risk_amount": 94.87583609513402,
+        "entry_fee": 0.964570552,
+        "exit_fee": 2.460093708138,
+        "gross_pnl": -795.36,
+        "net_pnl": -100.76,
+        "realized_r": -1.062,
+        "gross_r": -1.0259,
+        "exit_price": 24.892439999999997,
+        "exit_timestamp": 1692025200,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1691996400,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1691985600",
+        "htf_bias": "PERMIT_SHORT",
+        "htf_destination": 22.23,
+        "mtf_realignment": "mtf_align_SOL/USDT_1691956800",
+        "mtf_keyzone": "OB_BEARISH_OB_1691942400_SW_LOW_85",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 24.41,
+        "sl": 24.69,
+        "tp": 22.23,
+        "planned_rr": 7.785714285714253,
+        "risk_amount": 93.81731539408656,
+        "entry_fee": 1.6357717076000002,
+        "exit_fee": 4.1384060899605,
+        "gross_pnl": -795.36,
+        "net_pnl": -103.73,
+        "realized_r": -1.1056,
+        "gross_r": -1.0441,
+        "exit_price": 24.702345,
+        "exit_timestamp": 1692025200,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1691982000,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1691888400",
+        "htf_bias": "PERMIT_SHORT",
+        "htf_destination": 22.23,
+        "mtf_realignment": "mtf_align_SOL/USDT_1691956800",
+        "mtf_keyzone": "OB_BEARISH_OB_1691942400_SW_LOW_86",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 24.4,
+        "sl": 24.88,
+        "tp": 22.23,
+        "planned_rr": 4.520833333333325,
+        "risk_amount": 91.78208969705956,
+        "entry_fee": 0.933117488,
+        "exit_fee": 2.379874086372,
+        "gross_pnl": -795.36,
+        "net_pnl": -97.47,
+        "realized_r": -1.062,
+        "gross_r": -1.0259,
+        "exit_price": 24.892439999999997,
+        "exit_timestamp": 1692028800,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1699452000,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1699441200",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 46.9,
+        "mtf_realignment": "mtf_align_SOL/USDT_1699372800",
+        "mtf_keyzone": "OB_BULLISH_OB_1699344000_SW_HIGH_75",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 42.78,
+        "sl": 42.25,
+        "tp": 46.9,
+        "planned_rr": 7.773584905660356,
+        "risk_amount": 90.80735245387585,
+        "entry_fee": 1.4659388376000002,
+        "exit_fee": 1.6071185479999999,
+        "gross_pnl": -795.36,
+        "net_pnl": 702.83,
+        "realized_r": 7.7397,
+        "gross_r": 7.7736,
+        "exit_price": 46.9,
+        "exit_timestamp": 1699524000,
+        "exit_reason": "HTF_TP",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1699484400,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1699470000",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 46.9,
+        "mtf_realignment": "mtf_align_SOL/USDT_1699372800",
+        "mtf_keyzone": "OB_BULLISH_OB_1699344000_SW_HIGH_73",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 43.13,
+        "sl": 42.25,
+        "tp": 46.9,
+        "planned_rr": 4.284090909090892,
+        "risk_amount": 90.79269306549985,
+        "entry_fee": 0.8899746110000001,
+        "exit_fee": 0.9677674300000001,
+        "gross_pnl": -795.36,
+        "net_pnl": 387.11,
+        "realized_r": 4.2636,
+        "gross_r": 4.2841,
+        "exit_price": 46.9,
+        "exit_timestamp": 1699524000,
+        "exit_reason": "HTF_TP",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1699452000,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1699441200",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 46.9,
+        "mtf_realignment": "mtf_align_SOL/USDT_1699372800",
+        "mtf_keyzone": "OB_BULLISH_OB_1699344000_SW_HIGH_75",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 42.78,
+        "sl": 42.25,
+        "tp": 46.9,
+        "planned_rr": 7.773584905660356,
+        "risk_amount": 101.70667092960983,
+        "entry_fee": 1.6418904108000003,
+        "exit_fee": 4.05184577614375,
+        "gross_pnl": -795.36,
+        "net_pnl": -111.45,
+        "realized_r": -1.0958,
+        "gross_r": -1.0399,
+        "exit_price": 42.228875,
+        "exit_timestamp": 1699545600,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1699484400,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1699470000",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 46.9,
+        "mtf_realignment": "mtf_align_SOL/USDT_1699372800",
+        "mtf_keyzone": "OB_BULLISH_OB_1699344000_SW_HIGH_73",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 43.13,
+        "sl": 42.25,
+        "tp": 46.9,
+        "planned_rr": 4.284090909090892,
+        "risk_amount": 101.70667092960983,
+        "entry_fee": 0.9969559882000002,
+        "exit_fee": 2.44031589416875,
+        "gross_pnl": -795.36,
+        "net_pnl": -107.59,
+        "realized_r": -1.0578,
+        "gross_r": -1.024,
+        "exit_price": 42.228875,
+        "exit_timestamp": 1699545600,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1700445600,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1700434800",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 68.2,
+        "mtf_realignment": "mtf_align_SOL/USDT_1700366400",
+        "mtf_keyzone": "FVG_BULLISH_1700366400_96",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 60.4,
+        "sl": 59.08,
+        "tp": 68.2,
+        "planned_rr": 5.909090909090911,
+        "risk_amount": 99.51627430516672,
+        "entry_fee": 0.910724488,
+        "exit_fee": 2.225939567453,
+        "gross_pnl": -795.36,
+        "net_pnl": -104.88,
+        "realized_r": -1.0539,
+        "gross_r": -1.0224,
+        "exit_price": 59.05046,
+        "exit_timestamp": 1700488800,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1700460000,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1700449200",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 68.2,
+        "mtf_realignment": "mtf_align_SOL/USDT_1700366400",
+        "mtf_keyzone": "FVG_BULLISH_1700366400_95",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 59.88,
+        "sl": 59.08,
+        "tp": 68.2,
+        "planned_rr": 10.399999999999945,
+        "risk_amount": 99.50716706028672,
+        "entry_fee": 1.4896215864000002,
+        "exit_fee": 3.6724632557970005,
+        "gross_pnl": -795.36,
+        "net_pnl": -108.34,
+        "realized_r": -1.0888,
+        "gross_r": -1.0369,
+        "exit_price": 59.05046,
+        "exit_timestamp": 1700488800,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1700445600,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1700434800",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 68.2,
+        "mtf_realignment": "mtf_align_SOL/USDT_1700366400",
+        "mtf_keyzone": "FVG_BULLISH_1700366400_96",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 60.4,
+        "sl": 59.08,
+        "tp": 68.2,
+        "planned_rr": 5.909090909090911,
+        "risk_amount": 97.38403956119022,
+        "entry_fee": 0.891210456,
+        "exit_fee": 2.178244510911,
+        "gross_pnl": -795.36,
+        "net_pnl": -102.63,
+        "realized_r": -1.0539,
+        "gross_r": -1.0224,
+        "exit_price": 59.05046,
+        "exit_timestamp": 1700492400,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1700460000,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1700449200",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 68.2,
+        "mtf_realignment": "mtf_align_SOL/USDT_1700366400",
+        "mtf_keyzone": "FVG_BULLISH_1700366400_95",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 59.88,
+        "sl": 59.08,
+        "tp": 68.2,
+        "planned_rr": 10.399999999999945,
+        "risk_amount": 97.38403956119022,
+        "entry_fee": 1.4578384800000002,
+        "exit_fee": 3.5941062479,
+        "gross_pnl": -795.36,
+        "net_pnl": -106.03,
+        "realized_r": -1.0888,
+        "gross_r": -1.0369,
+        "exit_price": 59.05046,
+        "exit_timestamp": 1700492400,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1700906400,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1700528400",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 68.2,
+        "mtf_realignment": "mtf_align_SOL/USDT_1700870400",
+        "mtf_keyzone": "FVG_BULLISH_1700870400_99",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 57.93,
+        "sl": 55.7,
+        "tp": 68.2,
+        "planned_rr": 4.60538116591929,
+        "risk_amount": 95.2973939404621,
+        "entry_fee": 0.4951184412000001,
+        "exit_fee": 1.1895523962650003,
+        "gross_pnl": -795.36,
+        "net_pnl": -98.17,
+        "realized_r": -1.0302,
+        "gross_r": -1.0125,
+        "exit_price": 55.67215000000001,
+        "exit_timestamp": 1701068400,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1700906400,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1700528400",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 68.2,
+        "mtf_realignment": "mtf_align_SOL/USDT_1700870400",
+        "mtf_keyzone": "FVG_BULLISH_1700870400_99",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 57.93,
+        "sl": 55.7,
+        "tp": 68.2,
+        "planned_rr": 4.60538116591929,
+        "risk_amount": 94.31567309738745,
+        "entry_fee": 0.4900182840000001,
+        "exit_fee": 1.1772989560500002,
+        "gross_pnl": -795.36,
+        "net_pnl": -97.16,
+        "realized_r": -1.0302,
+        "gross_r": -1.0125,
+        "exit_price": 55.67215000000001,
+        "exit_timestamp": 1701072000,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1702983600,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1702972800",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 79.5,
+        "mtf_realignment": "mtf_align_SOL/USDT_1702944000",
+        "mtf_keyzone": "OB_BULLISH_OB_1702872000_SW_HIGH_90",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 74.63,
+        "sl": 73.83,
+        "tp": 79.5,
+        "planned_rr": 6.087500000000027,
+        "risk_amount": 93.34406484598696,
+        "entry_fee": 1.7415656800000001,
+        "exit_fee": 4.3050885789,
+        "gross_pnl": -795.36,
+        "net_pnl": -103.7,
+        "realized_r": -1.1109,
+        "gross_r": -1.0461,
+        "exit_price": 73.793085,
+        "exit_timestamp": 1702994400,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      },
+      {
+        "candidate_timestamp": 1702983600,
+        "stream": "SOL_SET_3",
+        "asset": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1702972800",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 79.5,
+        "mtf_realignment": "mtf_align_SOL/USDT_1702944000",
+        "mtf_keyzone": "OB_BULLISH_OB_1702872000_SW_HIGH_90",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 74.63,
+        "sl": 73.83,
+        "tp": 79.5,
+        "planned_rr": 6.087500000000027,
+        "risk_amount": 92.30708588139797,
+        "entry_fee": 1.7222185988000003,
+        "exit_fee": 4.257263280511501,
+        "gross_pnl": -795.36,
+        "net_pnl": -102.55,
+        "realized_r": -1.1109,
+        "gross_r": -1.0461,
+        "exit_price": 73.793085,
+        "exit_timestamp": 1702998000,
+        "exit_reason": "INITIAL_LTF_SL",
+        "trailing_events": [],
+        "rejection_reason": null
+      }
+    ]
+  },
+  {
+    "stream_id": "BTC_SET_4",
+    "identity": {
+      "asset": "BTC/USDT",
+      "timeframe_set": "SET_4",
+      "label": "SET_4 (4H -> 1H -> 15M, Intraday)",
+      "htf": "4h",
+      "mtf": "1h",
+      "ltf": "15m",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2023-01-01 to 2024-01-01 (Certified Annual Benchmark)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 13952,
+      "mtf_candles": 55741,
+      "ltf_candles": 35036
+    },
+    "execution_time_sec": 262.4,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 35021,
+      "htf_qualified_contexts": 4593,
+      "mtf_structural_alignments": 1032,
+      "mtf_causal_retests": 729,
+      "ltf_triggers": 317,
+      "risk_evaluations": 26,
+      "risk_approved_plans": 1,
+      "submitted_orders": 1,
+      "filled_trades": 1,
+      "closed_trades": 1
+    },
+    "rejection_attribution": {
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 66,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 140,
+      "REJECT_RR_BELOW_4R": 36,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 43,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 122,
+      "REJECT_MIN_STOP_DISTANCE_VIOLATION": 6,
+      "REJECT_MAX_LEVERAGE_VIOLATION": 17,
+      "REJECT_NEGATIVE_STOP_DISTANCE": 2
+    },
+    "performance": {
+      "total_trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "win_rate_pct": 100.0,
+      "gross_profit_usd": 407.64,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 407.64,
+      "profit_factor": 407.6431,
+      "gross_realized_r": 4.1007,
+      "total_friction_r": 0.0242,
+      "net_realized_r": 4.0764,
+      "expectancy_r": 4.0764,
+      "avg_r": 4.0764,
+      "median_r": 4.0764,
+      "max_drawdown_usd": 1.14,
+      "max_drawdown_pct": 0.01,
+      "max_consecutive_losses": 0,
+      "avg_mfe_r": 4.329,
+      "median_mfe_r": 4.329,
+      "avg_mae_r": 0.555,
+      "median_mae_r": 0.555,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 1,
+        "net_r": 4.0764,
+        "net_pnl": 407.64
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 1,
+        "pct": 100.0,
+        "avg_gross_r": 4.1007,
+        "avg_net_r": 4.0764
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": [
+      {
+        "candidate_timestamp": 1678952700,
+        "stream": "BTC_SET_4",
+        "asset": "BTC/USDT",
+        "timeframe_set": "SET_4",
+        "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1678911300",
+        "htf_bias": "PERMIT_LONG",
+        "htf_destination": 26386.87,
+        "mtf_realignment": "mtf_align_BTC/USDT_1678946400",
+        "mtf_keyzone": "FVG_BULLISH_1678942800_99",
+        "retest": "CONFIRMED",
+        "ltf_trigger": "SWEEP_AND_DISPLACEMENT",
+        "entry": 24614.27,
+        "sl": 24182.0,
+        "tp": 26386.87,
+        "planned_rr": 4.100677817105042,
+        "risk_amount": 100.0,
+        "entry_fee": 1.1386561302,
+        "exit_fee": 1.2206566062,
+        "gross_pnl": 410.0,
+        "net_pnl": 407.64,
+        "realized_r": 4.0764,
+        "gross_r": 4.1007,
+        "exit_price": 26386.87,
+        "exit_timestamp": 1679047200,
+        "exit_reason": "HTF_TP",
+        "trailing_events": [
+          {
+            "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1678911300",
+            "timestamp": 1678971600,
+            "old_stop": 24182.0,
+            "new_stop": 24374.35
+          },
+          {
+            "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1678911300",
+            "timestamp": 1679004000,
+            "old_stop": 24374.35,
+            "new_stop": 24515.23
+          }
+        ],
+        "rejection_reason": null
+      }
+    ]
+  },
+  {
+    "stream_id": "ETH_SET_4",
+    "identity": {
+      "asset": "ETH/USDT",
+      "timeframe_set": "SET_4",
+      "label": "SET_4 (4H -> 1H -> 15M, Intraday)",
+      "htf": "4h",
+      "mtf": "1h",
+      "ltf": "15m",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2023-01-01 to 2024-01-01 (Certified Annual Benchmark)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 13952,
+      "mtf_candles": 55741,
+      "ltf_candles": 35036
+    },
+    "execution_time_sec": 260.58,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 35021,
+      "htf_qualified_contexts": 4522,
+      "mtf_structural_alignments": 1255,
+      "mtf_causal_retests": 768,
+      "ltf_triggers": 357,
+      "risk_evaluations": 28,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_MAX_LEVERAGE_VIOLATION": 21,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 160,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 83,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 72,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 123,
+      "REJECT_RR_BELOW_4R": 53,
+      "REJECT_MIN_STOP_DISTANCE_VIOLATION": 6,
+      "REJECT_NEGATIVE_STOP_DISTANCE": 1
+    },
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "avg_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "max_consecutive_losses": 0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "SOL_SET_4",
+    "identity": {
+      "asset": "SOL/USDT",
+      "timeframe_set": "SET_4",
+      "label": "SET_4 (4H -> 1H -> 15M, Intraday)",
+      "htf": "4h",
+      "mtf": "1h",
+      "ltf": "15m",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2023-01-01 to 2024-01-01 (Certified Annual Benchmark)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 7406,
+      "mtf_candles": 29604,
+      "ltf_candles": 35036
+    },
+    "execution_time_sec": 214.94,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 35021,
+      "htf_qualified_contexts": 5461,
+      "mtf_structural_alignments": 1149,
+      "mtf_causal_retests": 555,
+      "ltf_triggers": 405,
+      "risk_evaluations": 14,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 135,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 61,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 213,
+      "REJECT_RR_BELOW_4R": 46,
+      "REJECT_MAX_LEVERAGE_VIOLATION": 13,
+      "REJECT_NEGATIVE_STOP_DISTANCE": 1,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 33,
+      "REJECT_SETUP_LIFESPAN_EXPIRED": 1
+    },
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "avg_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "max_consecutive_losses": 0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "BTC_SET_5",
+    "identity": {
+      "asset": "BTC/USDT",
+      "timeframe_set": "SET_5",
+      "label": "SET_5 (15M -> 5M -> 1M, Intraday Scalping)",
+      "htf": "15m",
+      "mtf": "5m",
+      "ltf": "1m",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2026-07-30 to 2026-09-03 (Certified Max 1m/5m Window)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 316482,
+      "mtf_candles": 50000,
+      "ltf_candles": 50000
+    },
+    "execution_time_sec": 307.45,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 49985,
+      "htf_qualified_contexts": 8100,
+      "mtf_structural_alignments": 487,
+      "mtf_causal_retests": 6784,
+      "ltf_triggers": 146,
+      "risk_evaluations": 4,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 64,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 55,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 163,
+      "REJECT_RR_BELOW_4R": 14,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 64,
+      "REJECT_SETUP_LIFESPAN_EXPIRED": 2,
+      "REJECT_MAX_LEVERAGE_VIOLATION": 2,
+      "REJECT_MIN_STOP_DISTANCE_VIOLATION": 2
+    },
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "avg_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "max_consecutive_losses": 0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "ETH_SET_5",
+    "identity": {
+      "asset": "ETH/USDT",
+      "timeframe_set": "SET_5",
+      "label": "SET_5 (15M -> 5M -> 1M, Intraday Scalping)",
+      "htf": "15m",
+      "mtf": "5m",
+      "ltf": "1m",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2026-07-30 to 2026-09-03 (Certified Max 1m/5m Window)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 316482,
+      "mtf_candles": 50000,
+      "ltf_candles": 50000
+    },
+    "execution_time_sec": 327.82,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 49985,
+      "htf_qualified_contexts": 8927,
+      "mtf_structural_alignments": 730,
+      "mtf_causal_retests": 5779,
+      "ltf_triggers": 181,
+      "risk_evaluations": 2,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 181,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 81,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 68,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 76,
+      "REJECT_RR_BELOW_4R": 19,
+      "REJECT_MAX_LEVERAGE_VIOLATION": 1,
+      "REJECT_MIN_STOP_DISTANCE_VIOLATION": 1
+    },
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "avg_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "max_consecutive_losses": 0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  },
+  {
+    "stream_id": "SOL_SET_5",
+    "identity": {
+      "asset": "SOL/USDT",
+      "timeframe_set": "SET_5",
+      "label": "SET_5 (15M -> 5M -> 1M, Intraday Scalping)",
+      "htf": "15m",
+      "mtf": "5m",
+      "ltf": "1m",
+      "strategy_id": "UNIFIED_CANONICAL_BASELINE",
+      "period": "2026-07-30 to 2026-09-03 (Certified Max 1m/5m Window)"
+    },
+    "data": {
+      "data_status": "CERTIFIED",
+      "htf_candles": 211973,
+      "mtf_candles": 50000,
+      "ltf_candles": 50000
+    },
+    "execution_time_sec": 255.25,
+    "lifecycle_funnel": {
+      "total_ltf_bars": 49985,
+      "htf_qualified_contexts": 8558,
+      "mtf_structural_alignments": 886,
+      "mtf_causal_retests": 5573,
+      "ltf_triggers": 273,
+      "risk_evaluations": 20,
+      "risk_approved_plans": 0,
+      "submitted_orders": 0,
+      "filled_trades": 0,
+      "closed_trades": 0
+    },
+    "rejection_attribution": {
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 154,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 113,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 56,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 117,
+      "REJECT_RR_BELOW_4R": 27,
+      "REJECT_MIN_STOP_DISTANCE_VIOLATION": 14,
+      "REJECT_SETUP_LIFESPAN_EXPIRED": 1,
+      "REJECT_MAX_LEVERAGE_VIOLATION": 6
+    },
+    "performance": {
+      "total_trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "win_rate_pct": 0.0,
+      "gross_profit_usd": 0,
+      "gross_loss_usd": 0,
+      "net_pnl_usd": 0,
+      "profit_factor": 0.0,
+      "gross_realized_r": 0.0,
+      "total_friction_r": 0.0,
+      "net_realized_r": 0.0,
+      "expectancy_r": 0.0,
+      "avg_r": 0.0,
+      "median_r": 0.0,
+      "max_drawdown_usd": 0.0,
+      "max_drawdown_pct": 0.0,
+      "max_consecutive_losses": 0,
+      "avg_mfe_r": 0.0,
+      "median_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "median_mae_r": 0.0,
+      "capital_barrier_verdict": "REJECTED_CAPITAL_BARRIER"
+    },
+    "context_attribution": {
+      "PULLBACK": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      },
+      "CONTINUATION": {
+        "trades": 0,
+        "net_r": 0.0,
+        "net_pnl": 0.0
+      }
+    },
+    "exit_attribution": {
+      "HTF_TP": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "PROFIT_LOCK_TRAIL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      },
+      "INITIAL_LTF_SL": {
+        "count": 0,
+        "pct": 0.0,
+        "avg_gross_r": 0.0,
+        "avg_net_r": 0.0
+      }
+    },
+    "trade_ledger": []
+  }
+]

@@ -15,9 +15,21 @@ from strategy_engine.entry.ltf_entry_model import LTFEntryModel
 
 
 class UnifiedStrategy(BaseHypothesis):
+    def __init__(
+        self,
+        hypothesis_id: str = "UNIFIED_STRATEGY",
+        version: str = "v2.0-UNIFIED-CANONICAL-LOCKED",
+        enable_kz_freshness: bool = False,
+        max_htf_kz_age_seconds: Optional[int] = None
+    ):
+        self._hypothesis_id = hypothesis_id
+        self._version = version
+        self.enable_kz_freshness = enable_kz_freshness
+        self.max_htf_kz_age_seconds = max_htf_kz_age_seconds
+
     @property
     def hypothesis_id(self) -> str:
-        return "UNIFIED_STRATEGY"
+        return self._hypothesis_id
 
     def evaluate(
         self,
@@ -48,6 +60,27 @@ class UnifiedStrategy(BaseHypothesis):
                 ltf_payload.timestamp, "REJECT_SETUP_LIFESPAN_EXPIRED",
                 structural_provenance=candidate.to_provenance_dict(), source_timeframes=timeframes
             )
+
+        # Causal KeyZone Freshness Gate (H_KZ_FRESH_01)
+        if self.enable_kz_freshness and self.max_htf_kz_age_seconds is not None:
+            kz_create_ts = candidate.htf_kz_creation_timestamp
+            if (kz_create_ts is None or kz_create_ts == 0) and candidate.htf_keyzone_id:
+                for part in candidate.htf_keyzone_id.split('_'):
+                    if part.isdigit() and len(part) >= 9:
+                        kz_create_ts = int(part)
+                        break
+            interact_ts = candidate.htf_interaction_timestamp or ltf_payload.timestamp
+            if kz_create_ts and interact_ts:
+                zone_age = interact_ts - kz_create_ts
+                if zone_age > self.max_htf_kz_age_seconds:
+                    candidate.transition_to(CandidateState.REJECTED)
+                    candidate.invalidation_reason = "REJECT_KEYZONE_STALE_AGE"
+                    candidate.invalidation_timestamp = ltf_payload.timestamp
+                    return TelemetryHelper.reject(
+                        candidate.candidate_id, self.hypothesis_id, candidate.symbol, candidate.directional_permission,
+                        ltf_payload.timestamp, "REJECT_KEYZONE_STALE_AGE",
+                        structural_provenance=candidate.to_provenance_dict(), source_timeframes=timeframes
+                    )
 
         # =========================================================================
         # 0. STRUCTURAL INVALIDATION ENGINE
@@ -153,7 +186,7 @@ class UnifiedStrategy(BaseHypothesis):
             return None # Still pending
             
         # =========================================================================
-        # 2. WAIT_MTF_RETEST
+        # 2. WAIT_MTF_RETEST (Phase 5: Active Pullback Retest)
         # =========================================================================
         if candidate.state == CandidateState.WAIT_MTF_RETEST:
             # Filter MTF KeyZones to only those causally created at or after the MTF alignment event
@@ -167,66 +200,95 @@ class UnifiedStrategy(BaseHypothesis):
                 
                 # Strict causality check: KeyZone MUST be created at or after MTF alignment timestamp
                 creation_ts = getattr(kz, 'creation_timestamp', None)
-                
                 if candidate.mtf_alignment_timestamp and creation_ts is not None and creation_ts > 0:
                     if creation_ts < candidate.mtf_alignment_timestamp:
                         continue  # Zombie historical keyzone rejected
                 
                 causal_zones.append(kz)
                 
-            # Check if any causal MTF KeyZone is mitigated or retested
+            # Phase 5 Active Retest: Price must actively return into the causal MTF keyzone.
+            # Never use is_mitigated == True as a substitute for active price retest.
             for kz in causal_zones:
-                is_mitigated = "MITIGATED" in str(getattr(kz, 'status', ''))
+                status_str = str(getattr(kz, 'status', ''))
+                if "INVALIDATED" in status_str:
+                    continue
+
+                high_bound = getattr(kz, 'high_boundary', None) or getattr(kz, 'high', None)
+                low_bound = getattr(kz, 'low_boundary', None) or getattr(kz, 'low', None)
+                if high_bound is None or low_bound is None:
+                    continue
+                if low_bound > high_bound:
+                    low_bound, high_bound = high_bound, low_bound
+
                 price_in_zone = False
-                high_bound = getattr(kz, 'high_boundary', getattr(kz, 'high', None))
-                low_bound = getattr(kz, 'low_boundary', getattr(kz, 'low', None))
-                if high_bound is not None and low_bound is not None:
-                    if mtf_payload.current_candle:
-                        price_in_zone = (mtf_payload.current_candle.low <= high_bound and mtf_payload.current_candle.high >= low_bound)
-                    else:
-                        price_in_zone = (low_bound <= mtf_payload.current_price <= high_bound)
+                if ltf_payload.current_candle:
+                    price_in_zone = (ltf_payload.current_candle.low <= high_bound and ltf_payload.current_candle.high >= low_bound)
+                elif mtf_payload.current_candle:
+                    price_in_zone = (mtf_payload.current_candle.low <= high_bound and mtf_payload.current_candle.high >= low_bound)
+                else:
+                    price_in_zone = (low_bound <= mtf_payload.current_price <= high_bound)
                 
-                if is_mitigated or price_in_zone:
+                if price_in_zone:
                     candidate.mtf_keyzone_id = getattr(kz, 'zone_id', '')
                     candidate.mtf_kz_creation_timestamp = getattr(kz, 'creation_timestamp', candidate.mtf_alignment_timestamp)
-                    candidate.mtf_retest_timestamp = mtf_payload.timestamp
+                    candidate.mtf_retest_timestamp = ltf_payload.timestamp
                     candidate.transition_to(CandidateState.WAIT_LTF_TRIGGER)
                     break
             return None # Still pending
             
         # =========================================================================
-        # 3. WAIT_LTF_TRIGGER
+        # 3. WAIT_LTF_TRIGGER (Phase 6: Modular LTF Directional Entry)
         # =========================================================================
         if candidate.state == CandidateState.WAIT_LTF_TRIGGER:
-            if LTFEntryModel.evaluate(ltf_payload, req_setup_dir):
+            entry_eval = LTFEntryModel.evaluate_details(
+                ltf_payload,
+                req_setup_dir,
+                setup_retest_timestamp=candidate.mtf_retest_timestamp or candidate.creation_timestamp
+            )
+            if entry_eval.is_confirmed:
                 candidate.ltf_confirmation_timestamp = ltf_payload.timestamp
-                candidate.ltf_entry_reason = "LTF_SWEEP_AND_DISPLACEMENT_CONFIRMED"
+                candidate.ltf_entry_reason = entry_eval.reversal_reason
+                candidate.ltf_entry_price = entry_eval.entry_price or ltf_payload.current_price
+                candidate.ltf_structural_sl = entry_eval.micro_invalidation_price
                 candidate.transition_to(CandidateState.RISK_GATE)
             return None # Still pending
             
         # =========================================================================
-        # 4. RISK_GATE
+        # 4. RISK_GATE (Phase 7: Immediate LTF Invalidation SL & Forward Target)
         # =========================================================================
         if candidate.state == CandidateState.RISK_GATE:
-            entry_price = ltf_payload.current_price
+            entry_price = candidate.ltf_entry_price or ltf_payload.current_price
             candidate.ltf_entry_price = entry_price
             
-            # Initial SL: LTF structural invalidation point associated with entry setup
-            # LONG: SL = LTF protected_low
-            # SHORT: SL = LTF protected_high
-            stop_price = None
-            try:
-                if is_long:
-                    stop_price = ltf_payload.structure_state.protected_low.raw_swing.price if ltf_payload.structure_state.protected_low else None
-                else:
-                    stop_price = ltf_payload.structure_state.protected_high.raw_swing.price if ltf_payload.structure_state.protected_high else None
-            except AttributeError:
-                pass
+            # Initial SL: Immediate LTF micro structural invalidation point from entry model
+            stop_price = candidate.ltf_structural_sl
+            if stop_price is None:
+                try:
+                    if is_long:
+                        stop_price = ltf_payload.structure_state.protected_low.raw_swing.price if ltf_payload.structure_state.protected_low else None
+                    else:
+                        stop_price = ltf_payload.structure_state.protected_high.raw_swing.price if ltf_payload.structure_state.protected_high else None
+                except AttributeError:
+                    pass
 
             candidate.ltf_structural_sl = stop_price
 
-            # Target: Derived from HTF Context Engine
+            # Target: Forward Structural Destination from HTF Destination Engine
             target_price = candidate.htf_target_price
+            # Verify forward target validity relative to actual entry price
+            target_valid = False
+            if target_price is not None:
+                if is_long and target_price > entry_price:
+                    target_valid = True
+                elif (not is_long) and target_price < entry_price:
+                    target_valid = True
+
+            if not target_valid:
+                from strategy_engine.context.htf_destination_engine import HTFDestinationEngine
+                dest = HTFDestinationEngine.evaluate(htf_payload, reference_price=entry_price, is_long=is_long)
+                if dest.is_valid:
+                    target_price = dest.target_price
+                    candidate.htf_target_price = target_price
 
             if stop_price is None or target_price is None:
                 candidate.transition_to(CandidateState.REJECTED)
@@ -259,8 +321,19 @@ class UnifiedStrategy(BaseHypothesis):
                         structural_provenance=candidate.to_provenance_dict(), source_timeframes=timeframes
                     )
 
+            # Minimum stop distance check (0.1% minimum separation to avoid division-by-zero or micro stops)
+            stop_distance = abs(entry_price - stop_price)
+            if stop_distance < entry_price * 0.0005:
+                candidate.transition_to(CandidateState.REJECTED)
+                candidate.invalidation_reason = "REJECT_MIN_STOP_DISTANCE_VIOLATION"
+                return TelemetryHelper.reject(
+                    candidate.candidate_id, self.hypothesis_id, candidate.symbol, candidate.directional_permission, ltf_payload.timestamp,
+                    "REJECT_MIN_STOP_DISTANCE_VIOLATION", entry_price=entry_price, stop_invalidation_price=stop_price, target_price=target_price, raw_rr=0.0,
+                    structural_provenance=candidate.to_provenance_dict(), source_timeframes=timeframes
+                )
+
             # Planned RR calculated ONLY after geometry passes
-            raw_rr = abs(target_price - entry_price) / abs(entry_price - stop_price)
+            raw_rr = abs(target_price - entry_price) / stop_distance
                 
             if raw_rr < 4.0:
                 candidate.transition_to(CandidateState.REJECTED)

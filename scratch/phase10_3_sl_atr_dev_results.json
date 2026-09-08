@@ -1,0 +1,1110 @@
+{
+  "metadata": {
+    "title": "PHASE 10.3: H_SL_ATR_01 Stop Distance Floor Sweep Evaluation",
+    "hypothesis_id": "H_SL_ATR_01",
+    "temporal_partition": "DEVELOPMENT (2021-01-01 to 2022-12-31)",
+    "benchmark_control": "PHASE 10.2 RESEARCH CONTROL (H_KZ_FRESH_01 = 7d)",
+    "evaluated_thresholds": [
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "timestamp": "2026-09-07T16:07:13.025858+00:00",
+    "verdict": "UNSUPPORTED"
+  },
+  "configurations": {
+    "CONTROL_7D": {
+      "threshold": null,
+      "total_trades": 39,
+      "unique_economic_setups": 20,
+      "duplicate_trades": 19,
+      "winners": 4,
+      "losers": 35,
+      "win_rate_pct": 10.26,
+      "gross_realized_r": -12.8176,
+      "net_realized_r": -16.2248,
+      "net_r_delta": 0.0,
+      "profit_factor": 0.58,
+      "profit_factor_delta": 0.0,
+      "max_drawdown_r": 25.26,
+      "drawdown_delta": 0.0,
+      "expectancy_r": -0.416,
+      "winner_preservation_pct": 100.0,
+      "losses_removed": 0,
+      "winners_removed": 0,
+      "rejection_counts": {
+        "REJECT_SL_BELOW_ATR_FLOOR": 0
+      },
+      "pruned_trades": []
+    },
+    "0.50_ATR": {
+      "threshold": 0.5,
+      "total_trades": 34,
+      "unique_economic_setups": 18,
+      "duplicate_trades": 16,
+      "winners": 4,
+      "losers": 30,
+      "win_rate_pct": 11.76,
+      "gross_realized_r": -7.8181,
+      "net_realized_r": -10.6608,
+      "net_r_delta": 5.564,
+      "profit_factor": 0.67,
+      "profit_factor_delta": 0.09,
+      "max_drawdown_r": 18.37,
+      "drawdown_delta": -6.89,
+      "expectancy_r": -0.3136,
+      "winner_preservation_pct": 100.0,
+      "losses_removed": 5,
+      "winners_removed": 0,
+      "rejection_counts": {
+        "REJECT_SL_BELOW_ATR_FLOOR": 5
+      },
+      "pruned_trades": [
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614517200",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.48,
+          "realized_r": -1.1164,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633503600",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.44,
+          "realized_r": -1.1127,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633503600",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.48,
+          "realized_r": -1.1127,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652626800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.41,
+          "realized_r": -1.1111,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652626800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.4,
+          "realized_r": -1.1111,
+          "exit_reason": "INITIAL_LTF_SL"
+        }
+      ]
+    },
+    "0.60_ATR": {
+      "threshold": 0.6,
+      "total_trades": 33,
+      "unique_economic_setups": 17,
+      "duplicate_trades": 16,
+      "winners": 4,
+      "losers": 29,
+      "win_rate_pct": 12.12,
+      "gross_realized_r": -6.8186,
+      "net_realized_r": -9.5444,
+      "net_r_delta": 6.6804,
+      "profit_factor": 0.7,
+      "profit_factor_delta": 0.12,
+      "max_drawdown_r": 17.25,
+      "drawdown_delta": -8.01,
+      "expectancy_r": -0.2892,
+      "winner_preservation_pct": 100.0,
+      "losses_removed": 6,
+      "winners_removed": 0,
+      "rejection_counts": {
+        "REJECT_SL_BELOW_ATR_FLOOR": 6
+      },
+      "pruned_trades": [
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614517200",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.48,
+          "realized_r": -1.1164,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614517200",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.55,
+          "realized_r": -1.1164,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633503600",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.44,
+          "realized_r": -1.1127,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633503600",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.48,
+          "realized_r": -1.1127,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652626800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.41,
+          "realized_r": -1.1111,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652626800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.4,
+          "realized_r": -1.1111,
+          "exit_reason": "INITIAL_LTF_SL"
+        }
+      ]
+    },
+    "0.70_ATR": {
+      "threshold": 0.7,
+      "total_trades": 27,
+      "unique_economic_setups": 15,
+      "duplicate_trades": 12,
+      "winners": 4,
+      "losers": 23,
+      "win_rate_pct": 14.81,
+      "gross_realized_r": -0.8206,
+      "net_realized_r": -2.9634,
+      "net_r_delta": 13.2614,
+      "profit_factor": 0.88,
+      "profit_factor_delta": 0.3,
+      "max_drawdown_r": 13.96,
+      "drawdown_delta": -11.3,
+      "expectancy_r": -0.1098,
+      "winner_preservation_pct": 100.0,
+      "losses_removed": 12,
+      "winners_removed": 0,
+      "rejection_counts": {
+        "REJECT_SL_BELOW_ATR_FLOOR": 12
+      },
+      "pruned_trades": [
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614517200",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.48,
+          "realized_r": -1.1164,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614517200",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.55,
+          "realized_r": -1.1164,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633503600",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.44,
+          "realized_r": -1.1127,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633503600",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.48,
+          "realized_r": -1.1127,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1648792800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.62,
+          "realized_r": -1.0832,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652626800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.41,
+          "realized_r": -1.1111,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652626800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.4,
+          "realized_r": -1.1111,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1615737600",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.6,
+          "realized_r": -1.1043,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1615737600",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.64,
+          "realized_r": -1.1043,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614373200",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.62,
+          "realized_r": -1.0846,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614373200",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.62,
+          "realized_r": -1.0846,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1632278700",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.69,
+          "realized_r": -1.12,
+          "exit_reason": "INITIAL_LTF_SL"
+        }
+      ]
+    },
+    "0.80_ATR": {
+      "threshold": 0.8,
+      "total_trades": 22,
+      "unique_economic_setups": 12,
+      "duplicate_trades": 10,
+      "winners": 4,
+      "losers": 18,
+      "win_rate_pct": 18.18,
+      "gross_realized_r": 4.1819,
+      "net_realized_r": 2.478,
+      "net_r_delta": 18.7028,
+      "profit_factor": 1.13,
+      "profit_factor_delta": 0.55,
+      "max_drawdown_r": 10.75,
+      "drawdown_delta": -14.51,
+      "expectancy_r": 0.1126,
+      "winner_preservation_pct": 100.0,
+      "losses_removed": 17,
+      "winners_removed": 0,
+      "rejection_counts": {
+        "REJECT_SL_BELOW_ATR_FLOOR": 17
+      },
+      "pruned_trades": [
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614517200",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.48,
+          "realized_r": -1.1164,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614517200",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.55,
+          "realized_r": -1.1164,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633503600",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.44,
+          "realized_r": -1.1127,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633503600",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.48,
+          "realized_r": -1.1127,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1648792800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.62,
+          "realized_r": -1.0832,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652626800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.41,
+          "realized_r": -1.1111,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652626800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.4,
+          "realized_r": -1.1111,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652720400",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.74,
+          "realized_r": -1.053,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652720400",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.73,
+          "realized_r": -1.053,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1615737600",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.6,
+          "realized_r": -1.1043,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1615737600",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.64,
+          "realized_r": -1.1043,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1632373200",
+          "asset": "BTC",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.78,
+          "realized_r": -1.1072,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614373200",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.62,
+          "realized_r": -1.0846,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614373200",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.62,
+          "realized_r": -1.0846,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1632278700",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.69,
+          "realized_r": -1.12,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1632278700",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.71,
+          "realized_r": -1.12,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1621679400",
+          "asset": "BTC",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.76,
+          "realized_r": -1.1082,
+          "exit_reason": "INITIAL_LTF_SL"
+        }
+      ]
+    },
+    "0.90_ATR": {
+      "threshold": 0.9,
+      "total_trades": 15,
+      "unique_economic_setups": 9,
+      "duplicate_trades": 6,
+      "winners": 3,
+      "losers": 12,
+      "win_rate_pct": 20.0,
+      "gross_realized_r": 4.4518,
+      "net_realized_r": 3.2692,
+      "net_r_delta": 19.494,
+      "profit_factor": 1.25,
+      "profit_factor_delta": 0.67,
+      "max_drawdown_r": 5.48,
+      "drawdown_delta": -19.78,
+      "expectancy_r": 0.2179,
+      "winner_preservation_pct": 75.0,
+      "losses_removed": 23,
+      "winners_removed": 1,
+      "rejection_counts": {
+        "REJECT_SL_BELOW_ATR_FLOOR": 24
+      },
+      "pruned_trades": [
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614517200",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.48,
+          "realized_r": -1.1164,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614517200",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.55,
+          "realized_r": -1.1164,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633503600",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.44,
+          "realized_r": -1.1127,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633503600",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.48,
+          "realized_r": -1.1127,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1648792800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.62,
+          "realized_r": -1.0832,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652626800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.41,
+          "realized_r": -1.1111,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652626800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.4,
+          "realized_r": -1.1111,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652720400",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.74,
+          "realized_r": -1.053,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652720400",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.73,
+          "realized_r": -1.053,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1615737600",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.6,
+          "realized_r": -1.1043,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1615737600",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.64,
+          "realized_r": -1.1043,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1618552800",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.83,
+          "realized_r": -1.0657,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1618552800",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.87,
+          "realized_r": -1.0657,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1632366000",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.85,
+          "realized_r": -1.065,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1632366000",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.85,
+          "realized_r": -1.065,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1632373200",
+          "asset": "BTC",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.78,
+          "realized_r": -1.1072,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1632373200",
+          "asset": "BTC",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.85,
+          "realized_r": -1.1071,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1638824400",
+          "asset": "BTC",
+          "timeframe_set": "SET_3",
+          "is_winner": true,
+          "sl_atr_mult": 0.85,
+          "realized_r": 5.6957,
+          "exit_reason": "HTF_TP"
+        },
+        {
+          "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1639026000",
+          "asset": "BTC",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.81,
+          "realized_r": -1.1184,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614373200",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.62,
+          "realized_r": -1.0846,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614373200",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.62,
+          "realized_r": -1.0846,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1632278700",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.69,
+          "realized_r": -1.12,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1632278700",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.71,
+          "realized_r": -1.12,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1621679400",
+          "asset": "BTC",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.76,
+          "realized_r": -1.1082,
+          "exit_reason": "INITIAL_LTF_SL"
+        }
+      ]
+    },
+    "1.00_ATR": {
+      "threshold": 1.0,
+      "total_trades": 9,
+      "unique_economic_setups": 6,
+      "duplicate_trades": 3,
+      "winners": 2,
+      "losers": 7,
+      "win_rate_pct": 22.22,
+      "gross_realized_r": 5.3337,
+      "net_realized_r": 4.597,
+      "net_r_delta": 20.8218,
+      "profit_factor": 1.6,
+      "profit_factor_delta": 1.02,
+      "max_drawdown_r": 3.3,
+      "drawdown_delta": -21.96,
+      "expectancy_r": 0.5108,
+      "winner_preservation_pct": 50.0,
+      "losses_removed": 28,
+      "winners_removed": 2,
+      "rejection_counts": {
+        "REJECT_SL_BELOW_ATR_FLOOR": 30
+      },
+      "pruned_trades": [
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614517200",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.48,
+          "realized_r": -1.1164,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614517200",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.55,
+          "realized_r": -1.1164,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633503600",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.44,
+          "realized_r": -1.1127,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633503600",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.48,
+          "realized_r": -1.1127,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1640329200",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.95,
+          "realized_r": -1.1107,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1648792800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.62,
+          "realized_r": -1.0832,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1648792800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.96,
+          "realized_r": -1.0832,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652626800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.41,
+          "realized_r": -1.1111,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652626800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.4,
+          "realized_r": -1.1111,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652644800",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.98,
+          "realized_r": -1.0375,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652720400",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.74,
+          "realized_r": -1.053,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1652720400",
+          "asset": "SOL",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.73,
+          "realized_r": -1.053,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1615737600",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.6,
+          "realized_r": -1.1043,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1615737600",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.64,
+          "realized_r": -1.1043,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1618552800",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.83,
+          "realized_r": -1.0657,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1618552800",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.87,
+          "realized_r": -1.0657,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1632366000",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.85,
+          "realized_r": -1.065,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1632366000",
+          "asset": "ETH",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.85,
+          "realized_r": -1.065,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1632373200",
+          "asset": "BTC",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.78,
+          "realized_r": -1.1072,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1632373200",
+          "asset": "BTC",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.85,
+          "realized_r": -1.1071,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1638824400",
+          "asset": "BTC",
+          "timeframe_set": "SET_3",
+          "is_winner": true,
+          "sl_atr_mult": 0.85,
+          "realized_r": 5.6957,
+          "exit_reason": "HTF_TP"
+        },
+        {
+          "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1639026000",
+          "asset": "BTC",
+          "timeframe_set": "SET_3",
+          "is_winner": true,
+          "sl_atr_mult": 0.92,
+          "realized_r": 4.0784,
+          "exit_reason": "HTF_TP"
+        },
+        {
+          "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1639026000",
+          "asset": "BTC",
+          "timeframe_set": "SET_3",
+          "is_winner": false,
+          "sl_atr_mult": 0.81,
+          "realized_r": -1.1184,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614373200",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.62,
+          "realized_r": -1.0846,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614373200",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.62,
+          "realized_r": -1.0846,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1624672800",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.97,
+          "realized_r": -1.0874,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1624672800",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.92,
+          "realized_r": -1.0874,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1632278700",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.69,
+          "realized_r": -1.12,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1632278700",
+          "asset": "SOL",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.71,
+          "realized_r": -1.12,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1621679400",
+          "asset": "BTC",
+          "timeframe_set": "SET_4",
+          "is_winner": false,
+          "sl_atr_mult": 0.76,
+          "realized_r": -1.1082,
+          "exit_reason": "INITIAL_LTF_SL"
+        }
+      ]
+    }
+  },
+  "winner_impact_audit": [
+    {
+      "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1638824400",
+      "asset": "BTC",
+      "timeframe_set": "SET_3",
+      "sl_atr_mult": 0.85,
+      "realized_r": 5.6957,
+      "status_by_threshold": {
+        "0.50_ATR": "PRESERVED",
+        "0.60_ATR": "PRESERVED",
+        "0.70_ATR": "PRESERVED",
+        "0.80_ATR": "PRESERVED",
+        "0.90_ATR": "REJECTED",
+        "1.00_ATR": "REJECTED"
+      }
+    },
+    {
+      "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1639026000",
+      "asset": "BTC",
+      "timeframe_set": "SET_3",
+      "sl_atr_mult": 0.92,
+      "realized_r": 4.0784,
+      "status_by_threshold": {
+        "0.50_ATR": "PRESERVED",
+        "0.60_ATR": "PRESERVED",
+        "0.70_ATR": "PRESERVED",
+        "0.80_ATR": "PRESERVED",
+        "0.90_ATR": "PRESERVED",
+        "1.00_ATR": "REJECTED"
+      }
+    },
+    {
+      "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1638824400",
+      "asset": "BTC",
+      "timeframe_set": "SET_3",
+      "sl_atr_mult": 1.34,
+      "realized_r": 5.6968,
+      "status_by_threshold": {
+        "0.50_ATR": "PRESERVED",
+        "0.60_ATR": "PRESERVED",
+        "0.70_ATR": "PRESERVED",
+        "0.80_ATR": "PRESERVED",
+        "0.90_ATR": "PRESERVED",
+        "1.00_ATR": "PRESERVED"
+      }
+    },
+    {
+      "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1655429400",
+      "asset": "ETH",
+      "timeframe_set": "SET_4",
+      "sl_atr_mult": 1.16,
+      "realized_r": 6.5704,
+      "status_by_threshold": {
+        "0.50_ATR": "PRESERVED",
+        "0.60_ATR": "PRESERVED",
+        "0.70_ATR": "PRESERVED",
+        "0.80_ATR": "PRESERVED",
+        "0.90_ATR": "PRESERVED",
+        "1.00_ATR": "PRESERVED"
+      }
+    }
+  ],
+  "decision_rule_evaluation": {
+    "rule_1_economic_objective": "FAIL \u2014 0.50-0.70 ATR remains net negative; 0.90-1.00 ATR causes unacceptable winner destruction (25%-50%); 0.80 ATR is an unstable knife-edge with 44% throughput collapse.",
+    "rule_2_search_space": "PASS \u2014 Restricted strictly to pre-registered 0.50-1.00 ATR range.",
+    "rule_3_control_comparison": "FAIL \u2014 Fails to demonstrate a robust, scalable edge over the Phase 10.2 7d control.",
+    "rule_4_canonical_invariance": "PASS \u2014 Canonical strategy remains completely unmodified.",
+    "rule_5_dataset_integrity": "PASS \u2014 Zero 2023+ validation or 2024-2026 OOS data accessed.",
+    "recommendation": "REJECT H_SL_ATR_01. Do not merge or retain the ATR stop floor."
+  }
+}

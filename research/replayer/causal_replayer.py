@@ -40,11 +40,15 @@ class CausalReplayer:
         enable_profit_lock: bool = False,
         lockin_r: float = 1.0,
         giveback_r: float = 0.75,
+        profit_lock_trigger_r: float = 1.0,
+        profit_lock_stop_r: float = 0.10,
         enable_regime_filter: bool = False,
         cache_htf_mtf: bool = True,
         risk_config: Optional[RiskConfig] = None,
         htf_context_filter: Optional[str] = None,
-        hypothesis: Optional[Any] = None
+        hypothesis: Optional[Any] = None,
+        enable_kz_freshness: bool = False,
+        max_htf_kz_age_seconds: Optional[int] = None
     ):
         self.timeframe_set: TimeframeSet = TimeframeAligner.get_set(timeframe_set_id)
         self.initial_balance = initial_balance
@@ -52,8 +56,12 @@ class CausalReplayer:
         self.enable_profit_lock = enable_profit_lock
         self.lockin_r = lockin_r
         self.giveback_r = giveback_r
+        self.profit_lock_trigger_r = profit_lock_trigger_r
+        self.profit_lock_stop_r = profit_lock_stop_r
         self.enable_regime_filter = enable_regime_filter
         self.risk_config = risk_config
+        self.enable_kz_freshness = enable_kz_freshness
+        self.max_htf_kz_age_seconds = max_htf_kz_age_seconds
         # RESEARCH ENGINE PERFORMANCE FLAG (no trading-logic impact):
         # When True, the point-in-time HTF/MTF incremental state is cached and only
         # recomputed when a NEW higher/middle timeframe candle becomes causally
@@ -79,9 +87,13 @@ class CausalReplayer:
             enable_profit_lock=self.enable_profit_lock,
             lockin_r=self.lockin_r,
             giveback_r=self.giveback_r,
+            profit_lock_trigger_r=self.profit_lock_trigger_r,
+            profit_lock_stop_r=self.profit_lock_stop_r,
             regime_filter=self.regime_filter,
             htf_context_filter=htf_context_filter,
-            hypothesis=hypothesis
+            hypothesis=hypothesis,
+            enable_kz_freshness=self.enable_kz_freshness,
+            max_htf_kz_age_seconds=self.max_htf_kz_age_seconds
         )
         self.execution_simulator = ExecutionSimulator(
             maker_fee_rate=maker_fee_rate,
@@ -89,7 +101,9 @@ class CausalReplayer:
             slippage_bps=slippage_bps,
             enable_profit_lock=self.enable_profit_lock,
             lockin_r=self.lockin_r,
-            giveback_r=self.giveback_r
+            giveback_r=self.giveback_r,
+            profit_lock_trigger_r=self.profit_lock_trigger_r,
+            profit_lock_stop_r=self.profit_lock_stop_r
         )
         self.ledger = TradeLedger(initial_equity=initial_balance)
 

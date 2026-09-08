@@ -21,7 +21,9 @@ class ExecutionSimulator:
         slippage_bps: float = 5.0,        # 5.0 basis points slippage on stop-loss market orders
         enable_profit_lock: bool = False,
         lockin_r: float = 1.0,
-        giveback_r: float = 0.75
+        giveback_r: float = 0.75,
+        profit_lock_trigger_r: float = 1.0,
+        profit_lock_stop_r: float = 0.10
     ):
         self.maker_fee_rate = maker_fee_rate
         self.taker_fee_rate = taker_fee_rate
@@ -29,6 +31,8 @@ class ExecutionSimulator:
         self.enable_profit_lock = enable_profit_lock
         self.lockin_r = lockin_r
         self.giveback_r = giveback_r
+        self.profit_lock_trigger_r = profit_lock_trigger_r
+        self.profit_lock_stop_r = profit_lock_stop_r
 
     def _apply_slippage(self, base_price: float, is_buy: bool) -> float:
         """
@@ -95,9 +99,9 @@ class ExecutionSimulator:
                     if is_long:
                         fav_p = trade.metadata.get("mfe_price", entry_p)
                         fav_r = (fav_p - entry_p) / risk_dist
-                        # Tier 1: Break-even at +1.5R excursion (+0.1R buffer)
-                        if fav_r >= 1.5:
-                            be_stop = entry_p + (0.1 * risk_dist)
+                        # Tier 1: Break-even / profit lock at profit_lock_trigger_r (+profit_lock_stop_r buffer)
+                        if fav_r >= self.profit_lock_trigger_r:
+                            be_stop = entry_p + (self.profit_lock_stop_r * risk_dist)
                             if be_stop > trade.current_stop_price:
                                 ledger.update_trailing_stop(trade.trade_id, be_stop)
                                 trade.metadata["profit_locked"] = True
@@ -110,9 +114,9 @@ class ExecutionSimulator:
                     else:
                         fav_p = trade.metadata.get("mfe_price", entry_p)
                         fav_r = (entry_p - fav_p) / risk_dist
-                        # Tier 1: Break-even at +1.5R excursion (-0.1R buffer)
-                        if fav_r >= 1.5:
-                            be_stop = entry_p - (0.1 * risk_dist)
+                        # Tier 1: Break-even / profit lock at profit_lock_trigger_r (-profit_lock_stop_r buffer)
+                        if fav_r >= self.profit_lock_trigger_r:
+                            be_stop = entry_p - (self.profit_lock_stop_r * risk_dist)
                             if be_stop < trade.current_stop_price:
                                 ledger.update_trailing_stop(trade.trade_id, be_stop)
                                 trade.metadata["profit_locked"] = True

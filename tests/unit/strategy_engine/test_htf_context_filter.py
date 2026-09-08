@@ -22,16 +22,27 @@ def make_swing(price: float, swing_type: SwingType = SwingType.SWING_LOW, ts: in
 
 
 def make_payload(phase: MarketPhase, timestamp: int = 1000) -> MarketStatePayload:
+    from market_intelligence.primitives import KeyZone
     prot = make_swing(90.0, SwingType.SWING_LOW, ts=timestamp)
     weak = make_swing(150.0, SwingType.SWING_HIGH, ts=timestamp)
     struct = StructureState(
         external_trend=TrendDirection.BULLISH, internal_trend=TrendDirection.BULLISH,
         protected_low=prot, protected_high=None, weak_high=weak, weak_low=None, events=[],
     )
+    kz = KeyZone(
+        zone_id="KZ_TEST",
+        zone_type="BULLISH_OB",
+        direction=TrendDirection.BULLISH,
+        high=105.0,
+        low=95.0,
+        timeframe="1D",
+        creation_timestamp=timestamp,
+        is_mitigated=False
+    )
     return MarketStatePayload(
         symbol="BTCUSD", timeframe="1D", timestamp=timestamp, current_price=100.0,
         current_candle=Candle(timestamp=timestamp, open=100.0, high=101.0, low=99.0, close=100.0, volume=100),
-        events=[], swings=[], structure_state=struct, liquidity_pools=[], keyzones=[],
+        events=[], swings=[], structure_state=struct, liquidity_pools=[], keyzones=[kz],
         phase_state=phase, trend_state=TrendDirection.BULLISH, valuation_state="EQUILIBRIUM",
         scorecard={"reason_codes": ["DISPLACEMENT_CONFIRMED"]}, metadata={},
     )

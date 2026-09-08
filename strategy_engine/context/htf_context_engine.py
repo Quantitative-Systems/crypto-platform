@@ -66,20 +66,18 @@ class HTFContextEngine:
         struct = htf_payload.structure_state
         prot_swing = None
         weak_swing = None
-        target_price = None
-        # 1. BULLISH Macro Structure
+        # Forward Structural Destination Discovery
+        from strategy_engine.context.htf_destination_engine import HTFDestinationEngine
+        dest = HTFDestinationEngine.evaluate(htf_payload)
+        target_price = dest.target_price
+
+        # Also capture protected and weak swings for telemetry provenance
         if trend == TrendDirection.BULLISH:
             prot_swing = struct.protected_low if struct else None
             weak_swing = struct.weak_high if struct else None
-            if weak_swing and weak_swing.raw_swing:
-                target_price = weak_swing.raw_swing.price
-
-        # 2. BEARISH Macro Structure
         elif trend == TrendDirection.BEARISH:
             prot_swing = struct.protected_high if struct else None
             weak_swing = struct.weak_low if struct else None
-            if weak_swing and weak_swing.raw_swing:
-                target_price = weak_swing.raw_swing.price
 
         # Last structure event
         last_event = None

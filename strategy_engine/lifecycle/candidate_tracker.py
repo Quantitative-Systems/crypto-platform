@@ -28,6 +28,7 @@ class CandidateSetup:
     htf_expected_move: Optional[str] = None
     htf_target_price: Optional[float] = None
     htf_keyzone_id: Optional[str] = None
+    htf_kz_creation_timestamp: Optional[int] = None
     htf_interaction_timestamp: Optional[int] = None
     
     # 2. MTF Setup & KeyZone Provenance
@@ -76,6 +77,7 @@ class CandidateSetup:
             "htf_expected_move": self.htf_expected_move or "",
             "htf_target_price": self.htf_target_price or 0.0,
             "htf_keyzone_id": self.htf_keyzone_id or "",
+            "htf_kz_creation_timestamp": self.htf_kz_creation_timestamp or 0,
             "htf_interaction_timestamp": self.htf_interaction_timestamp or 0,
             "mtf_setup_id": self.mtf_setup_id or "",
             "mtf_setup_timestamp": self.mtf_setup_timestamp or 0,

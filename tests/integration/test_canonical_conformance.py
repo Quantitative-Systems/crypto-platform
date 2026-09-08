@@ -454,8 +454,8 @@ def test_scenario_6_pullback_riding_lifecycle():
     hyp.evaluate(candidate, make_dummy_payload("1D"), mtf_choch, make_dummy_payload("1H"))
     assert candidate.state == CandidateState.WAIT_MTF_RETEST
     
-    # 2. MTF KeyZone mitigated (Retest)
-    mtf_retest = make_dummy_payload(timeframe="4H")
+    # 2. MTF KeyZone active retest
+    mtf_retest = make_dummy_payload(timeframe="4H", current_price=95.0)
     mtf_retest.keyzones = [
         KeyZone(
             zone_id="kz_1",
@@ -469,7 +469,7 @@ def test_scenario_6_pullback_riding_lifecycle():
             status=ZoneStatus.MITIGATED
         )
     ]
-    hyp.evaluate(candidate, make_dummy_payload("1D"), mtf_retest, make_dummy_payload("1H"))
+    hyp.evaluate(candidate, make_dummy_payload("1D"), mtf_retest, make_dummy_payload("1H", current_price=95.0))
     assert candidate.state == CandidateState.WAIT_LTF_TRIGGER
     
     # 3. LTF Trigger (Sweep + Displacement)

@@ -84,9 +84,13 @@ class StrategyCoordinator:
         enable_profit_lock: bool = False,
         lockin_r: float = 1.0,
         giveback_r: float = 0.75,
+        profit_lock_trigger_r: float = 1.0,
+        profit_lock_stop_r: float = 0.10,
         regime_filter: Optional[RegimeFilter] = None,
         htf_context_filter: Optional[str] = None,
-        hypothesis: Optional[BaseHypothesis] = None
+        hypothesis: Optional[BaseHypothesis] = None,
+        enable_kz_freshness: bool = False,
+        max_htf_kz_age_seconds: Optional[int] = None
     ):
         """
         htf_context_filter: when set to "PULLBACK" or "CONTINUATION", candidates
@@ -95,18 +99,25 @@ class StrategyCoordinator:
           HYP_A_PULLBACK_RIDING      -> filter="PULLBACK"
           HYP_B_CONTINUATION_RIDING  -> filter="CONTINUATION"
         """
+        self.enable_kz_freshness = enable_kz_freshness
+        self.max_htf_kz_age_seconds = max_htf_kz_age_seconds
         if hypothesis is not None:
             self.hypotheses = {hypothesis.hypothesis_id: hypothesis}
         else:
             self.hypotheses = {
-                "UNIFIED_STRATEGY": UnifiedStrategy()
+                "UNIFIED_STRATEGY": UnifiedStrategy(
+                    enable_kz_freshness=enable_kz_freshness,
+                    max_htf_kz_age_seconds=max_htf_kz_age_seconds
+                )
             }
         self.candidate_tracker = CandidateTracker()
         self.active_manager = ActiveTradeManager(
             enable_mtf_trailing=enable_mtf_trailing,
             enable_profit_lock=enable_profit_lock,
             lockin_r=lockin_r,
-            giveback_r=giveback_r
+            giveback_r=giveback_r,
+            profit_lock_trigger_r=profit_lock_trigger_r,
+            profit_lock_stop_r=profit_lock_stop_r
         )
         self.news_provider = news_provider or NullNewsProvider()
         self.regime_filter = regime_filter
@@ -148,55 +159,87 @@ class StrategyCoordinator:
             # --- Dynamic Hypothesis Candidate Tracking ---
             active = self.candidate_tracker.get_active_candidates(symbol, active_hyp_id)
             if not active:
-                # Check for HTF KeyZone Interaction (Optional for Context)
+                # Phase 3: Mandatory Active HTF KeyZone Interaction
+                # Price must actively interact with a relevant causal HTF keyzone in the HTF trend direction.
+                # Historical mitigation alone must never qualify current price as interacting with a zone.
                 htf_interacting_kz = None
                 for kz in (htf_payload.keyzones or []):
                     kz_type_str = str(getattr(kz, 'zone_type', ''))
-                    if is_bullish and ("BULLISH" not in kz_type_str): continue
-                    if (not is_bullish) and ("BEARISH" not in kz_type_str): continue
-                    is_mitigated = "MITIGATED" in str(getattr(kz, 'status', ''))
-                    high_bound = getattr(kz, 'high_boundary', getattr(kz, 'high', None))
-                    low_bound = getattr(kz, 'low_boundary', getattr(kz, 'low', None))
+                    status_str = str(getattr(kz, 'status', ''))
+                    if "INVALIDATED" in status_str:
+                        continue
+
+                    # Direction matching: Bullish keyzone for Long, Bearish keyzone for Short
+                    if is_bullish and ("BULLISH" not in kz_type_str):
+                        continue
+                    if (not is_bullish) and ("BEARISH" not in kz_type_str):
+                        continue
+
+                    high_bound = getattr(kz, 'high_boundary', None)
+                    if high_bound is None:
+                        high_bound = getattr(kz, 'high', None)
+                    low_bound = getattr(kz, 'low_boundary', None)
+                    if low_bound is None:
+                        low_bound = getattr(kz, 'low', None)
+
+                    if high_bound is None or low_bound is None:
+                        continue
+                    if low_bound > high_bound:
+                        low_bound, high_bound = high_bound, low_bound
+
+                    # Active price interaction check: current price or current candle penetrating zone
                     price_in_zone = False
-                    if high_bound is not None and low_bound is not None:
-                        if htf_payload.current_candle:
-                            price_in_zone = (htf_payload.current_candle.low <= high_bound and htf_payload.current_candle.high >= low_bound)
-                        else:
-                            price_in_zone = (low_bound <= htf_payload.current_price <= high_bound)
-                    if is_mitigated or price_in_zone:
+                    if ltf_payload.current_candle:
+                        price_in_zone = (ltf_payload.current_candle.low <= high_bound and ltf_payload.current_candle.high >= low_bound)
+                    elif htf_payload.current_candle:
+                        price_in_zone = (htf_payload.current_candle.low <= high_bound and htf_payload.current_candle.high >= low_bound)
+                    else:
+                        price_in_zone = (low_bound <= htf_payload.current_price <= high_bound)
+
+                    if price_in_zone:
                         htf_interacting_kz = kz
                         break
-                
-                htf_ctx_label = "PULLBACK" if ("PULLBACK" in phase_str or (htf_interacting_kz is not None and "PULLBACK" in phase_str)) else "CONTINUATION"
 
-                # Hypothesis isolation: PULLBACK_RIDING vs CONTINUATION_RIDING.
-                # When a filter is set, candidates outside the hypothesis phase context
-                # are NOT spawned — existing in-flight candidates still progress onward.
-                context_matches = (self.htf_context_filter is None) or (htf_ctx_label == self.htf_context_filter)
+                # MANDATORY GATE: If price has not reached a relevant HTF keyzone, NO candidate setup can qualify
+                if htf_interacting_kz is not None:
+                    htf_ctx_label = "PULLBACK" if ("PULLBACK" in phase_str or (htf_interacting_kz is not None and "PULLBACK" in phase_str)) else "CONTINUATION"
+                    context_matches = (self.htf_context_filter is None) or (htf_ctx_label == self.htf_context_filter)
 
-                if context_matches:
-                    # Unconditionally spawn a candidate if bias allows
-                    new_candidate = CandidateSetup(
-                        candidate_id=f"cand_{symbol}_{active_hyp_id}_{ltf_payload.timestamp}",
-                        hypothesis_id=active_hyp_id,
-                        symbol=symbol,
-                        htf=htf_payload.timeframe,
-                        mtf=mtf_payload.timeframe,
-                        ltf=ltf_payload.timeframe,
-                        state=CandidateState.WAIT_MTF_ALIGNMENT,
-                        directional_permission=DirectionalPermission.PERMIT_LONG if is_bullish else DirectionalPermission.PERMIT_SHORT,
-                        htf_context=htf_ctx_label,
-                        htf_context_id=htf_context.context_id,
-                        htf_context_timestamp=htf_context.timestamp,
-                        htf_macro_direction=htf_payload.trend_state.value if hasattr(htf_payload.trend_state, 'value') else str(htf_payload.trend_state),
-                        htf_phase=str(htf_payload.phase_state),
-                        htf_target_price=htf_context.target_anchor_price,
-                        htf_keyzone_id=getattr(htf_interacting_kz, 'zone_id', None) if htf_interacting_kz else None,
-                        htf_interaction_timestamp=htf_payload.timestamp if htf_interacting_kz else None,
-                        creation_timestamp=ltf_payload.timestamp,
-                        max_lifespan_seconds=max_lifespan
-                    )
-                    self.candidate_tracker.add_candidate(new_candidate)
+                    if context_matches:
+                        # Discover forward structural destination
+                        from strategy_engine.context.htf_destination_engine import HTFDestinationEngine
+                        dest = HTFDestinationEngine.evaluate(htf_payload, reference_price=ltf_payload.current_price, is_long=is_bullish)
+                        target_price = dest.target_price if dest.is_valid else htf_context.target_anchor_price
+
+                        kz_create_ts = getattr(htf_interacting_kz, 'creation_timestamp', None)
+                        if (kz_create_ts is None or kz_create_ts == 0) and getattr(htf_interacting_kz, 'zone_id', None):
+                            for part in str(htf_interacting_kz.zone_id).split('_'):
+                                if part.isdigit() and len(part) >= 9:
+                                    kz_create_ts = int(part)
+                                    break
+
+                        new_candidate = CandidateSetup(
+                            candidate_id=f"cand_{symbol}_{active_hyp_id}_{ltf_payload.timestamp}",
+                            hypothesis_id=active_hyp_id,
+                            symbol=symbol,
+                            htf=htf_payload.timeframe,
+                            mtf=mtf_payload.timeframe,
+                            ltf=ltf_payload.timeframe,
+                            state=CandidateState.WAIT_MTF_ALIGNMENT,
+                            directional_permission=DirectionalPermission.PERMIT_LONG if is_bullish else DirectionalPermission.PERMIT_SHORT,
+                            htf_context=htf_ctx_label,
+                            htf_context_id=htf_context.context_id,
+                            htf_context_timestamp=htf_context.timestamp,
+                            htf_macro_direction=htf_payload.trend_state.value if hasattr(htf_payload.trend_state, 'value') else str(htf_payload.trend_state),
+                            htf_phase=str(htf_payload.phase_state),
+                            htf_target_price=target_price,
+                            htf_keyzone_id=getattr(htf_interacting_kz, 'zone_id', None),
+                            htf_kz_creation_timestamp=kz_create_ts,
+                            htf_interaction_timestamp=ltf_payload.timestamp,
+                            creation_timestamp=ltf_payload.timestamp,
+                            max_lifespan_seconds=max_lifespan
+                        )
+                        self.candidate_tracker.add_candidate(new_candidate)
                     
         # 3. Progress Active Candidate Setups
         for hyp_id, hypothesis in self.hypotheses.items():
