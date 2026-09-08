@@ -82,19 +82,44 @@ class ExecutionSimulator:
             is_long = trade.directional_permission == "PERMIT_LONG"
             target_price = trade.target_price
 
-            # Track Excursions (MFE / MAE)
+            # Track Excursions (MFE / MAE) and Timing Milestones
+            entry_p = trade.fill_entry_price or trade.entry_price
+            init_sl = trade.initial_stop_price
+            risk_dist = abs(entry_p - init_sl)
+
             if is_long:
-                trade.metadata["mfe_price"] = max(trade.metadata.get("mfe_price", trade.fill_entry_price), candle.high)
-                trade.metadata["mae_price"] = min(trade.metadata.get("mae_price", trade.fill_entry_price), candle.low)
+                if candle.high > trade.metadata.get("mfe_price", entry_p):
+                    trade.metadata["mfe_price"] = candle.high
+                    trade.metadata["mfe_timestamp"] = candle.timestamp
+                if candle.low < trade.metadata.get("mae_price", entry_p):
+                    trade.metadata["mae_price"] = candle.low
+                    trade.metadata["mae_timestamp"] = candle.timestamp
             else:
-                trade.metadata["mfe_price"] = min(trade.metadata.get("mfe_price", trade.fill_entry_price), candle.low)
-                trade.metadata["mae_price"] = max(trade.metadata.get("mae_price", trade.fill_entry_price), candle.high)
+                if candle.low < trade.metadata.get("mfe_price", entry_p):
+                    trade.metadata["mfe_price"] = candle.low
+                    trade.metadata["mfe_timestamp"] = candle.timestamp
+                if candle.high > trade.metadata.get("mae_price", entry_p):
+                    trade.metadata["mae_price"] = candle.high
+                    trade.metadata["mae_timestamp"] = candle.timestamp
+
+            # Track excursion milestones (time to +0.5R, +1R, +2R, +3R, +4R)
+            if risk_dist > 0 and trade.entry_timestamp:
+                curr_fav_p = trade.metadata.get("mfe_price", entry_p)
+                curr_fav_r = (curr_fav_p - entry_p) / risk_dist if is_long else (entry_p - curr_fav_p) / risk_dist
+                dt = candle.timestamp - trade.entry_timestamp
+                if curr_fav_r >= 0.5 and "time_to_0_5r" not in trade.metadata:
+                    trade.metadata["time_to_0_5r"] = dt
+                if curr_fav_r >= 1.0 and "time_to_1_0r" not in trade.metadata:
+                    trade.metadata["time_to_1_0r"] = dt
+                if curr_fav_r >= 2.0 and "time_to_2_0r" not in trade.metadata:
+                    trade.metadata["time_to_2_0r"] = dt
+                if curr_fav_r >= 3.0 and "time_to_3_0r" not in trade.metadata:
+                    trade.metadata["time_to_3_0r"] = dt
+                if curr_fav_r >= 4.0 and "time_to_4_0r" not in trade.metadata:
+                    trade.metadata["time_to_4_0r"] = dt
 
             # Profit-Lock & Break-Even Ratchet
             if self.enable_profit_lock:
-                entry_p = trade.fill_entry_price
-                init_sl = trade.initial_stop_price
-                risk_dist = abs(entry_p - init_sl)
                 if risk_dist > 0:
                     if is_long:
                         fav_p = trade.metadata.get("mfe_price", entry_p)

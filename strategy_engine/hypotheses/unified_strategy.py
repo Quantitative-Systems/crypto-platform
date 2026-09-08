@@ -20,12 +20,14 @@ class UnifiedStrategy(BaseHypothesis):
         hypothesis_id: str = "UNIFIED_STRATEGY",
         version: str = "v2.0-UNIFIED-CANONICAL-LOCKED",
         enable_kz_freshness: bool = False,
-        max_htf_kz_age_seconds: Optional[int] = None
+        max_htf_kz_age_seconds: Optional[int] = None,
+        enable_forward_expansion: bool = False
     ):
         self._hypothesis_id = hypothesis_id
         self._version = version
         self.enable_kz_freshness = enable_kz_freshness
         self.max_htf_kz_age_seconds = max_htf_kz_age_seconds
+        self.enable_forward_expansion = enable_forward_expansion
 
     @property
     def hypothesis_id(self) -> str:
@@ -343,7 +345,7 @@ class UnifiedStrategy(BaseHypothesis):
 
             if not target_valid:
                 from strategy_engine.context.htf_destination_engine import HTFDestinationEngine
-                dest = HTFDestinationEngine.evaluate(htf_payload, reference_price=entry_price, is_long=is_long)
+                dest = HTFDestinationEngine.evaluate(htf_payload, reference_price=entry_price, is_long=is_long, enable_forward_expansion=self.enable_forward_expansion)
                 if dest.is_valid:
                     target_price = dest.target_price
                     candidate.htf_target_price = target_price

@@ -48,7 +48,8 @@ class CausalReplayer:
         htf_context_filter: Optional[str] = None,
         hypothesis: Optional[Any] = None,
         enable_kz_freshness: bool = False,
-        max_htf_kz_age_seconds: Optional[int] = None
+        max_htf_kz_age_seconds: Optional[int] = None,
+        enable_forward_expansion: bool = False
     ):
         self.timeframe_set: TimeframeSet = TimeframeAligner.get_set(timeframe_set_id)
         self.initial_balance = initial_balance
@@ -62,6 +63,7 @@ class CausalReplayer:
         self.risk_config = risk_config
         self.enable_kz_freshness = enable_kz_freshness
         self.max_htf_kz_age_seconds = max_htf_kz_age_seconds
+        self.enable_forward_expansion = enable_forward_expansion
         # RESEARCH ENGINE PERFORMANCE FLAG (no trading-logic impact):
         # When True, the point-in-time HTF/MTF incremental state is cached and only
         # recomputed when a NEW higher/middle timeframe candle becomes causally
@@ -93,7 +95,8 @@ class CausalReplayer:
             htf_context_filter=htf_context_filter,
             hypothesis=hypothesis,
             enable_kz_freshness=self.enable_kz_freshness,
-            max_htf_kz_age_seconds=self.max_htf_kz_age_seconds
+            max_htf_kz_age_seconds=self.max_htf_kz_age_seconds,
+            enable_forward_expansion=self.enable_forward_expansion
         )
         self.execution_simulator = ExecutionSimulator(
             maker_fee_rate=maker_fee_rate,
@@ -199,8 +202,24 @@ class CausalReplayer:
 
                 # 5. Process emitted trade plans through Risk Firewall (P03)
                 for plan in trade_plans:
-                    # Case A: New Entry Proposal
-                    if plan.status == CandidateState.ENTERED.value:
+                    # Case B: Active Trade Trailing Stop / Exit Management (must take precedence over entry check)
+                    if getattr(plan, "position_status", None) in [PositionState.MTF_TRAIL_EXIT.value, PositionState.LTF_SL_EXIT.value, PositionState.TP_EXIT.value]:
+                        if plan.position_status == PositionState.MTF_TRAIL_EXIT.value and self.enable_mtf_trailing:
+                            self.execution_simulator.execute_structural_exit(
+                                trade_id=plan.trade_plan_id,
+                                current_market_price=ltf_state.current_price,
+                                timestamp=decision_timestamp,
+                                exit_reason="MTF_STRUCTURAL_TRAIL",
+                                ledger=self.ledger
+                            )
+                        # Intrabar SL/TP exits are handled directly by ExecutionSimulator
+
+                    # Case A: New Entry Proposal (only for genuine new entries in ENTERED state)
+                    elif plan.status == CandidateState.ENTERED.value:
+                        # Explicit Regression Invariant: Terminal or already registered candidate MUST NEVER re-enter execution
+                        if plan.trade_plan_id in self.ledger.trades:
+                            continue
+
                         account_state = AccountState(
                             current_equity=self.ledger.current_equity,
                             peak_equity=self.ledger.peak_equity,
@@ -232,22 +251,6 @@ class CausalReplayer:
                             )
                             self.ledger.record_pending_trade(simulated_trade)
 
-                    # Case B: Active Trade Trailing Stop / Exit Management
-                    elif plan.position_status == PositionState.MTF_TRAIL_EXIT.value:
-                        if self.enable_mtf_trailing:
-                            self.execution_simulator.execute_structural_exit(
-                                trade_id=plan.trade_plan_id,
-                                current_market_price=ltf_state.current_price,
-                                timestamp=decision_timestamp,
-                                exit_reason="MTF_STRUCTURAL_TRAIL",
-                                ledger=self.ledger
-                            )
-                    # Case C: SL/TP exits are executed by ExecutionSimulator inside the
-                    # per-candle loop (adverse-first). The ActiveTradeManager may still
-                    # emit TP_EXIT / LTF_SL_EXIT *plans* for trades already closed by the
-                    # simulator in the same bar or on later bars (ghost plans). Those are
-                    # NOT rejections and MUST NOT pollute the counterfactual funnel.
-                    # Only genuinely rejected candidates (status == REJECTED) count.
                     else:
                         if plan.status == CandidateState.REJECTED.value:
                             rejected_candidates.append(plan)
@@ -292,5 +295,6 @@ class CausalReplayer:
                 "mtf": self._mtf_runs,
                 "ltf": self._ltf_runs,
                 "ltf_ticks": max(0, len(ltf_candles) - min_lookback_bars)
-            }
+            },
+            "all_candidates": [c.to_provenance_dict() for c in getattr(self.strategy_coordinator.candidate_tracker, 'all_candidates', [])]
         }
