@@ -128,4 +128,4 @@ def test_profit_lock_ratchet_long():
     ltf3.current_candle = Candle(timestamp=3000, open=111.0, high=111.0, low=104.0, close=104.0, volume=100.0)
     exited = atm.evaluate(make_payload("4H", 104.0), make_payload("1H", 104.0), ltf3)
     assert len(exited) == 1
-    assert exited[0].position_status == PositionState.LTF_SL_EXIT.value
+    assert exited[0].position_status == PositionState.MTF_TRAIL_EXIT.value

@@ -181,6 +181,48 @@ class UnifiedStrategy(BaseHypothesis):
                         candidate.mtf_structural_event = str(event.event_type)
                         candidate.mtf_choch_id = getattr(event, 'broken_swing_id', None) or (event.metadata.get('broken_swing_id', '') if hasattr(event, 'metadata') else '')
                         candidate.mtf_alignment_timestamp = event_ts
+
+                        # Find or dynamically synthesize the newly formed MTF realignment KeyZone
+                        matched_kz = None
+                        for kz in mtf_payload.keyzones:
+                            kz_type_str = str(getattr(kz, 'zone_type', ''))
+                            if is_long and ("BULLISH" not in kz_type_str):
+                                continue
+                            if (not is_long) and ("BEARISH" not in kz_type_str):
+                                continue
+                            c_ts = getattr(kz, 'creation_timestamp', 0)
+                            if c_ts >= event_ts:
+                                matched_kz = kz
+                                break
+
+                        if matched_kz is not None:
+                            candidate.mtf_keyzone_id = getattr(matched_kz, 'zone_id', '')
+                            candidate.mtf_kz_creation_timestamp = getattr(matched_kz, 'creation_timestamp', event_ts)
+                        else:
+                            # Synthesize dedicated MTF realignment KeyZone from displacement origin
+                            if candidate.metadata is None:
+                                candidate.metadata = {}
+                            c = mtf_payload.current_candle
+                            if c:
+                                if is_long:
+                                    s_low = c.low
+                                    s_high = max(c.low, min(c.open, c.close))
+                                else:
+                                    s_high = c.high
+                                    s_low = min(c.high, max(c.open, c.close))
+                            else:
+                                if is_long:
+                                    s_low = mtf_payload.current_price * 0.995
+                                    s_high = mtf_payload.current_price
+                                else:
+                                    s_high = mtf_payload.current_price * 1.005
+                                    s_low = mtf_payload.current_price
+
+                            candidate.metadata["synth_mtf_kz_low"] = min(s_low, s_high)
+                            candidate.metadata["synth_mtf_kz_high"] = max(s_low, s_high)
+                            candidate.mtf_keyzone_id = f"synth_mtf_kz_{candidate.symbol}_{event_ts}"
+                            candidate.mtf_kz_creation_timestamp = event_ts
+
                         candidate.transition_to(CandidateState.WAIT_MTF_RETEST)
                         break
             return None # Still pending
@@ -207,7 +249,6 @@ class UnifiedStrategy(BaseHypothesis):
                 causal_zones.append(kz)
                 
             # Phase 5 Active Retest: Price must actively return into the causal MTF keyzone.
-            # Never use is_mitigated == True as a substitute for active price retest.
             for kz in causal_zones:
                 status_str = str(getattr(kz, 'status', ''))
                 if "INVALIDATED" in status_str:
@@ -234,6 +275,23 @@ class UnifiedStrategy(BaseHypothesis):
                     candidate.mtf_retest_timestamp = ltf_payload.timestamp
                     candidate.transition_to(CandidateState.WAIT_LTF_TRIGGER)
                     break
+
+            # If not triggered by primitive keyzones, check synthesized alignment keyzone
+            if candidate.state == CandidateState.WAIT_MTF_RETEST and candidate.metadata and "synth_mtf_kz_low" in candidate.metadata:
+                s_low = candidate.metadata["synth_mtf_kz_low"]
+                s_high = candidate.metadata["synth_mtf_kz_high"]
+                price_in_synth = False
+                if ltf_payload.current_candle:
+                    price_in_synth = (ltf_payload.current_candle.low <= s_high and ltf_payload.current_candle.high >= s_low)
+                elif mtf_payload.current_candle:
+                    price_in_synth = (mtf_payload.current_candle.low <= s_high and mtf_payload.current_candle.high >= s_low)
+                else:
+                    price_in_synth = (s_low <= mtf_payload.current_price <= s_high)
+
+                if price_in_synth:
+                    candidate.mtf_retest_timestamp = ltf_payload.timestamp
+                    candidate.transition_to(CandidateState.WAIT_LTF_TRIGGER)
+
             return None # Still pending
             
         # =========================================================================

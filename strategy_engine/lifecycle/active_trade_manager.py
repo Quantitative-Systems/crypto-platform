@@ -109,14 +109,17 @@ class ActiveTradeManager:
                         plan.stop_invalidation_price = decision.new_stop_price
                         
             # 5. Check LTF / Trailed SL Trigger
+            is_trailed = abs(plan.stop_invalidation_price - initial_sl) >= 1e-6
+            exit_status = PositionState.MTF_TRAIL_EXIT.value if is_trailed else PositionState.LTF_SL_EXIT.value
+
             if is_long and cur_low <= plan.stop_invalidation_price:
-                plan.position_status = PositionState.LTF_SL_EXIT.value
+                plan.position_status = exit_status
                 plan.exit_timestamp = ltf_payload.timestamp
                 exited_trades.append(plan)
                 del self.active_trades[trade_id]
                 continue
             elif not is_long and cur_high >= plan.stop_invalidation_price:
-                plan.position_status = PositionState.LTF_SL_EXIT.value
+                plan.position_status = exit_status
                 plan.exit_timestamp = ltf_payload.timestamp
                 exited_trades.append(plan)
                 del self.active_trades[trade_id]

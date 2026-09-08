@@ -11,9 +11,9 @@ class LTFEntryModel:
     """
     Orchestrates modular LTF price-action entry evaluation.
     Evaluates:
-    1. Liquidity Sweep + Directional Displacement Model.
+    1. Liquidity Sweep + Directional Displacement Model (Canonical SMC).
     2. LTF Structural Shift Model (CHOCH / BOS).
-    3. Directional Displacement Model.
+    3. Directional Displacement Model (with structural swing invalidation).
     Provides evaluate_details() for rich telemetry and evaluate() returning bool for backwards compatibility.
     """
     _sweep_displacement = LiquiditySweepAndDisplacementModel()
@@ -28,7 +28,7 @@ class LTFEntryModel:
         setup_retest_timestamp: int = 0
     ) -> EntryEvaluationResult:
         # Check if scorecard has DISPLACEMENT_CONFIRMED for synthetic test compatibility
-        scorecard = ltf_payload.scorecard or {}
+        scorecard = getattr(ltf_payload, 'scorecard', None) or {}
         has_scorecard_disp = "DISPLACEMENT_CONFIRMED" in scorecard.get("reason_codes", [])
 
         # 1. Primary Model: Sweep + Directional Displacement
@@ -45,7 +45,7 @@ class LTFEntryModel:
         if sweeps and has_scorecard_disp:
             c = ltf_payload.current_candle
             is_long = req_event_dir.upper() in ("BULLISH", "LONG", "BUY")
-            stop_p = c.low if (is_long and c) else (c.high if c else None)
+            stop_p = cls._directional_displacement.extract_structural_stop(ltf_payload, is_long=is_long, fallback_extreme=c.low if (is_long and c) else (c.high if c else None))
             cur_p = c.close if c else ltf_payload.current_price
             return EntryEvaluationResult(
                 is_confirmed=True,
@@ -60,10 +60,13 @@ class LTFEntryModel:
         if res_shift.is_confirmed:
             return res_shift
 
-        # 3. Tertiary Model: Pure Directional Displacement Close
+        # 3. Tertiary Model: Directional Displacement with confirmed structural stop
         res_disp = cls._directional_displacement.evaluate(ltf_payload, req_event_dir, setup_retest_timestamp)
-        if res_disp.is_confirmed:
-            return res_disp
+        if res_disp.is_confirmed and res_disp.micro_invalidation_price is not None:
+            # Reject if the stop distance is purely microscopic (< 0.05% of price)
+            entry_p = res_disp.entry_price or ltf_payload.current_price
+            if abs(entry_p - res_disp.micro_invalidation_price) >= entry_p * 0.0008:
+                return res_disp
 
         return res
 
