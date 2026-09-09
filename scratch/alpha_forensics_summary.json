@@ -1,0 +1,1020 @@
+{
+  "inventory": {
+    "BTC": {
+      "1M": {
+        "count": 110,
+        "start_utc": "2017-08-01 00:00",
+        "end_utc": "2026-09-01 00:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "1w": {
+        "count": 473,
+        "start_utc": "2017-08-14 00:00",
+        "end_utc": "2026-08-31 00:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "1d": {
+        "count": 3303,
+        "start_utc": "2017-08-17 00:00",
+        "end_utc": "2026-09-01 00:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "4h": {
+        "count": 19800,
+        "start_utc": "2017-08-17 04:00",
+        "end_utc": "2026-09-01 16:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 8,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "1h": {
+        "count": 79134,
+        "start_utc": "2017-08-17 04:00",
+        "end_utc": "2026-09-01 17:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 28,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "15m": {
+        "count": 316482,
+        "start_utc": "2017-08-17 04:00",
+        "end_utc": "2026-09-01 17:30",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 33,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "5m": {
+        "count": 50000,
+        "start_utc": "2026-03-14 02:35",
+        "end_utc": "2026-09-03 17:10",
+        "covers_2021_2022": false,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "1m": {
+        "count": 50000,
+        "start_utc": "2026-07-30 23:53",
+        "end_utc": "2026-09-03 17:12",
+        "covers_2021_2022": false,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      }
+    },
+    "ETH": {
+      "1M": {
+        "count": 110,
+        "start_utc": "2017-08-01 00:00",
+        "end_utc": "2026-09-01 00:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "1w": {
+        "count": 473,
+        "start_utc": "2017-08-14 00:00",
+        "end_utc": "2026-08-31 00:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "1d": {
+        "count": 3303,
+        "start_utc": "2017-08-17 00:00",
+        "end_utc": "2026-09-01 00:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "4h": {
+        "count": 19800,
+        "start_utc": "2017-08-17 04:00",
+        "end_utc": "2026-09-01 16:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 8,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "1h": {
+        "count": 79134,
+        "start_utc": "2017-08-17 04:00",
+        "end_utc": "2026-09-01 17:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 28,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "15m": {
+        "count": 316482,
+        "start_utc": "2017-08-17 04:00",
+        "end_utc": "2026-09-01 17:30",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 33,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "5m": {
+        "count": 50000,
+        "start_utc": "2026-03-14 02:35",
+        "end_utc": "2026-09-03 17:10",
+        "covers_2021_2022": false,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "1m": {
+        "count": 50000,
+        "start_utc": "2026-07-30 23:54",
+        "end_utc": "2026-09-03 17:13",
+        "covers_2021_2022": false,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      }
+    },
+    "SOL": {
+      "1M": {
+        "count": 73,
+        "start_utc": "2020-09-01 00:00",
+        "end_utc": "2026-09-01 00:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "1w": {
+        "count": 316,
+        "start_utc": "2020-08-17 00:00",
+        "end_utc": "2026-08-31 00:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "1d": {
+        "count": 2209,
+        "start_utc": "2020-08-15 00:00",
+        "end_utc": "2026-09-01 00:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "4h": {
+        "count": 13254,
+        "start_utc": "2020-08-14 20:00",
+        "end_utc": "2026-09-01 16:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "1h": {
+        "count": 52997,
+        "start_utc": "2020-08-14 17:00",
+        "end_utc": "2026-09-01 17:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 10,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "15m": {
+        "count": 71000,
+        "start_utc": "2020-12-21 13:00",
+        "end_utc": "2023-01-01 00:00",
+        "covers_2021_2022": true,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 8,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "5m": {
+        "count": 50000,
+        "start_utc": "2026-03-14 02:35",
+        "end_utc": "2026-09-03 17:10",
+        "covers_2021_2022": false,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      },
+      "1m": {
+        "count": 50000,
+        "start_utc": "2026-07-30 23:56",
+        "end_utc": "2026-09-03 17:15",
+        "covers_2021_2022": false,
+        "duplicates": 0,
+        "invalid_candles": 0,
+        "gap_count": 0,
+        "timezone": "UTC (Binance Public API Standard)"
+      }
+    }
+  },
+  "manifest_h0": {
+    "experiment_id": "CANONICAL_H0_DEV_2021_2022",
+    "treatment": "H0",
+    "generated_at_utc": "2026-09-08T15:58:35.708678+00:00",
+    "git_commit": "0bee4584bc41967e7afc0aa2973bab444c812046",
+    "git_branch": "feat/exp-anchor2-expansion",
+    "config_hash": "e0d5372d9c49c31f",
+    "date_partition": {
+      "name": "DEVELOPMENT",
+      "start": "2021-01-01T00:00:00Z",
+      "end": "2022-12-31T23:59:59Z"
+    },
+    "universe": {
+      "assets": [
+        "BTC",
+        "ETH",
+        "SOL"
+      ],
+      "timeframe_sets": [
+        "SET_1",
+        "SET_2",
+        "SET_3",
+        "SET_4",
+        "SET_5"
+      ],
+      "total_streams": 15
+    },
+    "friction_model": {
+      "maker_fee_rate": 0.0002,
+      "taker_fee_rate": 0.0005,
+      "slippage_bps": 5.0,
+      "funding_model": "ZERO_DRIFT_SPOT"
+    },
+    "risk_model": {
+      "max_risk_fraction": 0.01,
+      "min_rr_floor": 4.0,
+      "min_stop_distance_pct": 0.001
+    },
+    "execution_model_version": "v1.0.0-causal-adverse-first"
+  },
+  "manifest_a2": {
+    "experiment_id": "CANONICAL_ANCHOR_2_DEV_2021_2022",
+    "treatment": "ANCHOR_2",
+    "generated_at_utc": "2026-09-08T16:11:39.306485+00:00",
+    "git_commit": "0bee4584bc41967e7afc0aa2973bab444c812046",
+    "git_branch": "feat/exp-anchor2-expansion",
+    "config_hash": "d736ed6affafccca",
+    "date_partition": {
+      "name": "DEVELOPMENT",
+      "start": "2021-01-01T00:00:00Z",
+      "end": "2022-12-31T23:59:59Z"
+    },
+    "universe": {
+      "assets": [
+        "BTC",
+        "ETH",
+        "SOL"
+      ],
+      "timeframe_sets": [
+        "SET_1",
+        "SET_2",
+        "SET_3",
+        "SET_4",
+        "SET_5"
+      ],
+      "total_streams": 15
+    },
+    "friction_model": {
+      "maker_fee_rate": 0.0002,
+      "taker_fee_rate": 0.0005,
+      "slippage_bps": 5.0,
+      "funding_model": "ZERO_DRIFT_SPOT"
+    },
+    "risk_model": {
+      "max_risk_fraction": 0.01,
+      "min_rr_floor": 4.0,
+      "min_stop_distance_pct": 0.001
+    },
+    "execution_model_version": "v1.0.0-causal-adverse-first"
+  },
+  "aggregate_h0": {
+    "total_trades": 14,
+    "wins": 0,
+    "losses": 14,
+    "breakevens": 0,
+    "win_rate": 0.0,
+    "net_r": -12.6931,
+    "gross_r": -11.5817,
+    "friction_r": 1.1114,
+    "expectancy": -0.9066,
+    "profit_factor": 0.0,
+    "max_drawdown_r": 12.6931,
+    "max_consecutive_losses": 14,
+    "avg_mfe_r": 0.4872,
+    "median_mfe_r": 0.3116,
+    "avg_mae_r": 1.8412,
+    "median_mae_r": 2.0293
+  },
+  "aggregate_a2": {
+    "total_trades": 35,
+    "wins": 2,
+    "losses": 33,
+    "breakevens": 0,
+    "win_rate": 5.71,
+    "net_r": -20.161,
+    "gross_r": -18.1078,
+    "friction_r": 2.0532,
+    "expectancy": -0.576,
+    "profit_factor": 0.1823,
+    "max_drawdown_r": 20.161,
+    "max_consecutive_losses": 18,
+    "avg_mfe_r": 0.903,
+    "median_mfe_r": 0.36,
+    "avg_mae_r": 1.2132,
+    "median_mae_r": 1.0368
+  },
+  "h0_waterfall": {
+    "funnel_counts": {
+      "total_market_bars": 277908,
+      "htf_state_runs": 15725,
+      "mtf_state_runs": 68143,
+      "ltf_state_runs": 277713,
+      "htf_qualified_candidates": 1424,
+      "mtf_aligned_candidates": 1173,
+      "mtf_retested_candidates": 754,
+      "ltf_triggered_candidates": 735,
+      "target_resolved_candidates": 15,
+      "executed_trades": 14,
+      "winning_trades": 0,
+      "losing_trades": 14,
+      "breakeven_trades": 0
+    },
+    "survival_rates": {
+      "market_bars_to_htf_qualified_pct": 0.51,
+      "htf_to_mtf_alignment_survival_pct": 82.37,
+      "mtf_alignment_to_retest_survival_pct": 64.28,
+      "retest_to_ltf_trigger_survival_pct": 97.48,
+      "ltf_trigger_to_target_resolved_survival_pct": 2.04,
+      "target_resolved_to_execution_survival_pct": 93.33,
+      "execution_to_win_pct": 0.0
+    },
+    "rejection_breakdown": {
+      "REJECT_RR_BELOW_4R": 580,
+      "REJECT_SETUP_LIFESPAN_EXPIRED": 10,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 329,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 367,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 95,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 28
+    }
+  },
+  "a2_waterfall": {
+    "funnel_counts": {
+      "total_market_bars": 277908,
+      "htf_state_runs": 15725,
+      "mtf_state_runs": 68143,
+      "ltf_state_runs": 277713,
+      "htf_qualified_candidates": 1424,
+      "mtf_aligned_candidates": 1173,
+      "mtf_retested_candidates": 754,
+      "ltf_triggered_candidates": 735,
+      "target_resolved_candidates": 30,
+      "executed_trades": 35,
+      "winning_trades": 2,
+      "losing_trades": 33,
+      "breakeven_trades": 0
+    },
+    "survival_rates": {
+      "market_bars_to_htf_qualified_pct": 0.51,
+      "htf_to_mtf_alignment_survival_pct": 82.37,
+      "mtf_alignment_to_retest_survival_pct": 64.28,
+      "retest_to_ltf_trigger_survival_pct": 97.48,
+      "ltf_trigger_to_target_resolved_survival_pct": 4.08,
+      "target_resolved_to_execution_survival_pct": 116.67,
+      "execution_to_win_pct": 5.71
+    },
+    "rejection_breakdown": {
+      "REJECT_RR_BELOW_4R": 671,
+      "REJECT_SETUP_LIFESPAN_EXPIRED": 10,
+      "REJECT_OPPOSING_MTF_STRUCTURE": 329,
+      "REJECT_SUPERSEDED_HTF_CONTEXT": 367,
+      "REJECT_MISSING_STRUCTURAL_ANCHORS": 12,
+      "REJECT_INVALID_ANCHOR_GEOMETRY": 5
+    }
+  },
+  "h0_mfe": {
+    "bucket_stats": {
+      "<0R": {
+        "count": 0,
+        "pct_of_total": 0.0,
+        "realized_r": 0.0,
+        "expectancy": 0.0,
+        "win_rate": 0.0,
+        "exit_reasons": {}
+      },
+      "0-0.5R": {
+        "count": 8,
+        "pct_of_total": 57.14,
+        "realized_r": -7.837,
+        "expectancy": -0.9796,
+        "win_rate": 0.0,
+        "exit_reasons": {
+          "INITIAL_LTF_SL": 7,
+          "MTF_STRUCTURAL_TRAIL": 1
+        }
+      },
+      "0.5-1R": {
+        "count": 3,
+        "pct_of_total": 21.43,
+        "realized_r": -2.9237,
+        "expectancy": -0.9746,
+        "win_rate": 0.0,
+        "exit_reasons": {
+          "INITIAL_LTF_SL": 2,
+          "MTF_STRUCTURAL_TRAIL": 1
+        }
+      },
+      "1-1.5R": {
+        "count": 2,
+        "pct_of_total": 14.29,
+        "realized_r": -0.8412,
+        "expectancy": -0.4206,
+        "win_rate": 0.0,
+        "exit_reasons": {
+          "MTF_STRUCTURAL_TRAIL": 2
+        }
+      },
+      "1.5-2R": {
+        "count": 1,
+        "pct_of_total": 7.14,
+        "realized_r": -1.0912,
+        "expectancy": -1.0912,
+        "win_rate": 0.0,
+        "exit_reasons": {
+          "INITIAL_LTF_SL": 1
+        }
+      },
+      "2-3R": {
+        "count": 0,
+        "pct_of_total": 0.0,
+        "realized_r": 0.0,
+        "expectancy": 0.0,
+        "win_rate": 0.0,
+        "exit_reasons": {}
+      },
+      "3-4R": {
+        "count": 0,
+        "pct_of_total": 0.0,
+        "realized_r": 0.0,
+        "expectancy": 0.0,
+        "win_rate": 0.0,
+        "exit_reasons": {}
+      },
+      "4R+": {
+        "count": 0,
+        "pct_of_total": 0.0,
+        "realized_r": 0.0,
+        "expectancy": 0.0,
+        "win_rate": 0.0,
+        "exit_reasons": {}
+      }
+    },
+    "leakage_summary": {
+      "mfe_ge_1r_ending_in_full_loss": 1,
+      "mfe_ge_2r_ending_in_full_loss": 0,
+      "mfe_ge_3r_ending_in_full_loss": 0,
+      "trades_reaching_ge_4r": 0,
+      "trades_reaching_target": 0,
+      "trades_exited_by_mtf_trail": 4,
+      "average_mfe_capture_ratio_winners": 0.0
+    }
+  },
+  "a2_mfe": {
+    "bucket_stats": {
+      "<0R": {
+        "count": 0,
+        "pct_of_total": 0.0,
+        "realized_r": 0.0,
+        "expectancy": 0.0,
+        "win_rate": 0.0,
+        "exit_reasons": {}
+      },
+      "0-0.5R": {
+        "count": 21,
+        "pct_of_total": 60.0,
+        "realized_r": -17.2034,
+        "expectancy": -0.8192,
+        "win_rate": 0.0,
+        "exit_reasons": {
+          "MTF_STRUCTURAL_TRAIL": 7,
+          "INITIAL_LTF_SL": 14
+        }
+      },
+      "0.5-1R": {
+        "count": 5,
+        "pct_of_total": 14.29,
+        "realized_r": -3.3853,
+        "expectancy": -0.6771,
+        "win_rate": 0.0,
+        "exit_reasons": {
+          "MTF_STRUCTURAL_TRAIL": 3,
+          "INITIAL_LTF_SL": 2
+        }
+      },
+      "1-1.5R": {
+        "count": 3,
+        "pct_of_total": 8.57,
+        "realized_r": -1.6102,
+        "expectancy": -0.5367,
+        "win_rate": 0.0,
+        "exit_reasons": {
+          "MTF_STRUCTURAL_TRAIL": 3
+        }
+      },
+      "1.5-2R": {
+        "count": 3,
+        "pct_of_total": 8.57,
+        "realized_r": -1.354,
+        "expectancy": -0.4513,
+        "win_rate": 0.0,
+        "exit_reasons": {
+          "INITIAL_LTF_SL": 1,
+          "MTF_STRUCTURAL_TRAIL": 2
+        }
+      },
+      "2-3R": {
+        "count": 0,
+        "pct_of_total": 0.0,
+        "realized_r": 0.0,
+        "expectancy": 0.0,
+        "win_rate": 0.0,
+        "exit_reasons": {}
+      },
+      "3-4R": {
+        "count": 2,
+        "pct_of_total": 5.71,
+        "realized_r": 4.4946,
+        "expectancy": 2.2473,
+        "win_rate": 100.0,
+        "exit_reasons": {
+          "MTF_STRUCTURAL_TRAIL": 2
+        }
+      },
+      "4R+": {
+        "count": 1,
+        "pct_of_total": 2.86,
+        "realized_r": -1.1027,
+        "expectancy": -1.1027,
+        "win_rate": 0.0,
+        "exit_reasons": {
+          "INITIAL_LTF_SL": 1
+        }
+      }
+    },
+    "leakage_summary": {
+      "mfe_ge_1r_ending_in_full_loss": 2,
+      "mfe_ge_2r_ending_in_full_loss": 1,
+      "mfe_ge_3r_ending_in_full_loss": 1,
+      "trades_reaching_ge_4r": 1,
+      "trades_reaching_target": 0,
+      "trades_exited_by_mtf_trail": 17,
+      "average_mfe_capture_ratio_winners": 0.5985
+    }
+  },
+  "h0_mae": {
+    "0-0.2R": {
+      "count": 1,
+      "avg_mfe_r": 0.4247,
+      "avg_realized_r": -0.2052,
+      "win_rate": 0.0,
+      "exit_reasons": {
+        "MTF_STRUCTURAL_TRAIL": 1
+      }
+    },
+    "0.2-0.5R": {
+      "count": 1,
+      "avg_mfe_r": 1.142,
+      "avg_realized_r": -0.2324,
+      "win_rate": 0.0,
+      "exit_reasons": {
+        "MTF_STRUCTURAL_TRAIL": 1
+      }
+    },
+    "0.5-0.8R": {
+      "count": 0,
+      "avg_mfe_r": 0.0,
+      "avg_realized_r": 0.0,
+      "win_rate": 0.0,
+      "exit_reasons": {}
+    },
+    "0.8-1.0R": {
+      "count": 0,
+      "avg_mfe_r": 0.0,
+      "avg_realized_r": 0.0,
+      "win_rate": 0.0,
+      "exit_reasons": {}
+    },
+    "1.0R+": {
+      "count": 12,
+      "avg_mfe_r": 0.4378,
+      "avg_realized_r": -1.0213,
+      "win_rate": 0.0,
+      "exit_reasons": {
+        "INITIAL_LTF_SL": 10,
+        "MTF_STRUCTURAL_TRAIL": 2
+      }
+    }
+  },
+  "a2_mae": {
+    "0-0.2R": {
+      "count": 3,
+      "avg_mfe_r": 1.4003,
+      "avg_realized_r": 0.4448,
+      "win_rate": 33.33,
+      "exit_reasons": {
+        "MTF_STRUCTURAL_TRAIL": 3
+      }
+    },
+    "0.2-0.5R": {
+      "count": 7,
+      "avg_mfe_r": 0.9759,
+      "avg_realized_r": 0.1758,
+      "win_rate": 14.29,
+      "exit_reasons": {
+        "MTF_STRUCTURAL_TRAIL": 7
+      }
+    },
+    "0.5-0.8R": {
+      "count": 4,
+      "avg_mfe_r": 1.3795,
+      "avg_realized_r": -0.3302,
+      "win_rate": 0.0,
+      "exit_reasons": {
+        "MTF_STRUCTURAL_TRAIL": 4
+      }
+    },
+    "0.8-1.0R": {
+      "count": 1,
+      "avg_mfe_r": 0.2584,
+      "avg_realized_r": -0.6857,
+      "win_rate": 0.0,
+      "exit_reasons": {
+        "MTF_STRUCTURAL_TRAIL": 1
+      }
+    },
+    "1.0R+": {
+      "count": 20,
+      "avg_mfe_r": 0.7399,
+      "avg_realized_r": -1.036,
+      "win_rate": 0.0,
+      "exit_reasons": {
+        "INITIAL_LTF_SL": 18,
+        "MTF_STRUCTURAL_TRAIL": 2
+      }
+    }
+  },
+  "time_to_excursion": {
+    "SET_4": {
+      "n_trades": 21,
+      "mtf_bar_duration_sec": 3600,
+      "mtf_bar_duration_hours": 1.0,
+      "median_time_to_0_5r_hours": 1.25,
+      "median_time_to_1_0r_hours": 1.88,
+      "median_time_to_2_0r_hours": 13.0,
+      "median_time_to_3_0r_hours": 27.75,
+      "median_time_to_mfe_hours": 4.25,
+      "median_time_to_stop_hours": 6.75,
+      "median_time_to_target_hours": null
+    },
+    "SET_3": {
+      "n_trades": 8,
+      "mtf_bar_duration_sec": 14400,
+      "mtf_bar_duration_hours": 4.0,
+      "median_time_to_0_5r_hours": 0.0,
+      "median_time_to_1_0r_hours": 4.0,
+      "median_time_to_2_0r_hours": null,
+      "median_time_to_3_0r_hours": null,
+      "median_time_to_mfe_hours": 0.0,
+      "median_time_to_stop_hours": 0.5,
+      "median_time_to_target_hours": null
+    },
+    "SET_2": {
+      "n_trades": 6,
+      "mtf_bar_duration_sec": 86400,
+      "mtf_bar_duration_hours": 24.0,
+      "median_time_to_0_5r_hours": 8.0,
+      "median_time_to_1_0r_hours": 8.0,
+      "median_time_to_2_0r_hours": null,
+      "median_time_to_3_0r_hours": null,
+      "median_time_to_mfe_hours": 40.0,
+      "median_time_to_stop_hours": 0.0,
+      "median_time_to_target_hours": null
+    }
+  },
+  "target_reality_test": {
+    "total_planned_4r_trades": 35,
+    "p_reach_0_5r": 40.0,
+    "p_reach_1_0r": 25.71,
+    "p_reach_2_0r": 8.57,
+    "p_reach_3_0r": 8.57,
+    "p_reach_4_0r": 2.86,
+    "p_reach_target": 0.0,
+    "verdict": "USUALLY_UNREACHABLE"
+  },
+  "exit_attribution_h0": {
+    "INITIAL_LTF_SL": {
+      "count": 10,
+      "net_r": -10.9311,
+      "expectancy": -1.0931,
+      "avg_mfe": 0.3184,
+      "avg_mae": 2.1082
+    },
+    "MTF_TRAIL_LOSS": {
+      "count": 4,
+      "net_r": -1.762,
+      "expectancy": -0.4405,
+      "avg_mfe": 0.9091,
+      "avg_mae": 1.1738
+    },
+    "MTF_TRAIL_BREAKEVEN": {
+      "count": 0,
+      "net_r": 0.0,
+      "expectancy": 0.0,
+      "avg_mfe": 0.0,
+      "avg_mae": 0.0
+    },
+    "MTF_TRAIL_PROFIT": {
+      "count": 0,
+      "net_r": 0.0,
+      "expectancy": 0.0,
+      "avg_mfe": 0.0,
+      "avg_mae": 0.0
+    },
+    "HTF_TARGET": {
+      "count": 0,
+      "net_r": 0.0,
+      "expectancy": 0.0,
+      "avg_mfe": 0.0,
+      "avg_mae": 0.0
+    },
+    "EMERGENCY": {
+      "count": 0,
+      "net_r": 0.0,
+      "expectancy": 0.0,
+      "avg_mfe": 0.0,
+      "avg_mae": 0.0
+    }
+  },
+  "exit_attribution_a2": {
+    "INITIAL_LTF_SL": {
+      "count": 18,
+      "net_r": -19.3952,
+      "expectancy": -1.0775,
+      "avg_mfe": 0.7071,
+      "avg_mae": 1.7859
+    },
+    "MTF_TRAIL_LOSS": {
+      "count": 15,
+      "net_r": -5.2604,
+      "expectancy": -0.3507,
+      "avg_mfe": 0.7591,
+      "avg_mae": 0.6662
+    },
+    "MTF_TRAIL_BREAKEVEN": {
+      "count": 0,
+      "net_r": 0.0,
+      "expectancy": 0.0,
+      "avg_mfe": 0.0,
+      "avg_mae": 0.0
+    },
+    "MTF_TRAIL_PROFIT": {
+      "count": 2,
+      "net_r": 4.4946,
+      "expectancy": 2.2473,
+      "avg_mfe": 3.7458,
+      "avg_mae": 0.161
+    },
+    "HTF_TARGET": {
+      "count": 0,
+      "net_r": 0.0,
+      "expectancy": 0.0,
+      "avg_mfe": 0.0,
+      "avg_mae": 0.0
+    },
+    "EMERGENCY": {
+      "count": 0,
+      "net_r": 0.0,
+      "expectancy": 0.0,
+      "avg_mfe": 0.0,
+      "avg_mae": 0.0
+    }
+  },
+  "target_provenance": {
+    "FORWARD_STRUCTURAL_EXPANSION": {
+      "count": 19,
+      "net_r": -6.2859,
+      "expectancy": -0.3308,
+      "win_rate": 10.53,
+      "avg_mfe_r": 1.3009,
+      "avg_mae_r": 0.8116
+    },
+    "LIQUIDITY_POOL": {
+      "count": 10,
+      "net_r": -8.1564,
+      "expectancy": -0.8156,
+      "win_rate": 0.0,
+      "avg_mfe_r": 0.482,
+      "avg_mae_r": 1.782
+    },
+    "OPPOSING_KEYZONE": {
+      "count": 6,
+      "net_r": -5.7187,
+      "expectancy": -0.9531,
+      "win_rate": 0.0,
+      "avg_mfe_r": 0.3447,
+      "avg_mae_r": 1.5369
+    }
+  },
+  "asset_attribution": {
+    "BTC": {
+      "count": 9,
+      "net_r": -6.1962,
+      "expectancy": -0.6885,
+      "pf": 0.2147,
+      "win_rate": 11.11,
+      "avg_mfe_r": 1.7392,
+      "avg_mae_r": 1.4956
+    },
+    "ETH": {
+      "count": 8,
+      "net_r": -5.9429,
+      "expectancy": -0.7429,
+      "pf": 0.0,
+      "win_rate": 0.0,
+      "avg_mfe_r": 0.8432,
+      "avg_mae_r": 1.8388
+    },
+    "SOL": {
+      "count": 18,
+      "net_r": -8.0219,
+      "expectancy": -0.4457,
+      "pf": 0.2588,
+      "win_rate": 5.56,
+      "avg_mfe_r": 0.5115,
+      "avg_mae_r": 0.7939
+    }
+  },
+  "timeframe_attribution": {
+    "SET_1": {
+      "count": 0,
+      "net_r": 0.0,
+      "expectancy": 0.0,
+      "pf": 0.0,
+      "win_rate": 0.0
+    },
+    "SET_2": {
+      "count": 6,
+      "net_r": -5.6862,
+      "expectancy": -0.9477,
+      "pf": 0.0,
+      "win_rate": 0.0,
+      "avg_mfe_r": 0.4542,
+      "avg_mae_r": 2.2142
+    },
+    "SET_3": {
+      "count": 8,
+      "net_r": -6.8717,
+      "expectancy": -0.859,
+      "pf": 0.0,
+      "win_rate": 0.0,
+      "avg_mfe_r": 0.3777,
+      "avg_mae_r": 1.4646
+    },
+    "SET_4": {
+      "count": 21,
+      "net_r": -7.603,
+      "expectancy": -0.362,
+      "pf": 0.3715,
+      "win_rate": 9.52,
+      "avg_mfe_r": 1.2314,
+      "avg_mae_r": 0.8314
+    },
+    "SET_5": {
+      "count": 0,
+      "net_r": 0.0,
+      "expectancy": 0.0,
+      "pf": 0.0,
+      "win_rate": 0.0
+    }
+  },
+  "regime_diagnostics": {
+    "trend_regimes": {
+      "RANGE_CHOP": {
+        "count": 35,
+        "net_r": -20.161,
+        "expectancy": -0.576,
+        "win_rate": 5.71,
+        "pf": 0.1823
+      }
+    },
+    "volatility_regimes": {
+      "NORMAL_VOLATILITY": {
+        "count": 35,
+        "net_r": -20.161,
+        "expectancy": -0.576,
+        "win_rate": 5.71,
+        "pf": 0.1823
+      }
+    },
+    "phase_regimes": {
+      "CONTINUATION": {
+        "count": 35,
+        "net_r": -20.161,
+        "expectancy": -0.576,
+        "win_rate": 5.71,
+        "pf": 0.1823
+      }
+    }
+  },
+  "cost_elasticity": {
+    "Base Cost": {
+      "multiplier": 1.0,
+      "net_r": -20.1612,
+      "expectancy": -0.576,
+      "profit_factor": 0.1823
+    },
+    "+25% Cost": {
+      "multiplier": 1.25,
+      "net_r": -20.6745,
+      "expectancy": -0.5907,
+      "profit_factor": 0.1779
+    },
+    "+50% Cost": {
+      "multiplier": 1.5,
+      "net_r": -21.1879,
+      "expectancy": -0.6054,
+      "profit_factor": 0.1738
+    },
+    "+100% Cost": {
+      "multiplier": 2.0,
+      "net_r": -22.2146,
+      "expectancy": -0.6347,
+      "profit_factor": 0.1659
+    },
+    "+200% Cost": {
+      "multiplier": 3.0,
+      "net_r": -24.268,
+      "expectancy": -0.6934,
+      "profit_factor": 0.1517
+    }
+  },
+  "trade_dependency": {
+    "raw_trade_count": 35,
+    "unique_setup_count": 32,
+    "overlapping_trade_count": 12,
+    "event_cluster_count": 23,
+    "cluster_details": [
+      "Cluster_1: 2 trades",
+      "Cluster_2: 2 trades",
+      "Cluster_3: 2 trades",
+      "Cluster_4: 2 trades",
+      "Cluster_6: 2 trades",
+      "Cluster_7: 2 trades",
+      "Cluster_8: 2 trades",
+      "Cluster_12: 2 trades",
+      "Cluster_14: 2 trades",
+      "Cluster_17: 2 trades",
+      "Cluster_18: 2 trades",
+      "Cluster_21: 2 trades"
+    ]
+  }
+}

@@ -78,15 +78,7 @@ def test_terminal_candidate_never_reenters_regression_invariant():
         position_status=PositionState.ACTIVE_POSITION.value
     )
     
-    # Evaluate proposal in mock coordinator
-    replayer.strategy_coordinator.evaluate = lambda h, m, l: [plan_entry]
-
-    htf_candles = generate_candle_series(20, start_ts=0, step_ms=4 * 3600 * 1000, base_price=100.0)
-    mtf_candles = generate_candle_series(40, start_ts=0, step_ms=3600 * 1000, base_price=100.0)
-    ltf_candles = generate_candle_series(100, start_ts=0, step_ms=15 * 60 * 1000, base_price=100.0)
-
-    # First bar sets it as pending, next bar fills it
-    # Now simulate active manager emitting an EXIT plan with status=ENTERED and position_status=MTF_TRAIL_EXIT
+    # 2. Simulate active manager emitting an EXIT plan with status=ENTERED and position_status=MTF_TRAIL_EXIT
     plan_exit = TradePlanPayload(
         trade_plan_id=cand_id,
         hypothesis_id="UNIFIED_STRATEGY",
@@ -112,6 +104,9 @@ def test_terminal_candidate_never_reenters_regression_invariant():
 
     replayer.strategy_coordinator.evaluate = dynamic_evaluate
 
+    htf_candles = generate_candle_series(20, start_ts=0, step_ms=4 * 3600 * 1000, base_price=100.0)
+    mtf_candles = generate_candle_series(40, start_ts=0, step_ms=3600 * 1000, base_price=100.0)
+    ltf_candles = generate_candle_series(100, start_ts=0, step_ms=15 * 60 * 1000, base_price=100.0)
     result = replayer.run(
         symbol="BTCUSDT",
         htf_candles=htf_candles,

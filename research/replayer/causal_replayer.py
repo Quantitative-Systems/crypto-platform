@@ -203,7 +203,15 @@ class CausalReplayer:
                 # 5. Process emitted trade plans through Risk Firewall (P03)
                 for plan in trade_plans:
                     # Case B: Active Trade Trailing Stop / Exit Management (must take precedence over entry check)
-                    if getattr(plan, "position_status", None) in [PositionState.MTF_TRAIL_EXIT.value, PositionState.LTF_SL_EXIT.value, PositionState.TP_EXIT.value]:
+                    if getattr(plan, "position_status", None) in [
+                        PositionState.MTF_TRAIL_EXIT.value,
+                        PositionState.LTF_SL_EXIT.value,
+                        PositionState.TP_EXIT.value,
+                        PositionState.HTF_TARGET_REACHED.value,
+                        PositionState.LTF_INVALIDATION_EXIT.value,
+                        PositionState.RISK_EXIT.value,
+                        PositionState.TRADE_CLOSED.value,
+                    ]:
                         if plan.position_status == PositionState.MTF_TRAIL_EXIT.value and self.enable_mtf_trailing:
                             self.execution_simulator.execute_structural_exit(
                                 trade_id=plan.trade_plan_id,
@@ -213,6 +221,7 @@ class CausalReplayer:
                                 ledger=self.ledger
                             )
                         # Intrabar SL/TP exits are handled directly by ExecutionSimulator
+                        plan.status = "CLOSED"
 
                     # Case A: New Entry Proposal (only for genuine new entries in ENTERED state)
                     elif plan.status == CandidateState.ENTERED.value:
