@@ -91,7 +91,8 @@ class StrategyCoordinator:
         hypothesis: Optional[BaseHypothesis] = None,
         enable_kz_freshness: bool = False,
         max_htf_kz_age_seconds: Optional[int] = None,
-        enable_forward_expansion: bool = False
+        enable_forward_expansion: bool = False,
+        enforce_displacement_polarity: bool = False
     ):
         """
         htf_context_filter: when set to "PULLBACK" or "CONTINUATION", candidates
@@ -103,6 +104,7 @@ class StrategyCoordinator:
         self.enable_kz_freshness = enable_kz_freshness
         self.max_htf_kz_age_seconds = max_htf_kz_age_seconds
         self.enable_forward_expansion = enable_forward_expansion
+        self.enforce_displacement_polarity = enforce_displacement_polarity
         if hypothesis is not None:
             self.hypotheses = {hypothesis.hypothesis_id: hypothesis}
         else:
@@ -110,7 +112,8 @@ class StrategyCoordinator:
                 "UNIFIED_STRATEGY": UnifiedStrategy(
                     enable_kz_freshness=enable_kz_freshness,
                     max_htf_kz_age_seconds=max_htf_kz_age_seconds,
-                    enable_forward_expansion=enable_forward_expansion
+                    enable_forward_expansion=enable_forward_expansion,
+                    enforce_displacement_polarity=enforce_displacement_polarity
                 )
             }
         self.candidate_tracker = CandidateTracker()

@@ -21,13 +21,15 @@ class UnifiedStrategy(BaseHypothesis):
         version: str = "v2.0-UNIFIED-CANONICAL-LOCKED",
         enable_kz_freshness: bool = False,
         max_htf_kz_age_seconds: Optional[int] = None,
-        enable_forward_expansion: bool = False
+        enable_forward_expansion: bool = False,
+        enforce_displacement_polarity: bool = False
     ):
         self._hypothesis_id = hypothesis_id
         self._version = version
         self.enable_kz_freshness = enable_kz_freshness
         self.max_htf_kz_age_seconds = max_htf_kz_age_seconds
         self.enable_forward_expansion = enable_forward_expansion
+        self.enforce_displacement_polarity = enforce_displacement_polarity
 
     @property
     def hypothesis_id(self) -> str:
@@ -306,6 +308,28 @@ class UnifiedStrategy(BaseHypothesis):
                 setup_retest_timestamp=candidate.mtf_retest_timestamp or candidate.creation_timestamp
             )
             if entry_eval.is_confirmed:
+                if self.enforce_displacement_polarity:
+                    c = ltf_payload.current_candle
+                    if c:
+                        if is_long and c.close <= c.open:
+                            candidate.transition_to(CandidateState.REJECTED)
+                            candidate.invalidation_reason = "REJECT_ENTRY_DISPLACEMENT_POLARITY"
+                            candidate.invalidation_timestamp = ltf_payload.timestamp
+                            return TelemetryHelper.reject(
+                                candidate.candidate_id, self.hypothesis_id, candidate.symbol, candidate.directional_permission,
+                                ltf_payload.timestamp, "REJECT_ENTRY_DISPLACEMENT_POLARITY",
+                                structural_provenance=candidate.to_provenance_dict(), source_timeframes=timeframes
+                            )
+                        elif (not is_long) and c.close >= c.open:
+                            candidate.transition_to(CandidateState.REJECTED)
+                            candidate.invalidation_reason = "REJECT_ENTRY_DISPLACEMENT_POLARITY"
+                            candidate.invalidation_timestamp = ltf_payload.timestamp
+                            return TelemetryHelper.reject(
+                                candidate.candidate_id, self.hypothesis_id, candidate.symbol, candidate.directional_permission,
+                                ltf_payload.timestamp, "REJECT_ENTRY_DISPLACEMENT_POLARITY",
+                                structural_provenance=candidate.to_provenance_dict(), source_timeframes=timeframes
+                            )
+
                 candidate.ltf_confirmation_timestamp = ltf_payload.timestamp
                 candidate.ltf_entry_reason = entry_eval.reversal_reason
                 candidate.ltf_entry_price = entry_eval.entry_price or ltf_payload.current_price

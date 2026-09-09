@@ -49,7 +49,8 @@ class CausalReplayer:
         hypothesis: Optional[Any] = None,
         enable_kz_freshness: bool = False,
         max_htf_kz_age_seconds: Optional[int] = None,
-        enable_forward_expansion: bool = False
+        enable_forward_expansion: bool = False,
+        enforce_displacement_polarity: bool = False
     ):
         self.timeframe_set: TimeframeSet = TimeframeAligner.get_set(timeframe_set_id)
         self.initial_balance = initial_balance
@@ -64,6 +65,7 @@ class CausalReplayer:
         self.enable_kz_freshness = enable_kz_freshness
         self.max_htf_kz_age_seconds = max_htf_kz_age_seconds
         self.enable_forward_expansion = enable_forward_expansion
+        self.enforce_displacement_polarity = enforce_displacement_polarity
         # RESEARCH ENGINE PERFORMANCE FLAG (no trading-logic impact):
         # When True, the point-in-time HTF/MTF incremental state is cached and only
         # recomputed when a NEW higher/middle timeframe candle becomes causally
@@ -96,7 +98,8 @@ class CausalReplayer:
             hypothesis=hypothesis,
             enable_kz_freshness=self.enable_kz_freshness,
             max_htf_kz_age_seconds=self.max_htf_kz_age_seconds,
-            enable_forward_expansion=self.enable_forward_expansion
+            enable_forward_expansion=self.enable_forward_expansion,
+            enforce_displacement_polarity=self.enforce_displacement_polarity
         )
         self.execution_simulator = ExecutionSimulator(
             maker_fee_rate=maker_fee_rate,
