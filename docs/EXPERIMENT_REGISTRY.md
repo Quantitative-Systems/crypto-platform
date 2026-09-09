@@ -118,7 +118,7 @@ Enforces the mandatory research governance rule: **no unrecorded experiments, no
   1. Entry Gate: `enforce_displacement_polarity = True` (rejects counter-directional LTF trigger candles)
   2. Lifecycle Manager: `enable_breakeven_1r = True`, `trigger_r = 1.0`, `stop_r = 0.10`
 - **BRANCH**: `feat/exp-composite-polarity-breakeven`
-- **COMMIT**: Pending commit on `feat/exp-composite-polarity-breakeven`
+- **COMMIT**: `591b5ba`
 - **DATASET**: Canonical 15 streams, certified Binance cache (restored 79,134-candle dataset)
 - **PARTITION**: Strict Development Partition (`2021-01-01` to `2022-12-31`). Validation (`2023`) and OOS (`2024–2026`) locked.
 - **FROZEN_VARIABLES**: Dealing range target geometry, initial stop loss, risk sizing (1%), fees (2 bps maker / 5 bps taker), slippage (5 bps), adverse-first collision resolution.
