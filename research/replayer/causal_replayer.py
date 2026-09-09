@@ -50,7 +50,10 @@ class CausalReplayer:
         enable_kz_freshness: bool = False,
         max_htf_kz_age_seconds: Optional[int] = None,
         enable_forward_expansion: bool = False,
-        enforce_displacement_polarity: bool = False
+        enforce_displacement_polarity: bool = False,
+        enable_breakeven_1r: bool = False,
+        breakeven_trigger_r: float = 1.0,
+        breakeven_stop_r: float = 0.10
     ):
         self.timeframe_set: TimeframeSet = TimeframeAligner.get_set(timeframe_set_id)
         self.initial_balance = initial_balance
@@ -60,6 +63,9 @@ class CausalReplayer:
         self.giveback_r = giveback_r
         self.profit_lock_trigger_r = profit_lock_trigger_r
         self.profit_lock_stop_r = profit_lock_stop_r
+        self.enable_breakeven_1r = enable_breakeven_1r
+        self.breakeven_trigger_r = breakeven_trigger_r
+        self.breakeven_stop_r = breakeven_stop_r
         self.enable_regime_filter = enable_regime_filter
         self.risk_config = risk_config
         self.enable_kz_freshness = enable_kz_freshness
@@ -93,6 +99,9 @@ class CausalReplayer:
             giveback_r=self.giveback_r,
             profit_lock_trigger_r=self.profit_lock_trigger_r,
             profit_lock_stop_r=self.profit_lock_stop_r,
+            enable_breakeven_1r=self.enable_breakeven_1r,
+            breakeven_trigger_r=self.breakeven_trigger_r,
+            breakeven_stop_r=self.breakeven_stop_r,
             regime_filter=self.regime_filter,
             htf_context_filter=htf_context_filter,
             hypothesis=hypothesis,
@@ -109,7 +118,10 @@ class CausalReplayer:
             lockin_r=self.lockin_r,
             giveback_r=self.giveback_r,
             profit_lock_trigger_r=self.profit_lock_trigger_r,
-            profit_lock_stop_r=self.profit_lock_stop_r
+            profit_lock_stop_r=self.profit_lock_stop_r,
+            enable_breakeven_1r=self.enable_breakeven_1r,
+            breakeven_trigger_r=self.breakeven_trigger_r,
+            breakeven_stop_r=self.breakeven_stop_r
         )
         self.ledger = TradeLedger(initial_equity=initial_balance)
 

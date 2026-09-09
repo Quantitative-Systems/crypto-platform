@@ -23,7 +23,10 @@ class ExecutionSimulator:
         lockin_r: float = 1.0,
         giveback_r: float = 0.75,
         profit_lock_trigger_r: float = 1.0,
-        profit_lock_stop_r: float = 0.10
+        profit_lock_stop_r: float = 0.10,
+        enable_breakeven_1r: bool = False,
+        breakeven_trigger_r: float = 1.0,
+        breakeven_stop_r: float = 0.10
     ):
         self.maker_fee_rate = maker_fee_rate
         self.taker_fee_rate = taker_fee_rate
@@ -33,6 +36,9 @@ class ExecutionSimulator:
         self.giveback_r = giveback_r
         self.profit_lock_trigger_r = profit_lock_trigger_r
         self.profit_lock_stop_r = profit_lock_stop_r
+        self.enable_breakeven_1r = enable_breakeven_1r
+        self.breakeven_trigger_r = breakeven_trigger_r
+        self.breakeven_stop_r = breakeven_stop_r
 
     def _apply_slippage(self, base_price: float, is_buy: bool) -> float:
         """
@@ -118,6 +124,42 @@ class ExecutionSimulator:
                 if curr_fav_r >= 4.0 and "time_to_4_0r" not in trade.metadata:
                     trade.metadata["time_to_4_0r"] = dt
 
+            # Prior stop level at start of candle (for adverse-first collision arbitration)
+            prior_stop = trade.current_stop_price
+            hit_prior_sl = (candle.low <= prior_stop) if is_long else (candle.high >= prior_stop)
+
+            # HYP_MGT_BREAKEVEN_1R_01: Single-variable +1.0R -> +0.10R monotonic breakeven ratchet
+            if self.enable_breakeven_1r and risk_dist > 0:
+                # Adverse-first collision invariant: If candle penetrated prior adverse stop,
+                # adverse stop wins; cannot assume +1.0R was reached prior to stop-out.
+                if not hit_prior_sl:
+                    if is_long:
+                        fav_p = trade.metadata.get("mfe_price", entry_p)
+                        fav_r = (fav_p - entry_p) / risk_dist
+                        if fav_r >= self.breakeven_trigger_r - 1e-7:
+                            be_stop = entry_p + (self.breakeven_stop_r * risk_dist)
+                            # Monotonicity: never weaken an already superior stop
+                            if be_stop > trade.current_stop_price:
+                                ledger.update_trailing_stop(trade.trade_id, be_stop)
+                                trade.metadata["breakeven_triggered"] = True
+                                trade.metadata["breakeven_trigger_ts"] = candle.timestamp
+                                trade.metadata["breakeven_trigger_price"] = entry_p + (self.breakeven_trigger_r * risk_dist)
+                                trade.metadata["breakeven_stop_ts"] = candle.timestamp
+                                trade.metadata["breakeven_stop_price"] = be_stop
+                    else:
+                        fav_p = trade.metadata.get("mfe_price", entry_p)
+                        fav_r = (entry_p - fav_p) / risk_dist
+                        if fav_r >= self.breakeven_trigger_r - 1e-7:
+                            be_stop = entry_p - (self.breakeven_stop_r * risk_dist)
+                            # Monotonicity: never weaken an already superior stop
+                            if be_stop < trade.current_stop_price:
+                                ledger.update_trailing_stop(trade.trade_id, be_stop)
+                                trade.metadata["breakeven_triggered"] = True
+                                trade.metadata["breakeven_trigger_ts"] = candle.timestamp
+                                trade.metadata["breakeven_trigger_price"] = entry_p - (self.breakeven_trigger_r * risk_dist)
+                                trade.metadata["breakeven_stop_ts"] = candle.timestamp
+                                trade.metadata["breakeven_stop_price"] = be_stop
+
             # Profit-Lock & Break-Even Ratchet
             if self.enable_profit_lock:
                 if risk_dist > 0:
@@ -175,7 +217,9 @@ class ExecutionSimulator:
                 exit_fee = notional * self.taker_fee_rate
                 
                 # Tag whether it was initial structural SL or MTF/Profit-Lock Trailed stop
-                if trade.metadata.get("profit_locked", False) and abs(current_stop - trade.initial_stop_price) >= 1e-6:
+                if trade.metadata.get("breakeven_triggered", False) and abs(current_stop - trade.metadata.get("breakeven_stop_price", -999.0)) < 1e-5:
+                    exit_reason = "BREAKEVEN_TRAIL"
+                elif trade.metadata.get("profit_locked", False) and abs(current_stop - trade.initial_stop_price) >= 1e-6:
                     exit_reason = "PROFIT_LOCK_TRAIL"
                 elif abs(current_stop - trade.initial_stop_price) < 1e-6:
                     exit_reason = "INITIAL_LTF_SL"

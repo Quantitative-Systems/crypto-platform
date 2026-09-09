@@ -92,7 +92,10 @@ class StrategyCoordinator:
         enable_kz_freshness: bool = False,
         max_htf_kz_age_seconds: Optional[int] = None,
         enable_forward_expansion: bool = False,
-        enforce_displacement_polarity: bool = False
+        enforce_displacement_polarity: bool = False,
+        enable_breakeven_1r: bool = False,
+        breakeven_trigger_r: float = 1.0,
+        breakeven_stop_r: float = 0.10
     ):
         """
         htf_context_filter: when set to "PULLBACK" or "CONTINUATION", candidates
@@ -105,6 +108,9 @@ class StrategyCoordinator:
         self.max_htf_kz_age_seconds = max_htf_kz_age_seconds
         self.enable_forward_expansion = enable_forward_expansion
         self.enforce_displacement_polarity = enforce_displacement_polarity
+        self.enable_breakeven_1r = enable_breakeven_1r
+        self.breakeven_trigger_r = breakeven_trigger_r
+        self.breakeven_stop_r = breakeven_stop_r
         if hypothesis is not None:
             self.hypotheses = {hypothesis.hypothesis_id: hypothesis}
         else:
@@ -123,7 +129,10 @@ class StrategyCoordinator:
             lockin_r=lockin_r,
             giveback_r=giveback_r,
             profit_lock_trigger_r=profit_lock_trigger_r,
-            profit_lock_stop_r=profit_lock_stop_r
+            profit_lock_stop_r=profit_lock_stop_r,
+            enable_breakeven_1r=enable_breakeven_1r,
+            breakeven_trigger_r=breakeven_trigger_r,
+            breakeven_stop_r=breakeven_stop_r
         )
         self.news_provider = news_provider or NullNewsProvider()
         self.regime_filter = regime_filter
