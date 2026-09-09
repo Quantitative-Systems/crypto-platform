@@ -12,6 +12,7 @@ Enforces the mandatory research governance rule: **no unrecorded experiments, no
 | `ANCHOR_2` | `feat/exp-anchor2-expansion` | Dev 2021–2022 | 23 | $-4.1741\text{R}$ | $-0.1815\text{R}$ | 0.5712 | `BASELINE_CERTIFIED` | Branching to Cycle #1 & Cycle #2 |
 | `HYP_ENTRY_DISPLACEMENT_POLARITY_01` | `feat/exp-anchor2-expansion` | Dev 2021–2022 | 12 | $-0.0685\text{R}$ | $-0.0057\text{R}$ | 0.9850 | `RESULT_B_IMPROVEMENT` | Retained, not promoted to control |
 | `HYP_COMPOSITE_POLARITY_BREAKEVEN_01` | `feat/exp-composite-polarity-breakeven` | Dev 2021–2022 | 13 | $+0.9615\text{R}$ | $+0.0740\text{R}$ | 1.2583 | `RESULT_B_CONTROLLED_INTERACTION` | Present raw results for independent audit; STOP |
+| `HYP_TARGET_MILESTONE_01` | `feat/exp-target-milestone-2.5r` | Dev 2021–2022 | 13 | $+1.4403\text{R}$ | $+0.1108\text{R}$ | 1.3869 | `RESULT_B_INFORMATIVE_MECHANISM` | Retained for research; STOP |
 
 ---
 
@@ -149,4 +150,44 @@ Enforces the mandatory research governance rule: **no unrecorded experiments, no
 - **RESULT**: Net $+0.9615\text{R}$ (vs $-4.1741\text{R}$ baseline), Expectancy $+0.0740\text{R}$, PF $1.2583$, Win Rate $38.46\%$, Max DD $2.5845\text{R}$, Max Consecutive Losses 3.
 - **DECISION_GATE**: `RESULT_B_CONTROLLED_INTERACTION`
 - **NEXT_ALLOWED_ACTION**: Submit raw results and 23-opportunity matrix for independent user audit. STOP. No target modifications, no parameter tuning, no unfreezing of Validation or OOS.
+
+---
+
+## 5. Research Cycle #4: `HYP_TARGET_MILESTONE_01`
+
+- **EXPERIMENT_ID**: `CANONICAL_MILESTONE_2_5R_DEV_2021_2022`
+- **PARENT_BASELINE**: `HYP_COMPOSITE_POLARITY_BREAKEVEN_01`
+- **HYPOTHESIS**: A pre-registered milestone monetization limit exit at $+2.5\text{R}$ monetizes open favorable excursion before large structural givebacks occur on high-excursion trades, testing the giveback-avoidance vs convexity-truncation trade-off.
+- **MECHANISM**: Additional post-entry exit rule:
+  - If causally observed excursion reaches $\ge +2.5\text{R}$, exit $100\%$ via limit order at $+2.5\text{R}$ price (`MILESTONE_TARGET_EXIT`).
+  - Maker fee (2 bps), zero slippage.
+  - Same-bar collision: adverse-first priority strictly preserved.
+  - Planned structural target remains intact in setup.
+- **BRANCH**: `feat/exp-target-milestone-2.5r`
+- **COMMIT**: `HEAD`
+- **DATASET**: Canonical 15 streams, certified Binance cache.
+- **PARTITION**: Strict Development Partition (`2021-01-01` to `2022-12-31`). Validation (`2023`) and OOS (`2024–2026`) locked.
+- **FROZEN_VARIABLES**: Entry qualification, displacement polarity, breakeven mechanism (+1.0R -> +0.10R), initial stop loss, risk sizing (1%), structural target geometry, fees, slippage, adverse-first collision.
+- **CHANGED_VARIABLES**: `enable_milestone_target = True`, `milestone_r = 2.5`
+- **WATERFALL**:
+  - Exact match to Composite baseline across all stages:
+  - Total Candidates: 1,489
+  - HTF Approved: 1,489
+  - MTF Retested: 412
+  - LTF Confirmed: 35
+  - Risk Approved: 13
+  - Executed Trades: 13 (Population invariance preserved: $13 / 13$)
+  - Closed Trades: 13
+- **TRADE_ATTRIBUTION**:
+  - Unchanged: 11 trades peaked below $2.5\text{R}$ MFE ($0.0\text{R}$ delta)
+  - Improved: 1 trade (#05 BTC_SET_4, saved $+0.7881\text{R}$ of giveback)
+  - Harmed: 1 trade (#03 SOL_SET_4, sacrificed $-0.3094\text{R}$ of runner convexity)
+- **CONVEXITY**:
+  - Total R Gained from Improved Exits: $+0.7881\text{R}$
+  - Total R Sacrificed from Truncated Winners: $-0.3094\text{R}$
+  - Net Delta R: $+0.4788\text{R}$
+- **RESULT**: Net $+1.4403\text{R}$ (vs $+0.9615\text{R}$ Composite), Expectancy $+0.1108\text{R}$, PF $1.3869$, Win Rate $38.46\%$, Max DD $2.5845\text{R}$, Milestone Hits $2/13$ ($15.4\%$).
+- **DECISION_GATE**: `RESULT_B_INFORMATIVE_MECHANISM`
+- **NEXT_ALLOWED_ACTION**: Submit raw forensic audit and paired attribution. STOP. No parameter sweeps, no target geometry alterations, no unfreezing of Validation/OOS.
+
 

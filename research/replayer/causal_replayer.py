@@ -53,7 +53,9 @@ class CausalReplayer:
         enforce_displacement_polarity: bool = False,
         enable_breakeven_1r: bool = False,
         breakeven_trigger_r: float = 1.0,
-        breakeven_stop_r: float = 0.10
+        breakeven_stop_r: float = 0.10,
+        enable_milestone_target: bool = False,
+        milestone_r: float = 2.5
     ):
         self.timeframe_set: TimeframeSet = TimeframeAligner.get_set(timeframe_set_id)
         self.initial_balance = initial_balance
@@ -66,6 +68,8 @@ class CausalReplayer:
         self.enable_breakeven_1r = enable_breakeven_1r
         self.breakeven_trigger_r = breakeven_trigger_r
         self.breakeven_stop_r = breakeven_stop_r
+        self.enable_milestone_target = enable_milestone_target
+        self.milestone_r = milestone_r
         self.enable_regime_filter = enable_regime_filter
         self.risk_config = risk_config
         self.enable_kz_freshness = enable_kz_freshness
@@ -102,6 +106,8 @@ class CausalReplayer:
             enable_breakeven_1r=self.enable_breakeven_1r,
             breakeven_trigger_r=self.breakeven_trigger_r,
             breakeven_stop_r=self.breakeven_stop_r,
+            enable_milestone_target=self.enable_milestone_target,
+            milestone_r=self.milestone_r,
             regime_filter=self.regime_filter,
             htf_context_filter=htf_context_filter,
             hypothesis=hypothesis,
@@ -121,7 +127,9 @@ class CausalReplayer:
             profit_lock_stop_r=self.profit_lock_stop_r,
             enable_breakeven_1r=self.enable_breakeven_1r,
             breakeven_trigger_r=self.breakeven_trigger_r,
-            breakeven_stop_r=self.breakeven_stop_r
+            breakeven_stop_r=self.breakeven_stop_r,
+            enable_milestone_target=self.enable_milestone_target,
+            milestone_r=self.milestone_r
         )
         self.ledger = TradeLedger(initial_equity=initial_balance)
 

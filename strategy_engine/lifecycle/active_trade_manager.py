@@ -18,7 +18,9 @@ class ActiveTradeManager:
         profit_lock_stop_r: float = 0.10,
         enable_breakeven_1r: bool = False,
         breakeven_trigger_r: float = 1.0,
-        breakeven_stop_r: float = 0.10
+        breakeven_stop_r: float = 0.10,
+        enable_milestone_target: bool = False,
+        milestone_r: float = 2.5
     ):
         self.active_trades: Dict[str, TradePlanPayload] = {}
         self.enable_mtf_trailing = enable_mtf_trailing
@@ -30,6 +32,8 @@ class ActiveTradeManager:
         self.enable_breakeven_1r = enable_breakeven_1r
         self.breakeven_trigger_r = breakeven_trigger_r
         self.breakeven_stop_r = breakeven_stop_r
+        self.enable_milestone_target = enable_milestone_target
+        self.milestone_r = milestone_r
         
     def register_trade(self, trade_id: str, plan: TradePlanPayload):
         plan.position_status = PositionState.ACTIVE_POSITION.value
@@ -71,6 +75,16 @@ class ActiveTradeManager:
                 exited_trades.append(plan)
                 del self.active_trades[trade_id]
                 continue
+
+            # 1b. Check Milestone Target (HYP_TARGET_MILESTONE_01)
+            if self.enable_milestone_target:
+                milestone_target = entry_price + (self.milestone_r * entry_risk_dist) if is_long else entry_price - (self.milestone_r * entry_risk_dist)
+                if (is_long and cur_high >= milestone_target) or ((not is_long) and cur_low <= milestone_target):
+                    plan.position_status = PositionState.TP_EXIT.value
+                    plan.exit_timestamp = ltf_payload.timestamp
+                    exited_trades.append(plan)
+                    del self.active_trades[trade_id]
+                    continue
                 
             # 2. Breakeven 1R Ratchet (HYP_MGT_BREAKEVEN_1R_01)
             if self.enable_breakeven_1r and hasattr(plan, 'metadata') and plan.metadata is not None:

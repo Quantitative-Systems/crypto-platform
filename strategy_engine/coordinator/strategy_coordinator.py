@@ -95,7 +95,9 @@ class StrategyCoordinator:
         enforce_displacement_polarity: bool = False,
         enable_breakeven_1r: bool = False,
         breakeven_trigger_r: float = 1.0,
-        breakeven_stop_r: float = 0.10
+        breakeven_stop_r: float = 0.10,
+        enable_milestone_target: bool = False,
+        milestone_r: float = 2.5
     ):
         """
         htf_context_filter: when set to "PULLBACK" or "CONTINUATION", candidates
@@ -111,6 +113,8 @@ class StrategyCoordinator:
         self.enable_breakeven_1r = enable_breakeven_1r
         self.breakeven_trigger_r = breakeven_trigger_r
         self.breakeven_stop_r = breakeven_stop_r
+        self.enable_milestone_target = enable_milestone_target
+        self.milestone_r = milestone_r
         if hypothesis is not None:
             self.hypotheses = {hypothesis.hypothesis_id: hypothesis}
         else:
@@ -132,7 +136,9 @@ class StrategyCoordinator:
             profit_lock_stop_r=profit_lock_stop_r,
             enable_breakeven_1r=enable_breakeven_1r,
             breakeven_trigger_r=breakeven_trigger_r,
-            breakeven_stop_r=breakeven_stop_r
+            breakeven_stop_r=breakeven_stop_r,
+            enable_milestone_target=enable_milestone_target,
+            milestone_r=milestone_r
         )
         self.news_provider = news_provider or NullNewsProvider()
         self.regime_filter = regime_filter

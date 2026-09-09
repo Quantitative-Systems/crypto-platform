@@ -26,7 +26,9 @@ class ExecutionSimulator:
         profit_lock_stop_r: float = 0.10,
         enable_breakeven_1r: bool = False,
         breakeven_trigger_r: float = 1.0,
-        breakeven_stop_r: float = 0.10
+        breakeven_stop_r: float = 0.10,
+        enable_milestone_target: bool = False,
+        milestone_r: float = 2.5
     ):
         self.maker_fee_rate = maker_fee_rate
         self.taker_fee_rate = taker_fee_rate
@@ -39,6 +41,8 @@ class ExecutionSimulator:
         self.enable_breakeven_1r = enable_breakeven_1r
         self.breakeven_trigger_r = breakeven_trigger_r
         self.breakeven_stop_r = breakeven_stop_r
+        self.enable_milestone_target = enable_milestone_target
+        self.milestone_r = milestone_r
 
     def _apply_slippage(self, base_price: float, is_buy: bool) -> float:
         """
@@ -194,6 +198,17 @@ class ExecutionSimulator:
                                 ledger.update_trailing_stop(trade.trade_id, floor_stop)
                                 trade.metadata["profit_locked"] = True
 
+            # HYP_TARGET_MILESTONE_01: Pre-registered +2.5R milestone target exit
+            hit_milestone = False
+            milestone_price = None
+            if self.enable_milestone_target and risk_dist > 0:
+                if is_long:
+                    milestone_price = entry_p + (self.milestone_r * risk_dist)
+                    hit_milestone = (candle.high >= milestone_price)
+                else:
+                    milestone_price = entry_p - (self.milestone_r * risk_dist)
+                    hit_milestone = (candle.low <= milestone_price)
+
             current_stop = trade.current_stop_price
             hit_sl = False
             hit_tp = False
@@ -209,6 +224,9 @@ class ExecutionSimulator:
             if hit_sl and hit_tp:
                 # ADVERSE-FIRST BASELINE AXIOM: Stop Loss takes priority in ambiguous bars
                 hit_tp = False
+            if hit_sl and hit_milestone:
+                # ADVERSE-FIRST BASELINE AXIOM: Stop Loss takes priority over milestone target
+                hit_milestone = False
 
             if hit_sl:
                 # Stop loss triggers as a Taker market order with slippage
@@ -233,6 +251,23 @@ class ExecutionSimulator:
                     exit_reason=exit_reason,
                     exit_fee=exit_fee,
                     slippage_bps=self.slippage_bps
+                )
+                if closed:
+                    closed_this_bar.append(closed)
+
+            elif hit_milestone:
+                # Milestone target fills as Limit at milestone price with maker fee (0 slippage)
+                exit_price = milestone_price
+                notional = exit_price * trade.position_units
+                exit_fee = notional * self.maker_fee_rate
+
+                closed = ledger.close_trade(
+                    trade_id=trade.trade_id,
+                    exit_price=exit_price,
+                    exit_timestamp=candle.timestamp,
+                    exit_reason="MILESTONE_TARGET_EXIT",
+                    exit_fee=exit_fee,
+                    slippage_bps=0.0
                 )
                 if closed:
                     closed_this_bar.append(closed)
