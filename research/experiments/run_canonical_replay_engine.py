@@ -100,9 +100,9 @@ def run_single_stream(asset: str, tf_set_id: str, treatment: str) -> Dict[str, A
         enable_news_filter=False
     )
 
-    enable_expansion = (treatment.upper() in ["ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R"])
-    enforce_polarity = (treatment.upper() == "POLARITY_01")
-    enable_breakeven = (treatment.upper() == "BREAKEVEN_1R")
+    enable_expansion = (treatment.upper() in ["ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R", "COMPOSITE_01"])
+    enforce_polarity = (treatment.upper() in ["POLARITY_01", "COMPOSITE_01"])
+    enable_breakeven = (treatment.upper() in ["BREAKEVEN_1R", "COMPOSITE_01"])
 
     replayer = CausalReplayer(
         timeframe_set_id=tf_set_id,
@@ -330,7 +330,7 @@ def run_matrix(treatment: str, output_path: str = None, workers: int = 8):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Canonical Replay Engine")
-    parser.add_argument("--treatment", type=str, default="H0", choices=["H0", "ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R"], help="Experimental treatment (H0, ANCHOR_2, POLARITY_01, or BREAKEVEN_1R)")
+    parser.add_argument("--treatment", type=str, default="H0", choices=["H0", "ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R", "COMPOSITE_01"], help="Experimental treatment (H0, ANCHOR_2, POLARITY_01, BREAKEVEN_1R, or COMPOSITE_01)")
     parser.add_argument("--output", type=str, default=None, help="Output JSON path")
     parser.add_argument("--workers", type=int, default=8, help="Parallel worker count")
     args = parser.parse_args()
