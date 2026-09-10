@@ -22,6 +22,7 @@ from strategy_engine.hypotheses.unified_strategy import UnifiedStrategy
 from strategy_engine.lifecycle.candidate_tracker import CandidateSetup, CandidateTracker
 from strategy_engine.coordinator.strategy_coordinator import StrategyCoordinator
 from research.replayer.timeframe_aligner import TimeframeAligner, CANONICAL_TIMEFRAME_SETS
+from config.timeframe_sets import TIMEFRAME_SETS, TimeframeSetID
 from risk_engine.contracts.account_state import AccountState
 from risk_engine.contracts.risk_config import RiskConfig
 from risk_engine.contracts.risk_plan import RiskApprovedPlan
@@ -87,6 +88,16 @@ def test_timeframe_matrix_5_sets():
 
     s5 = TimeframeAligner.get_set("SET_5")
     assert s5.htf == "15M" and s5.mtf == "5M" and s5.ltf in ["1m", "1M"]
+
+    # Reconcile config source of truth
+    assert len(TIMEFRAME_SETS) == 5
+    assert TimeframeSetID.SET_1_INVESTING in TIMEFRAME_SETS
+    assert TimeframeSetID.SET_2_POSITION in TIMEFRAME_SETS
+    assert TimeframeSetID.SET_3_SWING in TIMEFRAME_SETS
+    assert TimeframeSetID.SET_4_INTRADAY in TIMEFRAME_SETS
+    assert TimeframeSetID.SET_5_SCALPING in TIMEFRAME_SETS
+    cfg_s5 = TIMEFRAME_SETS[TimeframeSetID.SET_5_SCALPING]
+    assert cfg_s5.htf == "15M" and cfg_s5.mtf == "5M" and cfg_s5.ltf == "1m"
 
 
 def test_single_executable_strategy_ontology():

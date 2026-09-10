@@ -22,7 +22,8 @@ class UnifiedStrategy(BaseHypothesis):
         enable_kz_freshness: bool = False,
         max_htf_kz_age_seconds: Optional[int] = None,
         enable_forward_expansion: bool = False,
-        enforce_displacement_polarity: bool = False
+        enforce_displacement_polarity: bool = False,
+        target_hierarchy: str = "CLOSEST_OBJECTIVE"
     ):
         self._hypothesis_id = hypothesis_id
         self._version = version
@@ -30,6 +31,7 @@ class UnifiedStrategy(BaseHypothesis):
         self.max_htf_kz_age_seconds = max_htf_kz_age_seconds
         self.enable_forward_expansion = enable_forward_expansion
         self.enforce_displacement_polarity = enforce_displacement_polarity
+        self.target_hierarchy = target_hierarchy
 
     @property
     def hypothesis_id(self) -> str:
@@ -369,10 +371,17 @@ class UnifiedStrategy(BaseHypothesis):
 
             if not target_valid:
                 from strategy_engine.context.htf_destination_engine import HTFDestinationEngine
-                dest = HTFDestinationEngine.evaluate(htf_payload, reference_price=entry_price, is_long=is_long, enable_forward_expansion=self.enable_forward_expansion)
+                dest = HTFDestinationEngine.evaluate(
+                    htf_payload,
+                    reference_price=entry_price,
+                    is_long=is_long,
+                    enable_forward_expansion=self.enable_forward_expansion,
+                    hierarchy_mode=self.target_hierarchy
+                )
                 if dest.is_valid:
                     target_price = dest.target_price
                     candidate.htf_target_price = target_price
+                    candidate.htf_target_provenance = dest.destination_type.value
 
             if stop_price is None or target_price is None:
                 candidate.transition_to(CandidateState.REJECTED)

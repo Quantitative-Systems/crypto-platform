@@ -97,7 +97,8 @@ class StrategyCoordinator:
         breakeven_trigger_r: float = 1.0,
         breakeven_stop_r: float = 0.10,
         enable_milestone_target: bool = False,
-        milestone_r: float = 2.5
+        milestone_r: float = 2.5,
+        target_hierarchy: str = "CLOSEST_OBJECTIVE"
     ):
         """
         htf_context_filter: when set to "PULLBACK" or "CONTINUATION", candidates
@@ -115,6 +116,7 @@ class StrategyCoordinator:
         self.breakeven_stop_r = breakeven_stop_r
         self.enable_milestone_target = enable_milestone_target
         self.milestone_r = milestone_r
+        self.target_hierarchy = target_hierarchy
         if hypothesis is not None:
             self.hypotheses = {hypothesis.hypothesis_id: hypothesis}
         else:
@@ -123,7 +125,8 @@ class StrategyCoordinator:
                     enable_kz_freshness=enable_kz_freshness,
                     max_htf_kz_age_seconds=max_htf_kz_age_seconds,
                     enable_forward_expansion=enable_forward_expansion,
-                    enforce_displacement_polarity=enforce_displacement_polarity
+                    enforce_displacement_polarity=enforce_displacement_polarity,
+                    target_hierarchy=target_hierarchy
                 )
             }
         self.candidate_tracker = CandidateTracker()
@@ -229,7 +232,13 @@ class StrategyCoordinator:
                     if context_matches:
                         # Discover forward structural destination
                         from strategy_engine.context.htf_destination_engine import HTFDestinationEngine
-                        dest = HTFDestinationEngine.evaluate(htf_payload, reference_price=ltf_payload.current_price, is_long=is_bullish, enable_forward_expansion=self.enable_forward_expansion)
+                        dest = HTFDestinationEngine.evaluate(
+                            htf_payload,
+                            reference_price=ltf_payload.current_price,
+                            is_long=is_bullish,
+                            enable_forward_expansion=self.enable_forward_expansion,
+                            hierarchy_mode=self.target_hierarchy
+                        )
                         target_price = dest.target_price if dest.is_valid else htf_context.target_anchor_price
                         target_provenance = dest.destination_type.value if dest.is_valid else "NONE"
 

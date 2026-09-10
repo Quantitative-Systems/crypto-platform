@@ -1,453 +1,435 @@
-# Quantitative Systems Platform (QSP) · Product 01: Crypto Trading Engine
+# Quantitative Systems Platform (QSP)
+## Product 01: Multi-Timeframe Structural Crypto Trading Engine
 
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
-[![Tests](https://img.shields.io/badge/Tests-358%20Unit%20%26%20Integration%20Passing-brightgreen.svg)]()
-[![Architecture](https://img.shields.io/badge/Architecture-3--Plane%2012--Layer%20Stack-orange.svg)]()
-[![Methodology](https://img.shields.io/badge/Methodology-Empirical%20Falsification-purple.svg)]()
-[![Governance](https://img.shields.io/badge/Governance-Capital%20Barrier%20Enforced-red.svg)]()
-[![Partitions](https://img.shields.io/badge/Temporal%20Partitions-Dev%20%7C%20Val%20%7C%20OOS-blue.svg)]()
-[![License](https://img.shields.io/badge/License-Proprietary-red.svg)]()
+[![Verification Suite](https://img.shields.io/badge/Verification-390%20Tests%20Passing%20(100%25)-brightgreen.svg)]()
+[![Architecture](https://img.shields.io/badge/Architecture-3--Plane%2013--Layer%20Stack-blue.svg)]()
+[![Research Matrix](https://img.shields.io/badge/Research%20Matrix-15%20Streams%20(BTC%2FETH%2FSOL)-purple.svg)]()
+[![Temporal Partitions](https://img.shields.io/badge/Partitions-Dev%20(2021--22)%20%7C%20Val%20(2023)%20%7C%20OOS%20(2024--26)-orange.svg)]()
+[![Methodology](https://img.shields.io/badge/Methodology-Empirical%20Falsification-red.svg)]()
+[![Capital Governance](https://img.shields.io/badge/Governance-4.0R%20Firewall%20Enforced-critical.svg)]()
 
 > [!IMPORTANT]
-> **Epistemological Foundation & Institutional Research Mandate:**  
-> This repository is an institutional-grade quantitative research, simulation, and autonomous execution platform designed to discover, audit, stress-test, and systematically falsify algorithmic trading strategies under strict point-in-time causality, realistic market microstructure physics, and automated capital governance.  
-> **The platform makes zero claims of commercial profitability or unproven alpha.** All research results—including negative findings—are preserved and reported with full mathematical, causal, and statistical transparency. Curve-fitting, hindsight tampering, and unverified indicator optimization are strictly prohibited.
+> **Institutional Research Mandate & Epistemological Standards**
+> The Quantitative Systems Platform (QSP) is an institutional-grade algorithmic trading research, simulation, and autonomous execution platform. Its mandate is to discover, audit, stress-test, and systematically falsify quantitative market hypotheses under strict point-in-time causality, realistic microstructure physics, and automated capital governance.
+> **This platform makes zero claims of commercial profitability, production-proven edge, or unvalidated alpha.** All findings—including structural rejections and statistical failures—are recorded with full causal provenance and mathematical transparency.
+
+---
+
+### Executive Architecture & Status Panel
+
+| Domain | Specification | Governance Status |
+| :--- | :--- | :--- |
+| **Runtime Environment** | Python 3.12 / Linux / Strict Type Annotations | Certified Stable |
+| **Verification Suite** | **390 / 390 Unit, Integration, & Regression Tests Passing** | 100% Green (`pytest -q` in 71.2s) |
+| **Asset Universe** | BTC/USDT, ETH/USDT, SOL/USDT (Spot & Perpetual Futures) | Active Coverage |
+| **Timeframe Matrix** | 15 Discrete Streams across 5 Nested Triad Sets (`1M` to `1m`) | Multi-Horizon Alignment |
+| **Data Partitioning** | **Development (`2021–2022`)** · **Validation (`2023`)** · **OOS (`2024–2026`)** | Strict Air-Gap Isolation |
+| **Validation / OOS Status**| **LOCKED & UNTOUCHED** (Zero Optimization Access) | Air-Gap Maintained |
+| **Execution Simulator** | Adverse-first intrabar collision, dynamic slippage, taker fees | Friction-Ceiling Enforced |
+| **Capital Firewall** | Minimum Planned Risk-to-Reward ($\text{RR}_{\text{planned}} \ge 4.0\text{R}$) | Strictly Enforced |
+| **Latest Research Track** | Target Destination Hierarchy (`EXP_TARGET_STRUCTURAL_01`) | Partially Supported & Calibrated |
+| **Canonical Strategy** | Unified 9-Stage SMC Structural State Machine | **Frozen** (No Live Capital Promotion) |
 
 ---
 
 ## Table of Contents
-1. [System Architecture & 3-Plane Decoupled Stack](#1-system-architecture--3-plane-decoupled-stack)
-2. [The Canonical Single-Strategy State Machine](#2-the-canonical-single-strategy-state-machine)
-3. [The 5-Timeframe Matrix Architecture](#3-the-5-timeframe-matrix-architecture)
-4. [Empirical Research Track Record & Phase Progression](#4-empirical-research-track-record--phase-progression)
-   - [Baseline: Canonical Rebuild Benchmark (2021–2022)](#41-canonical-rebuild-baseline-20212022-development-partition)
-   - [Phase 10.1: Multi-Dimensional Regime Failure Forensics](#42-phase-101-multi-dimensional-regime-failure-forensics)
-   - [Phase 10.2: HTF KeyZone Freshness Isolation (`H_KZ_FRESH_01`)](#43-phase-102-htf-keyzone-freshness-isolation-h_kz_fresh_01)
-   - [Phase 10.3: Minimum ATR Stop Distance Floor Sweep (`H_SL_ATR_01`)](#44-phase-103-minimum-atr-stop-distance-floor-sweep-h_sl_atr_01)
-   - [Phase 10.4: Infrastructure Repair & Clean Development Control ($N=23$)](#45-phase-104-infrastructure-repair-replayer-defect--clean-control-n23)
-   - [Phase 10.5: Structural SL Geometry Forensics (`HYP_RISK_MAX_SL_DISTANCE_01`)](#46-phase-105-structural-sl-geometry-forensics-hyp_risk_max_sl_distance_01)
-   - [Phase 10.6: LTF Entry Quality Forensics & Directional Displacement Defect](#47-phase-106-ltf-entry-quality-forensics--directional-displacement-defect)
-   - [Phase 10.7: Trade Management Forensics & Local Structural Trail Diagnostic](#48-phase-107-trade-management-forensics--local-structural-trail-diagnostic)
-   - [Phase 10.8: The 3-Pillar Causal Synthesis & Pre-Registered Roadmap](#49-phase-108-the-3-pillar-causal-synthesis--pre-registered-roadmap)
-5. [Repository Structure & Codebase Navigation](#5-repository-structure--codebase-navigation)
-6. [Operational Manual: Setup, Testing & Execution](#6-operational-manual-setup-testing--execution)
-7. [Artifacts, Data Outputs & Provenance Ledgers](#7-artifacts-data-outputs--provenance-ledgers)
-8. [Institutional Research Governance & Falsification Rules](#8-institutional-research-governance--falsification-rules)
+
+1. [System Architecture & The 3-Plane Decoupled Stack](#1-system-architecture--the-3-plane-decoupled-stack)
+2. [Canonical Strategy State Machine](#2-canonical-strategy-state-machine)
+3. [Five-Timeframe Research Matrix](#3-five-timeframe-research-matrix)
+4. [Research Methodology & Governance Lifecycle](#4-research-methodology--governance-lifecycle)
+5. [Data Partitioning & Temporal Air-Gap Governance](#5-data-partitioning--temporal-air-gap-governance)
+6. [Empirical Research Record & Baseline Evolution](#6-empirical-research-record--baseline-evolution)
+7. [Target Destination Hierarchy Experiment (`EXP_TARGET_STRUCTURAL_01`)](#7-target-destination-hierarchy-experiment-exp_target_structural_01)
+8. [Sub-4R Setup Population Forensic Decomposition](#8-sub-4r-setup-population-forensic-decomposition)
+9. [Current Research & Governance Status](#9-current-research--governance-status)
+10. [Visual Evidence & Audit Artifacts](#10-visual-evidence--audit-artifacts)
+11. [Repository Structure & Codebase Navigation](#11-repository-structure--codebase-navigation)
+12. [Installation & Verification Guide](#12-installation--verification-guide)
+13. [Experiment Reproduction Manual](#13-experiment-reproduction-manual)
+14. [Systemic Risk & Capital Firewalls](#14-systemic-risk--capital-firewalls)
+15. [Methodological Limitations & Non-Claims](#15-methodological-limitations--non-claims)
+16. [Roadmap & Planned Research Tracks](#16-roadmap--planned-research-tracks)
 
 ---
 
-## 1. System Architecture & 3-Plane Decoupled Stack
+## 1. System Architecture & The 3-Plane Decoupled Stack
 
-The Quantitative Systems Platform separates analytical modeling, risk allocation, and live exchange interaction into three decoupled architectural planes. This isolation guarantees that research simulations cannot leak into execution state and that production execution obeys identical deterministic physics.
-
-```text
-Quantitative Systems Platform (QSP)
-└── Product 01: Canonical Crypto Trading Engine
-    ├── PLANE 1: RESEARCH & LABORATORY PLANE
-    │   ├── Layer 01: Certified Data Warehouse & Pipeline (RAW ➔ VERIFIED ➔ CERTIFIED)
-    │   ├── Layer 02: Market Intelligence Engine P01 (Pure Price Action & Structural Primitives)
-    │   ├── Layer 03: Unified Strategy State Machine P02 (Single-Engine Structural Strategy)
-    │   ├── Layer 04: Causal Replayer & Alignment Engine (Zero-Lookahead Point-in-Time Tick Simulator)
-    │   ├── Layer 05: Microstructure Execution Simulator (Adverse Collision Physics, Fees & Slippage)
-    │   ├── Layer 06: Forensic Attribution & Diagnostic Engine (Funnel Decomposition, Regime Attribution)
-    │   └── Layer 07: Statistical Validator (Block Bootstrap, Multi-Hypothesis Holm-Bonferroni Testing)
-    │
-    ├── PLANE 2: DECISION & CAPITAL GOVERNANCE PLANE
-    │   ├── Layer 08: Programmatic Capital Barrier (Strict Risk Authorization & Edge Verification)
-    │   ├── Layer 09: Quantitative Risk Firewall (Planned RR ≥ 4.0R, Stop Geometry, Friction Ceiling)
-    │   └── Layer 10: Dynamic Portfolio Allocator (1% Max Account Risk, Multi-Stream Correlation Sizing)
-    │
-    └── PLANE 3: PRODUCTION & EXECUTION PLANE
-        ├── Layer 11: Universal Broker Gateway P03 (CCXT / MT5 / Paper / Mock Abstraction Layer)
-        ├── Layer 12: 24/7 Autonomous Trading Daemon (Async Polling Loop, SQLite WAL State Machine)
-        └── Layer 13: Continuous Ledger & Telemetry Reconciler (Broker vs Local State Reconciliation)
-```
-
-### Architectural Plane Flow
+QSP decouples analytical modeling, capital allocation, and live exchange execution into **three distinct planes across thirteen modular layers**. This architectural isolation prevents simulation leakage, eliminates hindsight bias, and guarantees that production runtime environments adhere to identical deterministic physics.
 
 ```mermaid
 flowchart TD
     subgraph Plane1 ["PLANE 1: RESEARCH & LABORATORY PLANE"]
-        L01["1. Certified Data Lake<br/>Historical Parquet / JSON Kline Store"] --> L02["2. Market Intelligence Engine P01<br/>Swings · BOS / CHOCH · FVGs · OBs"]
-        L02 --> L03["3. Unified Strategy Engine P02<br/>Multi-TF Setup State Machine"]
-        L03 --> L04["4. Causal Replayer<br/>Strict Point-in-Time Bar Close Visibility"]
-        L04 --> L05["5. Microstructure Simulator<br/>Adverse-First Intrabar Collision · Slip/Fee Physics"]
-        L05 --> L06["6. Forensic Attribution Engine<br/>Funnel Decomposition · Regime Clustering"]
-        L06 --> L07["7. Statistical Validator<br/>Stationary Block Bootstrap · Holm-Bonferroni MHT"]
+        L01["1. Certified Data Warehouse<br/>Parquet Store · Clean Bar Feeds"] --> L02["2. Market Intelligence Engine<br/>Swings · BOS / CHOCH · FVGs · OBs"]
+        L02 --> L03["3. Unified Strategy State Machine<br/>Multi-TF Setup State Machine"]
+        L03 --> L04["4. Causal Replay Engine<br/>Strict Zero-Lookahead Bar Close Alignment"]
+        L04 --> L05["5. Microstructure Simulator<br/>Adverse-First Collision · Slip/Fee Physics"]
+        L05 --> L06["6. Forensic Attribution Engine<br/>Funnel Decomposition · Regime Diagnostics"]
+        L06 --> L07["7. Statistical Validator<br/>Stationary Block Bootstrap · Holm-Bonferroni"]
     end
 
     subgraph Plane2 ["PLANE 2: DECISION & CAPITAL GOVERNANCE PLANE"]
-        L07 --> CB{"8. PROGRAMMATIC CAPITAL BARRIER<br/>Mathematical Edge Verification"}
-        CB -->|Falsified / Negative Edge| Q["RESEARCH QUARANTINE<br/>Zero Live Capital Allocation"]
-        CB -->|Certified Positive Edge| L09["9. Quantitative Risk Firewall<br/>Planned RR ≥ 4.0R · Geometry Sanity"]
-        L09 --> L10["10. Dynamic Portfolio Allocator<br/>1% Equity Risk Ceiling · Stream Balancing"]
+        L07 --> CB{"8. Programmatic Capital Barrier<br/>Mathematical Edge Verification"}
+        CB -->|Falsified / Unproven| Q["RESEARCH QUARANTINE<br/>Zero Live Capital Allocation"]
+        CB -->|Certified Edge| L09["9. Quantitative Risk Firewall<br/>Planned RR ≥ 4.0R · Geometric Sanity"]
+        L09 --> L10["10. Dynamic Portfolio Allocator<br/>1% Max Risk Ceiling · Stream Balancing"]
     end
 
     subgraph Plane3 ["PLANE 3: PRODUCTION & EXECUTION PLANE"]
-        L10 --> L11["11. Universal Broker Gateway P03<br/>CCXT Universal · Spot / Perp / Futures"]
-        L11 --> L12["12. 24/7 Autonomous Daemon<br/>Async Event Loop · SQLite WAL State Store"]
-        L12 --> L13["13. EOD Reconciler & Telemetry<br/>Internal vs Exchange Balance Auditor"]
+        L10 --> L11["11. Universal Broker Gateway<br/>CCXT Universal · Spot / Perp / Futures"]
+        L11 --> L12["12. Autonomous Trading Daemon<br/>Async Polling · SQLite WAL State Machine"]
+        L12 --> L13["13. Telemetry & Ledger Reconciler<br/>Exchange vs Local State Auditor"]
     end
 
-    classDef barrier fill:#ff4444,stroke:#333,stroke-width:2px,color:#fff;
-    classDef approved fill:#00C851,stroke:#333,stroke-width:2px,color:#fff;
-    classDef research fill:#33b5e5,stroke:#333,stroke-width:2px,color:#fff;
+    classDef barrier fill:#b62324,stroke:#30363d,stroke-width:2px,color:#fff;
+    classDef approved fill:#238636,stroke:#30363d,stroke-width:2px,color:#fff;
+    classDef research fill:#1f6feb,stroke:#30363d,stroke-width:2px,color:#fff;
     class CB barrier;
     class L10,L11,L12,L13 approved;
     class L01,L02,L03,L04,L05,L06,L07 research;
 ```
 
+### Architectural Plane Decoupling:
+1. **Plane 1: Research & Laboratory Plane (Layers 01–07)**: Point-in-time multi-asset data pipelines, SMC structural geometry calculators, zero-lookahead replayers, adverse fill simulators, and multi-hypothesis statistical testing suites.
+2. **Plane 2: Decision & Capital Governance Plane (Layers 08–10)**: Automated capital authorization gates requiring non-negative expectancy, planned $\text{RR} \ge 4.0\text{R}$ minimum structural thresholds, and maximum 1.0% equity risk per trade.
+3. **Plane 3: Production & Execution Plane (Layers 11–13)**: Exchange-agnostic CCXT execution gateways, resilient asynchronous state daemons, and end-of-bar balance/position reconcilers.
+
 ---
 
-## 2. The Canonical Single-Strategy State Machine
+## 2. Canonical Strategy State Machine
 
-The platform enforces **ONE canonical strategy engine**. There are no diverging branches or alternative "Strategy A / Strategy B" implementations. Every executed trade must traverse an invariant 9-stage structural lifecycle based strictly on pure price action and structural order flow:
+The platform enforces **one canonical structural strategy**. There are no diverging sub-engines or discretionary overrides. Every trade candidate must traverse an invariant **9-stage structural order-flow state machine**:
 
 ```mermaid
 stateDiagram-v2
     [*] --> HTF_DETECTED: 1. HTF Structural Bias Confirmed (BOS / CHOCH)
     HTF_DETECTED --> HTF_INTERACTED: 2. Price Tests Unmitigated HTF KeyZone (OB / FVG)
-    HTF_INTERACTED --> MTF_ALIGNED: 3. MTF Realigns Toward HTF Bias (CHOCH / MSS)
+    HTF_INTERACTED --> MTF_ALIGNED: 3. MTF Realigns Toward HTF Bias (MSS / CHOCH)
     MTF_ALIGNED --> MTF_PULLBACK: 4. Mark Causal MTF Zone & Await Retest
-    MTF_PULLBACK --> LTF_TRIGGER: 5. LTF Sweep + Structural Displacement
-    LTF_TRIGGER --> ORDER_SUBMITTED: 6. Pre-Entry Validation (RR ≥ 4.0R, SL Geometry)
-    ORDER_SUBMITTED --> POSITION_ACTIVE: 7. Order Filled (1% Risk Lot Sized)
-    POSITION_ACTIVE --> MANAGED: 8. MTF Structural Trailing & Target Monitoring
-    MANAGED --> CLOSED: 9. Exit via HTF Target TP / MTF Trail / Initial SL
+    MTF_PULLBACK --> LTF_TRIGGER: 5. LTF Sweep + Directional Displacement
+    LTF_TRIGGER --> ORDER_SUBMITTED: 6. Risk Gate Validation (Planned RR ≥ 4.0R, SL Geometry)
+    ORDER_SUBMITTED --> POSITION_ACTIVE: 7. Limit Order Filled (1.0% Equity Risk Allocation)
+    POSITION_ACTIVE --> MANAGED: 8. Monotonic MTF Structural Trailing & Target Monitoring
+    MANAGED --> CLOSED: 9. Position Closed via HTF Target TP, Trail, or Initial SL
     CLOSED --> [*]
 ```
 
-### The 9 Canonical Invariants:
-1. **HTF Structural Trend & Bias**: Determines the directional mandate (`PERMIT_LONG` or `PERMIT_SHORT`). Countertrend trades are forbidden.
-2. **HTF KeyZone Interaction**: High-probability institutional points of interest (Order Blocks and Fair Value Gaps) formed causally on higher timeframe closes.
-3. **MTF Structural Realignment**: After touching the HTF KeyZone, the middle timeframe must execute an independent structural shift (CHOCH or BOS) confirming institutional participation in the HTF direction.
-4. **MTF KeyZone Genesis**: A newly confirmed MTF KeyZone is marked *strictly at the close* of the candle confirming the realignment.
-5. **Active MTF Pullback Retest**: Price must retrace and tap the newly minted MTF KeyZone.
-6. **LTF Microstructure Trigger**: Lower timeframe confirmation requiring liquidity sweep followed by directional displacement breaking micro structure.
-7. **LTF Structural Invalidation Stop Loss**: The stop loss is anchored to the protected structural micro pivot.
-8. **HTF Structural Destination Target**: The take-profit target is anchored to the opposing HTF unmitigated structural liquidity pool. Planned Risk-to-Reward ratio must satisfy $\text{RR}_{\text{planned}} \ge 4.0\text{R}$.
-9. **MTF Structural Monotonic Trailing**: In-flight trades trail stops only upon newly confirmed MTF structural swing pivots. Trailing stops never loosen.
+### The Nine Invariant Stages:
+1. **HTF Structural Bias**: Higher Timeframe trend direction is established strictly via Break of Structure (BOS) or Change of Character (CHOCH). Counter-trend entries are structurally forbidden.
+2. **HTF KeyZone Interaction**: Price must retrace into an unmitigated HTF Order Block (OB) or Fair Value Gap (FVG) formed on closing bars.
+3. **MTF Structural Realignment**: Upon HTF KeyZone contact, the Middle Timeframe must confirm institutional participation by breaking structure in the HTF direction (Market Structure Shift / MSS).
+4. **MTF KeyZone Genesis**: A causal MTF KeyZone is registered *strictly at the close* of the bar that finalized realignment.
+5. **Active MTF Retest**: Price must pull back and test the newly minted MTF KeyZone.
+6. **LTF Microstructure Trigger**: Lower Timeframe confirms entry via a localized liquidity sweep followed by directional displacement breaking micro-structure with matching candle polarity.
+7. **Structural Invalidation Stop**: The stop-loss is placed at the protected structural micro pivot ($SL$).
+8. **HTF Structural Target & Risk Gate**: The profit target ($TP$) is anchored to opposing HTF structural liquidity. The planned reward-to-risk ratio must satisfy:
+   $$\text{RR}_{\text{planned}} = \frac{|TP - E|}{|E - SL|} \ge 4.0\text{R}$$
+9. **Monotonic MTF Trailing**: In-flight trades trail stops only upon confirmed MTF swing closes. Stops never widen or loosen.
 
 ---
 
-## 3. The 5-Timeframe Matrix Architecture
+## 3. Five-Timeframe Research Matrix
 
-The canonical state machine runs concurrently across five discrete timeframe scales across **BTC/USDT**, **ETH/USDT**, and **SOL/USDT** (15 parallel streams):
+The canonical strategy state machine evaluates fifteen parallel multi-timeframe streams across three major cryptocurrency assets (**BTC/USDT**, **ETH/USDT**, **SOL/USDT**):
 
-| Stream Set ID | HTF (Macro Trend) | MTF (Setup / Retest) | LTF (Trigger / Entry) | Trading Horizon | Canonical Role |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| **SET 1** | Monthly (`1M`) | Weekly (`1w`) | Daily (`1d`) | Position / Macro | Multi-month cyclical trend capture |
+| Timeframe Set | HTF (Macro Context) | MTF (Setup / Retest) | LTF (Micro Trigger) | Trading Horizon | Architectural Purpose |
+| :---: | :---: | :---: | :---: | :---: | :--- |
+| **SET 1** | Monthly (`1M`) | Weekly (`1w`) | Daily (`1d`) | Position / Cyclical | Multi-month macro cycle trend capture |
 | **SET 2** | Weekly (`1w`) | Daily (`1d`) | 4-Hour (`4h`) | Macro Swing | Multi-week institutional structural swings |
-| **SET 3** | Daily (`1d`) | 4-Hour (`4h`) | 1-Hour (`1h`) | Intermediate Swing | Primary high-volume swing matrix |
-| **SET 4** | 4-Hour (`4h`) | 1-Hour (`1h`) | 15-Minute (`15m`) | Intraday Momentum | Intraday structural flow capture |
-| **SET 5** | 15-Minute (`15m`) | 5-Minute (`5m`) | 1-Minute (`1m`) | Microstructure Scalp | Micro liquidity sweep execution |
+| **SET 3** | Daily (`1d`) | 4-Hour (`4h`) | 1-Hour (`1h`) | Intermediate Swing | Primary institutional liquidity matrix |
+| **SET 4** | 4-Hour (`4h`) | 1-Hour (`1h`) | 15-Minute (`15m`) | Intraday Momentum | Intraday structural flow & momentum capture |
+| **SET 5** | 15-Minute (`15m`) | 5-Minute (`5m`) | 1-Minute (`1m`) | Micro Scalp | High-frequency micro liquidity sweep execution |
 
 ---
 
-## 4. Empirical Research Track Record & Phase Progression
+## 4. Research Methodology & Governance Lifecycle
 
-The platform maintains strict temporal dataset isolation to prevent data leakage and forward-looking bias:
-- **Development Partition (`2021-01-01` to `2022-12-31`)**: The laboratory sandbox used for forensic diagnosis, hypothesis testing, and filter validation.
-- **Validation Partition (`2023-01-01` to `2023-12-31`)**: Frozen out-of-sample partition for statistical validation.
-- **Production OOS Partition (`2024-01-01` to `2026-06-30`)**: Untouched blind live verification.
-
----
-
-### 4.1 Canonical Rebuild Baseline (2021–2022 Development Partition)
-
-The initial canonical baseline replayed all 15 streams under zero-lookahead causality and adverse execution physics:
-- **Total Executed Trades**: 59
-- **Unique Economic Setups**: 31 (28 duplicate candidate timestamps from overlapping multi-timeframe events)
-- **Outcomes**: 4 Winners, 55 Losers (Win Rate: $6.78\%$)
-- **Gross Realized R**: $-31.9749\text{R}$
-- **Net Realized R**: **$-36.7023\text{R}$** (Friction Drag: $4.7272\text{R}$)
-- **Profit Factor**: **0.38**
-- **Max Drawdown**: **$43.27\text{R}$**
-- **Expectancy / Trade**: **$-0.6221\text{R}$**
-- **Initial Stop Out Rate**: **$91.5\%$** (54 of 55 losses stopped out at the initial LTF invalidation level)
-
-```
-===================================================================================================
-BASELINE CONTROL AUDIT VERDICT: REJECTED_RESEARCH_ONLY
-===================================================================================================
-• Capital Barrier Status: BLOCKED (Negative Expectancy: -0.6221R / trade)
-• Key Diagnostic: High initial stop-out rate (91.5%) indicates severe adverse selection or micro-stop noise.
-• Baseline Invariance Mandate: This -36.7023R result is permanently frozen as the benchmark control.
-===================================================================================================
-```
-
----
-
-### 4.2 Phase 10.1: Multi-Dimensional Regime Failure Forensics
-
-Rather than blindly curve-fitting technical indicators, Phase 10.1 conducted candle-by-candle forensic classification on all 59 executed trades to isolate why trades failed:
-
-```mermaid
-pie title Phase 10.1 Loss Forensic Breakdown (55 Losses)
-    "Micro-Noise Stop Sweep (< 0.70 ATR)" : 23
-    "Stale HTF KeyZone Decay (> 7 Days)" : 22
-    "Volatility Contraction Squeeze (ATR Ratio < 0.80)" : 8
-    "Late-Stage Exhaustion Squeeze" : 2
-```
-
-#### Forensic Findings:
-1. **The Sub-ATR Micro-Stop Vulnerability (41.8% of Losses)**: 23 trades stopped out on the entry bar or bar $+1$ because the initial stop distance was $< 0.70\text{ ATR}_{14}$. In volatile crypto assets, standard intra-bar spread swept micro pivots before directional displacement could materialize.
-2. **Stale HTF KeyZone Decay (37.3% of Losses)**: 22 trades originated from HTF keyzones older than 7 days. **0 of those 22 trades won.** Stale keyzones represent mitigated imbalances that have lost institutional sponsorship.
-3. **Macro Regimes vs Microstructure**: 78% of losses occurred in strongly trending macro environments ($\text{ADX} \ge 30$). Scalar regime filters (e.g. ADX or ATR expansion) pruned valid winning runners while only removing 10–20% of losses.
-
----
-
-### 4.3 Phase 10.2: HTF KeyZone Freshness Isolation (`H_KZ_FRESH_01`)
-
-To test whether KeyZone freshness is a causal predictor or in-sample coincidence, Phase 10.2 implemented an isolated pre-entry qualification gate:
-$$\text{zone\_age} = t_{\text{interaction}} - t_{\text{creation}} > \theta$$
-
-When $\text{zone\_age} > \theta$, candidates are causally pruned with rejection code `REJECT_KEYZONE_STALE_AGE`.
-
-#### Pre-Specified Sensitivity Sweep Results:
-
-| Configuration | Threshold ($\theta$) | Trades | Unique Setups | Wins / Losses | Win Rate | Net Realized R | $\Delta\text{Net R}$ vs Baseline | Profit Factor | Max Drawdown | Expectancy / Trade | Winner Pres (%) | Losses Rem |
-|---|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **BASELINE** | None (OFF) | 59 | 31 | 4 / 55 | 6.8% | **-36.7023R** | 0.0000R | 0.38 | 43.27R | -0.6221R | 100.0% | 0 |
-| **90-Day Gate** | 90d (7,776,000s) | 53 | 28 | 4 / 49 | 7.5% | **-30.4190R** | +6.2833R | 0.42 | 36.99R | -0.5739R | 100.0% | 6 |
-| **60-Day Gate** | 60d (5,184,000s) | 51 | 27 | 4 / 47 | 7.8% | **-28.2078R** | +8.4945R | 0.44 | 34.78R | -0.5531R | 100.0% | 8 |
-| **30-Day Gate** | 30d (2,592,000s) | 49 | 26 | 4 / 45 | 8.2% | **-26.1384R** | +10.5639R | 0.46 | 32.71R | -0.5334R | 100.0% | 10 |
-| **21-Day Gate** | 21d (1,814,400s) | 49 | 26 | 4 / 45 | 8.2% | **-26.1384R** | +10.5639R | 0.46 | 32.71R | -0.5334R | 100.0% | 10 |
-| **14-Day Gate** | 14d (1,209,600s) | 47 | 25 | 4 / 43 | 8.5% | **-24.0303R** | +12.6720R | 0.48 | 30.60R | -0.5113R | 100.0% | 12 |
-| **7-Day Gate** | 7d (604,800s) | **39** | **20** | **4 / 35** | **10.3%** | **-16.2248R** | **+20.4775R** | **0.58** | **25.26R** | **-0.4160R** | **100.0%** | **20** |
-
-#### Winner Preservation Audit:
-- Baseline Winners: **4**
-- Winners Eliminated: **0 (100.0% Preserved across all thresholds)**
-- Oldest Winner Zone Age: **5.21 days** (`cand_BTC/USDT_1639026000`, SET 3, $+4.08\text{R}$)
-
-#### Exact Loss Reconciliation Accounting:
-$$\Delta\text{Net R} = +20.4775\text{R} \quad \longleftrightarrow \quad \sum \text{Removed Losses} = -20.4773\text{R} \quad (\text{Discrepancy: } 0.0002\text{R})$$
-
-> [!NOTE]
-> **Phase 10.2 Final Scientific Verdict: `PARTIALLY SUPPORTED`**  
-> The relationship is broad, stable, and strictly monotonic across all 6 thresholds (proving it is not a 7-day curve-fit). Pruning stale keyzones removes $+20.48\text{R}$ of pure loss drag without touching a single winner. However, because Net R remains negative ($-16.22\text{R}$), freshness is classified as a **necessary structural hygiene condition**, not a standalone positive alpha edge.
-
----
-
-### 4.4 Phase 10.3: Minimum ATR Stop Distance Floor Sweep (`H_SL_ATR_01`)
-
-Phase 10.3 evaluated whether rejecting candidates with tight micro stops ($\text{SL Distance} < \theta_{\text{ATR}} \times \text{ATR}_{14}$) cured the remaining losses. The pre-registered sweep evaluated 0.50 to 1.00 ATR against the frozen **Phase 10.2 7d Control**:
-
-| Configuration | Threshold | Trades | W / L | Win Rate | Net Realized R | $\Delta\text{Net R}$ vs Control | Profit Factor | Max DD | Expectancy | Winner Pres (%) | Rejections |
-|---|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **CONTROL_7D** | None (Control) | 39 | 4 / 35 | 10.3% | **-16.2248R** | 0.0000R | 0.58 | 25.26R | -0.4160R | **100.0%** | 0 |
-| **0.50_ATR** | 0.50 ATR | 34 | 4 / 30 | 11.8% | **-10.6608R** | +5.5640R | 0.67 | 18.37R | -0.3136R | **100.0%** | 5 |
-| **0.60_ATR** | 0.60 ATR | 33 | 4 / 29 | 12.1% | **-9.5444R** | +6.6804R | 0.70 | 17.25R | -0.2892R | **100.0%** | 6 |
-| **0.70_ATR** | 0.70 ATR | 27 | 4 / 23 | 14.8% | **-2.9634R** | +13.2614R | 0.88 | 13.96R | -0.1098R | **100.0%** | 12 |
-| **0.80_ATR** | 0.80 ATR | 22 | 4 / 18 | 18.2% | **+2.4780R** | +18.7028R | 1.13 | 10.75R | +0.1126R | **100.0%** | 17 |
-| **0.90_ATR** | 0.90 ATR | 15 | 3 / 12 | 20.0% | **+3.2692R** | +19.4940R | 1.25 | 5.48R | +0.2179R | <span style="color:red">**75.0% (1 Win Lost)**</span> | 24 |
-| **1.00_ATR** | 1.00 ATR | 9 | 2 / 7 | 22.2% | **+4.5970R** | +20.8218R | 1.60 | 3.30R | +0.5108R | <span style="color:red">**50.0% (2 Wins Lost)**</span> | 30 |
-
-#### Forensic Analysis of Failure:
-- **Catastrophic Winner Mortality**: At $\ge 0.90\text{ ATR}$, Winner 1 (+5.70R, stop distance 0.85 ATR) is eliminated. At $\ge 1.00\text{ ATR}$, Winner 2 (+4.08R, stop distance 0.92 ATR) is eliminated—destroying $50\%$ of the strategy's winning alpha.
-- **The 0.80 ATR Knife-Edge**: Although 0.80 ATR shows nominal $+2.48\text{R}$, it sits directly adjacent to Winner 1 (0.85 ATR) and reduces sample size to 22 trades across 15 streams in 24 months (~0.7 trades/stream/year).
-- **Core Diagnosis**: Discarding trades via scalar ATR floors does not address the underlying microstructure issue. The proper architectural solution is **structural re-anchoring to higher-timeframe swing pivots**, not trade rejection.
-
-> [!WARNING]
-> **Phase 10.3 Final Scientific Verdict: `UNSUPPORTED`**  
-> Under programmatic Decision Rule 1, `H_SL_ATR_01` is rejected. It failed to achieve robust positive economic performance without unacceptable loss of winners and severe throughput collapse. The experimental ATR stop floor implementation was removed from canonical production code.
-
----
-
-### 4.5 Phase 10.4: Infrastructure Repair, Replayer Defect & Clean Control ($N=23$)
-
-During full-population alpha forensics, an infrastructure defect was identified in `CausalReplayer`: closed terminal trades (`INITIAL_LTF_SL`, `MTF_TRAIL_LOSS`) were able to re-enter downstream bars if candidate tracking was not explicitly scrubbed upon terminal state resolution. This corrupted historical trade counts with phantom duplicate entries.
-
-#### Infrastructure Remediation & Regression Invariant:
-- An explicit lifecycle invariant check (`test_terminal_candidate_never_reenters_regression_invariant`) was integrated into the platform regression test suite.
-- Re-running the 15-stream matrix across the 2021-01-01 to 2022-12-31 Development partition established the **clean, genuine executed market population of $N=23$ trades**.
-
-#### Clean Development Control Baseline ($N=23$):
-| Metric | Clean H0 Value |
-|---|:---:|
-| **Sample Size ($N$)** | **23 Genuine Executed Opportunities** |
-| **Wins / Losses** | 2 Wins / 21 Losses |
-| **Win Rate** | **8.70%** |
-| **Gross Realized R** | $-6.2955\text{R}$ |
-| **Total Friction Drag** | $1.0000\text{R}$ |
-| **Net Realized R** | **$-7.2955\text{R}$** |
-| **Expectancy / Trade** | **$-0.3172\text{R}$** |
-| **Profit Factor** | **0.3812** |
-| **Max Drawdown** | **$8.43\text{R}$** |
-| **Initial Stop-Out Rate** | **69.6%** (16 of 23) |
-
-#### Target Statistics Reconciliation:
-The reconciliation audit resolved the apparent divergence between earlier reporting:
-1. **0/35 Target Hits in ANCHOR_2**: ANCHOR_2 tested forward dealing-range expansions; none achieved their macro expansion targets before trailing exits or reversals.
-2. **4/59 Winners in Baseline**: In the legacy baseline, the 4 winning trades were closed via **MTF structural trailing exits** (+4.0R to +5.7R), not HTF target hits. Zero trades reached canonical structural HTF targets across the entire 2-year dataset.
-
----
-
-### 4.6 Phase 10.5: Structural SL Geometry Forensics (`HYP_RISK_MAX_SL_DISTANCE_01`)
-
-This forensic audit evaluated whether excessive initial structural stop distance caused negative expectancy, testing candidate percentage caps (2% to 10%) on the clean $N=23$ population.
-
-#### Empirical Evidence & Cohort Decomposition:
-- **Tight Stops ($<2.0\%$ SL Distance)**: 12 trades. Generated **$-6.76\text{R}$ in losses** (**92.6% of all observed strategy loss**). Median holding time was only 2.5 hours before being swept by micro-structure noise.
-- **Wide Stops ($>5.0\%$ SL Distance)**: 5 trades. Generated only **$-0.17\text{R}$ in losses**. 100% of wide-stop trades survived initial volatility and exited safely via monotonic MTF structural trailing.
-- **Fixed Cap Failure**: Simulating hard percentage caps (2.0% to 4.0%) pruned the Trade 05 winner ($+2.47\text{R}$ on SOL), directly worsening strategy expectancy.
-- **Negative Target Geometry**: On short trades with wide stops, enforcing the canonical $\ge 4.0\text{R}$ floor resulted in mathematically impossible negative absolute target prices—confirming target geometry as an engineering defect rather than an alpha issue.
-
-> [!WARNING]
-> **Phase 10.5 Scientific Verdict: `REJECTED AS ALPHA FILTER`**  
-> Wide initial stops do not cause losses; tight stops suffer micro-noise failure while wide stops exit safely via MTF trailing. Fixed percentage SL caps destroy legitimate winners. No SL percentage filter is adopted into canonical strategy code.
-
----
-
-### 4.7 Phase 10.6: LTF Entry Quality Forensics & Directional Displacement Defect
-
-Forensic inspection of micro-structure triggers across all 23 clean trades revealed a critical directional-integrity defect in the entry qualification engine:
-
-#### The Defect:
-In `validation_engine.py`, candle displacement was validated purely by magnitude without checking directional polarity:
-```python
-# DEFECTIVE LOGIC (Checked magnitude only):
-abs(candle.close - candle.open) / candle.open >= 0.001
-```
-Because the sign was not checked (`close > open` for long, `close < open` for short), **9 trades triggered on adverse dumping/pumping candles** directly into opposing momentum.
-
-#### Counterfactual Impact:
-| Population | Trades | Wins / Losses | Win Rate | Net Realized R | Expectancy | Profit Factor |
-|---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Full Clean H0** | 23 | 2 / 21 | 8.7% | -7.2955R | -0.3172R | 0.3812 |
-| **Adverse Inverted Entries** | 9 | 0 / 9 | 0.0% | -5.9900R | -0.6656R | 0.0000 |
-| **Directionally Aligned Only** | **14** | **2 / 12** | **14.3%** | **-1.3055R** | **-0.0933R** | **0.7810** |
-
-- **Zero Winner Elimination**: Both canonical winners (Trade 01: $+4.08\text{R}$, Trade 05: $+2.47\text{R}$) possessed strong directional displacement and were 100% preserved.
-- **Pre-Registration**: Formally pre-registered as **`HYP_ENTRY_DISPLACEMENT_DIRECTION_01`** for controlled testing.
-
----
-
-### 4.8 Phase 10.7: Trade Management Forensics & Local Structural Trail Diagnostic
-
-Analysis of favorable excursion revealed severe management latency:
-- **Excursion Bleed**: Multiple trades achieved $+1.0\text{R}$ to $+1.5\text{R}$ favorable excursion before reversing to a full $-1.0\text{R}$ loss because the MTF trailing bar (4H or 1D) had not yet closed.
-- **Diagnostic Evaluation (`HYP_MGT_LOCAL_TRAIL_01`)**: Introducing a +1.0R local structural ratchet recovered $+3.25\text{R}$ from excursion decay on the development dataset.
-- **Governance Status**: Retained as an exploratory **NON-CANONICAL RESEARCH DIAGNOSTIC**. Not promoted to production.
-
----
-
-### 4.9 Phase 10.8: The 3-Pillar Causal Synthesis & Pre-Registered Roadmap
-
-Comprehensive forensic reconciliation synthesizes the root economic causes of performance into three complementary, orthogonal pillars:
+QSP enforces a formal research lifecycle designed to prevent p-hacking, overfitting, and survivorship bias:
 
 ```mermaid
 flowchart TD
-    subgraph Pillar1 ["PILLAR 1: ENTRY INTEGRITY"]
-        E1["Directional Displacement Sign Enforcement<br/>HYP_ENTRY_DISPLACEMENT_DIRECTION_01"]
-        E2["Prunes 9 Adverse Losses (-5.99R)<br/>Lifts H0 Expectancy to -0.0933R"]
-        E1 --> E2
-    end
-
-    subgraph Pillar2 ["PILLAR 2: MANAGEMENT LATENCY"]
-        M1["Local Structural Trail / +1.0R Ratchet<br/>HYP_MGT_LOCAL_TRAIL_01"]
-        M2["Recovers +3.25R Excursion Bleed<br/>Lifts Aligned Setups to +0.0699R (PF 1.24)"]
-        M1 --> M2
-    end
-
-    subgraph Pillar3 ["PILLAR 3: TARGET REALISM"]
-        T1["Realistic Opposing MTF KeyZone Anchoring<br/>HYP_TARGET_REALISM_01"]
-        T2["1.5R–2.5R Primary Target + HTF Runner<br/>Cures Unreachable Macro 4R Floor"]
-        T1 --> T2
-    end
-
-    Pillar1 --> SYN["Causal Alpha Synthesis"]
-    Pillar2 --> SYN
-    Pillar3 --> SYN
-    SYN --> GOV["RESEARCH GOVERNANCE:<br/>Pre-Registered Hypotheses for Controlled Day 41 Testing"]
+    H["1. Hypothesis Formulation<br/>Falsifiable Structural Proposition"] --> PR["2. Pre-Registration<br/>Define Parameters, Metrics & Stopping Rules"]
+    PR --> CI["3. Controlled Single-Variable Intervention<br/>Isolate Exactly One Component"]
+    CI --> DR["4. Causal Replayer Simulation<br/>Strict 2021–2022 Development Partition"]
+    DR --> FA["5. Forensic Decomposition<br/>Funnel Attribution · Execution Diagnostics"]
+    FA --> SE["6. Statistical Evaluation<br/>Stationary Block Bootstrap · MFE/MAE Curves"]
+    SE --> G{"7. Governance Decision"}
+    G -->|Target Criteria Not Met| F["UNSUPPORTED / CALIBRATED<br/>Preserve in Research Record · Do Not Promote"]
+    G -->|Confirmed Edge & Invariance| P["AUTHORIZED CANDIDATE<br/>Advance to Formal Validation Partition"]
 ```
 
-> [!IMPORTANT]
-> **Repository Governance Statement:**  
-> All three pillars remain pre-registered research hypotheses. Canonical `main` remains strictly frozen with zero strategy changes. Validation (2023) and OOS (2024–2026) data partitions remain strictly locked.
+### Methodological Rules:
+- **Single-Variable Interventions**: Exactly one component is modified per experiment while all other nine structural stages remain frozen.
+- **Pre-Registration**: Metrics, criteria, and boundary conditions are specified prior to execution.
+- **Falsification-First**: Hypotheses failing to demonstrate positive economic contribution are classified as `UNSUPPORTED` or `CALIBRATED`. Results are never pruned or hidden.
 
 ---
 
-## 5. Repository Structure & Codebase Navigation
+## 5. Data Partitioning & Temporal Air-Gap Governance
+
+To guarantee valid out-of-sample testing, historical data is partitioned into three air-gapped temporal tranches:
+
+```mermaid
+flowchart LR
+    subgraph Dev ["1. DEVELOPMENT PARTITION<br/>2021-01-01 to 2022-12-31"]
+        D1["Active Research & Simulation<br/>15 Streams · 277,908 Candles"]
+        D2["Hypothesis Testing & Forensics<br/>EXP_TARGET_STRUCTURAL_01"]
+    end
+
+    subgraph Val ["2. VALIDATION PARTITION<br/>2023-01-01 to 2023-12-31"]
+        V1["STRICTLY LOCKED<br/>Holdout Verification Tranche"]
+        V2["Zero Parameter Tuning Permitted<br/>Requires Formal Promotion"]
+    end
+
+    subgraph OOS ["3. OUT-OF-SAMPLE PARTITION<br/>2024-01-01 to 2026-09-10"]
+        O1["STRICTLY BLIND & LOCKED<br/>Final Out-of-Sample Test Set"]
+        O2["Zero Strategy Interaction<br/>Unseen Historical Universe"]
+    end
+
+    Dev -->|Formal Research Promotion Only| Val
+    Val -->|Certified Robustness Only| OOS
+
+    classDef dev fill:#1f6feb,stroke:#30363d,stroke-width:2px,color:#fff;
+    classDef locked fill:#b62324,stroke:#30363d,stroke-width:2px,color:#fff;
+    class D1,D2 dev;
+    class V1,V2,O1,O2 locked;
+```
+
+- **Development Partition (`2021-01-01` to `2022-12-31`)**: The active laboratory environment. All historical audits, baseline replays, and target experiments operate exclusively on this partition.
+- **Validation Partition (`2023-01-01` to `2023-12-31`)**: **Locked.** Sealed against exploration to prevent model contamination.
+- **Out-of-Sample Partition (`2024-01-01` to `2026-09-10`)**: **Locked & Blind.** Strictly quarantined until formal institutional promotion criteria are met.
+
+---
+
+## 6. Empirical Research Record & Baseline Evolution
+
+The platform maintains a complete audit trail tracking the technical evolution of the strategy and replayer infrastructure:
+
+### Historical Research Progression:
+1. **Legacy Exploratory Baseline ($N=59$, $-36.70\text{R}$)**: Initial uncalibrated replay across 15 streams revealed micro-noise stop vulnerability and stale keyzone decay.
+2. **Replayer Lifecycle Remediation ($N=23$, $-7.2955\text{R}$)**: Resolved candidate re-entry defects upon terminal stop resolution, uncovering a clean population of 23 executed trades.
+3. **Entry Directional Polarity Defect Discovery**: Discovered that candle displacement magnitude checks lacked directional sign verification, causing adverse momentum entries.
+4. **Data Gap Impact Audit**: Documented in [`docs/DAY41_DEVELOPMENT_DATA_GAP_IMPACT_AUDIT.md`](docs/DAY41_DEVELOPMENT_DATA_GAP_IMPACT_AUDIT.md), confirming that all 36 Development data gaps were routine Binance maintenance outages with zero causal interaction with trade setups.
+5. **Certified Canonical Baseline Control ($N=11$)**: Following software correction of negative target geometry in forward dealing-range expansions, the clean baseline control across the 2-year Development partition ($277,908$ candles) was established:
+
+#### Certified Development Baseline Performance ($N=11$):
+- **Evaluated Candles**: $277,908$ across 15 streams
+- **Pre-Filter Candidates**: $1,462$
+- **LTF-Confirmed Triggers**: $391$
+- **Target-Resolved Setups**: $387$
+- **Qualified Setups ($\ge 4.0\text{R}$)**: $11$
+- **Executed Trades**: $11$ (5 Wins / 6 Losses)
+- **Win Rate**: $45.45\%$
+- **Net Realized PnL**: **$+1.4145\text{R}$** (Friction fees and slippage included)
+- **Expectancy / Trade**: **$+0.1286\text{R}$**
+- **Profit Factor**: **$1.4326$**
+- **Max Drawdown**: **$2.1316\text{R}$**
+
+---
+
+## 7. Target Destination Hierarchy Experiment (`EXP_TARGET_STRUCTURAL_01`)
+
+### Hypothesis `HYP_TARGET_HIERARCHY_STRUCTURAL_OBJECTIVE_01`
+*Proposition*: The canonical closest-target selection rule prematurely terminated profit objectives at intermediate minor keyzones, artificially suppressing planned risk/reward ratios below the $4.0\text{R}$ firewall. Elevating major directional Weak Swings and unmitigated Liquidity Pools above local keyzones in the destination hierarchy will unlock valid high-RR setups without altering entry timing or invalidation geometry.
+
+### Experimental Isolation Controls:
+- **Dataset**: 2021–2022 Development Partition only ($277,908$ candles across 15 streams).
+- **Invariants Maintained**: Identical HTF trend, MTF realignment, MTF retest, LTF sweep, directional displacement, entry price, structural stop loss, 1% risk sizing, and 4.0R firewall.
+- **Single-Variable Change**: `hierarchy_mode` changed from `CLOSEST_OBJECTIVE` (Control) to `STRUCTURAL_OBJECTIVE` (Treatment) in `HTFDestinationEngine`.
+
+### A/B Experimental Results (Exact Same 391 Triggers):
+
+| Metric | Control (Closest Objective) | Treatment (Structural Objective) | Absolute Delta ($\Delta$) | Relative Change |
+| :--- | :---: | :---: | :---: | :---: |
+| **Evaluated Candles** | 277,908 | 277,908 | 0 | 0.0% |
+| **Pre-filter Candidates** | 1,462 | 1,462 | 0 | 0.0% |
+| **LTF-Confirmed Triggers** | **391** | **391** | **0** | **Exact Identity** |
+| **Target-Resolved Setups** | 387 | 387 | 0 | 0.0% |
+| **Qualified Setups ($\ge 4.0\text{R}$)** | **11** | **21** | **+10** | **+90.9%** |
+| **Executed Trades** | **11** | **20** | **+9** | **+81.8%** |
+| **Net Realized Return (R)** | **+1.4145R** | **+3.8327R** | **+2.4182R** | **+170.9%** |
+| **Expectancy / Trade** | **+0.1286R** | **+0.1916R** | **+0.0630R** | **+49.0%** |
+| **Profit Factor** | **1.4326** | **1.6569** | **+0.2243** | **+15.7%** |
+| **Win Rate** | **45.45%** (5W / 6L) | **45.00%** (9W / 11L) | -0.45% | -1.0% |
+| **Max Drawdown (R)** | **2.1316R** | **3.3480R** | +1.2164R | +57.1% |
+| **Baseline Trade Invariance**| **11 / 11 Preserved** | **11 / 11 Preserved** | **0.0000R diff** | **Exact Equivalence** |
+
+> **Attribution Note**: All 11 original baseline trades reproduced with **exact $0.0000\text{R}$ divergence** in entry, SL, exit price, and net P&L. The 21st qualified candidate placed an intraday limit order on ETH (`1319.73`) that was never reached by market price, correctly expiring unfilled.
+
+### Visual Research Evidence:
+
+#### Figure 1: Opportunity Funnel Comparison
+![Figure 1: Opportunity Funnel Comparison](docs/evidence/figures/opportunity_funnel_comparison.png)
+*Figure 1 — Opportunity funnel comparison across the 2021–2022 Development partition. Descriptive attribution demonstrating identical LTF triggers ($391$) and the expansion in $\ge 4.0\text{R}$ qualified setups ($11 \rightarrow 21$).*
+
+#### Figure 2: Planned Risk/Reward Distribution Shift
+![Figure 2: Planned Risk/Reward Distribution](docs/evidence/figures/planned_rr_distribution.png)
+*Figure 2 — Distribution of planned structural risk-to-reward ratios among 387 target-resolved setups. Demonstrates rightward percentile expansion (Median: $0.47\text{R} \rightarrow 0.66\text{R}$, P75: $0.97\text{R} \rightarrow 1.33\text{R}$, P90: $1.69\text{R} \rightarrow 2.67\text{R}$) against the permanent 4.0R firewall.*
+
+#### Figure 3: Cumulative Realized Equity Curve
+![Figure 3: Cumulative Realized Return Curve](docs/evidence/figures/cumulative_realized_r_curve.png)
+*Figure 3 — Sequential cumulative realized return trajectory in R for baseline control ($N=11$) versus structural target experiment ($N=20$). Microstructure slippage and taker fee friction included. Small sample size ($N=20$) is descriptive and not statistically asymptotic.*
+
+### Scientific Finding:
+`EXP_TARGET_STRUCTURAL_01` is classified as **`PARTIALLY SUPPORTED & CALIBRATED`**.
+The target hierarchy modification materially relieved an artificial suppression mechanism, nearly doubling qualified opportunity throughput while preserving baseline trade integrity and expanding net realized return. However, target hierarchy alone does not resolve the remaining low-RR population: 354 out of 387 setups ($91.5\%$) remained below the $4.0\text{R}$ threshold.
+
+---
+
+## 8. Sub-4R Setup Population Forensic Decomposition
+
+To investigate why 354 setups achieved confirmed lower-timeframe execution triggers but remained below the $4.0\text{R}$ firewall, an observational forensic audit was conducted on all 354 instances:
+
+### The Geometric Invariant of 4.0R:
+For any trade with entry price $E$, structural stop loss $SL$, and profit target $TP$:
+$$\text{RR} = \frac{|TP - E|}{|E - SL|} \ge 4.0 \iff \frac{|E - SL|}{|TP - SL|} \le 0.2000$$
+To achieve $\ge 4.0\text{R}$, entry must occur within the first **$20.00\%$** of the structural span $[SL, TP]$. Across all 354 still-rejected setups, the median setup entered after **$61.02\%$** of the structural span was already traversed.
+
+### Seven Mutually Interpretable Causal Categories:
+
+| Cat # | Causal Failure Category | Count | % of Pop | Median RR | Median Target Dist | Median Stop Dist | Median Latency | Underlying Geometric Factor |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **Cat 6** | **Extreme Proximity to Target** | **106** | **29.94%** | $0.20\text{R}$ | $1.32\%$ | $5.25\%$ | $1.0\text{ h}$ | Setup formed adjacent to target |
+| **Cat 4** | **Target Ambiguity (Dealing Range Fallback)**| **88** | **24.86%** | $0.98\text{R}$ | $8.65\%$ | $8.49\%$ | $4.5\text{ h}$ | No opposing HTF swing existed |
+| **Cat 7** | **Dealing Range Compression** | **51** | **14.41%** | $1.01\text{R}$ | $5.31\%$ | $5.41\%$ | $2.0\text{ h}$ | Symmetrical equilibrium entry |
+| **Cat 1** | **Late Expansion Leg Entry** | **29** | **8.19%** | $0.50\text{R}$ | $3.89\%$ | $8.81\%$ | $1.2\text{ h}$ | $>60\%$ of structural span consumed |
+| **Cat 2** | **Macro Invalidation Stop Distance** | **25** | **7.06%** | $0.30\text{R}$ | $6.59\%$ | $22.16\%$ | $9.5\text{ h}$ | Stop anchored to macro horizon ($\ge 15\%$) |
+| **Cat 5** | **Confirmation Latency Consumed Range** | **20** | **5.65%** | $0.55\text{R}$ | $3.69\%$ | $7.71\%$ | $15.9\text{ h}$ | Multi-day confirmation drift ($\ge 35\%$) |
+| **Cat 3** | **Intermediate Structural Swings** | **35** | **9.89%** | $2.18\text{R}$ | $10.80\%$ | $5.08\%$ | $2.0\text{ h}$ | Planned RR below 4.0R ($1.5\text{R}\text{–}3.9\text{R}$) |
+| **TOTAL** | **All Evaluated Sub-4R Setups** | **354** | **100.0%** | **$0.64\text{R}$** | **$4.10\%$** | **$6.81\%$** | **$2.0\text{ h}$** | — |
+
+#### Figure 4: Sub-4R Geometric Decomposition Breakdown
+![Figure 4: Rejected Setups Decomposition](docs/evidence/figures/rejected_setups_decomposition.png)
+*Figure 4 — Forensic decomposition of the 354 still-rejected development setups. Highlights the 90.11% combined low-RR multi-factor population versus the 9.89% intermediate swing population.*
+
+### Key Empirical Groupings:
+1. **Combined Low-RR Population (Cats 6, 4, 7, 1, 2, 5)**:
+   $$106 + 88 + 51 + 29 + 25 + 20 = \mathbf{319\text{ setups}} \quad \left(\mathbf{90.11\%}\right)$$
+   Across 319 setups, median planned RR was only $0.53\text{R}$. These setups represent fundamentally compressed geometry where remaining distance to target was small ($1.32\%$), ranges were compressed, or stops were anchored to distant macro horizons ($22.16\%$).
+2. **Intermediate Structural Swings (Cat 3)**:
+   $$\mathbf{35\text{ setups}} \quad \left(\mathbf{9.89\%}\right)$$
+   Setups exhibiting sound structural geometry (median target room $10.80\%$, compact stops $5.08\%$) yielding planned RR between $1.5\text{R}$ and $3.9\text{R}$ (median $2.18\text{R}$). The 4R firewall rejected setups whose planned structural RR was below 4R.
+
+> [!NOTE]
+> **Forensic Governance Rule**: This decomposition is strictly observational. No entry timing, invalidation anchor, or stop-loss modifications have been implemented. The 4R firewall remains locked at $\ge 4.0\text{R}$.
+
+---
+
+## 9. Current Research & Governance Status
+
+| Research Component | Current Classification | Governance Mandate |
+| :--- | :---: | :--- |
+| **Canonical Strategy State Machine** | **FROZEN** | No unauthorized logic or parameter modifications |
+| **Target Destination Hierarchy** | **PARTIALLY SUPPORTED & CALIBRATED** | Tested in Development; isolated to experimental branch |
+| **4.0R Risk Firewall Threshold** | **ENFORCED & UNCHANGED** | Fixed at $\ge 4.0\text{R}$; zero threshold relaxation |
+| **Sub-4R Setup Population** | **OBSERVED, NOT INTERVENED UPON** | Forensic baseline established; zero entry/stop changes |
+| **2021–2022 Development Partition** | **COMPLETED & PRESERVED** | Reference data benchmark frozen |
+| **2023 Validation Partition** | **STRICTLY LOCKED** | Air-gapped; zero access permitted |
+| **2024–2026 Out-of-Sample Partition** | **STRICTLY BLIND & LOCKED** | Air-gapped; zero access permitted |
+| **Production / Live Capital Promotion** | **NOT AUTHORIZED** | Quarantined to research laboratory |
+| **Commercial Profitability Claims** | **NONE** | Small sample ($N=20$) is not statistically asymptotic |
+
+---
+
+## 10. Visual Evidence & Audit Artifacts
+
+All research results and test verifications are backed by immutable visual artifacts stored in [`docs/evidence/`](docs/evidence/):
+
+<details>
+<summary><b>Click to expand Visual Terminal Verification Captures</b></summary>
+
+### Terminal Capture A — Full Test Suite Verification (390 Passing Tests)
+![Capture A: Test Suite Verification](docs/evidence/screenshot_a_tests.png)
+*Terminal execution of `pytest -q` certifying 390 passing unit and integration tests in 71.17s.*
+
+### Terminal Capture B — Git Branch & Repository State
+![Capture B: Git Branch and Working Tree](docs/evidence/screenshot_b_git_state.png)
+*Verification of current research branch `feat/exp-target-milestone-2.5r` and working tree state.*
+
+### Terminal Capture C — Experiment Metrics Ledger & Decomposition
+![Capture C: Experiment Evidence](docs/evidence/screenshot_c_day41_experiment_evidence.png)
+*Authoritative evidence ledger reconciling identical triggers ($391$), qualified setup growth ($11 \rightarrow 21$), and corrected 354-case decomposition arithmetic.*
+
+### Terminal Capture D — Partition Locks & Protocol Immutability
+![Capture D: Partition Locks](docs/evidence/screenshot_d_validation_oos_protection.png)
+*Formal audit certificate verifying that 2023 Validation and 2024–2026 OOS partitions remain locked and air-gapped.*
+
+</details>
+
+---
+
+## 11. Repository Structure & Codebase Navigation
 
 ```text
 crypto-platform/
-├── docs/                                  # Canonical Specifications & Forensic Research Reports
-│   ├── CANONICAL_STRATEGY_SPECIFICATION.md# Universal Multi-Timeframe Structural Strategy Specification
-│   ├── ALPHA_FORENSICS_DEVELOPMENT_2021_2022.md # Master 15-Stream Development Alpha Forensics Report
-│   ├── ALPHA_FORENSICS_RECONCILIATION_REPORT.md # Forensic Reconciliation of Target Stats & Sample Sizes
-│   ├── CLEAN_POPULATION_ENTRY_TARGET_FORENSICS.md # Clean Population (N=23) Baseline Report
-│   ├── SL_GEOMETRY_FORENSICS.md           # Structural SL Geometry & Percentage Cap Forensic Audit
-│   ├── ENTRY_QUALITY_FORENSICS.md         # LTF Entry Quality & Directional Displacement Audit
-│   └── HYP_MGT_LOCAL_TRAIL_01_DEVELOPMENT.md # Pre-Registration & Diagnostic Analysis of H1.1 Ratchet
+├── config/                                # System Configuration & Timeframe Set Matrices
+│   └── timeframe_sets.py                  # Canonical 5-Timeframe Set Definitions
 │
-├── market_intelligence/                   # PRODUCT 01: Market Language & SMC Primitives
-│   ├── primitives.py                      # Core contracts: Swings, KeyZones, Events, Payloads
+├── market_data/                           # Warehouse & Data Ingestion Pipeline
+│   └── warehouse_loader.py                # Zero-Lookahead Historical Kline Loader
+│
+├── market_intelligence/                   # SMC Structural Language & Intelligence
+│   ├── primitives.py                      # Swings, KeyZones, Dealing Ranges, Events
 │   ├── structure_engine.py                # BOS / CHOCH / Protected & Weak Swing Builder
 │   ├── keyzone_engine.py                  # Order Block & Fair Value Gap Causal Detector
 │   ├── trend_engine.py                    # Multi-Timeframe Trend & Bias Evaluator
 │   └── coordinator.py                     # LanguageCoordinator Pipeline Orchestrator
 │
-├── strategy_engine/                       # PRODUCT 02: Canonical Strategy Engine
+├── strategy_engine/                       # Canonical Structural Strategy State Machine
 │   ├── hypotheses/
 │   │   └── unified_strategy.py            # Canonical Unified Multi-Timeframe Strategy Engine
 │   ├── coordinator/
-│   │   └── strategy_coordinator.py        # Multi-Timeframe State Machine Coordinator
+│   │   └── strategy_coordinator.py        # 15-Stream Strategy Coordinator Pipeline
 │   ├── context/
-│   │   ├── htf_context_engine.py          # HTF Directional & Context Filter
-│   │   └── htf_destination_engine.py      # HTF Structural Target Destination Selector
+│   │   ├── htf_context_engine.py          # HTF Context & Directional Permission Gate
+│   │   └── htf_destination_engine.py      # Structural Objective & KeyZone Destination Selector
 │   ├── lifecycle/
-│   │   ├── candidate_tracker.py           # Candidate Setup Lifecycle (FRESH ➔ ENTERED / REJECTED)
-│   │   ├── active_trade_manager.py        # Open Position Management & SL/TP Intrabar Physics
+│   │   ├── candidate_tracker.py           # Setup Lifecycle Tracker (FRESH ➔ ENTERED / REJECTED)
+│   │   ├── active_trade_manager.py        # Position Lifecycle & Intrabar Execution
 │   │   └── mtf_trailing_engine.py         # Monotonic MTF Structural Trailing Ratchet
 │   └── entry/
-│       └── ltf_entry_model.py             # Lower-Timeframe Sweep & Displacement Entry Model
+│       └── ltf_entry_model.py             # Lower-Timeframe Sweep & Polarity Displacement Model
 │
-├── research/                              # PRODUCT 04: Research Laboratory & Replayer
+├── research/                              # Laboratory Replayer & Execution Simulator
 │   ├── replayer/
-│   │   └── causal_replayer.py             # Causal Replay Engine with Zero-Lookahead Caching
+│   │   ├── causal_replayer.py             # Zero-Lookahead Point-in-Time Event Simulator
+│   │   └── timeframe_aligner.py           # Multi-Timeframe Candle Bar-Close Aligner
 │   ├── simulation/
-│   │   └── execution_simulator.py         # Intrabar Adverse Collision Simulator & Fee Modeling
+│   │   └── execution_simulator.py         # Adverse Fill Collision Physics, Slippage & Fees
 │   └── experiments/
-│       ├── run_canonical_rebuild_replay.py # Master 15-Stream Baseline Replay Script
-│       ├── run_phase10_2_kz_freshness_experiment.py # Phase 10.2 Freshness Sweep Runner
-│       └── run_phase10_3_sl_atr_evaluation.py       # Phase 10.3 ATR Floor Evaluation Runner
+│       └── run_canonical_replay_engine.py # Master 15-Stream Replay CLI Driver
 │
-├── execution_gateway/                     # PRODUCT 03: Universal Execution Gateways
-│   ├── broker_factory.py                  # Gateway Factory (CCXT, MT5, Paper, Mock)
-│   └── gateways/
-│       └── ccxt_universal_gateway.py      # Universal Spot / Perp / Futures CCXT Adapter
+├── platform_core/                         # Systemic Risk & Capital Governance
+│   └── capital_barrier.py                 # Multi-Tier Programmatic Capital Barrier
 │
-├── platform_core/                         # Systemic Risk Governance
-│   └── capital_barrier.py                 # 5-Tier Programmatic Capital Authorization Barrier
+├── docs/                                  # Canonical Specifications & Research Reports
+│   ├── CANONICAL_PLATFORM_ARCHITECTURE_FORENSICS_2021_2022.md # Master Architecture Audit
+│   ├── DAY41_CURRENT_ARCHITECTURE_FULL_BASELINE_AUDIT.md     # Repaired Baseline Audit (N=11)
+│   ├── DAY41_DEVELOPMENT_DATA_GAP_IMPACT_AUDIT.md            # 36-Gap Non-Causal Impact Audit
+│   ├── DAY41_TARGET_HIERARCHY_AB_EXPERIMENT_2021_2022.md     # A/B Experiment Report (EXP_01)
+│   ├── DAY41_REJECTED_SETUPS_FORENSIC_DECOMPOSITION.md       # 354 Sub-4R Setup Forensic Report
+│   └── evidence/                          # Visual Evidence Captures & Research Figures
+│       ├── screenshot_a_tests.png
+│       ├── screenshot_b_git_state.png
+│       ├── screenshot_c_day41_experiment_evidence.png
+│       ├── screenshot_d_validation_oos_protection.png
+│       └── figures/                       # High-Resolution Publication Figures
+│           ├── opportunity_funnel_comparison.png
+│           ├── planned_rr_distribution.png
+│           ├── rejected_setups_decomposition.png
+│           └── cumulative_realized_r_curve.png
 │
-├── scratch/                               # Permanent Authoritative Research Artifacts & Audits
-│   ├── analyze_clean_population_23.py     # Deterministic Clean Population 23 Audit Script
-│   ├── audit_sl_geometry.py               # Structural SL Geometry Forensic Audit Script
-│   ├── audit_entry_quality.py             # LTF Entry Displacement Forensic Audit Script
-│   ├── canonical_35_trade_audit_ledger.json # Complete 35-Trade Ledger with Phantom Re-Entry Flags
-│   ├── sl_geometry_forensics_summary.json # SL Geometry Metrics & Cap Simulation Results
-│   ├── entry_quality_forensics_summary.json # Entry Quality Metrics & Displacement Sign Breakdown
-│   ├── alpha_forensics_summary.json       # Master Alpha Forensics JSON Summary
-│   ├── paired_counterfactual_comparison.json # Trade-by-Trade Counterfactual Management Ledger
-│   ├── canonical_rebuild_dev_results.json # Historical Baseline Results (59 Trades)
-│   ├── phase10_1_regime_forensics.md      # Comprehensive Phase 10.1 Diagnostic Report
-│   ├── phase10_2_kz_freshness_dev_results.md # Comprehensive Phase 10.2 Freshness Report
-│   └── phase10_3_sl_atr_dev_results.md    # Comprehensive Phase 10.3 Evaluation Report
-│
-└── tests/                                 # 358 Tests: Unit, Synthetic & Integration Suites
-    ├── unit/
-    │   └── strategy_engine/               # Strategy State Machine & Component Unit Tests
-    └── integration/                       # Replayer Reference Equivalence & Regression Invariants
+└── tests/                                 # 390 Passing Tests: Unit, Synthetic & Integration
+    ├── unit/                              # Component Unit Tests (Engines, Primitives, Context)
+    └── integration/                       # Reference Equivalence & Replayer Invariants
 ```
 
 ---
 
-## 6. Operational Manual: Setup, Testing & Execution
+## 12. Installation & Verification Guide
 
-### 6.1 Environment Installation
-
+### 12.1 Environment Setup
 ```bash
 # Clone the repository
 git clone https://github.com/Quantitative-Systems/crypto-platform.git
@@ -457,110 +439,112 @@ cd crypto-platform
 python3 -m venv .venv
 source .venv/bin/activate
 
-# Install locked dependencies
+# Install dependencies in editable mode
 pip install --upgrade pip
 pip install -e .
 ```
 
-### 6.2 Running the Full Verification Test Suite
-
-The platform maintains **358 unit, integration, and conformance tests**:
+### 12.2 Verification Test Suite
+The platform maintains **390 automated unit and integration tests** guaranteeing deterministic state transitions, replayer reference equivalence, and regression invariants:
 
 ```bash
-# Run all strategy engine and conformance unit tests
-pytest tests/unit/ -v
-
-# Run integration and reference equivalence tests
-pytest tests/integration/ -v
-
 # Run the complete test suite
-pytest tests/
-```
+pytest -q
 
-### 6.3 Reproducing Empirical Research Experiments & Audits
+# Run specific engine unit tests
+pytest tests/unit/strategy_engine/test_htf_destination_engine.py -v
+pytest tests/unit/strategy_engine/test_strategy_ontology.py -v
 
-#### 1. Analyze the Clean Development Population ($N=23$)
-```bash
-python3 scratch/analyze_clean_population_23.py
-```
-*Output*: Reconciles clean H0 baseline ($-7.2955\text{R}$, $8.70\%$ WR, 2 wins, 21 losses).
-
-#### 2. Run Structural SL Geometry & Percentage Cap Forensics
-```bash
-python3 scratch/audit_sl_geometry.py
-```
-*Output*: Evaluates tight vs. wide SL loss attribution and simulates 2%–10% caps.
-
-#### 3. Run LTF Entry Quality & Directional Displacement Forensics
-```bash
-python3 scratch/audit_entry_quality.py
-```
-*Output*: Classifies displacement directionality and calculates counterfactual aligned performance.
-
-#### 4. Replay the Frozen Canonical Rebuild Baseline (15 Streams, 2021–2022)
-```bash
-python3 research/experiments/run_canonical_rebuild_replay.py
-```
-*Output*: [`scratch/canonical_rebuild_dev_results.json`](file:///home/mrcn2/crypto-platform/scratch/canonical_rebuild_dev_results.json).
-
-#### 5. Execute Phase 10.2 KeyZone Freshness Sensitivity Sweep
-```bash
-python3 research/experiments/run_phase10_2_kz_freshness_experiment.py
-```
-*Outputs*: [`scratch/phase10_2_kz_freshness_dev_results.md`](file:///home/mrcn2/crypto-platform/scratch/phase10_2_kz_freshness_dev_results.md).
-
-#### 6. Execute Phase 10.3 ATR Stop Distance Floor Evaluation
-```bash
-python3 research/experiments/run_phase10_3_sl_atr_evaluation.py
-```
-*Outputs*: [`scratch/phase10_3_sl_atr_dev_results.md`](file:///home/mrcn2/crypto-platform/scratch/phase10_3_sl_atr_dev_results.md).
-
----
-
-## 7. Artifacts, Data Outputs & Provenance Ledgers
-
-Every experiment executed by the platform produces immutable JSON and Markdown audit artifacts stored in [`docs/`](file:///home/mrcn2/crypto-platform/docs) and [`scratch/`](file:///home/mrcn2/crypto-platform/scratch):
-
-### Trade Ledger Format
-Each executed trade record contains complete structural provenance:
-```json
-{
-  "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1638824400",
-  "symbol": "BTC/USDT",
-  "timeframe_set": "SET_3",
-  "direction": "BEARISH",
-  "entry_price": 50785.42,
-  "initial_stop_price": 51432.10,
-  "target_price": 46800.00,
-  "raw_rr": 6.16,
-  "realized_r": 5.6957,
-  "exit_reason": "HTF_TP",
-  "duration_hours": 18.5,
-  "structural_provenance": {
-    "htf_macro_direction": "BEARISH",
-    "htf_keyzone_id": "FVG_BEARISH_1638576000_79",
-    "htf_kz_creation_timestamp": 1638576000,
-    "htf_interaction_timestamp": 1638824400,
-    "mtf_alignment_event": "CHOCH_BEARISH",
-    "mtf_keyzone_id": "OB_BEARISH_OB_1638804000_SW_LOW_12",
-    "ltf_trigger_type": "SWEEP_AND_DISPLACEMENT"
-  }
-}
+# Run multi-timeframe alignment integration tests
+pytest tests/integration/test_replayer_timeframe_alignment.py -v
 ```
 
 ---
 
-## 8. Institutional Research Governance & Falsification Rules
+## 13. Experiment Reproduction Manual
 
-1. **The System Must Be Allowed to Fail**: Hypotheses that produce negative expectancy or destroy valid winning trades are permanently marked `UNSUPPORTED`. They are never retained, and no parameters are adjusted ex-post to mask failure.
-2. **One Variable at a Time**: Experiments must isolate a single structural gate or parameter at a time. Confounding multiple modifications simultaneously is prohibited.
-3. **Temporal Isolation Barrier**: Research and development are strictly quarantined to historical Development partitions. The Validation (`2023`) and Out-of-Sample (`2024–2026`) partitions are accessed only upon formal institutional promotion.
-4. **Point-in-Time Causality Guarantee**:
-   - Higher timeframe candles remain strictly invisible until period close ($t_{\text{close}} \le t_{\text{LTF}}$).
-   - Keyzones are timestamped at the closing bar of formation; hindsight bar adjustment is impossible.
-   - Intrabar collision physics always prioritizes adverse stop-out execution.
-5. **Programmatic Capital Barrier**: Live capital deployment requires certified positive Block Bootstrap 95% confidence bounds ($P(\text{Edge} > 0) \ge 95\%$), multi-year partition invariance, and transaction friction stress testing ($2.0\times$ fee shocks).
+All empirical findings can be reproduced deterministically using repository scripts:
+
+### 1. Replay the Certified Baseline Control (Closest Objective)
+```bash
+python3 research/experiments/run_canonical_replay_engine.py \
+    --start-date 2021-01-01 \
+    --end-date 2022-12-31 \
+    --target-hierarchy CLOSEST_OBJECTIVE \
+    --output-results scratch/composite_01_dev_results_repaired_terminal.json
+```
+*Output*: Reconciles the 11 executed trades ($+1.4145\text{R}$, $45.45\%$ WR, $1.4326$ PF).
+
+### 2. Replay the Target Hierarchy Experiment (Structural Objective)
+```bash
+python3 research/experiments/run_canonical_replay_engine.py \
+    --start-date 2021-01-01 \
+    --end-date 2022-12-31 \
+    --target-hierarchy STRUCTURAL_OBJECTIVE \
+    --output-results scratch/exp_target_structural_01_dev_results.json
+```
+*Output*: Reconciles 21 qualified setups, 20 executed trades ($+3.8327\text{R}$, $45.00\%$ WR, $1.6569$ PF).
+
+### 3. Run the Sub-4R Setup Forensic Decomposition
+```bash
+python3 scratch/decompose_rejected_setups.py
+```
+*Output*: Categorizes all 354 still-rejected setups into the 7 geometric failure modes ($319$ low-RR, $35$ intermediate).
+
+### 4. Regenerate Publication Figures
+```bash
+python3 scratch/generate_research_figures.py
+```
+*Output*: Updates all figures in [`docs/evidence/figures/`](docs/evidence/figures/).
 
 ---
 
-**Proprietary & Confidential** · Quantitative Systems Platform Engineering Team · 2026
+## 14. Systemic Risk & Capital Firewalls
+
+QSP incorporates automated risk barriers that programmatically prevent capital deployment without verified structural edge:
+
+1. **The 4.0R Structural Firewall**:
+   Setups with planned structural risk-to-reward below $4.0\text{R}$ are rejected prior to order submission. This prevents entering compressed ranges where fee drag and adverse excursions dominate expected return.
+2. **Account Equity Risk Ceiling**:
+   Position sizing is dynamically calculated to risk exactly $1.0\%$ of available equity at the structural invalidation price ($SL$).
+3. **Adverse Intrabar Fill Physics**:
+   If a single candle touches both the stop-loss and the take-profit target, the execution simulator strictly assumes the stop-loss was touched first (worst-case adverse collision).
+4. **Transaction Friction Modeling**:
+   All historical simulations deduct taker fees ($0.04\%$ to $0.05\%$) and adverse slippage buffers on both entry and exit legs.
+
+---
+
+## 15. Methodological Limitations & Non-Claims
+
+In accordance with institutional research governance standards, the platform explicitly records the following limitations:
+
+1. **Development Evidence is Not Validation Evidence**:
+   All empirical findings presented herein derive exclusively from the 2021–2022 Development partition. No statistical claims regarding performance on the locked 2023 Validation or 2024–2026 Out-of-Sample partitions are made.
+2. **Sample Size Constraints**:
+   The sample size of executed trades ($N=11$ in Baseline, $N=20$ in Target Hierarchy) across a 2-year period is small. It cannot establish asymptotic statistical certainty or long-term Sharpe stability.
+3. **Descriptive Nature of Forensic Decomposition**:
+   The categorization of 354 sub-4R setups is a descriptive diagnostic, not causal proof of alternative parameter profitability.
+4. **Counterfactual Diagnostic Interpretation**:
+   The 4R firewall rejected setups whose planned structural RR was below 4R. Because rejected setups were not executed, no claims are made regarding whether rejected setups would have resulted in realized losses.
+5. **Zero Commercial Profitability Claim**:
+   The platform makes no claim of commercial alpha, live profitability, or institutional readiness. The repository serves exclusively as a scientific and software-engineering artifact for quantitative research.
+
+---
+
+## 16. Roadmap & Planned Research Tracks
+
+1. **Track 1: Research Knowledge Distribution & Institutional Consolidation**
+   Consolidation of quantitative methodologies, risk/reward geometry, and temporal partitioning principles into institutional knowledge assets.
+2. **Track 2: Entry Geometry & Confirmation Latency Forensics**
+   Pre-registration of non-invasive diagnostics investigating entry timing relative to structural span consumption ($>20\%$ consumption threshold).
+3. **Track 3: Multi-Timeframe Trailing Mechanics**
+   Investigation of excursion preservation and local structural trailing ratchets under adverse volatility conditions.
+4. **Track 4: Formal Validation Gate Review**
+   Execution of formal promotion audits prior to unlocking the 2023 Validation partition.
+
+---
+
+## 17. License & Confidentiality
+
+This codebase and research artifacts are proprietary.
+© 2021–2026 Quantitative Systems Platform Engineering & Research Group. All rights reserved.

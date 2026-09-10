@@ -1,6 +1,6 @@
 """
 Product 01: Crypto Platform Configuration
-Defines liquid asset universe and the 4 Operational Timeframe Execution Scales.
+Defines liquid asset universe and the 5 Canonical Operational Timeframe Execution Scales.
 """
 
 from dataclasses import dataclass
@@ -13,7 +13,8 @@ class TimeframeSetID(str, Enum):
     SET_2_POSITION = "SET_2_POSITION"
     SET_3_SWING = "SET_3_SWING"
     SET_4_INTRADAY = "SET_4_INTRADAY"
- 
+    SET_5_SCALPING = "SET_5_SCALPING"
+
 
 @dataclass(frozen=True)
 class TimeframeSet:
@@ -36,6 +37,9 @@ TIMEFRAME_SETS = {
     ),
     TimeframeSetID.SET_4_INTRADAY: TimeframeSet(
         set_id=TimeframeSetID.SET_4_INTRADAY, style_name="Intraday Scaling", htf="4H", mtf="1H", ltf="15M"
+    ),
+    TimeframeSetID.SET_5_SCALPING: TimeframeSet(
+        set_id=TimeframeSetID.SET_5_SCALPING, style_name="Intraday Scalping", htf="15M", mtf="5M", ltf="1m"
     ),
 }
 

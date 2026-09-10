@@ -42,16 +42,20 @@ class HTFDestinationEngine:
     Rejects invalid geometry rather than inventing artificial targets.
     """
     ENABLE_FORWARD_EXPANSION: bool = False
+    TARGET_HIERARCHY_MODE: str = "CLOSEST_OBJECTIVE"
 
     @staticmethod
     def evaluate(
         htf_payload: MarketStatePayload,
         reference_price: Optional[float] = None,
         is_long: Optional[bool] = None,
-        enable_forward_expansion: Optional[bool] = None
+        enable_forward_expansion: Optional[bool] = None,
+        hierarchy_mode: Optional[str] = None
     ) -> StructuralDestination:
         if enable_forward_expansion is None:
             enable_forward_expansion = HTFDestinationEngine.ENABLE_FORWARD_EXPANSION
+        if hierarchy_mode is None:
+            hierarchy_mode = HTFDestinationEngine.TARGET_HIERARCHY_MODE
 
         trend = htf_payload.trend_state
         if is_long is None:
@@ -104,10 +108,10 @@ class HTFDestinationEngine:
             zone_id = getattr(kz, 'zone_id', 'unknown_kz')
 
             if is_long:
-                if "BEARISH" in kz_type and low_b is not None and low_b > ref_price:
+                if "BEARISH" in kz_type and low_b is not None and low_b > 0.0 and low_b > ref_price:
                     candidates.append((low_b, DestinationType.OPPOSING_KEYZONE, zone_id))
             else:
-                if "BULLISH" in kz_type and high_b is not None and high_b < ref_price:
+                if "BULLISH" in kz_type and high_b is not None and high_b > 0.0 and high_b < ref_price:
                     candidates.append((high_b, DestinationType.OPPOSING_KEYZONE, zone_id))
 
         # Candidate Pool 2: Unswept HTF Liquidity Pools (EQH/EQL)
@@ -116,7 +120,7 @@ class HTFDestinationEngine:
                 continue
             pool_price = getattr(pool, 'price_level', None)
             pool_id = getattr(pool, 'pool_id', 'unknown_pool')
-            if pool_price is None:
+            if pool_price is None or pool_price <= 0.0:
                 continue
 
             if is_long and pool_price > ref_price:
@@ -131,10 +135,11 @@ class HTFDestinationEngine:
             if weak_swing and weak_swing.raw_swing:
                 ws_price = weak_swing.raw_swing.price
                 ws_id = getattr(weak_swing.raw_swing, 'swing_id', 'weak_swing')
-                if is_long and ws_price > ref_price:
-                    candidates.append((ws_price, DestinationType.WEAK_SWING, ws_id))
-                elif not is_long and ws_price < ref_price:
-                    candidates.append((ws_price, DestinationType.WEAK_SWING, ws_id))
+                if ws_price is not None and ws_price > 0.0:
+                    if is_long and ws_price > ref_price:
+                        candidates.append((ws_price, DestinationType.WEAK_SWING, ws_id))
+                    elif not is_long and ws_price < ref_price:
+                        candidates.append((ws_price, DestinationType.WEAK_SWING, ws_id))
 
         # Candidate Pool 4: Forward Structural Expansion (Fallback if target-starved, disabled by default)
         if enable_forward_expansion and not candidates and struct and struct.dealing_range:
@@ -143,12 +148,15 @@ class HTFDestinationEngine:
             if range_width > 0:
                 if is_long:
                     expansion_target = dr.high_price + (range_width * 1.0)
-                    if expansion_target > ref_price:
+                    if expansion_target > 0.0 and expansion_target > ref_price:
                         candidates.append((expansion_target, DestinationType.FORWARD_STRUCTURAL_EXPANSION, f"DR_EXPANSION_1.0_L_{dr.low_price}_{dr.high_price}"))
                 else:
                     expansion_target = dr.low_price - (range_width * 1.0)
-                    if expansion_target < ref_price:
+                    if expansion_target > 0.0 and expansion_target < ref_price:
                         candidates.append((expansion_target, DestinationType.FORWARD_STRUCTURAL_EXPANSION, f"DR_EXPANSION_1.0_S_{dr.high_price}_{dr.low_price}"))
+
+        # Enforce strict positive price constraints across all candidates
+        candidates = [c for c in candidates if c[0] > 0.0]
 
         if not candidates:
             return StructuralDestination(
@@ -160,15 +168,40 @@ class HTFDestinationEngine:
             )
 
         # Hierarchy / Ranking:
-        # Sort candidates by distance from reference price (closest forward structural objective)
-        if is_long:
-            candidates.sort(key=lambda x: x[0])  # Smallest target > ref_price
+        if hierarchy_mode == "STRUCTURAL_OBJECTIVE":
+            # Structural Objective Hierarchy:
+            # Tier 1: WEAK_SWING (Primary directional trend destination / liquidation point)
+            # Tier 2: LIQUIDITY_POOL (Unswept external EQH / EQL pools)
+            # Tier 3: OPPOSING_KEYZONE (Internal supply / demand zones)
+            # Tier 4: FORWARD_STRUCTURAL_EXPANSION (Dealing range expansion fallback)
+            # Within each tier, select the closest objective to reference price.
+            tier_priority = {
+                DestinationType.WEAK_SWING: 1,
+                DestinationType.LIQUIDITY_POOL: 2,
+                DestinationType.OPPOSING_KEYZONE: 3,
+                DestinationType.FORWARD_STRUCTURAL_EXPANSION: 4,
+            }
+            candidates.sort(key=lambda x: (tier_priority.get(x[1], 99), abs(x[0] - ref_price)))
         else:
-            candidates.sort(key=lambda x: x[0], reverse=True)  # Largest target < ref_price
+            # Default / Baseline: CLOSEST_OBJECTIVE
+            # Sort candidates strictly by distance from reference price (closest forward structural objective)
+            if is_long:
+                candidates.sort(key=lambda x: x[0])  # Smallest target > ref_price
+            else:
+                candidates.sort(key=lambda x: x[0], reverse=True)  # Largest target < ref_price
 
         best_target, best_type, best_id = candidates[0]
 
-        # Final geometric verification
+        # Final geometric and absolute price verification
+        if best_target <= 0.0:
+            return StructuralDestination(
+                target_price=None,
+                destination_type=DestinationType.NONE,
+                source_id=None,
+                is_valid=False,
+                rejection_reason="REJECT_NON_POSITIVE_TARGET_PRICE"
+            )
+
         if is_long and best_target <= ref_price:
             return StructuralDestination(
                 target_price=None,

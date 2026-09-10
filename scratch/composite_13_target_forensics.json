@@ -1,0 +1,696 @@
+[
+  {
+    "index": 1,
+    "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1614220200",
+    "asset": "SOL",
+    "timeframe_set": "SET_4",
+    "direction": "LONG",
+    "entry_timestamp": 1614372300,
+    "entry_datetime_utc": "2021-02-26 20:45:00 UTC",
+    "entry_price": 14.4794,
+    "initial_sl": 13.1,
+    "stop_distance": 1.3794000000000004,
+    "chosen_target": 21.33,
+    "chosen_target_provenance": "FORWARD_STRUCTURAL_EXPANSION",
+    "planned_rr": 4.966362186457878,
+    "realized_net_r": -0.685690406622859,
+    "mfe_r": 0.2584,
+    "exit_reason": "MTF_STRUCTURAL_TRAIL",
+    "total_visible_candidates": 6,
+    "closest_candidate": {
+      "target": 14.6432,
+      "type": "OPPOSING_KEYZONE",
+      "id": "FVG_BEARISH_1614283200_75",
+      "dist_p": 0.16380000000000017
+    },
+    "closest_dist_r": 0.11874728142670735,
+    "visible_candidates_breakdown": {
+      "opposing_keyzones_count": 3,
+      "liquidity_pools_count": 1,
+      "weak_swings_count": 1,
+      "dr_expansions_count": 1
+    },
+    "all_candidates": [
+      {
+        "target": 14.6432,
+        "type": "OPPOSING_KEYZONE",
+        "id": "FVG_BEARISH_1614283200_75",
+        "dist_p": 0.16380000000000017
+      },
+      {
+        "target": 15.2744,
+        "type": "OPPOSING_KEYZONE",
+        "id": "FVG_BEARISH_1614268800_74",
+        "dist_p": 0.7949999999999999
+      },
+      {
+        "target": 16.6787,
+        "type": "OPPOSING_KEYZONE",
+        "id": "FVG_BEARISH_1614211200_70",
+        "dist_p": 2.199299999999999
+      },
+      {
+        "target": 18.2052,
+        "type": "LIQUIDITY_POOL",
+        "id": "BSL_SW_HIGH_67",
+        "dist_p": 3.7258000000000013
+      },
+      {
+        "target": 18.2052,
+        "type": "WEAK_SWING",
+        "id": "SW_HIGH_67",
+        "dist_p": 3.7258000000000013
+      }
+    ]
+  },
+  {
+    "index": 2,
+    "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1624409100",
+    "asset": "SOL",
+    "timeframe_set": "SET_4",
+    "direction": "SHORT",
+    "entry_timestamp": 1624492800,
+    "entry_datetime_utc": "2021-06-24 00:00:00 UTC",
+    "entry_price": 30.837,
+    "initial_sl": 32.9,
+    "stop_distance": 2.062999999999999,
+    "chosen_target": 20.187,
+    "chosen_target_provenance": "LIQUIDITY_POOL",
+    "planned_rr": 5.162384876393604,
+    "realized_net_r": 0.08215907158699405,
+    "mfe_r": 1.142,
+    "exit_reason": "BREAKEVEN_TRAIL",
+    "total_visible_candidates": 4,
+    "closest_candidate": {
+      "target": 29.525,
+      "type": "OPPOSING_KEYZONE",
+      "id": "FVG_BULLISH_1624406400_75",
+      "dist_p": 1.3120000000000012
+    },
+    "closest_dist_r": 0.6359670382937479,
+    "visible_candidates_breakdown": {
+      "opposing_keyzones_count": 1,
+      "liquidity_pools_count": 1,
+      "weak_swings_count": 1,
+      "dr_expansions_count": 1
+    },
+    "all_candidates": [
+      {
+        "target": 29.525,
+        "type": "OPPOSING_KEYZONE",
+        "id": "FVG_BULLISH_1624406400_75",
+        "dist_p": 1.3120000000000012
+      },
+      {
+        "target": 20.187,
+        "type": "LIQUIDITY_POOL",
+        "id": "SSL_SW_LOW_71",
+        "dist_p": 10.649999999999999
+      },
+      {
+        "target": 20.187,
+        "type": "WEAK_SWING",
+        "id": "SW_LOW_71",
+        "dist_p": 10.649999999999999
+      },
+      {
+        "target": 2.7340000000000018,
+        "type": "FORWARD_STRUCTURAL_EXPANSION",
+        "id": "DR_EXP_37.64_20.187",
+        "dist_p": 28.102999999999998
+      }
+    ]
+  },
+  {
+    "index": 3,
+    "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1626504300",
+    "asset": "SOL",
+    "timeframe_set": "SET_4",
+    "direction": "SHORT",
+    "entry_timestamp": 1626647400,
+    "entry_datetime_utc": "2021-07-18 22:30:00 UTC",
+    "entry_price": 26.637,
+    "initial_sl": 27.836,
+    "stop_distance": 1.198999999999998,
+    "chosen_target": 18.469,
+    "chosen_target_provenance": "FORWARD_STRUCTURAL_EXPANSION",
+    "planned_rr": 6.812343619683079,
+    "realized_net_r": 2.801014713875708,
+    "mfe_r": 3.784,
+    "exit_reason": "MTF_STRUCTURAL_TRAIL",
+    "total_visible_candidates": 3,
+    "closest_candidate": {
+      "target": 25.979,
+      "type": "LIQUIDITY_POOL",
+      "id": "SSL_SW_LOW_71",
+      "dist_p": 0.6580000000000013
+    },
+    "closest_dist_r": 0.548790658882404,
+    "visible_candidates_breakdown": {
+      "opposing_keyzones_count": 0,
+      "liquidity_pools_count": 1,
+      "weak_swings_count": 1,
+      "dr_expansions_count": 1
+    },
+    "all_candidates": [
+      {
+        "target": 25.979,
+        "type": "LIQUIDITY_POOL",
+        "id": "SSL_SW_LOW_71",
+        "dist_p": 0.6580000000000013
+      },
+      {
+        "target": 25.979,
+        "type": "WEAK_SWING",
+        "id": "SW_LOW_71",
+        "dist_p": 0.6580000000000013
+      },
+      {
+        "target": 16.917,
+        "type": "FORWARD_STRUCTURAL_EXPANSION",
+        "id": "DR_EXP_35.041_25.979",
+        "dist_p": 9.719999999999999
+      }
+    ]
+  },
+  {
+    "index": 4,
+    "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1641543300",
+    "asset": "BTC",
+    "timeframe_set": "SET_4",
+    "direction": "SHORT",
+    "entry_timestamp": 1641660300,
+    "entry_datetime_utc": "2022-01-08 16:45:00 UTC",
+    "entry_price": 41438.08,
+    "initial_sl": 42883.47,
+    "stop_distance": 1445.3899999999994,
+    "chosen_target": 33704.93,
+    "chosen_target_provenance": "FORWARD_STRUCTURAL_EXPANSION",
+    "planned_rr": 5.350216896477771,
+    "realized_net_r": -0.3455802237197261,
+    "mfe_r": 0.2339,
+    "exit_reason": "MTF_STRUCTURAL_TRAIL",
+    "total_visible_candidates": 3,
+    "closest_candidate": {
+      "target": 40610.0,
+      "type": "LIQUIDITY_POOL",
+      "id": "SSL_SW_LOW_73",
+      "dist_p": 828.0800000000017
+    },
+    "closest_dist_r": 0.5729111174146785,
+    "visible_candidates_breakdown": {
+      "opposing_keyzones_count": 0,
+      "liquidity_pools_count": 1,
+      "weak_swings_count": 1,
+      "dr_expansions_count": 1
+    },
+    "all_candidates": [
+      {
+        "target": 40610.0,
+        "type": "LIQUIDITY_POOL",
+        "id": "SSL_SW_LOW_73",
+        "dist_p": 828.0800000000017
+      },
+      {
+        "target": 40610.0,
+        "type": "WEAK_SWING",
+        "id": "SW_LOW_73",
+        "dist_p": 828.0800000000017
+      },
+      {
+        "target": 29940.0,
+        "type": "FORWARD_STRUCTURAL_EXPANSION",
+        "id": "DR_EXP_51280.0_40610.0",
+        "dist_p": 11498.080000000002
+      }
+    ]
+  },
+  {
+    "index": 5,
+    "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1644192000",
+    "asset": "BTC",
+    "timeframe_set": "SET_4",
+    "direction": "LONG",
+    "entry_timestamp": 1644195600,
+    "entry_datetime_utc": "2022-02-07 01:00:00 UTC",
+    "entry_price": 41830.55,
+    "initial_sl": 40843.01,
+    "stop_distance": 987.5400000000009,
+    "chosen_target": 47577.380000000005,
+    "chosen_target_provenance": "FORWARD_STRUCTURAL_EXPANSION",
+    "planned_rr": 5.81933896348502,
+    "realized_net_r": 1.6941731177107582,
+    "mfe_r": 3.7076,
+    "exit_reason": "MTF_STRUCTURAL_TRAIL",
+    "total_visible_candidates": 2,
+    "closest_candidate": {
+      "target": 41913.69,
+      "type": "WEAK_SWING",
+      "id": "SW_HIGH_68",
+      "dist_p": 83.13999999999942
+    },
+    "closest_dist_r": 0.08418899487615625,
+    "visible_candidates_breakdown": {
+      "opposing_keyzones_count": 0,
+      "liquidity_pools_count": 0,
+      "weak_swings_count": 1,
+      "dr_expansions_count": 1
+    },
+    "all_candidates": [
+      {
+        "target": 41913.69,
+        "type": "WEAK_SWING",
+        "id": "SW_HIGH_68",
+        "dist_p": 83.13999999999942
+      },
+      {
+        "target": 47577.380000000005,
+        "type": "FORWARD_STRUCTURAL_EXPANSION",
+        "id": "DR_EXP_36250.0_41913.69",
+        "dist_p": 5746.830000000002
+      }
+    ]
+  },
+  {
+    "index": 6,
+    "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1645524900",
+    "asset": "BTC",
+    "timeframe_set": "SET_4",
+    "direction": "SHORT",
+    "entry_timestamp": 1645590600,
+    "entry_datetime_utc": "2022-02-23 04:30:00 UTC",
+    "entry_price": 37847.95,
+    "initial_sl": 39141.41,
+    "stop_distance": 1293.4600000000064,
+    "chosen_target": 31201.0,
+    "chosen_target_provenance": "FORWARD_STRUCTURAL_EXPANSION",
+    "planned_rr": 5.138891036444857,
+    "realized_net_r": -0.887622945004081,
+    "mfe_r": 0.0268,
+    "exit_reason": "MTF_STRUCTURAL_TRAIL",
+    "total_visible_candidates": 4,
+    "closest_candidate": {
+      "target": 37274.38,
+      "type": "OPPOSING_KEYZONE",
+      "id": "FVG_BULLISH_1645516800_76",
+      "dist_p": 573.5699999999997
+    },
+    "closest_dist_r": 0.44343852921620835,
+    "visible_candidates_breakdown": {
+      "opposing_keyzones_count": 1,
+      "liquidity_pools_count": 1,
+      "weak_swings_count": 1,
+      "dr_expansions_count": 1
+    },
+    "all_candidates": [
+      {
+        "target": 37274.38,
+        "type": "OPPOSING_KEYZONE",
+        "id": "FVG_BULLISH_1645516800_76",
+        "dist_p": 573.5699999999997
+      },
+      {
+        "target": 36350.0,
+        "type": "LIQUIDITY_POOL",
+        "id": "SSL_SW_LOW_73",
+        "dist_p": 1497.949999999997
+      },
+      {
+        "target": 36350.0,
+        "type": "WEAK_SWING",
+        "id": "SW_LOW_73",
+        "dist_p": 1497.949999999997
+      },
+      {
+        "target": 26879.0,
+        "type": "FORWARD_STRUCTURAL_EXPANSION",
+        "id": "DR_EXP_45821.0_36350.0",
+        "dist_p": 10968.949999999997
+      }
+    ]
+  },
+  {
+    "index": 7,
+    "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1652145300",
+    "asset": "ETH",
+    "timeframe_set": "SET_4",
+    "direction": "SHORT",
+    "entry_timestamp": 1652205600,
+    "entry_datetime_utc": "2022-05-10 18:00:00 UTC",
+    "entry_price": 2400.38,
+    "initial_sl": 2469.72,
+    "stop_distance": 69.33999999999969,
+    "chosen_target": 2114.13,
+    "chosen_target_provenance": "FORWARD_STRUCTURAL_EXPANSION",
+    "planned_rr": 4.1282088260744345,
+    "realized_net_r": 0.05854752426681106,
+    "mfe_r": 0.8066,
+    "exit_reason": "MTF_STRUCTURAL_TRAIL",
+    "total_visible_candidates": 4,
+    "closest_candidate": {
+      "target": 2365.45,
+      "type": "OPPOSING_KEYZONE",
+      "id": "FVG_BULLISH_1652155200_78",
+      "dist_p": 34.93000000000029
+    },
+    "closest_dist_r": 0.5037496394577509,
+    "visible_candidates_breakdown": {
+      "opposing_keyzones_count": 1,
+      "liquidity_pools_count": 1,
+      "weak_swings_count": 1,
+      "dr_expansions_count": 1
+    },
+    "all_candidates": [
+      {
+        "target": 2365.45,
+        "type": "OPPOSING_KEYZONE",
+        "id": "FVG_BULLISH_1652155200_78",
+        "dist_p": 34.93000000000029
+      },
+      {
+        "target": 2200.0,
+        "type": "LIQUIDITY_POOL",
+        "id": "SSL_SW_LOW_76",
+        "dist_p": 200.3800000000001
+      },
+      {
+        "target": 2200.0,
+        "type": "WEAK_SWING",
+        "id": "SW_LOW_76",
+        "dist_p": 200.3800000000001
+      },
+      {
+        "target": 1420.0,
+        "type": "FORWARD_STRUCTURAL_EXPANSION",
+        "id": "DR_EXP_2980.0_2200.0",
+        "dist_p": 980.3800000000001
+      }
+    ]
+  },
+  {
+    "index": 8,
+    "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1654300800",
+    "asset": "SOL",
+    "timeframe_set": "SET_3",
+    "direction": "SHORT",
+    "entry_timestamp": 1654336800,
+    "entry_datetime_utc": "2022-06-04 10:00:00 UTC",
+    "entry_price": 37.31,
+    "initial_sl": 48.39,
+    "stop_distance": 11.079999999999998,
+    "chosen_target": -14.689999999999998,
+    "chosen_target_provenance": "LIQUIDITY_POOL",
+    "planned_rr": 4.693140794223828,
+    "realized_net_r": -0.15400978014410932,
+    "mfe_r": 0.0686,
+    "exit_reason": "MTF_STRUCTURAL_TRAIL",
+    "total_visible_candidates": 1,
+    "closest_candidate": {
+      "target": -14.689999999999998,
+      "type": "FORWARD_STRUCTURAL_EXPANSION",
+      "id": "DR_EXP_94.55_39.93",
+      "dist_p": 52.0
+    },
+    "closest_dist_r": 4.693140794223828,
+    "visible_candidates_breakdown": {
+      "opposing_keyzones_count": 0,
+      "liquidity_pools_count": 0,
+      "weak_swings_count": 0,
+      "dr_expansions_count": 1
+    },
+    "all_candidates": [
+      {
+        "target": -14.689999999999998,
+        "type": "FORWARD_STRUCTURAL_EXPANSION",
+        "id": "DR_EXP_94.55_39.93",
+        "dist_p": 52.0
+      }
+    ]
+  },
+  {
+    "index": 9,
+    "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1668061800",
+    "asset": "BTC",
+    "timeframe_set": "SET_4",
+    "direction": "SHORT",
+    "entry_timestamp": 1668147300,
+    "entry_datetime_utc": "2022-11-11 06:15:00 UTC",
+    "entry_price": 17332.51,
+    "initial_sl": 18199.0,
+    "stop_distance": 866.4900000000016,
+    "chosen_target": 13248.660000000003,
+    "chosen_target_provenance": "FORWARD_STRUCTURAL_EXPANSION",
+    "planned_rr": 4.713095361746803,
+    "realized_net_r": -0.26019885723375286,
+    "mfe_r": 0.2062,
+    "exit_reason": "MTF_STRUCTURAL_TRAIL",
+    "total_visible_candidates": 4,
+    "closest_candidate": {
+      "target": 17120.94,
+      "type": "OPPOSING_KEYZONE",
+      "id": "FVG_BULLISH_1668081600_77",
+      "dist_p": 211.5699999999997
+    },
+    "closest_dist_r": 0.24416900368151892,
+    "visible_candidates_breakdown": {
+      "opposing_keyzones_count": 1,
+      "liquidity_pools_count": 1,
+      "weak_swings_count": 1,
+      "dr_expansions_count": 1
+    },
+    "all_candidates": [
+      {
+        "target": 17120.94,
+        "type": "OPPOSING_KEYZONE",
+        "id": "FVG_BULLISH_1668081600_77",
+        "dist_p": 211.5699999999997
+      },
+      {
+        "target": 15588.0,
+        "type": "LIQUIDITY_POOL",
+        "id": "SSL_SW_LOW_72",
+        "dist_p": 1744.5099999999984
+      },
+      {
+        "target": 15588.0,
+        "type": "WEAK_SWING",
+        "id": "SW_LOW_72",
+        "dist_p": 1744.5099999999984
+      },
+      {
+        "target": 10091.0,
+        "type": "FORWARD_STRUCTURAL_EXPANSION",
+        "id": "DR_EXP_21085.0_15588.0",
+        "dist_p": 7241.509999999998
+      }
+    ]
+  },
+  {
+    "index": 10,
+    "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1669035600",
+    "asset": "SOL",
+    "timeframe_set": "SET_4",
+    "direction": "SHORT",
+    "entry_timestamp": 1669067100,
+    "entry_datetime_utc": "2022-11-21 21:45:00 UTC",
+    "entry_price": 11.64,
+    "initial_sl": 13.16,
+    "stop_distance": 1.5199999999999996,
+    "chosen_target": -6.5600000000000005,
+    "chosen_target_provenance": "FORWARD_STRUCTURAL_EXPANSION",
+    "planned_rr": 11.97368421052632,
+    "realized_net_r": -0.29895424614454286,
+    "mfe_r": 0.4605,
+    "exit_reason": "MTF_STRUCTURAL_TRAIL",
+    "total_visible_candidates": 1,
+    "closest_candidate": {
+      "target": 6.850000000000001,
+      "type": "FORWARD_STRUCTURAL_EXPANSION",
+      "id": "DR_EXP_18.31_12.58",
+      "dist_p": 4.789999999999999
+    },
+    "closest_dist_r": 3.1513157894736845,
+    "visible_candidates_breakdown": {
+      "opposing_keyzones_count": 0,
+      "liquidity_pools_count": 0,
+      "weak_swings_count": 0,
+      "dr_expansions_count": 1
+    },
+    "all_candidates": [
+      {
+        "target": 6.850000000000001,
+        "type": "FORWARD_STRUCTURAL_EXPANSION",
+        "id": "DR_EXP_18.31_12.58",
+        "dist_p": 4.789999999999999
+      }
+    ]
+  },
+  {
+    "index": 11,
+    "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1669824000",
+    "asset": "ETH",
+    "timeframe_set": "SET_2",
+    "direction": "SHORT",
+    "entry_timestamp": 1670544000,
+    "entry_datetime_utc": "2022-12-09 00:00:00 UTC",
+    "entry_price": 1280.18,
+    "initial_sl": 1309.77,
+    "stop_distance": 29.589999999999918,
+    "chosen_target": 1073.53,
+    "chosen_target_provenance": "LIQUIDITY_POOL",
+    "planned_rr": 6.983778303480928,
+    "realized_net_r": 0.04817219376408121,
+    "mfe_r": 1.0199,
+    "exit_reason": "BREAKEVEN_TRAIL",
+    "total_visible_candidates": 4,
+    "closest_candidate": {
+      "target": 1073.53,
+      "type": "LIQUIDITY_POOL",
+      "id": "SSL_SW_LOW_76",
+      "dist_p": 206.6500000000001
+    },
+    "closest_dist_r": 6.983778303480928,
+    "visible_candidates_breakdown": {
+      "opposing_keyzones_count": 0,
+      "liquidity_pools_count": 2,
+      "weak_swings_count": 1,
+      "dr_expansions_count": 1
+    },
+    "all_candidates": [
+      {
+        "target": 1073.53,
+        "type": "LIQUIDITY_POOL",
+        "id": "SSL_SW_LOW_76",
+        "dist_p": 206.6500000000001
+      },
+      {
+        "target": 1073.53,
+        "type": "WEAK_SWING",
+        "id": "SW_LOW_76",
+        "dist_p": 206.6500000000001
+      },
+      {
+        "target": 881.56,
+        "type": "LIQUIDITY_POOL",
+        "id": "SSL_SW_LOW_55",
+        "dist_p": 398.6200000000001
+      },
+      {
+        "target": -261.94000000000005,
+        "type": "FORWARD_STRUCTURAL_EXPANSION",
+        "id": "DR_EXP_2409.0_1073.53",
+        "dist_p": 1542.1200000000001
+      }
+    ]
+  },
+  {
+    "index": 12,
+    "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1670572800",
+    "asset": "ETH",
+    "timeframe_set": "SET_2",
+    "direction": "SHORT",
+    "entry_timestamp": 1670616000,
+    "entry_datetime_utc": "2022-12-09 20:00:00 UTC",
+    "entry_price": 1269.05,
+    "initial_sl": 1309.77,
+    "stop_distance": 40.72000000000003,
+    "chosen_target": 1073.53,
+    "chosen_target_provenance": "LIQUIDITY_POOL",
+    "planned_rr": 4.801571709233788,
+    "realized_net_r": -0.7156149529153208,
+    "mfe_r": 0.7127,
+    "exit_reason": "MTF_STRUCTURAL_TRAIL",
+    "total_visible_candidates": 4,
+    "closest_candidate": {
+      "target": 1073.53,
+      "type": "LIQUIDITY_POOL",
+      "id": "SSL_SW_LOW_76",
+      "dist_p": 195.51999999999998
+    },
+    "closest_dist_r": 4.801571709233788,
+    "visible_candidates_breakdown": {
+      "opposing_keyzones_count": 0,
+      "liquidity_pools_count": 2,
+      "weak_swings_count": 1,
+      "dr_expansions_count": 1
+    },
+    "all_candidates": [
+      {
+        "target": 1073.53,
+        "type": "LIQUIDITY_POOL",
+        "id": "SSL_SW_LOW_76",
+        "dist_p": 195.51999999999998
+      },
+      {
+        "target": 1073.53,
+        "type": "WEAK_SWING",
+        "id": "SW_LOW_76",
+        "dist_p": 195.51999999999998
+      },
+      {
+        "target": 881.56,
+        "type": "LIQUIDITY_POOL",
+        "id": "SSL_SW_LOW_55",
+        "dist_p": 387.49
+      },
+      {
+        "target": -261.94000000000005,
+        "type": "FORWARD_STRUCTURAL_EXPANSION",
+        "id": "DR_EXP_2409.0_1073.53",
+        "dist_p": 1530.99
+      }
+    ]
+  },
+  {
+    "index": 13,
+    "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1671889500",
+    "asset": "SOL",
+    "timeframe_set": "SET_4",
+    "direction": "SHORT",
+    "entry_timestamp": 1671983100,
+    "entry_datetime_utc": "2022-12-25 15:45:00 UTC",
+    "entry_price": 11.36,
+    "initial_sl": 11.61,
+    "stop_distance": 0.25,
+    "chosen_target": 9.54,
+    "chosen_target_provenance": "FORWARD_STRUCTURAL_EXPANSION",
+    "planned_rr": 7.280000000000001,
+    "realized_net_r": -0.3748594297179645,
+    "mfe_r": 0.36,
+    "exit_reason": "MTF_STRUCTURAL_TRAIL",
+    "total_visible_candidates": 3,
+    "closest_candidate": {
+      "target": 11.07,
+      "type": "LIQUIDITY_POOL",
+      "id": "SSL_SW_LOW_72",
+      "dist_p": 0.28999999999999915
+    },
+    "closest_dist_r": 1.1599999999999966,
+    "visible_candidates_breakdown": {
+      "opposing_keyzones_count": 0,
+      "liquidity_pools_count": 1,
+      "weak_swings_count": 1,
+      "dr_expansions_count": 1
+    },
+    "all_candidates": [
+      {
+        "target": 11.07,
+        "type": "LIQUIDITY_POOL",
+        "id": "SSL_SW_LOW_72",
+        "dist_p": 0.28999999999999915
+      },
+      {
+        "target": 11.07,
+        "type": "WEAK_SWING",
+        "id": "SW_LOW_72",
+        "dist_p": 0.28999999999999915
+      },
+      {
+        "target": 7.99,
+        "type": "FORWARD_STRUCTURAL_EXPANSION",
+        "id": "DR_EXP_14.15_11.07",
+        "dist_p": 3.369999999999999
+      }
+    ]
+  }
+]
