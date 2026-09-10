@@ -55,7 +55,8 @@ class CausalReplayer:
         breakeven_trigger_r: float = 1.0,
         breakeven_stop_r: float = 0.10,
         enable_milestone_target: bool = False,
-        milestone_r: float = 2.5
+        milestone_r: float = 2.5,
+        target_hierarchy: str = "CLOSEST_OBJECTIVE"
     ):
         self.timeframe_set: TimeframeSet = TimeframeAligner.get_set(timeframe_set_id)
         self.initial_balance = initial_balance
@@ -70,6 +71,7 @@ class CausalReplayer:
         self.breakeven_stop_r = breakeven_stop_r
         self.enable_milestone_target = enable_milestone_target
         self.milestone_r = milestone_r
+        self.target_hierarchy = target_hierarchy
         self.enable_regime_filter = enable_regime_filter
         self.risk_config = risk_config
         self.enable_kz_freshness = enable_kz_freshness
@@ -114,7 +116,8 @@ class CausalReplayer:
             enable_kz_freshness=self.enable_kz_freshness,
             max_htf_kz_age_seconds=self.max_htf_kz_age_seconds,
             enable_forward_expansion=self.enable_forward_expansion,
-            enforce_displacement_polarity=self.enforce_displacement_polarity
+            enforce_displacement_polarity=self.enforce_displacement_polarity,
+            target_hierarchy=self.target_hierarchy
         )
         self.execution_simulator = ExecutionSimulator(
             maker_fee_rate=maker_fee_rate,
@@ -158,6 +161,9 @@ class CausalReplayer:
         self._htf_cache = {"key": None, "state": None}
         self._mtf_cache = {"key": None, "state": None}
         
+        from strategy_engine.context.htf_destination_engine import HTFDestinationEngine
+        HTFDestinationEngine.TARGET_HIERARCHY_MODE = self.target_hierarchy
+
         rejected_candidates = []
 
         # Step chronologically forward through LTF candles

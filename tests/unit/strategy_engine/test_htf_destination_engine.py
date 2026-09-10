@@ -144,10 +144,117 @@ def test_bearish_destination():
         creation_timestamp=500,
         is_mitigated=False
     )
+    # Bullish OB below current price acts as demand/support target
     payload = _make_payload(trend=TrendDirection.BEARISH, current_price=100.0, keyzones=[kz])
     dest = HTFDestinationEngine.evaluate(payload)
 
     assert dest.is_valid is True
     assert dest.destination_type == DestinationType.OPPOSING_KEYZONE
     assert dest.target_price == 85.0  # Front edge of support zone (high)
+
+
+def test_forward_expansion_negative_price_rejected():
+    from market_intelligence.primitives import DealingRange
+    # Case replicating SOL trade #8: low=39.93, high=94.55 -> expansion target would be -14.69
+    dr = DealingRange(high_price=94.55, low_price=39.93)
+    payload = _make_payload(trend=TrendDirection.BEARISH, current_price=38.0)
+    payload.structure_state.dealing_range = dr
+
+    dest = HTFDestinationEngine.evaluate(payload, enable_forward_expansion=True)
+    # Negative target -14.69 must be strictly rejected
+    assert dest.is_valid is False
+    assert dest.target_price is None
+    assert dest.rejection_reason == "REJECT_NO_FORWARD_STRUCTURAL_DESTINATION"
+
+
+def test_forward_expansion_positive_price_accepted():
+    from market_intelligence.primitives import DealingRange
+    # Valid positive expansion target: low=80, high=100, width=20 -> target = 60.0 (< current 75.0)
+    dr = DealingRange(high_price=100.0, low_price=80.0)
+    payload = _make_payload(trend=TrendDirection.BEARISH, current_price=75.0)
+    payload.structure_state.dealing_range = dr
+
+    dest = HTFDestinationEngine.evaluate(payload, enable_forward_expansion=True)
+    assert dest.is_valid is True
+    assert dest.destination_type == DestinationType.FORWARD_STRUCTURAL_EXPANSION
+    assert dest.target_price == 60.0
+    assert dest.target_price > 0.0
+
+
+def test_non_positive_keyzone_target_rejected():
+    # If a keyzone has invalid high/low <= 0.0, it must not be selected as target
+    kz = KeyZone(
+        zone_id="OB_INVALID_NEG",
+        zone_type="BULLISH_OB",
+        direction=TrendDirection.BULLISH,
+        high=-5.0,
+        low=-10.0,
+        timeframe="1D",
+        creation_timestamp=500,
+        is_mitigated=False
+    )
+    payload = _make_payload(trend=TrendDirection.BEARISH, current_price=10.0, keyzones=[kz])
+    dest = HTFDestinationEngine.evaluate(payload)
+    assert dest.is_valid is False
+    assert dest.target_price is None
+
+
+def test_target_hierarchy_mode_structural_objective():
+    # Bullish setup:
+    # Nearer KeyZone at 105.0
+    # Farther Weak High at 130.0
+    kz = KeyZone(
+        zone_id="OB_BEARISH_NEAR",
+        zone_type="BEARISH_OB",
+        direction=TrendDirection.BEARISH,
+        high=110.0,
+        low=105.0,
+        timeframe="1D",
+        creation_timestamp=500,
+        is_mitigated=False
+    )
+    payload = _make_payload(trend=TrendDirection.BULLISH, current_price=100.0, keyzones=[kz], weak_swing_price=130.0)
+
+    # Under CLOSEST_OBJECTIVE (baseline): selects nearer KeyZone
+    dest_closest = HTFDestinationEngine.evaluate(payload, hierarchy_mode="CLOSEST_OBJECTIVE")
+    assert dest_closest.is_valid is True
+    assert dest_closest.destination_type == DestinationType.OPPOSING_KEYZONE
+    assert dest_closest.target_price == 105.0
+
+    # Under STRUCTURAL_OBJECTIVE (experiment): selects major directional Weak Swing
+    dest_struct = HTFDestinationEngine.evaluate(payload, hierarchy_mode="STRUCTURAL_OBJECTIVE")
+    assert dest_struct.is_valid is True
+    assert dest_struct.destination_type == DestinationType.WEAK_SWING
+    assert dest_struct.target_price == 130.0
+
+
+def test_target_hierarchy_liquidity_pool_over_keyzone():
+    # Bullish setup:
+    # Nearer KeyZone at 105.0
+    # Farther Liquidity Pool at 120.0
+    kz = KeyZone(
+        zone_id="OB_BEARISH_NEAR",
+        zone_type="BEARISH_OB",
+        direction=TrendDirection.BEARISH,
+        high=110.0,
+        low=105.0,
+        timeframe="1D",
+        creation_timestamp=500,
+        is_mitigated=False
+    )
+    pool = EQHLiquidityPool(
+        pool_id="EQH_MAJOR",
+        pool_type=LiquidityPoolType.EQH,
+        price_level=120.0,
+        swings=[],
+        is_swept=False
+    )
+    payload = _make_payload(trend=TrendDirection.BULLISH, current_price=100.0, keyzones=[kz], liquidity_pools=[pool])
+
+    # Under STRUCTURAL_OBJECTIVE: selects Liquidity Pool over KeyZone
+    dest_struct = HTFDestinationEngine.evaluate(payload, hierarchy_mode="STRUCTURAL_OBJECTIVE")
+    assert dest_struct.is_valid is True
+    assert dest_struct.destination_type == DestinationType.LIQUIDITY_POOL
+    assert dest_struct.target_price == 120.0
+
 
