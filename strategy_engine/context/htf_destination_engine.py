@@ -20,6 +20,7 @@ class DestinationType(Enum):
     OPPOSING_KEYZONE = "OPPOSING_KEYZONE"
     LIQUIDITY_POOL = "LIQUIDITY_POOL"
     WEAK_SWING = "WEAK_SWING"
+    FORWARD_STRUCTURAL_EXPANSION = "FORWARD_STRUCTURAL_EXPANSION"
     NONE = "NONE"
 
 
@@ -40,13 +41,18 @@ class HTFDestinationEngine:
       - Short: Target < Reference Price
     Rejects invalid geometry rather than inventing artificial targets.
     """
+    ENABLE_FORWARD_EXPANSION: bool = False
 
     @staticmethod
     def evaluate(
         htf_payload: MarketStatePayload,
         reference_price: Optional[float] = None,
-        is_long: Optional[bool] = None
+        is_long: Optional[bool] = None,
+        enable_forward_expansion: Optional[bool] = None
     ) -> StructuralDestination:
+        if enable_forward_expansion is None:
+            enable_forward_expansion = HTFDestinationEngine.ENABLE_FORWARD_EXPANSION
+
         trend = htf_payload.trend_state
         if is_long is None:
             if trend == TrendDirection.BULLISH or "BULLISH" in str(trend):
@@ -129,6 +135,20 @@ class HTFDestinationEngine:
                     candidates.append((ws_price, DestinationType.WEAK_SWING, ws_id))
                 elif not is_long and ws_price < ref_price:
                     candidates.append((ws_price, DestinationType.WEAK_SWING, ws_id))
+
+        # Candidate Pool 4: Forward Structural Expansion (Fallback if target-starved, disabled by default)
+        if enable_forward_expansion and not candidates and struct and struct.dealing_range:
+            dr = struct.dealing_range
+            range_width = dr.high_price - dr.low_price
+            if range_width > 0:
+                if is_long:
+                    expansion_target = dr.high_price + (range_width * 1.0)
+                    if expansion_target > ref_price:
+                        candidates.append((expansion_target, DestinationType.FORWARD_STRUCTURAL_EXPANSION, f"DR_EXPANSION_1.0_L_{dr.low_price}_{dr.high_price}"))
+                else:
+                    expansion_target = dr.low_price - (range_width * 1.0)
+                    if expansion_target < ref_price:
+                        candidates.append((expansion_target, DestinationType.FORWARD_STRUCTURAL_EXPANSION, f"DR_EXPANSION_1.0_S_{dr.high_price}_{dr.low_price}"))
 
         if not candidates:
             return StructuralDestination(

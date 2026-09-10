@@ -27,6 +27,7 @@ class CandidateSetup:
     htf_phase: Optional[str] = None
     htf_expected_move: Optional[str] = None
     htf_target_price: Optional[float] = None
+    htf_target_provenance: Optional[str] = None
     htf_keyzone_id: Optional[str] = None
     htf_kz_creation_timestamp: Optional[int] = None
     htf_interaction_timestamp: Optional[int] = None
@@ -58,6 +59,7 @@ class CandidateSetup:
     # Setup Lifespan & Expiration
     creation_timestamp: Optional[int] = None
     max_lifespan_seconds: Optional[int] = None
+    stages_reached: List[str] = field(default_factory=lambda: ["HTF_QUALIFIED", "WAIT_MTF_ALIGNMENT"])
 
     def is_expired(self, current_timestamp: int) -> bool:
         if not self.creation_timestamp or not self.max_lifespan_seconds:
@@ -66,9 +68,15 @@ class CandidateSetup:
 
     def transition_to(self, new_state: CandidateState):
         self.state = new_state
+        st_val = new_state.value if hasattr(new_state, 'value') else str(new_state)
+        if st_val not in self.stages_reached:
+            self.stages_reached.append(st_val)
 
     def to_provenance_dict(self) -> Dict[str, Any]:
         return {
+            "candidate_id": self.candidate_id,
+            "state": self.state.value if hasattr(self.state, 'value') else str(self.state),
+            "stages_reached": list(self.stages_reached),
             "htf_context": self.htf_context or ("PULLBACK" if "PULLBACK" in str(self.htf_phase) else "CONTINUATION"),
             "htf_context_id": self.htf_context_id or "",
             "htf_context_timestamp": self.htf_context_timestamp or 0,
@@ -76,6 +84,7 @@ class CandidateSetup:
             "htf_phase": self.htf_phase or "",
             "htf_expected_move": self.htf_expected_move or "",
             "htf_target_price": self.htf_target_price or 0.0,
+            "htf_target_provenance": self.htf_target_provenance or "",
             "htf_keyzone_id": self.htf_keyzone_id or "",
             "htf_kz_creation_timestamp": self.htf_kz_creation_timestamp or 0,
             "htf_interaction_timestamp": self.htf_interaction_timestamp or 0,
@@ -103,9 +112,11 @@ class CandidateTracker:
     """
     def __init__(self):
         self.active_candidates: Dict[str, CandidateSetup] = {}
+        self.all_candidates: List[CandidateSetup] = []
         
     def add_candidate(self, candidate: CandidateSetup):
         self.active_candidates[candidate.candidate_id] = candidate
+        self.all_candidates.append(candidate)
         
     def get_active_candidates(self, symbol: str, hypothesis_id: str) -> list[CandidateSetup]:
         return [c for c in self.active_candidates.values() 

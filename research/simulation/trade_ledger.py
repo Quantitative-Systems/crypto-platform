@@ -187,6 +187,18 @@ class TradeLedger:
         # Total equity change for the trade is: -entry_fee + (gross_pnl - exit_fee) == net_pnl
         self.current_equity += (gross_pnl - exit_fee)
         self._update_drawdown(exit_timestamp)
+
+        # Timing metadata
+        if trade.entry_timestamp and exit_timestamp:
+            trade.metadata["duration_seconds"] = exit_timestamp - trade.entry_timestamp
+            if "mfe_timestamp" in trade.metadata:
+                trade.metadata["time_to_mfe"] = trade.metadata["mfe_timestamp"] - trade.entry_timestamp
+            if "mae_timestamp" in trade.metadata:
+                trade.metadata["time_to_mae"] = trade.metadata["mae_timestamp"] - trade.entry_timestamp
+            if exit_reason == "HTF_TP" and "time_to_target" not in trade.metadata:
+                trade.metadata["time_to_target"] = exit_timestamp - trade.entry_timestamp
+            if "SL" in exit_reason or "TRAIL" in exit_reason:
+                trade.metadata["time_to_stop"] = exit_timestamp - trade.entry_timestamp
         
         self.closed_trades.append(trade)
         return trade

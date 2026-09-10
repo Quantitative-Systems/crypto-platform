@@ -15,7 +15,12 @@ class ActiveTradeManager:
         lockin_r: float = 1.0,
         giveback_r: float = 0.75,
         profit_lock_trigger_r: float = 1.0,
-        profit_lock_stop_r: float = 0.10
+        profit_lock_stop_r: float = 0.10,
+        enable_breakeven_1r: bool = False,
+        breakeven_trigger_r: float = 1.0,
+        breakeven_stop_r: float = 0.10,
+        enable_milestone_target: bool = False,
+        milestone_r: float = 2.5
     ):
         self.active_trades: Dict[str, TradePlanPayload] = {}
         self.enable_mtf_trailing = enable_mtf_trailing
@@ -24,6 +29,11 @@ class ActiveTradeManager:
         self.giveback_r = giveback_r
         self.profit_lock_trigger_r = profit_lock_trigger_r
         self.profit_lock_stop_r = profit_lock_stop_r
+        self.enable_breakeven_1r = enable_breakeven_1r
+        self.breakeven_trigger_r = breakeven_trigger_r
+        self.breakeven_stop_r = breakeven_stop_r
+        self.enable_milestone_target = enable_milestone_target
+        self.milestone_r = milestone_r
         
     def register_trade(self, trade_id: str, plan: TradePlanPayload):
         plan.position_status = PositionState.ACTIVE_POSITION.value
@@ -65,8 +75,38 @@ class ActiveTradeManager:
                 exited_trades.append(plan)
                 del self.active_trades[trade_id]
                 continue
+
+            # 1b. Check Milestone Target (HYP_TARGET_MILESTONE_01)
+            if self.enable_milestone_target:
+                milestone_target = entry_price + (self.milestone_r * entry_risk_dist) if is_long else entry_price - (self.milestone_r * entry_risk_dist)
+                if (is_long and cur_high >= milestone_target) or ((not is_long) and cur_low <= milestone_target):
+                    plan.position_status = PositionState.TP_EXIT.value
+                    plan.exit_timestamp = ltf_payload.timestamp
+                    exited_trades.append(plan)
+                    del self.active_trades[trade_id]
+                    continue
                 
-            # 2. Profit-Lock & Break-Even Ratchet (Preserved for historical ablation, disabled in canonical H0)
+            # 2. Breakeven 1R Ratchet (HYP_MGT_BREAKEVEN_1R_01)
+            if self.enable_breakeven_1r and hasattr(plan, 'metadata') and plan.metadata is not None:
+                max_fav = plan.metadata.get("max_favorable_price", entry_price)
+                if is_long:
+                    fav_r = (max_fav - entry_price) / entry_risk_dist
+                    if fav_r >= self.breakeven_trigger_r - 1e-7:
+                        be_stop = entry_price + (self.breakeven_stop_r * entry_risk_dist)
+                        if be_stop > plan.stop_invalidation_price:
+                            plan.stop_invalidation_price = be_stop
+                            plan.metadata["breakeven_triggered"] = True
+                            plan.metadata["breakeven_stop_price"] = be_stop
+                else:
+                    fav_r = (entry_price - max_fav) / entry_risk_dist
+                    if fav_r >= self.breakeven_trigger_r - 1e-7:
+                        be_stop = entry_price - (self.breakeven_stop_r * entry_risk_dist)
+                        if be_stop < plan.stop_invalidation_price:
+                            plan.stop_invalidation_price = be_stop
+                            plan.metadata["breakeven_triggered"] = True
+                            plan.metadata["breakeven_stop_price"] = be_stop
+
+            # 2b. Profit-Lock & Break-Even Ratchet (Preserved for historical ablation, disabled in canonical H0)
             if self.enable_profit_lock and hasattr(plan, 'metadata') and plan.metadata is not None:
                 max_fav = plan.metadata.get("max_favorable_price", entry_price)
                 if is_long:

@@ -90,7 +90,14 @@ class StrategyCoordinator:
         htf_context_filter: Optional[str] = None,
         hypothesis: Optional[BaseHypothesis] = None,
         enable_kz_freshness: bool = False,
-        max_htf_kz_age_seconds: Optional[int] = None
+        max_htf_kz_age_seconds: Optional[int] = None,
+        enable_forward_expansion: bool = False,
+        enforce_displacement_polarity: bool = False,
+        enable_breakeven_1r: bool = False,
+        breakeven_trigger_r: float = 1.0,
+        breakeven_stop_r: float = 0.10,
+        enable_milestone_target: bool = False,
+        milestone_r: float = 2.5
     ):
         """
         htf_context_filter: when set to "PULLBACK" or "CONTINUATION", candidates
@@ -101,13 +108,22 @@ class StrategyCoordinator:
         """
         self.enable_kz_freshness = enable_kz_freshness
         self.max_htf_kz_age_seconds = max_htf_kz_age_seconds
+        self.enable_forward_expansion = enable_forward_expansion
+        self.enforce_displacement_polarity = enforce_displacement_polarity
+        self.enable_breakeven_1r = enable_breakeven_1r
+        self.breakeven_trigger_r = breakeven_trigger_r
+        self.breakeven_stop_r = breakeven_stop_r
+        self.enable_milestone_target = enable_milestone_target
+        self.milestone_r = milestone_r
         if hypothesis is not None:
             self.hypotheses = {hypothesis.hypothesis_id: hypothesis}
         else:
             self.hypotheses = {
                 "UNIFIED_STRATEGY": UnifiedStrategy(
                     enable_kz_freshness=enable_kz_freshness,
-                    max_htf_kz_age_seconds=max_htf_kz_age_seconds
+                    max_htf_kz_age_seconds=max_htf_kz_age_seconds,
+                    enable_forward_expansion=enable_forward_expansion,
+                    enforce_displacement_polarity=enforce_displacement_polarity
                 )
             }
         self.candidate_tracker = CandidateTracker()
@@ -117,7 +133,12 @@ class StrategyCoordinator:
             lockin_r=lockin_r,
             giveback_r=giveback_r,
             profit_lock_trigger_r=profit_lock_trigger_r,
-            profit_lock_stop_r=profit_lock_stop_r
+            profit_lock_stop_r=profit_lock_stop_r,
+            enable_breakeven_1r=enable_breakeven_1r,
+            breakeven_trigger_r=breakeven_trigger_r,
+            breakeven_stop_r=breakeven_stop_r,
+            enable_milestone_target=enable_milestone_target,
+            milestone_r=milestone_r
         )
         self.news_provider = news_provider or NullNewsProvider()
         self.regime_filter = regime_filter
@@ -208,8 +229,9 @@ class StrategyCoordinator:
                     if context_matches:
                         # Discover forward structural destination
                         from strategy_engine.context.htf_destination_engine import HTFDestinationEngine
-                        dest = HTFDestinationEngine.evaluate(htf_payload, reference_price=ltf_payload.current_price, is_long=is_bullish)
+                        dest = HTFDestinationEngine.evaluate(htf_payload, reference_price=ltf_payload.current_price, is_long=is_bullish, enable_forward_expansion=self.enable_forward_expansion)
                         target_price = dest.target_price if dest.is_valid else htf_context.target_anchor_price
+                        target_provenance = dest.destination_type.value if dest.is_valid else "NONE"
 
                         kz_create_ts = getattr(htf_interacting_kz, 'creation_timestamp', None)
                         if (kz_create_ts is None or kz_create_ts == 0) and getattr(htf_interacting_kz, 'zone_id', None):
@@ -233,6 +255,7 @@ class StrategyCoordinator:
                             htf_macro_direction=htf_payload.trend_state.value if hasattr(htf_payload.trend_state, 'value') else str(htf_payload.trend_state),
                             htf_phase=str(htf_payload.phase_state),
                             htf_target_price=target_price,
+                            htf_target_provenance=target_provenance,
                             htf_keyzone_id=getattr(htf_interacting_kz, 'zone_id', None),
                             htf_kz_creation_timestamp=kz_create_ts,
                             htf_interaction_timestamp=ltf_payload.timestamp,
