@@ -111,24 +111,36 @@ class ActiveTradeManager:
                 max_fav = plan.metadata.get("max_favorable_price", entry_price)
                 if is_long:
                     fav_r = (max_fav - entry_price) / entry_risk_dist
-                    if fav_r >= self.profit_lock_trigger_r:
+                    if fav_r >= self.profit_lock_trigger_r - 1e-7:
                         be_stop = entry_price + (self.profit_lock_stop_r * entry_risk_dist)
                         if be_stop > plan.stop_invalidation_price:
                             plan.stop_invalidation_price = be_stop
-                    if fav_r >= self.lockin_r:
+                            plan.metadata["profit_locked"] = True
+                            plan.metadata["profit_lock_stop_price"] = be_stop
+                            plan.metadata["profit_lock_trigger_bar_ts"] = ltf_payload.timestamp
+                    if fav_r >= self.lockin_r - 1e-7:
                         floor_stop = max_fav - (self.giveback_r * entry_risk_dist)
                         if floor_stop > plan.stop_invalidation_price:
                             plan.stop_invalidation_price = floor_stop
+                            plan.metadata["profit_locked"] = True
+                            plan.metadata["profit_lock_stop_price"] = floor_stop
+                            plan.metadata["profit_lock_trigger_bar_ts"] = ltf_payload.timestamp
                 else:
                     fav_r = (entry_price - max_fav) / entry_risk_dist
-                    if fav_r >= self.profit_lock_trigger_r:
+                    if fav_r >= self.profit_lock_trigger_r - 1e-7:
                         be_stop = entry_price - (self.profit_lock_stop_r * entry_risk_dist)
                         if be_stop < plan.stop_invalidation_price:
                             plan.stop_invalidation_price = be_stop
-                    if fav_r >= self.lockin_r:
+                            plan.metadata["profit_locked"] = True
+                            plan.metadata["profit_lock_stop_price"] = be_stop
+                            plan.metadata["profit_lock_trigger_bar_ts"] = ltf_payload.timestamp
+                    if fav_r >= self.lockin_r - 1e-7:
                         floor_stop = max_fav + (self.giveback_r * entry_risk_dist)
                         if floor_stop < plan.stop_invalidation_price:
                             plan.stop_invalidation_price = floor_stop
+                            plan.metadata["profit_locked"] = True
+                            plan.metadata["profit_lock_stop_price"] = floor_stop
+                            plan.metadata["profit_lock_trigger_bar_ts"] = ltf_payload.timestamp
 
             # 3. Canonical MTF Structural Trailing Stop & Adverse CHOCH Exit
             if self.enable_mtf_trailing:
@@ -149,16 +161,18 @@ class ActiveTradeManager:
                         plan.stop_invalidation_price = decision.new_stop_price
                         
             # 5. Check LTF / Trailed SL Trigger
-            is_trailed = abs(plan.stop_invalidation_price - initial_sl) >= 1e-6
-            exit_status = PositionState.MTF_TRAIL_EXIT.value if is_trailed else PositionState.LTF_SL_EXIT.value
+            cur_close = getattr(ltf_payload.current_candle, 'close', ltf_payload.current_price) if ltf_payload.current_candle else ltf_payload.current_price
+            is_trigger_bar = (hasattr(plan, 'metadata') and plan.metadata is not None and plan.metadata.get("profit_lock_trigger_bar_ts") == ltf_payload.timestamp)
 
-            if is_long and cur_low <= plan.stop_invalidation_price:
-                plan.position_status = exit_status
-                plan.exit_timestamp = ltf_payload.timestamp
-                exited_trades.append(plan)
-                del self.active_trades[trade_id]
-                continue
-            elif not is_long and cur_high >= plan.stop_invalidation_price:
+            if is_trigger_bar:
+                hit_sl = (cur_close <= plan.stop_invalidation_price) if is_long else (cur_close >= plan.stop_invalidation_price)
+            else:
+                hit_sl = (cur_low <= plan.stop_invalidation_price) if is_long else (cur_high >= plan.stop_invalidation_price)
+
+            if hit_sl:
+                is_trailed = abs(plan.stop_invalidation_price - initial_sl) >= 1e-6
+                exit_status = PositionState.MTF_TRAIL_EXIT.value if is_trailed else PositionState.LTF_SL_EXIT.value
+
                 plan.position_status = exit_status
                 plan.exit_timestamp = ltf_payload.timestamp
                 exited_trades.append(plan)

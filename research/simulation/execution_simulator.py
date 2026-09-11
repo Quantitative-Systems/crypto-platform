@@ -165,38 +165,52 @@ class ExecutionSimulator:
                                 trade.metadata["breakeven_stop_price"] = be_stop
 
             # Profit-Lock & Break-Even Ratchet
-            if self.enable_profit_lock:
-                if risk_dist > 0:
+            if self.enable_profit_lock and risk_dist > 0:
+                # Adverse-first collision invariant: If candle penetrated prior adverse stop,
+                # adverse stop wins; cannot assume excursion was reached prior to stop-out.
+                if not hit_prior_sl:
                     if is_long:
                         fav_p = trade.metadata.get("mfe_price", entry_p)
                         fav_r = (fav_p - entry_p) / risk_dist
                         # Tier 1: Break-even / profit lock at profit_lock_trigger_r (+profit_lock_stop_r buffer)
-                        if fav_r >= self.profit_lock_trigger_r:
+                        if fav_r >= self.profit_lock_trigger_r - 1e-7:
                             be_stop = entry_p + (self.profit_lock_stop_r * risk_dist)
                             if be_stop > trade.current_stop_price:
                                 ledger.update_trailing_stop(trade.trade_id, be_stop)
                                 trade.metadata["profit_locked"] = True
+                                trade.metadata["profit_lock_stop_price"] = be_stop
+                                trade.metadata["profit_lock_trigger_ts"] = candle.timestamp
+                                trade.metadata["profit_lock_trigger_bar_ts"] = candle.timestamp
                         # Tier 2: Ratchet trailing floor at lockin_r
-                        if fav_r >= self.lockin_r:
+                        if fav_r >= self.lockin_r - 1e-7:
                             floor_stop = fav_p - (self.giveback_r * risk_dist)
                             if floor_stop > trade.current_stop_price:
                                 ledger.update_trailing_stop(trade.trade_id, floor_stop)
                                 trade.metadata["profit_locked"] = True
+                                trade.metadata["profit_lock_stop_price"] = floor_stop
+                                trade.metadata["profit_lock_trigger_ts"] = candle.timestamp
+                                trade.metadata["profit_lock_trigger_bar_ts"] = candle.timestamp
                     else:
                         fav_p = trade.metadata.get("mfe_price", entry_p)
                         fav_r = (entry_p - fav_p) / risk_dist
                         # Tier 1: Break-even / profit lock at profit_lock_trigger_r (-profit_lock_stop_r buffer)
-                        if fav_r >= self.profit_lock_trigger_r:
+                        if fav_r >= self.profit_lock_trigger_r - 1e-7:
                             be_stop = entry_p - (self.profit_lock_stop_r * risk_dist)
                             if be_stop < trade.current_stop_price:
                                 ledger.update_trailing_stop(trade.trade_id, be_stop)
                                 trade.metadata["profit_locked"] = True
+                                trade.metadata["profit_lock_stop_price"] = be_stop
+                                trade.metadata["profit_lock_trigger_ts"] = candle.timestamp
+                                trade.metadata["profit_lock_trigger_bar_ts"] = candle.timestamp
                         # Tier 2: Ratchet trailing floor at lockin_r
-                        if fav_r >= self.lockin_r:
+                        if fav_r >= self.lockin_r - 1e-7:
                             floor_stop = fav_p + (self.giveback_r * risk_dist)
                             if floor_stop < trade.current_stop_price:
                                 ledger.update_trailing_stop(trade.trade_id, floor_stop)
                                 trade.metadata["profit_locked"] = True
+                                trade.metadata["profit_lock_stop_price"] = floor_stop
+                                trade.metadata["profit_lock_trigger_ts"] = candle.timestamp
+                                trade.metadata["profit_lock_trigger_bar_ts"] = candle.timestamp
 
             # HYP_TARGET_MILESTONE_01: Pre-registered +2.5R milestone target exit
             hit_milestone = False
@@ -213,11 +227,23 @@ class ExecutionSimulator:
             hit_sl = False
             hit_tp = False
 
+            # Causal Same-Bar Protection Check:
+            # If the protective stop was just raised on this candle, we cannot assume
+            # High reaches +0.5R -> immediately move stop -> Low hits new stop on the same candle.
+            # Only if the candle closed through the stop does it exit on the trigger candle.
+            is_trigger_bar = (trade.metadata.get("profit_lock_trigger_bar_ts") == candle.timestamp)
+
             if is_long:
-                hit_sl = (candle.low <= current_stop)
+                if is_trigger_bar:
+                    hit_sl = (candle.close <= current_stop)
+                else:
+                    hit_sl = (candle.low <= current_stop)
                 hit_tp = (candle.high >= target_price)
             else:
-                hit_sl = (candle.high >= current_stop)
+                if is_trigger_bar:
+                    hit_sl = (candle.close >= current_stop)
+                else:
+                    hit_sl = (candle.high >= current_stop)
                 hit_tp = (candle.low <= target_price)
 
             # 3. Collision Resolution & Execution
@@ -230,7 +256,9 @@ class ExecutionSimulator:
 
             if hit_sl:
                 # Stop loss triggers as a Taker market order with slippage
-                exit_price = self._apply_slippage(current_stop, is_buy=(not is_long))
+                # If stopped out on trigger bar by closing through stop, fill at candle.close with slippage
+                exec_stop_price = candle.close if is_trigger_bar else current_stop
+                exit_price = self._apply_slippage(exec_stop_price, is_buy=(not is_long))
                 notional = exit_price * trade.position_units
                 exit_fee = notional * self.taker_fee_rate
                 

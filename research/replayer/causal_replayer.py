@@ -100,7 +100,7 @@ class CausalReplayer:
         self.regime_filter = RegimeFilter(enable_filter=True) if self.enable_regime_filter else None
         self.strategy_coordinator = StrategyCoordinator(
             enable_mtf_trailing=self.enable_mtf_trailing,
-            enable_profit_lock=self.enable_profit_lock,
+            enable_profit_lock=False,  # Isolated to ExecutionSimulator on active filled positions
             lockin_r=self.lockin_r,
             giveback_r=self.giveback_r,
             profit_lock_trigger_r=self.profit_lock_trigger_r,
