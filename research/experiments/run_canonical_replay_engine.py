@@ -105,6 +105,9 @@ def run_single_stream(asset: str, tf_set_id: str, treatment: str) -> Dict[str, A
     enable_breakeven = (treatment.upper() in ["BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R", "EXP_TARGET_STRUCTURAL_01"])
     enable_milestone = (treatment.upper() == "MILESTONE_2_5R")
     target_hierarchy = "STRUCTURAL_OBJECTIVE" if treatment.upper() == "EXP_TARGET_STRUCTURAL_01" else "CLOSEST_OBJECTIVE"
+    enable_profit_lock = (treatment.upper() == "PROFIT_LOCK_0.5R_0.25R")
+    profit_lock_trigger_r = 0.5 if enable_profit_lock else 1.0
+    profit_lock_stop_r = 0.25 if enable_profit_lock else 0.10
 
     replayer = CausalReplayer(
         timeframe_set_id=tf_set_id,
@@ -113,8 +116,11 @@ def run_single_stream(asset: str, tf_set_id: str, treatment: str) -> Dict[str, A
         taker_fee_rate=0.0005,   # 5 bps taker
         slippage_bps=5.0,        # 5 bps realistic adverse slippage
         enable_mtf_trailing=True, # MTF structural trailing preserved
-        enable_profit_lock=False, # DISABLED to preserve pure structural isolation
+        enable_profit_lock=enable_profit_lock,
         lockin_r=999.0,
+        giveback_r=0.0,
+        profit_lock_trigger_r=profit_lock_trigger_r,
+        profit_lock_stop_r=profit_lock_stop_r,
         enable_forward_expansion=enable_expansion,
         enforce_displacement_polarity=enforce_polarity,
         enable_breakeven_1r=enable_breakeven,
@@ -335,7 +341,7 @@ def run_matrix(treatment: str, output_path: str = None, workers: int = 8):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Canonical Replay Engine")
-    parser.add_argument("--treatment", type=str, default="H0", choices=["H0", "ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R", "EXP_TARGET_STRUCTURAL_01"], help="Experimental treatment (H0, ANCHOR_2, POLARITY_01, BREAKEVEN_1R, COMPOSITE_01, MILESTONE_2_5R, or EXP_TARGET_STRUCTURAL_01)")
+    parser.add_argument("--treatment", type=str, default="H0", choices=["H0", "ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R", "EXP_TARGET_STRUCTURAL_01", "PROFIT_LOCK_0.5R_0.25R"], help="Experimental treatment (H0, ANCHOR_2, POLARITY_01, BREAKEVEN_1R, COMPOSITE_01, MILESTONE_2_5R, EXP_TARGET_STRUCTURAL_01, or PROFIT_LOCK_0.5R_0.25R)")
     parser.add_argument("--output", type=str, default=None, help="Output JSON path")
     parser.add_argument("--workers", type=int, default=8, help="Parallel worker count")
     args = parser.parse_args()
