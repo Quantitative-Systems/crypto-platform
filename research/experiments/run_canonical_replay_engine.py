@@ -108,6 +108,7 @@ def run_single_stream(asset: str, tf_set_id: str, treatment: str) -> Dict[str, A
     enable_profit_lock = (treatment.upper() == "PROFIT_LOCK_0.5R_0.25R")
     profit_lock_trigger_r = 0.5 if enable_profit_lock else 1.0
     profit_lock_stop_r = 0.25 if enable_profit_lock else 0.10
+    require_htf_kz = (treatment.upper() != "H_MOM_01")
 
     replayer = CausalReplayer(
         timeframe_set_id=tf_set_id,
@@ -127,6 +128,7 @@ def run_single_stream(asset: str, tf_set_id: str, treatment: str) -> Dict[str, A
         enable_milestone_target=enable_milestone,
         milestone_r=2.5,
         target_hierarchy=target_hierarchy,
+        require_htf_keyzone=require_htf_kz,
         cache_htf_mtf=True,
         risk_config=risk_cfg
     )
@@ -341,7 +343,7 @@ def run_matrix(treatment: str, output_path: str = None, workers: int = 8):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Canonical Replay Engine")
-    parser.add_argument("--treatment", type=str, default="H0", choices=["H0", "ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R", "EXP_TARGET_STRUCTURAL_01", "PROFIT_LOCK_0.5R_0.25R"], help="Experimental treatment (H0, ANCHOR_2, POLARITY_01, BREAKEVEN_1R, COMPOSITE_01, MILESTONE_2_5R, EXP_TARGET_STRUCTURAL_01, or PROFIT_LOCK_0.5R_0.25R)")
+    parser.add_argument("--treatment", type=str, default="H0", choices=["H0", "ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R", "EXP_TARGET_STRUCTURAL_01", "PROFIT_LOCK_0.5R_0.25R", "H_MOM_01"], help="Experimental treatment (H0, ANCHOR_2, POLARITY_01, BREAKEVEN_1R, COMPOSITE_01, MILESTONE_2_5R, EXP_TARGET_STRUCTURAL_01, PROFIT_LOCK_0.5R_0.25R, or H_MOM_01)")
     parser.add_argument("--output", type=str, default=None, help="Output JSON path")
     parser.add_argument("--workers", type=int, default=8, help="Parallel worker count")
     args = parser.parse_args()

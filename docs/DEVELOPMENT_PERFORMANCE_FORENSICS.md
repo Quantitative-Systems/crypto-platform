@@ -10,7 +10,7 @@
 
 ## Executive Summary
 
-Pursuant to the Day 40 / Week 6 Research Reset mandate, all individual parameter optimization, indicator addition, breakeven threshold tweaking, and ad-hoc rule modifications were completely halted. The objective of this forensic investigation was to determine **where expected economic value is created or destroyed across the complete multi-timeframe trading funnel**.
+Pursuant to the Quantitative Research Reset mandate, all individual parameter optimization, indicator addition, breakeven threshold tweaking, and ad-hoc rule modifications were completely halted. The objective of this forensic investigation was to determine **where expected economic value is created or destroyed across the complete multi-timeframe trading funnel**.
 
 Using the authoritative, point-in-time `CausalReplayer` across all 15 market streams (BTC, ETH, SOL across Timeframe Sets 1 through 5), we executed the frozen **Canonical H0 Control** (14 executed trades, -12.69 R net, expectancy -0.9066 R) and the isolated **ANCHOR_2 Treatment** (35 executed trades, -20.16 R net, expectancy -0.5760 R).
 
@@ -425,5 +425,5 @@ The data proves that **entries are directionally sound** (excursion regularly re
 - [x] Full Historical Data Inventory Audited across 15 streams
 - [x] Partitions Preserved: 2021–2022 Development Only (2023+ Untouched)
 - [x] Alpha Waterfall Survival Percentages Calculated
-- [x] Master Forensic Document Emitted: `ALPHA_FORENSICS_DEVELOPMENT_2021_2022.md`
+- [x] Master Forensic Document Emitted: `DEVELOPMENT_PERFORMANCE_FORENSICS.md`
 - [x] Execution Halted: Zero code changes to canonical strategy, zero parameter hunts, zero git commits.

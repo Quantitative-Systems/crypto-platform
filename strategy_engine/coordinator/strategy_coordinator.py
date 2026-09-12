@@ -98,7 +98,8 @@ class StrategyCoordinator:
         breakeven_stop_r: float = 0.10,
         enable_milestone_target: bool = False,
         milestone_r: float = 2.5,
-        target_hierarchy: str = "CLOSEST_OBJECTIVE"
+        target_hierarchy: str = "CLOSEST_OBJECTIVE",
+        require_htf_keyzone: bool = True
     ):
         """
         htf_context_filter: when set to "PULLBACK" or "CONTINUATION", candidates
@@ -117,6 +118,7 @@ class StrategyCoordinator:
         self.enable_milestone_target = enable_milestone_target
         self.milestone_r = milestone_r
         self.target_hierarchy = target_hierarchy
+        self.require_htf_keyzone = require_htf_keyzone
         if hypothesis is not None:
             self.hypotheses = {hypothesis.hypothesis_id: hypothesis}
         else:
@@ -193,6 +195,11 @@ class StrategyCoordinator:
                     if "INVALIDATED" in status_str:
                         continue
 
+                    # Historical mitigation check: If zone was already mitigated before current HTF bar, reject
+                    mit_ts = getattr(kz, 'mitigation_timestamp', None)
+                    if mit_ts is not None and mit_ts > 0 and mit_ts < htf_payload.timestamp:
+                        continue
+
                     # Direction matching: Bullish keyzone for Long, Bearish keyzone for Short
                     if is_bullish and ("BULLISH" not in kz_type_str):
                         continue
@@ -225,7 +232,9 @@ class StrategyCoordinator:
                         break
 
                 # MANDATORY GATE: If price has not reached a relevant HTF keyzone, NO candidate setup can qualify
-                if htf_interacting_kz is not None:
+                # H_MOM_01 intervention: When require_htf_keyzone is False, allow continuation candidates during confirmed directional bias
+                qualifies = (htf_interacting_kz is not None) or (not self.require_htf_keyzone)
+                if qualifies:
                     htf_ctx_label = "PULLBACK" if ("PULLBACK" in phase_str or (htf_interacting_kz is not None and "PULLBACK" in phase_str)) else "CONTINUATION"
                     context_matches = (self.htf_context_filter is None) or (htf_ctx_label == self.htf_context_filter)
 
@@ -242,8 +251,8 @@ class StrategyCoordinator:
                         target_price = dest.target_price if dest.is_valid else htf_context.target_anchor_price
                         target_provenance = dest.destination_type.value if dest.is_valid else "NONE"
 
-                        kz_create_ts = getattr(htf_interacting_kz, 'creation_timestamp', None)
-                        if (kz_create_ts is None or kz_create_ts == 0) and getattr(htf_interacting_kz, 'zone_id', None):
+                        kz_create_ts = getattr(htf_interacting_kz, 'creation_timestamp', None) if htf_interacting_kz else None
+                        if (kz_create_ts is None or kz_create_ts == 0) and htf_interacting_kz and getattr(htf_interacting_kz, 'zone_id', None):
                             for part in str(htf_interacting_kz.zone_id).split('_'):
                                 if part.isdigit() and len(part) >= 9:
                                     kz_create_ts = int(part)
@@ -265,7 +274,7 @@ class StrategyCoordinator:
                             htf_phase=str(htf_payload.phase_state),
                             htf_target_price=target_price,
                             htf_target_provenance=target_provenance,
-                            htf_keyzone_id=getattr(htf_interacting_kz, 'zone_id', None),
+                            htf_keyzone_id=getattr(htf_interacting_kz, 'zone_id', None) if htf_interacting_kz else None,
                             htf_kz_creation_timestamp=kz_create_ts,
                             htf_interaction_timestamp=ltf_payload.timestamp,
                             creation_timestamp=ltf_payload.timestamp,

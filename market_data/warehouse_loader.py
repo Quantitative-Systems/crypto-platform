@@ -1,6 +1,6 @@
 """
 Product 01: Crypto Platform - Historical Data Warehouse Loader
-Connects BinanceFetcher real market data into the APEX Quant Warehouse.
+Connects BinanceFetcher real market data into the Quant Data Warehouse.
 """
 
 import os

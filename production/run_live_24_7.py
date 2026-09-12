@@ -80,7 +80,7 @@ class LiveTradingDaemon:
         
         mode_str = "🔴 LIVE CAPITAL" if self.is_live else "🟢 DEMO / TESTNET"
         print("\n" + "=" * 90)
-        print(f"      🚀 APEX INSTITUTIONAL 24/7/365 ENGINE ACTIVE [{mode_str}]")
+        print(f"      🚀 INSTITUTIONAL 24/7/365 ENGINE ACTIVE [{mode_str}]")
         print(f"      Broker: {self.broker_config.broker_type.value} | Strategy: {'Hyp B (Continuation)' if self.hyp_b_only else 'Dual (Hyp A+B)'}")
         print(f"      Whitelist: {', '.join(self.broker_config.allowed_symbols)}")
         print("      Press Ctrl+C at any time to gracefully stop the engine and persist state.")
@@ -162,7 +162,7 @@ class LiveTradingDaemon:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Apex Institutional 24/7/365 Trading Daemon")
+    parser = argparse.ArgumentParser(description="Institutional 24/7/365 Trading Daemon")
     parser.add_argument("--non-interactive", action="store_true", help="Run with CLI arguments without interactive prompts")
     parser.add_argument("--broker", type=str, default="PAPER", help="Broker type: PAPER, BINANCE, EXNESS_MT5, VANTAGE_MT5, BYBIT, OKX")
     parser.add_argument("--mode", type=str, default="demo", choices=["live", "demo"], help="Execution mode: live or demo")

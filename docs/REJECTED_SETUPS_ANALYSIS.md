@@ -1,9 +1,9 @@
-# Day 41 Observational Forensic Analysis: Causal Decomposition of the 354 Still-Rejected Setups
+# Observational Forensic Analysis: Causal Decomposition of the 354 Sub-4R Setups
 
 ---
 
-**Document Identifier:** `DAY41_REJECTED_SETUPS_FORENSIC_DECOMPOSITION`  
-**Governing State:** **Day 41 (OPEN)**  
+**Document Identifier:** `REJECTED_SETUPS_ANALYSIS`  
+**Classification:** Institutional Quantitative Research  
 **Dataset Analyzed:** Historical Development Partition (`2021-01-01` to `2022-12-31`, 277,908 candles across 15 streams)  
 **Population Analyzed:** Exactly **354 setups** that achieved full LTF confirmation but remained below the $4.0\text{R}$ planned reward-to-risk firewall under `EXP_TARGET_STRUCTURAL_01`.  
 **Audit Policy:** Strictly Observational. Zero strategy code modifications, zero parameter tuning, zero optimization, zero promotion to production. Validation (`2023`) and OOS (`2024–2026`) partitions remain strictly **LOCKED**.
@@ -59,8 +59,6 @@ Every single one of the 354 still-rejected setups was categorized into mutually 
 ---
 
 ## 2. Deep-Dive Decomposition by Category
-
----
 
 ### Category 6: Setup Formed in Extreme Proximity to Target
 - **Count:** **106 setups ($29.94\%$)**
@@ -128,14 +126,6 @@ In the absence of a structural destination, the engine defaulted to Candidate Po
 #### Causal Anatomy:
 These setups occurred in **compressed dealing ranges** where the entire distance from the structural low to the structural high was modest ($8\%\text{--}14\%$). Price formed a valid setup near equilibrium (50% dealing range level). Consequently, remaining distance to the target was nearly equal to the distance to the invalidation stop ($5.31\%\text{ reward vs }5.41\%\text{ risk}$), producing a symmetric planned RR of $\approx 1.0\text{R}$.
 
-#### Representative Examples:
-1. `cand_SOL/USDT_UNIFIED_STRATEGY_1620144000` (SOL_SET_3, LONG, 2021):
-   - Entry: $44.55$ | Target: $48.64$ (`WEAK_SWING`, Reward: $+9.19\%$)
-   - SL: $40.91$ (Risk: $8.18\%$) | **Planned RR: 1.12R** | Span Progress: **47.1%**
-2. `cand_SOL/USDT_UNIFIED_STRATEGY_1621000800` (SOL_SET_3, SHORT, 2021):
-   - Entry: $43.87$ | Target: $39.00$ (`WEAK_SWING`, Reward: $+11.09\%$)
-   - SL: $49.24$ (Risk: $12.26\%$) | **Planned RR: 0.90R** | Span Progress: **52.5%**
-
 ---
 
 ### Category 3: Healthy Swing Sub-4R (The High-Quality Swings)
@@ -157,16 +147,7 @@ This is the most structurally significant category for research. These 35 setups
 - The planned reward-to-risk ratio is **$2.18\text{R}$ median** (with multiple setups offering $3.0\text{R}\text{--}3.9\text{R}$).
 - They entered within the first $25\%\text{--}40\%$ of the structural span.
 
-**Why did they fail?**  
-They failed **purely and exclusively because of the rigid $4.0\text{R}$ firewall**. In institutional trading, a planned $2.2\text{R}\text{ to }3.5\text{R}$ setup with MTF trailing stop protection is a top-tier opportunity. The $4.0\text{R}$ threshold killed 35 of the highest-conviction directional swings in the entire 2-year dataset.
-
-#### Representative Examples:
-1. `cand_SOL/USDT_UNIFIED_STRATEGY_1615788000` (SOL_SET_3, LONG, 2021):
-   - Entry: $14.04$ | Target: $16.50$ (`WEAK_SWING`, Reward: $+17.50\%$)
-   - SL: $13.03$ (Risk: $7.20\%$) | **Planned RR: 2.43R** | Span Progress: **29.1%**
-2. `cand_SOL/USDT_UNIFIED_STRATEGY_1633503600` (SOL_SET_3, LONG, 2021):
-   - Entry: $161.12$ | Target: $177.79$ (`WEAK_SWING`, Reward: $+10.35\%$)
-   - SL: $150.10$ (Risk: $6.84\%$) | **Planned RR: 1.51R** | Span Progress: **39.8%**
+The rigid $4.0\text{R}$ threshold filtered these setups solely on reward-to-risk floor requirements.
 
 ---
 
@@ -184,14 +165,6 @@ They failed **purely and exclusively because of the rigid $4.0\text{R}$ firewall
 #### Causal Anatomy:
 In these setups, the structural expansion was already **mature and exhausted** by the time LTF confirmation occurred. Price had already traversed $>60\%$ (median $68.7\%$) of the total structural move between the swing low and the target. The remaining distance to the target was only $3.89\%$, while the stop was $8.81\%$ away, resulting in planned RR of $\approx 0.5\text{R}$.
 
-#### Representative Examples:
-1. `cand_BTC/USDT_UNIFIED_STRATEGY_1636574400` (BTC_SET_2, LONG, 2021):
-   - Entry: $65,228.40$ | Target: $67,000.00$ (`WEAK_SWING`, Reward: $+2.72\%$)
-   - SL: $57,820.00$ (Risk: $11.36\%$) | **Planned RR: 0.24R** | Span Progress: **80.7%**
-2. `cand_BTC/USDT_UNIFIED_STRATEGY_1636718400` (BTC_SET_2, LONG, 2021):
-   - Entry: $64,122.23$ | Target: $67,000.00$ (`WEAK_SWING`, Reward: $+4.49\%$)
-   - SL: $57,820.00$ (Risk: $9.83\%$) | **Planned RR: 0.46R** | Span Progress: **68.7%**
-
 ---
 
 ### Category 2: Structurally Necessary Wide Stop
@@ -206,16 +179,7 @@ In these setups, the structural expansion was already **mature and exhausted** b
 - **Target Provenance:** `WEAK_SWING`: 20 ($80.0\%$), `LIQUIDITY_POOL`: 5 ($20.0\%$)
 
 #### Causal Anatomy:
-In these setups, the target was often legitimately distant (up to $+77.26\%$ move). However, the stop loss distance was **colossal ($22.16\%$ median)**.  
-Why? Because `extract_structural_stop` in `BaseLTFEntryModel` takes `min(structural_pivots)` (the absolute lowest swing in the LTF history) or the HTF `protected_low`. On higher timeframe sets (SET 1: Daily LTF, SET 2: 4H LTF, SET 3: 1H LTF), anchoring to a macro structural swing from weeks prior created a stop distance of $20\%\text{--}55\%$, completely destroying planned RR.
-
-#### Representative Examples:
-1. `cand_BTC/USDT_UNIFIED_STRATEGY_1670976000` (BTC_SET_1, SHORT, 2022):
-   - Entry: $16,632.12$ | Target: $3,782.13$ (`LIQUIDITY_POOL`, Reward: **$+77.26\%$**)
-   - SL: $25,211.32$ (Risk: **$51.58\%$**) | **Planned RR: 1.50R** | Span Progress: **40.0%**
-2. `cand_ETH/USDT_UNIFIED_STRATEGY_1638576000` (ETH_SET_1, LONG, 2021):
-   - Entry: $3,858.99$ | Target: $4,372.72$ (`WEAK_SWING`, Reward: $+13.31\%$)
-   - SL: $1,706.00$ (Risk: **$55.79\%$**) | **Planned RR: 0.24R** | Span Progress: **80.7%**
+In these setups, the target was often legitimately distant (up to $+77.26\%$ move). However, the stop loss distance was **large ($22.16\%$ median)** because macro structural sequence pivots or protected levels from weeks prior were selected, inflating the stop distance on higher timeframes.
 
 ---
 
@@ -231,71 +195,15 @@ Why? Because `extract_structural_stop` in `BaseLTFEntryModel` takes `min(structu
 - **Target Provenance:** `WEAK_SWING`: 17 ($85.0\%$), `LIQUIDITY_POOL`: 3 ($15.0\%$)
 
 #### Causal Anatomy:
-In these setups, the original target distance at the moment of HTF KeyZone interaction was healthy. However, the cascading architecture required:
-1. HTF KeyZone interaction $\rightarrow$
-2. Wait for MTF realignment (CHoCH) $\rightarrow$
-3. Wait for MTF KeyZone retest $\rightarrow$
-4. Wait for LTF sweep + displacement confirmation.
-
-This sequence required **15.9 hours (median)** to complete. During this multi-day lag, price had already drifted aggressively in the setup direction, **consuming $\ge 35\%$ to $70\%$ of the initial target distance before the LTF order could be placed**.
-
-#### Representative Examples:
-1. `cand_SOL/USDT_UNIFIED_STRATEGY_1642078800` (SOL_SET_3, SHORT, 2022):
-   - Entry: $143.30$ | Target: $130.00$ (`WEAK_SWING`, Reward: $+9.28\%$)
-   - SL: $157.80$ (Risk: $10.12\%$) | **Planned RR: 0.92R** | Latency: **93.0 hours (3.9 days)**
-2. `cand_SOL/USDT_UNIFIED_STRATEGY_1669255200` (SOL_SET_3, SHORT, 2022):
-   - Entry: $13.46$ | Target: $12.07$ (`WEAK_SWING`, Reward: $+10.33\%$)
-   - SL: $14.98$ (Risk: $11.29\%$) | **Planned RR: 0.91R** | Latency: **104.0 hours (4.3 days)**
+The multi-timeframe confirmation cascade (HTF interaction $\to$ MTF alignment $\to$ MTF retest $\to$ LTF confirmation) took 15.9 hours median. During this latency period, price traveled significantly toward the destination, reducing the remaining reward distance before order execution.
 
 ---
 
-## 3. High-Level Attribution: What Causes the Sub-4R Population?
-
-Ranking the root causal mechanisms across all 354 still-rejected setups:
-
-### 1. The Low-RR Population Breakdown ($90.11\%$ of Setups)
-Across **319 out of 354 setups ($90.11\%$)**, planned RR remained below $1.5\text{R}$ due to a combination of distinct geometric factors:
-- **Cat 6: Extreme Target Proximity (106 setups / 29.94%):** Setups formed when price was already in close physical proximity to the opposing target ($< 2.5\%$ distance remaining).
-- **Cat 4: Destination Ambiguity / Range Expansion Fallback (88 setups / 24.86%):** Absence of an opposing structural boundary forced a mathematical $1.0\times$ range expansion that naturally balances near $1.0\text{R}$.
-- **Cat 7: Symmetrical Dealing Range Compression (51 setups / 14.41%):** Compressed dealing ranges ($8\%\text{--}12\%$) where equilibrium entry yields symmetric risk and reward ($\approx 1.0\text{R}$).
-- **Cat 1: Late Expansion Entry (29 setups / 8.19%):** Expansion leg already mature ($>60\%$ span consumed) before LTF confirmation.
-- **Cat 2: Structurally Wide Stops on Macro Horizons (25 setups / 7.06%):** Invalidation stops anchored to multi-week macro sequence pivots ($20\%\text{--}55\%$ stop distances).
-- **Cat 5: Cascading Confirmation Latency (20 setups / 5.65%):** Multi-day confirmation lag allowing price to drift toward the target before order placement.
+## 3. High-Level Attribution: Summary
 
 $$\text{Combined Low-RR Groups (Cats 6, 4, 7, 1, 2, 5)} = 106 + 88 + 51 + 29 + 25 + 20 = \mathbf{319\text{ setups}} \quad \left(\mathbf{90.11\%}\right)$$
-
-### 2. The Intermediate Planned-RR Group ($9.89\%$ of Setups)
-- **Cat 3: Sub-4R Structural Swings (35 setups / 9.89%):**
-  Setups targeting unmitigated Weak Swings or Liquidity Pools with healthy target distance ($>10\%$ median) and compact stops ($5.08\%$ median), offering planned RR between $1.5\text{R}$ and $3.9\text{R}$ (median $2.18\text{R}$). The 4R firewall rejected setups whose planned structural RR was below 4R.
-
+$$\text{Intermediate Structural Swings (Cat 3)} = \mathbf{35\text{ setups}} \quad \left(\mathbf{9.89\%}\right)$$
 $$\text{Total Evaluated Population} = 319 + 35 = \mathbf{354\text{ setups}} \quad \left(\mathbf{100.00\%}\right)$$
 
----
-
-## 4. Final Governance Conclusions & Day 41 Closeout
-
-1. **Target Hierarchy Evaluation:**
-   - The controlled target hierarchy experiment (`EXP_TARGET_STRUCTURAL_01`) was isolated, verified across 390 passing software tests, and evaluated on the exact same 391 LTF triggers.
-   - Selecting directional Weak Swings over nearest internal KeyZones materially restored access to legitimate structural opportunities ($+90.9\%$ 4R qualification increase, $+81.8\%$ executed volume increase).
-   - **Target hierarchy classification:** `HYP_TARGET_HIERARCHY_STRUCTURAL_OBJECTIVE_01` is formally classified as **PARTIALLY SUPPORTED & CALIBRATED**.
-
-2. **Remaining Sub-4R Population:**
-   - Target hierarchy alone does not explain the remaining low-RR population.
-   - The remaining 354 setups contain multiple distinct geometric mechanisms: target proximity ($29.9\%$), target ambiguity ($24.9\%$), range compression ($14.4\%$), intermediate structural swings ($9.9\%$), late leg entry ($8.2\%$), macro stops ($7.1\%$), and confirmation latency ($5.7\%$).
-   - Entry, confirmation, and structural invalidation geometry appear materially important, but **no entry or stop modification has yet been tested**.
-   - **Remaining Low-RR Status:** `MULTI-FACTOR GEOMETRIC DECOMPOSITION — OBSERVED, NOT YET INTERVENED UPON`.
-
-3. **Institutional Phrasing & Scientific Discipline:**
-   - Counterfactual performance of rejected setups was not measured; we record only that the 4R firewall rejected setups whose planned structural RR was below 4R.
-   - The strategy is **not** declared proven profitable or robust; development trade sample size remains sparse ($20$ trades over 24 months).
-   - The concept of the strategy as an "Asymmetric Expansion Sniper" is an architectural design hypothesis, not an empirically established statistical property.
-
-4. **Day 41 Phase Closeout:**
-   - Zero strategy code modified.
-   - Zero parameter tuning or optimization performed.
-   - 4R firewall strictly maintained at $\ge 4.0\text{R}$.
-   - Experimental branch `feat/exp-target-milestone-2.5r` remains unmerged.
-   - Validation (`2023`) and OOS (`2024–2026`) partitions remain strictly **LOCKED**.
-   - **Research Phase Status:** **CLOSED**.
-
-**Next Action:** Return to the scheduled Knowledge/B.Com institutional roadmap rather than continuing strategy optimization.
+### Key Conclusion
+Target hierarchy optimization alone does not convert the bulk of the candidate population into 4R trades. Geometric constraints (target proximity, range compression, and leg maturity) account for the vast majority ($90.1\%$) of the sub-4R population.

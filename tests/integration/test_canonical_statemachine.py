@@ -1,5 +1,5 @@
 """
-DAY 35 — Canonical Strategy State-Machine Deterministic Test Suite
+Canonical Strategy State-Machine Deterministic Test Suite
 Validates all 17 canonical specification requirements across P01, P02, P03, and P04.
 """
 

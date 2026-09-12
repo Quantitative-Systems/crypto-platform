@@ -10,7 +10,7 @@
 
 ## Executive Summary
 
-Pursuant to the **Day 40 / Week 6 Research Governance Directive**, this audit was conducted to independently reconcile the Alpha Forensics findings, verify internal numerical consistency, establish trade-level causal integrity, and evaluate the specific mechanisms of strategy leakage prior to authorizing any trade management hypothesis.
+Pursuant to the **Quantitative Research Governance Directive**, this audit was conducted to independently reconcile the Alpha Forensics findings, verify internal numerical consistency, establish trade-level causal integrity, and evaluate the specific mechanisms of strategy leakage prior to authorizing any trade management hypothesis.
 
 ### Key Audit Findings
 1. **Target Statistics Reconciled (Gate 1):** The apparent contradiction between *"0/35 trades reached target"* and *"1/35 trades reached $\ge$ +4.0R"* is resolved. In Trade 26 (`cand_BTC/USDT_UNIFIED_STRATEGY_1668061800`), price achieved an MFE of **+9.08 R** (dropping from entry 17,332.51 to 15,476.00 against an initial risk of 204.49). However, because the planned structural target was anchored at 13,248.66 (+19.97 R), price reversed before reaching target. **MFE threshold reachability and planned target hit are distinct physical events.**

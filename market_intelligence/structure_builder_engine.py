@@ -1,5 +1,5 @@
 """
-APEX Product 01 — Engine 2.3
+Product 01 — Engine 2.3
 Hierarchical Causal Stateful Market Structure Engine
 
 RESPONSIBILITY

@@ -1,5 +1,5 @@
 """
-APEX Product 01 — Engine 1: Raw Swing Engine
+Product 01 — Engine 1: Raw Swing Engine
 
 Single responsibility:
     Convert validated OHLCV candles into confirmed geometric swing points.

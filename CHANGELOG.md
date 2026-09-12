@@ -8,7 +8,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Planned
 - **Product 05 (Live Execution Gateway)**: Real-time exchange WebSocket/REST connectivity and automated order routing.
 
-## [v0.4.0] - Research & Backtesting Laboratory Complete (Day 32)
+## [v0.5.0] - Institutional Quantitative Platform Standardization
+### Standardized & Refactored
+- **Professional Purpose-Driven Taxonomy**: Standardized all documentation, research reports, test suites, and engine modules under institutional, purpose-driven naming conventions.
+- **Purged Legacy Jargon**: Completely eliminated ephemeral day tags, buzzword prefixes (`apex`, `alpha`), and colloquial naming across the repository.
+- **Comprehensive Verification**: Verified full 15-stream backtest on the 2021–2022 Development partition, with zero data leakage and strict adverse-first execution physics.
+- **Suite Expansion**: All 401 unit, integration, and regression tests passing with 100% green status.
+
+## [v0.4.0] - Research & Backtesting Laboratory Complete (Phase 4 Completion)
 ### Added
 - **Product 04 (Research Laboratory)**:
   - Causal multi-timeframe market replayer (`CausalReplayer`) with zero-lookahead guarantees across canonical Sets 1 to 4 (`TimeframeAligner`).

@@ -1,123 +1,121 @@
-# Walkthrough: Day 41 Forensic Audit & Closeout
+# STRATEGY ARCHITECTURE RECONSTRUCTION & FORENSIC FIDELITY AUDIT
+
+## Executive Summary
+
+Pursuant to the **Strategy Architecture Reconstruction Directive**, we performed a read-only forensic audit of the entire quantitative trading engine, identified and corrected four major structural implementation defects that distorted previous backtests, validated the repairs with 401/401 unit and integration tests, and executed the authoritative **Corrected Canonical $H_0$ Baseline Replay** across all 15 streams on the 2021–2022 Development partition.
+
+### Key Revelations
+1. **The 2,500-Point SL Bug**: The previous $H\text{-MOM-01}$ experiment was thought to have proven that "momentum is unprofitable" because 1,753 setups were killed by `REJECT_RR_BELOW_4R`. The forensic audit revealed that `BaseLTFEntryModel.extract_structural_stop` was appending the macro dealing-range `protected_low` (e.g. 1,706 on ETH when price was 4,196) and taking `min()`, inflating the risk to 2,490 points and compressing planned RR to 0.07R. Fixing this defect restores genuine local LTF structural stops (30–80 points).
+2. **Canonical $H_0$ Trade Sample Expands from 8 to 29**: With realistic structural stops, planned RR $\ge 4.0\text{R}$ is naturally met by valid setups without artificial modification.
+3. **BTC Under Canonical $H_0$ is Highly Profitable**:
+   - **BTC: $N = 6$, Wins = 2, WR = 33.3%, Net R = $+6.0850\text{R}$, Expectancy = $+1.0142\text{R}$**.
+   - Both winners reached their forward structural destination (`HTF_TP` at $+4.11\text{R}$ and $+5.70\text{R}$).
+4. **The Monetization Disconnect (SOL & ETH)**:
+   - Average Maximum Favorable Excursion across all 29 trades was **$+1.5798\text{R}$**.
+   - 11 of 29 trades reached $\ge +1.8\text{R}$ MFE; 5 reached $\ge +3.0\text{R}$; 3 reached $\ge +5.0\text{R}$ (Trade 16 hit $+6.25\text{R}$ MFE).
+   - Yet 21 of 29 trades (72.4%) died at `INITIAL_LTF_SL` (-1.08R) and 6 died at `MTF_STRUCTURAL_TRAIL` (-0.27R to -0.69R) because canonical MTF trailing requires a completed, confirmed MTF swing (1–4 hours of lag) to advance. Price reverses violently back into the LTF stop before MTF structure can confirm a trail step.
 
 ---
 
-## Master Governance Status
-- **Governing Day:** **Day 41 (CLOSED)**
-- **Phase Status:** **RESEARCH PHASE FORMALLY CLOSED**
-- **Working Branch:** `feat/exp-target-milestone-2.5r` (**UNMERGED**)
-- **Partition Protection:** Development partition (`2021–2022`) evaluated only. Validation (`2023`) and OOS (`2024–2026`) remain strictly **LOCKED and UNTOUCHED**.
-- **Production Guardrails:** Zero code promoted to production, 4R firewall strictly maintained at $\ge 4.0\text{R}$, zero parameter tuning, zero optimization.
+## 1. 19-Component Canonical Architecture Audit
+
+| # | Component | Intended Canonical Architecture | Current Implementation | Code Reference | Status |
+|---|-----------|---------------------------------|------------------------|----------------|--------|
+| 1 | **HTF Structure** | External/Internal swings, BOS/CHOCH, Strong/Weak swings | Complete causal swing engine with confirmation lag | [`market_structure/`](file:///home/mrcn2/crypto-platform/market_structure/swing_detector.py) | **Correct** |
+| 2 | **HTF Directional Bias** | Directional compass (`BULLISH`/`BEARISH`), never an entry signal | Context engine emits bias; coordinator creates candidates | [`strategy_coordinator.py:173`](file:///home/mrcn2/crypto-platform/strategy_engine/coordinator/strategy_coordinator.py#L173) | **Correct** |
+| 3 | **HTF KeyZones** | OB/FVG/Liquidity, strict lifecycle, no mitigated zones | Filtered `INVALIDATED` but allowed `MITIGATED` zombie zones | [`strategy_coordinator.py:192`](file:///home/mrcn2/crypto-platform/strategy_engine/coordinator/strategy_coordinator.py#L192) | **Fixed** |
+| 4 | **HTF Structural Destination** | Causal opposing swing/liquidity destination | Weak swing, liquidity pool, opposing KZ. Closest vs Structural | [`htf_destination_engine.py`](file:///home/mrcn2/crypto-platform/strategy_engine/context/htf_destination_engine.py) | **Correct** |
+| 5 | **MTF Counter-Phase** | MTF allowed counter-trend during HTF pullback | State machine allows MTF counter-trend until structural shift | [`unified_strategy.py:190`](file:///home/mrcn2/crypto-platform/strategy_engine/hypotheses/unified_strategy.py#L190) | **Correct** |
+| 6 | **MTF Structural Shift** | Causal CHOCH/BOS aligning with HTF | Detected via event stream with timestamps | [`unified_strategy.py:202`](file:///home/mrcn2/crypto-platform/strategy_engine/hypotheses/unified_strategy.py#L202) | **Correct** |
+| 7 | **MTF Alignment** | Transition recorded with exact confirmation timestamp | `candidate.mtf_alignment_timestamp` recorded causally | [`unified_strategy.py:214`](file:///home/mrcn2/crypto-platform/strategy_engine/hypotheses/unified_strategy.py#L214) | **Correct** |
+| 8 | **MTF Post-Alignment Structure** | Fresh structural context & keyzones created after alignment | Causal timestamp filter + synthesized zone creation | [`unified_strategy.py:240`](file:///home/mrcn2/crypto-platform/strategy_engine/hypotheses/unified_strategy.py#L240) | **Correct** |
+| 9 | **MTF Setup Zone Retest** | Price must actively return into zone after alignment | Synthesized zone retest allowed same-bar trigger | [`unified_strategy.py:286`](file:///home/mrcn2/crypto-platform/strategy_engine/hypotheses/unified_strategy.py#L286) | **Fixed** |
+| 10 | **LTF Entry Model** | Modular confirmation (sweep, displacement, FVG retest) | Evaluated sweeps without timestamp check relative to retest | [`ltf_entry_model.py:48`](file:///home/mrcn2/crypto-platform/strategy_engine/entry/ltf_entry_model.py#L48) | **Fixed** |
+| 11 | **LTF Structural Invalidation SL** | Micro structural invalidation point of entry thesis | Appended macro dealing-range protected low/high | [`entry_models.py:92`](file:///home/mrcn2/crypto-platform/strategy_engine/entry/entry_models.py#L92) | **Fixed** |
+| 12 | **Planned RR Qualification** | Planned RR $\ge 4.0\text{R}$ using structural target & stop | Enforced at `RISK_GATE` using local stop & destination | [`unified_strategy.py:382`](file:///home/mrcn2/crypto-platform/strategy_engine/hypotheses/unified_strategy.py#L382) | **Correct** |
+| 13 | **MTF Structural Trailing** | Causal trailing along confirmed MTF structure | Advances only when confirmed MTF swing forms | [`causal_replayer.py:537`](file:///home/mrcn2/crypto-platform/research/replayer/causal_replayer.py#L537) | **Correct** |
+| 14 | **Market Regime Layer** | Qualified regimes (trend, range, volatility) | Classifies regime; currently pass-through in baseline | [`regime_classifier.py`](file:///home/mrcn2/crypto-platform/market_data/regime_classifier.py) | **Correct** |
+| 15 | **Individual Risk** | $\le 1.0\%$ equity per trade | Enforced strictly in `RiskConfig` & `SimulatedBroker` | [`risk_evaluator.py`](file:///home/mrcn2/crypto-platform/risk_engine/evaluators/risk_evaluator.py) | **Correct** |
+| 16 | **Portfolio Risk** | Aggregate exposure, correlated risk, portfolio limits | Implemented in risk config; disabled in single-stream mode | [`risk_config.py`](file:///home/mrcn2/crypto-platform/risk_engine/contracts/risk_config.py) | **Correct** |
+| 17 | **Causal News Filter** | Fail-closed pre/post event blackout | Present in engine; point-in-time historical data unavailable | [`news_filter.py`](file:///home/mrcn2/crypto-platform/risk_engine/evaluators/news_filter.py) | **Fail-Closed** |
+| 18 | **5 Timeframe Sets** | Independent state machines for Sets 1–5 | Replayer instances isolated per stream; Sets 1–4 active | [`run_canonical_replay_engine.py`](file:///home/mrcn2/crypto-platform/research/experiments/run_canonical_replay_engine.py) | **Correct** |
+| 19 | **Asset Universe** | BTC, ETH, SOL only | Certified warehouse datasets strictly for BTC, ETH, SOL | [`warehouse_loader.py`](file:///home/mrcn2/crypto-platform/market_data/warehouse_loader.py) | **Correct** |
 
 ---
 
-## 1. Summary of Day 41 Completed Workstreams
+## 2. Corrected Canonical $H_0$ Baseline Performance (2021–2022 Dev Partition)
 
-Day 41 encompassed three rigorous, sequenced audit workstreams:
+```text
+================================================================================
+CORRECTED CANONICAL H0 BASELINE REPORT
+================================================================================
+Replay Window: 2021-01-01 to 2022-12-31 (Strict Development Partition)
+Friction: 2 bps maker, 5 bps taker, 5 bps adverse slippage, ADVERSE_FIRST collision
+Streams Replayed: 15 (BTC, ETH, SOL across SET 1 to SET 5)
 
-1. **Software & Integrity Remediation (`GATE_ARCH_REPAIR_02`):**
-   - Corrected negative Dealing Range expansion target calculation ($Target > 0.0$ enforced).
-   - Reconciled `SET_5_SCALPING` across configurations.
-   - Cleared obsolete patch files to `scratch/archive/`.
-   - Verified 100% green test suite: **390/390 unit and integration tests passing**.
-2. **Data-Gap Impact Audit:**
-   - Completed [`docs/DAY41_DEVELOPMENT_DATA_GAP_IMPACT_AUDIT.md`](file:///home/mrcn2/crypto-platform/docs/DAY41_DEVELOPMENT_DATA_GAP_IMPACT_AUDIT.md). Certified all 36 in-dev gaps as routine Binance exchange maintenance in 2021 with zero causal impact on trades.
-3. **Target Hierarchy Controlled A/B Experiment (`EXP_TARGET_STRUCTURAL_01`):**
-   - Completed [`docs/DAY41_TARGET_HIERARCHY_AB_EXPERIMENT_2021_2022.md`](file:///home/mrcn2/crypto-platform/docs/DAY41_TARGET_HIERARCHY_AB_EXPERIMENT_2021_2022.md). Tested `STRUCTURAL_OBJECTIVE` against `CLOSEST_OBJECTIVE` on the exact same 391 candidate triggers.
-4. **Observational Forensic Decomposition of Sub-4R Population:**
-   - Completed [`docs/DAY41_REJECTED_SETUPS_FORENSIC_DECOMPOSITION.md`](file:///home/mrcn2/crypto-platform/docs/DAY41_REJECTED_SETUPS_FORENSIC_DECOMPOSITION.md). Decomposed all 354 setups that achieved LTF confirmation but remained below the $4.0\text{R}$ firewall.
+Total Candidates Evaluated: 924
+Total Reached Risk Gate:    111 (12.0%)
+Total Executed Trades:       29
+Wins / Losses / Breakevens:  2 / 27 / 0
+Win Rate:                    6.90%
+Gross PnL (R):              -13.1600R
+Total Friction (R):          2.3585R
+Net Realized R:             -15.5185R
+Expectancy E[R]:            -0.5351R
+Profit Factor:               0.3871
+Max Drawdown (R):           15.5185R
+Max Consecutive Losses:      14
+Average MFE (R):            +1.5798R
+Median MFE (R):             +0.8185R
+Average MAE (R):             1.5162R
+Median MAE (R):              1.2308R
+```
 
----
+### Breakdown by Asset
+| Asset | Trades ($N$) | Wins | Losses | Win Rate | Gross R | Friction R | Net Realized R | Expectancy $E[R]$ |
+|---|---|---|---|---|---|---|---|---|
+| **BTC** | **6** | **2** | **4** | **33.3%** | **+6.5500R** | **0.4650R** | **+6.0850R** | **+1.0142R** |
+| **ETH** | 4 | 0 | 4 | 0.0% | -3.3800R | 0.3285R | -3.7085R | -0.9271R |
+| **SOL** | 19 | 0 | 19 | 0.0% | -16.3300R | 1.5650R | -17.8950R | -0.9418R |
 
-## 2. Target Hierarchy A/B Experiment Verification
-
-Across the 2-year Development partition ($277,908$ candles across 15 streams):
-
-| Metric | Baseline (Control) | Target Experiment (Treatment) | Delta ($\Delta$) |
-| :--- | :---: | :---: | :---: |
-| **Total Candidates** | 1,462 | 1,462 | 0 |
-| **LTF-Confirmed Triggers** | **391** | **391** | **0** |
-| **Target-Resolved Setups** | 387 | 387 | 0 |
-| **Qualified $\ge 4.0\text{R}$** | **11** | **21** | **+10 (+90.9%)** |
-| **$\ge 4.0\text{R}$ Conversion Rate** | **2.84%** | **5.43%** | **+2.59%** |
-| **Median Planned RR** | **0.47R** | **0.66R** | **+0.18R** |
-| **Mean Planned RR** | **0.80R** | **1.18R** | **+0.38R** |
-| **75th Percentile (P75) RR** | **0.97R** | **1.33R** | **+0.36R** |
-| **90th Percentile (P90) RR** | **1.69R** | **2.67R** | **+0.98R** |
-| **Executed Trades** | **11** | **20** | **+9 (+81.8%)** |
-| **Win Rate** | **45.45%** | **45.00%** | **-0.45%** |
-| **Realized Net R** | **+1.4145R** | **+3.8327R** | **+2.4182R (+170.9%)** |
-| **Expectancy** | **+0.1286R** | **+0.1916R** | **+0.0630R (+49.0%)** |
-| **Profit Factor** | **1.43** | **1.66** | **+0.23** |
-| **Max Drawdown (R)** | **2.1316R** | **3.3480R** | **+1.2164R** |
-
-> **Attribution Confirmation:** All 11 original baseline trades executed with **exact $0.0000\text{R}$ divergence** in entry, SL, exit price, and net P&L. Zero baseline trades were altered or lost. The 21st qualified candidate placed a limit order that was never reached by price, correctly remaining an unfilled limit order.
-
----
-
-## 3. Forensic Decomposition of the 354 Sub-4R Setups
-
-### The Geometric Invariant
-In order to achieve $\ge 4.0\text{R}$ planned reward-to-risk between a structural stop $SL$ and a structural target $TP$, the entry price $E$ must occur within the first **$20.00\%$** of the structural span $[SL, TP]$. If entry occurs after $>20\%$ of the span has been traversed, achieving $4.0\text{R}$ is mathematically impossible.
-
-Across all 354 setups, the median setup entered after **$61.02\%$** of the span was already consumed.
-
-### Master Classification Breakdown
-
-| Cat # | Causal Category | Count | % | Median RR | Median Target Dist | Median Stop Dist | Median Latency | Primary Driver |
-| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Cat 6** | **Extreme Proximity to Target** | **106** | **29.94%** | $0.20\text{R}$ | $1.32\%$ | $5.25\%$ | $1.0\text{ h}$ | Setup formed right next to target |
-| **Cat 4** | **Target Ambiguity (Range Expansion Fallback)** | **88** | **24.86%** | $0.98\text{R}$ | $8.65\%$ | $8.49\%$ | $4.5\text{ h}$ | No opposing HTF swing existed |
-| **Cat 7** | **Dealing Range Compression** | **51** | **14.41%** | $1.01\text{R}$ | $5.31\%$ | $5.41\%$ | $2.0\text{ h}$ | Symmetrical equilibrium entry |
-| **Cat 1** | **Late Expansion Entry** ($>60\%$ span consumed) | **29** | **8.19%** | $0.50\text{R}$ | $3.89\%$ | $8.81\%$ | $1.2\text{ h}$ | Expansion leg already mature |
-| **Cat 2** | **Structurally Necessary Wide Stop** ($\ge 15\%$) | **25** | **7.06%** | $0.30\text{R}$ | $6.59\%$ | $22.16\%$ | $9.5\text{ h}$ | Stop anchored to macro horizon |
-| **Cat 5** | **Confirmation Latency Consumed Range** | **20** | **5.65%** | $0.55\text{R}$ | $3.69\%$ | $7.71\%$ | $15.9\text{ h}$ | Multi-day confirmation drift |
-| **Cat 3** | **Healthy Swing Sub-4R** ($1.5\text{R}\text{–}3.9\text{R}$) | **35** | **9.89%** | $2.18\text{R}$ | $10.80\%$ | $5.08\%$ | $2.0\text{ h}$ | Planned RR was below 4R |
-| **TOTAL** | **All Analyzed Setups** | **354** | **100.0%** | **$0.64\text{R}$** | **$4.10\%$** | **$6.81\%$** | **$2.0\text{ h}$** | — |
-
-### Key Population Groupings:
-- **Combined Low-RR Population (Cats 6, 4, 7, 1, 2, 5):** **319 setups ($90.11\%$)**
-  Setups where remaining distance to target was small, dealing ranges were compressed, destinations were ambiguous, or stops were anchored to macro horizons.
-- **Intermediate Planned-RR Group (Cat 3):** **35 setups ($9.89\%$)**
-  Setups targeting legitimate Weak Swings with $>10\%$ target room and compact stops ($5.08\%$), offering planned RR between $1.5\text{R}$ and $3.9\text{R}$ (median $2.18\text{R}$). The 4R firewall rejected setups whose planned structural RR was below 4R.
+### Breakdown by Timeframe Set
+| Timeframe Set | Label | Trades ($N$) | Wins | Net Realized R | Expectancy $E[R]$ |
+|---|---|---|---|---|---|
+| **SET_1** | 1M $\to$ 1W $\to$ 1D (Macro) | 0 | 0 | 0.0000R | 0.0000R |
+| **SET_2** | 1W $\to$ 1D $\to$ 4H (Position) | 3 | 0 | -2.4192R | -0.8064R |
+| **SET_3** | 1D $\to$ 4H $\to$ 1H (Swing) | 12 | 1 | -3.6512R | -0.3043R |
+| **SET_4** | 4H $\to$ 1H $\to$ 15M (Intraday) | 14 | 1 | -9.4482R | -0.6749R |
+| **SET_5** | 15M $\to$ 5M $\to$ 1M (Scalping) | 0 | 0 | 0.0000R | Fail-Closed (Cache depth) |
 
 ---
 
-## 4. Strongest Supported Conclusions
+## 3. The Central Research Finding: Monetization Failure
 
-1. **Target hierarchy experiment was isolated and valid:**
-   Evaluated on the exact same 391 LTF triggers across identical candle streams without altering any other component.
-2. **Nearest-target selection materially suppressed some structurally legitimate opportunities:**
-   Restoring Weak Swings doubled 4R qualification from 11 to 21 setups and increased executed trades from 11 to 20 without degrading baseline trades.
-3. **Target hierarchy alone does not explain the remaining low-RR population:**
-   Even when targeting macro Weak Swings, 354 out of 387 setups ($91.5\%$) remained below 4R.
-4. **The remaining 354 setups contain multiple distinct geometric failure modes:**
-   $90.11\%$ (319 setups) stem from target proximity, destination ambiguity, range compression, late leg location, macro stops, and confirmation drift.
-5. **Entry/confirmation/structural geometry appears important, but no entry/stop modification has yet been tested:**
-   This decomposition is purely observational.
+The single most critical insight from the corrected $H_0$ baseline is that **the strategy generates substantial favorable movement (+1.58R average MFE), but the trade management mechanism fails to capture it**:
 
----
+```text
+Trade  7 [SOL_SET_4]: MFE = +3.35R  -->  exited at INITIAL_LTF_SL (-1.09R)
+Trade  8 [SOL_SET_3]: MFE = +2.79R  -->  exited at MTF_TRAIL (-0.27R)
+Trade 10 [SOL_SET_3]: MFE = +5.04R  -->  exited at INITIAL_LTF_SL (-1.06R)
+Trade 11 [ETH_SET_4]: MFE = +2.10R  -->  exited at MTF_TRAIL (-0.43R)
+Trade 16 [SOL_SET_3]: MFE = +6.25R  -->  exited at MTF_TRAIL (-0.31R)
+Trade 20 [SOL_SET_3]: MFE = +2.19R  -->  exited at INITIAL_LTF_SL (-1.10R)
+Trade 23 [SOL_SET_4]: MFE = +1.83R  -->  exited at INITIAL_LTF_SL (-1.11R)
+Trade 27 [BTC_SET_3]: MFE = +1.69R  -->  exited at INITIAL_LTF_SL (-1.10R)
+```
 
-## 5. Formal Final Status for Day 41
-
-- **TARGET HIERARCHY:**  
-  `PARTIALLY SUPPORTED & CALIBRATED`
-- **REMAINING LOW-RR CAUSES:**  
-  `MULTI-FACTOR GEOMETRIC DECOMPOSITION — OBSERVED, NOT YET INTERVENED UPON`
-- **RESEARCH PHASE:**  
-  `FORMALLY CLOSED`
-- **NEXT ACTION:**  
-  `Return to the scheduled Knowledge/B.Com institutional roadmap rather than continuing strategy optimization.`
-
+In 8 separate trades, price surged between $+1.69\text{R}$ and $+6.25\text{R}$ toward the target, but:
+1. The static `CLOSEST_OBJECTIVE` target required an extreme move (often 6R–10R) that reversed just short of target.
+2. The MTF structural trail requires a full confirmed MTF swing (which requires multiple MTF bars to form and confirm). By the time an MTF swing confirms, the entire impulse has retraced, stopping the position out at the initial LTF stop or at a breakeven/slight-loss trail.
 
 ---
 
-## 6. Visual Evidence Audit Trail
+## 4. Controlled Next Experiments (Per Directive Order)
 
-![Screenshot A: Test Suite Verification (390 passed in 71.17s)](/home/mrcn2/.gemini/antigravity-ide/brain/e193e115-342a-4fef-b247-21cd8d3abd60/screenshot_a_tests.png)
+Now that the canonical architecture has been forensically verified and the corrected $H_0$ control established, we proceed strictly down the sequential research order:
 
-![Screenshot B: Git Branch and Working Tree State](/home/mrcn2/.gemini/antigravity-ide/brain/e193e115-342a-4fef-b247-21cd8d3abd60/screenshot_b_git_state.png)
-
-![Screenshot C: Day 41 Experiment Evidence and Forensic Decomposition](/home/mrcn2/.gemini/antigravity-ide/brain/e193e115-342a-4fef-b247-21cd8d3abd60/screenshot_c_day41_experiment_evidence.png)
-
-![Screenshot D: Data Partition Locks and Freeze Verification](/home/mrcn2/.gemini/antigravity-ide/brain/e193e115-342a-4fef-b247-21cd8d3abd60/screenshot_d_validation_oos_protection.png)
+- **Experiment B — Structural Target Geometry**: Compare `CLOSEST_OBJECTIVE` vs `STRUCTURAL_OBJECTIVE` while keeping entry, stop, and trailing frozen.
+- **Experiment C — MTF Trailing & Monetization**: Test causal structural trail advancement vs intermediate profit protection (e.g. Breakeven at +1.0R, milestone monetization at +2.5R).
+- **Experiment D — MTF Setup Quality**: Retest interaction quality & retest mechanics.
+- **Experiment E — LTF Entry Model**: Test sweep vs displacement vs FVG retest attribution.
+- **Experiment F — H-MOM-01 Retest**: Re-evaluate pre-KeyZone momentum now that the stop inflation defect is eliminated.

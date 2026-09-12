@@ -1,5 +1,5 @@
 """
-Unit tests for Day 35 Canonical Refinements:
+Unit tests for Canonical Strategy Refinements:
 1. Candidate Setup Lifespan Expiration
 2. Dual Active Trade Management (MTF Trailing + +1.0R Profit-Lock Ratchet)
 3. Planned RR Hurdle Validation

@@ -1,5 +1,5 @@
 """
-APEX Quantitative Systems Platform
+Quantitative Systems Platform
 Product 01 — Market Language | Engine 5 — Market Phase Engine (Hardened Core v2.1)
 
 PURPOSE
