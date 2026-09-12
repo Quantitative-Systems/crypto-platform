@@ -100,15 +100,29 @@ def run_single_stream(asset: str, tf_set_id: str, treatment: str) -> Dict[str, A
         enable_news_filter=False
     )
 
-    enable_expansion = (treatment.upper() in ["ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R"])
-    enforce_polarity = (treatment.upper() in ["POLARITY_01", "COMPOSITE_01", "MILESTONE_2_5R"])
-    enable_breakeven = (treatment.upper() in ["BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R"])
-    enable_milestone = (treatment.upper() == "MILESTONE_2_5R")
-    target_hierarchy = "STRUCTURAL_OBJECTIVE" if treatment.upper() in ["EXP_TARGET_STRUCTURAL_01", "EXP_TARGET_STRUCTURAL_01_PURE"] else "CLOSEST_OBJECTIVE"
-    enable_profit_lock = (treatment.upper() == "PROFIT_LOCK_0.5R_0.25R")
+    treat = treatment.upper()
+    enable_expansion = (treat in ["ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R"])
+    enforce_polarity = (treat in ["POLARITY_01", "COMPOSITE_01", "MILESTONE_2_5R"])
+    enable_breakeven = (treat in ["BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R", "C1", "C2", "C3"])
+
+    be_trigger_r = 1.0
+    be_stop_r = 0.10
+    if treat == "C1":
+        be_trigger_r = 1.5
+        be_stop_r = 0.0  # Exact cost-covering friction buffer derived from execution-cost model
+    elif treat == "C2":
+        be_trigger_r = 2.0
+        be_stop_r = 0.0  # Exact cost-covering friction buffer derived from execution-cost model
+    elif treat == "C3":
+        be_trigger_r = 2.5
+        be_stop_r = 0.0  # Exact cost-covering friction buffer derived from execution-cost model
+
+    enable_milestone = (treat == "MILESTONE_2_5R")
+    target_hierarchy = "STRUCTURAL_OBJECTIVE" if treat in ["EXP_TARGET_STRUCTURAL_01", "EXP_TARGET_STRUCTURAL_01_PURE"] else "CLOSEST_OBJECTIVE"
+    enable_profit_lock = (treat == "PROFIT_LOCK_0.5R_0.25R")
     profit_lock_trigger_r = 0.5 if enable_profit_lock else 1.0
     profit_lock_stop_r = 0.25 if enable_profit_lock else 0.10
-    require_htf_kz = (treatment.upper() != "H_MOM_01")
+    require_htf_kz = (treat != "H_MOM_01")
 
     replayer = CausalReplayer(
         timeframe_set_id=tf_set_id,
@@ -125,6 +139,8 @@ def run_single_stream(asset: str, tf_set_id: str, treatment: str) -> Dict[str, A
         enable_forward_expansion=enable_expansion,
         enforce_displacement_polarity=enforce_polarity,
         enable_breakeven_1r=enable_breakeven,
+        breakeven_trigger_r=be_trigger_r,
+        breakeven_stop_r=be_stop_r,
         enable_milestone_target=enable_milestone,
         milestone_r=2.5,
         target_hierarchy=target_hierarchy,
@@ -343,7 +359,7 @@ def run_matrix(treatment: str, output_path: str = None, workers: int = 8):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Canonical Replay Engine")
-    parser.add_argument("--treatment", type=str, default="H0", choices=["H0", "ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R", "EXP_TARGET_STRUCTURAL_01", "EXP_TARGET_STRUCTURAL_01_PURE", "PROFIT_LOCK_0.5R_0.25R", "H_MOM_01"], help="Experimental treatment")
+    parser.add_argument("--treatment", type=str, default="H0", choices=["H0", "C0", "C1", "C2", "C3", "ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R", "EXP_TARGET_STRUCTURAL_01", "EXP_TARGET_STRUCTURAL_01_PURE", "PROFIT_LOCK_0.5R_0.25R", "H_MOM_01"], help="Experimental treatment")
     parser.add_argument("--output", type=str, default=None, help="Output JSON path")
     parser.add_argument("--workers", type=int, default=8, help="Parallel worker count")
     args = parser.parse_args()
