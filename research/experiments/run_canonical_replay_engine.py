@@ -100,11 +100,11 @@ def run_single_stream(asset: str, tf_set_id: str, treatment: str) -> Dict[str, A
         enable_news_filter=False
     )
 
-    enable_expansion = (treatment.upper() in ["ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R", "EXP_TARGET_STRUCTURAL_01"])
-    enforce_polarity = (treatment.upper() in ["POLARITY_01", "COMPOSITE_01", "MILESTONE_2_5R", "EXP_TARGET_STRUCTURAL_01"])
-    enable_breakeven = (treatment.upper() in ["BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R", "EXP_TARGET_STRUCTURAL_01"])
+    enable_expansion = (treatment.upper() in ["ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R"])
+    enforce_polarity = (treatment.upper() in ["POLARITY_01", "COMPOSITE_01", "MILESTONE_2_5R"])
+    enable_breakeven = (treatment.upper() in ["BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R"])
     enable_milestone = (treatment.upper() == "MILESTONE_2_5R")
-    target_hierarchy = "STRUCTURAL_OBJECTIVE" if treatment.upper() == "EXP_TARGET_STRUCTURAL_01" else "CLOSEST_OBJECTIVE"
+    target_hierarchy = "STRUCTURAL_OBJECTIVE" if treatment.upper() in ["EXP_TARGET_STRUCTURAL_01", "EXP_TARGET_STRUCTURAL_01_PURE"] else "CLOSEST_OBJECTIVE"
     enable_profit_lock = (treatment.upper() == "PROFIT_LOCK_0.5R_0.25R")
     profit_lock_trigger_r = 0.5 if enable_profit_lock else 1.0
     profit_lock_stop_r = 0.25 if enable_profit_lock else 0.10
@@ -343,7 +343,7 @@ def run_matrix(treatment: str, output_path: str = None, workers: int = 8):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Canonical Replay Engine")
-    parser.add_argument("--treatment", type=str, default="H0", choices=["H0", "ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R", "EXP_TARGET_STRUCTURAL_01", "PROFIT_LOCK_0.5R_0.25R", "H_MOM_01"], help="Experimental treatment (H0, ANCHOR_2, POLARITY_01, BREAKEVEN_1R, COMPOSITE_01, MILESTONE_2_5R, EXP_TARGET_STRUCTURAL_01, PROFIT_LOCK_0.5R_0.25R, or H_MOM_01)")
+    parser.add_argument("--treatment", type=str, default="H0", choices=["H0", "ANCHOR_2", "POLARITY_01", "BREAKEVEN_1R", "COMPOSITE_01", "MILESTONE_2_5R", "EXP_TARGET_STRUCTURAL_01", "EXP_TARGET_STRUCTURAL_01_PURE", "PROFIT_LOCK_0.5R_0.25R", "H_MOM_01"], help="Experimental treatment")
     parser.add_argument("--output", type=str, default=None, help="Output JSON path")
     parser.add_argument("--workers", type=int, default=8, help="Parallel worker count")
     args = parser.parse_args()
