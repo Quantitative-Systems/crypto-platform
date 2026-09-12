@@ -11,7 +11,7 @@
 
 ## Executive Summary & Research Gate Decision
 
-Following the discovery of the replayer loop defect on Day 40 (where exited trade plans re-entered the risk firewall, generating 12 phantom duplicate trades), an infrastructure patch was applied to `main`:
+Following the discovery of the replayer loop defect (where exited trade plans re-entered the risk firewall, generating 12 phantom duplicate trades), an infrastructure patch was applied to `main`:
 1. Active trade exits (`MTF_TRAIL_EXIT`, `LTF_SL_EXIT`, `TP_EXIT`) now strictly precede new candidate entry evaluations.
 2. An explicit invariant was enforced: if a trade plan ID already exists in `ledger.trades`, it can **never** re-enter candidate risk evaluation or execution.
 3. Exited plans transition to a terminal status (`CLOSED`).
@@ -202,7 +202,7 @@ Now that accounting truth is certified ($N=23$ unique trades, zero phantom dupli
 - Whether the poor performance in SET 2/3 ($-5.05\text{R}$ across 8 trades) is caused by timeframe horizon per se or by large structural stop distance interacting with volatility regimes.
 - Whether entry filtering (e.g. displacement candle polarity) or profit monetization (e.g. realistic target placement or trailing ratchet) represents the higher-leverage causal path.
 
-### Proposed Next Isolated Hypothesis for Day 42
+### Proposed Next Isolated Hypothesis
 Before modifying entry logic or changing stop loss rules, the single most empirically defensible leakage point is:
 **HYP_TARGET_REALISM_01**:  
 *Hypothesis:* Structural forward expansion targets projected at $\ge 5\text{R}$ create an unreachable destination trap where $0/23$ trades take profit. Replacing or capping structural target projections at a realistic exhaustion bound (or implementing a structural interim monetization tier at $+2.0\text{R}$ to $+3.0\text{R}$) will retain excursions that currently turn into giveback losses.

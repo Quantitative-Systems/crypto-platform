@@ -1,5 +1,5 @@
 """
-Day 39 — Regression Tests for Canonical Baseline Remediations
+Regression Tests for Canonical Baseline Remediations
 Validates:
 1. Trade Ledger Accounting: Realized PnL includes BOTH entry and exit fees,
    Realized RR is net of all fees, and Account Equity delta strictly matches

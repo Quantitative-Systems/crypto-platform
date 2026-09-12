@@ -2,7 +2,7 @@
 ## Product 01: Multi-Timeframe Structural Crypto Trading Engine
 
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
-[![Verification Suite](https://img.shields.io/badge/Verification-390%20Tests%20Passing%20(100%25)-brightgreen.svg)]()
+[![Verification Suite](https://img.shields.io/badge/Verification-401%20Tests%20Passing%20(100%25)-brightgreen.svg)]()
 [![Architecture](https://img.shields.io/badge/Architecture-3--Plane%2013--Layer%20Stack-blue.svg)]()
 [![Research Matrix](https://img.shields.io/badge/Research%20Matrix-15%20Streams%20(BTC%2FETH%2FSOL)-purple.svg)]()
 [![Temporal Partitions](https://img.shields.io/badge/Partitions-Dev%20(2021--22)%20%7C%20Val%20(2023)%20%7C%20OOS%20(2024--26)-orange.svg)]()
@@ -21,7 +21,7 @@
 | Domain | Specification | Governance Status |
 | :--- | :--- | :--- |
 | **Runtime Environment** | Python 3.12 / Linux / Strict Type Annotations | Certified Stable |
-| **Verification Suite** | **390 / 390 Unit, Integration, & Regression Tests Passing** | 100% Green (`pytest -q` in 71.2s) |
+| **Verification Suite** | **401 / 401 Unit, Integration, & Regression Tests Passing** | 100% Green (`pytest -q` in 79.0s) |
 | **Asset Universe** | BTC/USDT, ETH/USDT, SOL/USDT (Spot & Perpetual Futures) | Active Coverage |
 | **Timeframe Matrix** | 15 Discrete Streams across 5 Nested Triad Sets (`1M` to `1m`) | Multi-Horizon Alignment |
 | **Data Partitioning** | **Development (`2021–2022`)** · **Validation (`2023`)** · **OOS (`2024–2026`)** | Strict Air-Gap Isolation |
@@ -210,7 +210,7 @@ The platform maintains a complete audit trail tracking the technical evolution o
 1. **Legacy Exploratory Baseline ($N=59$, $-36.70\text{R}$)**: Initial uncalibrated replay across 15 streams revealed micro-noise stop vulnerability and stale keyzone decay.
 2. **Replayer Lifecycle Remediation ($N=23$, $-7.2955\text{R}$)**: Resolved candidate re-entry defects upon terminal stop resolution, uncovering a clean population of 23 executed trades.
 3. **Entry Directional Polarity Defect Discovery**: Discovered that candle displacement magnitude checks lacked directional sign verification, causing adverse momentum entries.
-4. **Data Gap Impact Audit**: Documented in [`docs/DAY41_DEVELOPMENT_DATA_GAP_IMPACT_AUDIT.md`](docs/DAY41_DEVELOPMENT_DATA_GAP_IMPACT_AUDIT.md), confirming that all 36 Development data gaps were routine Binance maintenance outages with zero causal interaction with trade setups.
+4. **Data Gap Impact Audit**: Documented in [`docs/DATA_GAP_INTEGRITY_AUDIT.md`](docs/DATA_GAP_INTEGRITY_AUDIT.md), confirming that all 36 Development data gaps were routine Binance maintenance outages with zero causal interaction with trade setups.
 5. **Certified Canonical Baseline Control ($N=11$)**: Following software correction of negative target geometry in forward dealing-range expansions, the clean baseline control across the 2-year Development partition ($277,908$ candles) was established:
 
 #### Certified Development Baseline Performance ($N=11$):
@@ -404,15 +404,22 @@ crypto-platform/
 │   └── capital_barrier.py                 # Multi-Tier Programmatic Capital Barrier
 │
 ├── docs/                                  # Canonical Specifications & Research Reports
-│   ├── CANONICAL_PLATFORM_ARCHITECTURE_FORENSICS_2021_2022.md # Master Architecture Audit
-│   ├── DAY41_CURRENT_ARCHITECTURE_FULL_BASELINE_AUDIT.md     # Repaired Baseline Audit (N=11)
-│   ├── DAY41_DEVELOPMENT_DATA_GAP_IMPACT_AUDIT.md            # 36-Gap Non-Causal Impact Audit
-│   ├── DAY41_TARGET_HIERARCHY_AB_EXPERIMENT_2021_2022.md     # A/B Experiment Report (EXP_01)
-│   ├── DAY41_REJECTED_SETUPS_FORENSIC_DECOMPOSITION.md       # 354 Sub-4R Setup Forensic Report
+│   ├── ARCHITECTURE_BASELINE_AUDIT.md         # Baseline Architecture & Calibration Audit
+│   ├── CANONICAL_PLATFORM_ARCHITECTURE_FORENSICS_2021_2022.md # Master Architecture Forensic Audit
+│   ├── CANONICAL_STRATEGY_SPECIFICATION.md    # Multi-Timeframe Structural Strategy Specification
+│   ├── CERTIFIED_DEVELOPMENT_BASELINE_AUDIT.md# 15-Stream Certified Development Baseline
+│   ├── CLEAN_POPULATION_ENTRY_TARGET_FORENSICS.md # Clean Setup Population & Geometry Audit
+│   ├── DATA_GAP_INTEGRITY_AUDIT.md            # Exchange Outage & Historical Gap Integrity Audit
+│   ├── DEVELOPMENT_PERFORMANCE_FORENSICS.md   # Full Development Partition Performance Forensics
+│   ├── DEVELOPMENT_TRADE_RECONCILIATION_AUDIT.md # Trade-by-Trade Execution Reconciliation
+│   ├── ENTRY_QUALITY_FORENSICS.md             # Directional Displacement & Entry Timing Forensic
+│   ├── REJECTED_SETUPS_ANALYSIS.md            # 354 Sub-4R Geometric Failure Analysis
+│   ├── SL_GEOMETRY_FORENSICS.md               # Structural Invalidation & Stop-Loss Forensics
+│   ├── TARGET_HIERARCHY_RESEARCH.md           # Structural Target Destination Hierarchy Research
 │   └── evidence/                          # Visual Evidence Captures & Research Figures
 │       ├── screenshot_a_tests.png
 │       ├── screenshot_b_git_state.png
-│       ├── screenshot_c_day41_experiment_evidence.png
+│       ├── screenshot_c_experiment_evidence.png
 │       ├── screenshot_d_validation_oos_protection.png
 │       └── figures/                       # High-Resolution Publication Figures
 │           ├── opportunity_funnel_comparison.png
@@ -420,7 +427,7 @@ crypto-platform/
 │           ├── rejected_setups_decomposition.png
 │           └── cumulative_realized_r_curve.png
 │
-└── tests/                                 # 390 Passing Tests: Unit, Synthetic & Integration
+└── tests/                                 # 401 Passing Tests: Unit, Synthetic & Integration
     ├── unit/                              # Component Unit Tests (Engines, Primitives, Context)
     └── integration/                       # Reference Equivalence & Replayer Invariants
 ```
@@ -445,7 +452,7 @@ pip install -e .
 ```
 
 ### 12.2 Verification Test Suite
-The platform maintains **390 automated unit and integration tests** guaranteeing deterministic state transitions, replayer reference equivalence, and regression invariants:
+The platform maintains **401 automated unit and integration tests** guaranteeing deterministic state transitions, replayer reference equivalence, and regression invariants:
 
 ```bash
 # Run the complete test suite

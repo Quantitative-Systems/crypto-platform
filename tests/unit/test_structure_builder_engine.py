@@ -1,5 +1,5 @@
 """
-APEX Product 01 — Engine 2.2 Production Contract Tests
+Product 01 — Engine 2.2 Production Contract Tests
 
 Tests:
     - empty state

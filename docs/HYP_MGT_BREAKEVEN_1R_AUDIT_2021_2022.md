@@ -21,7 +21,7 @@
 
 ## 2. Baseline Definition (`ANCHOR_2`)
 
-* **Baseline Identifier**: `ANCHOR_2` (Certified Day 41 Baseline)
+* **Baseline Identifier**: `ANCHOR_2` (Certified Canonical Baseline)
 * **Replay Universe**: 15 multi-timeframe streams ($3\text{ assets} \times 5\text{ sets}$)
 * **Sample Size ($N$)**: 23 executed trades
 * **Wins / Losses**: 3W / 20L ($13.04\%$ win rate)

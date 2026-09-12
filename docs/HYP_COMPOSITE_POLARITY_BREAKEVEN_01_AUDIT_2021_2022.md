@@ -17,7 +17,7 @@
 
 1. **Clean Mechanism Composition**: The entry-quality mechanism (displacement polarity) and post-entry risk-management mechanism (+1.0R breakeven ratchet) compose cleanly without destructive interference, state corruption, or candidate leakage.
 2. **Empirical Executed Population**: The composite replay produced **$N = 13$ executed trades** (expected $\approx 12-13$, exact match to the polarity-retained population on the canonical 79,134-candle dataset). **Zero ($0$) unmatched or new trades** emerged.
-3. **Forensic Reconciliation of Trade #14**: Baseline Trade #14 (`cand_ETH/USDT_UNIFIED_STRATEGY_1652145300`) was executed in Composite ($+0.0585\text{R}$) because its trigger candle conforms to displacement polarity (`close < open` for SHORT). It was absent from Cycle #1's original record solely due to the temporary 1,000-bar cache truncation in `binance_ETHUSDT_1h.json` that was discovered and permanently restored prior to Day 41.
+3. **Forensic Reconciliation of Trade #14**: Baseline Trade #14 (`cand_ETH/USDT_UNIFIED_STRATEGY_1652145300`) was executed in Composite ($+0.0585\text{R}$) because its trigger candle conforms to displacement polarity (`close < open` for SHORT). It was absent from Cycle #1's original record solely due to the temporary 1,000-bar cache truncation in `binance_ETHUSDT_1h.json` that was discovered and permanently restored prior to baseline certification.
 4. **Interaction Behavior ($I_{total} = -1.9979\text{R}$)**: The combined effect is mathematically **subadditive / redundant** because Trade #08 and Trade #17 were double-saved across branches (Polarity filtered them at entry, eliminating the opportunity for Breakeven to protect them post-entry).
 5. **Runner Convexity Preserved**: Top baseline winners Trade #05 ($+2.8010\text{R}$) and Trade #10 ($+1.6942\text{R}$) survived both mechanisms and exited at their identical structural trail points untouched by breakeven.
 6. **Economic Improvement**: Net realized R improved from $-4.1741\text{R}$ (baseline) to **$+0.9615\text{R}$**, win rate rose from $13.04\%$ to **$38.46\%$**, and Profit Factor reached **$1.2583$**. However, per institutional governance rules, this positive expectancy on a small Development sample ($N=13$) is **NOT treated as a proven edge**. It is recorded strictly as a **causally isolated Development improvement**.
@@ -72,7 +72,7 @@ Unmatched / Genuinely New     : N = 0 (Zero population leakage)
 - **Investigation**: We conducted a trade-by-trade provenance audit across all 15 streams.
 - **Root Cause**: Trade #14 (`cand_ETH/USDT_UNIFIED_STRATEGY_1652145300` in `ETH_SET_4`, May 2022) had a bearish trigger candle (`open=2415.0, close=2400.38`), perfectly conforming to displacement polarity for a `PERMIT_SHORT` setup.
 - **Why it was missing in Cycle #1**: In Cycle #1, `binance_ETHUSDT_1h.json` had been accidentally truncated to 1,000 candles during testing. Missing MTF depth caused Trade #14 to fail early on `REJECT_SUPERSEDED_HTF_CONTEXT` before reaching the entry gate.
-- **Restoration**: Prior to Day 41, `binance_ETHUSDT_1h.json` was restored to its certified 79,134 candles.
+- **Restoration**: Prior to baseline certification, `binance_ETHUSDT_1h.json` was restored to its certified 79,134 candles.
 - **Confirmation**: Running with full canonical data, Trade #14 is legitimately qualified under Polarity and correctly executed under Composite.
 - **Audit Verification**: Every one of the 13 executed trades in Composite belongs to the 23 certified baseline opportunities. No phantom or new candidates were generated.
 

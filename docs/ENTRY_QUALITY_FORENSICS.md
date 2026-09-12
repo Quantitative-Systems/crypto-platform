@@ -11,7 +11,7 @@
 
 ## Executive Summary & Core Discoveries
 
-Pursuant to the **Day 40 / Week 6 Research Governance Directive (Part 3 — LTF Entry Quality Forensics)**, this report performs an exhaustive, candle-by-candle forensic investigation into why otherwise-qualified Lower-Timeframe (LTF) entry triggers fail to generate meaningful favorable excursion.
+Pursuant to the **Quantitative Research Governance Directive (LTF Entry Quality Forensics)**, this report performs an exhaustive, candle-by-candle forensic investigation into why otherwise-qualified Lower-Timeframe (LTF) entry triggers fail to generate meaningful favorable excursion.
 
 Following the conclusive rejection of the *"Wide SL causes losses"* hypothesis in the previous audit, this forensic audit examines the micro-structure of all 23 genuine executed market entries across **LTF displacement mechanics, liquidity sweep dynamics, MTF keyzone location, and higher-timeframe alignment timing**.
 

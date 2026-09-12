@@ -21,6 +21,17 @@ class LTFEntryModel:
     _directional_displacement = DirectionalDisplacementModel()
 
     @classmethod
+    def extract_structural_stop(
+        cls,
+        ltf_payload: MarketStatePayload,
+        is_long: bool,
+        fallback_extreme: Optional[float] = None
+    ) -> Optional[float]:
+        return cls._directional_displacement.extract_structural_stop(
+            ltf_payload, is_long=is_long, fallback_extreme=fallback_extreme
+        )
+
+    @classmethod
     def evaluate_details(
         cls,
         ltf_payload: MarketStatePayload,
@@ -36,16 +47,18 @@ class LTFEntryModel:
         if res.is_confirmed:
             return res
 
-        # Synthetic test fixture compatibility: if payload has scorecard displacement + sweep event
+        # Synthetic test fixture compatibility: if payload has scorecard displacement + causal sweep event
         ltf_events = ltf_payload.events or []
         sweeps = [
             e for e in ltf_events
-            if "LIQUIDITY_SWEEP" in str(getattr(e, 'event_type', '')) and req_event_dir.upper() in str(getattr(e, 'direction', '') or (e.metadata.get('direction', '') if hasattr(e, 'metadata') else ''))
+            if "LIQUIDITY_SWEEP" in str(getattr(e, 'event_type', ''))
+            and req_event_dir.upper() in str(getattr(e, 'direction', '') or (e.metadata.get('direction', '') if hasattr(e, 'metadata') else ''))
+            and getattr(e, 'timestamp', 0) >= setup_retest_timestamp
         ]
         if sweeps and has_scorecard_disp:
             c = ltf_payload.current_candle
             is_long = req_event_dir.upper() in ("BULLISH", "LONG", "BUY")
-            stop_p = cls._directional_displacement.extract_structural_stop(ltf_payload, is_long=is_long, fallback_extreme=c.low if (is_long and c) else (c.high if c else None))
+            stop_p = cls.extract_structural_stop(ltf_payload, is_long=is_long, fallback_extreme=c.low if (is_long and c) else (c.high if c else None))
             cur_p = c.close if c else ltf_payload.current_price
             return EntryEvaluationResult(
                 is_confirmed=True,

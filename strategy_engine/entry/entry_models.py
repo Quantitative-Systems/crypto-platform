@@ -39,49 +39,51 @@ class BaseLTFEntryModel(ABC):
         fallback_extreme: Optional[float] = None
     ) -> Optional[float]:
         """
-        Derives the genuine structural invalidation stop from LTF market structure:
-        - Long: Protected swing low, latest confirmed sequence low, or sweep extreme.
-        - Short: Protected swing high, latest confirmed sequence high, or sweep extreme.
-        Never relies purely on single-candle wick extremes.
+        Derives genuine structural invalidation stop from LTF market structure:
+        - Sweep extreme / reversal origin if provided.
+        - Most recent local confirmed sequence swing on LTF.
+        - Fallback to protected swing if no sequence swing exists.
+        Returns None if no structural pivot exists (never falls back to single-candle wicks).
         """
         struct = getattr(ltf_payload, 'structure_state', None)
-        structural_pivots: List[float] = []
 
-        if struct:
-            if is_long:
-                if getattr(struct, 'protected_low', None) and getattr(struct.protected_low, 'raw_swing', None):
-                    structural_pivots.append(struct.protected_low.raw_swing.price)
-                # Also check recent sequence swings
-                for s in (getattr(struct, 'sequence_swings', None) or []):
-                    raw = getattr(s, 'raw_swing', None)
-                    if raw and "LOW" in str(getattr(raw, 'swing_type', '')):
-                        if raw.price < ltf_payload.current_price:
-                            structural_pivots.append(raw.price)
-            else:
-                if getattr(struct, 'protected_high', None) and getattr(struct.protected_high, 'raw_swing', None):
-                    structural_pivots.append(struct.protected_high.raw_swing.price)
-                for s in (getattr(struct, 'sequence_swings', None) or []):
-                    raw = getattr(s, 'raw_swing', None)
-                    if raw and "HIGH" in str(getattr(raw, 'swing_type', '')):
-                        if raw.price > ltf_payload.current_price:
-                            structural_pivots.append(raw.price)
+        candidate_stops: List[float] = []
 
+        # 1. Sweep extreme / setup extreme passed as fallback
         if fallback_extreme is not None:
-            if is_long and fallback_extreme < ltf_payload.current_price:
-                structural_pivots.append(fallback_extreme)
-            elif (not is_long) and fallback_extreme > ltf_payload.current_price:
-                structural_pivots.append(fallback_extreme)
+            candidate_stops.append(fallback_extreme)
 
-        if not structural_pivots:
-            # Fallback to candle extreme only if no structural pivot exists, but preserve distance
-            c = ltf_payload.current_candle
-            if c:
-                return c.low if is_long else c.high
+        # 2. Recent confirmed sequence swings on LTF (checked in reverse chronological order)
+        found_seq = False
+        if struct and struct.sequence_swings:
+            for s in reversed(struct.sequence_swings):
+                raw = getattr(s, 'raw_swing', None)
+                if not raw:
+                    continue
+                st = str(getattr(raw, 'swing_type', ''))
+                if is_long and "LOW" in st:
+                    candidate_stops.append(raw.price)
+                    found_seq = True
+                    break
+                elif (not is_long) and "HIGH" in st:
+                    candidate_stops.append(raw.price)
+                    found_seq = True
+                    break
+
+        # 3. Fallback to protected swing ONLY if no local sequence swing exists
+        if not found_seq and struct:
+            if is_long and getattr(struct, 'protected_low', None) and getattr(struct.protected_low, 'raw_swing', None):
+                candidate_stops.append(struct.protected_low.raw_swing.price)
+            elif (not is_long) and getattr(struct, 'protected_high', None) and getattr(struct.protected_high, 'raw_swing', None):
+                candidate_stops.append(struct.protected_high.raw_swing.price)
+
+        if not candidate_stops:
             return None
 
-        # Long: Stop is below lowest relevant structural swing
-        # Short: Stop is above highest relevant structural swing
-        return min(structural_pivots) if is_long else max(structural_pivots)
+        # Return the structural stop candidate:
+        # Long: min(candidate_stops)
+        # Short: max(candidate_stops)
+        return min(candidate_stops) if is_long else max(candidate_stops)
 
 
 class DirectionalDisplacementModel(BaseLTFEntryModel):

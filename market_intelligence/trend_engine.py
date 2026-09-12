@@ -1,5 +1,5 @@
 """
-APEX Quantitative Systems Platform
+Quantitative Systems Platform
 Product 01 — Market Language | Engine 6 — Trend Engine
 
 PURPOSE

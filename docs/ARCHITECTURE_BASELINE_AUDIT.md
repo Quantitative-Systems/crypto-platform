@@ -1,9 +1,9 @@
-# Day 41 Forensic Audit: Full Current-Architecture Baseline & Trade-Frequency Analysis
+# Quantitative Architecture Baseline & Trade Frequency Audit
 
 ---
 
-**Document Identifier:** `DAY41_CURRENT_ARCHITECTURE_FULL_BASELINE_AUDIT`  
-**Governing State:** **Day 41 (OPEN)**  
+**Document Identifier:** `ARCHITECTURE_BASELINE_AUDIT`  
+**Classification:** Institutional Quantitative Research  
 **Dataset Scope:** Historical Development Partition (`2021-01-01T00:00:00Z` to `2022-12-31T23:59:59Z`, 277,908 market candles)  
 **Universe Audited:** BTC/USDT, ETH/USDT, SOL/USDT across all 5 Canonical Timeframe Sets (15 Streams)  
 **Replay Dataset:** Repaired Composite Baseline (`scratch/composite_01_dev_results_repaired_terminal.json`)  
@@ -41,7 +41,7 @@ Across 2 full calendar years ($277,908$ candles) on Bitcoin, Ethereum, and Solan
 The complete breakdown across all 15 operational streams (`3 assets × 5 timeframe sets`) from the certified terminal replay:
 
 | Stream ID | Style Name | Status | Candles | Cands | HTF Qual | MTF Align | MTF Retest | LTF Conf | Tgt Res | RR $\ge$ 4R | Trades | Win% | Net R | Profit Factor | Max DD |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **BTC_SET_1** | 1M/1W/1D | OK | 731 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | **0** | 0.0% | +0.0000R | 0.00 | 0.0000R |
 | **ETH_SET_1** | 1M/1W/1D | OK | 731 | 12 | 12 | 10 | 10 | 3 | 3 | 0 | **0** | 0.0% | +0.0000R | 0.00 | 0.0000R |
 | **SOL_SET_1** | 1M/1W/1D | OK | 731 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **0** | 0.0% | +0.0000R | 0.00 | 0.0000R |
@@ -80,7 +80,7 @@ The complete breakdown across all 15 operational streams (`3 assets × 5 timefra
 
 ---
 
-### B. Aggregation by Asset Universe
+## 3. Aggregation by Asset Universe
 
 | Asset | Candidates | LTF Confirmed | Planned RR $\ge$ 4R | Executed Trades | Win Rate | Realized Net R | Expectancy | Profit Factor |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -94,20 +94,16 @@ The complete breakdown across all 15 operational streams (`3 assets × 5 timefra
 
 ---
 
-### C. Aggregation by Calendar Year
+## 4. Aggregation by Calendar Year
 
 | Year | Market Context | Candles | Executed Trades | Win Rate | Realized Net R | Expectancy | Profit Factor | Top Trade |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
 | **2021** | Bull Market Expansion & High Volatility | 138,954 | **3** | 66.7% (2W / 1L) | **+2.1975R** | +0.7325R | **4.20** | SOL Trade #3 (+2.80R) |
 | **2022** | Bear Market Grind & Deleveraging | 138,954 | **8** | 37.5% (3W / 5L) | **-0.7830R** | -0.0979R | 0.70 | BTC Trade #5 (+1.69R) |
 
-#### Analysis:
-- In 2021, the strategy executed only 3 trades, but capitalized heavily on upward and downward expansion trends ($+2.20\text{R}$).
-- In 2022, trade count increased to 8, but choppy compression resulted in a slight loss ($-0.78\text{R}$).
-
 ---
 
-## 3. Opportunity Frequency & Commercial Velocity Metrics
+## 5. Opportunity Frequency & Commercial Velocity Metrics
 
 | Metric | Whole Portfolio (3 Assets) | Per Asset (Average) | Per Active Stream (SET 4) |
 | :--- | :---: | :---: | :---: |
@@ -120,7 +116,7 @@ The complete breakdown across all 15 operational streams (`3 assets × 5 timefra
 
 ---
 
-## 4. Full Funnel Drop-off Attribution
+## 6. Full Funnel Drop-off Attribution
 
 Tracing every step of the funnel across the 2-year Development dataset:
 
@@ -153,100 +149,7 @@ Tracing every step of the funnel across the 2-year Development dataset:
 
 ---
 
-## 5. Planned RR Distribution & Geometric Chokepoint Analysis
-
-For the 387 candidates reaching the Risk Gate with a valid target price:
-
-### Statistical Distribution:
-- **Mean Planned RR:** $0.80\text{R}$
-- **Median Planned RR:** **$0.47\text{R}$**
-- **25th Percentile (P25):** $0.20\text{R}$
-- **75th Percentile (P75):** $0.97\text{R}$
-- **90th Percentile (P90):** $1.69\text{R}$
-- **Max Planned RR:** $7.28\text{R}$
-
-### Planned RR Histogram:
-
-```text
-┌──────────────────┬───────┬─────────┬────────────────────────────────────────┐
-│ Planned RR Range │ Count │ Percent │ Visual Histogram                       │
-├──────────────────┼───────┼─────────┼────────────────────────────────────────┤
-│ < 0.5R           │   204 │  52.71% │ █████████████████████████████████████▌ │
-│ 0.5R – 1.0R      │    92 │  23.77% │ ███████████████▌                       │
-│ 1.0R – 1.5R      │    43 │  11.11% │ ███████                                │
-│ 1.5R – 2.0R      │    17 │   4.39% │ ███                                    │
-│ 2.0R – 2.5R      │     9 │   2.33% │ █▌                                     │
-│ 2.5R – 3.0R      │     6 │   1.55% │ █                                      │
-│ 3.0R – 3.5R      │     3 │   0.78% │ ▌                                      │
-│ 3.5R – 4.0R      │     2 │   0.52% │ ▎                                      │
-│ >= 4.0R          │    11 │   2.84% │ █                                      │
-└──────────────────┴───────┴─────────┴────────────────────────────────────────┘
-```
-
-### Target Provenance Breakdown:
-- **Weak Swings:** 125 candidates ($32.0\%$)
-- **Opposing KeyZones:** 106 candidates ($27.1\%$)
-- **Forward Structural Expansion:** 77 candidates ($19.7\%$)
-- **Liquidity Pools:** 76 candidates ($19.4\%$)
-- **None:** 7 candidates ($1.8\%$)
-
----
-
-## 6. Dissecting the Bottleneck: Why Are There Only 11 Trades?
-
-The empirical data provides a definitive answer to the user's question:
-
-### Is the strategy naturally selective, or is target selection suppressing opportunities?
-
-1. **The Strategy Pipeline Is NOT Overly Selective Upstream:**
-   - The strategy generated **1,462 candidates** ($5.26$ per 1k bars).
-   - It identified **391 verified structural entries** with confirmed LTF sweep and directional displacement.
-   - That represents roughly **16 LTF triggers per month** across the portfolio.
-2. **The Bottleneck Is 100% Concentrated at Target Resolution & Planned RR:**
-   - **$93.09\%$ of all LTF confirmed setups were killed by `REJECT_RR_BELOW_4R`**.
-   - $76.5\%$ of confirmed setups were assigned target prices with planned $\text{RR} < 1.0\text{R}$.
-   - The median target distance was only **$0.47\text{R}$**!
-
-### Why Are the Targets So Close?
-The destination engine was hardcoded to sort candidates by **closest distance to entry**:
-```python
-candidates.sort(key=lambda x: x[0])  # Closest target to entry
-```
-Because the engine treats minor internal KeyZones and local micro-swings as valid HTF destinations, it systematically anchors planned targets to the nearest micro-zone sitting just 0.3R to 0.8R away from entry, rather than identifying true macro swing destinations. This artificially forces planned RR into the $0.2\text{R}$ to $0.8\text{R}$ bracket, where the 4R firewall rightfully rejects them.
-
----
-
-## 7. SET 5 Disambiguation & Fail-Closed Status
-
-- **Configuration:** `SET_5_SCALPING` is fully registered across `config/timeframe_sets.py` and `timeframe_aligner.py` (`15M -> 5M -> 1m`).
-- **Data Availability:** Public Binance API historical depth for 1m and 5m candles only extends back to 2026 in the local cache.
-- **Fail-Closed Verification:** Replaying SET 5 on 2021–2022 raises `INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED` and produces exactly 0 trades.
-- **Integrity Rule:** The platform strictly refused to fabricate synthetic 1m/5m data or contaminate Development with post-2023 data.
-
----
-
-## 8. Summary Table: Where Did the 11 Trades Come From?
-
-```
-┌──────────────────────────────────────────────────────────────────────────────────┐
-│                      FINAL BASELINE DISTRIBUTION (11 TRADES)                     │
-├──────────────┬──────────────┬──────────────┬──────────────────┬──────────────────┤
-│ Stream       │ Trades Count │ Win / Loss   │ Realized Net R   │ Dominant Exit    │
-├──────────────┼──────────────┼──────────────┼──────────────────┼──────────────────┤
-│ ETH_SET_2    │ 2 trades     │ 1W / 1L      │ -0.6674R         │ MTF Trail / BE   │
-│ BTC_SET_4    │ 4 trades     │ 1W / 3L      │ +0.2008R         │ MTF Trail        │
-│ ETH_SET_4    │ 1 trade      │ 1W / 0L      │ +0.0585R         │ MTF Trail        │
-│ SOL_SET_4    │ 4 trades     │ 2W / 2L      │ +1.8226R         │ MTF Trail        │
-│ All Others   │ 0 trades     │ —            │ +0.0000R         │ Zero RR >= 4R    │
-├──────────────┼──────────────┼──────────────┼──────────────────┼──────────────────┤
-│ TOTAL        │ 11 trades    │ 5W / 6L      │ +1.4145R         │ 100% Monetized   │
-│              │              │              │                  │ via MTF Trailing │
-└──────────────┴──────────────┴──────────────┴──────────────────┴──────────────────┘
-```
-
----
-
-## Master Architectural Conclusions for Day 41
+## 7. Master Architectural Conclusions
 
 1. **The Strategy Pipeline is Functionally Sound Upstream:**
    Market structure, HTF keyzones, MTF realignment, MTF retest, and LTF entry displacement generate plenty of structural candidates ($391$ confirmed opportunities). The system is not suffering from an upstream signal failure.
@@ -254,8 +157,3 @@ Because the engine treats minor internal KeyZones and local micro-swings as vali
    The firewall prevents the execution of trades with planned $\text{RR} < 4.0\text{R}$. Given that $76.5\%$ of generated candidates had planned $\text{RR} < 1.0\text{R}$, the firewall is protecting the portfolio from low-reward setups.
 3. **The Target Selection Engine is the Structural Chokepoint:**
    The destination engine's policy of sorting candidates by closest proximity causes it to pick micro internal keyzones sitting adjacent to price. This collapses the planned RR geometry ($52.7\%$ are $<0.5\text{R}$) and starves the platform of trade executions across SET 1, SET 2, and SET 3.
-4. **Current Status:**
-   We have established a complete, transparent, and certified baseline. **Day 41 remains strictly open.**
-
----
-*Report certified under Day 41 Quantitative Governance.*

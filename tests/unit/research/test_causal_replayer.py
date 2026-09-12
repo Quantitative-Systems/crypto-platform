@@ -51,7 +51,7 @@ def test_replayer_runs_without_exceptions_on_synthetic_data():
 
 def test_terminal_candidate_never_reenters_regression_invariant():
     """
-    REGRESSION INVARIANT (Day 40 Infrastructure Audit):
+    REGRESSION INVARIANT (Institutional Infrastructure Audit):
     A terminal candidate / trade MUST NEVER re-enter: candidate -> risk -> execution.
     1 unique candidate ID -> at most 1 genuine execution.
     """

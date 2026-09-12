@@ -283,20 +283,22 @@ class UnifiedStrategy(BaseHypothesis):
                     break
 
             # If not triggered by primitive keyzones, check synthesized alignment keyzone
+            align_ts = candidate.mtf_alignment_timestamp or candidate.creation_timestamp or 0
             if candidate.state == CandidateState.WAIT_MTF_RETEST and candidate.metadata and "synth_mtf_kz_low" in candidate.metadata:
-                s_low = candidate.metadata["synth_mtf_kz_low"]
-                s_high = candidate.metadata["synth_mtf_kz_high"]
-                price_in_synth = False
-                if ltf_payload.current_candle:
-                    price_in_synth = (ltf_payload.current_candle.low <= s_high and ltf_payload.current_candle.high >= s_low)
-                elif mtf_payload.current_candle:
-                    price_in_synth = (mtf_payload.current_candle.low <= s_high and mtf_payload.current_candle.high >= s_low)
-                else:
-                    price_in_synth = (s_low <= mtf_payload.current_price <= s_high)
+                if ltf_payload.timestamp > align_ts:
+                    s_low = candidate.metadata["synth_mtf_kz_low"]
+                    s_high = candidate.metadata["synth_mtf_kz_high"]
+                    price_in_synth = False
+                    if ltf_payload.current_candle:
+                        price_in_synth = (ltf_payload.current_candle.low <= s_high and ltf_payload.current_candle.high >= s_low)
+                    elif mtf_payload.current_candle:
+                        price_in_synth = (mtf_payload.current_candle.low <= s_high and mtf_payload.current_candle.high >= s_low)
+                    else:
+                        price_in_synth = (s_low <= mtf_payload.current_price <= s_high)
 
-                if price_in_synth:
-                    candidate.mtf_retest_timestamp = ltf_payload.timestamp
-                    candidate.transition_to(CandidateState.WAIT_LTF_TRIGGER)
+                    if price_in_synth:
+                        candidate.mtf_retest_timestamp = ltf_payload.timestamp
+                        candidate.transition_to(CandidateState.WAIT_LTF_TRIGGER)
 
             return None # Still pending
             
@@ -349,13 +351,7 @@ class UnifiedStrategy(BaseHypothesis):
             # Initial SL: Immediate LTF micro structural invalidation point from entry model
             stop_price = candidate.ltf_structural_sl
             if stop_price is None:
-                try:
-                    if is_long:
-                        stop_price = ltf_payload.structure_state.protected_low.raw_swing.price if ltf_payload.structure_state.protected_low else None
-                    else:
-                        stop_price = ltf_payload.structure_state.protected_high.raw_swing.price if ltf_payload.structure_state.protected_high else None
-                except AttributeError:
-                    pass
+                stop_price = LTFEntryModel.extract_structural_stop(ltf_payload, is_long=is_long)
 
             candidate.ltf_structural_sl = stop_price
 

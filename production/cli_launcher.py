@@ -31,7 +31,7 @@ class CLILauncher:
     @staticmethod
     def prompt_user_config() -> Tuple[BrokerConfig, Dict[str, Any]]:
         print("\n" + "=" * 80)
-        print("     APEX INSTITUTIONAL 24/7/365 AUTONOMOUS TRADING PLATFORM LAUNCHER")
+        print("     INSTITUTIONAL 24/7/365 AUTONOMOUS TRADING PLATFORM LAUNCHER")
         print("=" * 80 + "\n")
 
         # 1. Select Broker

@@ -11,7 +11,7 @@
 
 ## Executive Summary & Core Discoveries
 
-Pursuant to the **Day 40 / Week 6 Research Governance Directive**, this report conducts an exhaustive, multi-dimensional forensic investigation into the structural Initial Stop-Loss (SL) geometry across the clean executed development population ($N=23$ genuine market opportunities).
+Pursuant to the **Quantitative Research Governance Directive**, this report conducts an exhaustive, multi-dimensional forensic investigation into the structural Initial Stop-Loss (SL) geometry across the clean executed development population ($N=23$ genuine market opportunities).
 
 The central investigative objective was to test whether **excessive Initial-SL geometry is the upstream cause of economically unrealistic 4R target distances and negative expectancy**, or whether SL geometry is merely a secondary symptom within a broader structural breakdown.
 

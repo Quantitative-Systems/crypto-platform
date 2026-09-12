@@ -124,7 +124,7 @@ class MT5ForexGateway(BaseGateway):
                     "sl": float(order.stop_price) if order.stop_price else 0.0,
                     "deviation": 20,
                     "magic": 108888,
-                    "comment": "Apex Institutional 24/7",
+                    "comment": "Institutional Execution 24/7",
                     "type_time": mt5.ORDER_TIME_GTC,
                     "type_filling": mt5.ORDER_FILLING_IOC,
                 }

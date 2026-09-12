@@ -157,7 +157,7 @@ def run_stream(
 
 def main():
     print("=" * 100)
-    print("CANONICAL 12-STREAM MATRIX HISTORICAL BACKTEST (DAY 35 REFINEMENT)")
+    print("CANONICAL 12-STREAM MATRIX HISTORICAL BACKTEST (CANONICAL REFINEMENT)")
     print("=" * 100)
     
     matrix_results = []

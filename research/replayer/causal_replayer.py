@@ -56,7 +56,8 @@ class CausalReplayer:
         breakeven_stop_r: float = 0.10,
         enable_milestone_target: bool = False,
         milestone_r: float = 2.5,
-        target_hierarchy: str = "CLOSEST_OBJECTIVE"
+        target_hierarchy: str = "CLOSEST_OBJECTIVE",
+        require_htf_keyzone: bool = True
     ):
         self.timeframe_set: TimeframeSet = TimeframeAligner.get_set(timeframe_set_id)
         self.initial_balance = initial_balance
@@ -72,6 +73,7 @@ class CausalReplayer:
         self.enable_milestone_target = enable_milestone_target
         self.milestone_r = milestone_r
         self.target_hierarchy = target_hierarchy
+        self.require_htf_keyzone = require_htf_keyzone
         self.enable_regime_filter = enable_regime_filter
         self.risk_config = risk_config
         self.enable_kz_freshness = enable_kz_freshness
@@ -117,7 +119,8 @@ class CausalReplayer:
             max_htf_kz_age_seconds=self.max_htf_kz_age_seconds,
             enable_forward_expansion=self.enable_forward_expansion,
             enforce_displacement_polarity=self.enforce_displacement_polarity,
-            target_hierarchy=self.target_hierarchy
+            target_hierarchy=self.target_hierarchy,
+            require_htf_keyzone=self.require_htf_keyzone
         )
         self.execution_simulator = ExecutionSimulator(
             maker_fee_rate=maker_fee_rate,

@@ -30,7 +30,7 @@ def format_ts(ts: int) -> str:
 
 def run_vertical_slice():
     print("================================================================================")
-    print("      DAY 34 — VERTICAL SLICE 001: BTCUSDT S3 PULLBACK RIDING RESEARCH RUN      ")
+    print("            VERTICAL SLICE 001: BTCUSDT S3 PULLBACK RIDING RESEARCH RUN         ")
     print("================================================================================\n")
 
     symbol = "BTC/USDT"

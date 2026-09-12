@@ -1,5 +1,5 @@
 """
-Product 04 — Research Laboratory: Institutional Alpha Forensics Engine
+Product 04 — Research Laboratory: Quantitative Performance Forensics Engine
 Performs forensic quantitative decomposition on canonical replay results across 15 streams.
 
 Computes:
@@ -695,10 +695,10 @@ def analyze_trade_dependency(all_trades: List[Dict[str, Any]], window_seconds: i
     }
 
 
-def run_alpha_forensics(h0_path: str, anchor2_path: str) -> Dict[str, Any]:
+def run_performance_forensics(h0_path: str, anchor2_path: str) -> Dict[str, Any]:
     """Master analytical runner."""
     print("=" * 80)
-    print("EXECUTING INSTITUTIONAL ALPHA FORENSICS ENGINE")
+    print("EXECUTING INSTITUTIONAL PERFORMANCE FORENSICS ENGINE")
     print("=" * 80)
 
     # Load replay artifacts
@@ -754,7 +754,7 @@ def run_alpha_forensics(h0_path: str, anchor2_path: str) -> Dict[str, Any]:
         "trade_dependency": a2_dependency
     }
 
-    out_json = "/home/mrcn2/crypto-platform/scratch/alpha_forensics_summary.json"
+    out_json = "/home/mrcn2/crypto-platform/scratch/performance_forensics_summary.json"
     with open(out_json, "w") as fp:
         json.dump(report_payload, fp, indent=2)
 
@@ -762,9 +762,12 @@ def run_alpha_forensics(h0_path: str, anchor2_path: str) -> Dict[str, Any]:
     return report_payload
 
 
+run_alpha_forensics = run_performance_forensics
+
+
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description="Alpha Forensics Engine")
+    parser = argparse.ArgumentParser(description="Performance Forensics Engine")
     parser.add_argument("--h0", type=str, default="/home/mrcn2/crypto-platform/scratch/h0_dev_certified_results.json", help="H0 results path")
     parser.add_argument("--anchor2", type=str, default="/home/mrcn2/crypto-platform/scratch/anchor2_dev_certified_results.json", help="ANCHOR_2 results path")
     args = parser.parse_args()
@@ -777,6 +780,6 @@ if __name__ == "__main__":
         a2_file = "/home/mrcn2/crypto-platform/scratch/canonical_anchor_2_dev_results.json"
 
     if os.path.exists(h0_file) and os.path.exists(a2_file):
-        run_alpha_forensics(h0_file, a2_file)
+        run_performance_forensics(h0_file, a2_file)
     else:
         print(f"Required result files missing. Found h0: {os.path.exists(h0_file)}, a2: {os.path.exists(a2_file)}")

@@ -1,14 +1,14 @@
-# Day 41 Controlled Development Experiment: Target Hierarchy A/B Forensic Audit
+# Quantitative Research Report: Target Hierarchy Structural Objective Analysis
 
 ---
 
-**Document Identifier:** `DAY41_TARGET_HIERARCHY_AB_EXPERIMENT_2021_2022`  
-**Governing State:** **Day 41 (OPEN)**  
+**Document Identifier:** `TARGET_HIERARCHY_RESEARCH`  
+**Classification:** Institutional Quantitative Research  
 **Experiment Identifier:** `EXP_TARGET_STRUCTURAL_01`  
 **Hypothesis Evaluated:** `HYP_TARGET_HIERARCHY_STRUCTURAL_OBJECTIVE_01`  
 **Dataset Partition:** Historical Development Only (`2021-01-01T00:00:00Z` to `2022-12-31T23:59:59Z`, 277,908 market candles)  
 **Universe Audited:** BTC/USDT, ETH/USDT, SOL/USDT across all 5 Canonical Timeframe Sets (15 Streams)  
-**Control Baseline:** Frozen Day 41 Baseline (`scratch/composite_01_dev_results_repaired_terminal.json`)  
+**Control Baseline:** Frozen Canonical Baseline (`scratch/composite_01_dev_results_repaired_terminal.json`)  
 **Treatment Experiment:** Isolated Destination Hierarchy (`scratch/exp_target_structural_01_dev_results.json`)  
 **Audit Policy:** Strictly Controlled. Validation (`2023`) and OOS (`2024–2026`) partitions strictly **LOCKED**.
 
@@ -16,7 +16,7 @@
 
 ## Executive Summary & Core Verdict
 
-We conducted exactly ONE isolated, controlled development A/B experiment to test whether the `HTFDestinationEngine`'s default closest-feature selection logic was artificially suppressing planned RR and choking the $4.0\text{R}$ firewall.
+We conducted an isolated, controlled development A/B experiment to test whether the `HTFDestinationEngine`'s default closest-feature selection logic was artificially suppressing planned RR and choking the $4.0\text{R}$ firewall.
 
 ### Core Quantitative A/B Comparison
 
@@ -166,7 +166,7 @@ Across all 387 target-resolved triggers:
 ## 9. Performance Breakdown by Asset
 
 | Asset | Baseline Trades | Baseline Net R | Baseline Win% | Baseline PF | Exp Trades | Exp Net R | Exp Win% | Exp PF | Net R Delta |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **BTC/USDT** | 4 | $+0.2008\text{R}$ | $25.0\%$ | 1.13 | 7 | $-2.1785\text{R}$ | $14.3\%$ | 0.44 | $-2.3793\text{R}$ |
 | **ETH/USDT** | 3 | $-0.6089\text{R}$ | $66.7\%$ | 0.15 | 4 | $-0.6213\text{R}$ | $50.0\%$ | 0.15 | $-0.0124\text{R}$ |
 | **SOL/USDT** | 4 | $+1.8226\text{R}$ | $50.0\%$ | 2.72 | 9 | **$+6.6325\text{R}$** | **$66.7\%$** | **6.32** | **$+4.8099\text{R}$** |
@@ -200,7 +200,7 @@ Across all 387 target-resolved triggers:
 The complete stream ledger under `EXP_TARGET_STRUCTURAL_01`:
 
 | Stream ID | Style | Status | Candles | Cands | HTF Qual | MTF Align | MTF Retest | LTF Conf | Tgt Res | RR $\ge$ 4R | Trades | Win% | Net R | Profit Factor | Max DD |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **BTC_SET_1** | Macro | OK | 731 | 1 | 1 | 1 | 1 | 1 | 1 | 0 | **0** | 0.0% | +0.0000R | 0.00 | 0.0000R |
 | **ETH_SET_1** | Macro | OK | 731 | 12 | 12 | 10 | 10 | 3 | 3 | 0 | **0** | 0.0% | +0.0000R | 0.00 | 0.0000R |
 | **SOL_SET_1** | Macro | OK | 731 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **0** | 0.0% | +0.0000R | 0.00 | 0.0000R |
