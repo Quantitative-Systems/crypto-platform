@@ -311,6 +311,10 @@ The complete cross-stream performance matrix across the Development partition:
 The evidence-supported candidate architecture is designated:
 
 ### **`EXP_F5L_COMPOSITE_STRUCTURAL_CANDIDATE`**
+
+> **Status: Development Candidate — NOT VALIDATED / NOT LIVE**  
+> *This candidate is an exploratory model evaluated exclusively on the 2021–2022 Development partition. It is not a certified live edge, paper-ready system, or capital-qualified strategy. Validation (2023) and Out-of-Sample (2024–2026) partitions remain strictly air-gapped, sealed, and untouched.*
+
 - **Target Mode:** `STRUCTURAL_OBJECTIVE`
 - **Stop Geometry:** `EXHAUSTIVE_STRUCTURAL`
 - **Risk Gate:** Minimum Planned $\text{RR} \ge 4.0\text{R}$
