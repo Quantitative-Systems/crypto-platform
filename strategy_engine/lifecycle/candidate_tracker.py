@@ -55,6 +55,7 @@ class CandidateSetup:
     
     # Custom arbitrary metadata
     metadata: Optional[Dict[str, Any]] = None
+    sweep_provenance: Optional[Dict[str, Any]] = None
 
     # Setup Lifespan & Expiration
     creation_timestamp: Optional[int] = None
@@ -73,7 +74,7 @@ class CandidateSetup:
             self.stages_reached.append(st_val)
 
     def to_provenance_dict(self) -> Dict[str, Any]:
-        return {
+        d = {
             "candidate_id": self.candidate_id,
             "state": self.state.value if hasattr(self.state, 'value') else str(self.state),
             "stages_reached": list(self.stages_reached),
@@ -104,6 +105,9 @@ class CandidateSetup:
             "invalidation_reason": self.invalidation_reason or "",
             "invalidation_timestamp": self.invalidation_timestamp or 0
         }
+        if self.sweep_provenance:
+            d["sweep_provenance"] = self.sweep_provenance
+        return d
 
 
 class CandidateTracker:

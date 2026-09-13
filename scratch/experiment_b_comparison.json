@@ -1,0 +1,396 @@
+{
+  "h0": {
+    "label": "Corrected Canonical H0 (Control)",
+    "funnel": {
+      "total_candidates": 924,
+      "risk_gate_candidates": 483,
+      "rr_rejections": 0,
+      "approved": 111,
+      "executed_trades": 29
+    },
+    "performance": {
+      "n": 29,
+      "wins": 2,
+      "losses": 27,
+      "breakevens": 0,
+      "win_rate_pct": 6.896551724137931,
+      "gross_r": -13.16,
+      "friction_r": 2.3586,
+      "net_r": -15.518545885693769,
+      "expectancy": -0.5351222719204748,
+      "profit_factor": 0.3871345661499077,
+      "max_drawdown_r": 15.518545885693769,
+      "max_consecutive_losses": 14
+    },
+    "excursion": {
+      "avg_mfe_r": 1.5797517241379306,
+      "med_mfe_r": 0.8185,
+      "avg_mae_r": 1.5161758620689656,
+      "med_mae_r": 1.2308,
+      "mfe_ge_1r": 13,
+      "mfe_ge_2r": 8,
+      "mfe_ge_3r": 5,
+      "mfe_ge_4r": 4,
+      "mfe_ge_5r": 4
+    },
+    "target_interaction": {
+      "target_reach_count": 2,
+      "target_reach_rate_pct": 6.896551724137931,
+      "reach_cond_1r_pct": 15.384615384615385,
+      "reach_cond_2r_pct": 25.0,
+      "reach_cond_3r_pct": 40.0,
+      "avg_planned_rr": 7.614362673775803,
+      "med_planned_rr": 6.520161290322528,
+      "avg_target_dist_r": 0.11494709994649567,
+      "med_target_dist_r": 0.09535866994720874
+    },
+    "exit_attribution": {
+      "counts": {
+        "INITIAL_LTF_SL": 21,
+        "MTF_STRUCTURAL_TRAIL": 6,
+        "HTF_TP": 2
+      },
+      "realized_r": {
+        "INITIAL_LTF_SL": -22.87895308430887,
+        "MTF_STRUCTURAL_TRAIL": -2.442341001742696,
+        "HTF_TP": 9.802748200357797
+      }
+    },
+    "monetization_failures": {
+      "mfe2_loss_count": 6,
+      "mfe3_loss_count": 3,
+      "mfe4_loss_count": 2,
+      "mfe5_loss_count": 2,
+      "trades": [
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1619125200",
+          "stream_id": "SOL_SET_4",
+          "mfe_r": 3.3542,
+          "realized_r": -1.0923154781303699,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1620133200",
+          "stream_id": "SOL_SET_3",
+          "mfe_r": 2.7931,
+          "realized_r": -0.2674160628244161,
+          "exit_reason": "MTF_STRUCTURAL_TRAIL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1620993600",
+          "stream_id": "SOL_SET_3",
+          "mfe_r": 5.0442,
+          "realized_r": -1.0592397307890584,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1624760100",
+          "stream_id": "ETH_SET_4",
+          "mfe_r": 2.0955,
+          "realized_r": -0.4288980005965478,
+          "exit_reason": "MTF_STRUCTURAL_TRAIL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1642078800",
+          "stream_id": "SOL_SET_3",
+          "mfe_r": 6.2516,
+          "realized_r": -0.3105143900868014,
+          "exit_reason": "MTF_STRUCTURAL_TRAIL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1648947600",
+          "stream_id": "SOL_SET_3",
+          "mfe_r": 2.1905,
+          "realized_r": -1.0959567667455752,
+          "exit_reason": "INITIAL_LTF_SL"
+        }
+      ]
+    },
+    "asset_attribution": {
+      "BTC": {
+        "n": 6,
+        "wins": 2,
+        "losses": 4,
+        "win_rate": 33.33333333333333,
+        "net_r": 6.084970145451991,
+        "expectancy": 1.0141616909086653
+      },
+      "ETH": {
+        "n": 4,
+        "wins": 0,
+        "losses": 4,
+        "win_rate": 0.0,
+        "net_r": -3.708488192483484,
+        "expectancy": -0.927122048120871
+      },
+      "SOL": {
+        "n": 19,
+        "wins": 0,
+        "losses": 19,
+        "win_rate": 0.0,
+        "net_r": -17.895027838662276,
+        "expectancy": -0.9418435704559093
+      }
+    },
+    "timeframe_attribution": {
+      "SET_1": {
+        "n": 0,
+        "wins": 0,
+        "losses": 0,
+        "net_r": 0,
+        "expectancy": 0.0
+      },
+      "SET_2": {
+        "n": 3,
+        "wins": 0,
+        "losses": 3,
+        "net_r": -2.419188516611001,
+        "expectancy": -0.8063961722036671
+      },
+      "SET_3": {
+        "n": 12,
+        "wins": 1,
+        "losses": 11,
+        "net_r": -3.651200646718874,
+        "expectancy": -0.30426672055990617
+      },
+      "SET_4": {
+        "n": 14,
+        "wins": 1,
+        "losses": 13,
+        "net_r": -9.448156722363894,
+        "expectancy": -0.6748683373117067
+      },
+      "SET_5": {
+        "n": 0,
+        "wins": 0,
+        "losses": 0,
+        "net_r": 0,
+        "expectancy": 0.0
+      }
+    },
+    "target_provenance": {
+      "counts": {
+        "LIQUIDITY_POOL": 18,
+        "OPPOSING_KEYZONE": 6,
+        "WEAK_SWING": 5
+      },
+      "realized_r": {
+        "LIQUIDITY_POOL": -11.092783156939978,
+        "OPPOSING_KEYZONE": 0.2211942146056547,
+        "WEAK_SWING": -4.646956943359446
+      },
+      "avg_mfe": {
+        "LIQUIDITY_POOL": 1.4344166666666665,
+        "OPPOSING_KEYZONE": 1.8493000000000002,
+        "WEAK_SWING": 1.7794999999999999
+      }
+    }
+  },
+  "exp": {
+    "label": "EXP_TARGET_STRUCTURAL_01 (Treatment)",
+    "funnel": {
+      "total_candidates": 924,
+      "risk_gate_candidates": 483,
+      "rr_rejections": 0,
+      "approved": 153,
+      "executed_trades": 41
+    },
+    "performance": {
+      "n": 41,
+      "wins": 3,
+      "losses": 38,
+      "breakevens": 0,
+      "win_rate_pct": 7.317073170731707,
+      "gross_r": -24.3768,
+      "friction_r": 3.2829,
+      "net_r": -27.659579843581117,
+      "expectancy": -0.6746238986239297,
+      "profit_factor": 0.19050112891559237,
+      "max_drawdown_r": 27.65957984358112,
+      "max_consecutive_losses": 21
+    },
+    "excursion": {
+      "avg_mfe_r": 1.5666853658536586,
+      "med_mfe_r": 0.9226,
+      "avg_mae_r": 1.3877365853658536,
+      "med_mae_r": 1.2044,
+      "mfe_ge_1r": 19,
+      "mfe_ge_2r": 11,
+      "mfe_ge_3r": 7,
+      "mfe_ge_4r": 5,
+      "mfe_ge_5r": 4
+    },
+    "target_interaction": {
+      "target_reach_count": 1,
+      "target_reach_rate_pct": 2.4390243902439024,
+      "reach_cond_1r_pct": 5.263157894736842,
+      "reach_cond_2r_pct": 9.090909090909092,
+      "reach_cond_3r_pct": 14.285714285714285,
+      "avg_planned_rr": 9.120854492021294,
+      "med_planned_rr": 7.095238095238117,
+      "avg_target_dist_r": 0.14462258823445115,
+      "med_target_dist_r": 0.12482079267446691
+    },
+    "exit_attribution": {
+      "counts": {
+        "INITIAL_LTF_SL": 27,
+        "MTF_STRUCTURAL_TRAIL": 13,
+        "HTF_TP": 1
+      },
+      "realized_r": {
+        "INITIAL_LTF_SL": -29.3779382319105,
+        "MTF_STRUCTURAL_TRAIL": -2.389383983013569,
+        "HTF_TP": 4.107742371342948
+      }
+    },
+    "monetization_failures": {
+      "mfe2_loss_count": 9,
+      "mfe3_loss_count": 5,
+      "mfe4_loss_count": 3,
+      "mfe5_loss_count": 2,
+      "trades": [
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1619125200",
+          "stream_id": "SOL_SET_4",
+          "mfe_r": 3.3542,
+          "realized_r": -1.0923155326068525,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1620133200",
+          "stream_id": "SOL_SET_3",
+          "mfe_r": 2.7931,
+          "realized_r": -0.2674160628244161,
+          "exit_reason": "MTF_STRUCTURAL_TRAIL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1620993600",
+          "stream_id": "SOL_SET_3",
+          "mfe_r": 5.0442,
+          "realized_r": -1.0592397307890584,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1624453200",
+          "stream_id": "SOL_SET_4",
+          "mfe_r": 4.9571,
+          "realized_r": -1.0985967034978434,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1624760100",
+          "stream_id": "ETH_SET_4",
+          "mfe_r": 2.0955,
+          "realized_r": -0.428894845192356,
+          "exit_reason": "MTF_STRUCTURAL_TRAIL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1624901400",
+          "stream_id": "SOL_SET_4",
+          "mfe_r": 2.9973,
+          "realized_r": -1.1066567294474867,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1642078800",
+          "stream_id": "SOL_SET_3",
+          "mfe_r": 6.2516,
+          "realized_r": -0.3105145741907844,
+          "exit_reason": "MTF_STRUCTURAL_TRAIL"
+        },
+        {
+          "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1648947600",
+          "stream_id": "SOL_SET_3",
+          "mfe_r": 2.1905,
+          "realized_r": -1.095957313530228,
+          "exit_reason": "INITIAL_LTF_SL"
+        },
+        {
+          "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1652145300",
+          "stream_id": "ETH_SET_4",
+          "mfe_r": 3.5675,
+          "realized_r": -0.9789908311179647,
+          "exit_reason": "MTF_STRUCTURAL_TRAIL"
+        }
+      ]
+    },
+    "asset_attribution": {
+      "BTC": {
+        "n": 8,
+        "wins": 2,
+        "losses": 6,
+        "win_rate": 25.0,
+        "net_r": 0.7703170549712182,
+        "expectancy": 0.09628963187140227
+      },
+      "ETH": {
+        "n": 7,
+        "wins": 0,
+        "losses": 7,
+        "win_rate": 0.0,
+        "net_r": -6.891204236164949,
+        "expectancy": -0.9844577480235641
+      },
+      "SOL": {
+        "n": 26,
+        "wins": 1,
+        "losses": 25,
+        "win_rate": 3.8461538461538463,
+        "net_r": -21.538692662387383,
+        "expectancy": -0.8284112562456686
+      }
+    },
+    "timeframe_attribution": {
+      "SET_1": {
+        "n": 0,
+        "wins": 0,
+        "losses": 0,
+        "net_r": 0,
+        "expectancy": 0.0
+      },
+      "SET_2": {
+        "n": 3,
+        "wins": 0,
+        "losses": 3,
+        "net_r": -2.419188516611001,
+        "expectancy": -0.8063961722036671
+      },
+      "SET_3": {
+        "n": 16,
+        "wins": 1,
+        "losses": 15,
+        "net_r": -10.291587388993621,
+        "expectancy": -0.6432242118121013
+      },
+      "SET_4": {
+        "n": 22,
+        "wins": 2,
+        "losses": 20,
+        "net_r": -14.948803937976493,
+        "expectancy": -0.6794910880898406
+      },
+      "SET_5": {
+        "n": 0,
+        "wins": 0,
+        "losses": 0,
+        "net_r": 0,
+        "expectancy": 0.0
+      }
+    },
+    "target_provenance": {
+      "counts": {
+        "WEAK_SWING": 29,
+        "LIQUIDITY_POOL": 12
+      },
+      "realized_r": {
+        "WEAK_SWING": -26.024253142047144,
+        "LIQUIDITY_POOL": -1.6353267015339716
+      },
+      "avg_mfe": {
+        "WEAK_SWING": 1.4175241379310346,
+        "LIQUIDITY_POOL": 1.9271583333333335
+      }
+    }
+  }
+}

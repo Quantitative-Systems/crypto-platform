@@ -141,7 +141,13 @@ class ExecutionSimulator:
                         fav_p = trade.metadata.get("mfe_price", entry_p)
                         fav_r = (fav_p - entry_p) / risk_dist
                         if fav_r >= self.breakeven_trigger_r - 1e-7:
-                            be_stop = entry_p + (self.breakeven_stop_r * risk_dist)
+                            if self.breakeven_stop_r == 0.0:
+                                # Exact cost-covering friction buffer derived from execution-cost model
+                                # Covers maker entry fee (2 bps), taker exit fee (5 bps), and adverse exit slippage (5 bps)
+                                cost_factor_long = (1.0 + self.maker_fee_rate) / ((1.0 - self.slippage_bps / 10000.0) * (1.0 - self.taker_fee_rate)) - 1.0
+                                be_stop = entry_p * (1.0 + cost_factor_long)
+                            else:
+                                be_stop = entry_p + (self.breakeven_stop_r * risk_dist)
                             # Monotonicity: never weaken an already superior stop
                             if be_stop > trade.current_stop_price:
                                 ledger.update_trailing_stop(trade.trade_id, be_stop)
@@ -154,7 +160,12 @@ class ExecutionSimulator:
                         fav_p = trade.metadata.get("mfe_price", entry_p)
                         fav_r = (entry_p - fav_p) / risk_dist
                         if fav_r >= self.breakeven_trigger_r - 1e-7:
-                            be_stop = entry_p - (self.breakeven_stop_r * risk_dist)
+                            if self.breakeven_stop_r == 0.0:
+                                # Exact cost-covering friction buffer derived from execution-cost model for short
+                                cost_factor_short = 1.0 - (1.0 - self.maker_fee_rate) / ((1.0 + self.slippage_bps / 10000.0) * (1.0 + self.taker_fee_rate))
+                                be_stop = entry_p * (1.0 - cost_factor_short)
+                            else:
+                                be_stop = entry_p - (self.breakeven_stop_r * risk_dist)
                             # Monotonicity: never weaken an already superior stop
                             if be_stop < trade.current_stop_price:
                                 ledger.update_trailing_stop(trade.trade_id, be_stop)

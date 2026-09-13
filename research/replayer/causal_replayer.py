@@ -57,7 +57,16 @@ class CausalReplayer:
         enable_milestone_target: bool = False,
         milestone_r: float = 2.5,
         target_hierarchy: str = "CLOSEST_OBJECTIVE",
-        require_htf_keyzone: bool = True
+        require_htf_keyzone: bool = True,
+        enable_major_mtf_only: bool = False,
+        require_ltf_sweep: bool = False,
+        max_retest_latency_hours: Optional[float] = None,
+        max_reaction_latency_hours: Optional[float] = None,
+        enable_conditional_archetype_routing: bool = False,
+        min_stop_distance_pct: Optional[float] = None,
+        max_stop_distance_pct: Optional[float] = None,
+        stop_anchor_mode: str = "LOCAL_SWING",
+        enable_historical_mitigation_check: bool = True
     ):
         self.timeframe_set: TimeframeSet = TimeframeAligner.get_set(timeframe_set_id)
         self.initial_balance = initial_balance
@@ -80,6 +89,15 @@ class CausalReplayer:
         self.max_htf_kz_age_seconds = max_htf_kz_age_seconds
         self.enable_forward_expansion = enable_forward_expansion
         self.enforce_displacement_polarity = enforce_displacement_polarity
+        self.enable_major_mtf_only = enable_major_mtf_only
+        self.require_ltf_sweep = require_ltf_sweep
+        self.max_retest_latency_hours = max_retest_latency_hours
+        self.max_reaction_latency_hours = max_reaction_latency_hours
+        self.enable_conditional_archetype_routing = enable_conditional_archetype_routing
+        self.min_stop_distance_pct = min_stop_distance_pct
+        self.max_stop_distance_pct = max_stop_distance_pct
+        self.stop_anchor_mode = stop_anchor_mode
+        self.enable_historical_mitigation_check = enable_historical_mitigation_check
         # RESEARCH ENGINE PERFORMANCE FLAG (no trading-logic impact):
         # When True, the point-in-time HTF/MTF incremental state is cached and only
         # recomputed when a NEW higher/middle timeframe candle becomes causally
@@ -120,7 +138,16 @@ class CausalReplayer:
             enable_forward_expansion=self.enable_forward_expansion,
             enforce_displacement_polarity=self.enforce_displacement_polarity,
             target_hierarchy=self.target_hierarchy,
-            require_htf_keyzone=self.require_htf_keyzone
+            require_htf_keyzone=self.require_htf_keyzone,
+            enable_major_mtf_only=self.enable_major_mtf_only,
+            require_ltf_sweep=self.require_ltf_sweep,
+            max_retest_latency_hours=self.max_retest_latency_hours,
+            max_reaction_latency_hours=self.max_reaction_latency_hours,
+            enable_conditional_archetype_routing=self.enable_conditional_archetype_routing,
+            min_stop_distance_pct=self.min_stop_distance_pct,
+            max_stop_distance_pct=self.max_stop_distance_pct,
+            stop_anchor_mode=self.stop_anchor_mode,
+            enable_historical_mitigation_check=self.enable_historical_mitigation_check
         )
         self.execution_simulator = ExecutionSimulator(
             maker_fee_rate=maker_fee_rate,

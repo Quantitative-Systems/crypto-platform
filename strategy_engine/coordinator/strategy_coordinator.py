@@ -99,7 +99,16 @@ class StrategyCoordinator:
         enable_milestone_target: bool = False,
         milestone_r: float = 2.5,
         target_hierarchy: str = "CLOSEST_OBJECTIVE",
-        require_htf_keyzone: bool = True
+        require_htf_keyzone: bool = True,
+        enable_major_mtf_only: bool = False,
+        require_ltf_sweep: bool = False,
+        max_retest_latency_hours: Optional[float] = None,
+        max_reaction_latency_hours: Optional[float] = None,
+        enable_conditional_archetype_routing: bool = False,
+        min_stop_distance_pct: Optional[float] = None,
+        max_stop_distance_pct: Optional[float] = None,
+        stop_anchor_mode: str = "LOCAL_SWING",
+        enable_historical_mitigation_check: bool = True
     ):
         """
         htf_context_filter: when set to "PULLBACK" or "CONTINUATION", candidates
@@ -119,6 +128,15 @@ class StrategyCoordinator:
         self.milestone_r = milestone_r
         self.target_hierarchy = target_hierarchy
         self.require_htf_keyzone = require_htf_keyzone
+        self.enable_major_mtf_only = enable_major_mtf_only
+        self.require_ltf_sweep = require_ltf_sweep
+        self.max_retest_latency_hours = max_retest_latency_hours
+        self.max_reaction_latency_hours = max_reaction_latency_hours
+        self.enable_conditional_archetype_routing = enable_conditional_archetype_routing
+        self.min_stop_distance_pct = min_stop_distance_pct
+        self.max_stop_distance_pct = max_stop_distance_pct
+        self.stop_anchor_mode = stop_anchor_mode
+        self.enable_historical_mitigation_check = enable_historical_mitigation_check
         if hypothesis is not None:
             self.hypotheses = {hypothesis.hypothesis_id: hypothesis}
         else:
@@ -128,7 +146,15 @@ class StrategyCoordinator:
                     max_htf_kz_age_seconds=max_htf_kz_age_seconds,
                     enable_forward_expansion=enable_forward_expansion,
                     enforce_displacement_polarity=enforce_displacement_polarity,
-                    target_hierarchy=target_hierarchy
+                    target_hierarchy=target_hierarchy,
+                    enable_major_mtf_only=enable_major_mtf_only,
+                    require_ltf_sweep=require_ltf_sweep,
+                    max_retest_latency_hours=max_retest_latency_hours,
+                    max_reaction_latency_hours=max_reaction_latency_hours,
+                    enable_conditional_archetype_routing=enable_conditional_archetype_routing,
+                    min_stop_distance_pct=min_stop_distance_pct,
+                    max_stop_distance_pct=max_stop_distance_pct,
+                    stop_anchor_mode=stop_anchor_mode
                 )
             }
         self.candidate_tracker = CandidateTracker()
@@ -196,9 +222,10 @@ class StrategyCoordinator:
                         continue
 
                     # Historical mitigation check: If zone was already mitigated before current HTF bar, reject
-                    mit_ts = getattr(kz, 'mitigation_timestamp', None)
-                    if mit_ts is not None and mit_ts > 0 and mit_ts < htf_payload.timestamp:
-                        continue
+                    if self.enable_historical_mitigation_check:
+                        mit_ts = getattr(kz, 'mitigation_timestamp', None)
+                        if mit_ts is not None and mit_ts > 0 and mit_ts < htf_payload.timestamp:
+                            continue
 
                     # Direction matching: Bullish keyzone for Long, Bearish keyzone for Short
                     if is_bullish and ("BULLISH" not in kz_type_str):
