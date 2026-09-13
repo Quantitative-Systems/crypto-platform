@@ -48,3 +48,4 @@ research/results/EXP_H1_1_*/
 # Large temporary scratch runs (Preserves authoritative JSON reports)
 scratch/*.tmp
 scratch/temp_*
+nohup.out

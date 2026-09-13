@@ -36,7 +36,8 @@ class LTFEntryModel:
         cls,
         ltf_payload: MarketStatePayload,
         req_event_dir: str,
-        setup_retest_timestamp: int = 0
+        setup_retest_timestamp: int = 0,
+        require_sweep_only: bool = False
     ) -> EntryEvaluationResult:
         # Check if scorecard has DISPLACEMENT_CONFIRMED for synthetic test compatibility
         scorecard = getattr(ltf_payload, 'scorecard', None) or {}
@@ -68,6 +69,15 @@ class LTFEntryModel:
                 entry_price=cur_p
             )
 
+        if require_sweep_only:
+            return EntryEvaluationResult(
+                is_confirmed=False,
+                entry_model_name="SWEEP_REQUIRED",
+                reversal_reason="NO_SWEEP_AND_DISPLACEMENT",
+                micro_invalidation_price=None,
+                entry_price=None
+            )
+
         # 2. Secondary Model: Structural Shift (LTF CHOCH/BOS)
         res_shift = cls._structural_shift.evaluate(ltf_payload, req_event_dir, setup_retest_timestamp)
         if res_shift.is_confirmed:
@@ -88,10 +98,11 @@ class LTFEntryModel:
         cls,
         ltf_payload: MarketStatePayload,
         req_event_dir: str,
-        setup_retest_timestamp: int = 0
+        setup_retest_timestamp: int = 0,
+        require_sweep_only: bool = False
     ) -> bool:
         """
         Returns boolean True/False for backwards-compatible test assertions (assert evaluate(...) is True).
         """
-        res = cls.evaluate_details(ltf_payload, req_event_dir, setup_retest_timestamp)
+        res = cls.evaluate_details(ltf_payload, req_event_dir, setup_retest_timestamp, require_sweep_only=require_sweep_only)
         return bool(res.is_confirmed)

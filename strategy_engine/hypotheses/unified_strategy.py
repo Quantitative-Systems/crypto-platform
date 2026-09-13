@@ -23,7 +23,15 @@ class UnifiedStrategy(BaseHypothesis):
         max_htf_kz_age_seconds: Optional[int] = None,
         enable_forward_expansion: bool = False,
         enforce_displacement_polarity: bool = False,
-        target_hierarchy: str = "CLOSEST_OBJECTIVE"
+        target_hierarchy: str = "CLOSEST_OBJECTIVE",
+        enable_major_mtf_only: bool = False,
+        require_ltf_sweep: bool = False,
+        max_retest_latency_hours: Optional[float] = None,
+        max_reaction_latency_hours: Optional[float] = None,
+        enable_conditional_archetype_routing: bool = False,
+        min_stop_distance_pct: Optional[float] = None,
+        max_stop_distance_pct: Optional[float] = None,
+        stop_anchor_mode: str = "LOCAL_SWING"
     ):
         self._hypothesis_id = hypothesis_id
         self._version = version
@@ -32,6 +40,19 @@ class UnifiedStrategy(BaseHypothesis):
         self.enable_forward_expansion = enable_forward_expansion
         self.enforce_displacement_polarity = enforce_displacement_polarity
         self.target_hierarchy = target_hierarchy
+        self.enable_major_mtf_only = enable_major_mtf_only
+        self.require_ltf_sweep = require_ltf_sweep
+        self.max_retest_latency_hours = max_retest_latency_hours
+        self.max_reaction_latency_hours = max_reaction_latency_hours
+        self.enable_conditional_archetype_routing = enable_conditional_archetype_routing
+        self.min_stop_distance_pct = min_stop_distance_pct
+        self.max_stop_distance_pct = max_stop_distance_pct
+        self.stop_anchor_mode = stop_anchor_mode
+        # Research decomposition: LTF structural stop anchor selection.
+        # Each worker process owns one hypothesis instance, so the module-level
+        # selection is safe under the ProcessPoolExecutor harness.
+        from strategy_engine.entry import entry_models as _em
+        _em.set_stop_anchor_mode(stop_anchor_mode)
 
     @property
     def hypothesis_id(self) -> str:
@@ -177,6 +198,10 @@ class UnifiedStrategy(BaseHypothesis):
                     if candidate.htf_context_timestamp and event_ts < candidate.htf_context_timestamp:
                         break
 
+                    # D1 / EXP_MTF_MAJOR_ALIGNMENT_01: Reject minor internal structural shifts
+                    if self.enable_major_mtf_only and "INTERNAL_CHOCH" in str(event.event_type):
+                        continue
+
                     is_choch = "CHOCH" in str(event.event_type) or "MSS" in str(event.event_type)
                     is_bos = "BOS" in str(event.event_type)
                     
@@ -237,6 +262,18 @@ class UnifiedStrategy(BaseHypothesis):
         # 2. WAIT_MTF_RETEST (Phase 5: Active Pullback Retest)
         # =========================================================================
         if candidate.state == CandidateState.WAIT_MTF_RETEST:
+            align_ts = candidate.mtf_alignment_timestamp or candidate.creation_timestamp or 0
+            if self.max_retest_latency_hours is not None and align_ts > 0:
+                if (ltf_payload.timestamp - align_ts) / 3600.0 > self.max_retest_latency_hours:
+                    candidate.transition_to(CandidateState.REJECTED)
+                    candidate.invalidation_reason = "REJECT_STALE_RETEST_LATENCY"
+                    candidate.invalidation_timestamp = ltf_payload.timestamp
+                    return TelemetryHelper.reject(
+                        candidate.candidate_id, self.hypothesis_id, candidate.symbol, candidate.directional_permission,
+                        ltf_payload.timestamp, "REJECT_STALE_RETEST_LATENCY",
+                        structural_provenance=candidate.to_provenance_dict(), source_timeframes=timeframes
+                    )
+
             # Filter MTF KeyZones to only those causally created at or after the MTF alignment event
             causal_zones = []
             for kz in mtf_payload.keyzones:
@@ -306,10 +343,37 @@ class UnifiedStrategy(BaseHypothesis):
         # 3. WAIT_LTF_TRIGGER (Phase 6: Modular LTF Directional Entry)
         # =========================================================================
         if candidate.state == CandidateState.WAIT_LTF_TRIGGER:
+            retest_ts = candidate.mtf_retest_timestamp or candidate.creation_timestamp or 0
+            if self.max_reaction_latency_hours is not None and retest_ts > 0:
+                react_latency_hr = (ltf_payload.timestamp - retest_ts) / 3600.0
+                if react_latency_hr > self.max_reaction_latency_hours:
+                    candidate.transition_to(CandidateState.REJECTED)
+                    candidate.invalidation_reason = "REJECT_ZONE_ABSORPTION_SLOW_REACTION"
+                    candidate.invalidation_timestamp = ltf_payload.timestamp
+                    return TelemetryHelper.reject(
+                        candidate.candidate_id, self.hypothesis_id, candidate.symbol, candidate.directional_permission,
+                        ltf_payload.timestamp, "REJECT_ZONE_ABSORPTION_SLOW_REACTION",
+                        structural_provenance=candidate.to_provenance_dict(), source_timeframes=timeframes
+                    )
+
+            # Determine whether sweep is required
+            require_sweep = self.require_ltf_sweep
+            if self.enable_conditional_archetype_routing:
+                phase_str = str(candidate.htf_phase or htf_payload.phase_state or "")
+                align_ts = candidate.mtf_alignment_timestamp or candidate.creation_timestamp or 0
+                retest_lat_hr = (retest_ts - align_ts) / 3600.0 if (align_ts > 0 and retest_ts >= align_ts) else 0.0
+                
+                # Fresh expansion context permits direct displacement (Archetype A);
+                # Pullback or extended retest mandates liquidity sweep (Archetype B).
+                is_fresh_expansion = ("EXPANSION" in phase_str) and (retest_lat_hr <= 6.0)
+                if not is_fresh_expansion:
+                    require_sweep = True
+
             entry_eval = LTFEntryModel.evaluate_details(
                 ltf_payload,
                 req_setup_dir,
-                setup_retest_timestamp=candidate.mtf_retest_timestamp or candidate.creation_timestamp
+                setup_retest_timestamp=candidate.mtf_retest_timestamp or candidate.creation_timestamp,
+                require_sweep_only=require_sweep
             )
             if entry_eval.is_confirmed:
                 if self.enforce_displacement_polarity:
@@ -338,6 +402,44 @@ class UnifiedStrategy(BaseHypothesis):
                 candidate.ltf_entry_reason = entry_eval.reversal_reason
                 candidate.ltf_entry_price = entry_eval.entry_price or ltf_payload.current_price
                 candidate.ltf_structural_sl = entry_eval.micro_invalidation_price
+
+                # Record causal sweep provenance if sweep was involved
+                if "SWEEP" in str(entry_eval.reversal_reason):
+                    retest_ts = candidate.mtf_retest_timestamp or candidate.creation_timestamp
+                    sweeps = [
+                        e for e in (ltf_payload.events or [])
+                        if "LIQUIDITY_SWEEP" in str(getattr(e, 'event_type', ''))
+                        and req_setup_dir.upper() in str(getattr(e, 'direction', '') or (e.metadata.get('direction', '') if hasattr(e, 'metadata') else ''))
+                        and getattr(e, 'timestamp', 0) >= retest_ts
+                    ]
+                    if sweeps:
+                        sw = sweeps[-1]
+                        p_id = getattr(sw, 'pool_id', '')
+                        sw_id = None
+                        parts = p_id.split('_') if p_id else []
+                        for k in range(len(parts)-1):
+                            if parts[k] == "SW" and parts[k+1] in ("HIGH", "LOW") and (k+2 < len(parts)):
+                                sw_id = f"SW_{parts[k+1]}_{parts[k+2]}"
+                                break
+                        matched = [s for s in (ltf_payload.swings or []) if getattr(s, 'swing_id', None) == sw_id] if sw_id else []
+                        raw_s = matched[0] if matched else None
+                        
+                        from research.replayer.timeframe_aligner import TIMEFRAME_DURATIONS_SEC
+                        bar_dur = TIMEFRAME_DURATIONS_SEC.get(ltf_payload.timeframe, 900)
+                        sw_ts = getattr(sw, 'timestamp', 0)
+                        conf_ts = ltf_payload.timestamp
+                        
+                        candidate.sweep_provenance = {
+                            "swept_ltf_swing_timestamp": raw_s.timestamp if raw_s else sw_ts,
+                            "swept_swing_price": raw_s.price if raw_s else getattr(sw, 'price_level', 0.0),
+                            "sweep_direction": getattr(sw, 'direction', ''),
+                            "sweep_confirmation_timestamp": sw_ts,
+                            "displacement_confirmation_timestamp": conf_ts,
+                            "number_of_ltf_bars_between": max(0, (conf_ts - sw_ts) // bar_dur),
+                            "mtf_retest_timestamp": retest_ts,
+                            "sweep_occurred_causally_after_retest": sw_ts >= retest_ts,
+                        }
+
                 candidate.transition_to(CandidateState.RISK_GATE)
             return None # Still pending
             
@@ -421,6 +523,25 @@ class UnifiedStrategy(BaseHypothesis):
                     structural_provenance=candidate.to_provenance_dict(), source_timeframes=timeframes
                 )
 
+            stop_distance_pct = (stop_distance / entry_price) * 100.0 if entry_price > 0 else 0.0
+            if self.max_stop_distance_pct is not None and stop_distance_pct > self.max_stop_distance_pct:
+                candidate.transition_to(CandidateState.REJECTED)
+                candidate.invalidation_reason = "REJECT_OVERSIZED_STOP_GEOMETRY"
+                return TelemetryHelper.reject(
+                    candidate.candidate_id, self.hypothesis_id, candidate.symbol, candidate.directional_permission, ltf_payload.timestamp,
+                    "REJECT_OVERSIZED_STOP_GEOMETRY", entry_price=entry_price, stop_invalidation_price=stop_price, target_price=target_price, raw_rr=0.0,
+                    structural_provenance=candidate.to_provenance_dict(), source_timeframes=timeframes
+                )
+
+            if self.min_stop_distance_pct is not None and stop_distance_pct < self.min_stop_distance_pct:
+                candidate.transition_to(CandidateState.REJECTED)
+                candidate.invalidation_reason = "REJECT_FRAGILE_MICRO_STOP"
+                return TelemetryHelper.reject(
+                    candidate.candidate_id, self.hypothesis_id, candidate.symbol, candidate.directional_permission, ltf_payload.timestamp,
+                    "REJECT_FRAGILE_MICRO_STOP", entry_price=entry_price, stop_invalidation_price=stop_price, target_price=target_price, raw_rr=0.0,
+                    structural_provenance=candidate.to_provenance_dict(), source_timeframes=timeframes
+                )
+
             # Planned RR calculated ONLY after geometry passes
             raw_rr = abs(target_price - entry_price) / stop_distance
                 
@@ -432,6 +553,15 @@ class UnifiedStrategy(BaseHypothesis):
                     "REJECT_RR_BELOW_4R", entry_price=entry_price, stop_invalidation_price=stop_price, target_price=target_price, raw_rr=raw_rr,
                     structural_provenance=candidate.to_provenance_dict(), source_timeframes=timeframes
                 )
+                
+            if candidate.sweep_provenance:
+                candidate.sweep_provenance.update({
+                    "entry_timestamp": ltf_payload.timestamp,
+                    "entry_price": entry_price,
+                    "structural_stop": stop_price,
+                    "target": target_price,
+                    "planned_rr": raw_rr
+                })
                 
             candidate.transition_to(CandidateState.ENTERED)
             provenance = candidate.to_provenance_dict()

@@ -9,6 +9,30 @@ from dataclasses import dataclass
 from typing import Optional, Tuple, List, Dict, Any
 from market_intelligence.primitives import MarketStatePayload, Candle, StructureEvent
 
+# ---------------------------------------------------------------------------
+# Stop-anchor mode selector (research decomposition of the LTF structural SL):
+#   "LOCAL_SWING"           – current behavior: sweep extreme / most-recent local
+#                             sequence swing first; protected swing as fallback.
+#   "EXHAUSTIVE_STRUCTURAL" – legacy pre-repair behavior: min/max over ALL relevant
+#                             confirmed structural pivots (protected + every sequence
+#                             swing on the correct side of price) plus the fallback
+#                             extreme. This produces systematically deeper structural
+#                             stops (farther from entry) -> wider risk per trade.
+# Both are causally valid (no future information); the choice is empirical.
+# Each worker process runs one strategy stream, so the module-level switch is
+# safe under the ProcessPoolExecutor harness.
+# ---------------------------------------------------------------------------
+STOP_ANCHOR_MODE = "LOCAL_SWING"
+
+
+def set_stop_anchor_mode(mode: str) -> None:
+    global STOP_ANCHOR_MODE
+    STOP_ANCHOR_MODE = mode
+
+
+def get_stop_anchor_mode() -> str:
+    return STOP_ANCHOR_MODE
+
 
 @dataclass(frozen=True)
 class EntryEvaluationResult:
@@ -36,17 +60,53 @@ class BaseLTFEntryModel(ABC):
     def extract_structural_stop(
         ltf_payload: MarketStatePayload,
         is_long: bool,
-        fallback_extreme: Optional[float] = None
+        fallback_extreme: Optional[float] = None,
+        stop_anchor_mode: Optional[str] = None
     ) -> Optional[float]:
         """
-        Derives genuine structural invalidation stop from LTF market structure:
-        - Sweep extreme / reversal origin if provided.
-        - Most recent local confirmed sequence swing on LTF.
-        - Fallback to protected swing if no sequence swing exists.
-        Returns None if no structural pivot exists (never falls back to single-candle wicks).
+        Derives genuine structural invalidation stop from LTF market structure.
+        The anchor mode determines whether the stop anchors to the most recent
+        local sequence swing (LOCAL_SWING) or to the exhaustive structural
+        minimum/maximum over all relevant confirmed pivots (EXHAUSTIVE_STRUCTURAL).
         """
+        mode = stop_anchor_mode or get_stop_anchor_mode()
         struct = getattr(ltf_payload, 'structure_state', None)
 
+        if mode == "EXHAUSTIVE_STRUCTURAL":
+            # Legacy pre-repair semantics: min/max over ALL causally confirmed
+            # structural pivots (protected swing + every sequence swing on the
+            # correct side of current price) plus any supplied fallback extreme.
+            structural_pivots: List[float] = []
+            if struct:
+                if is_long:
+                    if getattr(struct, 'protected_low', None) and getattr(struct.protected_low, 'raw_swing', None):
+                        structural_pivots.append(struct.protected_low.raw_swing.price)
+                    for s in (getattr(struct, 'sequence_swings', None) or []):
+                        raw = getattr(s, 'raw_swing', None)
+                        if raw and "LOW" in str(getattr(raw, 'swing_type', '')):
+                            if raw.price < ltf_payload.current_price:
+                                structural_pivots.append(raw.price)
+                else:
+                    if getattr(struct, 'protected_high', None) and getattr(struct.protected_high, 'raw_swing', None):
+                        structural_pivots.append(struct.protected_high.raw_swing.price)
+                    for s in (getattr(struct, 'sequence_swings', None) or []):
+                        raw = getattr(s, 'raw_swing', None)
+                        if raw and "HIGH" in str(getattr(raw, 'swing_type', '')):
+                            if raw.price > ltf_payload.current_price:
+                                structural_pivots.append(raw.price)
+            if fallback_extreme is not None:
+                if is_long and fallback_extreme < ltf_payload.current_price:
+                    structural_pivots.append(fallback_extreme)
+                elif (not is_long) and fallback_extreme > ltf_payload.current_price:
+                    structural_pivots.append(fallback_extreme)
+            if not structural_pivots:
+                c = ltf_payload.current_candle
+                if c:
+                    return c.low if is_long else c.high
+                return None
+            return min(structural_pivots) if is_long else max(structural_pivots)
+
+        # ===================== LOCAL_SWING (current default) =====================
         candidate_stops: List[float] = []
 
         # 1. Sweep extreme / setup extreme passed as fallback
@@ -175,7 +235,7 @@ class LiquiditySweepAndDisplacementModel(BaseLTFEntryModel):
         for ev in reversed(ltf_events):
             ev_ts = getattr(ev, 'timestamp', 0)
             if ev_ts < setup_retest_timestamp:
-                break
+                continue
             ev_type = str(getattr(ev, 'event_type', ''))
             ev_dir = str(getattr(ev, 'direction', None) or (ev.metadata.get('direction', '') if hasattr(ev, 'metadata') else ''))
             
