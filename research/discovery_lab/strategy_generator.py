@@ -398,6 +398,8 @@ class StrategyExecutor:
         atr_mult: float = 1.5,
         ema_len: int = 21,
         donchian_len: int = 10,
+        start_ts: Optional[int] = None,
+        end_ts: Optional[int] = None,
     ) -> Dict[str, Any]:
         """Family 7: Multi-Timeframe Continuation (HTF trend + MTF trend + LTF local swing break)."""
         ltf_c = np.array([c.close for c in self.ltf_candles], dtype=np.float64)
@@ -426,7 +428,7 @@ class StrategyExecutor:
         short_signals[:50] = False
 
         sl_dist = atr * atr_mult
-        return self.simulate_signals(long_signals, short_signals, sl_dist, tp_multipliers=tp_r)
+        return self.simulate_signals(long_signals, short_signals, sl_dist, tp_multipliers=tp_r, start_ts=start_ts, end_ts=end_ts)
 
 
     def run_family_8_regime_adaptive(self, tp_r: float = 2.5, atr_mult: float = 1.5) -> Dict[str, Any]:

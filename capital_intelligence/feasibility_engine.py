@@ -184,11 +184,12 @@ class CapitalFeasibilityEngine:
         """
         Evaluates feasibility for a specific account capital and trade geometry.
         """
-        constraints = BINANCE_CONSTRAINTS.get(symbol, {}).get(venue)
+        clean_sym = symbol.replace("/", "")
+        constraints = BINANCE_CONSTRAINTS.get(clean_sym, {}).get(venue)
         if not constraints:
             # Fallback conservative constraints
             constraints = InstrumentConstraints(
-                symbol=symbol,
+                symbol=clean_sym,
                 venue=venue,
                 min_notional=5.0,
                 min_qty=0.001,
