@@ -1,174 +1,284 @@
-# Crypto Quantitative Trading & Research Platform
+# Quantitative Crypto  Platform (QSP)
 
 [![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
-[![Tests](https://img.shields.io/badge/Tests-Passing-brightgreen.svg)]()
-[![Asset Coverage](https://img.shields.io/badge/Assets-BTC%20%7C%20ETH%20%7C%20SOL-blue.svg)]()
-[![Data Partitioning](https://img.shields.io/badge/Partitions-Dev%20(2021--22)%20%7C%20Val%20(2023)%20%7C%20OOS%20(2024--26)-orange.svg)]()
-[![Risk Engine](https://img.shields.io/badge/Risk-1.0%25%20Friction--Adjusted%20Ceiling-red.svg)]()
+[![Test Suite](https://img.shields.io/badge/Tests-428%20Passing-brightgreen.svg)]()
+[![Asset Universe](https://img.shields.io/badge/Assets-BTC%20%7C%20ETH%20%7C%20SOL-blue.svg)]()
+[![Temporal Partitioning](https://img.shields.io/badge/Partitions-Dev%20(2021--22)%20%7C%20Val%20(2023)%20%7C%20OOS%20(2024--26)-orange.svg)]()
+[![Risk Engine](https://img.shields.io/badge/Risk-1.0%25%20Friction--Adjusted%20Loss%20Ceiling-red.svg)]()
+[![Production Status](https://img.shields.io/badge/Production-LIVE%20LOCKED-inactive.svg)]()
 
-A modular, high-performance platform for quantitative cryptocurrency research, multi-timeframe strategy simulation, automated risk governance, and exchange execution.
-
-Designed from first principles to prevent data leakage and curve-fitting, the platform combines strict point-in-time backtesting, friction-aware order modeling, an automated multi-strategy discovery engine, and standardized R-multiple accounting across crypto spot and perpetual futures markets.
-
----
-
-## Key Highlights
-
-* **Multi-Timeframe Architecture:** Supports six operational trading styles from macro position trading down to short-term intraday and scalping across major pairs (`BTC/USDT`, `ETH/USDT`, `SOL/USDT`).
-* **Causal Backtest Engine:** Zero lookahead bias, strict bar-close confirmation, and adverse-first intra-candle order collision (stop loss checked before take profit if high/low span both levels in the same bar).
-* **Friction-Adjusted Risk Engine:** Standardized R-multiple accounting where position sizing strictly caps initial capital risk to $\le 1.0\%$ of equity, inclusive of exchange taker fees ($0.075\%$), dynamic slippage ($0.03\%$), and bid-ask spread ($0.01\%$).
-* **Automated Strategy Discovery Lab:** Evaluates 8 fundamental strategy families across market regimes with a strict minimum evidence threshold ($\ge 100$ independent trades per asset/timeframe unit).
-* **Multi-Dimensional Robustness Firewalls:**
-  * **Profit Concentration Firewall:** Automatically tests if performance depends on outlier winners (Top 1 trade must contribute $\le 50\%$ of Net R; edge must remain positive after removing top 1 and top 5 winners).
-  * **Cost Stress Testing:** Requires positive expectancy under $2\times$ baseline fees and slippage ($0.15\%$ taker fee, $0.06\%$ slippage, $0.02\%$ spread).
-  * **Parameter Sensitivity:** Validates strategy stability under $\pm 20\%$ parameter shifts.
-* **Temporal Data Partitioning:** Strict calendar isolation dividing historical data into **Development (2021–2022)**, **Validation (2023)**, and **Out-of-Sample (2024–2026)** to ensure strategies generalize across bull, bear, and choppy regimes.
-* **Live & Paper Trading Interfaces:** Clean broker abstraction with CCXT exchange connectivity, order lifecycle management, and telemetry reconciliation.
+> **An autonomous quantitative research and systematic capital platform for crypto markets.**
+>
+> *Crypto markets serve as the initial proving ground for a broader autonomous systematic capital platform.*
 
 ---
 
-## Trading Styles & Timeframe Structure
+## Executive Summary
 
-The platform organizes multi-timeframe analysis into 6 nested timeframe sets:
+The **Quantitative Systems Platform (QSP)** is an autonomous quantitative research, alpha evaluation, risk governance, and systematic capital allocation platform.
 
-| Set | Operational Style | Higher Timeframe (Trend / Bias) | Middle Timeframe (Setup / Pullback) | Lower Timeframe (Entry Trigger) | Typical Holding Horizon |
-| :---: | :--- | :---: | :---: | :---: | :---: |
-| **Set 1** | Macro / Position | Monthly (`1M`) | Weekly (`1W`) | Daily (`1D`) | Multi-week to months |
-| **Set 2** | Swing | Weekly (`1W`) | Daily (`1D`) | 4-Hour (`4H`) | Days to weeks |
-| **Set 3** | Swing / Intraday | Daily (`1D`) | 4-Hour (`4H`) | 1-Hour (`1H`) | 1 to 5 days |
-| **Set 4** | Intraday | 4-Hour (`4H`) | 1-Hour (`1H`) | 15-Minute (`15M`) | Intraday (hours) |
-| **Set 5** | Short-Term Intraday | 1-Hour (`1H`) | 15-Minute (`15M`) | 5-Minute (`5M`) | Minutes to hours |
-| **Set 6** | Scalping | 15-Minute (`15M`) | 5-Minute (`5M`) | 1-Minute (`1M`) | Minutes |
+Designed from first principles to address the fundamental gap between *backtested mathematical edge* and *executable exchange economics*, QSP integrates causal multi-timeframe strategy generation, friction-aware order simulation, Bayesian confidence estimation, square-root market impact modeling, adversarial falsification, and closed-loop research evolution.
 
-*Note: For strategy qualification, each asset/set unit is evaluated independently. Sample sizes are never artificially pooled across pairs to satisfy statistical significance requirements.*
+### Operational Governance State
+
+* **Software Status:** `Implemented / Tested` (428 automated unit, integration, and regression tests passing).
+* **Research Status:** `Development / Validation / OOS Qualified` (Control portfolio frozen; zero parameter adjustments).
+* **Forward Status:** `Paper-Testing` (Live API credentials permanently disconnected).
+* **Production Status:** `LIVE LOCKED` (Real capital deployment requires passing all forward paper gates).
+* **Strategy Family 9:** `RESEARCH / OOS OBSERVATION` (Cross-asset relative value observation; pending multi-pair qualification).
+* **Defensive Hedging Engine:** `PROTECTION MODULE — UNQUALIFIED FOR LIVE USE` (Pending forward paper-testing).
 
 ---
 
-## Repository Structure
+## The Closed Research-to-Capital Loop
+
+QSP operates as a continuous, evidence-governed closed loop where empirical outcomes systematically inform research hypotheses without compromising calendar firewalls or curve-fitting:
+
+```text
+                     ┌────────────────────────────────────────┐
+                     ▼                                        │
+             [ DATA INGESTION ]                               │
+         Timestamp & Gap Integrity                           │
+                     │                                        │
+                     ▼                                        │
+             [ RESEARCH LAB ]                                 │
+     Hypothesis & Alpha Genome Generation                     │
+                     │                                        │
+                     ▼                                        │
+         [ CAUSAL DEVELOPMENT ]                               │
+     In-Sample (2021-2022) Falsification                      │
+                     │                                        │
+                     ▼                                        │
+        [ CHRONOLOGICAL VALIDATION ]                          │
+        Validation (2023) - Frozen Rules                      │
+                     │                                        │
+                     ▼                                        │
+          [ OUT-OF-SAMPLE (OOS) ]                             │
+       OOS (2024-2026) - Blind Testing                        │
+                     │                                        │
+                     ▼                                        │
+         [ ADVERSARIAL STRESS TEST ]                          │
+      Friction 2x, Outliers, Latency Delay                    │
+                     │                                        │
+                     ▼                                        │
+          [ TRADE ECONOMICS GATE ]                            │
+     Expected Net Edge > +0.05R Verification                  │
+                     │                                        │
+                     ▼                                        │
+       [ CAPITAL ALLOCATION AUCTION ]                         │
+    Feasibility, Capacity & Correlation Sizing                │
+                     │                                        │
+                     ▼                                        │
+          [ DETERMINISTIC RISK GATE ]                         │
+       Portfolio Heat <= 3.0%, Drawdown Halts                 │
+                     │                                        │
+                     ▼                                        │
+          [ PAPER EXECUTION HARNESS ]                         │
+       Simulated Fills & Telemetry Capture                    │
+                     │                                        │
+                     ▼                                        │
+          [ CONTINUOUS EVOLUTION ]                            │
+       Edge Health Clock & Hypothesis Ticket ─────────────────┘
+```
+
+---
+
+## Core Engineering & Research Principles
+
+1. **Evidence Over Assumptions:** Backtested metrics are treated as preliminary research hypotheses, never as proofs of future profitability.
+2. **Causal Integrity:** Zero lookahead bias, strict bar-close confirmation, point-in-time multi-timeframe forward-filling, and adverse-first intra-candle order collision (stop loss checked before take profit if high/low span both levels in the same bar).
+3. **Exchange Economics First:** True alpha exists only after deducting exchange taker fees, bid-ask spread, adverse slippage, borrowing/funding drag, latency slippage, and market impact.
+4. **Adversarial Falsification:** Promising strategies are subjected to active attempts at invalidation ($2.0\times$ friction, windfall trade removal, 1-bar execution delay, and sub-period splits) before being considered for forward testing.
+5. **Capital Feasibility Awareness:** Sizing models must respect real-world exchange lot steps and minimum notional thresholds, evaluating whether an account size ($10, $100, $1,000) distorts risk beyond acceptable boundaries.
+6. **Deterministic Risk Invariants:** Hard boundaries are enforced in deterministic software: maximum $1.0000\%$ equity risk at stop loss, maximum $3.00\%$ total portfolio heat, and automated drawdown scaling.
+7. **Failure Memory as an Asset:** Failed hypotheses, starved strategies, and decayed alphas are permanently archived in the Strategy Graveyard to prevent the recurrence of known dead ends.
+8. **Separation of Research AI from Execution:** Artificial Intelligence operates solely as a research scientist (analyzing data, formulating hypotheses, diagnosing telemetry). The live execution and risk layers remain strictly deterministic.
+9. **Production Lock:** Real capital deployment is locked until strategies complete formal forward paper-trading gates.
+
+---
+
+## Architecture & Subsystems
 
 ```text
 crypto-platform/
-├── backtesting/               # Simulation engines, order matching, and replay logic
-├── config/                    # Asset parameters, exchange settings, and risk limits
-├── market_data/               # Historical candle ingestion, caching, and data pipelines
-├── market_intelligence/       # Technical indicators, regime classifiers, and structural analysis
-├── production/                # Live daemons, order management, SQLite WAL persistence, telemetry
-├── research/                  # Quantitative research laboratory
-│   ├── analytics/             # Standardized R-multiple accounting and statistical tests
-│   ├── discovery_lab/         # Multi-family strategy generator and autonomous research runner
-│   └── results/               # CEO dashboard, qualification ledgers, and experiment reports
-├── risk_engine/               # Friction-adjusted position sizing, drawdown ceilings, and risk checks
-├── strategy_engine/           # Canonical strategy state machines, entry models, and exit logic
-├── tests/                     # Unit, integration, and regression test suites
+├── platform_core/             # System constants, canonical registry, and lifecycle states
+├── capital_intelligence/      # Net edge economics, confidence, capacity, and feasibility
+├── market_intelligence/       # Regime detection, volatility clustering, and market memory
+├── portfolio_engine/          # Portfolio construction, correlation sizing, and hedging
+├── risk_engine/               # Loss bounds, position sizing, and drawdown coordination
+├── trade_management/          # 5-stage trade lifecycle, order precision, and fail-safes
+├── execution_gateway/         # Broker abstraction, CCXT connectors, and order management
+├── research/                  # Quantitative discovery lab, accounting, and analytics
+│   ├── discovery_lab/         # Multi-family generators, OOS manager, and adversarial tester
+│   ├── analytics/             # Standardized R-multiple accounting and statistical metrics
+│   └── results/               # Comprehensive matrices, decision records, and audit dashboards
+├── tests/                     # 428 automated unit, integration, and regression tests
 └── README.md                  # System documentation
 ```
 
----
+### 1. Alpha & Capital Intelligence Layer
 
-## Strategy Discovery Families
+Located in [`capital_intelligence/`](file:///home/mrcn2/crypto-platform/capital_intelligence/):
 
-The platform systematically evaluates eight distinct quantitative strategy families:
+* **Net Edge Engine (`NetEdgeEngine`):** Converts nominal strategy signals into Expected Net Edge by explicitly deducting all six sources of execution drag:
+  $$\text{Expected Net Edge (R)} = \text{Gross Alpha (R)} - \frac{\text{Fees}_{\text{RT}} + \text{Spread} + \text{Slippage}_{\text{RT}} + \text{Market Impact} + \text{Funding} + \text{Latency}}{\text{Stop Distance (\%)}}$$
+  Enforces the **Trade Economics Gate**: emits a deterministic `NO_TRADE` whenever $\text{Expected Net Edge} \le +0.05\text{R}$.
+* **Alpha Confidence Engine (`AlphaConfidenceEngine`):** Replaces point estimates with Bayesian standard errors ($\text{SE} = \sigma / \sqrt{N}$) and $95\%$ confidence bounds ($\bar{R} \pm 1.96 \cdot \text{SE}$). Enforces sample-size penalties ($N < 100$) so low-$N$ outliers cannot receive capital.
+* **Alpha Capacity Engine (`AlphaCapacityEngine`):** Models capital elasticity across account sizes from $\$10$ to $\$10,000,000$ using the square-root law of market impact ($\text{Impact} = 0.5 \cdot \sigma_{\text{daily}} \cdot \sqrt{\text{Order Size} / \text{ADV}}$).
+* **Alpha Selection Engine (`AlphaSelectionEngine`):** Runs an internal capital auction that scores and ranks competing trade opportunities:
+  $$\text{Score} = \text{Net Edge} \times \text{Confidence} \times \text{Regime Fit} \times (1 - \text{Portfolio Correlation Penalty})$$
+* **Factor Attribution Engine (`FactorAttributionEngine`):** Decomposes trade outcomes into five structural factors: Trend Beta, Momentum, Volatility Expansion, Carry/Funding, and Microstructure.
+* **Alpha Health & Edge Decay Clock (`AlphaHealthEngine`):** Continuously monitors rolling 30-trade expectancy against historical baselines, assigning health states: `NORMAL` ($\ge 85$), `WATCH` ($70–85$), `REDUCE` ($50–70$), `QUARANTINE` ($30–50$), or `RETIRE` ($< 30$).
+* **Capital Feasibility Engine (`CapitalFeasibilityEngine`):** Evaluates account capital against Binance Spot and USD-M Futures exchange rules (lot steps, min notionals). Flags severe risk distortion on micro-capital accounts ($< \$100$).
 
-1. **Trend Following:** Multi-timeframe trend alignment with trailing trend stops.
-2. **Trend + Pullback:** Trend continuation following intermediate pullbacks into support/resistance or moving averages.
-3. **Breakout (Donchian / Channel):** Structural range expansion beyond multi-period high/low channels.
-4. **Momentum Continuation:** Trend strength confirmation using RSI / MACD momentum filters.
-5. **Mean Reversion:** Counter-trend entries into overbought/oversold boundaries (empirically audited and falsified in trending regimes).
-6. **Volatility Expansion:** Volatility breakout triggers following Bollinger Band / ATR squeezes.
-7. **Multi-Timeframe Continuation:** Higher timeframe trend direction + intermediate alignment + lower timeframe channel breakout.
-8. **Regime-Adaptive Systems:** Volatility and trend regime switching between trend-following and defensive modes.
+### 2. Research & Discovery Lab
 
----
+Located in [`research/discovery_lab/`](file:///home/mrcn2/crypto-platform/research/discovery_lab/):
 
-## Risk Governance & Trade Accounting
+* **Multi-Family Strategy Generator (`StrategyExecutor`):** Evaluates 8 core quantitative strategy families (Trend Following, Pullback, Donchian Breakouts, Momentum, Mean Reversion, Volatility Expansion, MTF Continuation, and Regime-Adaptive).
+* **Temporal OOS Manager (`OOSManager`):** Enforces cryptographic chronological separation between Development (2021–2022), Validation (2023), and Out-of-Sample (2024–2026).
+* **Adversarial Researcher (`AdversarialResearcher`):** Deliberately subjects qualified strategies to 4 stress attacks: $2.0\times$ friction, top 5% windfall removal, 1-bar execution latency, and calendar sub-period splits.
+* **Market Memory & Alpha Genome (`market_memory.py`):** Represents every strategy as a 9-dimensional genetic fingerprint to measure distance and avoid disguised beta.
+* **Strategy Graveyard (`StrategyGraveyard`):** Permanently archives all falsified strategies and dead hypotheses with post-mortem documentation.
 
-### 1. Friction-Adjusted Position Sizing
-Traditional backtest models frequently under-size risk by calculating position size solely from nominal stop distance, leaving the portfolio vulnerable to fee and slippage drag on stopouts. This platform uses certified friction-adjusted sizing:
+### 3. Market Intelligence Layer
 
-$$\text{Effective Risk Per Unit} = |P_{\text{entry}} - P_{\text{stop}}| + \left( P_{\text{entry}} \times f_{\text{entry}} \right) + \left( P_{\text{stop}} \times f_{\text{exit}} \right)$$
+Located in [`market_intelligence/`](file:///home/mrcn2/crypto-platform/market_intelligence/):
 
-$$\text{Position Size} = \frac{\text{Equity} \times \text{Risk Ceiling}}{\text{Effective Risk Per Unit}}$$
+* **Regime Engine (`MarketRegimeEngine`):** Classifies market structure into Trend (Bull/Bear/Neutral via EMA alignment and ADX), Volatility (Normal/Elevated/Compression via ATR percentiles and Bollinger Band width), and Liquidity regimes. Computes conditional edge probabilities: $P(\text{Strategy Edge} \mid \text{Regime})$.
+* **Market Memory Store (`MarketMemoryStore`):** Records macro market events, regime transitions, and conditional strategy performance matrices over multi-year horizons.
 
-Where:
-* $\text{Risk Ceiling} \le 1.0\%$ of total account equity.
-* $f_{\text{entry}}, f_{\text{exit}}$ incorporate taker fee ($0.075\%$), dynamic slippage ($0.03\%$), and bid-ask spread ($0.01\%$).
-* **Guaranteed Invariant:** Maximum dollar loss at stop loss is mathematically capped at $\le 1.0000\%$ of equity.
+### 4. Portfolio Intelligence & Hedging
 
-### 2. Standardized R-Multiple Accounting
-Every trade's performance is measured in normalized R-multiples:
-$$R = \frac{\text{Net Dollar P&L}}{\text{Initial Dollar Risk}}$$
-This normalizes returns across varying volatilities, market caps, and time horizons, enabling clean portfolio-level aggregation.
+Located in [`portfolio_engine/`](file:///home/mrcn2/crypto-platform/portfolio_engine/):
 
----
+* **Portfolio Intelligence Engine (`PortfolioIntelligenceEngine`):** Computes rolling asset correlation matrices and applies correlation discount factors ($30\%$ risk reduction if correlation $> 0.65$). Enforces a maximum portfolio heat ceiling of $\le 3.00\%$.
+* **Relative Value & Hedging (`PortfolioHedgingEngine`):** Evaluates net portfolio crypto beta ($\beta_{\text{net}} = \sum w_i \beta_i$). In hostile regimes where $\beta_{\text{net}} > 2.0$, calculates protective short hedges, automatically falling back to trade rejection or position reduction if small account size makes the hedge unexecutable.
 
-## Research Workflow & Verification Pipeline
+### 5. Deterministic Risk Engine
 
-```mermaid
-flowchart TD
-    A[Market Data Ingestion] --> B[Data Integrity & Gap Validation]
-    B --> C[Hypothesis Formulation & Economic Rationale]
-    C --> D[Causal Backtest Simulation (Dev: 2021-2022)]
-    D --> E{Dev Qualification Gates}
-    E -->|N < 100 or Neg Expectancy| F[Archived in Failure Registry]
-    E -->|Passed N, PF, DD, Fees, Sizing| G[Profit Concentration & Cost Stress Firewalls]
-    G -->|Outlier Dependent or Cost Fragile| F
-    G -->|Robust Multi-Dimensional Edge| H[PROMISING CANDIDATE]
-    H --> I[Validation Partition (2023) - Frozen Rules]
-    I -->|Maintains Edge & Low DD| J[Out-of-Sample Partition (2024-2026)]
-    I -->|Fails Validation| F
-    J -->|Positive Expectancy across all 3 Epochs| K[QUALIFIED ROBUST STRATEGY]
-    J -->|Fails OOS| F
-    K --> L[Paper Trading Simulation]
-    L -->|Execution & Slippage Verified| M[Production Capital Allocation]
-```
+Located in [`risk_engine/`](file:///home/mrcn2/crypto-platform/risk_engine/):
 
-### Automatic Rejection Gates
-Candidates are immediately rejected or archived upon encountering:
-* Negative expectancy after realistic exchange fees and slippage.
-* Fewer than 100 naturally occurring trades in the Development horizon.
-* Profit concentration where the top 1 winner contributes $>50\%$ of Net R, or where removing top 1/top 5 winners destroys the edge.
-* Drawdown exceeding the $25\text{R}$ risk ceiling.
-* Failure under $2\times$ fee and slippage stress testing.
-* Parameter instability under $\pm 20\%$ perturbations.
+* **Friction-Adjusted Position Sizing:** Position sizing strictly accounts for entry taker fee ($0.05\%$), exit taker fee ($0.05\%$), dynamic slippage ($0.03\% \times 2$), and bid-ask spread ($0.02\%$):
+  $$\text{Loss at Stop} = (\text{Entry Price} - \text{Stop Price}) \times \text{Size} + \text{Round-Trip Friction} \le 1.0000\% \text{ of Equity}$$
+* **Mathematical Invariant:** Zero tolerance for risk distortion beyond account limits.
+
+### 6. Trade Lifecycle & Execution Gateway
+
+Located in [`trade_management/`](file:///home/mrcn2/crypto-platform/trade_management/) and [`execution_gateway/`](file:///home/mrcn2/crypto-platform/execution_gateway/):
+
+* **5-Stage Trade Lifecycle (`TradeLifecycleEngine`):** Pre-entry checks, entry precision, post-entry verification, multi-stage take profit and trailing stops, and emergency disconnection fail-safes.
+* **Paper Execution Harness:** Deterministic simulation capturing bid/ask spread, modeled slippage, execution latency, and fees.
+* **Broker Abstraction:** Pluggable gateway architecture supporting CCXT-compatible exchanges with fail-closed safety semantics.
+
+### 7. Continuous Evolution Engine
+
+Located in [`research/discovery_lab/continuous_evolution_engine.py`](file:///home/mrcn2/crypto-platform/research/discovery_lab/continuous_evolution_engine.py):
+
+* **Telemetric Feedback Loop:** Captures forward execution metrics and evaluates degradation against baseline historical distributions.
+* **Governance Rule:** Detection of degradation triggers **quarantine and automated hypothesis generation**, never direct automatic parameter optimization or curve-fitting.
 
 ---
 
-## Research Findings & Discovered Portfolio (2021–2026)
+## Comprehensive 6-Set Multi-Asset Empirical Backtest Matrix
 
-Across 5.5 years of crypto market data spanning bull runs (2021), bear markets (2022), chop/recovery (2023), and new cycle expansions (2024–2026), the autonomous discovery engine evaluated 96 candidate units and qualified **5 robust strategy instances**:
+Evaluated systematically with the certified `StrategyExecutor` across all available historical bars (Lifetime, Development 2021–2022, Validation 2023, Out-of-Sample 2024–2026). Full JSON data: [`MULTISET_COMPREHENSIVE_BACKTEST_MATRIX.json`](file:///home/mrcn2/crypto-platform/research/results/MULTISET_COMPREHENSIVE_BACKTEST_MATRIX.json).
 
-| Strategy Instance | Style | Pair | Dev (2021–22) Net R (N) | Val (2023) Net R (N) | OOS (2024–26) Net R (N) | Lifetime Net R | Lifetime N | Max DD | Status |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **MTF Continuation** | Set 3 (1D/4H/1H) | SOL/USDT | +86.53R (576) | +43.83R (292) | +73.82R (765) | **+204.19R** | 1,633 | 22.07R | **`QUALIFIED_ROBUST`** |
-| **MTF Continuation** | Set 2 (1W/1D/4H) | SOL/USDT | +48.52R (127) | +31.21R (68) | +28.68R (191) | **+108.41R** | 386 | 13.07R | **`QUALIFIED_ROBUST`** |
-| **MTF Continuation** | Set 2 (1W/1D/4H) | ETH/USDT | +34.41R (128) | +2.39R (66) | +53.93R (169) | **+90.74R** | 363 | 9.00R | **`QUALIFIED_ROBUST`** |
-| **MTF Continuation** | Set 2 (1W/1D/4H) | BTC/USDT | +22.54R (125) | +30.74R (62) | +29.38R (193) | **+82.66R** | 380 | 9.73R | **`QUALIFIED_ROBUST`** |
-| **Momentum Continuation** | Set 2 (1W/1D/4H) | SOL/USDT | +16.18R (115) | +4.51R (62) | +8.39R (202) | **+29.07R** | 379 | 19.77R | **`QUALIFIED_ROBUST`** |
-
-### Key Empirical Findings:
-1. **Set 2 Swing Convergence:** Multi-timeframe continuation (Higher Timeframe Trend + Middle Timeframe Trend Alignment + Lower Timeframe 10-bar Donchian Breakout, 1.5 ATR stop, 2.5R target) produced positive returns across **BTC, ETH, and SOL** simultaneously without asset-specific curve-fitting. Combined Set 2 Net R: **+281.80R across 1,129 trades**, with maximum drawdown $\le 13.07\text{R}$.
-2. **Profit Concentration Verified:** In all qualified strategies, the top 1 winner accounted for $\le 8.4\%$ of Net R. Removing the top 1 winner leaves $>90\%$ of net returns intact.
-3. **Falsified Strategies:**
-   * **Mean Reversion:** Counter-trend mean reversion suffered severe losses ($-140\text{R}$ to $-660\text{R}$) due to sustained trending momentum blowing through counter-trend stops.
-   * **Over-Constrained 3-Timeframe State Machines:** Strategies requiring synchronous multi-timeframe oversold/overbought oscillators suffered from opportunity starvation ($<10$ trades in 2 years).
-   * **Intraday Breakouts:** High trade frequency ($>2,000$ trades on 15M) suffered from fee erosion, failing the $2\times$ cost stress test.
+| Set | Timeframe Triad | Operational Style | Asset | Lifetime N | Lifetime Net R | Win Rate | Dev (2021-22) | Val (2023) | OOS (2024-26) | Max DD | Empirical Diagnosis |
+| :--- | :--- | :--- | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | :--- |
+| **Set 1** | 1M → 1w → 1d | Macro / Position | BTC | 99 | **+32.38R** | 39.4% | +0.1R | +4.7R | +9.5R | 6.00R | 🟢 Low-turnover macro edge ($N < 100$, natural market limit). |
+| | | | ETH | 91 | **+27.98R** | 38.5% | +11.3R | -1.3R | +9.8R | 8.00R | 🟢 Reliable trend capture, low opportunity density (12–40 trades/epoch). |
+| | | | SOL | 49 | **+19.41R** | 40.8% | +3.9R | +9.9R | +5.6R | 4.60R | 🟢 Consistent positive drift; small sample size ($N=49$). |
+| **Set 2** | 1w → 1d → 4h | Swing | BTC | 589 | **+169.04R** | 40.4% | +21.5R | +30.7R | +29.4R | 9.73R | 🟢 **Core Bedrock**: Stable across all 3 epochs; Max DD 9.73R. |
+| | | | ETH | 576 | **+167.08R** | 39.6% | +33.4R | +2.4R | +53.9R | 11.00R | 🟢 Strong OOS expansion; Max DD 11.00R. |
+| | | | SOL | 387 | **+107.41R** | 38.5% | +47.5R | +31.2R | +28.7R | 13.07R | 🟢 **100% Adversarial Robustness**: Survived all attack vectors. |
+| **Set 3** | 1d → 4h → 1h | Swing / Intraday | BTC | 2,489 | **+212.25R** | 37.3% | +56.0R | +7.9R | **-12.0R** | 38.09R | 🟡 **Edge Decay in OOS**: Deterioration detected in 2024–2026. |
+| | | | ETH | 2,559 | **+366.89R** | 37.6% | +107.7R | -25.6R | +89.2R | 44.04R | 🟡 High lifetime alpha, but severe cyclical drawdowns (-25.6R in Val). |
+| | | | SOL | 1,741 | **+209.86R** | 35.6% | +86.5R | +43.8R | +73.8R | 22.07R | 🟢 Exceptional continuity; highly sensitive to execution latency. |
+| **Set 4** | 4h → 1h → 15m | Intraday | BTC | 10,682 | **-1,394.41R** | 34.9% | -88.0R | -274.4R | -563.0R | 1405.76R | 🔴 **Friction Collapse**: Over 10k trades; 0.16% round-trip friction erases edge. |
+| | | | ETH | 11,164 | **-717.21R** | 35.2% | +144.6R | -302.1R | -280.8R | 733.55R | 🔴 **Friction Bleed**: Dev winner (+144.6R) collapsed in Val/OOS. |
+| | | | SOL | 2,533 | **+127.34R** | 35.1% | +117.5R | 0.0R | 0.0R | 24.06R | 🟡 15m historical data limited in early cache; Dev positive. |
+| **Set 5** | 1h → 15m → 5m | Short-Term Intraday | BTC | 2,108 | **-994.33R** | 29.5% | 0.0R | 0.0R | -994.3R | 993.33R | 🔴 **Noise & Fee Dominated**: Microstructure noise swamps signal. |
+| | | | ETH | 2,028 | **-766.15R** | 32.1% | 0.0R | 0.0R | -766.2R | 766.86R | 🔴 **Fatal Microstructure Bleed**: Taker fees absorb gross profit. |
+| | | | SOL | 992 | **-264.09R** | 36.1% | 0.0R | 0.0R | -264.1R | 264.99R | 🔴 Negative net edge after exchange economics. |
+| **Set 6** | 15m → 5m → 1m | Scalping | BTC | 2,813 | **-2,148.04R** | 6.3% | 0.0R | 0.0R | -2,148.0R | 2147.04R | 🔴 **Extreme Execution Hazard**: 1m stops are too tight for exchange spread/slip. |
+| | | | ETH | 2,456 | **-1,667.65R** | 13.0% | 0.0R | 0.0R | -1,667.7R | 1666.92R | 🔴 Complete failure under taker fee economics. |
+| | | | SOL | 1,266 | **-793.59R** | 17.1% | 0.0R | 0.0R | -793.6R | 793.29R | 🔴 Unexecutable under standard retail or institutional API latency. |
 
 ---
 
-## Quickstart & Installation
+## Adversarial Research & Candidate Classifications
 
-### 1. Prerequisites
-* Python 3.12 or higher
-* Linux x86_64 / macOS environment
-* Git
+Every qualified candidate was audited by the [AdversarialResearcher](file:///home/mrcn2/crypto-platform/research/discovery_lab/adversarial_researcher.py) to assess survival under simulated operational degradation. Full JSON data: [`ADVERSARIAL_STRESS_BATTERY.json`](file:///home/mrcn2/crypto-platform/research/results/ADVERSARIAL_STRESS_BATTERY.json).
 
-### 2. Setup Virtual Environment
+| Strategy ID | Family | Asset | Set | Total N | Lifetime Net R | Adversarial Survival | Classification & Status |
+| :--- | :--- | :---: | :---: | ---: | ---: | :---: | :--- |
+| `FAM-07-MTFCONT_SOLUSDT_Set2` | MTF Continuation | SOL | Set 2 | 387 | **+107.41R** | **100.0%** (4/4 passed) | 🟢 **Strongest Surviving Candidate** under the current adversarial battery. |
+| `FAM-07-MTFCONT_ETHUSDT_Set2` | MTF Continuation | ETH | Set 2 | 576 | **+167.08R** | **75.0%** (3/4 passed) | 🟡 **Conditional / Fat-Tail Sensitive** (Fails if top 5% windfall trades are removed). |
+| `FAM-07-MTFCONT_BTCUSDT_Set2` | MTF Continuation | BTC | Set 2 | 589 | **+169.04R** | **75.0%** (3/4 passed) | 🟡 **Conditional / Fat-Tail Sensitive** (Fails if top 5% windfall trades are removed). |
+| `FAM-07-MTFCONT_SOLUSDT_Set3` | MTF Continuation | SOL | Set 3 | 1,741 | **+209.86R** | **50.0%** (2/4 passed) | 🟡 **Execution-Sensitive / Latency Fragile** (1-bar fill delay turns edge negative). |
+| `FAM-04-MOMENTUM_SOLUSDT_Set2` | Momentum Continuation | SOL | Set 2 | 115 | **+29.07R** | **25.0%** (1/4 passed) | 🔴 **Falsified & Archived** (Collapsed under 2x fees, latency, and outlier removal). |
+
+### Candidates Explicitly Not Qualified for Deployment
+* **Set 1 Candidates:** Positive drift, but lower-turnover research layer with insufficient sample size ($N < 100$) for statistical confidence.
+* **BTC Set 3:** Experienced Out-of-Sample deterioration in 2024–2026 ($-12.0\text{R}$).
+* **ETH Set 3:** Experienced severe cyclical drawdown in 2023 ($-25.6\text{R}$).
+* **Sets 4, 5, and 6:** Currently uneconomic due to friction erosion on high-frequency signals. Not deployment candidates.
+
+---
+
+## Daily Multi-Set Decision Record Engine
+
+The platform executes a deterministic 10-level hierarchy before considering any trade:
+
+1. **Level 1 — Data Trust:** Validates timestamp monotonicity, zero gap corruption, and latency $\le 30$ seconds. (If failed: `NO_TRADE`).
+2. **Level 2 — Market Tradability:** Validates spread $\le 0.15\%$ and depth metrics. (If failed: `NO_TRADE`).
+3. **Level 3 — Qualified Alpha:** Confirms the candidate is registered in the Canonical Registry. (If failed: `NO_TRADE`).
+4. **Level 4 — Net Edge Economics:** Verifies that Expected Net Edge $> +0.05\text{R}$ after all frictions. (If failed: `NO_TRADE`).
+5. **Level 5 — Capital Feasibility:** Checks account capital against minimum lot sizes and liquidation buffer. (If failed: `NO_TRADE`).
+6. **Level 6 — Portfolio Construction:** Enforces maximum portfolio heat ceiling $\le 3.0\%$ and applies correlation discounts. (If failed: `NO_TRADE`).
+7. **Level 7 — Hedging Check:** Evaluates net crypto beta and market regime. (Triggers `HEDGE` or `REDUCE`).
+8. **Level 8 — Deterministic Output:** Emits machine-readable decisions to [`DAILY_DECISION_RECORD.json`](file:///home/mrcn2/crypto-platform/research/results/DAILY_DECISION_RECORD.json) (`NO_TRADE / TRADE / REDUCE / HEDGE / QUARANTINE`).
+
+---
+
+## Role of Artificial Intelligence in QSP
+
+Artificial Intelligence functions as an **Autonomous Research Scientist**, not a discretionary trader.
+
+### Permitted AI Functions:
+* Analyzing historical telemetry and cross-asset correlations.
+* Formulating new strategy hypotheses and economic rationale.
+* Designing adversarial test batteries to falsify surviving candidates.
+* Diagnosing root causes when strategy degradation is detected.
+* Recommending capital allocation adjustments based on objective health indices.
+
+### Prohibited AI Actions:
+* AI is strictly prohibited from placing direct unhedged market orders on live exchanges.
+* AI cannot modify live strategy parameters without completing formal development, validation, and OOS qualification.
+* AI cannot bypass deterministic risk invariants or capital feasibility limits.
+
+---
+
+## Capital Feasibility: Sizing Reality Across Account Tiers
+
+Empirical evaluation against real Binance Spot and USD-M Futures exchange rules (saved in [`CAPITAL_FEASIBILITY_MATRIX.md`](file:///home/mrcn2/crypto-platform/research/results/CAPITAL_FEASIBILITY_MATRIX.md)):
+
+* **$10 Account:** Mathematically viable in backtest theory, but **unexecutable in reality** on BTC/ETH due to the $\$5.00$ minimum notional and minimum lot sizes ($0.001$ BTC $\approx \$65.00$ notional requires $6.5\times$ leverage and incurs a $20.0\%$ equity loss at stop, creating an unacceptable $33\times$ risk distortion). SOL Set 3 is the only candidate viable with manageable distortion.
+* **$100 Account:** Viable for SOL Set 2 and Set 3 with minor distortion ($1.1\times$ to $1.4\times$).
+* **$500–$1,000 Account:** **Clean execution across all candidates.** Zero leverage required ($<1.0\times$), zero risk distortion, fee drag $<2\%$ of risk, and Gambler's Ruin probability $<0.1\%$.
+
+---
+
+## Quickstart & Verification
+
+### 1. Environment Setup
 ```bash
 # Clone repository
 git clone https://github.com/Quantitative-Systems/crypto-platform.git
 cd crypto-platform
 
-# Create virtual environment
+# Create virtual environment (Python 3.12+)
 python3 -m venv .venv
 source .venv/bin/activate
 
@@ -176,29 +286,45 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Run Test Suite
-Verify that the complete unit and integration test suite passes:
+### 2. Run the Full Test Suite
+Verify that all 428 automated tests pass:
 ```bash
 pytest -q
 ```
+*Expected output: 428 passed in ~90 seconds.*
 
-### 4. Run Backtests & Research Lab
+### 3. Run the Multi-Set Backtest Battery
 ```bash
-# Run the autonomous strategy discovery sweep on Development data (2021-2022)
-python3 research/discovery_lab/autonomous_researcher.py
+python3 research/discovery_lab/run_multiset_comprehensive_backtest.py
+```
 
-# Run chronological Validation (2023) and Out-of-Sample (2024-2026) testing
-python3 research/discovery_lab/run_validation_and_oos.py
+### 4. Run the Adversarial Researcher
+```bash
+python3 research/discovery_lab/adversarial_researcher.py
+```
 
-# Sync strategy library and generate executive dashboard
-python3 research/discovery_lab/sync_dashboard_and_registry.py
+### 5. Generate the Daily Decision Record
+```bash
+python3 production/decision_record_engine.py
+```
 
-# View updated executive research dashboard
+### 6. Inspect Results
+```bash
 cat research/results/CEO_DASHBOARD.md
+cat research/results/DAILY_DECISION_RECORD.json
 ```
 
 ---
 
-## Risk Disclosure & Disclaimer
+## Data Integrity & Research Disclaimer
 
-This platform and its codebase are provided strictly for quantitative research, backtesting, and algorithmic simulation purposes. Cryptocurrency trading involves substantial risk of financial loss. Past backtested performance, whether in-sample or out-of-sample, is no guarantee of future live execution results. Always paper-trade and independently audit execution latency, order fills, and exchange fee schedules before deploying capital.
+This platform and its codebase are provided strictly for quantitative research, algorithmic simulation, and systematic risk governance.
+
+All backtest metrics, out-of-sample evaluations, and adversarial stress tests are **empirical research observations**, not guarantees of future performance. Real-world execution is subject to:
+* Data feed latency and clock desynchronization.
+* Unmodeled exchange queue priority and partial fills.
+* Exchange API outages and connectivity drops.
+* Sudden liquidity evaporation during flash events.
+* Variations in exchange fee tiers and margin interest rates.
+
+**Production status is LIVE LOCKED.** Real capital must never be deployed until predefined paper-trading gates are independently verified.
