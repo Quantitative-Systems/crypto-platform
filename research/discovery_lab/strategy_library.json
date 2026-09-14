@@ -1,0 +1,262 @@
+{
+  "CANDIDATE-001": {
+    "strategy_id": "CANDIDATE-001",
+    "version": "1.0.0-FROZEN",
+    "registered_at": "2026-09-14T12:15:17.203888+00:00",
+    "status": "RESEARCH",
+    "hypothesis": {
+      "hypothesis_id": "CANDIDATE-001",
+      "name": "Supertrend + Stochastic MTF Triple Alignment (6.0R)",
+      "family": "MTF_CONTINUATION",
+      "parent_candidate_id": null,
+      "economic_rationale": "Captures large macro trend continuation by requiring higher timeframe trend alignment (Supertrend), intermediate pullback into deep oversold/overbought conditions (Stochastic K<=25), and lower timeframe momentum confirmation on candle close, with asymmetric 6R geometric expansion.",
+      "entry_condition": "HTF Supertrend green/red AND HTF, MTF, LTF Stochastics all <= 25 (>=75) with confirmed K/D cross",
+      "exit_condition": "Initial structural SL OR 3-phase structural trailing stop OR TP3 (HTF opposing swing)",
+      "stop_condition": "LTF structural swing extreme at entry, trailed via LTF/MTF/HTF Supertrend/swings",
+      "target_condition": "HTF opposing liquidity / structural swing pivot (minimum 6.0R required at entry)",
+      "asset_scope": [
+        "BTC/USDT",
+        "ETH/USDT",
+        "SOL/USDT"
+      ],
+      "timeframe_scope": [
+        "Set 1",
+        "Set 2",
+        "Set 3",
+        "Set 4",
+        "Set 5",
+        "Set 6"
+      ],
+      "expected_regime": "STRONG_TREND_WITH_SHARP_PULLBACKS",
+      "risk_model": {
+        "max_risk_pct": 0.01,
+        "friction_adjusted": true
+      },
+      "falsification": {
+        "min_trades": 30,
+        "min_expectancy_r": 0.25,
+        "max_drawdown_r": 6.0,
+        "min_profit_factor": 1.3,
+        "min_win_rate": 0.3,
+        "max_consecutive_losses": 7,
+        "allow_oos_degradation_pct": 0.4
+      }
+    },
+    "rules": {
+      "supertrend": {
+        "atr_period": 6,
+        "multiplier": 5.0
+      },
+      "stochastic": {
+        "k_period": 25,
+        "k_smooth": 5,
+        "d_smooth": 3,
+        "oversold": 25,
+        "overbought": 75
+      },
+      "min_tp3_r": 6.0,
+      "timeframe_hierarchy": "HTF_BIAS -> MTF_SETUP -> LTF_ENTRY",
+      "trailing_stop": "3_PHASE_STRUCTURAL"
+    },
+    "assets": [
+      "BTC/USDT",
+      "ETH/USDT",
+      "SOL/USDT"
+    ],
+    "timeframes": [
+      "Set 1",
+      "Set 2",
+      "Set 3",
+      "Set 4",
+      "Set 5",
+      "Set 6"
+    ],
+    "risk_model": {
+      "max_risk_pct": 0.01,
+      "friction_adjusted": true
+    },
+    "development_results": {
+      "total_trades": 25,
+      "win_count": 11,
+      "loss_count": 14,
+      "win_rate": 0.44,
+      "net_r": 35.79,
+      "expectancy_r": 1.43,
+      "profit_factor_r": 3.94,
+      "max_drawdown_r": 2.91,
+      "average_r": 1.43,
+      "median_r": -0.26,
+      "net_pnl_usd": 3697.1,
+      "sample_confidence": "INSUFFICIENT_DATA"
+    },
+    "validation_results": {},
+    "oos_results": {},
+    "robustness_results": {},
+    "status_history": [
+      {
+        "timestamp": "2026-09-14T12:15:17.203928+00:00",
+        "status": "RESEARCH",
+        "reason": "Frozen benchmark. Opportunity starved (25 trades total across 18 sets, 10 sets with 0 trades)."
+      }
+    ],
+    "notes": "Frozen benchmark. Opportunity starved (25 trades total across 18 sets, 10 sets with 0 trades)."
+  },
+  "EXP-001A-GEOM": {
+    "strategy_id": "EXP-001A-GEOM",
+    "version": "0.1.0-DRAFT",
+    "registered_at": "2026-09-14T12:15:17.205645+00:00",
+    "status": "RESEARCH",
+    "hypothesis": {
+      "hypothesis_id": "EXP-001A-GEOM",
+      "name": "Supertrend + Stochastic MTF with 3.0R Rational Geometry",
+      "family": "MTF_CONTINUATION",
+      "parent_candidate_id": "CANDIDATE-001",
+      "economic_rationale": "Candidate #001 suffered 29 aborted setups due to the extreme 6.0R hurdle. Crypto market intraday swings regularly offer 3.0R to 4.5R before standard mean-reversion pullbacks occur. Lowering the entry qualification hurdle to 3.0R increases statistical opportunity while maintaining positive expectancy.",
+      "entry_condition": "Same as CANDIDATE-001 but minimum TP3 reward-to-risk reduced to >= 3.0R",
+      "exit_condition": "Same as CANDIDATE-001 (Trailing stop + TP3)",
+      "stop_condition": "Same as CANDIDATE-001 (LTF structural swing)",
+      "target_condition": "HTF opposing structural swing >= 3.0R",
+      "asset_scope": [
+        "BTC/USDT",
+        "ETH/USDT",
+        "SOL/USDT"
+      ],
+      "timeframe_scope": [
+        "Set 3",
+        "Set 4"
+      ],
+      "expected_regime": "TREND_CONTINUATION",
+      "risk_model": {
+        "max_risk_pct": 0.01,
+        "friction_adjusted": true
+      },
+      "falsification": {
+        "min_trades": 30,
+        "min_expectancy_r": 0.2,
+        "max_drawdown_r": 8.0,
+        "min_profit_factor": 1.3,
+        "min_win_rate": 0.3,
+        "max_consecutive_losses": 7,
+        "allow_oos_degradation_pct": 0.4
+      }
+    },
+    "rules": {
+      "supertrend": {
+        "atr_period": 6,
+        "multiplier": 5.0
+      },
+      "stochastic": {
+        "k_period": 25,
+        "k_smooth": 5,
+        "d_smooth": 3,
+        "oversold": 25,
+        "overbought": 75
+      },
+      "min_tp3_r": 3.0,
+      "timeframe_hierarchy": "HTF_BIAS -> MTF_SETUP -> LTF_ENTRY",
+      "trailing_stop": "3_PHASE_STRUCTURAL"
+    },
+    "assets": [
+      "BTC/USDT",
+      "ETH/USDT",
+      "SOL/USDT"
+    ],
+    "timeframes": [
+      "Set 3",
+      "Set 4"
+    ],
+    "risk_model": {
+      "max_risk_pct": 0.01,
+      "friction_adjusted": true
+    },
+    "development_results": {},
+    "validation_results": {},
+    "oos_results": {},
+    "robustness_results": {},
+    "status_history": [
+      {
+        "timestamp": "2026-09-14T12:15:17.205675+00:00",
+        "status": "RESEARCH",
+        "reason": "Pre-registered hypothesis for Discovery Lab: test reducing 6R hurdle to 3R to unlock viable setups."
+      }
+    ],
+    "notes": "Pre-registered hypothesis for Discovery Lab: test reducing 6R hurdle to 3R to unlock viable setups."
+  },
+  "EXP-001B-STOCH": {
+    "strategy_id": "EXP-001B-STOCH",
+    "version": "0.1.0-DRAFT",
+    "registered_at": "2026-09-14T12:15:17.208332+00:00",
+    "status": "RESEARCH",
+    "hypothesis": {
+      "hypothesis_id": "EXP-001B-STOCH-HIERARCHY",
+      "name": "Decoupled HTF Trend / MTF Pullback Oscillator",
+      "family": "TREND_PULLBACK",
+      "parent_candidate_id": "CANDIDATE-001",
+      "economic_rationale": "In strong trends, the HTF Stochastic rarely drops to K<=25; it typically finds support near K~40-50. Requiring K<=25 on HTF filters out the best trending moves. Allowing HTF to simply hold Supertrend direction + Stochastic K>35 while MTF/LTF execute the oversold pullback aligns with institutional trend-pullback dynamics.",
+      "entry_condition": "HTF: Supertrend green + Stoch K > 35. MTF: Stoch <= 25 with K/D cross. LTF: Stoch <= 25 with K/D cross",
+      "exit_condition": "Trailing stop + TP3 (>= 3.0R)",
+      "stop_condition": "LTF structural swing",
+      "target_condition": "HTF opposing swing target >= 3.0R",
+      "asset_scope": [
+        "BTC/USDT",
+        "ETH/USDT",
+        "SOL/USDT"
+      ],
+      "timeframe_scope": [
+        "Set 3",
+        "Set 4"
+      ],
+      "expected_regime": "BULL_AND_BEAR_TRENDS",
+      "risk_model": {
+        "max_risk_pct": 0.01,
+        "friction_adjusted": true
+      },
+      "falsification": {
+        "min_trades": 40,
+        "min_expectancy_r": 0.25,
+        "max_drawdown_r": 7.0,
+        "min_profit_factor": 1.3,
+        "min_win_rate": 0.3,
+        "max_consecutive_losses": 7,
+        "allow_oos_degradation_pct": 0.4
+      }
+    },
+    "rules": {
+      "supertrend": {
+        "atr_period": 6,
+        "multiplier": 5.0
+      },
+      "htf_stoch_floor": 35.0,
+      "mtf_stoch_oversold": 25.0,
+      "ltf_stoch_oversold": 25.0,
+      "min_tp3_r": 3.0,
+      "timeframe_hierarchy": "HTF_TREND -> MTF_PULLBACK -> LTF_TRIGGER",
+      "trailing_stop": "3_PHASE_STRUCTURAL"
+    },
+    "assets": [
+      "BTC/USDT",
+      "ETH/USDT",
+      "SOL/USDT"
+    ],
+    "timeframes": [
+      "Set 3",
+      "Set 4"
+    ],
+    "risk_model": {
+      "max_risk_pct": 0.01,
+      "friction_adjusted": true
+    },
+    "development_results": {},
+    "validation_results": {},
+    "oos_results": {},
+    "robustness_results": {},
+    "status_history": [
+      {
+        "timestamp": "2026-09-14T12:15:17.208366+00:00",
+        "status": "RESEARCH",
+        "reason": "Pre-registered hypothesis: decouple HTF from deep oversold condition, allowing trend persistence."
+      }
+    ],
+    "notes": "Pre-registered hypothesis: decouple HTF from deep oversold condition, allowing trend persistence."
+  }
+}

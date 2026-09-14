@@ -18,6 +18,7 @@ from strategy_candidate_v2.fast_indicators import compute_indicators_fast
 from strategy_engine.news.news_provider import NullNewsProvider
 from backtesting.friction_model import FrictionModel
 from strategy_candidate_v2.data_audit import TIMEFRAME_SETS, ASSETS, load_candles
+from research.analytics.r_accounting import RAccountingEngine
 
 
 class SwingCache:
@@ -250,8 +251,12 @@ def run_single_set(symbol: str, set_name: str, htf_candles: List[Candle],
         # Manage active position
         if active_pos is not None:
             direction = active_pos["direction"]
-            # Update trailing
+            # Bar-by-bar MFE / MAE tracking
             if direction == 1:  # LONG
+                active_pos["mfe_price"] = max(active_pos["mfe_price"], float(ltf_high[i]))
+                active_pos["mae_price"] = min(active_pos["mae_price"], float(ltf_low[i]))
+
+                # Update trailing
                 if active_pos["phase"] == 1:
                     if ldv > active_pos["sl"]:
                         active_pos["sl"] = ldv
@@ -280,16 +285,25 @@ def run_single_set(symbol: str, set_name: str, htf_candles: List[Candle],
                     pnl = (fill_exit - active_pos["fill_entry"]) * active_pos["size"]
                     exit_fee = friction.calculate_fee(fill_exit * active_pos["size"])
                     net_pnl = pnl - active_pos["entry_fee"] - exit_fee
+                    mfe_r, mae_r = RAccountingEngine.calculate_excursions(
+                        direction, active_pos["entry_price"], active_pos["initial_sl"],
+                        active_pos["mfe_price"], active_pos["mae_price"]
+                    )
+                    realized_r = RAccountingEngine.calculate_trade_r(
+                        net_pnl, active_pos["entry_equity"], risk_pct
+                    )
                     trades.append({
                         "trade_id": active_pos["id"], "symbol": symbol, "set": set_name,
                         "direction": "LONG", "entry_ts": active_pos["entry_ts"],
+                        "entry_equity": active_pos["entry_equity"],
                         "entry_price": active_pos["entry_price"], "fill_entry": active_pos["fill_entry"],
                         "size": active_pos["size"], "entry_fee": active_pos["entry_fee"],
                         "initial_sl": active_pos["initial_sl"], "tp1": active_pos["tp1"],
                         "tp2": active_pos["tp2"], "tp3": active_pos["tp3"],
-                        "planned_rr": active_pos["planned_rr"], "exit_ts": ltf_close_time,
+                        "planned_r": active_pos["planned_r"], "exit_ts": ltf_close_time,
                         "exit_price": active_pos["sl"], "fill_exit": fill_exit,
                         "exit_reason": "SL", "exit_fee": exit_fee, "net_pnl": net_pnl,
+                        "realized_r": realized_r, "mfe_r": mfe_r, "mae_r": mae_r,
                         "trailing_phase": active_pos["phase"],
                     })
                     balance += net_pnl
@@ -299,21 +313,33 @@ def run_single_set(symbol: str, set_name: str, htf_candles: List[Candle],
                     pnl = (fill_exit - active_pos["fill_entry"]) * active_pos["size"]
                     exit_fee = friction.calculate_fee(fill_exit * active_pos["size"])
                     net_pnl = pnl - active_pos["entry_fee"] - exit_fee
+                    mfe_r, mae_r = RAccountingEngine.calculate_excursions(
+                        direction, active_pos["entry_price"], active_pos["initial_sl"],
+                        active_pos["mfe_price"], active_pos["mae_price"]
+                    )
+                    realized_r = RAccountingEngine.calculate_trade_r(
+                        net_pnl, active_pos["entry_equity"], risk_pct
+                    )
                     trades.append({
                         "trade_id": active_pos["id"], "symbol": symbol, "set": set_name,
                         "direction": "LONG", "entry_ts": active_pos["entry_ts"],
+                        "entry_equity": active_pos["entry_equity"],
                         "entry_price": active_pos["entry_price"], "fill_entry": active_pos["fill_entry"],
                         "size": active_pos["size"], "entry_fee": active_pos["entry_fee"],
                         "initial_sl": active_pos["initial_sl"], "tp1": active_pos["tp1"],
                         "tp2": active_pos["tp2"], "tp3": active_pos["tp3"],
-                        "planned_rr": active_pos["planned_rr"], "exit_ts": ltf_close_time,
+                        "planned_r": active_pos["planned_r"], "exit_ts": ltf_close_time,
                         "exit_price": active_pos["tp3"], "fill_exit": fill_exit,
                         "exit_reason": "TP3", "exit_fee": exit_fee, "net_pnl": net_pnl,
+                        "realized_r": realized_r, "mfe_r": mfe_r, "mae_r": mae_r,
                         "trailing_phase": active_pos["phase"],
                     })
                     balance += net_pnl
                     active_pos = None
             else:  # SHORT
+                active_pos["mfe_price"] = min(active_pos["mfe_price"], float(ltf_low[i]))
+                active_pos["mae_price"] = max(active_pos["mae_price"], float(ltf_high[i]))
+
                 if active_pos["phase"] == 1:
                     if ldv < active_pos["sl"]:
                         active_pos["sl"] = ldv
@@ -341,16 +367,25 @@ def run_single_set(symbol: str, set_name: str, htf_candles: List[Candle],
                     pnl = (active_pos["fill_entry"] - fill_exit) * active_pos["size"]
                     exit_fee = friction.calculate_fee(fill_exit * active_pos["size"])
                     net_pnl = pnl - active_pos["entry_fee"] - exit_fee
+                    mfe_r, mae_r = RAccountingEngine.calculate_excursions(
+                        direction, active_pos["entry_price"], active_pos["initial_sl"],
+                        active_pos["mfe_price"], active_pos["mae_price"]
+                    )
+                    realized_r = RAccountingEngine.calculate_trade_r(
+                        net_pnl, active_pos["entry_equity"], risk_pct
+                    )
                     trades.append({
                         "trade_id": active_pos["id"], "symbol": symbol, "set": set_name,
                         "direction": "SHORT", "entry_ts": active_pos["entry_ts"],
+                        "entry_equity": active_pos["entry_equity"],
                         "entry_price": active_pos["entry_price"], "fill_entry": active_pos["fill_entry"],
                         "size": active_pos["size"], "entry_fee": active_pos["entry_fee"],
                         "initial_sl": active_pos["initial_sl"], "tp1": active_pos["tp1"],
                         "tp2": active_pos["tp2"], "tp3": active_pos["tp3"],
-                        "planned_rr": active_pos["planned_rr"], "exit_ts": ltf_close_time,
+                        "planned_r": active_pos["planned_r"], "exit_ts": ltf_close_time,
                         "exit_price": active_pos["sl"], "fill_exit": fill_exit,
                         "exit_reason": "SL", "exit_fee": exit_fee, "net_pnl": net_pnl,
+                        "realized_r": realized_r, "mfe_r": mfe_r, "mae_r": mae_r,
                         "trailing_phase": active_pos["phase"],
                     })
                     balance += net_pnl
@@ -360,16 +395,25 @@ def run_single_set(symbol: str, set_name: str, htf_candles: List[Candle],
                     pnl = (active_pos["fill_entry"] - fill_exit) * active_pos["size"]
                     exit_fee = friction.calculate_fee(fill_exit * active_pos["size"])
                     net_pnl = pnl - active_pos["entry_fee"] - exit_fee
+                    mfe_r, mae_r = RAccountingEngine.calculate_excursions(
+                        direction, active_pos["entry_price"], active_pos["initial_sl"],
+                        active_pos["mfe_price"], active_pos["mae_price"]
+                    )
+                    realized_r = RAccountingEngine.calculate_trade_r(
+                        net_pnl, active_pos["entry_equity"], risk_pct
+                    )
                     trades.append({
                         "trade_id": active_pos["id"], "symbol": symbol, "set": set_name,
                         "direction": "SHORT", "entry_ts": active_pos["entry_ts"],
+                        "entry_equity": active_pos["entry_equity"],
                         "entry_price": active_pos["entry_price"], "fill_entry": active_pos["fill_entry"],
                         "size": active_pos["size"], "entry_fee": active_pos["entry_fee"],
                         "initial_sl": active_pos["initial_sl"], "tp1": active_pos["tp1"],
                         "tp2": active_pos["tp2"], "tp3": active_pos["tp3"],
-                        "planned_rr": active_pos["planned_rr"], "exit_ts": ltf_close_time,
+                        "planned_r": active_pos["planned_r"], "exit_ts": ltf_close_time,
                         "exit_price": active_pos["tp3"], "fill_exit": fill_exit,
                         "exit_reason": "TP3", "exit_fee": exit_fee, "net_pnl": net_pnl,
+                        "realized_r": realized_r, "mfe_r": mfe_r, "mae_r": mae_r,
                         "trailing_phase": active_pos["phase"],
                     })
                     balance += net_pnl
@@ -437,10 +481,17 @@ def run_single_set(symbol: str, set_name: str, htf_candles: List[Candle],
                 trade_counter += 1
                 if direction == 1:
                     fill_entry = friction.calculate_buy_fill(entry_price)
+                    fill_sl_exit = friction.calculate_sell_fill(sl_price)
+                    unit_loss = (fill_entry - fill_sl_exit) + friction.calculate_fee(fill_entry) + friction.calculate_fee(fill_sl_exit)
                 else:
                     fill_entry = friction.calculate_sell_fill(entry_price)
-                dollar_risk = balance * risk_pct
-                position_size = dollar_risk / risk
+                    fill_sl_exit = friction.calculate_buy_fill(sl_price)
+                    unit_loss = (fill_sl_exit - fill_entry) + friction.calculate_fee(fill_entry) + friction.calculate_fee(fill_sl_exit)
+
+                max_dollar_loss = balance * risk_pct
+                position_size = max_dollar_loss / unit_loss if unit_loss > 0 else 0.0
+                price_risk = abs(entry_price - sl_price)
+                risk_amount = position_size * price_risk
                 notional_entry = fill_entry * position_size
                 entry_fee = friction.calculate_fee(notional_entry)
 
@@ -448,16 +499,21 @@ def run_single_set(symbol: str, set_name: str, htf_candles: List[Candle],
                     "id": f"{symbol}_{set_name}_{trade_counter}",
                     "direction": direction,
                     "entry_ts": ltf_close_time,
+                    "entry_equity": balance,
                     "entry_price": entry_price,
                     "fill_entry": fill_entry,
                     "size": position_size,
                     "entry_fee": entry_fee,
+                    "risk_amount": risk_amount,
+                    "max_dollar_loss": max_dollar_loss,
                     "initial_sl": sl_price,
                     "sl": sl_price,
                     "tp1": tp1,
                     "tp2": tp2,
                     "tp3": tp3,
-                    "planned_rr": rr,
+                    "planned_r": rr,
+                    "mfe_price": entry_price,
+                    "mae_price": entry_price,
                     "phase": 1,
                 }
 
@@ -466,16 +522,23 @@ def run_single_set(symbol: str, set_name: str, htf_candles: List[Candle],
                 ltf_sm[direction].state = 'IDLE'
                 break
 
+    metrics = RAccountingEngine.compute_stream_metrics(trades)
     return {
         "symbol": symbol, "set": set_name, "starting_balance": starting_balance,
         "final_balance": balance, "trades": trades, "total_trades": len(trades),
         "valid_setups": valid_setups, "rejected_6r": rejected_6r, "news_filtered": news_filtered,
+        "metrics": metrics,
     }
 
 
 def main():
-    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
-    os.makedirs(output_dir, exist_ok=True)
+    output_dirs = [
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "results"),
+        os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "research", "results", "candidate_001_certified"),
+    ]
+    for d in output_dirs:
+        os.makedirs(d, exist_ok=True)
+
     all_results = []
 
     for symbol in ASSETS:
@@ -487,44 +550,71 @@ def main():
 
             if htf is None or mtf is None or ltf is None:
                 print(f"  SKIPPED: Missing data")
-                all_results.append({"symbol": symbol, "set": set_name, "starting_balance": 10000,
-                                    "final_balance": 10000, "trades": [], "total_trades": 0,
+                empty_metrics = RAccountingEngine.compute_stream_metrics([])
+                all_results.append({"symbol": symbol, "set": set_name, "style": sc["style"],
+                                    "starting_balance": 10000, "final_balance": 10000,
+                                    "trades": [], "total_trades": 0, "metrics": empty_metrics,
                                     "valid_setups": 0, "rejected_6r": 0, "news_filtered": 0})
                 continue
 
             result = run_single_set(symbol, set_name, htf, mtf, ltf)
+            result["style"] = sc["style"]
             all_results.append(result)
-            print(f"  Trades: {result['total_trades']}, Balance: ${result['final_balance']:.2f}, Rejected6R: {result['rejected_6r']}")
+            m = result["metrics"]
+            print(f"  Trades: {result['total_trades']}, Net R: {m['net_r']:+.2f}R, Exp: {m['expectancy_r']:+.2f}R, MaxDD: {m['max_drawdown_r']:.2f}R, Balance: ${result['final_balance']:.2f}, Rejected6R: {result['rejected_6r']}")
 
-    # Save results
-    ledger_path = os.path.join(output_dir, "trade_ledger.csv")
-    with open(ledger_path, "w", newline="") as f:
-        w = csv.writer(f)
-        w.writerow(["trade_id","symbol","set","direction","entry_ts","entry_price","fill_entry",
-                     "size","entry_fee","initial_sl","tp1","tp2","tp3","planned_rr",
-                     "exit_ts","exit_price","fill_exit","exit_reason","exit_fee","net_pnl","trailing_phase"])
-        for r in all_results:
-            for t in r["trades"]:
-                w.writerow([t["trade_id"],t["symbol"],t["set"],t["direction"],t["entry_ts"],
-                           t["entry_price"],t["fill_entry"],t["size"],t["entry_fee"],
-                           t["initial_sl"],t["tp1"],t["tp2"],t["tp3"],t["planned_rr"],
-                           t["exit_ts"],t["exit_price"],t["fill_exit"],t["exit_reason"],
-                           t["exit_fee"],t["net_pnl"],t["trailing_phase"]])
+    for out_dir in output_dirs:
+        # 1. Trade Ledger with full R metrics
+        ledger_path = os.path.join(out_dir, "trade_ledger.csv")
+        with open(ledger_path, "w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow([
+                "trade_id", "symbol", "set", "direction", "entry_ts", "entry_equity",
+                "entry_price", "fill_entry", "size", "entry_fee", "initial_sl",
+                "tp1", "tp2", "tp3", "planned_r", "exit_ts", "exit_price", "fill_exit",
+                "exit_reason", "exit_fee", "net_pnl", "realized_r", "mfe_r", "mae_r",
+                "trailing_phase"
+            ])
+            for r in all_results:
+                for t in r["trades"]:
+                    w.writerow([
+                        t["trade_id"], t["symbol"], t["set"], t["direction"], t["entry_ts"],
+                        f"{t['entry_equity']:.2f}", f"{t['entry_price']:.4f}", f"{t['fill_entry']:.4f}",
+                        f"{t['size']:.6f}", f"{t['entry_fee']:.4f}", f"{t['initial_sl']:.4f}",
+                        f"{t['tp1']:.4f}", f"{t['tp2']:.4f}", f"{t['tp3']:.4f}", f"{t['planned_r']:.2f}",
+                        t["exit_ts"], f"{t['exit_price']:.4f}", f"{t['fill_exit']:.4f}",
+                        t["exit_reason"], f"{t['exit_fee']:.4f}", f"{t['net_pnl']:.2f}",
+                        f"{t['realized_r']:.4f}", f"{t['mfe_r']:.4f}", f"{t['mae_r']:.4f}",
+                        t["trailing_phase"]
+                    ])
 
-    summary_path = os.path.join(output_dir, "summary.csv")
-    with open(summary_path, "w", newline="") as f:
-        w = csv.writer(f)
-        w.writerow(["asset","set","total_trades","final_balance","net_pnl","rejected_6r","news_filtered","valid_setups"])
-        for r in all_results:
-            w.writerow([r["symbol"],r["set"],r["total_trades"],r["final_balance"],
-                        r["final_balance"]-r["starting_balance"],r["rejected_6r"],
-                        r["news_filtered"],r["valid_setups"]])
+        # 2. Standardized R Summary
+        summary_path = os.path.join(out_dir, "summary_r.csv")
+        with open(summary_path, "w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow([
+                "asset", "set", "style", "total_trades", "win_count", "loss_count",
+                "win_rate", "net_r", "expectancy_r", "profit_factor_r", "max_drawdown_r",
+                "average_r", "median_r", "avg_mfe_r", "avg_mae_r", "final_balance",
+                "net_pnl_usd", "total_fees_usd", "rejected_6r", "sample_confidence"
+            ])
+            for r in all_results:
+                m = r["metrics"]
+                w.writerow([
+                    r["symbol"], r["set"], r.get("style", ""), r["total_trades"],
+                    m["win_count"], m["loss_count"], m["win_rate"], m["net_r"],
+                    m["expectancy_r"], m["profit_factor_r"], m["max_drawdown_r"],
+                    m["average_r"], m["median_r"], m["avg_mfe_r"], m["avg_mae_r"],
+                    f"{r['final_balance']:.2f}", f"{r['final_balance'] - r['starting_balance']:.2f}",
+                    m["total_fees_usd"], r["rejected_6r"], m["sample_confidence"]
+                ])
 
-    json_path = os.path.join(output_dir, "full_results.json")
-    with open(json_path, "w") as f:
-        json.dump(all_results, f, indent=2, default=str)
+        # 3. Full JSON
+        json_path = os.path.join(out_dir, "full_results.json")
+        with open(json_path, "w") as f:
+            json.dump(all_results, f, indent=2, default=str)
 
-    print(f"\nResults saved to {output_dir}")
+    print(f"\nCertified results saved to: {', '.join(output_dirs)}")
     return all_results
 
 
