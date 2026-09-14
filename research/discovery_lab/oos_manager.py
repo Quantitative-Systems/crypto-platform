@@ -25,6 +25,84 @@ class OOSManager:
 
     DEFAULT_IN_SAMPLE_RATIO = 0.70
 
+    # Strict Calendar Horizon Constants (UTC)
+    DEV_START_TS = 1609459200  # 2021-01-01 00:00:00 UTC
+    DEV_END_TS = 1672531199    # 2022-12-31 23:59:59 UTC
+    VAL_START_TS = 1672531200  # 2023-01-01 00:00:00 UTC
+    VAL_END_TS = 1704067199    # 2023-12-31 23:59:59 UTC
+    OOS_START_TS = 1704067200  # 2024-01-01 00:00:00 UTC
+
+    @staticmethod
+    def get_development_candles_by_date(
+        candles: List[Candle],
+        include_warmup: bool = True,
+    ) -> List[Candle]:
+        """
+        Returns candles for Development research (2021-2022).
+        If include_warmup is True, includes candles prior to 2021 for indicator stability,
+        capped strictly at DEV_END_TS (2022-12-31 23:59:59 UTC).
+        """
+        if not candles:
+            return []
+        if include_warmup:
+            return [c for c in candles if c.timestamp <= OOSManager.DEV_END_TS]
+        else:
+            return [c for c in candles if OOSManager.DEV_START_TS <= c.timestamp <= OOSManager.DEV_END_TS]
+
+    @staticmethod
+    def get_validation_candles_by_date(
+        candles: List[Candle],
+        is_candidate_qualified: bool,
+        candidate_id: str,
+        include_warmup: bool = True,
+    ) -> List[Candle]:
+        """Gated access to the 2023 Validation dataset."""
+        if not is_candidate_qualified:
+            raise OOSLockViolation(
+                f"Candidate '{candidate_id}' is not qualified for Validation testing! "
+                f"Validation access is locked until candidate passes all Development gates."
+            )
+        if not candles:
+            return []
+        if include_warmup:
+            return [c for c in candles if c.timestamp <= OOSManager.VAL_END_TS]
+        else:
+            return [c for c in candles if OOSManager.VAL_START_TS <= c.timestamp <= OOSManager.VAL_END_TS]
+
+    @staticmethod
+    def get_oos_candles_by_date(
+        candles: List[Candle],
+        is_candidate_validated: bool,
+        candidate_id: str,
+        include_warmup: bool = True,
+    ) -> List[Candle]:
+        """Gated access to the 2024-2026 Out-of-Sample dataset."""
+        if not is_candidate_validated:
+            raise OOSLockViolation(
+                f"Candidate '{candidate_id}' is not qualified for OOS testing! "
+                f"OOS access is locked until candidate passes Validation."
+            )
+        if not candles:
+            return []
+        if include_warmup:
+            return [c for c in candles if c.timestamp >= OOSManager.DEV_START_TS]
+        else:
+            return [c for c in candles if c.timestamp >= OOSManager.OOS_START_TS]
+
+    @staticmethod
+    def filter_trades_to_window(
+        trades: List[Dict[str, Any]],
+        start_ts: int,
+        end_ts: int,
+    ) -> List[Dict[str, Any]]:
+        """Strictly filter trades by entry timestamp to an active evaluation window."""
+        return [t for t in trades if start_ts <= int(t.get("entry_ts", 0)) <= end_ts]
+
+    @staticmethod
+    def filter_development_trades(trades: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Filter trades strictly to Development research period (2021-2022)."""
+        return OOSManager.filter_trades_to_window(trades, OOSManager.DEV_START_TS, OOSManager.DEV_END_TS)
+
     @staticmethod
     def partition_candles(
         candles: List[Candle],

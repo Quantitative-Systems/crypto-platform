@@ -88,6 +88,17 @@ class RAccountingEngine:
                 "avg_mfe_r": 0.0,
                 "max_mae_r": 0.0,
                 "max_mfe_r": 0.0,
+                "top_1_r": 0.0,
+                "top_1_pct_net_r": 0.0,
+                "top_5_r": 0.0,
+                "top_5_pct_net_r": 0.0,
+                "top_10_r": 0.0,
+                "top_10_pct_net_r": 0.0,
+                "net_r_without_top_1": 0.0,
+                "net_r_without_top_5": 0.0,
+                "max_loss_streak": 0,
+                "losing_streak_dist": {},
+                "profit_concentration_status": "NO_TRADES",
                 "net_pnl_usd": 0.0,
                 "total_fees_usd": 0.0,
                 "sample_confidence": "INSUFFICIENT_DATA",
@@ -140,8 +151,56 @@ class RAccountingEngine:
         net_pnl_usd = sum(float(t.get("net_pnl", 0.0)) for t in trades)
         total_fees_usd = sum(float(t.get("entry_fee", 0.0)) + float(t.get("exit_fee", 0.0)) for t in trades)
 
+        # Profit Concentration Firewall Telemetry
+        sorted_rs = sorted(realized_rs, reverse=True)
+        top_1_r = sorted_rs[0] if len(sorted_rs) >= 1 else 0.0
+        top_5_r = sum(sorted_rs[:5]) if len(sorted_rs) >= 1 else 0.0
+        top_10_r = sum(sorted_rs[:10]) if len(sorted_rs) >= 1 else 0.0
+
+        if net_r > 0.0:
+            top_1_pct = (top_1_r / net_r) * 100.0
+            top_5_pct = (top_5_r / net_r) * 100.0
+            top_10_pct = (top_10_r / net_r) * 100.0
+        else:
+            top_1_pct = 0.0
+            top_5_pct = 0.0
+            top_10_pct = 0.0
+
+        net_r_without_top_1 = net_r - top_1_r
+        net_r_without_top_5 = net_r - top_5_r
+
+        # Losing streak distribution
+        current_loss_streak = 0
+        max_loss_streak = 0
+        losing_streak_dist: Dict[int, int] = {}
+        for r_val in realized_rs:
+            if r_val < 0.0:
+                current_loss_streak += 1
+                if current_loss_streak > max_loss_streak:
+                    max_loss_streak = current_loss_streak
+            else:
+                if current_loss_streak > 0:
+                    losing_streak_dist[current_loss_streak] = losing_streak_dist.get(current_loss_streak, 0) + 1
+                current_loss_streak = 0
+        if current_loss_streak > 0:
+            losing_streak_dist[current_loss_streak] = losing_streak_dist.get(current_loss_streak, 0) + 1
+
+        # Profit Concentration Firewall Status
+        if net_r <= 0.0:
+            profit_concentration_status = "NEGATIVE_NET_R"
+        elif total_trades >= 5 and net_r_without_top_1 <= 0.0:
+            profit_concentration_status = "REJECTED_TOP1_COLLAPSE"
+        elif total_trades >= 5 and top_1_pct > 50.0:
+            profit_concentration_status = "REJECTED_EXCESSIVE_TOP1"
+        elif total_trades >= 20 and top_5_pct > 80.0:
+            profit_concentration_status = "WARNING_HIGH_TOP5"
+        else:
+            profit_concentration_status = "PASS"
+
         # Statistical sample confidence
-        if total_trades >= 30:
+        if total_trades >= 100:
+            sample_confidence = "STATISTICALLY_QUALIFIED"
+        elif total_trades >= 30:
             sample_confidence = "STATISTICALLY_EVALUABLE"
         elif total_trades >= 10:
             sample_confidence = "PRELIMINARY_SAMPLE"
@@ -167,6 +226,17 @@ class RAccountingEngine:
             "avg_mfe_r": round(avg_mfe_r, 4),
             "max_mae_r": round(max_mae_r, 4),
             "max_mfe_r": round(max_mfe_r, 4),
+            "top_1_r": round(top_1_r, 4),
+            "top_1_pct_net_r": round(top_1_pct, 2),
+            "top_5_r": round(top_5_r, 4),
+            "top_5_pct_net_r": round(top_5_pct, 2),
+            "top_10_r": round(top_10_r, 4),
+            "top_10_pct_net_r": round(top_10_pct, 2),
+            "net_r_without_top_1": round(net_r_without_top_1, 4),
+            "net_r_without_top_5": round(net_r_without_top_5, 4),
+            "max_loss_streak": max_loss_streak,
+            "losing_streak_dist": losing_streak_dist,
+            "profit_concentration_status": profit_concentration_status,
             "net_pnl_usd": round(net_pnl_usd, 2),
             "total_fees_usd": round(total_fees_usd, 2),
             "sample_confidence": sample_confidence,

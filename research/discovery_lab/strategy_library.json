@@ -3,7 +3,7 @@
     "strategy_id": "CANDIDATE-001",
     "version": "1.0.0-FROZEN",
     "registered_at": "2026-09-14T12:15:17.203888+00:00",
-    "status": "RESEARCH",
+    "status": "FAILED",
     "hypothesis": {
       "hypothesis_id": "CANDIDATE-001",
       "name": "Supertrend + Stochastic MTF Triple Alignment (6.0R)",
@@ -76,18 +76,10 @@
       "friction_adjusted": true
     },
     "development_results": {
-      "total_trades": 25,
-      "win_count": 11,
-      "loss_count": 14,
-      "win_rate": 0.44,
-      "net_r": 35.79,
-      "expectancy_r": 1.43,
-      "profit_factor_r": 3.94,
-      "max_drawdown_r": 2.91,
-      "average_r": 1.43,
-      "median_r": -0.26,
-      "net_pnl_usd": 3697.1,
-      "sample_confidence": "INSUFFICIENT_DATA"
+      "total_trades": 6,
+      "net_r": -1.97,
+      "expectancy_r": -0.3278,
+      "verdict": "FALSIFIED / INSUFFICIENT_N (6 trades in 2021-2022 Dev)"
     },
     "validation_results": {},
     "oos_results": {},
@@ -105,7 +97,7 @@
     "strategy_id": "EXP-001A-GEOM",
     "version": "0.1.0-DRAFT",
     "registered_at": "2026-09-14T12:15:17.205645+00:00",
-    "status": "RESEARCH",
+    "status": "FAILED",
     "hypothesis": {
       "hypothesis_id": "EXP-001A-GEOM",
       "name": "Supertrend + Stochastic MTF with 3.0R Rational Geometry",
@@ -169,7 +161,12 @@
       "max_risk_pct": 0.01,
       "friction_adjusted": true
     },
-    "development_results": {},
+    "development_results": {
+      "total_trades": 11,
+      "net_r": -3.42,
+      "expectancy_r": -0.3106,
+      "verdict": "FALSIFIED / INSUFFICIENT_N (11 trades in 2021-2022 Dev)"
+    },
     "validation_results": {},
     "oos_results": {},
     "robustness_results": {},
@@ -186,7 +183,7 @@
     "strategy_id": "EXP-001B-STOCH",
     "version": "0.1.0-DRAFT",
     "registered_at": "2026-09-14T12:15:17.208332+00:00",
-    "status": "RESEARCH",
+    "status": "FAILED",
     "hypothesis": {
       "hypothesis_id": "EXP-001B-STOCH-HIERARCHY",
       "name": "Decoupled HTF Trend / MTF Pullback Oscillator",
@@ -246,7 +243,12 @@
       "max_risk_pct": 0.01,
       "friction_adjusted": true
     },
-    "development_results": {},
+    "development_results": {
+      "total_trades": 97,
+      "net_r": -2.15,
+      "expectancy_r": -0.0222,
+      "verdict": "FALSIFIED / INSUFFICIENT_N (97 trades total, no set reached N >= 100)"
+    },
     "validation_results": {},
     "oos_results": {},
     "robustness_results": {},
@@ -258,5 +260,2863 @@
       }
     ],
     "notes": "Pre-registered hypothesis: decouple HTF from deep oversold condition, allowing trend persistence."
+  },
+  "FAM-01-TREND_BTCUSDT_Set1": {
+    "strategy_id": "FAM-01-TREND_BTCUSDT_Set1",
+    "family_id": "FAM-01-TREND",
+    "family_name": "Trend Following",
+    "symbol": "BTC/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 3,
+      "net_r": 0.9274,
+      "expectancy_r": 0.3091,
+      "profit_factor_r": 1.4637,
+      "win_rate": 0.3333,
+      "max_drawdown_r": 1.0,
+      "top_1_r": 2.9274,
+      "top_1_pct": 315.66,
+      "net_r_without_top_1": -2.0,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (3 < 100)"
+      ]
+    }
+  },
+  "FAM-01-TREND_BTCUSDT_Set2": {
+    "strategy_id": "FAM-01-TREND_BTCUSDT_Set2",
+    "family_id": "FAM-01-TREND",
+    "family_name": "Trend Following",
+    "symbol": "BTC/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 46,
+      "net_r": 7.2946,
+      "expectancy_r": 0.1586,
+      "profit_factor_r": 1.228,
+      "win_rate": 0.3043,
+      "max_drawdown_r": 7.3864,
+      "top_1_r": 2.9138,
+      "top_1_pct": 39.95,
+      "net_r_without_top_1": 4.3808,
+      "profit_concentration_status": "WARNING_HIGH_TOP5",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (46 < 100)",
+        "CONCENTRATION_VIOLATION (WARNING_HIGH_TOP5)"
+      ]
+    }
+  },
+  "FAM-01-TREND_BTCUSDT_Set3": {
+    "strategy_id": "FAM-01-TREND_BTCUSDT_Set3",
+    "family_id": "FAM-01-TREND",
+    "family_name": "Trend Following",
+    "symbol": "BTC/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 193,
+      "net_r": 0.747,
+      "expectancy_r": 0.0039,
+      "profit_factor_r": 1.0054,
+      "win_rate": 0.2798,
+      "max_drawdown_r": 18.6364,
+      "top_1_r": 2.8521,
+      "top_1_pct": 381.83,
+      "net_r_without_top_1": -2.1051,
+      "profit_concentration_status": "REJECTED_TOP1_COLLAPSE",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "CONCENTRATION_VIOLATION (REJECTED_TOP1_COLLAPSE)"
+      ]
+    }
+  },
+  "FAM-01-TREND_BTCUSDT_Set4": {
+    "strategy_id": "FAM-01-TREND_BTCUSDT_Set4",
+    "family_id": "FAM-01-TREND",
+    "family_name": "Trend Following",
+    "symbol": "BTC/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 854,
+      "net_r": -93.438,
+      "expectancy_r": -0.1094,
+      "profit_factor_r": 0.8488,
+      "win_rate": 0.2763,
+      "max_drawdown_r": 110.7412,
+      "top_1_r": 2.8032,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -96.2411,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.11R)",
+        "EXCESSIVE_DD (110.74R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-01-TREND_ETHUSDT_Set1": {
+    "strategy_id": "FAM-01-TREND_ETHUSDT_Set1",
+    "family_id": "FAM-01-TREND",
+    "family_name": "Trend Following",
+    "symbol": "ETH/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 5,
+      "net_r": -5.0,
+      "expectancy_r": -1.0,
+      "profit_factor_r": 0.0,
+      "win_rate": 0.0,
+      "max_drawdown_r": 4.0,
+      "top_1_r": -1.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -4.0,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (5 < 100)",
+        "NEGATIVE_EXPECTANCY (-1.00R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-01-TREND_ETHUSDT_Set2": {
+    "strategy_id": "FAM-01-TREND_ETHUSDT_Set2",
+    "family_id": "FAM-01-TREND",
+    "family_name": "Trend Following",
+    "symbol": "ETH/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 44,
+      "net_r": 17.6261,
+      "expectancy_r": 0.4006,
+      "profit_factor_r": 1.6295,
+      "win_rate": 0.3636,
+      "max_drawdown_r": 8.1819,
+      "top_1_r": 2.9393,
+      "top_1_pct": 16.68,
+      "net_r_without_top_1": 14.6868,
+      "profit_concentration_status": "WARNING_HIGH_TOP5",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (44 < 100)",
+        "CONCENTRATION_VIOLATION (WARNING_HIGH_TOP5)"
+      ]
+    }
+  },
+  "FAM-01-TREND_ETHUSDT_Set3": {
+    "strategy_id": "FAM-01-TREND_ETHUSDT_Set3",
+    "family_id": "FAM-01-TREND",
+    "family_name": "Trend Following",
+    "symbol": "ETH/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 191,
+      "net_r": -18.6316,
+      "expectancy_r": -0.0975,
+      "profit_factor_r": 0.8706,
+      "win_rate": 0.2461,
+      "max_drawdown_r": 35.8577,
+      "top_1_r": 2.9222,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -21.5538,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.10R)",
+        "EXCESSIVE_DD (35.86R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-01-TREND_ETHUSDT_Set4": {
+    "strategy_id": "FAM-01-TREND_ETHUSDT_Set4",
+    "family_id": "FAM-01-TREND",
+    "family_name": "Trend Following",
+    "symbol": "ETH/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 916,
+      "net_r": -20.6708,
+      "expectancy_r": -0.0226,
+      "profit_factor_r": 0.9681,
+      "win_rate": 0.2915,
+      "max_drawdown_r": 68.5365,
+      "top_1_r": 2.8802,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -23.551,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.02R)",
+        "EXCESSIVE_DD (68.54R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-01-TREND_SOLUSDT_Set1": {
+    "strategy_id": "FAM-01-TREND_SOLUSDT_Set1",
+    "family_id": "FAM-01-TREND",
+    "family_name": "Trend Following",
+    "symbol": "SOL/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 0,
+      "net_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor_r": "NOT_AVAILABLE",
+      "win_rate": 0.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 0.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": 0.0,
+      "profit_concentration_status": "NO_TRADES",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (0 < 100)",
+        "NEGATIVE_EXPECTANCY (+0.00R)",
+        "CONCENTRATION_VIOLATION (NO_TRADES)"
+      ]
+    }
+  },
+  "FAM-01-TREND_SOLUSDT_Set2": {
+    "strategy_id": "FAM-01-TREND_SOLUSDT_Set2",
+    "family_id": "FAM-01-TREND",
+    "family_name": "Trend Following",
+    "symbol": "SOL/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 25,
+      "net_r": 17.6825,
+      "expectancy_r": 0.7073,
+      "profit_factor_r": 2.263,
+      "win_rate": 0.44,
+      "max_drawdown_r": 3.0,
+      "top_1_r": 2.9557,
+      "top_1_pct": 16.72,
+      "net_r_without_top_1": 14.7267,
+      "profit_concentration_status": "WARNING_HIGH_TOP5",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (25 < 100)",
+        "CONCENTRATION_VIOLATION (WARNING_HIGH_TOP5)"
+      ]
+    }
+  },
+  "FAM-01-TREND_SOLUSDT_Set3": {
+    "strategy_id": "FAM-01-TREND_SOLUSDT_Set3",
+    "family_id": "FAM-01-TREND",
+    "family_name": "Trend Following",
+    "symbol": "SOL/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "VALIDATION",
+    "development_results": {
+      "total_trades": 203,
+      "net_r": 46.3879,
+      "expectancy_r": 0.2285,
+      "profit_factor_r": 1.3386,
+      "win_rate": 0.3251,
+      "max_drawdown_r": 14.0733,
+      "top_1_r": 2.9429,
+      "top_1_pct": 6.34,
+      "net_r_without_top_1": 43.445,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": true,
+      "stressed_net_r": 33.5617,
+      "param_stability_passed": true,
+      "falsification_reasons": []
+    },
+    "validation_results": {
+      "n": 98,
+      "net_r": 8.5343,
+      "exp_r": 0.0871,
+      "pf": 1.1237,
+      "max_dd": 14.7446,
+      "passed": true
+    },
+    "oos_results": {
+      "n": 293,
+      "net_r": -10.5336,
+      "exp_r": -0.036,
+      "pf": 0.951,
+      "max_dd": 18.7753,
+      "passed": false
+    }
+  },
+  "FAM-01-TREND_SOLUSDT_Set4": {
+    "strategy_id": "FAM-01-TREND_SOLUSDT_Set4",
+    "family_id": "FAM-01-TREND",
+    "family_name": "Trend Following",
+    "symbol": "SOL/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 880,
+      "net_r": 43.6952,
+      "expectancy_r": 0.0497,
+      "profit_factor_r": 1.0705,
+      "win_rate": 0.2955,
+      "max_drawdown_r": 44.4024,
+      "top_1_r": 2.9166,
+      "top_1_pct": 6.67,
+      "net_r_without_top_1": 40.7786,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "EXCESSIVE_DD (44.40R > 25R)"
+      ]
+    }
+  },
+  "FAM-02-PULLBACK_BTCUSDT_Set1": {
+    "strategy_id": "FAM-02-PULLBACK_BTCUSDT_Set1",
+    "family_id": "FAM-02-PULLBACK",
+    "family_name": "Trend + Pullback",
+    "symbol": "BTC/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 4,
+      "net_r": -4.0,
+      "expectancy_r": -1.0,
+      "profit_factor_r": 0.0,
+      "win_rate": 0.0,
+      "max_drawdown_r": 3.0,
+      "top_1_r": -1.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -3.0,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (4 < 100)",
+        "NEGATIVE_EXPECTANCY (-1.00R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-02-PULLBACK_BTCUSDT_Set2": {
+    "strategy_id": "FAM-02-PULLBACK_BTCUSDT_Set2",
+    "family_id": "FAM-02-PULLBACK",
+    "family_name": "Trend + Pullback",
+    "symbol": "BTC/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 15,
+      "net_r": -11.7064,
+      "expectancy_r": -0.7804,
+      "profit_factor_r": 0.1638,
+      "win_rate": 0.0667,
+      "max_drawdown_r": 10.7064,
+      "top_1_r": 2.2936,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -14.0,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (15 < 100)",
+        "NEGATIVE_EXPECTANCY (-0.78R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-02-PULLBACK_BTCUSDT_Set3": {
+    "strategy_id": "FAM-02-PULLBACK_BTCUSDT_Set3",
+    "family_id": "FAM-02-PULLBACK",
+    "family_name": "Trend + Pullback",
+    "symbol": "BTC/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 53,
+      "net_r": -3.627,
+      "expectancy_r": -0.0684,
+      "profit_factor_r": 0.902,
+      "win_rate": 0.3019,
+      "max_drawdown_r": 12.6016,
+      "top_1_r": 2.2718,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -5.8988,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (53 < 100)",
+        "NEGATIVE_EXPECTANCY (-0.07R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-02-PULLBACK_BTCUSDT_Set4": {
+    "strategy_id": "FAM-02-PULLBACK_BTCUSDT_Set4",
+    "family_id": "FAM-02-PULLBACK",
+    "family_name": "Trend + Pullback",
+    "symbol": "BTC/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 122,
+      "net_r": -49.8748,
+      "expectancy_r": -0.4088,
+      "profit_factor_r": 0.475,
+      "win_rate": 0.2213,
+      "max_drawdown_r": 54.0067,
+      "top_1_r": 2.2997,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -52.1745,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.41R)",
+        "EXCESSIVE_DD (54.01R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-02-PULLBACK_ETHUSDT_Set1": {
+    "strategy_id": "FAM-02-PULLBACK_ETHUSDT_Set1",
+    "family_id": "FAM-02-PULLBACK",
+    "family_name": "Trend + Pullback",
+    "symbol": "ETH/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 5,
+      "net_r": 1.8704,
+      "expectancy_r": 0.3741,
+      "profit_factor_r": 1.6235,
+      "win_rate": 0.4,
+      "max_drawdown_r": 2.0,
+      "top_1_r": 2.4387,
+      "top_1_pct": 130.38,
+      "net_r_without_top_1": -0.5682,
+      "profit_concentration_status": "REJECTED_TOP1_COLLAPSE",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (5 < 100)",
+        "CONCENTRATION_VIOLATION (REJECTED_TOP1_COLLAPSE)"
+      ]
+    }
+  },
+  "FAM-02-PULLBACK_ETHUSDT_Set2": {
+    "strategy_id": "FAM-02-PULLBACK_ETHUSDT_Set2",
+    "family_id": "FAM-02-PULLBACK",
+    "family_name": "Trend + Pullback",
+    "symbol": "ETH/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 11,
+      "net_r": -7.6848,
+      "expectancy_r": -0.6986,
+      "profit_factor_r": 0.2315,
+      "win_rate": 0.0909,
+      "max_drawdown_r": 8.0,
+      "top_1_r": 2.3152,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -10.0,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (11 < 100)",
+        "NEGATIVE_EXPECTANCY (-0.70R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-02-PULLBACK_ETHUSDT_Set3": {
+    "strategy_id": "FAM-02-PULLBACK_ETHUSDT_Set3",
+    "family_id": "FAM-02-PULLBACK",
+    "family_name": "Trend + Pullback",
+    "symbol": "ETH/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 47,
+      "net_r": -31.4372,
+      "expectancy_r": -0.6689,
+      "profit_factor_r": 0.2515,
+      "win_rate": 0.1064,
+      "max_drawdown_r": 32.3177,
+      "top_1_r": 2.2062,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -33.6434,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (47 < 100)",
+        "NEGATIVE_EXPECTANCY (-0.67R)",
+        "EXCESSIVE_DD (32.32R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-02-PULLBACK_ETHUSDT_Set4": {
+    "strategy_id": "FAM-02-PULLBACK_ETHUSDT_Set4",
+    "family_id": "FAM-02-PULLBACK",
+    "family_name": "Trend + Pullback",
+    "symbol": "ETH/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 132,
+      "net_r": -35.0865,
+      "expectancy_r": -0.2658,
+      "profit_factor_r": 0.642,
+      "win_rate": 0.2576,
+      "max_drawdown_r": 38.4427,
+      "top_1_r": 2.2709,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -37.3575,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.27R)",
+        "EXCESSIVE_DD (38.44R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-02-PULLBACK_SOLUSDT_Set1": {
+    "strategy_id": "FAM-02-PULLBACK_SOLUSDT_Set1",
+    "family_id": "FAM-02-PULLBACK",
+    "family_name": "Trend + Pullback",
+    "symbol": "SOL/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 0,
+      "net_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor_r": "NOT_AVAILABLE",
+      "win_rate": 0.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 0.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": 0.0,
+      "profit_concentration_status": "NO_TRADES",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (0 < 100)",
+        "NEGATIVE_EXPECTANCY (+0.00R)",
+        "CONCENTRATION_VIOLATION (NO_TRADES)"
+      ]
+    }
+  },
+  "FAM-02-PULLBACK_SOLUSDT_Set2": {
+    "strategy_id": "FAM-02-PULLBACK_SOLUSDT_Set2",
+    "family_id": "FAM-02-PULLBACK",
+    "family_name": "Trend + Pullback",
+    "symbol": "SOL/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 7,
+      "net_r": -0.2205,
+      "expectancy_r": -0.0315,
+      "profit_factor_r": 0.9559,
+      "win_rate": 0.2857,
+      "max_drawdown_r": 3.0,
+      "top_1_r": 2.4039,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -2.6245,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (7 < 100)",
+        "NEGATIVE_EXPECTANCY (-0.03R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-02-PULLBACK_SOLUSDT_Set3": {
+    "strategy_id": "FAM-02-PULLBACK_SOLUSDT_Set3",
+    "family_id": "FAM-02-PULLBACK",
+    "family_name": "Trend + Pullback",
+    "symbol": "SOL/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 56,
+      "net_r": -16.6428,
+      "expectancy_r": -0.2972,
+      "profit_factor_r": 0.6218,
+      "win_rate": 0.2143,
+      "max_drawdown_r": 20.7498,
+      "top_1_r": 2.3852,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -19.028,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (56 < 100)",
+        "NEGATIVE_EXPECTANCY (-0.30R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-02-PULLBACK_SOLUSDT_Set4": {
+    "strategy_id": "FAM-02-PULLBACK_SOLUSDT_Set4",
+    "family_id": "FAM-02-PULLBACK",
+    "family_name": "Trend + Pullback",
+    "symbol": "SOL/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 160,
+      "net_r": -38.435,
+      "expectancy_r": -0.2402,
+      "profit_factor_r": 0.677,
+      "win_rate": 0.2562,
+      "max_drawdown_r": 43.8372,
+      "top_1_r": 2.3562,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -40.7912,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.24R)",
+        "EXCESSIVE_DD (43.84R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-03-BREAKOUT_BTCUSDT_Set1": {
+    "strategy_id": "FAM-03-BREAKOUT_BTCUSDT_Set1",
+    "family_id": "FAM-03-BREAKOUT",
+    "family_name": "Breakout (Donchian)",
+    "symbol": "BTC/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 16,
+      "net_r": 3.5381,
+      "expectancy_r": 0.2211,
+      "profit_factor_r": 1.3216,
+      "win_rate": 0.3125,
+      "max_drawdown_r": 5.0,
+      "top_1_r": 2.9239,
+      "top_1_pct": 82.64,
+      "net_r_without_top_1": 0.6142,
+      "profit_concentration_status": "REJECTED_EXCESSIVE_TOP1",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (16 < 100)",
+        "CONCENTRATION_VIOLATION (REJECTED_EXCESSIVE_TOP1)"
+      ]
+    }
+  },
+  "FAM-03-BREAKOUT_BTCUSDT_Set2": {
+    "strategy_id": "FAM-03-BREAKOUT_BTCUSDT_Set2",
+    "family_id": "FAM-03-BREAKOUT",
+    "family_name": "Breakout (Donchian)",
+    "symbol": "BTC/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 152,
+      "net_r": -24.8797,
+      "expectancy_r": -0.1637,
+      "profit_factor_r": 0.7892,
+      "win_rate": 0.2237,
+      "max_drawdown_r": 26.6174,
+      "top_1_r": 2.8884,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -27.7681,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.16R)",
+        "EXCESSIVE_DD (26.62R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-03-BREAKOUT_BTCUSDT_Set3": {
+    "strategy_id": "FAM-03-BREAKOUT_BTCUSDT_Set3",
+    "family_id": "FAM-03-BREAKOUT",
+    "family_name": "Breakout (Donchian)",
+    "symbol": "BTC/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 556,
+      "net_r": -21.8978,
+      "expectancy_r": -0.0394,
+      "profit_factor_r": 0.9457,
+      "win_rate": 0.2752,
+      "max_drawdown_r": 41.8729,
+      "top_1_r": 2.8569,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -24.7547,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.04R)",
+        "EXCESSIVE_DD (41.87R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-03-BREAKOUT_BTCUSDT_Set4": {
+    "strategy_id": "FAM-03-BREAKOUT_BTCUSDT_Set4",
+    "family_id": "FAM-03-BREAKOUT",
+    "family_name": "Breakout (Donchian)",
+    "symbol": "BTC/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2302,
+      "net_r": -531.3028,
+      "expectancy_r": -0.2308,
+      "profit_factor_r": 0.6924,
+      "win_rate": 0.2498,
+      "max_drawdown_r": 542.9844,
+      "top_1_r": 2.7278,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -534.0306,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.23R)",
+        "EXCESSIVE_DD (542.98R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-03-BREAKOUT_ETHUSDT_Set1": {
+    "strategy_id": "FAM-03-BREAKOUT_ETHUSDT_Set1",
+    "family_id": "FAM-03-BREAKOUT",
+    "family_name": "Breakout (Donchian)",
+    "symbol": "ETH/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 24,
+      "net_r": 7.3093,
+      "expectancy_r": 0.3046,
+      "profit_factor_r": 1.4568,
+      "win_rate": 0.3333,
+      "max_drawdown_r": 6.0,
+      "top_1_r": 2.9441,
+      "top_1_pct": 40.28,
+      "net_r_without_top_1": 4.3652,
+      "profit_concentration_status": "WARNING_HIGH_TOP5",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (24 < 100)",
+        "CONCENTRATION_VIOLATION (WARNING_HIGH_TOP5)"
+      ]
+    }
+  },
+  "FAM-03-BREAKOUT_ETHUSDT_Set2": {
+    "strategy_id": "FAM-03-BREAKOUT_ETHUSDT_Set2",
+    "family_id": "FAM-03-BREAKOUT",
+    "family_name": "Breakout (Donchian)",
+    "symbol": "ETH/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 131,
+      "net_r": 20.2002,
+      "expectancy_r": 0.1542,
+      "profit_factor_r": 1.222,
+      "win_rate": 0.3053,
+      "max_drawdown_r": 10.3266,
+      "top_1_r": 2.8987,
+      "top_1_pct": 14.35,
+      "net_r_without_top_1": 17.3015,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": true,
+      "stressed_net_r": 12.3845,
+      "param_stability_passed": true,
+      "falsification_reasons": []
+    },
+    "validation_results": {
+      "n": 82,
+      "net_r": -21.3825,
+      "exp_r": -0.2608,
+      "pf": 0.671,
+      "max_dd": 23.0288,
+      "passed": false
+    },
+    "oos_results": {
+      "n": 0,
+      "net_r": 0.0,
+      "exp_r": 0.0,
+      "pf": "N/A",
+      "max_dd": 0.0,
+      "passed": false
+    }
+  },
+  "FAM-03-BREAKOUT_ETHUSDT_Set3": {
+    "strategy_id": "FAM-03-BREAKOUT_ETHUSDT_Set3",
+    "family_id": "FAM-03-BREAKOUT",
+    "family_name": "Breakout (Donchian)",
+    "symbol": "ETH/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 584,
+      "net_r": 4.4727,
+      "expectancy_r": 0.0077,
+      "profit_factor_r": 1.0106,
+      "win_rate": 0.2808,
+      "max_drawdown_r": 31.3809,
+      "top_1_r": 2.888,
+      "top_1_pct": 64.57,
+      "net_r_without_top_1": 1.5847,
+      "profit_concentration_status": "REJECTED_EXCESSIVE_TOP1",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "EXCESSIVE_DD (31.38R > 25R)",
+        "CONCENTRATION_VIOLATION (REJECTED_EXCESSIVE_TOP1)"
+      ]
+    }
+  },
+  "FAM-03-BREAKOUT_ETHUSDT_Set4": {
+    "strategy_id": "FAM-03-BREAKOUT_ETHUSDT_Set4",
+    "family_id": "FAM-03-BREAKOUT",
+    "family_name": "Breakout (Donchian)",
+    "symbol": "ETH/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2341,
+      "net_r": -231.2446,
+      "expectancy_r": -0.0988,
+      "profit_factor_r": 0.863,
+      "win_rate": 0.2789,
+      "max_drawdown_r": 239.1564,
+      "top_1_r": 2.7766,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -234.0213,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.10R)",
+        "EXCESSIVE_DD (239.16R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-03-BREAKOUT_SOLUSDT_Set1": {
+    "strategy_id": "FAM-03-BREAKOUT_SOLUSDT_Set1",
+    "family_id": "FAM-03-BREAKOUT",
+    "family_name": "Breakout (Donchian)",
+    "symbol": "SOL/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 31,
+      "net_r": 24.0946,
+      "expectancy_r": 0.7772,
+      "profit_factor_r": 2.4173,
+      "win_rate": 0.4516,
+      "max_drawdown_r": 5.0,
+      "top_1_r": 2.9564,
+      "top_1_pct": 12.27,
+      "net_r_without_top_1": 21.1382,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (31 < 100)"
+      ]
+    }
+  },
+  "FAM-03-BREAKOUT_SOLUSDT_Set2": {
+    "strategy_id": "FAM-03-BREAKOUT_SOLUSDT_Set2",
+    "family_id": "FAM-03-BREAKOUT",
+    "family_name": "Breakout (Donchian)",
+    "symbol": "SOL/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "VALIDATION",
+    "development_results": {
+      "total_trades": 144,
+      "net_r": 29.0453,
+      "expectancy_r": 0.2017,
+      "profit_factor_r": 1.2934,
+      "win_rate": 0.3125,
+      "max_drawdown_r": 11.5547,
+      "top_1_r": 2.9456,
+      "top_1_pct": 10.14,
+      "net_r_without_top_1": 26.0997,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": true,
+      "stressed_net_r": 22.6587,
+      "param_stability_passed": true,
+      "falsification_reasons": []
+    },
+    "validation_results": {
+      "n": 78,
+      "net_r": 28.0553,
+      "exp_r": 0.3597,
+      "pf": 1.5611,
+      "max_dd": 7.6115,
+      "passed": true
+    },
+    "oos_results": {
+      "n": 205,
+      "net_r": -2.6127,
+      "exp_r": -0.0127,
+      "pf": 0.9827,
+      "max_dd": 29.546,
+      "passed": false
+    }
+  },
+  "FAM-03-BREAKOUT_SOLUSDT_Set3": {
+    "strategy_id": "FAM-03-BREAKOUT_SOLUSDT_Set3",
+    "family_id": "FAM-03-BREAKOUT",
+    "family_name": "Breakout (Donchian)",
+    "symbol": "SOL/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 609,
+      "net_r": -20.4521,
+      "expectancy_r": -0.0336,
+      "profit_factor_r": 0.9546,
+      "win_rate": 0.2611,
+      "max_drawdown_r": 50.2125,
+      "top_1_r": 2.9279,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -23.3799,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.03R)",
+        "EXCESSIVE_DD (50.21R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-03-BREAKOUT_SOLUSDT_Set4": {
+    "strategy_id": "FAM-03-BREAKOUT_SOLUSDT_Set4",
+    "family_id": "FAM-03-BREAKOUT",
+    "family_name": "Breakout (Donchian)",
+    "symbol": "SOL/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2504,
+      "net_r": -284.262,
+      "expectancy_r": -0.1135,
+      "profit_factor_r": 0.8468,
+      "win_rate": 0.2588,
+      "max_drawdown_r": 327.7275,
+      "top_1_r": 2.8854,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -287.1474,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.11R)",
+        "EXCESSIVE_DD (327.73R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-04-MOMENTUM_BTCUSDT_Set1": {
+    "strategy_id": "FAM-04-MOMENTUM_BTCUSDT_Set1",
+    "family_id": "FAM-04-MOMENTUM",
+    "family_name": "Momentum Continuation",
+    "symbol": "BTC/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 15,
+      "net_r": -1.3594,
+      "expectancy_r": -0.0906,
+      "profit_factor_r": 0.8764,
+      "win_rate": 0.2667,
+      "max_drawdown_r": 4.0,
+      "top_1_r": 2.4313,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -3.7907,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (15 < 100)",
+        "NEGATIVE_EXPECTANCY (-0.09R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-04-MOMENTUM_BTCUSDT_Set2": {
+    "strategy_id": "FAM-04-MOMENTUM_BTCUSDT_Set2",
+    "family_id": "FAM-04-MOMENTUM",
+    "family_name": "Momentum Continuation",
+    "symbol": "BTC/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 139,
+      "net_r": 8.4383,
+      "expectancy_r": 0.0607,
+      "profit_factor_r": 1.0898,
+      "win_rate": 0.3237,
+      "max_drawdown_r": 15.677,
+      "top_1_r": 2.4005,
+      "top_1_pct": 28.45,
+      "net_r_without_top_1": 6.0379,
+      "profit_concentration_status": "WARNING_HIGH_TOP5",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "CONCENTRATION_VIOLATION (WARNING_HIGH_TOP5)"
+      ]
+    }
+  },
+  "FAM-04-MOMENTUM_BTCUSDT_Set3": {
+    "strategy_id": "FAM-04-MOMENTUM_BTCUSDT_Set3",
+    "family_id": "FAM-04-MOMENTUM",
+    "family_name": "Momentum Continuation",
+    "symbol": "BTC/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 622,
+      "net_r": -97.8389,
+      "expectancy_r": -0.1573,
+      "profit_factor_r": 0.7831,
+      "win_rate": 0.2749,
+      "max_drawdown_r": 114.2466,
+      "top_1_r": 2.3748,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -100.2137,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.16R)",
+        "EXCESSIVE_DD (114.25R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-04-MOMENTUM_BTCUSDT_Set4": {
+    "strategy_id": "FAM-04-MOMENTUM_BTCUSDT_Set4",
+    "family_id": "FAM-04-MOMENTUM",
+    "family_name": "Momentum Continuation",
+    "symbol": "BTC/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 1533,
+      "net_r": -217.0943,
+      "expectancy_r": -0.1416,
+      "profit_factor_r": 0.7965,
+      "win_rate": 0.304,
+      "max_drawdown_r": 230.8605,
+      "top_1_r": 2.2857,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -219.3801,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.14R)",
+        "EXCESSIVE_DD (230.86R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-04-MOMENTUM_ETHUSDT_Set1": {
+    "strategy_id": "FAM-04-MOMENTUM_ETHUSDT_Set1",
+    "family_id": "FAM-04-MOMENTUM",
+    "family_name": "Momentum Continuation",
+    "symbol": "ETH/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 17,
+      "net_r": 3.5863,
+      "expectancy_r": 0.211,
+      "profit_factor_r": 1.326,
+      "win_rate": 0.3529,
+      "max_drawdown_r": 4.0,
+      "top_1_r": 2.4556,
+      "top_1_pct": 68.47,
+      "net_r_without_top_1": 1.1307,
+      "profit_concentration_status": "REJECTED_EXCESSIVE_TOP1",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (17 < 100)",
+        "CONCENTRATION_VIOLATION (REJECTED_EXCESSIVE_TOP1)"
+      ]
+    }
+  },
+  "FAM-04-MOMENTUM_ETHUSDT_Set2": {
+    "strategy_id": "FAM-04-MOMENTUM_ETHUSDT_Set2",
+    "family_id": "FAM-04-MOMENTUM",
+    "family_name": "Momentum Continuation",
+    "symbol": "ETH/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 123,
+      "net_r": -20.6672,
+      "expectancy_r": -0.168,
+      "profit_factor_r": 0.7754,
+      "win_rate": 0.252,
+      "max_drawdown_r": 27.5415,
+      "top_1_r": 2.409,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -23.0762,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.17R)",
+        "EXCESSIVE_DD (27.54R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-04-MOMENTUM_ETHUSDT_Set3": {
+    "strategy_id": "FAM-04-MOMENTUM_ETHUSDT_Set3",
+    "family_id": "FAM-04-MOMENTUM",
+    "family_name": "Momentum Continuation",
+    "symbol": "ETH/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 665,
+      "net_r": -45.2908,
+      "expectancy_r": -0.0681,
+      "profit_factor_r": 0.9032,
+      "win_rate": 0.2962,
+      "max_drawdown_r": 61.527,
+      "top_1_r": 2.4086,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -47.6993,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.07R)",
+        "EXCESSIVE_DD (61.53R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-04-MOMENTUM_ETHUSDT_Set4": {
+    "strategy_id": "FAM-04-MOMENTUM_ETHUSDT_Set4",
+    "family_id": "FAM-04-MOMENTUM",
+    "family_name": "Momentum Continuation",
+    "symbol": "ETH/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2074,
+      "net_r": -269.1796,
+      "expectancy_r": -0.1298,
+      "profit_factor_r": 0.8146,
+      "win_rate": 0.2999,
+      "max_drawdown_r": 292.3493,
+      "top_1_r": 2.3726,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -271.5522,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.13R)",
+        "EXCESSIVE_DD (292.35R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-04-MOMENTUM_SOLUSDT_Set1": {
+    "strategy_id": "FAM-04-MOMENTUM_SOLUSDT_Set1",
+    "family_id": "FAM-04-MOMENTUM",
+    "family_name": "Momentum Continuation",
+    "symbol": "SOL/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 13,
+      "net_r": 14.62,
+      "expectancy_r": 1.1246,
+      "profit_factor_r": 3.924,
+      "win_rate": 0.6154,
+      "max_drawdown_r": 3.0,
+      "top_1_r": 2.4673,
+      "top_1_pct": 16.88,
+      "net_r_without_top_1": 12.1527,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (13 < 100)"
+      ]
+    }
+  },
+  "FAM-04-MOMENTUM_SOLUSDT_Set2": {
+    "strategy_id": "FAM-04-MOMENTUM_SOLUSDT_Set2",
+    "family_id": "FAM-04-MOMENTUM",
+    "family_name": "Momentum Continuation",
+    "symbol": "SOL/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "ROBUST",
+    "development_results": {
+      "total_trades": 115,
+      "net_r": 16.1782,
+      "expectancy_r": 0.1407,
+      "profit_factor_r": 1.2129,
+      "win_rate": 0.3391,
+      "max_drawdown_r": 11.3134,
+      "top_1_r": 2.451,
+      "top_1_pct": 15.15,
+      "net_r_without_top_1": 13.7272,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": true,
+      "stressed_net_r": 11.3003,
+      "param_stability_passed": true,
+      "falsification_reasons": []
+    },
+    "validation_results": {
+      "n": 62,
+      "net_r": 4.5057,
+      "exp_r": 0.0727,
+      "pf": 1.1073,
+      "max_dd": 8.4164,
+      "passed": true
+    },
+    "oos_results": {
+      "n": 202,
+      "net_r": 8.3899,
+      "exp_r": 0.0415,
+      "pf": 1.0608,
+      "max_dd": 19.7697,
+      "passed": true
+    }
+  },
+  "FAM-04-MOMENTUM_SOLUSDT_Set3": {
+    "strategy_id": "FAM-04-MOMENTUM_SOLUSDT_Set3",
+    "family_id": "FAM-04-MOMENTUM",
+    "family_name": "Momentum Continuation",
+    "symbol": "SOL/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 646,
+      "net_r": 37.2841,
+      "expectancy_r": 0.0577,
+      "profit_factor_r": 1.0857,
+      "win_rate": 0.3266,
+      "max_drawdown_r": 26.7467,
+      "top_1_r": 2.4285,
+      "top_1_pct": 6.51,
+      "net_r_without_top_1": 34.8556,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "EXCESSIVE_DD (26.75R > 25R)"
+      ]
+    }
+  },
+  "FAM-04-MOMENTUM_SOLUSDT_Set4": {
+    "strategy_id": "FAM-04-MOMENTUM_SOLUSDT_Set4",
+    "family_id": "FAM-04-MOMENTUM",
+    "family_name": "Momentum Continuation",
+    "symbol": "SOL/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2452,
+      "net_r": -196.7081,
+      "expectancy_r": -0.0802,
+      "profit_factor_r": 0.8848,
+      "win_rate": 0.3038,
+      "max_drawdown_r": 259.9103,
+      "top_1_r": 2.4051,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -199.1132,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.08R)",
+        "EXCESSIVE_DD (259.91R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-05-MEANREV_BTCUSDT_Set1": {
+    "strategy_id": "FAM-05-MEANREV_BTCUSDT_Set1",
+    "family_id": "FAM-05-MEANREV",
+    "family_name": "Mean Reversion",
+    "symbol": "BTC/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 23,
+      "net_r": -1.2866,
+      "expectancy_r": -0.0559,
+      "profit_factor_r": 0.9142,
+      "win_rate": 0.3478,
+      "max_drawdown_r": 6.0,
+      "top_1_r": 1.7503,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -3.0369,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (23 < 100)",
+        "NEGATIVE_EXPECTANCY (-0.06R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-05-MEANREV_BTCUSDT_Set2": {
+    "strategy_id": "FAM-05-MEANREV_BTCUSDT_Set2",
+    "family_id": "FAM-05-MEANREV",
+    "family_name": "Mean Reversion",
+    "symbol": "BTC/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 174,
+      "net_r": -27.8502,
+      "expectancy_r": -0.1601,
+      "profit_factor_r": 0.762,
+      "win_rate": 0.3276,
+      "max_drawdown_r": 33.3205,
+      "top_1_r": 1.7321,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -29.5823,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.16R)",
+        "EXCESSIVE_DD (33.32R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-05-MEANREV_BTCUSDT_Set3": {
+    "strategy_id": "FAM-05-MEANREV_BTCUSDT_Set3",
+    "family_id": "FAM-05-MEANREV",
+    "family_name": "Mean Reversion",
+    "symbol": "BTC/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 641,
+      "net_r": -149.6695,
+      "expectancy_r": -0.2335,
+      "profit_factor_r": 0.6559,
+      "win_rate": 0.3214,
+      "max_drawdown_r": 152.7476,
+      "top_1_r": 1.7166,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -151.386,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.23R)",
+        "EXCESSIVE_DD (152.75R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-05-MEANREV_BTCUSDT_Set4": {
+    "strategy_id": "FAM-05-MEANREV_BTCUSDT_Set4",
+    "family_id": "FAM-05-MEANREV",
+    "family_name": "Mean Reversion",
+    "symbol": "BTC/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2274,
+      "net_r": -578.778,
+      "expectancy_r": -0.2545,
+      "profit_factor_r": 0.6017,
+      "win_rate": 0.3602,
+      "max_drawdown_r": 580.5067,
+      "top_1_r": 1.6527,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -580.4307,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.25R)",
+        "EXCESSIVE_DD (580.51R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-05-MEANREV_ETHUSDT_Set1": {
+    "strategy_id": "FAM-05-MEANREV_ETHUSDT_Set1",
+    "family_id": "FAM-05-MEANREV",
+    "family_name": "Mean Reversion",
+    "symbol": "ETH/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 28,
+      "net_r": -11.6807,
+      "expectancy_r": -0.4172,
+      "profit_factor_r": 0.4691,
+      "win_rate": 0.2143,
+      "max_drawdown_r": 11.1118,
+      "top_1_r": 1.7627,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -13.4433,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (28 < 100)",
+        "NEGATIVE_EXPECTANCY (-0.42R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-05-MEANREV_ETHUSDT_Set2": {
+    "strategy_id": "FAM-05-MEANREV_ETHUSDT_Set2",
+    "family_id": "FAM-05-MEANREV",
+    "family_name": "Mean Reversion",
+    "symbol": "ETH/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 173,
+      "net_r": -1.9686,
+      "expectancy_r": -0.0114,
+      "profit_factor_r": 0.9818,
+      "win_rate": 0.3757,
+      "max_drawdown_r": 17.4556,
+      "top_1_r": 1.757,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -3.7257,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.01R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-05-MEANREV_ETHUSDT_Set3": {
+    "strategy_id": "FAM-05-MEANREV_ETHUSDT_Set3",
+    "family_id": "FAM-05-MEANREV",
+    "family_name": "Mean Reversion",
+    "symbol": "ETH/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 685,
+      "net_r": -145.9779,
+      "expectancy_r": -0.2131,
+      "profit_factor_r": 0.6861,
+      "win_rate": 0.3212,
+      "max_drawdown_r": 147.2212,
+      "top_1_r": 1.7487,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -147.7266,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.21R)",
+        "EXCESSIVE_DD (147.22R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-05-MEANREV_ETHUSDT_Set4": {
+    "strategy_id": "FAM-05-MEANREV_ETHUSDT_Set4",
+    "family_id": "FAM-05-MEANREV",
+    "family_name": "Mean Reversion",
+    "symbol": "ETH/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2488,
+      "net_r": -661.122,
+      "expectancy_r": -0.2657,
+      "profit_factor_r": 0.5986,
+      "win_rate": 0.338,
+      "max_drawdown_r": 661.2611,
+      "top_1_r": 1.7336,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -662.8556,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.27R)",
+        "EXCESSIVE_DD (661.26R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-05-MEANREV_SOLUSDT_Set1": {
+    "strategy_id": "FAM-05-MEANREV_SOLUSDT_Set1",
+    "family_id": "FAM-05-MEANREV",
+    "family_name": "Mean Reversion",
+    "symbol": "SOL/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 32,
+      "net_r": -18.3,
+      "expectancy_r": -0.5719,
+      "profit_factor_r": 0.3222,
+      "win_rate": 0.1562,
+      "max_drawdown_r": 19.7869,
+      "top_1_r": 1.771,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -20.071,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (32 < 100)",
+        "NEGATIVE_EXPECTANCY (-0.57R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-05-MEANREV_SOLUSDT_Set2": {
+    "strategy_id": "FAM-05-MEANREV_SOLUSDT_Set2",
+    "family_id": "FAM-05-MEANREV",
+    "family_name": "Mean Reversion",
+    "symbol": "SOL/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 174,
+      "net_r": -18.7322,
+      "expectancy_r": -0.1077,
+      "profit_factor_r": 0.8385,
+      "win_rate": 0.3333,
+      "max_drawdown_r": 27.3915,
+      "top_1_r": 1.7752,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -20.5074,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.11R)",
+        "EXCESSIVE_DD (27.39R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-05-MEANREV_SOLUSDT_Set3": {
+    "strategy_id": "FAM-05-MEANREV_SOLUSDT_Set3",
+    "family_id": "FAM-05-MEANREV",
+    "family_name": "Mean Reversion",
+    "symbol": "SOL/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 687,
+      "net_r": -137.7138,
+      "expectancy_r": -0.2005,
+      "profit_factor_r": 0.7076,
+      "win_rate": 0.3144,
+      "max_drawdown_r": 140.368,
+      "top_1_r": 1.7611,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -139.475,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.20R)",
+        "EXCESSIVE_DD (140.37R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-05-MEANREV_SOLUSDT_Set4": {
+    "strategy_id": "FAM-05-MEANREV_SOLUSDT_Set4",
+    "family_id": "FAM-05-MEANREV",
+    "family_name": "Mean Reversion",
+    "symbol": "SOL/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2574,
+      "net_r": -518.4385,
+      "expectancy_r": -0.2014,
+      "profit_factor_r": 0.6947,
+      "win_rate": 0.3403,
+      "max_drawdown_r": 531.8435,
+      "top_1_r": 1.752,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -520.1905,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.20R)",
+        "EXCESSIVE_DD (531.84R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-06-VOLEXP_BTCUSDT_Set1": {
+    "strategy_id": "FAM-06-VOLEXP_BTCUSDT_Set1",
+    "family_id": "FAM-06-VOLEXP",
+    "family_name": "Volatility Expansion",
+    "symbol": "BTC/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 0,
+      "net_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor_r": "NOT_AVAILABLE",
+      "win_rate": 0.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 0.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": 0.0,
+      "profit_concentration_status": "NO_TRADES",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (0 < 100)",
+        "NEGATIVE_EXPECTANCY (+0.00R)",
+        "CONCENTRATION_VIOLATION (NO_TRADES)"
+      ]
+    }
+  },
+  "FAM-06-VOLEXP_BTCUSDT_Set2": {
+    "strategy_id": "FAM-06-VOLEXP_BTCUSDT_Set2",
+    "family_id": "FAM-06-VOLEXP",
+    "family_name": "Volatility Expansion",
+    "symbol": "BTC/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 0,
+      "net_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor_r": "NOT_AVAILABLE",
+      "win_rate": 0.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 0.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": 0.0,
+      "profit_concentration_status": "NO_TRADES",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (0 < 100)",
+        "NEGATIVE_EXPECTANCY (+0.00R)",
+        "CONCENTRATION_VIOLATION (NO_TRADES)"
+      ]
+    }
+  },
+  "FAM-06-VOLEXP_BTCUSDT_Set3": {
+    "strategy_id": "FAM-06-VOLEXP_BTCUSDT_Set3",
+    "family_id": "FAM-06-VOLEXP",
+    "family_name": "Volatility Expansion",
+    "symbol": "BTC/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 0,
+      "net_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor_r": "NOT_AVAILABLE",
+      "win_rate": 0.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 0.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": 0.0,
+      "profit_concentration_status": "NO_TRADES",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (0 < 100)",
+        "NEGATIVE_EXPECTANCY (+0.00R)",
+        "CONCENTRATION_VIOLATION (NO_TRADES)"
+      ]
+    }
+  },
+  "FAM-06-VOLEXP_BTCUSDT_Set4": {
+    "strategy_id": "FAM-06-VOLEXP_BTCUSDT_Set4",
+    "family_id": "FAM-06-VOLEXP",
+    "family_name": "Volatility Expansion",
+    "symbol": "BTC/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 0,
+      "net_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor_r": "NOT_AVAILABLE",
+      "win_rate": 0.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 0.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": 0.0,
+      "profit_concentration_status": "NO_TRADES",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (0 < 100)",
+        "NEGATIVE_EXPECTANCY (+0.00R)",
+        "CONCENTRATION_VIOLATION (NO_TRADES)"
+      ]
+    }
+  },
+  "FAM-06-VOLEXP_ETHUSDT_Set1": {
+    "strategy_id": "FAM-06-VOLEXP_ETHUSDT_Set1",
+    "family_id": "FAM-06-VOLEXP",
+    "family_name": "Volatility Expansion",
+    "symbol": "ETH/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 0,
+      "net_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor_r": "NOT_AVAILABLE",
+      "win_rate": 0.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 0.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": 0.0,
+      "profit_concentration_status": "NO_TRADES",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (0 < 100)",
+        "NEGATIVE_EXPECTANCY (+0.00R)",
+        "CONCENTRATION_VIOLATION (NO_TRADES)"
+      ]
+    }
+  },
+  "FAM-06-VOLEXP_ETHUSDT_Set2": {
+    "strategy_id": "FAM-06-VOLEXP_ETHUSDT_Set2",
+    "family_id": "FAM-06-VOLEXP",
+    "family_name": "Volatility Expansion",
+    "symbol": "ETH/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 0,
+      "net_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor_r": "NOT_AVAILABLE",
+      "win_rate": 0.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 0.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": 0.0,
+      "profit_concentration_status": "NO_TRADES",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (0 < 100)",
+        "NEGATIVE_EXPECTANCY (+0.00R)",
+        "CONCENTRATION_VIOLATION (NO_TRADES)"
+      ]
+    }
+  },
+  "FAM-06-VOLEXP_ETHUSDT_Set3": {
+    "strategy_id": "FAM-06-VOLEXP_ETHUSDT_Set3",
+    "family_id": "FAM-06-VOLEXP",
+    "family_name": "Volatility Expansion",
+    "symbol": "ETH/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 0,
+      "net_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor_r": "NOT_AVAILABLE",
+      "win_rate": 0.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 0.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": 0.0,
+      "profit_concentration_status": "NO_TRADES",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (0 < 100)",
+        "NEGATIVE_EXPECTANCY (+0.00R)",
+        "CONCENTRATION_VIOLATION (NO_TRADES)"
+      ]
+    }
+  },
+  "FAM-06-VOLEXP_ETHUSDT_Set4": {
+    "strategy_id": "FAM-06-VOLEXP_ETHUSDT_Set4",
+    "family_id": "FAM-06-VOLEXP",
+    "family_name": "Volatility Expansion",
+    "symbol": "ETH/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 0,
+      "net_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor_r": "NOT_AVAILABLE",
+      "win_rate": 0.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 0.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": 0.0,
+      "profit_concentration_status": "NO_TRADES",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (0 < 100)",
+        "NEGATIVE_EXPECTANCY (+0.00R)",
+        "CONCENTRATION_VIOLATION (NO_TRADES)"
+      ]
+    }
+  },
+  "FAM-06-VOLEXP_SOLUSDT_Set1": {
+    "strategy_id": "FAM-06-VOLEXP_SOLUSDT_Set1",
+    "family_id": "FAM-06-VOLEXP",
+    "family_name": "Volatility Expansion",
+    "symbol": "SOL/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 0,
+      "net_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor_r": "NOT_AVAILABLE",
+      "win_rate": 0.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 0.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": 0.0,
+      "profit_concentration_status": "NO_TRADES",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (0 < 100)",
+        "NEGATIVE_EXPECTANCY (+0.00R)",
+        "CONCENTRATION_VIOLATION (NO_TRADES)"
+      ]
+    }
+  },
+  "FAM-06-VOLEXP_SOLUSDT_Set2": {
+    "strategy_id": "FAM-06-VOLEXP_SOLUSDT_Set2",
+    "family_id": "FAM-06-VOLEXP",
+    "family_name": "Volatility Expansion",
+    "symbol": "SOL/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 0,
+      "net_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor_r": "NOT_AVAILABLE",
+      "win_rate": 0.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 0.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": 0.0,
+      "profit_concentration_status": "NO_TRADES",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (0 < 100)",
+        "NEGATIVE_EXPECTANCY (+0.00R)",
+        "CONCENTRATION_VIOLATION (NO_TRADES)"
+      ]
+    }
+  },
+  "FAM-06-VOLEXP_SOLUSDT_Set3": {
+    "strategy_id": "FAM-06-VOLEXP_SOLUSDT_Set3",
+    "family_id": "FAM-06-VOLEXP",
+    "family_name": "Volatility Expansion",
+    "symbol": "SOL/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 0,
+      "net_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor_r": "NOT_AVAILABLE",
+      "win_rate": 0.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 0.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": 0.0,
+      "profit_concentration_status": "NO_TRADES",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (0 < 100)",
+        "NEGATIVE_EXPECTANCY (+0.00R)",
+        "CONCENTRATION_VIOLATION (NO_TRADES)"
+      ]
+    }
+  },
+  "FAM-06-VOLEXP_SOLUSDT_Set4": {
+    "strategy_id": "FAM-06-VOLEXP_SOLUSDT_Set4",
+    "family_id": "FAM-06-VOLEXP",
+    "family_name": "Volatility Expansion",
+    "symbol": "SOL/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 0,
+      "net_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor_r": "NOT_AVAILABLE",
+      "win_rate": 0.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 0.0,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": 0.0,
+      "profit_concentration_status": "NO_TRADES",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (0 < 100)",
+        "NEGATIVE_EXPECTANCY (+0.00R)",
+        "CONCENTRATION_VIOLATION (NO_TRADES)"
+      ]
+    }
+  },
+  "FAM-07-MTFCONT_BTCUSDT_Set1": {
+    "strategy_id": "FAM-07-MTFCONT_BTCUSDT_Set1",
+    "family_id": "FAM-07-MTFCONT",
+    "family_name": "MTF Continuation",
+    "symbol": "BTC/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 16,
+      "net_r": 1.0733,
+      "expectancy_r": 0.0671,
+      "profit_factor_r": 1.0976,
+      "win_rate": 0.3125,
+      "max_drawdown_r": 3.0,
+      "top_1_r": 2.4341,
+      "top_1_pct": 226.79,
+      "net_r_without_top_1": -1.3608,
+      "profit_concentration_status": "REJECTED_TOP1_COLLAPSE",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (16 < 100)",
+        "CONCENTRATION_VIOLATION (REJECTED_TOP1_COLLAPSE)"
+      ]
+    }
+  },
+  "FAM-07-MTFCONT_BTCUSDT_Set2": {
+    "strategy_id": "FAM-07-MTFCONT_BTCUSDT_Set2",
+    "family_id": "FAM-07-MTFCONT",
+    "family_name": "MTF Continuation",
+    "symbol": "BTC/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "ROBUST",
+    "development_results": {
+      "total_trades": 125,
+      "net_r": 22.5425,
+      "expectancy_r": 0.1803,
+      "profit_factor_r": 1.2818,
+      "win_rate": 0.36,
+      "max_drawdown_r": 9.7309,
+      "top_1_r": 2.395,
+      "top_1_pct": 10.62,
+      "net_r_without_top_1": 20.1475,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": true,
+      "stressed_net_r": 13.8508,
+      "param_stability_passed": true,
+      "falsification_reasons": []
+    },
+    "validation_results": {
+      "n": 62,
+      "net_r": 30.7383,
+      "exp_r": 0.4958,
+      "pf": 1.9606,
+      "max_dd": 5.0,
+      "passed": true
+    },
+    "oos_results": {
+      "n": 193,
+      "net_r": 29.3805,
+      "exp_r": 0.1522,
+      "pf": 1.2408,
+      "max_dd": 9.7238,
+      "passed": true
+    }
+  },
+  "FAM-07-MTFCONT_BTCUSDT_Set3": {
+    "strategy_id": "FAM-07-MTFCONT_BTCUSDT_Set3",
+    "family_id": "FAM-07-MTFCONT",
+    "family_name": "MTF Continuation",
+    "symbol": "BTC/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 529,
+      "net_r": 57.0444,
+      "expectancy_r": 0.1078,
+      "profit_factor_r": 1.1698,
+      "win_rate": 0.3648,
+      "max_drawdown_r": 13.0971,
+      "top_1_r": 2.3748,
+      "top_1_pct": 4.16,
+      "net_r_without_top_1": 54.6696,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": false,
+      "stressed_net_r": -9.2829,
+      "param_stability_passed": true,
+      "falsification_reasons": [
+        "COST_STRESS_FAILED (Stressed Exp: -0.02R)"
+      ]
+    }
+  },
+  "FAM-07-MTFCONT_BTCUSDT_Set4": {
+    "strategy_id": "FAM-07-MTFCONT_BTCUSDT_Set4",
+    "family_id": "FAM-07-MTFCONT",
+    "family_name": "MTF Continuation",
+    "symbol": "BTC/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2295,
+      "net_r": -88.002,
+      "expectancy_r": -0.0383,
+      "profit_factor_r": 0.9403,
+      "win_rate": 0.3577,
+      "max_drawdown_r": 123.5921,
+      "top_1_r": 2.3524,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -90.3544,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.04R)",
+        "EXCESSIVE_DD (123.59R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-07-MTFCONT_ETHUSDT_Set1": {
+    "strategy_id": "FAM-07-MTFCONT_ETHUSDT_Set1",
+    "family_id": "FAM-07-MTFCONT",
+    "family_name": "MTF Continuation",
+    "symbol": "ETH/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 22,
+      "net_r": 12.3037,
+      "expectancy_r": 0.5593,
+      "profit_factor_r": 2.0253,
+      "win_rate": 0.4545,
+      "max_drawdown_r": 3.0,
+      "top_1_r": 2.4511,
+      "top_1_pct": 19.92,
+      "net_r_without_top_1": 9.8526,
+      "profit_concentration_status": "WARNING_HIGH_TOP5",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (22 < 100)",
+        "CONCENTRATION_VIOLATION (WARNING_HIGH_TOP5)"
+      ]
+    }
+  },
+  "FAM-07-MTFCONT_ETHUSDT_Set2": {
+    "strategy_id": "FAM-07-MTFCONT_ETHUSDT_Set2",
+    "family_id": "FAM-07-MTFCONT",
+    "family_name": "MTF Continuation",
+    "symbol": "ETH/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "ROBUST",
+    "development_results": {
+      "total_trades": 128,
+      "net_r": 34.4099,
+      "expectancy_r": 0.2688,
+      "profit_factor_r": 1.4356,
+      "win_rate": 0.3828,
+      "max_drawdown_r": 8.1123,
+      "top_1_r": 2.4232,
+      "top_1_pct": 7.04,
+      "net_r_without_top_1": 31.9867,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": true,
+      "stressed_net_r": 26.3036,
+      "param_stability_passed": true,
+      "falsification_reasons": []
+    },
+    "validation_results": {
+      "n": 66,
+      "net_r": 2.3938,
+      "exp_r": 0.0363,
+      "pf": 1.0544,
+      "max_dd": 6.0,
+      "passed": true
+    },
+    "oos_results": {
+      "n": 169,
+      "net_r": 53.9328,
+      "exp_r": 0.3191,
+      "pf": 1.5393,
+      "max_dd": 9.0,
+      "passed": true
+    }
+  },
+  "FAM-07-MTFCONT_ETHUSDT_Set3": {
+    "strategy_id": "FAM-07-MTFCONT_ETHUSDT_Set3",
+    "family_id": "FAM-07-MTFCONT",
+    "family_name": "MTF Continuation",
+    "symbol": "ETH/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 555,
+      "net_r": 107.7087,
+      "expectancy_r": 0.1941,
+      "profit_factor_r": 1.314,
+      "win_rate": 0.382,
+      "max_drawdown_r": 10.0,
+      "top_1_r": 2.4009,
+      "top_1_pct": 2.23,
+      "net_r_without_top_1": 105.3078,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": true,
+      "stressed_net_r": 45.3632,
+      "param_stability_passed": true,
+      "falsification_reasons": []
+    },
+    "validation_results": {
+      "n": 307,
+      "net_r": -25.6403,
+      "exp_r": -0.0835,
+      "pf": 0.8755,
+      "max_dd": 41.3797,
+      "passed": false
+    },
+    "oos_results": {
+      "n": 0,
+      "net_r": 0.0,
+      "exp_r": 0.0,
+      "pf": "N/A",
+      "max_dd": 0.0,
+      "passed": false
+    }
+  },
+  "FAM-07-MTFCONT_ETHUSDT_Set4": {
+    "strategy_id": "FAM-07-MTFCONT_ETHUSDT_Set4",
+    "family_id": "FAM-07-MTFCONT",
+    "family_name": "MTF Continuation",
+    "symbol": "ETH/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2388,
+      "net_r": 145.5779,
+      "expectancy_r": 0.061,
+      "profit_factor_r": 1.098,
+      "win_rate": 0.3781,
+      "max_drawdown_r": 30.3061,
+      "top_1_r": 2.3574,
+      "top_1_pct": 1.62,
+      "net_r_without_top_1": 143.2205,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "EXCESSIVE_DD (30.31R > 25R)"
+      ]
+    }
+  },
+  "FAM-07-MTFCONT_SOLUSDT_Set1": {
+    "strategy_id": "FAM-07-MTFCONT_SOLUSDT_Set1",
+    "family_id": "FAM-07-MTFCONT",
+    "family_name": "MTF Continuation",
+    "symbol": "SOL/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2,
+      "net_r": 4.9194,
+      "expectancy_r": 2.4597,
+      "profit_factor_r": "INFINITE",
+      "win_rate": 1.0,
+      "max_drawdown_r": 0.0,
+      "top_1_r": 2.4729,
+      "top_1_pct": 50.27,
+      "net_r_without_top_1": 2.4465,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (2 < 100)"
+      ]
+    }
+  },
+  "FAM-07-MTFCONT_SOLUSDT_Set2": {
+    "strategy_id": "FAM-07-MTFCONT_SOLUSDT_Set2",
+    "family_id": "FAM-07-MTFCONT",
+    "family_name": "MTF Continuation",
+    "symbol": "SOL/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "ROBUST",
+    "development_results": {
+      "total_trades": 127,
+      "net_r": 48.5177,
+      "expectancy_r": 0.382,
+      "profit_factor_r": 1.6469,
+      "win_rate": 0.4094,
+      "max_drawdown_r": 6.0,
+      "top_1_r": 2.4524,
+      "top_1_pct": 5.05,
+      "net_r_without_top_1": 46.0653,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": true,
+      "stressed_net_r": 42.5117,
+      "param_stability_passed": true,
+      "falsification_reasons": []
+    },
+    "validation_results": {
+      "n": 68,
+      "net_r": 31.2084,
+      "exp_r": 0.4589,
+      "pf": 1.8213,
+      "max_dd": 6.0,
+      "passed": true
+    },
+    "oos_results": {
+      "n": 191,
+      "net_r": 28.682,
+      "exp_r": 0.1502,
+      "pf": 1.2313,
+      "max_dd": 13.0667,
+      "passed": true
+    }
+  },
+  "FAM-07-MTFCONT_SOLUSDT_Set3": {
+    "strategy_id": "FAM-07-MTFCONT_SOLUSDT_Set3",
+    "family_id": "FAM-07-MTFCONT",
+    "family_name": "MTF Continuation",
+    "symbol": "SOL/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "ROBUST",
+    "development_results": {
+      "total_trades": 576,
+      "net_r": 86.5337,
+      "expectancy_r": 0.1502,
+      "profit_factor_r": 1.2332,
+      "win_rate": 0.3559,
+      "max_drawdown_r": 14.3016,
+      "top_1_r": 2.4369,
+      "top_1_pct": 2.82,
+      "net_r_without_top_1": 84.0969,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": true,
+      "stressed_net_r": 40.3954,
+      "param_stability_passed": true,
+      "falsification_reasons": []
+    },
+    "validation_results": {
+      "n": 292,
+      "net_r": 43.8343,
+      "exp_r": 0.1501,
+      "pf": 1.2382,
+      "max_dd": 17.3884,
+      "passed": true
+    },
+    "oos_results": {
+      "n": 765,
+      "net_r": 73.8227,
+      "exp_r": 0.0965,
+      "pf": 1.1497,
+      "max_dd": 22.0734,
+      "passed": true
+    }
+  },
+  "FAM-07-MTFCONT_SOLUSDT_Set4": {
+    "strategy_id": "FAM-07-MTFCONT_SOLUSDT_Set4",
+    "family_id": "FAM-07-MTFCONT",
+    "family_name": "MTF Continuation",
+    "symbol": "SOL/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2494,
+      "net_r": 117.4687,
+      "expectancy_r": 0.0471,
+      "profit_factor_r": 1.0725,
+      "win_rate": 0.3504,
+      "max_drawdown_r": 24.0561,
+      "top_1_r": 2.4039,
+      "top_1_pct": 2.05,
+      "net_r_without_top_1": 115.0648,
+      "profit_concentration_status": "PASS",
+      "cost_stress_passed": false,
+      "stressed_net_r": -203.7604,
+      "param_stability_passed": true,
+      "falsification_reasons": [
+        "COST_STRESS_FAILED (Stressed Exp: -0.08R)"
+      ]
+    }
+  },
+  "FAM-08-REGIME_BTCUSDT_Set1": {
+    "strategy_id": "FAM-08-REGIME_BTCUSDT_Set1",
+    "family_id": "FAM-08-REGIME",
+    "family_name": "Regime-Adaptive Systems",
+    "symbol": "BTC/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 14,
+      "net_r": 3.0762,
+      "expectancy_r": 0.2197,
+      "profit_factor_r": 1.3418,
+      "win_rate": 0.3571,
+      "max_drawdown_r": 4.0,
+      "top_1_r": 2.4488,
+      "top_1_pct": 79.6,
+      "net_r_without_top_1": 0.6274,
+      "profit_concentration_status": "REJECTED_EXCESSIVE_TOP1",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (14 < 100)",
+        "CONCENTRATION_VIOLATION (REJECTED_EXCESSIVE_TOP1)"
+      ]
+    }
+  },
+  "FAM-08-REGIME_BTCUSDT_Set2": {
+    "strategy_id": "FAM-08-REGIME_BTCUSDT_Set2",
+    "family_id": "FAM-08-REGIME",
+    "family_name": "Regime-Adaptive Systems",
+    "symbol": "BTC/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 113,
+      "net_r": -34.1612,
+      "expectancy_r": -0.3023,
+      "profit_factor_r": 0.6162,
+      "win_rate": 0.2124,
+      "max_drawdown_r": 42.9696,
+      "top_1_r": 2.3979,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -36.5591,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.30R)",
+        "EXCESSIVE_DD (42.97R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-08-REGIME_BTCUSDT_Set3": {
+    "strategy_id": "FAM-08-REGIME_BTCUSDT_Set3",
+    "family_id": "FAM-08-REGIME",
+    "family_name": "Regime-Adaptive Systems",
+    "symbol": "BTC/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 490,
+      "net_r": -85.5315,
+      "expectancy_r": -0.1746,
+      "profit_factor_r": 0.7604,
+      "win_rate": 0.2714,
+      "max_drawdown_r": 89.12,
+      "top_1_r": 2.4133,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -87.9448,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.17R)",
+        "EXCESSIVE_DD (89.12R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-08-REGIME_BTCUSDT_Set4": {
+    "strategy_id": "FAM-08-REGIME_BTCUSDT_Set4",
+    "family_id": "FAM-08-REGIME",
+    "family_name": "Regime-Adaptive Systems",
+    "symbol": "BTC/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2142,
+      "net_r": -427.7466,
+      "expectancy_r": -0.1997,
+      "profit_factor_r": 0.7156,
+      "win_rate": 0.2979,
+      "max_drawdown_r": 434.5568,
+      "top_1_r": 2.2857,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -430.0323,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.20R)",
+        "EXCESSIVE_DD (434.56R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-08-REGIME_ETHUSDT_Set1": {
+    "strategy_id": "FAM-08-REGIME_ETHUSDT_Set1",
+    "family_id": "FAM-08-REGIME",
+    "family_name": "Regime-Adaptive Systems",
+    "symbol": "ETH/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 19,
+      "net_r": -1.8192,
+      "expectancy_r": -0.0957,
+      "profit_factor_r": 0.8701,
+      "win_rate": 0.2632,
+      "max_drawdown_r": 9.1682,
+      "top_1_r": 2.4594,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -4.2786,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (19 < 100)",
+        "NEGATIVE_EXPECTANCY (-0.10R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-08-REGIME_ETHUSDT_Set2": {
+    "strategy_id": "FAM-08-REGIME_ETHUSDT_Set2",
+    "family_id": "FAM-08-REGIME",
+    "family_name": "Regime-Adaptive Systems",
+    "symbol": "ETH/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 123,
+      "net_r": -16.9013,
+      "expectancy_r": -0.1374,
+      "profit_factor_r": 0.8143,
+      "win_rate": 0.2602,
+      "max_drawdown_r": 29.1912,
+      "top_1_r": 2.4295,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -19.3308,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.14R)",
+        "EXCESSIVE_DD (29.19R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-08-REGIME_ETHUSDT_Set3": {
+    "strategy_id": "FAM-08-REGIME_ETHUSDT_Set3",
+    "family_id": "FAM-08-REGIME",
+    "family_name": "Regime-Adaptive Systems",
+    "symbol": "ETH/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 529,
+      "net_r": -42.1045,
+      "expectancy_r": -0.0796,
+      "profit_factor_r": 0.8871,
+      "win_rate": 0.2949,
+      "max_drawdown_r": 62.4254,
+      "top_1_r": 2.4212,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -44.5258,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.08R)",
+        "EXCESSIVE_DD (62.43R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-08-REGIME_ETHUSDT_Set4": {
+    "strategy_id": "FAM-08-REGIME_ETHUSDT_Set4",
+    "family_id": "FAM-08-REGIME",
+    "family_name": "Regime-Adaptive Systems",
+    "symbol": "ETH/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2335,
+      "net_r": -534.5897,
+      "expectancy_r": -0.2289,
+      "profit_factor_r": 0.6842,
+      "win_rate": 0.2749,
+      "max_drawdown_r": 542.306,
+      "top_1_r": 2.3212,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -536.9109,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.23R)",
+        "EXCESSIVE_DD (542.31R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-08-REGIME_SOLUSDT_Set1": {
+    "strategy_id": "FAM-08-REGIME_SOLUSDT_Set1",
+    "family_id": "FAM-08-REGIME",
+    "family_name": "Regime-Adaptive Systems",
+    "symbol": "SOL/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 27,
+      "net_r": -20.0834,
+      "expectancy_r": -0.7438,
+      "profit_factor_r": 0.1967,
+      "win_rate": 0.0741,
+      "max_drawdown_r": 19.0834,
+      "top_1_r": 2.4832,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -22.5666,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "INSUFFICIENT_N (27 < 100)",
+        "NEGATIVE_EXPECTANCY (-0.74R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-08-REGIME_SOLUSDT_Set2": {
+    "strategy_id": "FAM-08-REGIME_SOLUSDT_Set2",
+    "family_id": "FAM-08-REGIME",
+    "family_name": "Regime-Adaptive Systems",
+    "symbol": "SOL/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 144,
+      "net_r": -15.9061,
+      "expectancy_r": -0.1105,
+      "profit_factor_r": 0.8499,
+      "win_rate": 0.2639,
+      "max_drawdown_r": 22.3561,
+      "top_1_r": 2.4649,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -18.371,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.11R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-08-REGIME_SOLUSDT_Set3": {
+    "strategy_id": "FAM-08-REGIME_SOLUSDT_Set3",
+    "family_id": "FAM-08-REGIME",
+    "family_name": "Regime-Adaptive Systems",
+    "symbol": "SOL/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 606,
+      "net_r": -72.963,
+      "expectancy_r": -0.1204,
+      "profit_factor_r": 0.8346,
+      "win_rate": 0.2723,
+      "max_drawdown_r": 92.3086,
+      "top_1_r": 2.4325,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -75.3955,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.12R)",
+        "EXCESSIVE_DD (92.31R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
+  },
+  "FAM-08-REGIME_SOLUSDT_Set4": {
+    "strategy_id": "FAM-08-REGIME_SOLUSDT_Set4",
+    "family_id": "FAM-08-REGIME",
+    "family_name": "Regime-Adaptive Systems",
+    "symbol": "SOL/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "status": "FAILED",
+    "development_results": {
+      "total_trades": 2385,
+      "net_r": -505.1855,
+      "expectancy_r": -0.2118,
+      "profit_factor_r": 0.7131,
+      "win_rate": 0.2616,
+      "max_drawdown_r": 514.6868,
+      "top_1_r": 2.4519,
+      "top_1_pct": 0.0,
+      "net_r_without_top_1": -507.6373,
+      "profit_concentration_status": "NEGATIVE_NET_R",
+      "cost_stress_passed": false,
+      "stressed_net_r": 0.0,
+      "param_stability_passed": false,
+      "falsification_reasons": [
+        "NEGATIVE_EXPECTANCY (-0.21R)",
+        "EXCESSIVE_DD (514.69R > 25R)",
+        "CONCENTRATION_VIOLATION (NEGATIVE_NET_R)"
+      ]
+    }
   }
 }
