@@ -23,6 +23,7 @@ DISCOVERY_FILE = os.path.join(RESULTS_DIR, "autonomous_discovery_reports.json")
 EXP_001_FILE = os.path.join(RESULTS_DIR, "candidate_001_experiments_dev.json")
 STRATEGY_LIB_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "strategy_library.json")
 DASHBOARD_MD_FILE = os.path.join(RESULTS_DIR, "CEO_DASHBOARD.md")
+QUANT_DASHBOARD_MD_FILE = os.path.join(RESULTS_DIR, "QUANTITATIVE_RESEARCH_DASHBOARD.md")
 
 
 def sync_all():
@@ -325,11 +326,21 @@ def sync_all():
     md.append(r"   - Candidate #001 was falsified due to severe opportunity starvation (6 trades in 2 years).")
     md.append(r"5. **Promotion to Phase 12 (Paper Trading Engine):** The 5 `QUALIFIED_ROBUST` strategies are eligible for live simulation in the Paper Trading Engine. In accordance with Directive §17, **Live Capital remains strictly locked**.")
 
+    from research.discovery_lab.institutional_dashboard import InstitutionalDashboard
+    inst_dashboard_text = InstitutionalDashboard.generate_dashboard(
+        discovery_reports=discovery_reports,
+        val_oos_results=val_oos_results,
+        strategy_library=strat_lib,
+    )
+    with open(QUANT_DASHBOARD_MD_FILE, "w") as f:
+        f.write(inst_dashboard_text)
+
     dashboard_text = "\n".join(md)
     with open(DASHBOARD_MD_FILE, "w") as f:
         f.write(dashboard_text)
 
-    print(f"CEO Dashboard written to: {DASHBOARD_MD_FILE}")
+    print(f"Institutional Research Dashboard written to: {QUANT_DASHBOARD_MD_FILE}")
+    print(f"Legacy mirror written to: {DASHBOARD_MD_FILE}")
     print(f"Strategy library updated at: {STRATEGY_LIB_FILE}")
 
 

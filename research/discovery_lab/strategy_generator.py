@@ -392,7 +392,13 @@ class StrategyExecutor:
         sl_dist = atr * atr_mult
         return self.simulate_signals(long_signals, short_signals, sl_dist, tp_multipliers=tp_r)
 
-    def run_family_7_mtf_continuation(self, tp_r: float = 2.5, atr_mult: float = 1.5) -> Dict[str, Any]:
+    def run_family_7_mtf_continuation(
+        self,
+        tp_r: float = 2.5,
+        atr_mult: float = 1.5,
+        ema_len: int = 21,
+        donchian_len: int = 10,
+    ) -> Dict[str, Any]:
         """Family 7: Multi-Timeframe Continuation (HTF trend + MTF trend + LTF local swing break)."""
         ltf_c = np.array([c.close for c in self.ltf_candles], dtype=np.float64)
         ltf_h = np.array([c.high for c in self.ltf_candles], dtype=np.float64)
@@ -401,17 +407,17 @@ class StrategyExecutor:
 
         htf_c = np.array([c.close for c in self.htf_candles], dtype=np.float64)
         htf_ts = np.array([c.timestamp for c in self.htf_candles], dtype=np.int64)
-        htf_ema = ema_numpy(htf_c, 21)
+        htf_ema = ema_numpy(htf_c, ema_len)
         htf_bull = self._sync_to_ltf(htf_ts, (htf_c > htf_ema).astype(np.float64), ltf_ts) == 1.0
         htf_bear = self._sync_to_ltf(htf_ts, (htf_c < htf_ema).astype(np.float64), ltf_ts) == 1.0
 
         mtf_c = np.array([c.close for c in self.mtf_candles], dtype=np.float64)
         mtf_ts = np.array([c.timestamp for c in self.mtf_candles], dtype=np.int64)
-        mtf_ema = ema_numpy(mtf_c, 21)
+        mtf_ema = ema_numpy(mtf_c, ema_len)
         mtf_bull = self._sync_to_ltf(mtf_ts, (mtf_c > mtf_ema).astype(np.float64), ltf_ts) == 1.0
         mtf_bear = self._sync_to_ltf(mtf_ts, (mtf_c < mtf_ema).astype(np.float64), ltf_ts) == 1.0
 
-        d_upper, d_lower, _ = donchian_numpy(ltf_h, ltf_l, period=10)
+        d_upper, d_lower, _ = donchian_numpy(ltf_h, ltf_l, period=donchian_len)
         atr = atr_numpy(ltf_h, ltf_l, ltf_c, 14)
 
         long_signals = htf_bull & mtf_bull & (ltf_c > d_upper)
@@ -421,6 +427,7 @@ class StrategyExecutor:
 
         sl_dist = atr * atr_mult
         return self.simulate_signals(long_signals, short_signals, sl_dist, tp_multipliers=tp_r)
+
 
     def run_family_8_regime_adaptive(self, tp_r: float = 2.5, atr_mult: float = 1.5) -> Dict[str, Any]:
         """Family 8: Regime-Adaptive (ADX trend vs range classifier routing)."""
