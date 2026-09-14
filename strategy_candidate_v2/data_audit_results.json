@@ -1,0 +1,3348 @@
+[
+  {
+    "asset": "BTC/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "htf_timeframe": "1M",
+    "mtf_timeframe": "1w",
+    "ltf_timeframe": "1d",
+    "status": "READY",
+    "earliest_timestamp": 1502928000,
+    "latest_timestamp": 1788134400,
+    "earliest_date": "2017-08-17 00:00",
+    "latest_date": "2026-08-31 00:00",
+    "htf_candles": 110,
+    "mtf_candles": 473,
+    "ltf_candles": 3303,
+    "htf_gaps": [],
+    "mtf_gaps": [],
+    "ltf_gaps": [],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "EXCELLENT",
+    "usable_continuous_period": {
+      "start": "2017-08-17 00:00",
+      "end": "2026-08-31 00:00",
+      "duration_days": 3301.0
+    }
+  },
+  {
+    "asset": "BTC/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "htf_timeframe": "1w",
+    "mtf_timeframe": "1d",
+    "ltf_timeframe": "4h",
+    "status": "READY",
+    "earliest_timestamp": 1502942400,
+    "latest_timestamp": 1788134400,
+    "earliest_date": "2017-08-17 04:00",
+    "latest_date": "2026-08-31 00:00",
+    "htf_candles": 473,
+    "mtf_candles": 3303,
+    "ltf_candles": 19800,
+    "htf_gaps": [],
+    "mtf_gaps": [],
+    "ltf_gaps": [
+      {
+        "start_ts": 1518048000,
+        "end_ts": 1518163200,
+        "gap_seconds": 115200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1529971200,
+        "end_ts": 1530014400,
+        "gap_seconds": 43200,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1530662400,
+        "end_ts": 1530691200,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1542153600,
+        "end_ts": 1542182400,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1552348800,
+        "end_ts": 1552377600,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1557878400,
+        "end_ts": 1557921600,
+        "gap_seconds": 43200,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1565827200,
+        "end_ts": 1565856000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1582099200,
+        "end_ts": 1582128000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "FAIR",
+    "usable_continuous_period": {
+      "start": "2017-08-17 04:00",
+      "end": "2026-08-31 00:00",
+      "duration_days": 3300.8333333333335
+    }
+  },
+  {
+    "asset": "BTC/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "htf_timeframe": "1d",
+    "mtf_timeframe": "4h",
+    "ltf_timeframe": "1h",
+    "status": "READY",
+    "earliest_timestamp": 1502942400,
+    "latest_timestamp": 1788220800,
+    "earliest_date": "2017-08-17 04:00",
+    "latest_date": "2026-09-01 00:00",
+    "htf_candles": 3303,
+    "mtf_candles": 19800,
+    "ltf_candles": 79134,
+    "htf_gaps": [],
+    "mtf_gaps": [
+      {
+        "start_ts": 1518048000,
+        "end_ts": 1518163200,
+        "gap_seconds": 115200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1529971200,
+        "end_ts": 1530014400,
+        "gap_seconds": 43200,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1530662400,
+        "end_ts": 1530691200,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1542153600,
+        "end_ts": 1542182400,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1552348800,
+        "end_ts": 1552377600,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1557878400,
+        "end_ts": 1557921600,
+        "gap_seconds": 43200,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1565827200,
+        "end_ts": 1565856000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1582099200,
+        "end_ts": 1582128000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "ltf_gaps": [
+      {
+        "start_ts": 1504713600,
+        "end_ts": 1504738800,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1515034800,
+        "end_ts": 1515042000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1518048000,
+        "end_ts": 1518170400,
+        "gap_seconds": 122400,
+        "estimated_missing_candles": 33
+      },
+      {
+        "start_ts": 1529974800,
+        "end_ts": 1530014400,
+        "gap_seconds": 39600,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1530100800,
+        "end_ts": 1530108000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1530662400,
+        "end_ts": 1530691200,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1539925200,
+        "end_ts": 1539939600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1542157200,
+        "end_ts": 1542186000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1552352400,
+        "end_ts": 1552377600,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1557885600,
+        "end_ts": 1557925200,
+        "gap_seconds": 39600,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1565830800,
+        "end_ts": 1565863200,
+        "gap_seconds": 32400,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1573606800,
+        "end_ts": 1573617600,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1574643600,
+        "end_ts": 1574654400,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1581210000,
+        "end_ts": 1581217200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1582110000,
+        "end_ts": 1582131600,
+        "gap_seconds": 21600,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1583312400,
+        "end_ts": 1583319600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1587776400,
+        "end_ts": 1587787200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1593306000,
+        "end_ts": 1593320400,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1606712400,
+        "end_ts": 1606719600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1608555600,
+        "end_ts": 1608573600,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608858000,
+        "end_ts": 1608865200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1613012400,
+        "end_ts": 1613019600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1614992400,
+        "end_ts": 1614999600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1618880400,
+        "end_ts": 1618891200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619337600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1628816400,
+        "end_ts": 1628834400,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1632895200,
+        "end_ts": 1632906000,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1679659200,
+        "end_ts": 1679666400,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "POOR",
+    "usable_continuous_period": {
+      "start": "2017-08-17 04:00",
+      "end": "2026-09-01 00:00",
+      "duration_days": 3301.8333333333335
+    }
+  },
+  {
+    "asset": "BTC/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "htf_timeframe": "4h",
+    "mtf_timeframe": "1h",
+    "ltf_timeframe": "15m",
+    "status": "READY",
+    "earliest_timestamp": 1502942400,
+    "latest_timestamp": 1788278400,
+    "earliest_date": "2017-08-17 04:00",
+    "latest_date": "2026-09-01 16:00",
+    "htf_candles": 19800,
+    "mtf_candles": 79134,
+    "ltf_candles": 316482,
+    "htf_gaps": [
+      {
+        "start_ts": 1518048000,
+        "end_ts": 1518163200,
+        "gap_seconds": 115200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1529971200,
+        "end_ts": 1530014400,
+        "gap_seconds": 43200,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1530662400,
+        "end_ts": 1530691200,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1542153600,
+        "end_ts": 1542182400,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1552348800,
+        "end_ts": 1552377600,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1557878400,
+        "end_ts": 1557921600,
+        "gap_seconds": 43200,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1565827200,
+        "end_ts": 1565856000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1582099200,
+        "end_ts": 1582128000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "mtf_gaps": [
+      {
+        "start_ts": 1504713600,
+        "end_ts": 1504738800,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1515034800,
+        "end_ts": 1515042000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1518048000,
+        "end_ts": 1518170400,
+        "gap_seconds": 122400,
+        "estimated_missing_candles": 33
+      },
+      {
+        "start_ts": 1529974800,
+        "end_ts": 1530014400,
+        "gap_seconds": 39600,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1530100800,
+        "end_ts": 1530108000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1530662400,
+        "end_ts": 1530691200,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1539925200,
+        "end_ts": 1539939600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1542157200,
+        "end_ts": 1542186000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1552352400,
+        "end_ts": 1552377600,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1557885600,
+        "end_ts": 1557925200,
+        "gap_seconds": 39600,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1565830800,
+        "end_ts": 1565863200,
+        "gap_seconds": 32400,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1573606800,
+        "end_ts": 1573617600,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1574643600,
+        "end_ts": 1574654400,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1581210000,
+        "end_ts": 1581217200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1582110000,
+        "end_ts": 1582131600,
+        "gap_seconds": 21600,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1583312400,
+        "end_ts": 1583319600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1587776400,
+        "end_ts": 1587787200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1593306000,
+        "end_ts": 1593320400,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1606712400,
+        "end_ts": 1606719600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1608555600,
+        "end_ts": 1608573600,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608858000,
+        "end_ts": 1608865200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1613012400,
+        "end_ts": 1613019600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1614992400,
+        "end_ts": 1614999600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1618880400,
+        "end_ts": 1618891200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619337600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1628816400,
+        "end_ts": 1628834400,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1632895200,
+        "end_ts": 1632906000,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1679659200,
+        "end_ts": 1679666400,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "ltf_gaps": [
+      {
+        "start_ts": 1504713600,
+        "end_ts": 1504738800,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 27
+      },
+      {
+        "start_ts": 1512367200,
+        "end_ts": 1512369900,
+        "gap_seconds": 2700,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1513599300,
+        "end_ts": 1513603800,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1515034800,
+        "end_ts": 1515042000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1518048900,
+        "end_ts": 1518170400,
+        "gap_seconds": 121500,
+        "estimated_missing_candles": 134
+      },
+      {
+        "start_ts": 1518241500,
+        "end_ts": 1518243300,
+        "gap_seconds": 1800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1518321600,
+        "end_ts": 1518323400,
+        "gap_seconds": 1800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1529977500,
+        "end_ts": 1530014400,
+        "gap_seconds": 36900,
+        "estimated_missing_candles": 40
+      },
+      {
+        "start_ts": 1530103500,
+        "end_ts": 1530110700,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1530663300,
+        "end_ts": 1530691200,
+        "gap_seconds": 27900,
+        "estimated_missing_candles": 30
+      },
+      {
+        "start_ts": 1539927900,
+        "end_ts": 1539941400,
+        "gap_seconds": 13500,
+        "estimated_missing_candles": 14
+      },
+      {
+        "start_ts": 1542159900,
+        "end_ts": 1542186000,
+        "gap_seconds": 26100,
+        "estimated_missing_candles": 28
+      },
+      {
+        "start_ts": 1552355100,
+        "end_ts": 1552377600,
+        "gap_seconds": 22500,
+        "estimated_missing_candles": 24
+      },
+      {
+        "start_ts": 1557888300,
+        "end_ts": 1557925200,
+        "gap_seconds": 36900,
+        "estimated_missing_candles": 40
+      },
+      {
+        "start_ts": 1559941200,
+        "end_ts": 1559945700,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1565833500,
+        "end_ts": 1565863200,
+        "gap_seconds": 29700,
+        "estimated_missing_candles": 32
+      },
+      {
+        "start_ts": 1573609500,
+        "end_ts": 1573618500,
+        "gap_seconds": 9000,
+        "estimated_missing_candles": 9
+      },
+      {
+        "start_ts": 1574646300,
+        "end_ts": 1574654400,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1581212700,
+        "end_ts": 1581217200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1582111800,
+        "end_ts": 1582133400,
+        "gap_seconds": 21600,
+        "estimated_missing_candles": 23
+      },
+      {
+        "start_ts": 1583313300,
+        "end_ts": 1583321400,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1587779100,
+        "end_ts": 1587789000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1593308700,
+        "end_ts": 1593322200,
+        "gap_seconds": 13500,
+        "estimated_missing_candles": 14
+      },
+      {
+        "start_ts": 1606715100,
+        "end_ts": 1606719600,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608558300,
+        "end_ts": 1608573600,
+        "gap_seconds": 15300,
+        "estimated_missing_candles": 16
+      },
+      {
+        "start_ts": 1608860700,
+        "end_ts": 1608865200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1613014200,
+        "end_ts": 1613019600,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1614995100,
+        "end_ts": 1615001400,
+        "gap_seconds": 6300,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1618883100,
+        "end_ts": 1618893000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619340300,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1628819100,
+        "end_ts": 1628836200,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1632897900,
+        "end_ts": 1632906000,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1679661000,
+        "end_ts": 1679666400,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      }
+    ],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "POOR",
+    "usable_continuous_period": {
+      "start": "2017-08-17 04:00",
+      "end": "2026-09-01 16:00",
+      "duration_days": 3302.5
+    }
+  },
+  {
+    "asset": "BTC/USDT",
+    "set": "Set 5",
+    "style": "Short-Term Intraday",
+    "htf_timeframe": "1h",
+    "mtf_timeframe": "15m",
+    "ltf_timeframe": "5m",
+    "status": "READY",
+    "earliest_timestamp": 1773455700,
+    "latest_timestamp": 1788282000,
+    "earliest_date": "2026-03-14 02:35",
+    "latest_date": "2026-09-01 17:00",
+    "htf_candles": 79134,
+    "mtf_candles": 316482,
+    "ltf_candles": 50000,
+    "htf_gaps": [
+      {
+        "start_ts": 1504713600,
+        "end_ts": 1504738800,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1515034800,
+        "end_ts": 1515042000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1518048000,
+        "end_ts": 1518170400,
+        "gap_seconds": 122400,
+        "estimated_missing_candles": 33
+      },
+      {
+        "start_ts": 1529974800,
+        "end_ts": 1530014400,
+        "gap_seconds": 39600,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1530100800,
+        "end_ts": 1530108000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1530662400,
+        "end_ts": 1530691200,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1539925200,
+        "end_ts": 1539939600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1542157200,
+        "end_ts": 1542186000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1552352400,
+        "end_ts": 1552377600,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1557885600,
+        "end_ts": 1557925200,
+        "gap_seconds": 39600,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1565830800,
+        "end_ts": 1565863200,
+        "gap_seconds": 32400,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1573606800,
+        "end_ts": 1573617600,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1574643600,
+        "end_ts": 1574654400,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1581210000,
+        "end_ts": 1581217200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1582110000,
+        "end_ts": 1582131600,
+        "gap_seconds": 21600,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1583312400,
+        "end_ts": 1583319600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1587776400,
+        "end_ts": 1587787200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1593306000,
+        "end_ts": 1593320400,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1606712400,
+        "end_ts": 1606719600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1608555600,
+        "end_ts": 1608573600,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608858000,
+        "end_ts": 1608865200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1613012400,
+        "end_ts": 1613019600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1614992400,
+        "end_ts": 1614999600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1618880400,
+        "end_ts": 1618891200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619337600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1628816400,
+        "end_ts": 1628834400,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1632895200,
+        "end_ts": 1632906000,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1679659200,
+        "end_ts": 1679666400,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "mtf_gaps": [
+      {
+        "start_ts": 1504713600,
+        "end_ts": 1504738800,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 27
+      },
+      {
+        "start_ts": 1512367200,
+        "end_ts": 1512369900,
+        "gap_seconds": 2700,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1513599300,
+        "end_ts": 1513603800,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1515034800,
+        "end_ts": 1515042000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1518048900,
+        "end_ts": 1518170400,
+        "gap_seconds": 121500,
+        "estimated_missing_candles": 134
+      },
+      {
+        "start_ts": 1518241500,
+        "end_ts": 1518243300,
+        "gap_seconds": 1800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1518321600,
+        "end_ts": 1518323400,
+        "gap_seconds": 1800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1529977500,
+        "end_ts": 1530014400,
+        "gap_seconds": 36900,
+        "estimated_missing_candles": 40
+      },
+      {
+        "start_ts": 1530103500,
+        "end_ts": 1530110700,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1530663300,
+        "end_ts": 1530691200,
+        "gap_seconds": 27900,
+        "estimated_missing_candles": 30
+      },
+      {
+        "start_ts": 1539927900,
+        "end_ts": 1539941400,
+        "gap_seconds": 13500,
+        "estimated_missing_candles": 14
+      },
+      {
+        "start_ts": 1542159900,
+        "end_ts": 1542186000,
+        "gap_seconds": 26100,
+        "estimated_missing_candles": 28
+      },
+      {
+        "start_ts": 1552355100,
+        "end_ts": 1552377600,
+        "gap_seconds": 22500,
+        "estimated_missing_candles": 24
+      },
+      {
+        "start_ts": 1557888300,
+        "end_ts": 1557925200,
+        "gap_seconds": 36900,
+        "estimated_missing_candles": 40
+      },
+      {
+        "start_ts": 1559941200,
+        "end_ts": 1559945700,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1565833500,
+        "end_ts": 1565863200,
+        "gap_seconds": 29700,
+        "estimated_missing_candles": 32
+      },
+      {
+        "start_ts": 1573609500,
+        "end_ts": 1573618500,
+        "gap_seconds": 9000,
+        "estimated_missing_candles": 9
+      },
+      {
+        "start_ts": 1574646300,
+        "end_ts": 1574654400,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1581212700,
+        "end_ts": 1581217200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1582111800,
+        "end_ts": 1582133400,
+        "gap_seconds": 21600,
+        "estimated_missing_candles": 23
+      },
+      {
+        "start_ts": 1583313300,
+        "end_ts": 1583321400,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1587779100,
+        "end_ts": 1587789000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1593308700,
+        "end_ts": 1593322200,
+        "gap_seconds": 13500,
+        "estimated_missing_candles": 14
+      },
+      {
+        "start_ts": 1606715100,
+        "end_ts": 1606719600,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608558300,
+        "end_ts": 1608573600,
+        "gap_seconds": 15300,
+        "estimated_missing_candles": 16
+      },
+      {
+        "start_ts": 1608860700,
+        "end_ts": 1608865200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1613014200,
+        "end_ts": 1613019600,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1614995100,
+        "end_ts": 1615001400,
+        "gap_seconds": 6300,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1618883100,
+        "end_ts": 1618893000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619340300,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1628819100,
+        "end_ts": 1628836200,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1632897900,
+        "end_ts": 1632906000,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1679661000,
+        "end_ts": 1679666400,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      }
+    ],
+    "ltf_gaps": [],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "POOR",
+    "usable_continuous_period": {
+      "start": "2026-03-14 02:35",
+      "end": "2026-09-01 17:00",
+      "duration_days": 171.60069444444446
+    }
+  },
+  {
+    "asset": "BTC/USDT",
+    "set": "Set 6",
+    "style": "Scalping",
+    "htf_timeframe": "15m",
+    "mtf_timeframe": "5m",
+    "ltf_timeframe": "1m",
+    "status": "READY",
+    "earliest_timestamp": 1785455580,
+    "latest_timestamp": 1788283800,
+    "earliest_date": "2026-07-30 23:53",
+    "latest_date": "2026-09-01 17:30",
+    "htf_candles": 316482,
+    "mtf_candles": 50000,
+    "ltf_candles": 50000,
+    "htf_gaps": [
+      {
+        "start_ts": 1504713600,
+        "end_ts": 1504738800,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 27
+      },
+      {
+        "start_ts": 1512367200,
+        "end_ts": 1512369900,
+        "gap_seconds": 2700,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1513599300,
+        "end_ts": 1513603800,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1515034800,
+        "end_ts": 1515042000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1518048900,
+        "end_ts": 1518170400,
+        "gap_seconds": 121500,
+        "estimated_missing_candles": 134
+      },
+      {
+        "start_ts": 1518241500,
+        "end_ts": 1518243300,
+        "gap_seconds": 1800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1518321600,
+        "end_ts": 1518323400,
+        "gap_seconds": 1800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1529977500,
+        "end_ts": 1530014400,
+        "gap_seconds": 36900,
+        "estimated_missing_candles": 40
+      },
+      {
+        "start_ts": 1530103500,
+        "end_ts": 1530110700,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1530663300,
+        "end_ts": 1530691200,
+        "gap_seconds": 27900,
+        "estimated_missing_candles": 30
+      },
+      {
+        "start_ts": 1539927900,
+        "end_ts": 1539941400,
+        "gap_seconds": 13500,
+        "estimated_missing_candles": 14
+      },
+      {
+        "start_ts": 1542159900,
+        "end_ts": 1542186000,
+        "gap_seconds": 26100,
+        "estimated_missing_candles": 28
+      },
+      {
+        "start_ts": 1552355100,
+        "end_ts": 1552377600,
+        "gap_seconds": 22500,
+        "estimated_missing_candles": 24
+      },
+      {
+        "start_ts": 1557888300,
+        "end_ts": 1557925200,
+        "gap_seconds": 36900,
+        "estimated_missing_candles": 40
+      },
+      {
+        "start_ts": 1559941200,
+        "end_ts": 1559945700,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1565833500,
+        "end_ts": 1565863200,
+        "gap_seconds": 29700,
+        "estimated_missing_candles": 32
+      },
+      {
+        "start_ts": 1573609500,
+        "end_ts": 1573618500,
+        "gap_seconds": 9000,
+        "estimated_missing_candles": 9
+      },
+      {
+        "start_ts": 1574646300,
+        "end_ts": 1574654400,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1581212700,
+        "end_ts": 1581217200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1582111800,
+        "end_ts": 1582133400,
+        "gap_seconds": 21600,
+        "estimated_missing_candles": 23
+      },
+      {
+        "start_ts": 1583313300,
+        "end_ts": 1583321400,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1587779100,
+        "end_ts": 1587789000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1593308700,
+        "end_ts": 1593322200,
+        "gap_seconds": 13500,
+        "estimated_missing_candles": 14
+      },
+      {
+        "start_ts": 1606715100,
+        "end_ts": 1606719600,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608558300,
+        "end_ts": 1608573600,
+        "gap_seconds": 15300,
+        "estimated_missing_candles": 16
+      },
+      {
+        "start_ts": 1608860700,
+        "end_ts": 1608865200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1613014200,
+        "end_ts": 1613019600,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1614995100,
+        "end_ts": 1615001400,
+        "gap_seconds": 6300,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1618883100,
+        "end_ts": 1618893000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619340300,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1628819100,
+        "end_ts": 1628836200,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1632897900,
+        "end_ts": 1632906000,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1679661000,
+        "end_ts": 1679666400,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      }
+    ],
+    "mtf_gaps": [],
+    "ltf_gaps": [],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "POOR",
+    "usable_continuous_period": {
+      "start": "2026-07-30 23:53",
+      "end": "2026-09-01 17:30",
+      "duration_days": 32.734027777777776
+    }
+  },
+  {
+    "asset": "ETH/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "htf_timeframe": "1M",
+    "mtf_timeframe": "1w",
+    "ltf_timeframe": "1d",
+    "status": "READY",
+    "earliest_timestamp": 1502928000,
+    "latest_timestamp": 1788134400,
+    "earliest_date": "2017-08-17 00:00",
+    "latest_date": "2026-08-31 00:00",
+    "htf_candles": 110,
+    "mtf_candles": 473,
+    "ltf_candles": 3303,
+    "htf_gaps": [],
+    "mtf_gaps": [],
+    "ltf_gaps": [],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "EXCELLENT",
+    "usable_continuous_period": {
+      "start": "2017-08-17 00:00",
+      "end": "2026-08-31 00:00",
+      "duration_days": 3301.0
+    }
+  },
+  {
+    "asset": "ETH/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "htf_timeframe": "1w",
+    "mtf_timeframe": "1d",
+    "ltf_timeframe": "4h",
+    "status": "READY",
+    "earliest_timestamp": 1502942400,
+    "latest_timestamp": 1788134400,
+    "earliest_date": "2017-08-17 04:00",
+    "latest_date": "2026-08-31 00:00",
+    "htf_candles": 473,
+    "mtf_candles": 3303,
+    "ltf_candles": 19800,
+    "htf_gaps": [],
+    "mtf_gaps": [],
+    "ltf_gaps": [
+      {
+        "start_ts": 1518048000,
+        "end_ts": 1518163200,
+        "gap_seconds": 115200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1529971200,
+        "end_ts": 1530014400,
+        "gap_seconds": 43200,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1530662400,
+        "end_ts": 1530691200,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1542153600,
+        "end_ts": 1542182400,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1552348800,
+        "end_ts": 1552377600,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1557878400,
+        "end_ts": 1557921600,
+        "gap_seconds": 43200,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1565827200,
+        "end_ts": 1565856000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1582099200,
+        "end_ts": 1582128000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "FAIR",
+    "usable_continuous_period": {
+      "start": "2017-08-17 04:00",
+      "end": "2026-08-31 00:00",
+      "duration_days": 3300.8333333333335
+    }
+  },
+  {
+    "asset": "ETH/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "htf_timeframe": "1d",
+    "mtf_timeframe": "4h",
+    "ltf_timeframe": "1h",
+    "status": "READY",
+    "earliest_timestamp": 1502942400,
+    "latest_timestamp": 1788220800,
+    "earliest_date": "2017-08-17 04:00",
+    "latest_date": "2026-09-01 00:00",
+    "htf_candles": 3303,
+    "mtf_candles": 19800,
+    "ltf_candles": 79134,
+    "htf_gaps": [],
+    "mtf_gaps": [
+      {
+        "start_ts": 1518048000,
+        "end_ts": 1518163200,
+        "gap_seconds": 115200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1529971200,
+        "end_ts": 1530014400,
+        "gap_seconds": 43200,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1530662400,
+        "end_ts": 1530691200,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1542153600,
+        "end_ts": 1542182400,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1552348800,
+        "end_ts": 1552377600,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1557878400,
+        "end_ts": 1557921600,
+        "gap_seconds": 43200,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1565827200,
+        "end_ts": 1565856000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1582099200,
+        "end_ts": 1582128000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "ltf_gaps": [
+      {
+        "start_ts": 1504713600,
+        "end_ts": 1504738800,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1515034800,
+        "end_ts": 1515042000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1518048000,
+        "end_ts": 1518170400,
+        "gap_seconds": 122400,
+        "estimated_missing_candles": 33
+      },
+      {
+        "start_ts": 1529974800,
+        "end_ts": 1530014400,
+        "gap_seconds": 39600,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1530100800,
+        "end_ts": 1530108000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1530662400,
+        "end_ts": 1530691200,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1539925200,
+        "end_ts": 1539939600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1542157200,
+        "end_ts": 1542186000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1552352400,
+        "end_ts": 1552377600,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1557885600,
+        "end_ts": 1557925200,
+        "gap_seconds": 39600,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1565830800,
+        "end_ts": 1565863200,
+        "gap_seconds": 32400,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1573606800,
+        "end_ts": 1573617600,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1574643600,
+        "end_ts": 1574654400,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1581210000,
+        "end_ts": 1581217200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1582110000,
+        "end_ts": 1582131600,
+        "gap_seconds": 21600,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1583312400,
+        "end_ts": 1583319600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1587776400,
+        "end_ts": 1587787200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1593306000,
+        "end_ts": 1593320400,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1606712400,
+        "end_ts": 1606719600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1608555600,
+        "end_ts": 1608573600,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608858000,
+        "end_ts": 1608865200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1613012400,
+        "end_ts": 1613019600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1614992400,
+        "end_ts": 1614999600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1618880400,
+        "end_ts": 1618891200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619337600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1628816400,
+        "end_ts": 1628834400,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1632895200,
+        "end_ts": 1632906000,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1679659200,
+        "end_ts": 1679666400,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "POOR",
+    "usable_continuous_period": {
+      "start": "2017-08-17 04:00",
+      "end": "2026-09-01 00:00",
+      "duration_days": 3301.8333333333335
+    }
+  },
+  {
+    "asset": "ETH/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "htf_timeframe": "4h",
+    "mtf_timeframe": "1h",
+    "ltf_timeframe": "15m",
+    "status": "READY",
+    "earliest_timestamp": 1502942400,
+    "latest_timestamp": 1788278400,
+    "earliest_date": "2017-08-17 04:00",
+    "latest_date": "2026-09-01 16:00",
+    "htf_candles": 19800,
+    "mtf_candles": 79134,
+    "ltf_candles": 316482,
+    "htf_gaps": [
+      {
+        "start_ts": 1518048000,
+        "end_ts": 1518163200,
+        "gap_seconds": 115200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1529971200,
+        "end_ts": 1530014400,
+        "gap_seconds": 43200,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1530662400,
+        "end_ts": 1530691200,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1542153600,
+        "end_ts": 1542182400,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1552348800,
+        "end_ts": 1552377600,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1557878400,
+        "end_ts": 1557921600,
+        "gap_seconds": 43200,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1565827200,
+        "end_ts": 1565856000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1582099200,
+        "end_ts": 1582128000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "mtf_gaps": [
+      {
+        "start_ts": 1504713600,
+        "end_ts": 1504738800,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1515034800,
+        "end_ts": 1515042000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1518048000,
+        "end_ts": 1518170400,
+        "gap_seconds": 122400,
+        "estimated_missing_candles": 33
+      },
+      {
+        "start_ts": 1529974800,
+        "end_ts": 1530014400,
+        "gap_seconds": 39600,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1530100800,
+        "end_ts": 1530108000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1530662400,
+        "end_ts": 1530691200,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1539925200,
+        "end_ts": 1539939600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1542157200,
+        "end_ts": 1542186000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1552352400,
+        "end_ts": 1552377600,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1557885600,
+        "end_ts": 1557925200,
+        "gap_seconds": 39600,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1565830800,
+        "end_ts": 1565863200,
+        "gap_seconds": 32400,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1573606800,
+        "end_ts": 1573617600,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1574643600,
+        "end_ts": 1574654400,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1581210000,
+        "end_ts": 1581217200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1582110000,
+        "end_ts": 1582131600,
+        "gap_seconds": 21600,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1583312400,
+        "end_ts": 1583319600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1587776400,
+        "end_ts": 1587787200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1593306000,
+        "end_ts": 1593320400,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1606712400,
+        "end_ts": 1606719600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1608555600,
+        "end_ts": 1608573600,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608858000,
+        "end_ts": 1608865200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1613012400,
+        "end_ts": 1613019600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1614992400,
+        "end_ts": 1614999600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1618880400,
+        "end_ts": 1618891200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619337600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1628816400,
+        "end_ts": 1628834400,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1632895200,
+        "end_ts": 1632906000,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1679659200,
+        "end_ts": 1679666400,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "ltf_gaps": [
+      {
+        "start_ts": 1504713600,
+        "end_ts": 1504738800,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 27
+      },
+      {
+        "start_ts": 1512367200,
+        "end_ts": 1512369900,
+        "gap_seconds": 2700,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1513599300,
+        "end_ts": 1513603800,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1515034800,
+        "end_ts": 1515042000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1518048900,
+        "end_ts": 1518170400,
+        "gap_seconds": 121500,
+        "estimated_missing_candles": 134
+      },
+      {
+        "start_ts": 1518241500,
+        "end_ts": 1518243300,
+        "gap_seconds": 1800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1518321600,
+        "end_ts": 1518323400,
+        "gap_seconds": 1800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1529977500,
+        "end_ts": 1530014400,
+        "gap_seconds": 36900,
+        "estimated_missing_candles": 40
+      },
+      {
+        "start_ts": 1530103500,
+        "end_ts": 1530110700,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1530663300,
+        "end_ts": 1530691200,
+        "gap_seconds": 27900,
+        "estimated_missing_candles": 30
+      },
+      {
+        "start_ts": 1539927900,
+        "end_ts": 1539941400,
+        "gap_seconds": 13500,
+        "estimated_missing_candles": 14
+      },
+      {
+        "start_ts": 1542159900,
+        "end_ts": 1542186000,
+        "gap_seconds": 26100,
+        "estimated_missing_candles": 28
+      },
+      {
+        "start_ts": 1552355100,
+        "end_ts": 1552377600,
+        "gap_seconds": 22500,
+        "estimated_missing_candles": 24
+      },
+      {
+        "start_ts": 1557888300,
+        "end_ts": 1557925200,
+        "gap_seconds": 36900,
+        "estimated_missing_candles": 40
+      },
+      {
+        "start_ts": 1559941200,
+        "end_ts": 1559945700,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1565833500,
+        "end_ts": 1565863200,
+        "gap_seconds": 29700,
+        "estimated_missing_candles": 32
+      },
+      {
+        "start_ts": 1573609500,
+        "end_ts": 1573618500,
+        "gap_seconds": 9000,
+        "estimated_missing_candles": 9
+      },
+      {
+        "start_ts": 1574646300,
+        "end_ts": 1574654400,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1581212700,
+        "end_ts": 1581217200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1582111800,
+        "end_ts": 1582133400,
+        "gap_seconds": 21600,
+        "estimated_missing_candles": 23
+      },
+      {
+        "start_ts": 1583313300,
+        "end_ts": 1583321400,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1587779100,
+        "end_ts": 1587789000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1593308700,
+        "end_ts": 1593322200,
+        "gap_seconds": 13500,
+        "estimated_missing_candles": 14
+      },
+      {
+        "start_ts": 1606715100,
+        "end_ts": 1606719600,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608558300,
+        "end_ts": 1608573600,
+        "gap_seconds": 15300,
+        "estimated_missing_candles": 16
+      },
+      {
+        "start_ts": 1608860700,
+        "end_ts": 1608865200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1613014200,
+        "end_ts": 1613019600,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1614995100,
+        "end_ts": 1615001400,
+        "gap_seconds": 6300,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1618883100,
+        "end_ts": 1618893000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619340300,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1628819100,
+        "end_ts": 1628836200,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1632897900,
+        "end_ts": 1632906000,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1679661000,
+        "end_ts": 1679666400,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      }
+    ],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "POOR",
+    "usable_continuous_period": {
+      "start": "2017-08-17 04:00",
+      "end": "2026-09-01 16:00",
+      "duration_days": 3302.5
+    }
+  },
+  {
+    "asset": "ETH/USDT",
+    "set": "Set 5",
+    "style": "Short-Term Intraday",
+    "htf_timeframe": "1h",
+    "mtf_timeframe": "15m",
+    "ltf_timeframe": "5m",
+    "status": "READY",
+    "earliest_timestamp": 1773455700,
+    "latest_timestamp": 1788282000,
+    "earliest_date": "2026-03-14 02:35",
+    "latest_date": "2026-09-01 17:00",
+    "htf_candles": 79134,
+    "mtf_candles": 316482,
+    "ltf_candles": 50000,
+    "htf_gaps": [
+      {
+        "start_ts": 1504713600,
+        "end_ts": 1504738800,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1515034800,
+        "end_ts": 1515042000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1518048000,
+        "end_ts": 1518170400,
+        "gap_seconds": 122400,
+        "estimated_missing_candles": 33
+      },
+      {
+        "start_ts": 1529974800,
+        "end_ts": 1530014400,
+        "gap_seconds": 39600,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1530100800,
+        "end_ts": 1530108000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1530662400,
+        "end_ts": 1530691200,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1539925200,
+        "end_ts": 1539939600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1542157200,
+        "end_ts": 1542186000,
+        "gap_seconds": 28800,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1552352400,
+        "end_ts": 1552377600,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1557885600,
+        "end_ts": 1557925200,
+        "gap_seconds": 39600,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1565830800,
+        "end_ts": 1565863200,
+        "gap_seconds": 32400,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1573606800,
+        "end_ts": 1573617600,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1574643600,
+        "end_ts": 1574654400,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1581210000,
+        "end_ts": 1581217200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1582110000,
+        "end_ts": 1582131600,
+        "gap_seconds": 21600,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1583312400,
+        "end_ts": 1583319600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1587776400,
+        "end_ts": 1587787200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1593306000,
+        "end_ts": 1593320400,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1606712400,
+        "end_ts": 1606719600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1608555600,
+        "end_ts": 1608573600,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608858000,
+        "end_ts": 1608865200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1613012400,
+        "end_ts": 1613019600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1614992400,
+        "end_ts": 1614999600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1618880400,
+        "end_ts": 1618891200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619337600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1628816400,
+        "end_ts": 1628834400,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1632895200,
+        "end_ts": 1632906000,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1679659200,
+        "end_ts": 1679666400,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "mtf_gaps": [
+      {
+        "start_ts": 1504713600,
+        "end_ts": 1504738800,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 27
+      },
+      {
+        "start_ts": 1512367200,
+        "end_ts": 1512369900,
+        "gap_seconds": 2700,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1513599300,
+        "end_ts": 1513603800,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1515034800,
+        "end_ts": 1515042000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1518048900,
+        "end_ts": 1518170400,
+        "gap_seconds": 121500,
+        "estimated_missing_candles": 134
+      },
+      {
+        "start_ts": 1518241500,
+        "end_ts": 1518243300,
+        "gap_seconds": 1800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1518321600,
+        "end_ts": 1518323400,
+        "gap_seconds": 1800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1529977500,
+        "end_ts": 1530014400,
+        "gap_seconds": 36900,
+        "estimated_missing_candles": 40
+      },
+      {
+        "start_ts": 1530103500,
+        "end_ts": 1530110700,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1530663300,
+        "end_ts": 1530691200,
+        "gap_seconds": 27900,
+        "estimated_missing_candles": 30
+      },
+      {
+        "start_ts": 1539927900,
+        "end_ts": 1539941400,
+        "gap_seconds": 13500,
+        "estimated_missing_candles": 14
+      },
+      {
+        "start_ts": 1542159900,
+        "end_ts": 1542186000,
+        "gap_seconds": 26100,
+        "estimated_missing_candles": 28
+      },
+      {
+        "start_ts": 1552355100,
+        "end_ts": 1552377600,
+        "gap_seconds": 22500,
+        "estimated_missing_candles": 24
+      },
+      {
+        "start_ts": 1557888300,
+        "end_ts": 1557925200,
+        "gap_seconds": 36900,
+        "estimated_missing_candles": 40
+      },
+      {
+        "start_ts": 1559941200,
+        "end_ts": 1559945700,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1565833500,
+        "end_ts": 1565863200,
+        "gap_seconds": 29700,
+        "estimated_missing_candles": 32
+      },
+      {
+        "start_ts": 1573609500,
+        "end_ts": 1573618500,
+        "gap_seconds": 9000,
+        "estimated_missing_candles": 9
+      },
+      {
+        "start_ts": 1574646300,
+        "end_ts": 1574654400,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1581212700,
+        "end_ts": 1581217200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1582111800,
+        "end_ts": 1582133400,
+        "gap_seconds": 21600,
+        "estimated_missing_candles": 23
+      },
+      {
+        "start_ts": 1583313300,
+        "end_ts": 1583321400,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1587779100,
+        "end_ts": 1587789000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1593308700,
+        "end_ts": 1593322200,
+        "gap_seconds": 13500,
+        "estimated_missing_candles": 14
+      },
+      {
+        "start_ts": 1606715100,
+        "end_ts": 1606719600,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608558300,
+        "end_ts": 1608573600,
+        "gap_seconds": 15300,
+        "estimated_missing_candles": 16
+      },
+      {
+        "start_ts": 1608860700,
+        "end_ts": 1608865200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1613014200,
+        "end_ts": 1613019600,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1614995100,
+        "end_ts": 1615001400,
+        "gap_seconds": 6300,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1618883100,
+        "end_ts": 1618893000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619340300,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1628819100,
+        "end_ts": 1628836200,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1632897900,
+        "end_ts": 1632906000,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1679661000,
+        "end_ts": 1679666400,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      }
+    ],
+    "ltf_gaps": [],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "POOR",
+    "usable_continuous_period": {
+      "start": "2026-03-14 02:35",
+      "end": "2026-09-01 17:00",
+      "duration_days": 171.60069444444446
+    }
+  },
+  {
+    "asset": "ETH/USDT",
+    "set": "Set 6",
+    "style": "Scalping",
+    "htf_timeframe": "15m",
+    "mtf_timeframe": "5m",
+    "ltf_timeframe": "1m",
+    "status": "READY",
+    "earliest_timestamp": 1785455640,
+    "latest_timestamp": 1788283800,
+    "earliest_date": "2026-07-30 23:54",
+    "latest_date": "2026-09-01 17:30",
+    "htf_candles": 316482,
+    "mtf_candles": 50000,
+    "ltf_candles": 50000,
+    "htf_gaps": [
+      {
+        "start_ts": 1504713600,
+        "end_ts": 1504738800,
+        "gap_seconds": 25200,
+        "estimated_missing_candles": 27
+      },
+      {
+        "start_ts": 1512367200,
+        "end_ts": 1512369900,
+        "gap_seconds": 2700,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1513599300,
+        "end_ts": 1513603800,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1515034800,
+        "end_ts": 1515042000,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1518048900,
+        "end_ts": 1518170400,
+        "gap_seconds": 121500,
+        "estimated_missing_candles": 134
+      },
+      {
+        "start_ts": 1518241500,
+        "end_ts": 1518243300,
+        "gap_seconds": 1800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1518321600,
+        "end_ts": 1518323400,
+        "gap_seconds": 1800,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1529977500,
+        "end_ts": 1530014400,
+        "gap_seconds": 36900,
+        "estimated_missing_candles": 40
+      },
+      {
+        "start_ts": 1530103500,
+        "end_ts": 1530110700,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 7
+      },
+      {
+        "start_ts": 1530663300,
+        "end_ts": 1530691200,
+        "gap_seconds": 27900,
+        "estimated_missing_candles": 30
+      },
+      {
+        "start_ts": 1539927900,
+        "end_ts": 1539941400,
+        "gap_seconds": 13500,
+        "estimated_missing_candles": 14
+      },
+      {
+        "start_ts": 1542159900,
+        "end_ts": 1542186000,
+        "gap_seconds": 26100,
+        "estimated_missing_candles": 28
+      },
+      {
+        "start_ts": 1552355100,
+        "end_ts": 1552377600,
+        "gap_seconds": 22500,
+        "estimated_missing_candles": 24
+      },
+      {
+        "start_ts": 1557888300,
+        "end_ts": 1557925200,
+        "gap_seconds": 36900,
+        "estimated_missing_candles": 40
+      },
+      {
+        "start_ts": 1559941200,
+        "end_ts": 1559945700,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1565833500,
+        "end_ts": 1565863200,
+        "gap_seconds": 29700,
+        "estimated_missing_candles": 32
+      },
+      {
+        "start_ts": 1573609500,
+        "end_ts": 1573618500,
+        "gap_seconds": 9000,
+        "estimated_missing_candles": 9
+      },
+      {
+        "start_ts": 1574646300,
+        "end_ts": 1574654400,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1581212700,
+        "end_ts": 1581217200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1582111800,
+        "end_ts": 1582133400,
+        "gap_seconds": 21600,
+        "estimated_missing_candles": 23
+      },
+      {
+        "start_ts": 1583313300,
+        "end_ts": 1583321400,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1587779100,
+        "end_ts": 1587789000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1593308700,
+        "end_ts": 1593322200,
+        "gap_seconds": 13500,
+        "estimated_missing_candles": 14
+      },
+      {
+        "start_ts": 1606715100,
+        "end_ts": 1606719600,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608558300,
+        "end_ts": 1608573600,
+        "gap_seconds": 15300,
+        "estimated_missing_candles": 16
+      },
+      {
+        "start_ts": 1608860700,
+        "end_ts": 1608865200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1613014200,
+        "end_ts": 1613019600,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1614995100,
+        "end_ts": 1615001400,
+        "gap_seconds": 6300,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1618883100,
+        "end_ts": 1618893000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619340300,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1628819100,
+        "end_ts": 1628836200,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1632897900,
+        "end_ts": 1632906000,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      },
+      {
+        "start_ts": 1679661000,
+        "end_ts": 1679666400,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      }
+    ],
+    "mtf_gaps": [],
+    "ltf_gaps": [],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "POOR",
+    "usable_continuous_period": {
+      "start": "2026-07-30 23:54",
+      "end": "2026-09-01 17:30",
+      "duration_days": 32.733333333333334
+    }
+  },
+  {
+    "asset": "SOL/USDT",
+    "set": "Set 1",
+    "style": "Macro / Position",
+    "htf_timeframe": "1M",
+    "mtf_timeframe": "1w",
+    "ltf_timeframe": "1d",
+    "status": "READY",
+    "earliest_timestamp": 1598918400,
+    "latest_timestamp": 1788134400,
+    "earliest_date": "2020-09-01 00:00",
+    "latest_date": "2026-08-31 00:00",
+    "htf_candles": 73,
+    "mtf_candles": 316,
+    "ltf_candles": 2209,
+    "htf_gaps": [],
+    "mtf_gaps": [],
+    "ltf_gaps": [],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "EXCELLENT",
+    "usable_continuous_period": {
+      "start": "2020-09-01 00:00",
+      "end": "2026-08-31 00:00",
+      "duration_days": 2190.0
+    }
+  },
+  {
+    "asset": "SOL/USDT",
+    "set": "Set 2",
+    "style": "Swing",
+    "htf_timeframe": "1w",
+    "mtf_timeframe": "1d",
+    "ltf_timeframe": "4h",
+    "status": "READY",
+    "earliest_timestamp": 1597622400,
+    "latest_timestamp": 1788134400,
+    "earliest_date": "2020-08-17 00:00",
+    "latest_date": "2026-08-31 00:00",
+    "htf_candles": 316,
+    "mtf_candles": 2209,
+    "ltf_candles": 13254,
+    "htf_gaps": [],
+    "mtf_gaps": [],
+    "ltf_gaps": [],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "EXCELLENT",
+    "usable_continuous_period": {
+      "start": "2020-08-17 00:00",
+      "end": "2026-08-31 00:00",
+      "duration_days": 2205.0
+    }
+  },
+  {
+    "asset": "SOL/USDT",
+    "set": "Set 3",
+    "style": "Swing / Intraday",
+    "htf_timeframe": "1d",
+    "mtf_timeframe": "4h",
+    "ltf_timeframe": "1h",
+    "status": "READY",
+    "earliest_timestamp": 1597449600,
+    "latest_timestamp": 1788220800,
+    "earliest_date": "2020-08-15 00:00",
+    "latest_date": "2026-09-01 00:00",
+    "htf_candles": 2209,
+    "mtf_candles": 13254,
+    "ltf_candles": 52997,
+    "htf_gaps": [],
+    "mtf_gaps": [],
+    "ltf_gaps": [
+      {
+        "start_ts": 1606712400,
+        "end_ts": 1606719600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1608555600,
+        "end_ts": 1608573600,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608858000,
+        "end_ts": 1608865200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1613012400,
+        "end_ts": 1613019600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1614992400,
+        "end_ts": 1614999600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1618880400,
+        "end_ts": 1618891200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619337600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1628816400,
+        "end_ts": 1628834400,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1632895200,
+        "end_ts": 1632906000,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1679659200,
+        "end_ts": 1679666400,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "FAIR",
+    "usable_continuous_period": {
+      "start": "2020-08-15 00:00",
+      "end": "2026-09-01 00:00",
+      "duration_days": 2208.0
+    }
+  },
+  {
+    "asset": "SOL/USDT",
+    "set": "Set 4",
+    "style": "Intraday",
+    "htf_timeframe": "4h",
+    "mtf_timeframe": "1h",
+    "ltf_timeframe": "15m",
+    "status": "READY",
+    "earliest_timestamp": 1608555600,
+    "latest_timestamp": 1672531200,
+    "earliest_date": "2020-12-21 13:00",
+    "latest_date": "2023-01-01 00:00",
+    "htf_candles": 13254,
+    "mtf_candles": 52997,
+    "ltf_candles": 71000,
+    "htf_gaps": [],
+    "mtf_gaps": [
+      {
+        "start_ts": 1606712400,
+        "end_ts": 1606719600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1608555600,
+        "end_ts": 1608573600,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608858000,
+        "end_ts": 1608865200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1613012400,
+        "end_ts": 1613019600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1614992400,
+        "end_ts": 1614999600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1618880400,
+        "end_ts": 1618891200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619337600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1628816400,
+        "end_ts": 1628834400,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1632895200,
+        "end_ts": 1632906000,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1679659200,
+        "end_ts": 1679666400,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "ltf_gaps": [
+      {
+        "start_ts": 1608558300,
+        "end_ts": 1608573600,
+        "gap_seconds": 15300,
+        "estimated_missing_candles": 16
+      },
+      {
+        "start_ts": 1608860700,
+        "end_ts": 1608865200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1613014200,
+        "end_ts": 1613019600,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1614995100,
+        "end_ts": 1615001400,
+        "gap_seconds": 6300,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1618883100,
+        "end_ts": 1618893000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619340300,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1628819100,
+        "end_ts": 1628836200,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1632897900,
+        "end_ts": 1632906000,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      }
+    ],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": true,
+    "data_quality": "POOR",
+    "usable_continuous_period": {
+      "start": "2020-12-21 13:00",
+      "end": "2023-01-01 00:00",
+      "duration_days": 740.4583333333334
+    }
+  },
+  {
+    "asset": "SOL/USDT",
+    "set": "Set 5",
+    "style": "Short-Term Intraday",
+    "htf_timeframe": "1h",
+    "mtf_timeframe": "15m",
+    "ltf_timeframe": "5m",
+    "status": "NO_OVERLAP",
+    "earliest_timestamp": 1773455700,
+    "latest_timestamp": 1672531200,
+    "earliest_date": "2026-03-14 02:35",
+    "latest_date": "2023-01-01 00:00",
+    "htf_candles": 52997,
+    "mtf_candles": 71000,
+    "ltf_candles": 50000,
+    "htf_gaps": [
+      {
+        "start_ts": 1606712400,
+        "end_ts": 1606719600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1608555600,
+        "end_ts": 1608573600,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1608858000,
+        "end_ts": 1608865200,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1613012400,
+        "end_ts": 1613019600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1614992400,
+        "end_ts": 1614999600,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      },
+      {
+        "start_ts": 1618880400,
+        "end_ts": 1618891200,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619337600,
+        "gap_seconds": 14400,
+        "estimated_missing_candles": 3
+      },
+      {
+        "start_ts": 1628816400,
+        "end_ts": 1628834400,
+        "gap_seconds": 18000,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1632895200,
+        "end_ts": 1632906000,
+        "gap_seconds": 10800,
+        "estimated_missing_candles": 2
+      },
+      {
+        "start_ts": 1679659200,
+        "end_ts": 1679666400,
+        "gap_seconds": 7200,
+        "estimated_missing_candles": 1
+      }
+    ],
+    "mtf_gaps": [
+      {
+        "start_ts": 1608558300,
+        "end_ts": 1608573600,
+        "gap_seconds": 15300,
+        "estimated_missing_candles": 16
+      },
+      {
+        "start_ts": 1608860700,
+        "end_ts": 1608865200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1613014200,
+        "end_ts": 1613019600,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1614995100,
+        "end_ts": 1615001400,
+        "gap_seconds": 6300,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1618883100,
+        "end_ts": 1618893000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619340300,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1628819100,
+        "end_ts": 1628836200,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1632897900,
+        "end_ts": 1632906000,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      }
+    ],
+    "ltf_gaps": [],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": false,
+    "data_quality": "UNKNOWN",
+    "usable_continuous_period": null
+  },
+  {
+    "asset": "SOL/USDT",
+    "set": "Set 6",
+    "style": "Scalping",
+    "htf_timeframe": "15m",
+    "mtf_timeframe": "5m",
+    "ltf_timeframe": "1m",
+    "status": "NO_OVERLAP",
+    "earliest_timestamp": 1785455760,
+    "latest_timestamp": 1672531200,
+    "earliest_date": "2026-07-30 23:56",
+    "latest_date": "2023-01-01 00:00",
+    "htf_candles": 71000,
+    "mtf_candles": 50000,
+    "ltf_candles": 50000,
+    "htf_gaps": [
+      {
+        "start_ts": 1608558300,
+        "end_ts": 1608573600,
+        "gap_seconds": 15300,
+        "estimated_missing_candles": 16
+      },
+      {
+        "start_ts": 1608860700,
+        "end_ts": 1608865200,
+        "gap_seconds": 4500,
+        "estimated_missing_candles": 4
+      },
+      {
+        "start_ts": 1613014200,
+        "end_ts": 1613019600,
+        "gap_seconds": 5400,
+        "estimated_missing_candles": 5
+      },
+      {
+        "start_ts": 1614995100,
+        "end_ts": 1615001400,
+        "gap_seconds": 6300,
+        "estimated_missing_candles": 6
+      },
+      {
+        "start_ts": 1618883100,
+        "end_ts": 1618893000,
+        "gap_seconds": 9900,
+        "estimated_missing_candles": 10
+      },
+      {
+        "start_ts": 1619323200,
+        "end_ts": 1619340300,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1628819100,
+        "end_ts": 1628836200,
+        "gap_seconds": 17100,
+        "estimated_missing_candles": 18
+      },
+      {
+        "start_ts": 1632897900,
+        "end_ts": 1632906000,
+        "gap_seconds": 8100,
+        "estimated_missing_candles": 8
+      }
+    ],
+    "mtf_gaps": [],
+    "ltf_gaps": [],
+    "exchange": "Binance",
+    "ohlcv_complete": true,
+    "causal_reconstruction_possible": true,
+    "sufficient_for_backtest": false,
+    "data_quality": "UNKNOWN",
+    "usable_continuous_period": null
+  }
+]
