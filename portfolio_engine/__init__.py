@@ -1,19 +1,25 @@
-from portfolio_engine.contracts.portfolio_state import (
-    PortfolioRiskConfig,
-    PortfolioState,
-    AssetExposure,
-    AllocatedTradePlan
+"""
+Quantitative Systems Platform (QSP) — Portfolio Engine Package.
+"""
+
+from portfolio_engine.portfolio_intelligence import (
+    PortfolioIntelligenceEngine,
+    PortfolioAllocationDecision,
+    TradeAllocationEvaluation,
 )
-from portfolio_engine.allocator.volatility_target_sizer import VolatilityTargetSizer
-from portfolio_engine.allocator.drawdown_dampener import DrawdownDampener
-from portfolio_engine.portfolio_coordinator import PortfolioCoordinator
+from portfolio_engine.hedging_engine import (
+    PortfolioHedgingEngine,
+    HedgeAction,
+    HedgingDecision,
+    PositionExposure,
+)
 
 __all__ = [
-    "PortfolioRiskConfig",
-    "PortfolioState",
-    "AssetExposure",
-    "AllocatedTradePlan",
-    "VolatilityTargetSizer",
-    "DrawdownDampener",
-    "PortfolioCoordinator"
+    "PortfolioIntelligenceEngine",
+    "PortfolioAllocationDecision",
+    "TradeAllocationEvaluation",
+    "PortfolioHedgingEngine",
+    "HedgeAction",
+    "HedgingDecision",
+    "PositionExposure",
 ]

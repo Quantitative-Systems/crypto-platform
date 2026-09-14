@@ -1,0 +1,77 @@
+{
+  "SOL/ETH": {
+    "dev": {
+      "trades": 23,
+      "net_r": -49.86,
+      "win_rate": 47.8,
+      "pf": 0.32,
+      "max_dd": 57.28
+    },
+    "val": {
+      "trades": 13,
+      "net_r": -32.55,
+      "win_rate": 53.8,
+      "pf": 0.28,
+      "max_dd": 39.17
+    },
+    "oos": {
+      "trades": 23,
+      "net_r": 10.16,
+      "win_rate": 60.9,
+      "pf": 1.67,
+      "max_dd": 8.11
+    },
+    "lifetime_net_r": -72.25,
+    "total_trades": 59
+  },
+  "SOL/BTC": {
+    "dev": {
+      "trades": 24,
+      "net_r": -78.89,
+      "win_rate": 45.8,
+      "pf": 0.22,
+      "max_dd": 78.89
+    },
+    "val": {
+      "trades": 14,
+      "net_r": -19.63,
+      "win_rate": 50.0,
+      "pf": 0.45,
+      "max_dd": 30.47
+    },
+    "oos": {
+      "trades": 22,
+      "net_r": 3.94,
+      "win_rate": 63.6,
+      "pf": 1.22,
+      "max_dd": 7.51
+    },
+    "lifetime_net_r": -94.58,
+    "total_trades": 60
+  },
+  "ETH/BTC": {
+    "dev": {
+      "trades": 19,
+      "net_r": -22.28,
+      "win_rate": 57.9,
+      "pf": 0.43,
+      "max_dd": 34.55
+    },
+    "val": {
+      "trades": 15,
+      "net_r": 2.13,
+      "win_rate": 60.0,
+      "pf": 1.56,
+      "max_dd": 2.05
+    },
+    "oos": {
+      "trades": 28,
+      "net_r": -7.21,
+      "win_rate": 50.0,
+      "pf": 0.74,
+      "max_dd": 15.61
+    },
+    "lifetime_net_r": -27.36,
+    "total_trades": 62
+  }
+}
