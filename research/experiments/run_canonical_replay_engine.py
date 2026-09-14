@@ -127,6 +127,7 @@ def run_single_stream(asset: str, tf_set_id: str, treatment: str) -> Dict[str, A
         "EXP_F2L_TGT_STRUCT_KZFRESH_7D",
         "EXP_F2BL_TGT_STRUCT_KZFRESH_30D",
         "EXP_F4L_TGT_STRUCT_RETESTFRESH_12H",
+        "EXP_F5L_COMPOSITE_STRUCTURAL_CANDIDATE",
         "STRESS_FEES_TGTSTRUCT_LEGACY", "STRESS_SLIPPAGE_TGTSTRUCT_LEGACY",
     }
     enable_expansion = (treat in COMPOSITE_FAMILY)
@@ -169,7 +170,8 @@ def run_single_stream(asset: str, tf_set_id: str, treatment: str) -> Dict[str, A
     if treat in [
         "EXP_RETEST_FRESHNESS_01", "EXP_UNIFIED_ALPHA_01", "ABL_MINUS_ROUTER",
         "ABL_MINUS_GEOMETRY", "ABL_MINUS_C1", "STRESS_FEES", "STRESS_SLIPPAGE",
-        "EXP_F4_TGT_STRUCT_RETESTFRESH_12H", "EXP_F4L_TGT_STRUCT_RETESTFRESH_12H"
+        "EXP_F4_TGT_STRUCT_RETESTFRESH_12H", "EXP_F4L_TGT_STRUCT_RETESTFRESH_12H",
+        "EXP_F5L_COMPOSITE_STRUCTURAL_CANDIDATE"
     ]:
         max_retest_lat = 12.0
 
@@ -199,7 +201,10 @@ def run_single_stream(asset: str, tf_set_id: str, treatment: str) -> Dict[str, A
     taker_fee = 0.0008 if treat in ("STRESS_FEES", "STRESS_FEES_TGTSTRUCT", "STRESS_FEES_TGTSTRUCT_LEGACY") else 0.0005   # 8 bps vs 5 bps
     slippage = 10.0 if treat in ("STRESS_SLIPPAGE", "STRESS_SLIPPAGE_TGTSTRUCT", "STRESS_SLIPPAGE_TGTSTRUCT_LEGACY") else 5.0  # 10 bps vs 5 bps
 
-    enable_milestone = (treat in ["MILESTONE_2_5R", "EXP_F1_TGT_STRUCT_MILESTONE_01", "EXP_F1L_TGT_STRUCT_MILESTONE_01"])
+    enable_milestone = (treat in [
+        "MILESTONE_2_5R", "EXP_F1_TGT_STRUCT_MILESTONE_01", "EXP_F1L_TGT_STRUCT_MILESTONE_01",
+        "EXP_F5L_COMPOSITE_STRUCTURAL_CANDIDATE"
+    ])
     target_hierarchy = ("STRUCTURAL_OBJECTIVE" if treat in [
         "EXP_TARGET_STRUCTURAL_01", "EXP_TARGET_STRUCTURAL_01_PURE",
         "EXP_F1_TGT_STRUCT_MILESTONE_01", "EXP_F2_TGT_STRUCT_KZFRESH_7D",
@@ -209,13 +214,14 @@ def run_single_stream(asset: str, tf_set_id: str, treatment: str) -> Dict[str, A
         "EXP_BASE_TGTSTRUCT_LEGACY_STOP_01",
         "EXP_F1L_TGT_STRUCT_MILESTONE_01", "EXP_F2L_TGT_STRUCT_KZFRESH_7D",
         "EXP_F2BL_TGT_STRUCT_KZFRESH_30D", "EXP_F4L_TGT_STRUCT_RETESTFRESH_12H",
+        "EXP_F5L_COMPOSITE_STRUCTURAL_CANDIDATE",
         "STRESS_FEES_TGTSTRUCT_LEGACY", "STRESS_SLIPPAGE_TGTSTRUCT_LEGACY",
     ] else "CLOSEST_OBJECTIVE")
 
     # Phase-10.2-derived causal HTF keyzone freshness gate (pre-registered thresholds)
     enable_kz_fresh = False
     max_kz_age_sec = None
-    if treat in ("EXP_F2_TGT_STRUCT_KZFRESH_7D", "EXP_F2L_TGT_STRUCT_KZFRESH_7D"):
+    if treat in ("EXP_F2_TGT_STRUCT_KZFRESH_7D", "EXP_F2L_TGT_STRUCT_KZFRESH_7D", "EXP_F5L_COMPOSITE_STRUCTURAL_CANDIDATE"):
         enable_kz_fresh = True
         max_kz_age_sec = 604800      # 7 days
     elif treat in ("EXP_F2B_TGT_STRUCT_KZFRESH_30D", "EXP_F2BL_TGT_STRUCT_KZFRESH_30D"):
@@ -239,8 +245,8 @@ def run_single_stream(asset: str, tf_set_id: str, treatment: str) -> Dict[str, A
         "EXP_TARGET_STRUCTURAL_01", "EXP_TARGET_STRUCTURAL_01_PURE",
         "EXP_BASE_TGTSTRUCT_LEGACY_STOP_01", "EXP_F1L_TGT_STRUCT_MILESTONE_01",
         "EXP_F2L_TGT_STRUCT_KZFRESH_7D", "EXP_F2BL_TGT_STRUCT_KZFRESH_30D",
-        "EXP_F4L_TGT_STRUCT_RETESTFRESH_12H", "STRESS_FEES_TGTSTRUCT_LEGACY",
-        "STRESS_SLIPPAGE_TGTSTRUCT_LEGACY"
+        "EXP_F4L_TGT_STRUCT_RETESTFRESH_12H", "EXP_F5L_COMPOSITE_STRUCTURAL_CANDIDATE",
+        "STRESS_FEES_TGTSTRUCT_LEGACY", "STRESS_SLIPPAGE_TGTSTRUCT_LEGACY"
     } else "LOCAL_SWING")
 
     enable_profit_lock = (treat == "PROFIT_LOCK_0.5R_0.25R")
@@ -508,6 +514,7 @@ if __name__ == "__main__":
         "EXP_BASE_TGTSTRUCT_LEGACY_STOP_01",
         "EXP_F1L_TGT_STRUCT_MILESTONE_01", "EXP_F2L_TGT_STRUCT_KZFRESH_7D",
         "EXP_F2BL_TGT_STRUCT_KZFRESH_30D", "EXP_F4L_TGT_STRUCT_RETESTFRESH_12H",
+        "EXP_F5L_COMPOSITE_STRUCTURAL_CANDIDATE",
         "STRESS_FEES_TGTSTRUCT_LEGACY", "STRESS_SLIPPAGE_TGTSTRUCT_LEGACY",
         "STRESS_FEES", "STRESS_SLIPPAGE"
     ], help="Experimental treatment")

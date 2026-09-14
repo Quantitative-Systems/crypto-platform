@@ -1,0 +1,34 @@
+{
+  "audit_timestamp": "2026-09-14T17:59:12.816141+00:00",
+  "account_capital": 1000.0,
+  "current_drawdown_pct": 2.5,
+  "current_portfolio_heat_pct": 0.0,
+  "hedging_status": {
+    "action": "NO_HEDGE_NEEDED",
+    "net_portfolio_beta": 0.0,
+    "total_portfolio_heat_pct": 0.0,
+    "recommended_hedge_symbol": "BTCUSDT",
+    "target_hedge_notional": 0.0,
+    "executable_hedge_notional": 0.0,
+    "min_exchange_notional": 5.0,
+    "reason": "Portfolio risk metrics within safe limits"
+  },
+  "evaluations": [
+    {
+      "strategy_id": "FAM-07-MTFCONT_SOLUSDT_Set2",
+      "symbol": "SOL/USDT",
+      "direction": "LONG",
+      "timeframe_set": 2,
+      "gross_alpha_r": 0.28,
+      "expected_net_edge_r": 0.2433,
+      "data_trust_passed": true,
+      "market_tradable_passed": true,
+      "net_edge_passed": true,
+      "capital_feasible": true,
+      "portfolio_approved": true,
+      "verdict": "TRADE",
+      "allocated_risk_pct": 0.6,
+      "reason": "Approved (Full risk approved under healthy portfolio conditions) | Net Edge: +0.243R"
+    }
+  ]
+}
