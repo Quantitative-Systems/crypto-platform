@@ -22,6 +22,10 @@ class PortfolioAllocationDecision(str, Enum):
     REJECTED_CORRELATION_CONCENTRATION = "REJECTED_CORRELATION_CONCENTRATION"
     REJECTED_DRAWDOWN_HALT = "REJECTED_DRAWDOWN_HALT"
 
+    # Compatibility aliases
+    ACCEPT_FULL = "APPROVED_FULL_SIZE"
+    ACCEPT_REDUCED = "APPROVED_SCALED_SIZE"
+
 
 @dataclass
 class TradeAllocationEvaluation:

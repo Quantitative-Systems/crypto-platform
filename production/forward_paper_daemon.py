@@ -528,6 +528,8 @@ class ForwardPaperDaemon:
                 )
 
                 if port_eval.decision in (
+                    PortfolioAllocationDecision.APPROVED_FULL_SIZE,
+                    PortfolioAllocationDecision.APPROVED_SCALED_SIZE,
                     PortfolioAllocationDecision.ACCEPT_FULL,
                     PortfolioAllocationDecision.ACCEPT_REDUCED,
                 ):
@@ -535,7 +537,8 @@ class ForwardPaperDaemon:
                     is_long = (signal.action in ("BUY", "LONG"))
                     raw_entry = current_bar.close
                     exec_entry = ExecutionContract.apply_slippage(raw_entry, is_buy=is_long, slippage_bps=2.0)
-                    r_risk_usd = self.current_equity * port_eval.recommended_risk_pct
+                    risk_frac = (port_eval.recommended_risk_pct / 100.0) if port_eval.recommended_risk_pct > 0.05 else port_eval.recommended_risk_pct
+                    r_risk_usd = self.current_equity * risk_frac
 
                     risk_distance = abs(exec_entry - signal.stop_loss)
                     if risk_distance > 1e-6:
