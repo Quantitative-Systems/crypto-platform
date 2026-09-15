@@ -1,19 +1,19 @@
 {
   "platform": "Quantitative Crypto Platform (QCP)",
   "last_heartbeat": {
-    "timestamp": 1789484997,
-    "utc_iso": "2026-09-15T15:09:57.166143+00:00",
+    "timestamp": 1789495398,
+    "utc_iso": "2026-09-15T18:03:18.999181+00:00",
     "status": "HEALTHY",
-    "uptime_seconds": 434.9,
+    "uptime_seconds": 10836.7,
     "current_equity_usd": 1000.0,
     "peak_equity_usd": 1000.0,
     "max_drawdown_pct": 0.0,
     "active_positions": 0,
     "total_closed_trades": 0,
     "last_processed_candles": {
-      "4h": 1789459200,
-      "1h": 1789480800,
-      "15m": 1789483500
+      "4h": 1789473600,
+      "1h": 1789491600,
+      "15m": 1789494300
     },
     "clock_drift_sec": 0.0,
     "gap_count": 0
