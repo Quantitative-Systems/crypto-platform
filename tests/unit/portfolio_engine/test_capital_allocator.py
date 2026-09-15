@@ -245,3 +245,84 @@ def test_portfolio_heat_and_concentration_ceilings():
     # Single strategy risk must strictly be <= 1.50%
     for s_id, alloc in report.allocations.items():
         assert alloc.recommended_risk_pct <= 1.50
+
+
+def test_allocator_tracing_proves_cap_binding():
+    """
+    Proves that for a single candidate, the allocator calculates raw_proposed_risk_pct = 3.00%
+    and that the 1.50% allocation is strictly due to the strategy concentration cap being binding.
+    """
+    allocator = GenericCapitalAllocator(max_portfolio_heat_pct=3.00)
+    slot = AlphaSlotInput(
+        strategy_id="SOL_SET2",
+        symbol="SOL/USDT",
+        timeframe="15m",
+        expected_net_edge_r=0.611,
+        uncertainty_penalty=0.150,
+        volatility_annual_pct=65.0,
+        max_drawdown_pct=4.73,
+        capacity_limit_usd=250000.0,
+        execution_quality_score=0.95,
+        lifecycle_tier="FORWARD_HEALTHY",
+    )
+    report = allocator.allocate_portfolio([slot], portfolio_equity_usd=100000.0)
+    alloc = report.allocations["SOL_SET2"]
+    assert alloc.is_allocated is True
+    assert alloc.raw_proposed_risk_pct == 3.00
+    assert alloc.is_capped_by_strategy_ceiling is True
+    assert alloc.recommended_risk_pct == 1.50
+    assert any("Capped at strategy concentration ceiling" in note for note in alloc.throttling_notes)
+
+
+def test_multi_alpha_covariance_penalty_and_independence():
+    """
+    Tests dynamic allocation between two simultaneous positive candidates:
+    verifies that high correlation matrix produces safe, capped co-allocation.
+    """
+    import numpy as np
+    allocator = GenericCapitalAllocator(max_portfolio_heat_pct=3.00)
+
+    slot_a = AlphaSlotInput(
+        strategy_id="ALPHA_SOL",
+        symbol="SOL/USDT",
+        timeframe="15m",
+        expected_net_edge_r=0.60,
+        uncertainty_penalty=0.10,
+        volatility_annual_pct=50.0,
+        max_drawdown_pct=5.0,
+        capacity_limit_usd=100000.0,
+        execution_quality_score=1.0,
+        lifecycle_tier="FORWARD_HEALTHY",
+    )
+    slot_b = AlphaSlotInput(
+        strategy_id="ALPHA_ETH",
+        symbol="ETH/USDT",
+        timeframe="15m",
+        expected_net_edge_r=0.60,
+        uncertainty_penalty=0.10,
+        volatility_annual_pct=50.0,
+        max_drawdown_pct=5.0,
+        capacity_limit_usd=100000.0,
+        execution_quality_score=1.0,
+        lifecycle_tier="FORWARD_HEALTHY",
+    )
+
+    cov_high = np.array([
+        [0.50**2, 0.50 * 0.50 * 0.85],
+        [0.50 * 0.50 * 0.85, 0.50**2]
+    ])
+
+    report_high = allocator.allocate_portfolio(
+        [slot_a, slot_b],
+        portfolio_equity_usd=100000.0,
+        covariance_matrix=cov_high,
+        strategy_order=["ALPHA_SOL", "ALPHA_ETH"],
+    )
+
+    assert report_high.allocated_strategies_count == 2
+    assert report_high.total_allocated_heat_pct <= 3.00
+    for s_id in ["ALPHA_SOL", "ALPHA_ETH"]:
+        a = report_high.allocations[s_id]
+        assert a.is_allocated is True
+        assert a.recommended_risk_pct <= 1.50
+

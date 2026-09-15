@@ -56,9 +56,15 @@ class AlphaAllocationResult:
     is_allocated: bool
     recommended_risk_pct: float         # Risk allocation as % of portfolio equity (e.g. 0.60%)
     recommended_notional_usd: float     # Dollar position size
-    allocation_weight_pct: float        # Fraction of total portfolio risk budget
+    allocation_weight_pct: float = 0.0  # Fraction of total portfolio risk budget
     rejection_reasons: List[str] = field(default_factory=list)
     throttling_notes: List[str] = field(default_factory=list)
+    raw_proposed_risk_pct: float = 0.0
+    adjusted_edge_r: float = 0.0
+    covariance_discount_pct: float = 0.0
+    is_capped_by_strategy_ceiling: bool = False
+    is_capped_by_asset_ceiling: bool = False
+    is_capped_by_heat_ceiling: bool = False
 
 
 @dataclass
@@ -267,8 +273,40 @@ class GenericCapitalAllocator:
 
         normalized_weights = [w / sum_raw for w in raw_weights]
 
+        # 4b. Covariance & Correlation Penalty
+        cov_discounts = [0.0] * len(eligible_candidates)
+        if covariance_matrix is not None and len(eligible_candidates) > 1:
+            try:
+                strat_indices = []
+                if strategy_order:
+                    id_to_idx = {sid: i for i, sid in enumerate(strategy_order)}
+                    for s, _ in eligible_candidates:
+                        if s.strategy_id in id_to_idx and id_to_idx[s.strategy_id] < covariance_matrix.shape[0]:
+                            strat_indices.append(id_to_idx[s.strategy_id])
+                else:
+                    if covariance_matrix.shape[0] >= len(eligible_candidates):
+                        strat_indices = list(range(len(eligible_candidates)))
+
+                if len(strat_indices) == len(eligible_candidates):
+                    sub_cov = covariance_matrix[np.ix_(strat_indices, strat_indices)]
+                    reg_lambda = 0.10 * np.trace(sub_cov) / len(eligible_candidates) if np.trace(sub_cov) > 0 else 0.01
+                    reg_cov = sub_cov + np.eye(len(eligible_candidates)) * reg_lambda
+                    inv_cov = np.linalg.pinv(reg_cov)
+                    cov_adjusted_w = inv_cov @ np.array(raw_weights, dtype=np.float64)
+                    cov_adjusted_w = np.maximum(0.0, cov_adjusted_w)
+                    sum_cov_w = np.sum(cov_adjusted_w)
+                    if sum_cov_w > 1e-9:
+                        cov_norm_w = cov_adjusted_w / sum_cov_w
+                        for i in range(len(eligible_candidates)):
+                            nominal_w = normalized_weights[i]
+                            actual_w = cov_norm_w[i]
+                            if nominal_w > 0 and actual_w < nominal_w:
+                                cov_discounts[i] = round((1.0 - (actual_w / nominal_w)) * 100.0, 2)
+                        normalized_weights = cov_norm_w.tolist()
+            except Exception:
+                pass
+
         # 5. Apply Portfolio Heat and Concentration Ceilings
-        # Available budget = min(MAX_PORTFOLIO_HEAT_PCT, remaining budget) * dd_multiplier
         target_total_heat = self.max_heat * dd_multiplier
 
         asset_heat_tracker: Dict[str, float] = {}
@@ -276,13 +314,23 @@ class GenericCapitalAllocator:
 
         for idx, (s, adj_e) in enumerate(eligible_candidates):
             w = normalized_weights[idx]
-            proposed_risk_pct = target_total_heat * w
+            raw_proposed = target_total_heat * w
+            proposed_risk_pct = raw_proposed
             notes = []
+
+            is_capped_strat = False
+            is_capped_asset = False
+            is_capped_heat = False
+
+            # Covariance discount note
+            if cov_discounts[idx] > 0.0:
+                notes.append(f"Covariance penalty applied ({cov_discounts[idx]:.1f}% reduction)")
 
             # Strategy concentration cap
             max_strat_cap = self.MAX_SINGLE_STRATEGY_HEAT_PCT * dd_multiplier
             if proposed_risk_pct > max_strat_cap:
                 proposed_risk_pct = max_strat_cap
+                is_capped_strat = True
                 notes.append(f"Capped at strategy concentration ceiling ({max_strat_cap:.2f}%)")
 
             # Asset concentration cap
@@ -292,11 +340,13 @@ class GenericCapitalAllocator:
                 allowed_asset_risk = max(0.0, max_asset_cap - curr_asset_heat)
                 if allowed_asset_risk < proposed_risk_pct:
                     proposed_risk_pct = allowed_asset_risk
+                    is_capped_asset = True
                     notes.append(f"Capped at asset concentration ceiling for {s.symbol} ({max_asset_cap:.2f}%)")
 
             # Portfolio heat ceiling check
             if total_allocated_heat + proposed_risk_pct > self.max_heat:
                 proposed_risk_pct = max(0.0, self.max_heat - total_allocated_heat)
+                is_capped_heat = True
                 notes.append(f"Capped at global portfolio heat ceiling ({self.max_heat:.2f}%)")
 
             if dd_multiplier < 1.0:
@@ -305,11 +355,8 @@ class GenericCapitalAllocator:
                 notes.append("Degradation penalty (50% haircut applied)")
 
             # Compute Notional Position Size based on 1R risk amount
-            # Risk USD = portfolio_equity * (proposed_risk_pct / 100)
             risk_usd = portfolio_equity_usd * (proposed_risk_pct / 100.0)
-            # Assuming standard 2% stop distance for notional calculation
             notional_usd = risk_usd / 0.02
-            # Capacity check
             if s.capacity_limit_usd > 0 and notional_usd > s.capacity_limit_usd:
                 notional_usd = s.capacity_limit_usd
                 notes.append(f"Capped by market capacity limit (${s.capacity_limit_usd:,.0f})")
@@ -326,6 +373,12 @@ class GenericCapitalAllocator:
                 allocation_weight_pct=round(w * 100.0, 2),
                 rejection_reasons=[],
                 throttling_notes=notes,
+                raw_proposed_risk_pct=round(raw_proposed, 4),
+                adjusted_edge_r=round(adj_e, 4),
+                covariance_discount_pct=cov_discounts[idx],
+                is_capped_by_strategy_ceiling=is_capped_strat,
+                is_capped_by_asset_ceiling=is_capped_asset,
+                is_capped_by_heat_ceiling=is_capped_heat,
             )
 
         n_allocated = sum(1 for a in allocations.values() if a.is_allocated)
