@@ -15,7 +15,7 @@
 
 ## Executive Summary
 
-The **Quantitative Crypto Platform (QCP)** (built on the **Quantitative Systems Platform / QSP** architecture) is an autonomous quantitative research, alpha evaluation, risk governance, and systematic capital allocation platform.
+The **Quantitative Crypto Platform (QCP)** is an autonomous quantitative research, alpha evaluation, risk governance, and systematic capital allocation platform.
 
 Designed from first principles to address the fundamental gap between *backtested mathematical edge* and *executable exchange economics*, QSP integrates causal multi-timeframe strategy generation, friction-aware order simulation, Bayesian confidence estimation, square-root market impact modeling, adversarial falsification, and closed-loop research evolution.
 
