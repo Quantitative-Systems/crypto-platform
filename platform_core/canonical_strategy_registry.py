@@ -27,6 +27,7 @@ class StrategyLifecycleState(str, Enum):
     DEGRADED = "DEGRADED"
     QUARANTINED = "QUARANTINED"
     RETIRED = "RETIRED"
+    FRAGILE = "FRAGILE"
     FALSIFIED = "FALSIFIED"
     FAILED = "FAILED"
 
@@ -36,26 +37,39 @@ VALID_TRANSITIONS: Dict[StrategyLifecycleState, List[StrategyLifecycleState]] = 
     StrategyLifecycleState.RESEARCH: [
         StrategyLifecycleState.DEVELOPMENT_PASS,
         StrategyLifecycleState.PROMISING,
+        StrategyLifecycleState.FRAGILE,
         StrategyLifecycleState.FALSIFIED,
         StrategyLifecycleState.FAILED,
     ],
     StrategyLifecycleState.DEVELOPMENT_PASS: [
         StrategyLifecycleState.PROMISING,
         StrategyLifecycleState.VALIDATION_PASS,
+        StrategyLifecycleState.FRAGILE,
         StrategyLifecycleState.FAILED,
     ],
     StrategyLifecycleState.PROMISING: [
         StrategyLifecycleState.VALIDATION_PASS,
+        StrategyLifecycleState.FRAGILE,
         StrategyLifecycleState.FAILED,
         StrategyLifecycleState.RETIRED,
     ],
     StrategyLifecycleState.VALIDATION_PASS: [
         StrategyLifecycleState.OOS_PASS,
         StrategyLifecycleState.QUALIFIED_ROBUST,
+        StrategyLifecycleState.FRAGILE,
         StrategyLifecycleState.FAILED,
     ],
     StrategyLifecycleState.OOS_PASS: [
         StrategyLifecycleState.QUALIFIED_ROBUST,
+        StrategyLifecycleState.FRAGILE,
+        StrategyLifecycleState.FAILED,
+    ],
+    StrategyLifecycleState.FRAGILE: [
+        StrategyLifecycleState.PAPER_ACTIVE,
+        StrategyLifecycleState.RESEARCH,
+        StrategyLifecycleState.DEGRADED,
+        StrategyLifecycleState.QUARANTINED,
+        StrategyLifecycleState.RETIRED,
         StrategyLifecycleState.FAILED,
     ],
     StrategyLifecycleState.QUALIFIED_ROBUST: [

@@ -1590,7 +1590,7 @@
     "symbol": "SOL/USDT",
     "set": "Set 2",
     "style": "Swing",
-    "status": "ROBUST",
+    "status": "FALSIFIED",
     "development_results": {
       "total_trades": 115,
       "net_r": 16.1782,
@@ -1622,6 +1622,20 @@
       "pf": 1.0608,
       "max_dd": 19.7697,
       "passed": true
+    },
+    "notes": "FALSIFIED_BY_ADVERSARIAL_TESTING: 25% stress survival (failed 2x friction test, collapsed from +16.2R to negative).",
+    "rules": {
+      "family": "FAM-04-MOMENTUM",
+      "tp_r": 2.5,
+      "atr_mult": 1.5,
+      "atr_period": 14,
+      "rsi_period": 14,
+      "ema_period": 20,
+      "roc_period": 10,
+      "roc_threshold": 1.5,
+      "rsi_long_threshold": 55.0,
+      "rsi_short_threshold": 45.0,
+      "direction": "BOTH"
     }
   },
   "FAM-04-MOMENTUM_SOLUSDT_Set3": {
@@ -2410,7 +2424,7 @@
     "symbol": "BTC/USDT",
     "set": "Set 2",
     "style": "Swing",
-    "status": "ROBUST",
+    "status": "FRAGILE",
     "development_results": {
       "total_trades": 125,
       "net_r": 22.5425,
@@ -2442,6 +2456,16 @@
       "pf": 1.2408,
       "max_dd": 9.7238,
       "passed": true
+    },
+    "notes": "FRAGILE_RESEARCH_CANDIDATE: Fails top 5% windfall removal (windfall-dependent alpha). Permitted for research observation only.",
+    "rules": {
+      "family": "FAM-07-MTFCONT",
+      "tp_r": 2.5,
+      "atr_mult": 1.5,
+      "atr_period": 14,
+      "ema_len": 21,
+      "donchian_len": 10,
+      "direction": "BOTH"
     }
   },
   "FAM-07-MTFCONT_BTCUSDT_Set3": {
@@ -2535,7 +2559,7 @@
     "symbol": "ETH/USDT",
     "set": "Set 2",
     "style": "Swing",
-    "status": "ROBUST",
+    "status": "FRAGILE",
     "development_results": {
       "total_trades": 128,
       "net_r": 34.4099,
@@ -2567,6 +2591,16 @@
       "pf": 1.5393,
       "max_dd": 9.0,
       "passed": true
+    },
+    "notes": "FRAGILE_RESEARCH_CANDIDATE: Fails top 5% windfall removal (windfall-dependent alpha). Permitted for research observation only.",
+    "rules": {
+      "family": "FAM-07-MTFCONT",
+      "tp_r": 2.5,
+      "atr_mult": 1.5,
+      "atr_period": 14,
+      "ema_len": 21,
+      "donchian_len": 10,
+      "direction": "BOTH"
     }
   },
   "FAM-07-MTFCONT_ETHUSDT_Set3": {
@@ -2703,6 +2737,16 @@
       "pf": 1.2313,
       "max_dd": 13.0667,
       "passed": true
+    },
+    "notes": "ROBUST_SURVIVOR: 100% adversarial stress test survival (+107.41R aggregate). Selected as primary candidate for QCP Paper Execution Bridge.",
+    "rules": {
+      "family": "FAM-07-MTFCONT",
+      "tp_r": 2.5,
+      "atr_mult": 1.5,
+      "atr_period": 14,
+      "ema_len": 21,
+      "donchian_len": 10,
+      "direction": "BOTH"
     }
   },
   "FAM-07-MTFCONT_SOLUSDT_Set3": {
@@ -2712,7 +2756,7 @@
     "symbol": "SOL/USDT",
     "set": "Set 3",
     "style": "Swing / Intraday",
-    "status": "ROBUST",
+    "status": "FRAGILE",
     "development_results": {
       "total_trades": 576,
       "net_r": 86.5337,
@@ -2744,6 +2788,16 @@
       "pf": 1.1497,
       "max_dd": 22.0734,
       "passed": true
+    },
+    "notes": "FRAGILE_RESEARCH_CANDIDATE: Sensitive to 1-bar latency delay. High signal frequency intraday candidate.",
+    "rules": {
+      "family": "FAM-07-MTFCONT",
+      "tp_r": 2.5,
+      "atr_mult": 1.5,
+      "atr_period": 14,
+      "ema_len": 21,
+      "donchian_len": 10,
+      "direction": "BOTH"
     }
   },
   "FAM-07-MTFCONT_SOLUSDT_Set4": {

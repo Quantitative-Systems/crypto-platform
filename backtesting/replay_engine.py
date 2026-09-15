@@ -77,8 +77,11 @@ class ReplayEngine:
                 hit_sl = (action == "BUY" and current_bar.low <= sl_price) or (action == "SELL" and current_bar.high >= sl_price)
 
                 if hit_tp or hit_sl:
-                    exit_type = "TP_HIT" if hit_tp else "SL_HIT"
-                    raw_exit = tp_price if hit_tp else sl_price
+                    # Adverse-first collision invariant: SL takes precedence on same-bar collision
+                    if hit_sl and hit_tp:
+                        hit_tp = False
+                    exit_type = "SL_HIT" if hit_sl else "TP_HIT"
+                    raw_exit = sl_price if hit_sl else tp_price
                     fill_exit = self.friction_model.calculate_sell_fill(raw_exit) if action == "BUY" else self.friction_model.calculate_buy_fill(raw_exit)
 
                     notional_exit = fill_exit * active_position["position_size"]

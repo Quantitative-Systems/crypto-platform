@@ -13,12 +13,14 @@ class TimeframeSetID(str, Enum):
     SET_2_POSITION = "SET_2_POSITION"
     SET_3_SWING = "SET_3_SWING"
     SET_4_INTRADAY = "SET_4_INTRADAY"
-    SET_5_SCALPING = "SET_5_SCALPING"
+    SET_5_SCALPING = "SET_5_SCALPING"  # Historical 5-set alias
+    SET_5_SHORT_TERM = "SET_5_SHORT_TERM"
+    SET_6_SCALPING = "SET_6_SCALPING"
 
 
 @dataclass(frozen=True)
 class TimeframeSet:
-    set_id: TimeframeSetID
+    set_id: str
     style_name: str
     htf: str  # Destination & Permission (Bias, Expected Phase, TP)
     mtf: str  # Navigation & Trailing (Setup, Realignment, Trailing SL)
@@ -43,4 +45,15 @@ TIMEFRAME_SETS = {
     ),
 }
 
+# Authoritative 6-Set Operational Market-Resolution Hierarchy
+CANONICAL_6_TIMEFRAME_SETS = {
+    "Set 1": TimeframeSet(set_id="Set 1", style_name="Macro / Position", htf="1M", mtf="1W", ltf="1D"),
+    "Set 2": TimeframeSet(set_id="Set 2", style_name="Position / Swing", htf="1W", mtf="1D", ltf="4H"),
+    "Set 3": TimeframeSet(set_id="Set 3", style_name="Swing / Intraday", htf="1D", mtf="4H", ltf="1H"),
+    "Set 4": TimeframeSet(set_id="Set 4", style_name="Intraday", htf="4H", mtf="1H", ltf="15M"),
+    "Set 5": TimeframeSet(set_id="Set 5", style_name="Short-Term Intraday", htf="1H", mtf="15M", ltf="5M"),
+    "Set 6": TimeframeSet(set_id="Set 6", style_name="Scalping", htf="15M", mtf="5M", ltf="1m"),
+}
+
 PRIMARY_ASSET_UNIVERSE: List[str] = ["BTC/USDT", "ETH/USDT", "SOL/USDT"]
+

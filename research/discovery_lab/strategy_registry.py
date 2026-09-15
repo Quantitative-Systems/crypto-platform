@@ -26,10 +26,12 @@ from typing import Dict, Any, List, Optional
 class StrategyStatus(str, Enum):
     RESEARCH = "RESEARCH"
     FAILED = "FAILED"
+    FALSIFIED = "FALSIFIED"
     PROMISING = "PROMISING"
     VALIDATION = "VALIDATION"
     OOS = "OOS"
     ROBUST = "ROBUST"
+    FRAGILE = "FRAGILE"
     PAPER = "PAPER"
     QUALIFIED = "QUALIFIED"
     LIVE = "LIVE"

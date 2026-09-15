@@ -122,7 +122,10 @@ class CandidateReplayer:
                         hit_tp = True
                         
                 if hit_sl or hit_tp:
-                    exit_price = active_position["tp3"] if hit_tp else current_sl
+                    # Adverse-first collision invariant: SL takes precedence on same-bar collision
+                    if hit_sl and hit_tp:
+                        hit_tp = False
+                    exit_price = current_sl if hit_sl else active_position["tp3"]
                     # If gap past stop/target, use fill model
                     fill_exit = self.friction_model.calculate_sell_fill(exit_price) if direction == 1 else self.friction_model.calculate_buy_fill(exit_price)
                     

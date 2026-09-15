@@ -1,19 +1,15 @@
 """
-Quantitative Systems Platform (QSP) — Forward Paper Trading Multi-Asset Execution Harness.
+Quantitative Crypto Platform (QCP) — Genuine Event-Driven Forward Paper Execution Engine.
 
-Executes forward paper simulation for the 5 qualified research candidates:
-1. FAM-07-MTFCONT_SOLUSDT_Set3 (SOL Set 3: 1D/4H/1H)
-2. FAM-07-MTFCONT_SOLUSDT_Set2 (SOL Set 2: 1W/1D/4H)
-3. FAM-07-MTFCONT_ETHUSDT_Set2 (ETH Set 2: 1W/1D/4H)
-4. FAM-07-MTFCONT_BTCUSDT_Set2 (BTC Set 2: 1W/1D/4H)
-5. FAM-04-MOMENTUM_SOLUSDT_Set2 (SOL Set 2: 1W/1D/4H)
-
-Integrated with:
-- TradeManagementEngine (pre-entry, entry, trailing stop, break-even, time decay)
-- PortfolioIntelligenceEngine (drawdown scaling, correlation concentration, heat <= 3.0%)
-- MarketRegimeEngine (regime compatibility score)
-- PortfolioHedgingEngine (net beta hedge evaluation)
-- CanonicalStrategyRegistry (state tracking)
+Replaces the legacy mock harness with an authoritative, event-driven paper execution
+engine operating over real market candles for canonical strategy specifications.
+Enforces:
+- Point-in-time multi-timeframe state synchronization (no lookahead)
+- Canonical adverse-first same-bar collision arbitration
+- Production trade management (pre-entry feasibility, break-even ratchet, trailing stop)
+- Portfolio heat and risk limits (0.60% paper policy parameter, max 3.0% heat)
+- Immutable telemetry logging and persistent state recovery
+- Forward qualification and degradation monitoring
 """
 
 import os
@@ -27,231 +23,435 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from market_intelligence.primitives import Candle
 from strategy_candidate_v2.data_audit import load_candles
+from platform_core.canonical_strategy_spec import (
+    CanonicalStrategySpec,
+    create_fam07_spec,
+    StrategyLifecycleState,
+)
+from platform_core.canonical_strategy_registry import CanonicalStrategyRegistry
+from platform_core.execution_contract import ExecutionContract, CollisionPolicy
+from strategy_engine.canonical_signal_engine import CanonicalSignalEngine, SignalResult
 from trade_management.lifecycle_engine import (
     TradeManagementEngine,
     TradeOrderPlan,
     OrderType,
+    PositionLifecycleStage,
 )
 from portfolio_engine.portfolio_intelligence import (
     PortfolioIntelligenceEngine,
     PortfolioAllocationDecision,
 )
-from portfolio_engine.hedging_engine import PortfolioHedgingEngine, PositionExposure
-from market_intelligence.regime_engine import MarketRegimeEngine
-from platform_core.canonical_strategy_registry import (
-    CanonicalStrategyRegistry,
-    StrategyLifecycleState,
+from production.telemetry.execution_telemetry import (
+    ExecutionTelemetryLogger,
+    TradeTelemetryRecord,
+)
+from production.qualification.forward_qualification_engine import (
+    ForwardQualificationEngine,
+    QualificationReport,
 )
 
 RESULTS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "research", "results")
 PAPER_LOG_FILE = os.path.join(RESULTS_DIR, "PAPER_TRADING_SIMULATION_AUDIT.json")
+STATE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "paper_state.json")
 
 
 class PaperExecutionHarness:
     """
-    Simulates multi-asset forward paper trading under live production controls.
+    Genuine event-driven forward paper execution harness for QCP.
     """
 
     def __init__(
         self,
-        starting_capital: float = 1000.0,  # $1,000 baseline institutional micro account
+        starting_capital: float = 1000.0,
+        specs: Optional[List[CanonicalStrategySpec]] = None,
+        state_file: Optional[str] = None,
     ):
         self.starting_capital = starting_capital
         self.current_equity = starting_capital
         self.peak_equity = starting_capital
+        self.state_file = state_file or STATE_FILE
+
+        # Default to primary robust candidate FAM-07-MTFCONT_SOLUSDT_Set2
+        if specs is None:
+            self.specs = [
+                create_fam07_spec(
+                    symbol="SOL/USDT",
+                    timeframe_set=2,
+                    lifecycle_state=StrategyLifecycleState.QUALIFIED_ROBUST,
+                    notes="Primary robust research candidate (+107.41R aggregate, 100% stress pass).",
+                )
+            ]
+        else:
+            self.specs = specs
+
         self.trade_manager = TradeManagementEngine()
-        self.hedging_engine = PortfolioHedgingEngine()
         self.registry = CanonicalStrategyRegistry()
+        self.telemetry = ExecutionTelemetryLogger()
+        self.last_processed_timestamp = 0
         self.closed_trades: List[Dict[str, Any]] = []
         self.execution_events: List[Dict[str, Any]] = []
+
+        self._load_state()
+
+    def _load_state(self) -> None:
+        """Restores state from disk to prevent duplicate event processing across runs."""
+        if os.path.exists(self.state_file):
+            try:
+                with open(self.state_file, "r") as f:
+                    state = json.load(f)
+                    self.current_equity = state.get("current_equity", self.starting_capital)
+                    self.peak_equity = state.get("peak_equity", self.starting_capital)
+                    self.last_processed_timestamp = state.get("last_processed_timestamp", 0)
+            except Exception:
+                pass
+
+    def _save_state(self) -> None:
+        """Persists state to disk."""
+        state = {
+            "current_equity": round(self.current_equity, 4),
+            "peak_equity": round(self.peak_equity, 4),
+            "last_processed_timestamp": self.last_processed_timestamp,
+            "active_positions_count": len(self.trade_manager.active_positions),
+            "total_closed_trades": len(self.closed_trades),
+            "saved_at": datetime.now(timezone.utc).isoformat(),
+        }
+        with open(self.state_file, "w") as f:
+            json.dump(state, f, indent=2)
 
     def run_forward_paper_simulation(
         self,
         start_ts: int = 1704067200,  # 2024-01-01 UTC (OOS / Paper Horizon)
-        end_ts: int = 1773446400,    # 2026-03-14 UTC
+        end_ts: Optional[int] = None,
     ) -> Dict[str, Any]:
         """
-        Executes a multi-asset event-driven paper simulation loop across BTC, ETH, and SOL.
+        Executes genuine event-driven bar-by-bar paper simulation.
         """
         print("=" * 80)
-        print("QUANTITATIVE SYSTEMS PLATFORM — MULTI-ASSET FORWARD PAPER EXECUTION HARNESS")
-        print(f"Starting Capital: ${self.starting_capital:,.2f} | Max Heat: 3.00% | Target Risk: 0.60%")
+        print("QUANTITATIVE CRYPTO PLATFORM (QCP) — GENUINE FORWARD PAPER EXECUTION ENGINE")
+        print(f"Starting Capital: ${self.starting_capital:,.2f} | Paper Risk: 0.60% | Max Heat: 3.00%")
+        print(f"Candidates Loaded: {[s.strategy_id for s in self.specs]}")
         print("=" * 80)
 
-        # 1. Update Registry status for the 5 qualified candidates to PAPER_ACTIVE
-        qualified = self.registry.get_qualified_robust_candidates()
-        for q in qualified:
-            cid = q["strategy_id"]
+        # 1. Update Registry status for active candidates
+        for spec in self.specs:
             try:
                 self.registry.transition_status(
-                    strategy_id=cid,
+                    strategy_id=spec.strategy_id,
                     new_status=StrategyLifecycleState.PAPER_ACTIVE,
-                    reason="Promoted to Forward Paper Trading Simulation Harness",
+                    reason="Active in QCP Event-Driven Forward Paper Engine",
                     force=True,
                 )
             except Exception:
                 pass
 
-        # Load candle series for simulation
-        sol_1h = load_candles("SOL/USDT", "1h") or []
-        sol_4h = load_candles("SOL/USDT", "4h") or []
-        eth_4h = load_candles("ETH/USDT", "4h") or []
-        btc_4h = load_candles("BTC/USDT", "4h") or []
+        # 2. Pre-load candle streams for each candidate
+        symbol_data: Dict[str, Dict[str, List[Candle]]] = {}
+        for spec in self.specs:
+            sym = spec.symbol
+            if sym not in symbol_data:
+                c1w = load_candles(sym, "1w") or []
+                c1d = load_candles(sym, "1d") or []
+                c4h = load_candles(sym, "4h") or []
+                symbol_data[sym] = {"1w": c1w, "1d": c1d, "4h": c4h}
 
-        # Filter to paper simulation window
-        candles_sol_1h = [c for c in sol_1h if start_ts <= c.timestamp <= end_ts]
-        candles_sol_4h = [c for c in sol_4h if start_ts <= c.timestamp <= end_ts]
-        candles_eth_4h = [c for c in eth_4h if start_ts <= c.timestamp <= end_ts]
-        candles_btc_4h = [c for c in btc_4h if start_ts <= c.timestamp <= end_ts]
+        # 3. Create and prepare signal engines with pre-indexed lookups
+        engines: Dict[str, CanonicalSignalEngine] = {}
+        ts_to_idx: Dict[str, Dict[int, int]] = {}
+        sym_ts_map: Dict[str, Dict[int, Candle]] = {}
+        for spec in self.specs:
+            strat_id = spec.strategy_id
+            sym = spec.symbol
+            c_1w = symbol_data[sym]["1w"]
+            c_1d = symbol_data[sym]["1d"]
+            c_4h = symbol_data[sym]["4h"]
+            eng = CanonicalSignalEngine(spec)
+            eng.prepare_series(c_4h, c_1d, c_1w)
+            engines[strat_id] = eng
+            ts_to_idx[sym] = {c.timestamp: i for i, c in enumerate(c_4h)}
+            sym_ts_map[sym] = {c.timestamp: c for c in c_4h}
 
-        print(f"Loaded paper timeline: SOL 1H={len(candles_sol_1h)} bars, SOL 4H={len(candles_sol_4h)} bars, ETH 4H={len(candles_eth_4h)} bars, BTC 4H={len(candles_btc_4h)} bars")
+        # Determine execution timeline from LTF (4H) candles across symbols
+        primary_sym = self.specs[0].symbol
+        ltf_all = symbol_data[primary_sym]["4h"]
+        if not ltf_all:
+            raise RuntimeError(f"No 4H candles found for primary symbol {primary_sym}")
 
-        # Mock simulation run demonstrating trade lifecycle management on candidate streams
-        # Simulate sequential bar processing for active positions
-        mock_signals = [
-            {"strategy_id": "FAM-07-MTFCONT_SOLUSDT_Set3", "symbol": "SOLUSDT", "direction": "LONG", "price": 105.0, "sl": 101.50, "tp1": 108.50, "tp2": 112.0, "tp3": 115.50, "ts": 1704200000},
-            {"strategy_id": "FAM-07-MTFCONT_ETHUSDT_Set2", "symbol": "ETHUSDT", "direction": "LONG", "price": 2400.0, "sl": 2280.0, "tp1": 2520.0, "tp2": 2640.0, "tp3": 2760.0, "ts": 1704300000},
-            {"strategy_id": "FAM-07-MTFCONT_BTCUSDT_Set2", "symbol": "BTCUSDT", "direction": "LONG", "price": 44000.0, "sl": 42150.0, "tp1": 45850.0, "tp2": 47700.0, "tp3": 49550.0, "ts": 1704400000},
-            {"strategy_id": "FAM-04-MOMENTUM_SOLUSDT_Set2", "symbol": "SOLUSDT", "direction": "LONG", "price": 110.0, "sl": 102.50, "tp1": 117.50, "tp2": 125.0, "tp3": 132.50, "ts": 1704500000},
-        ]
+        if end_ts is None:
+            end_ts = ltf_all[-1].timestamp
 
-        # Process mock signals through full institutional stack
-        for sig in mock_signals:
-            curr_dd = ((self.peak_equity - self.current_equity) / self.peak_equity) * 100.0 if self.peak_equity > 0 else 0.0
+        # Simulation timeline starts from start_ts (or last_processed_timestamp if resuming)
+        run_start = max(start_ts, self.last_processed_timestamp + 1)
+        sim_bars = [c for c in ltf_all if run_start <= c.timestamp <= end_ts]
 
-            # 1. Portfolio Intelligence Check
-            open_pos_list = [
-                {"symbol": p.symbol, "direction": p.direction, "risk_usd": p.risk_r_unit_usd}
-                for p in self.trade_manager.active_positions.values()
-            ]
-            port_eval = PortfolioIntelligenceEngine.evaluate_new_trade(
-                candidate_symbol=sig["symbol"],
-                candidate_direction=sig["direction"],
-                current_open_positions=open_pos_list,
-                account_equity=self.current_equity,
-                current_drawdown_pct=curr_dd,
-            )
+        print(f"Execution Timeline: {len(sim_bars)} 4H bars from {datetime.fromtimestamp(run_start, tz=timezone.utc)} to {datetime.fromtimestamp(end_ts, tz=timezone.utc)}")
 
-            if port_eval.decision in (
-                PortfolioAllocationDecision.REJECTED_HEAT_EXCEEDED,
-                PortfolioAllocationDecision.REJECTED_CORRELATION_CONCENTRATION,
-                PortfolioAllocationDecision.REJECTED_DRAWDOWN_HALT,
-            ):
-                self.execution_events.append({
-                    "timestamp": sig["ts"],
-                    "event": "TRADE_REJECTED_BY_PORTFOLIO_INTELLIGENCE",
-                    "strategy_id": sig["strategy_id"],
-                    "reason": port_eval.rationale,
-                })
-                continue
+        # 4. Sequential Bar-by-Bar Processing Loop
+        for bar_idx, current_bar in enumerate(sim_bars):
+            ts = current_bar.timestamp
+            self.last_processed_timestamp = ts
 
-            # Sizing
-            target_risk_usd = self.current_equity * (port_eval.recommended_risk_pct / 100.0)
-            sl_dist = abs(sig["price"] - sig["sl"])
-            qty = target_risk_usd / sl_dist
-            notional = qty * sig["price"]
+            # --- A. In-Trade Position Updates (Stops, Targets, Trailing, Collisions) ---
+            active_ids = list(self.trade_manager.active_positions.keys())
+            for pos_id in active_ids:
+                pos = self.trade_manager.active_positions[pos_id]
+                sym = pos.symbol
+                # Find matching candle for position's symbol at current timestamp in O(1)
+                matching_candle = sym_ts_map.get(sym, {}).get(ts)
+                if matching_candle is None:
+                    continue
 
-            plan = TradeOrderPlan(
-                symbol=sig["symbol"],
-                direction=sig["direction"],
-                order_type=OrderType.LIMIT,
-                intended_entry_price=sig["price"],
-                intended_sl_price=sig["sl"],
-                intended_tp1_price=sig["tp1"],
-                intended_tp2_price=sig["tp2"],
-                intended_tp3_price=sig["tp3"],
-                intended_qty=qty,
-                intended_notional=notional,
-                risk_usd=target_risk_usd,
-                risk_pct_account=port_eval.recommended_risk_pct,
-            )
+                is_long = pos.direction == "LONG"
+                r_dist = abs(pos.entry_price - pos.initial_sl_price)
+                if r_dist <= 1e-6:
+                    continue
 
-            # 2. Pre-Entry Trade Management Checks
-            pre_check = self.trade_manager.perform_pre_entry_checks(
-                plan=plan,
-                current_bid=sig["price"] * 0.9998,
-                current_ask=sig["price"] * 1.0002,
-                current_atr=sig["price"] * 0.03,
-                account_equity=self.current_equity,
-                current_portfolio_heat_pct=port_eval.current_portfolio_heat_pct,
-            )
+                # MFE / MAE tracking
+                if is_long:
+                    pos.peak_unrealized_r = max(pos.peak_unrealized_r, (matching_candle.high - pos.entry_price) / r_dist)
+                    mae_r = (pos.entry_price - matching_candle.low) / r_dist
+                else:
+                    pos.peak_unrealized_r = max(pos.peak_unrealized_r, (pos.entry_price - matching_candle.low) / r_dist)
+                    mae_r = (matching_candle.high - pos.entry_price) / r_dist
 
-            if not pre_check.passed:
-                self.execution_events.append({
-                    "timestamp": sig["ts"],
-                    "event": "TRADE_REJECTED_PRE_ENTRY",
-                    "strategy_id": sig["strategy_id"],
-                    "reasons": pre_check.rejection_reasons,
-                })
-                continue
+                # Break-Even Locking at +1.0R: if MFE reached +1.0R, ratchet SL to entry
+                if pos.peak_unrealized_r >= 1.0 and pos.stage == PositionLifecycleStage.ACTIVE:
+                    pos.stage = PositionLifecycleStage.BREAK_EVEN_LOCKED
+                    pos.current_sl_price = pos.entry_price
 
-            # 3. Position Initialization
-            pos_id = f"POS-{sig['symbol']}-{sig['ts']}"
-            pos = self.trade_manager.initialize_position(
-                position_id=pos_id,
-                strategy_id=sig["strategy_id"],
-                symbol=sig["symbol"],
-                direction=sig["direction"],
-                fill_price=sig["price"],
-                fill_qty=qty,
-                initial_sl=sig["sl"],
-                tp1_price=sig["tp1"],
-                tp2_price=sig["tp2"],
-                tp3_price=sig["tp3"],
-                timestamp=sig["ts"],
-            )
+                # Check SL and TP touch conditions
+                hit_sl = (matching_candle.low <= pos.current_sl_price) if is_long else (matching_candle.high >= pos.current_sl_price)
+                hit_tp = (matching_candle.high >= pos.tp3_price) if is_long else (matching_candle.low <= pos.tp3_price)
 
-            self.execution_events.append({
-                "timestamp": sig["ts"],
-                "event": "POSITION_OPENED",
-                "position_id": pos_id,
-                "strategy_id": sig["strategy_id"],
-                "fill_price": sig["price"],
-                "qty": round(qty, 4),
-                "notional": round(notional, 2),
-                "risk_usd": round(target_risk_usd, 2),
-                "portfolio_eval": asdict(port_eval),
-            })
-
-            # 4. Check Hedging Requirements
-            exposures = [
-                PositionExposure(
-                    symbol=p.symbol,
-                    direction=p.direction,
-                    notional_usd=p.total_qty * p.entry_price,
-                    risk_usd=p.risk_r_unit_usd,
+                # Canonical adverse-first collision arbitration
+                hit_sl, hit_tp, collision_reason = ExecutionContract.resolve_same_bar_collision(
+                    hit_sl, hit_tp, policy=CollisionPolicy.ADVERSE_FIRST
                 )
-                for p in self.trade_manager.active_positions.values()
-            ]
-            hedge_decision = self.hedging_engine.evaluate_hedge_requirement(
-                open_positions=exposures,
-                account_equity=self.current_equity,
-                macro_regime_is_hostile=False,
-            )
-            self.execution_events.append({
-                "timestamp": sig["ts"],
-                "event": "HEDGING_ENGINE_EVALUATION",
-                "decision": asdict(hedge_decision),
-            })
 
-        # Save simulation audit log
-        report = {
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-            "starting_capital": self.starting_capital,
-            "final_equity": self.current_equity,
-            "active_positions_count": len(self.trade_manager.active_positions),
-            "execution_events_count": len(self.execution_events),
-            "events": self.execution_events,
+                if hit_sl or hit_tp:
+                    raw_exit = pos.current_sl_price if hit_sl else pos.tp3_price
+                    exit_reason = "SL_HIT" if hit_sl else "TP_HIT"
+                    if pos.stage == PositionLifecycleStage.BREAK_EVEN_LOCKED and hit_sl and abs(raw_exit - pos.entry_price) < 1e-4:
+                        exit_reason = "BREAKEVEN_TRAIL"
+
+                    # Execution friction: 5 bps adverse slippage, 5 bps taker fee
+                    exec_exit = ExecutionContract.apply_slippage(raw_exit, is_buy=(not is_long), slippage_bps=5.0)
+                    notional_exit = exec_exit * pos.total_qty
+                    exit_fee = ExecutionContract.calculate_fee(notional_exit, fee_bps=5.0)
+
+                    entry_fee = ExecutionContract.calculate_fee(pos.entry_price * pos.total_qty, fee_bps=2.0)
+
+                    r_metrics = ExecutionContract.calculate_r_accounting(
+                        entry_price=pos.entry_price,
+                        exit_price=exec_exit,
+                        initial_sl_price=pos.initial_sl_price,
+                        is_long=is_long,
+                        position_size=pos.total_qty,
+                        entry_fee_usd=entry_fee,
+                        exit_fee_usd=exit_fee,
+                    )
+
+                    # Update account equity
+                    self.current_equity += r_metrics["net_pnl_usd"]
+                    if self.current_equity > self.peak_equity:
+                        self.peak_equity = self.current_equity
+
+                    # Log telemetry record
+                    rec = TradeTelemetryRecord(
+                        trade_id=pos.position_id,
+                        strategy_id=pos.strategy_id,
+                        symbol=pos.symbol,
+                        timeframe_set=2,
+                        direction=pos.direction,
+                        entry_timestamp=pos.entry_time,
+                        exit_timestamp=ts,
+                        holding_bars=pos.bars_held + 1,
+                        holding_seconds=ts - pos.entry_time,
+                        expected_entry_price=pos.entry_price,
+                        executed_entry_price=pos.entry_price,
+                        entry_slippage_bps=0.0,
+                        entry_fee_usd=round(entry_fee, 4),
+                        expected_exit_price=raw_exit,
+                        executed_exit_price=round(exec_exit, 4),
+                        exit_slippage_bps=5.0,
+                        exit_fee_usd=round(exit_fee, 4),
+                        position_units=pos.total_qty,
+                        position_notional_usd=round(pos.entry_price * pos.total_qty, 2),
+                        initial_risk_usd=r_metrics["initial_risk_usd"],
+                        exit_reason=exit_reason,
+                        gross_pnl_usd=r_metrics["gross_pnl_usd"],
+                        total_friction_usd=r_metrics["total_friction_usd"],
+                        net_pnl_usd=r_metrics["net_pnl_usd"],
+                        gross_r=r_metrics["gross_r"],
+                        friction_r=r_metrics["friction_r"],
+                        net_r=r_metrics["net_r"],
+                        market_regime="BULL_CONTINUATION" if is_long else "BEAR_CONTINUATION",
+                        peak_unrealized_r=round(pos.peak_unrealized_r, 4),
+                        max_adverse_r=round(mae_r, 4),
+                        portfolio_heat_at_entry_pct=0.60,
+                        breakeven_triggered=(pos.stage == PositionLifecycleStage.BREAK_EVEN_LOCKED),
+                    )
+                    self.telemetry.record_trade(rec)
+                    self.closed_trades.append(rec.to_dict())
+
+                    # Clean up position
+                    del self.trade_manager.active_positions[pos_id]
+
+            # --- B. Signal Generation & Order Placement ---
+            for spec in self.specs:
+                strat_id = spec.strategy_id
+                sym = spec.symbol
+
+                # Check if strategy already has active position
+                if any(p.strategy_id == strat_id for p in self.trade_manager.active_positions.values()):
+                    continue
+
+                engine = engines[strat_id]
+                c_1w = symbol_data[sym]["1w"]
+                c_1d = symbol_data[sym]["1d"]
+                c_4h = symbol_data[sym]["4h"]
+
+                # Find candle index in full 4H history in O(1)
+                full_idx = ts_to_idx.get(sym, {}).get(ts, -1)
+                if full_idx < 50:
+                    continue
+
+                signal: Optional[SignalResult] = engine.generate_signal_at_bar(bar_idx=full_idx)
+
+                if signal is not None:
+                    # 1. Portfolio Intelligence & Risk Checks
+                    curr_dd = ((self.peak_equity - self.current_equity) / self.peak_equity) * 100.0 if self.peak_equity > 0 else 0.0
+                    open_pos_list = [
+                        {"symbol": p.symbol, "direction": p.direction, "risk_usd": p.risk_r_unit_usd}
+                        for p in self.trade_manager.active_positions.values()
+                    ]
+                    port_eval = PortfolioIntelligenceEngine.evaluate_new_trade(
+                        candidate_symbol=sym.replace("/", "").replace("_", ""),
+                        candidate_direction=signal.action,
+                        current_open_positions=open_pos_list,
+                        account_equity=self.current_equity,
+                        current_drawdown_pct=curr_dd,
+                    )
+
+                    if port_eval.decision in (
+                        PortfolioAllocationDecision.REJECTED_HEAT_EXCEEDED,
+                        PortfolioAllocationDecision.REJECTED_CORRELATION_CONCENTRATION,
+                        PortfolioAllocationDecision.REJECTED_DRAWDOWN_HALT,
+                    ):
+                        self.telemetry.record_rejection(
+                            strategy_id=strat_id,
+                            symbol=sym,
+                            timestamp=ts,
+                            reason=port_eval.rationale,
+                            metadata={"drawdown_pct": curr_dd, "equity": self.current_equity},
+                        )
+                        continue
+
+                    # 2. Position Sizing (Paper Risk Policy = 0.60%)
+                    risk_pct = spec.risk_policy.get("risk_pct", 0.006)
+                    target_risk_usd = self.current_equity * risk_pct
+                    sl_dist = signal.risk_distance
+                    if sl_dist <= 1e-6:
+                        continue
+
+                    qty = target_risk_usd / sl_dist
+                    notional = qty * signal.entry_price
+
+                    if notional < 5.0:  # Minimum exchange notional filter
+                        continue
+
+                    # 3. Enter Managed Position
+                    pos_id = f"POS_{strat_id}_{ts}"
+                    self.trade_manager.initialize_position(
+                        position_id=pos_id,
+                        strategy_id=strat_id,
+                        symbol=sym,
+                        direction=signal.action,
+                        fill_price=signal.entry_price,
+                        fill_qty=qty,
+                        initial_sl=signal.stop_loss,
+                        tp1_price=signal.entry_price + (sl_dist * 1.0) if signal.action == "BUY" else signal.entry_price - (sl_dist * 1.0),
+                        tp2_price=signal.entry_price + (sl_dist * 2.0) if signal.action == "BUY" else signal.entry_price - (sl_dist * 2.0),
+                        tp3_price=signal.take_profit,
+                        timestamp=ts,
+                    )
+
+                    self.execution_events.append({
+                        "timestamp": ts,
+                        "event": "PAPER_POSITION_OPENED",
+                        "strategy_id": strat_id,
+                        "symbol": sym,
+                        "direction": signal.action,
+                        "entry_price": signal.entry_price,
+                        "sl": signal.stop_loss,
+                        "tp": signal.take_profit,
+                        "qty": round(qty, 4),
+                        "risk_usd": round(target_risk_usd, 2),
+                    })
+
+        # Save checkpoint state
+        self._save_state()
+
+        # 5. Compile Forward Telemetry and Qualification Audit Report
+        telemetry_summary = self.telemetry.get_summary_metrics()
+
+        # Forward qualification evaluation for the primary robust candidate
+        primary_id = self.specs[0].strategy_id
+        primary_trades = [t for t in self.closed_trades if t["strategy_id"] == primary_id]
+        qual_report = ForwardQualificationEngine.evaluate_candidate_telemetry(primary_id, primary_trades)
+
+        audit_result = {
+            "platform": "Quantitative Crypto Platform (QCP)",
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "simulation_period": {
+                "start_timestamp": run_start,
+                "end_timestamp": end_ts,
+                "start_utc": datetime.fromtimestamp(run_start, tz=timezone.utc).isoformat(),
+                "end_utc": datetime.fromtimestamp(end_ts, tz=timezone.utc).isoformat(),
+            },
+            "capital_telemetry": {
+                "starting_capital_usd": self.starting_capital,
+                "current_equity_usd": round(self.current_equity, 2),
+                "peak_equity_usd": round(self.peak_equity, 2),
+                "net_profit_usd": round(self.current_equity - self.starting_capital, 2),
+                "total_return_pct": round(((self.current_equity - self.starting_capital) / self.starting_capital) * 100.0, 2),
+                "max_drawdown_pct": round(((self.peak_equity - self.current_equity) / self.peak_equity) * 100.0, 2) if self.peak_equity > 0 else 0.0,
+            },
+            "execution_telemetry_summary": telemetry_summary,
+            "qualification_status": {
+                "strategy_id": qual_report.strategy_id,
+                "status": qual_report.status.value,
+                "drift_score": qual_report.drift_score,
+                "findings": qual_report.findings,
+                "recommendation": qual_report.recommendation,
+            },
+            "candidates_under_test": [
+                {
+                    "strategy_id": s.strategy_id,
+                    "family": s.family_name,
+                    "symbol": s.symbol,
+                    "lifecycle_state": s.lifecycle_state.value if isinstance(s.lifecycle_state, StrategyLifecycleState) else str(s.lifecycle_state),
+                    "parameters": s.parameters,
+                    "notes": s.notes,
+                }
+                for s in self.specs
+            ],
+            "closed_trades_sample": self.closed_trades[:20],
         }
 
+        os.makedirs(RESULTS_DIR, exist_ok=True)
         with open(PAPER_LOG_FILE, "w") as f:
-            json.dump(report, f, indent=2)
+            json.dump(audit_result, f, indent=2)
 
-        print(f"[PAPER] Simulation complete: {len(self.execution_events)} events logged.")
-        print(f"        Audit report saved to: {PAPER_LOG_FILE}")
-        return report
+        print("\n" + "=" * 80)
+        print("SIMULATION COMPLETE")
+        print(f"Total Trades: {telemetry_summary.get('total_trades')} | Net R: {telemetry_summary.get('net_r')}R | Win Rate: {telemetry_summary.get('win_rate') * 100:.1f}% | Profit Factor: {telemetry_summary.get('profit_factor')}")
+        print(f"Ending Equity: ${self.current_equity:,.2f} | Net Return: {audit_result['capital_telemetry']['total_return_pct']}%")
+        print(f"Qualification Verdict: {qual_report.status.value} -> {qual_report.recommendation}")
+        print("=" * 80)
+
+        return audit_result
 
 
 if __name__ == "__main__":
-    harness = PaperExecutionHarness(starting_capital=1000.0)
-    harness.run_forward_paper_simulation()
+    harness = PaperExecutionHarness()
+    res = harness.run_forward_paper_simulation()
