@@ -1,6 +1,6 @@
 {
   "platform": "Quantitative Crypto Platform (QCP)",
-  "generated_at": "2026-09-15T07:45:08.392794+00:00",
+  "generated_at": "2026-09-15T07:45:08.761901+00:00",
   "simulation_period": {
     "start_timestamp": 1704067200,
     "end_timestamp": 1788278400,
@@ -53,7 +53,7 @@
         "donchian_len": 10,
         "direction": "BOTH"
       },
-      "notes": "Primary robust research candidate (+107.41R aggregate, 100% stress pass)."
+      "notes": "Primary robust candidate"
     }
   ],
   "closed_trades_sample": [

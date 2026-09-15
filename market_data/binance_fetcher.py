@@ -171,3 +171,44 @@ class BinanceFetcher:
             for bar in filtered[-limit:]
         ]
         return candles
+
+    @staticmethod
+    def fetch_live_candles(symbol: str = "SOL/USDT", timeframe: str = "15m", limit: int = 100, max_retries: int = 3) -> List[Candle]:
+        """
+        Fetches the latest real-time candles directly from Binance API without reading disk cache.
+        Supports automatic retries with backoff for network resilience.
+        """
+        binance_symbol = symbol.replace("/", "").upper()
+        tf_map = {
+            "4H": "4h", "4h": "4h",
+            "1H": "1h", "1h": "1h",
+            "15M": "15m", "15m": "15m",
+            "5M": "5m", "5m": "5m",
+            "1m": "1m", "1d": "1d",
+        }
+        binance_tf = tf_map.get(timeframe, timeframe.lower())
+        url = f"{BinanceFetcher.BINANCE_URL}?symbol={binance_symbol}&interval={binance_tf}&limit={min(1000, limit)}"
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+
+        for attempt in range(max_retries):
+            try:
+                with urllib.request.urlopen(req, timeout=10) as response:
+                    if response.status != 200:
+                        raise RuntimeError(f"Binance HTTP {response.status}")
+                    raw = json.loads(response.read().decode('utf-8'))
+                    return [
+                        Candle(
+                            timestamp=int(bar[0] // 1000),
+                            open=float(bar[1]),
+                            high=float(bar[2]),
+                            low=float(bar[3]),
+                            close=float(bar[4]),
+                            volume=float(bar[5])
+                        )
+                        for bar in raw
+                    ]
+            except Exception as e:
+                if attempt == max_retries - 1:
+                    raise RuntimeError(f"Binance live fetch failed for {symbol} {timeframe} after {max_retries} attempts: {e}")
+                time.sleep(1.0 * (attempt + 1))
+        return []

@@ -103,17 +103,19 @@ def test_paper_execution_harness_short_window(tmp_path):
         timeframe_set=2,
         lifecycle_state=StrategyLifecycleState.QUALIFIED_ROBUST,
     )
+    audit_file = str(tmp_path / "test_paper_audit.json")
     harness = PaperExecutionHarness(
         starting_capital=1000.0,
         specs=[spec],
         state_file=state_file,
+        audit_file=audit_file,
     )
 
     # Run over a 10-day slice in 2024
     start_ts = 1704067200         # 2024-01-01
     end_ts = start_ts + 10 * 86400 # 10 days later
 
-    result = harness.run_forward_paper_simulation(start_ts=start_ts, end_ts=end_ts)
+    result = harness.run_forward_paper_simulation(start_ts=start_ts, end_ts=end_ts, audit_file=audit_file)
     assert result["platform"] == "Quantitative Crypto Platform (QCP)"
     assert os.path.exists(state_file)
     assert harness.last_processed_timestamp >= start_ts

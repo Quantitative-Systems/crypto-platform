@@ -65,11 +65,15 @@ class PaperExecutionHarness:
         starting_capital: float = 1000.0,
         specs: Optional[List[CanonicalStrategySpec]] = None,
         state_file: Optional[str] = None,
+        audit_file: Optional[str] = None,
     ):
         self.starting_capital = starting_capital
         self.current_equity = starting_capital
         self.peak_equity = starting_capital
+        self.max_drawdown_usd = 0.0
+        self.max_drawdown_pct = 0.0
         self.state_file = state_file or STATE_FILE
+        self.audit_file = audit_file or PAPER_LOG_FILE
 
         # Default to primary robust candidate FAM-07-MTFCONT_SOLUSDT_Set2
         if specs is None:
@@ -101,6 +105,8 @@ class PaperExecutionHarness:
                     state = json.load(f)
                     self.current_equity = state.get("current_equity", self.starting_capital)
                     self.peak_equity = state.get("peak_equity", self.starting_capital)
+                    self.max_drawdown_usd = state.get("max_drawdown_usd", 0.0)
+                    self.max_drawdown_pct = state.get("max_drawdown_pct", 0.0)
                     self.last_processed_timestamp = state.get("last_processed_timestamp", 0)
             except Exception:
                 pass
@@ -110,6 +116,8 @@ class PaperExecutionHarness:
         state = {
             "current_equity": round(self.current_equity, 4),
             "peak_equity": round(self.peak_equity, 4),
+            "max_drawdown_usd": round(self.max_drawdown_usd, 4),
+            "max_drawdown_pct": round(self.max_drawdown_pct, 4),
             "last_processed_timestamp": self.last_processed_timestamp,
             "active_positions_count": len(self.trade_manager.active_positions),
             "total_closed_trades": len(self.closed_trades),
@@ -122,10 +130,22 @@ class PaperExecutionHarness:
         self,
         start_ts: int = 1704067200,  # 2024-01-01 UTC (OOS / Paper Horizon)
         end_ts: Optional[int] = None,
+        audit_file: Optional[str] = None,
+        reset_state: bool = False,
     ) -> Dict[str, Any]:
         """
         Executes genuine event-driven bar-by-bar paper simulation.
         """
+        if reset_state:
+            self.current_equity = self.starting_capital
+            self.peak_equity = self.starting_capital
+            self.max_drawdown_usd = 0.0
+            self.max_drawdown_pct = 0.0
+            self.last_processed_timestamp = 0
+            self.closed_trades = []
+            self.execution_events = []
+            self.trade_manager.active_positions.clear()
+
         print("=" * 80)
         print("QUANTITATIVE CRYPTO PLATFORM (QCP) — GENUINE FORWARD PAPER EXECUTION ENGINE")
         print(f"Starting Capital: ${self.starting_capital:,.2f} | Paper Risk: 0.60% | Max Heat: 3.00%")
@@ -254,6 +274,13 @@ class PaperExecutionHarness:
                     self.current_equity += r_metrics["net_pnl_usd"]
                     if self.current_equity > self.peak_equity:
                         self.peak_equity = self.current_equity
+                    else:
+                        dd_usd = self.peak_equity - self.current_equity
+                        dd_pct = (dd_usd / self.peak_equity) * 100.0 if self.peak_equity > 0 else 0.0
+                        if dd_usd > self.max_drawdown_usd:
+                            self.max_drawdown_usd = dd_usd
+                        if dd_pct > self.max_drawdown_pct:
+                            self.max_drawdown_pct = dd_pct
 
                     # Log telemetry record
                     rec = TradeTelemetryRecord(
@@ -414,7 +441,9 @@ class PaperExecutionHarness:
                 "peak_equity_usd": round(self.peak_equity, 2),
                 "net_profit_usd": round(self.current_equity - self.starting_capital, 2),
                 "total_return_pct": round(((self.current_equity - self.starting_capital) / self.starting_capital) * 100.0, 2),
-                "max_drawdown_pct": round(((self.peak_equity - self.current_equity) / self.peak_equity) * 100.0, 2) if self.peak_equity > 0 else 0.0,
+                "max_drawdown_pct": round(self.max_drawdown_pct, 2),
+                "max_drawdown_usd": round(self.max_drawdown_usd, 2),
+                "current_drawdown_pct": round(((self.peak_equity - self.current_equity) / self.peak_equity) * 100.0, 2) if self.peak_equity > 0 else 0.0,
             },
             "execution_telemetry_summary": telemetry_summary,
             "qualification_status": {
@@ -438,8 +467,9 @@ class PaperExecutionHarness:
             "closed_trades_sample": self.closed_trades[:20],
         }
 
-        os.makedirs(RESULTS_DIR, exist_ok=True)
-        with open(PAPER_LOG_FILE, "w") as f:
+        target_file = audit_file or self.audit_file
+        os.makedirs(os.path.dirname(os.path.abspath(target_file)), exist_ok=True)
+        with open(target_file, "w") as f:
             json.dump(audit_result, f, indent=2)
 
         print("\n" + "=" * 80)
