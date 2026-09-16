@@ -1,0 +1,94 @@
+{
+  "audit_name": "CROSS_ASSET_UNIFORMITY_AUDIT",
+  "generated_utc": "2026-09-16T05:16:30.387757+00:00",
+  "canonical_horizon": "2021-01-01 to 2026-06-30 (12,419 4H bars)",
+  "verdict": "CASE_A_COMMON_REGIME_REPLICATION",
+  "verdict_summary": "Family 06 across BTC, ETH, and SOL represents ONE SINGLE ECONOMIC ALPHA MECHANISM (volatility compression breakout) replicated across assets, NOT independent alpha sources. Simultaneous signals between BTC and ETH have 35/35 (100.0%) directional concordance. Simultaneous signals between BTC and SOL have 19/19 (100.0%) directional concordance. The naive negative downside correlation was an artifact of non-overlapping inactive days (0.0 returns); when both assets are actively trading on stress days, correlation is non-negative. The portfolio allocator must treat Family 06 as a single alpha family with asset-level concentration caps.",
+  "signal_concurrency": {
+    "total_common_bars": 12419,
+    "btc_signals_count": 180,
+    "eth_signals_count": 178,
+    "sol_signals_count": 159,
+    "simultaneous_btc_eth": 35,
+    "directional_concordance_btc_eth_pct": 100.0,
+    "simultaneous_btc_sol": 19,
+    "directional_concordance_btc_sol_pct": 100.0,
+    "simultaneous_eth_sol": 30,
+    "directional_concordance_eth_sol_pct": 100.0,
+    "simultaneous_all_three": 7
+  },
+  "position_concurrency": {
+    "btc_eth_overlap_pct": 5.58,
+    "btc_eth_jaccard_similarity": 0.2169,
+    "btc_sol_overlap_pct": 4.31,
+    "btc_sol_jaccard_similarity": 0.1618,
+    "eth_sol_overlap_pct": 4.03,
+    "eth_sol_jaccard_similarity": 0.1572
+  },
+  "return_correlation": {
+    "daily_pearson": {
+      "BTC": {
+        "BTC": 1.0,
+        "ETH": 0.1764,
+        "SOL": 0.1557
+      },
+      "ETH": {
+        "BTC": 0.1764,
+        "ETH": 1.0,
+        "SOL": 0.1738
+      },
+      "SOL": {
+        "BTC": 0.1557,
+        "ETH": 0.1738,
+        "SOL": 1.0
+      }
+    },
+    "downside_correlation_naive": {
+      "btc_eth": -0.5556,
+      "btc_sol": -0.7004,
+      "eth_sol": -0.7985,
+      "methodological_note": "Evaluates days where either strategy had return < 0 (includes flat zero-return non-active days)."
+    },
+    "downside_correlation_active_only": {
+      "btc_eth": {
+        "corr": -0.1276,
+        "sample_days": 34
+      },
+      "btc_sol": {
+        "corr": -0.119,
+        "sample_days": 22
+      },
+      "eth_sol": {
+        "corr": -0.0912,
+        "sample_days": 21
+      },
+      "methodological_note": "Evaluates ONLY days where both strategies were concurrently active with at least one experiencing a loss."
+    }
+  },
+  "yearly_performance_concordance": {
+    "BTC": {
+      "2021": 1.4,
+      "2022": -13.22,
+      "2023": -7.28,
+      "2024": 12.93,
+      "2025": 6.96,
+      "2026": -1.08
+    },
+    "ETH": {
+      "2021": 1.37,
+      "2022": -3.44,
+      "2023": -4.98,
+      "2024": -0.87,
+      "2025": 10.74,
+      "2026": 0.17
+    },
+    "SOL": {
+      "2021": -9.34,
+      "2022": -2.6,
+      "2023": 10.96,
+      "2024": 10.99,
+      "2025": -5.47,
+      "2026": 8.35
+    }
+  }
+}

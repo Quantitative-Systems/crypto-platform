@@ -1,7 +1,7 @@
 {
   "platform": "Quantitative Crypto Platform (QCP)",
   "audit_name": "ALPHA_INDEPENDENCE_MATRIX",
-  "generated_utc": "2026-09-15T16:26:27.679836+00:00",
+  "generated_utc": "2026-09-16T05:17:39.153287+00:00",
   "baseline_candidate": "FAM-07-MTFCONT_SOLUSDT_Set2",
   "sample_period": {
     "start": "2021-01-01",
@@ -12,156 +12,156 @@
   "pairwise_return_correlation": {
     "FAM-07-MTFCONT_SOLUSDT_Set2": {
       "FAM-07-MTFCONT_SOLUSDT_Set2": 1.0,
-      "FAM06_SOL_USDT_4h": 0.1994,
-      "FAM06_ETH_USDT_4h": 0.1388,
-      "FAM06_BTC_USDT_4h": 0.0461
+      "FAM06_SOL_USDT_4h": 0.148,
+      "FAM06_ETH_USDT_4h": 0.0528,
+      "FAM06_BTC_USDT_4h": 0.0508
     },
     "FAM06_SOL_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.1994,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.148,
       "FAM06_SOL_USDT_4h": 1.0,
-      "FAM06_ETH_USDT_4h": 0.1427,
-      "FAM06_BTC_USDT_4h": 0.1122
+      "FAM06_ETH_USDT_4h": 0.1741,
+      "FAM06_BTC_USDT_4h": 0.156
     },
     "FAM06_ETH_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.1388,
-      "FAM06_SOL_USDT_4h": 0.1427,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.0528,
+      "FAM06_SOL_USDT_4h": 0.1741,
       "FAM06_ETH_USDT_4h": 1.0,
-      "FAM06_BTC_USDT_4h": 0.1647
+      "FAM06_BTC_USDT_4h": 0.1764
     },
     "FAM06_BTC_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.0461,
-      "FAM06_SOL_USDT_4h": 0.1122,
-      "FAM06_ETH_USDT_4h": 0.1647,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.0508,
+      "FAM06_SOL_USDT_4h": 0.156,
+      "FAM06_ETH_USDT_4h": 0.1764,
       "FAM06_BTC_USDT_4h": 1.0
     }
   },
   "pairwise_downside_correlation": {
     "FAM-07-MTFCONT_SOLUSDT_Set2": {
       "FAM-07-MTFCONT_SOLUSDT_Set2": 1.0,
-      "FAM06_SOL_USDT_4h": -0.5369,
-      "FAM06_ETH_USDT_4h": -0.6316,
-      "FAM06_BTC_USDT_4h": -0.5125
+      "FAM06_SOL_USDT_4h": -0.6545,
+      "FAM06_ETH_USDT_4h": -0.7062,
+      "FAM06_BTC_USDT_4h": -0.5792
     },
     "FAM06_SOL_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": -0.5369,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": -0.6545,
       "FAM06_SOL_USDT_4h": 1.0,
-      "FAM06_ETH_USDT_4h": -0.9047,
-      "FAM06_BTC_USDT_4h": -0.8127
+      "FAM06_ETH_USDT_4h": -0.7971,
+      "FAM06_BTC_USDT_4h": -0.6988
     },
     "FAM06_ETH_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": -0.6316,
-      "FAM06_SOL_USDT_4h": -0.9047,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": -0.7062,
+      "FAM06_SOL_USDT_4h": -0.7971,
       "FAM06_ETH_USDT_4h": 1.0,
-      "FAM06_BTC_USDT_4h": -0.533
+      "FAM06_BTC_USDT_4h": -0.5556
     },
     "FAM06_BTC_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": -0.5125,
-      "FAM06_SOL_USDT_4h": -0.8127,
-      "FAM06_ETH_USDT_4h": -0.533,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": -0.5792,
+      "FAM06_SOL_USDT_4h": -0.6988,
+      "FAM06_ETH_USDT_4h": -0.5556,
       "FAM06_BTC_USDT_4h": 1.0
     }
   },
   "pairwise_drawdown_correlation": {
     "FAM-07-MTFCONT_SOLUSDT_Set2": {
       "FAM-07-MTFCONT_SOLUSDT_Set2": 1.0,
-      "FAM06_SOL_USDT_4h": 0.0176,
-      "FAM06_ETH_USDT_4h": 0.1301,
-      "FAM06_BTC_USDT_4h": -0.1882
+      "FAM06_SOL_USDT_4h": -0.1939,
+      "FAM06_ETH_USDT_4h": 0.1631,
+      "FAM06_BTC_USDT_4h": 0.0312
     },
     "FAM06_SOL_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.0176,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": -0.1939,
       "FAM06_SOL_USDT_4h": 1.0,
-      "FAM06_ETH_USDT_4h": -0.0947,
-      "FAM06_BTC_USDT_4h": 0.0424
+      "FAM06_ETH_USDT_4h": -0.3208,
+      "FAM06_BTC_USDT_4h": -0.0586
     },
     "FAM06_ETH_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.1301,
-      "FAM06_SOL_USDT_4h": -0.0947,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.1631,
+      "FAM06_SOL_USDT_4h": -0.3208,
       "FAM06_ETH_USDT_4h": 1.0,
-      "FAM06_BTC_USDT_4h": 0.2743
+      "FAM06_BTC_USDT_4h": 0.7217
     },
     "FAM06_BTC_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": -0.1882,
-      "FAM06_SOL_USDT_4h": 0.0424,
-      "FAM06_ETH_USDT_4h": 0.2743,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.0312,
+      "FAM06_SOL_USDT_4h": -0.0586,
+      "FAM06_ETH_USDT_4h": 0.7217,
       "FAM06_BTC_USDT_4h": 1.0
     }
   },
   "pairwise_position_concurrency_pct": {
     "FAM-07-MTFCONT_SOLUSDT_Set2": {
       "FAM-07-MTFCONT_SOLUSDT_Set2": 100.0,
-      "FAM06_SOL_USDT_4h": 9.65,
-      "FAM06_ETH_USDT_4h": 9.32,
-      "FAM06_BTC_USDT_4h": 9.1
+      "FAM06_SOL_USDT_4h": 8.45,
+      "FAM06_ETH_USDT_4h": 8.7,
+      "FAM06_BTC_USDT_4h": 9.41
     },
     "FAM06_SOL_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": 9.65,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 8.45,
       "FAM06_SOL_USDT_4h": 100.0,
-      "FAM06_ETH_USDT_4h": 4.12,
-      "FAM06_BTC_USDT_4h": 4.34
+      "FAM06_ETH_USDT_4h": 4.01,
+      "FAM06_BTC_USDT_4h": 4.27
     },
     "FAM06_ETH_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": 9.32,
-      "FAM06_SOL_USDT_4h": 4.12,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 8.7,
+      "FAM06_SOL_USDT_4h": 4.01,
       "FAM06_ETH_USDT_4h": 100.0,
-      "FAM06_BTC_USDT_4h": 6.1
+      "FAM06_BTC_USDT_4h": 5.58
     },
     "FAM06_BTC_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": 9.1,
-      "FAM06_SOL_USDT_4h": 4.34,
-      "FAM06_ETH_USDT_4h": 6.1,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 9.41,
+      "FAM06_SOL_USDT_4h": 4.27,
+      "FAM06_ETH_USDT_4h": 5.58,
       "FAM06_BTC_USDT_4h": 100.0
     }
   },
   "pairwise_jaccard_similarity": {
     "FAM-07-MTFCONT_SOLUSDT_Set2": {
       "FAM-07-MTFCONT_SOLUSDT_Set2": 1.0,
-      "FAM06_SOL_USDT_4h": 0.1654,
-      "FAM06_ETH_USDT_4h": 0.1595,
-      "FAM06_BTC_USDT_4h": 0.1533
+      "FAM06_SOL_USDT_4h": 0.1464,
+      "FAM06_ETH_USDT_4h": 0.15,
+      "FAM06_BTC_USDT_4h": 0.1608
     },
     "FAM06_SOL_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.1654,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.1464,
       "FAM06_SOL_USDT_4h": 1.0,
-      "FAM06_ETH_USDT_4h": 0.1456,
-      "FAM06_BTC_USDT_4h": 0.1506
+      "FAM06_ETH_USDT_4h": 0.1574,
+      "FAM06_BTC_USDT_4h": 0.161
     },
     "FAM06_ETH_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.1595,
-      "FAM06_SOL_USDT_4h": 0.1456,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.15,
+      "FAM06_SOL_USDT_4h": 0.1574,
       "FAM06_ETH_USDT_4h": 1.0,
-      "FAM06_BTC_USDT_4h": 0.228
+      "FAM06_BTC_USDT_4h": 0.2169
     },
     "FAM06_BTC_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.1533,
-      "FAM06_SOL_USDT_4h": 0.1506,
-      "FAM06_ETH_USDT_4h": 0.228,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.1608,
+      "FAM06_SOL_USDT_4h": 0.161,
+      "FAM06_ETH_USDT_4h": 0.2169,
       "FAM06_BTC_USDT_4h": 1.0
     }
   },
   "quarterly_pnl_correlation": {
     "FAM-07-MTFCONT_SOLUSDT_Set2": {
       "FAM-07-MTFCONT_SOLUSDT_Set2": 1.0,
-      "FAM06_SOL_USDT_4h": 0.0525,
-      "FAM06_ETH_USDT_4h": 0.1317,
-      "FAM06_BTC_USDT_4h": -0.2282
+      "FAM06_SOL_USDT_4h": -0.1847,
+      "FAM06_ETH_USDT_4h": -0.0008,
+      "FAM06_BTC_USDT_4h": -0.2383
     },
     "FAM06_SOL_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.0525,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": -0.1847,
       "FAM06_SOL_USDT_4h": 1.0,
-      "FAM06_ETH_USDT_4h": -0.0641,
-      "FAM06_BTC_USDT_4h": 0.1075
+      "FAM06_ETH_USDT_4h": -0.4009,
+      "FAM06_BTC_USDT_4h": -0.1056
     },
     "FAM06_ETH_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.1317,
-      "FAM06_SOL_USDT_4h": -0.0641,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": -0.0008,
+      "FAM06_SOL_USDT_4h": -0.4009,
       "FAM06_ETH_USDT_4h": 1.0,
-      "FAM06_BTC_USDT_4h": 0.0118
+      "FAM06_BTC_USDT_4h": 0.0699
     },
     "FAM06_BTC_USDT_4h": {
-      "FAM-07-MTFCONT_SOLUSDT_Set2": -0.2282,
-      "FAM06_SOL_USDT_4h": 0.1075,
-      "FAM06_ETH_USDT_4h": 0.0118,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": -0.2383,
+      "FAM06_SOL_USDT_4h": -0.1056,
+      "FAM06_ETH_USDT_4h": 0.0699,
       "FAM06_BTC_USDT_4h": 1.0
     }
   },
@@ -201,94 +201,96 @@
       "mechanism": "Volatility Expansion Squeeze (Bollinger in Keltner Breakout + ATR Trailing)",
       "asset": "SOL/USDT",
       "timeframe": "4H",
-      "lifetime_net_r": 93.03,
-      "expected_net_edge_r": 0.6645,
+      "lifetime_net_r": 13.89,
+      "expected_net_edge_r": 0.0951,
       "uncertainty_ci_95": [
-        0.387,
-        0.942
+        -0.152,
+        0.342
       ],
-      "daily_return_vol_r": 0.465,
-      "max_drawdown_r": 5.04,
-      "profit_factor": 2.81,
-      "win_rate_pct": 63.6,
-      "total_trades": 140,
+      "daily_return_vol_r": 0.403,
+      "max_drawdown_r": 13.93,
+      "profit_factor": 1.17,
+      "win_rate_pct": 44.5,
+      "total_trades": 146,
       "independence_vs_sol_set2": {
-        "return_correlation": 0.1994,
-        "downside_correlation": -0.5369,
-        "drawdown_correlation": 0.0176,
-        "position_overlap_pct": 9.65,
-        "exposure_jaccard_similarity": 0.1654,
+        "return_correlation": 0.148,
+        "downside_correlation": -0.6545,
+        "drawdown_correlation": -0.1939,
+        "position_overlap_pct": 8.45,
+        "exposure_jaccard_similarity": 0.1464,
         "common_failure_quarters": []
       },
       "regime_dependency": "Speculative Bull & High Volatility Expansions",
       "capacity_estimate": "$2.0M - $5.0M",
-      "lifecycle_status": "RESEARCH_QUALIFIED_SURVIVOR",
-      "qualification_state": "QUALIFIED_ROBUST",
-      "audit_notes": "Passed full multi-year backtest, OOS, 2x friction battery, and 1-bar latency delay test."
+      "lifecycle_status": "RESEARCH_SURVIVOR",
+      "qualification_state": "RESEARCH_SURVIVOR_SUB_THRESHOLD",
+      "audit_notes": "Causal next-bar fill (+12.88R, PF 1.156). Weak sub-threshold edge; retained for research observation only."
     },
     {
       "alpha_id": "FAM06_ETH_USDT_4h",
       "mechanism": "Volatility Expansion Squeeze (Bollinger in Keltner Breakout + ATR Trailing)",
       "asset": "ETH/USDT",
       "timeframe": "4H",
-      "lifetime_net_r": 103.31,
-      "expected_net_edge_r": 0.6299,
+      "lifetime_net_r": 2.99,
+      "expected_net_edge_r": 0.0175,
       "uncertainty_ci_95": [
-        0.369,
-        0.891
+        -0.211,
+        0.246
       ],
-      "daily_return_vol_r": 0.508,
-      "max_drawdown_r": 5.65,
-      "profit_factor": 2.62,
-      "win_rate_pct": 61.6,
-      "total_trades": 164,
+      "daily_return_vol_r": 0.436,
+      "max_drawdown_r": 18.5,
+      "profit_factor": 1.03,
+      "win_rate_pct": 40.9,
+      "total_trades": 171,
       "independence_vs_sol_set2": {
-        "return_correlation": 0.1388,
-        "downside_correlation": -0.6316,
-        "drawdown_correlation": 0.1301,
-        "position_overlap_pct": 9.32,
-        "exposure_jaccard_similarity": 0.1595,
-        "common_failure_quarters": []
+        "return_correlation": 0.0528,
+        "downside_correlation": -0.7062,
+        "drawdown_correlation": 0.1631,
+        "position_overlap_pct": 8.7,
+        "exposure_jaccard_similarity": 0.15,
+        "common_failure_quarters": [
+          "2024Q2"
+        ]
       },
       "regime_dependency": "Speculative Bull & High Volatility Expansions",
       "capacity_estimate": "$2.0M - $5.0M",
-      "lifecycle_status": "RESEARCH_QUALIFIED_SURVIVOR",
-      "qualification_state": "QUALIFIED_ROBUST",
-      "audit_notes": "Passed full multi-year backtest, OOS, 2x friction battery, and 1-bar latency delay test."
+      "lifecycle_status": "RESEARCH_GRAVEYARD_FALSIFIED",
+      "qualification_state": "FALSIFIED",
+      "audit_notes": "Causal next-bar fill (+2.99R, PF < 1.05). Lookahead-deflated research hypothesis; $0 capital allocation."
     },
     {
       "alpha_id": "FAM06_BTC_USDT_4h",
       "mechanism": "Volatility Expansion Squeeze (Bollinger in Keltner Breakout + ATR Trailing)",
       "asset": "BTC/USDT",
       "timeframe": "4H",
-      "lifetime_net_r": 104.88,
-      "expected_net_edge_r": 0.6243,
+      "lifetime_net_r": -0.29,
+      "expected_net_edge_r": -0.0017,
       "uncertainty_ci_95": [
-        0.373,
-        0.875
+        -0.222,
+        0.219
       ],
-      "daily_return_vol_r": 0.501,
-      "max_drawdown_r": 5.66,
-      "profit_factor": 2.67,
-      "win_rate_pct": 63.1,
-      "total_trades": 168,
+      "daily_return_vol_r": 0.422,
+      "max_drawdown_r": 25.28,
+      "profit_factor": 1.0,
+      "win_rate_pct": 42.7,
+      "total_trades": 171,
       "independence_vs_sol_set2": {
-        "return_correlation": 0.0461,
-        "downside_correlation": -0.5125,
-        "drawdown_correlation": -0.1882,
-        "position_overlap_pct": 9.1,
-        "exposure_jaccard_similarity": 0.1533,
+        "return_correlation": 0.0508,
+        "downside_correlation": -0.5792,
+        "drawdown_correlation": 0.0312,
+        "position_overlap_pct": 9.41,
+        "exposure_jaccard_similarity": 0.1608,
         "common_failure_quarters": []
       },
       "regime_dependency": "Speculative Bull & High Volatility Expansions",
       "capacity_estimate": "$2.0M - $5.0M",
-      "lifecycle_status": "RESEARCH_QUALIFIED_SURVIVOR",
-      "qualification_state": "QUALIFIED_ROBUST",
-      "audit_notes": "Passed full multi-year backtest, OOS, 2x friction battery, and 1-bar latency delay test."
+      "lifecycle_status": "RESEARCH_GRAVEYARD_FALSIFIED",
+      "qualification_state": "FALSIFIED",
+      "audit_notes": "Causal next-bar fill (-0.29R, PF < 1.05). Lookahead-deflated research hypothesis; $0 capital allocation."
     },
     {
       "alpha_id": "FAM-10-FUNDINGCARRY",
-      "mechanism": "Dynamic Spot-Perp Basis Carry (Regime-filtered at >=15% APR)",
+      "mechanism": "Dynamic Spot-Perp Basis Carry V1 (Regime-filtered at >=15% APR)",
       "asset": "SOL/BTC/ETH",
       "timeframe": "8H funding cycles",
       "lifetime_net_r": 0.0,
@@ -314,7 +316,7 @@
       "capacity_estimate": "< $1.0M (Illiquid / Falsified)",
       "lifecycle_status": "RESEARCH_GRAVEYARD_FALSIFIED",
       "qualification_state": "FALSIFIED",
-      "audit_notes": "Sub-hurdle funding regimes (<11% APR) fail to clear 6% margin borrow + 32 bps round-trip friction. Idle/0 trades in low-yield periods."
+      "audit_notes": "V1 parameterization (funding >= 15% APR, 6% borrow, 32bps friction) yielded 0 qualified opportunities. Scope restricted to V1; does not falsify broader funding carry family."
     },
     {
       "alpha_id": "RV_LONG_HORIZON_COINTEGRATION_V1",
@@ -349,8 +351,8 @@
   ],
   "executive_summary": {
     "total_candidates_evaluated": 6,
-    "qualified_robust_survivors": 4,
-    "falsified_graveyard": 2,
+    "qualified_robust_survivors": 1,
+    "falsified_graveyard": 4,
     "key_finding": "FAM06_ETH_USDT_4h and FAM06_BTC_USDT_4h exhibit low return correlation (0.016 to 0.024) and low downside correlation (0.063 to 0.081) against SOL Set 2, providing genuine cross-asset and mechanism diversification."
   }
 }

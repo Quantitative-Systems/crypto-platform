@@ -1,22 +1,22 @@
 {
   "platform": "Quantitative Crypto Platform (QCP)",
   "last_heartbeat": {
-    "timestamp": 1789495398,
-    "utc_iso": "2026-09-15T18:03:18.999181+00:00",
+    "timestamp": 1789536214,
+    "utc_iso": "2026-09-16T05:23:34.735314+00:00",
     "status": "HEALTHY",
-    "uptime_seconds": 10836.7,
+    "uptime_seconds": 1607.2,
     "current_equity_usd": 1000.0,
     "peak_equity_usd": 1000.0,
     "max_drawdown_pct": 0.0,
-    "active_positions": 0,
+    "active_positions": 1,
     "total_closed_trades": 0,
     "last_processed_candles": {
-      "4h": 1789473600,
-      "1h": 1789491600,
-      "15m": 1789494300
+      "4h": 1789516800,
+      "1h": 1789531200,
+      "15m": 1789534800
     },
     "clock_drift_sec": 0.0,
-    "gap_count": 0
+    "gap_count": 3
   },
   "state_summary": {
     "starting_capital_usd": 1000.0,
@@ -42,5 +42,27 @@
       "NO_FORWARD_TRADES_AVAILABLE"
     ]
   },
-  "recent_gaps": []
+  "recent_gaps": [
+    {
+      "timeframe": "4h",
+      "expected_ts": 1789488000,
+      "received_ts": 1789516800,
+      "gap_seconds": 43200,
+      "detected_at_utc": "2026-09-16T04:56:49.660604+00:00"
+    },
+    {
+      "timeframe": "1h",
+      "expected_ts": 1789495200,
+      "received_ts": 1789527600,
+      "gap_seconds": 36000,
+      "detected_at_utc": "2026-09-16T04:56:49.660709+00:00"
+    },
+    {
+      "timeframe": "15m",
+      "expected_ts": 1789495200,
+      "received_ts": 1789533000,
+      "gap_seconds": 38700,
+      "detected_at_utc": "2026-09-16T04:56:49.660767+00:00"
+    }
+  ]
 }

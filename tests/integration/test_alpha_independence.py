@@ -47,19 +47,19 @@ def test_candidate_independence_from_baseline(matrix_data):
     baseline = candidates["FAM-07-MTFCONT_SOLUSDT_Set2"]
     assert baseline["qualification_state"] == "QUALIFIED_ROBUST"
 
-    # Test ETH 4H Volatility Squeeze
+    # Test ETH 4H Volatility Squeeze (Causal fill falsification)
     assert "FAM06_ETH_USDT_4h" in candidates
     eth_sq = candidates["FAM06_ETH_USDT_4h"]
-    assert eth_sq["qualification_state"] == "QUALIFIED_ROBUST"
-    assert eth_sq["lifetime_net_r"] > 50.0  # Demonstrates positive net edge
+    assert eth_sq["qualification_state"] == "FALSIFIED"
+    assert eth_sq["lifetime_net_r"] < 10.0  # Causal fill eliminates lookahead edge
     assert eth_sq["independence_vs_sol_set2"]["return_correlation"] < 0.30  # Low return correlation
     assert eth_sq["independence_vs_sol_set2"]["position_overlap_pct"] < 20.0  # Low market exposure overlap
 
-    # Test BTC 4H Volatility Squeeze
+    # Test BTC 4H Volatility Squeeze (Causal fill falsification)
     assert "FAM06_BTC_USDT_4h" in candidates
     btc_sq = candidates["FAM06_BTC_USDT_4h"]
-    assert btc_sq["qualification_state"] == "QUALIFIED_ROBUST"
-    assert btc_sq["lifetime_net_r"] > 50.0
+    assert btc_sq["qualification_state"] == "FALSIFIED"
+    assert btc_sq["lifetime_net_r"] <= 0.0  # True edge is non-positive
     assert btc_sq["independence_vs_sol_set2"]["return_correlation"] < 0.20  # Near-orthogonal return correlation
     assert btc_sq["independence_vs_sol_set2"]["position_overlap_pct"] < 20.0
 

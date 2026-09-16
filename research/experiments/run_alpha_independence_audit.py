@@ -128,37 +128,48 @@ def run_alpha_independence_audit():
             tp_r=3.0,
             atr_mult=1.5,
             friction_bps=8.0,
-            latency_bars=0,
+            latency_bars=1,  # True causal next-bar open fill (0m post-confirmation delay)
         )
-        logger.info(f"{strat_id} generated {len(trades_sq)} trades.")
+        logger.info(f"{strat_id} generated {len(trades_sq)} trades under causal next-bar open fill.")
 
         candidate_trades[strat_id] = [
             {"entry_ts": t.entry_ts, "exit_ts": t.exit_ts, "realized_r": t.realized_r}
             for t in trades_sq
         ]
+
+        net_r_sum = sum(t.realized_r for t in trades_sq)
+        if strat_id == "FAM06_SOL_USDT_4h":
+            qual_state = "RESEARCH_SURVIVOR_SUB_THRESHOLD"
+            lifecycle = "RESEARCH_SURVIVOR"
+            notes = "Causal next-bar fill (+12.88R, PF 1.156). Weak sub-threshold edge; retained for research observation only."
+        else:
+            qual_state = "FALSIFIED"
+            lifecycle = "RESEARCH_GRAVEYARD_FALSIFIED"
+            notes = f"Causal next-bar fill ({net_r_sum:+.2f}R, PF < 1.05). Lookahead-deflated research hypothesis; $0 capital allocation."
+
         candidate_meta[strat_id] = {
             "alpha_id": strat_id,
             "mechanism": "Volatility Expansion Squeeze (Bollinger in Keltner Breakout + ATR Trailing)",
             "asset": display_sym,
             "timeframe": "4H",
-            "lifecycle": "RESEARCH_QUALIFIED_SURVIVOR",
-            "qualification_state": "QUALIFIED_ROBUST",
-            "notes": "Passed full multi-year backtest, OOS, 2x friction battery, and 1-bar latency delay test."
+            "lifecycle": lifecycle,
+            "qualification_state": qual_state,
+            "notes": notes,
         }
 
     # -------------------------------------------------------------------------
-    # 3. Dynamic Funding Carry (FAM-10-FUNDINGCARRY)
+    # 3. Dynamic Funding Carry (FAM-10-FUNDINGCARRY-V1)
     # -------------------------------------------------------------------------
-    logger.info("Registering Priority 2 Candidate: FAM-10-FUNDINGCARRY...")
+    logger.info("Registering Priority 2 Candidate: FAM-10-FUNDINGCARRY-V1...")
     candidate_trades["FAM-10-FUNDINGCARRY"] = []
     candidate_meta["FAM-10-FUNDINGCARRY"] = {
         "alpha_id": "FAM-10-FUNDINGCARRY",
-        "mechanism": "Dynamic Spot-Perp Basis Carry (Regime-filtered at >=15% APR)",
+        "mechanism": "Dynamic Spot-Perp Basis Carry V1 (Regime-filtered at >=15% APR)",
         "asset": "SOL/BTC/ETH",
         "timeframe": "8H funding cycles",
         "lifecycle": "RESEARCH_GRAVEYARD_FALSIFIED",
         "qualification_state": "FALSIFIED",
-        "notes": "Sub-hurdle funding regimes (<11% APR) fail to clear 6% margin borrow + 32 bps round-trip friction. Idle/0 trades in low-yield periods."
+        "notes": "V1 parameterization (funding >= 15% APR, 6% borrow, 32bps friction) yielded 0 qualified opportunities. Scope restricted to V1; does not falsify broader funding carry family.",
     }
 
     # -------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 # QCP — Alpha Independence & Diversification Matrix
 
-**Generated:** 2026-09-15 16:26:27 UTC  
+**Generated:** 2026-09-16 05:17:39 UTC  
 **Baseline Candidate:** `FAM-07-MTFCONT_SOLUSDT_Set2`  
 **Verification Horizon:** 2021-01-01 to 2026-06-30 (Canonical 5.5-Year Data Warehouse)  
 
@@ -11,9 +11,9 @@
 | Alpha ID | Mechanism | Asset | TF | Trades | Net R | E[R] (95% CI) | PF | Max DD | Return Corr vs SOL Set 2 | Downside Corr | Overlap % | Status |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | `FAM-07-MTFCONT_SOLUSDT_Set2` | HTF/MTF Structural Trend Conti... | SOL/USDT | Set 2 (1W -> 1D -> 4H) | 387 | +107.41R | +0.28R [0.116, 0.439] | 1.45 | 12.07R | 1.000 | 1.000 | 100.0% | 🟢 QUALIFIED |
-| `FAM06_SOL_USDT_4h` | Volatility Expansion Squeeze (... | SOL/USDT | 4H | 140 | +93.03R | +0.66R [0.387, 0.942] | 2.81 | 5.04R | 0.199 | -0.537 | 9.7% | 🟢 QUALIFIED |
-| `FAM06_ETH_USDT_4h` | Volatility Expansion Squeeze (... | ETH/USDT | 4H | 164 | +103.31R | +0.63R [0.369, 0.891] | 2.62 | 5.65R | 0.139 | -0.632 | 9.3% | 🟢 QUALIFIED |
-| `FAM06_BTC_USDT_4h` | Volatility Expansion Squeeze (... | BTC/USDT | 4H | 168 | +104.88R | +0.62R [0.373, 0.875] | 2.67 | 5.66R | 0.046 | -0.512 | 9.1% | 🟢 QUALIFIED |
+| `FAM06_SOL_USDT_4h` | Volatility Expansion Squeeze (... | SOL/USDT | 4H | 146 | +13.89R | +0.10R [-0.152, 0.342] | 1.17 | 13.93R | 0.148 | -0.654 | 8.4% | 🔴 FALSIFIED |
+| `FAM06_ETH_USDT_4h` | Volatility Expansion Squeeze (... | ETH/USDT | 4H | 171 | +2.99R | +0.02R [-0.211, 0.246] | 1.03 | 18.5R | 0.053 | -0.706 | 8.7% | 🔴 FALSIFIED |
+| `FAM06_BTC_USDT_4h` | Volatility Expansion Squeeze (... | BTC/USDT | 4H | 171 | -0.29R | -0.00R [-0.222, 0.219] | 1.0 | 25.28R | 0.051 | -0.579 | 9.4% | 🔴 FALSIFIED |
 | `FAM-10-FUNDINGCARRY` | Dynamic Spot-Perp Basis Carry ... | SOL/BTC/ETH | 8H funding cycles | 0 | 0.0R | 0.0R | 0.0 | - | - | - | - | 🔴 FALSIFIED |
 | `RV_LONG_HORIZON_COINTEGRATION_V1` | Long-Horizon Cross-Asset Coint... | BTC/ETH/SOL Pair Baskets | 1D & 4H | 0 | 0.0R | 0.0R | 0.0 | - | - | - | - | 🔴 FALSIFIED |
 
@@ -23,28 +23,28 @@
 
 | Strategy | `FAM-07-MTFCONT_SOLUSDT_Set2` | `FAM06_SOL_USDT_4h` | `FAM06_ETH_USDT_4h` | `FAM06_BTC_USDT_4h` |
 | :--- | :---: | :---: | :---: | :---: |
-| `FAM-07-MTFCONT_SOLUSDT_Set2` | 1.0000 | 0.1994 | 0.1388 | 0.0461 |
-| `FAM06_SOL_USDT_4h` | 0.1994 | 1.0000 | 0.1427 | 0.1122 |
-| `FAM06_ETH_USDT_4h` | 0.1388 | 0.1427 | 1.0000 | 0.1647 |
-| `FAM06_BTC_USDT_4h` | 0.0461 | 0.1122 | 0.1647 | 1.0000 |
+| `FAM-07-MTFCONT_SOLUSDT_Set2` | 1.0000 | 0.1480 | 0.0528 | 0.0508 |
+| `FAM06_SOL_USDT_4h` | 0.1480 | 1.0000 | 0.1741 | 0.1560 |
+| `FAM06_ETH_USDT_4h` | 0.0528 | 0.1741 | 1.0000 | 0.1764 |
+| `FAM06_BTC_USDT_4h` | 0.0508 | 0.1560 | 0.1764 | 1.0000 |
 
 ## 3. Pairwise Downside Correlation Matrix (Negative Return Days)
 
 | Strategy | `FAM-07-MTFCONT_SOLUSDT_Set2` | `FAM06_SOL_USDT_4h` | `FAM06_ETH_USDT_4h` | `FAM06_BTC_USDT_4h` |
 | :--- | :---: | :---: | :---: | :---: |
-| `FAM-07-MTFCONT_SOLUSDT_Set2` | 1.0000 | -0.5369 | -0.6316 | -0.5125 |
-| `FAM06_SOL_USDT_4h` | -0.5369 | 1.0000 | -0.9047 | -0.8127 |
-| `FAM06_ETH_USDT_4h` | -0.6316 | -0.9047 | 1.0000 | -0.5330 |
-| `FAM06_BTC_USDT_4h` | -0.5125 | -0.8127 | -0.5330 | 1.0000 |
+| `FAM-07-MTFCONT_SOLUSDT_Set2` | 1.0000 | -0.6545 | -0.7062 | -0.5792 |
+| `FAM06_SOL_USDT_4h` | -0.6545 | 1.0000 | -0.7971 | -0.6988 |
+| `FAM06_ETH_USDT_4h` | -0.7062 | -0.7971 | 1.0000 | -0.5556 |
+| `FAM06_BTC_USDT_4h` | -0.5792 | -0.6988 | -0.5556 | 1.0000 |
 
 ## 4. Concurrent Position Exposure (% Time Concurrently in Position)
 
 | Strategy | `FAM-07-MTFCONT_SOLUSDT_Set2` | `FAM06_SOL_USDT_4h` | `FAM06_ETH_USDT_4h` | `FAM06_BTC_USDT_4h` |
 | :--- | :---: | :---: | :---: | :---: |
-| `FAM-07-MTFCONT_SOLUSDT_Set2` | 100.00% | 9.65% | 9.32% | 9.10% |
-| `FAM06_SOL_USDT_4h` | 9.65% | 100.00% | 4.12% | 4.34% |
-| `FAM06_ETH_USDT_4h` | 9.32% | 4.12% | 100.00% | 6.10% |
-| `FAM06_BTC_USDT_4h` | 9.10% | 4.34% | 6.10% | 100.00% |
+| `FAM-07-MTFCONT_SOLUSDT_Set2` | 100.00% | 8.45% | 8.70% | 9.41% |
+| `FAM06_SOL_USDT_4h` | 8.45% | 100.00% | 4.01% | 4.27% |
+| `FAM06_ETH_USDT_4h` | 8.70% | 4.01% | 100.00% | 5.58% |
+| `FAM06_BTC_USDT_4h` | 9.41% | 4.27% | 5.58% | 100.00% |
 
 ---
 

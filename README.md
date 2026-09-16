@@ -26,23 +26,23 @@ Rather than relying on single-strategy curve-fitting or opaque black boxes, QCP 
 6. **Continuous Forward Paper Burn-In:** 24/7 autonomous paper daemon consuming real public exchange streams with zero live credentials and live capital locked at $\$0.00$.
 
 ---
-
 ## Operational Governance Ledger
 
 | System Layer | Status | Verified Operational Evidence |
 | :--- | :---: | :--- |
-| **Software Integrity** | 🟢 Operational | **517 / 517 automated unit, integration, and regression tests passing cleanly.** |
+| **Software Integrity** | 🟢 Operational | **524 / 524 automated unit, integration, and regression tests passing cleanly.** |
 | **Data Warehouse & Lineage** | 🟢 Certified | 5.5-year canonical datasets (BTC, ETH, SOL) verified with SHA-256 provenance hashes and 0 gaps. |
 | **Execution Semantics** | 🟢 Locked | Canonical causal contract: next-bar open fill, `ADVERSE_FIRST` stop/target collision policy. |
 | **Risk Firewall & Killswitch** | 🟢 Locked | 7-dimensional risk firewall active: 1.0% max loss per trade, 3.0% max portfolio heat, auto drawdown throttle. |
 | **Capital Firewall** | 🟢 Locked | **Live Capital = $0.00.** Live order submission disabled; exchange API credentials disconnected. |
 | **Forward Paper Daemon** | 🟢 Active | Autonomous daemon running 24/7 on public Binance data feed (`production_live_state.db`). |
 | **Primary Baseline Candidate** | 🟡 Forward Burn-In | `FAM-07-MTFCONT_SOLUSDT_Set2`: +107.41R historical baseline; burn-in daemon collecting live observations. |
-| **Qualified Independent Alpha 1** | 🟢 Qualified Robust | `FAM06_BTC_USDT_4h`: **+104.88R net, PF 2.67.** Return correlation vs SOL Set 2: **+0.046** (near-orthogonal). |
-| **Qualified Independent Alpha 2** | 🟢 Qualified Robust | `FAM06_ETH_USDT_4h`: **+103.31R net, PF 2.62.** Return correlation vs SOL Set 2: **+0.139**, Downside corr: **-0.632**. |
-| **Relative Value Spread (`FAM-09`)** | 🔴 Falsified | All 6 cross-asset cointegration streams failed qualification; archived in Strategy Graveyard. |
-| **Dynamic Funding Carry (`FAM-10`)** | 🔴 Falsified | Sub-hurdle net carry (<11% APR funding fails to clear 6% borrow + 32 bps friction); archived in Graveyard. |
-| **Generic Capital Allocator** | 🟢 Audited | Fully transparent calculation trace; demonstrates +78.7% Sharpe improvement in multi-alpha portfolio. |
+| **Family 06 Volatility Squeeze (BTC)** | 🔴 Falsified | `FAM06_BTC_USDT_4h`: **-0.29R net, PF 0.997.** Prior +104.88R was a same-bar open lookahead artifact. |
+| **Family 06 Volatility Squeeze (ETH)** | 🔴 Falsified | `FAM06_ETH_USDT_4h`: **+2.99R net, PF 1.029.** Uncertainty exceeds edge; lookahead artifact eliminated. |
+| **Family 06 Volatility Squeeze (SOL)** | 🟡 Research Only | `FAM06_SOL_USDT_4h`: **+12.88R net, PF 1.156.** Sub-threshold edge; retained for research observation only. |
+| **Relative Value Spread (`FAM-09`)** | 🔴 Falsified (V1) | `RV_LONG_HORIZON_COINTEGRATION_V1`: 6 streams failed qualification; preserved in Graveyard. |
+| **Dynamic Funding Carry (`FAM-10`)** | 🔴 Falsified (V1) | `FAM-10-FUNDINGCARRY-V1`: V1 parameterization yielded 0 qualified trades; preserved in Graveyard. |
+| **Generic Capital Allocator** | 🟢 Audited | Fail-closed dynamic risk allocation; correctly rejected unvalidated alphas ($0 allocation). |
 | **Production Qualification** | 🔴 Not Reached | Real capital deployment requires extensive forward paper trade verification. |
 
 ---
@@ -107,35 +107,41 @@ From [`research/results/ALPHA_INDEPENDENCE_MATRIX.json`](file:///home/mrcn2/cryp
 | Alpha ID | Mechanism | Asset | TF | Trades | Net R | E[R] (95% CI) | PF | Max DD | Return Corr vs SOL Set 2 | Downside Corr | Overlap % | Status |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | `FAM-07-MTFCONT_SOLUSDT_Set2` | Trend Continuation | SOL/USDT | Set 2 (1W/1D/4H) | 387 | +107.41R | +0.28R [0.12, 0.44] | 1.45 | 12.07R | 1.000 | 1.000 | 100.0% | 🟡 `FORWARD_HEALTHY` |
-| `FAM06_SOL_USDT_4h` | Volatility Squeeze | SOL/USDT | 4H | 140 | +93.03R | +0.66R [0.39, 0.94] | 2.81 | 5.04R | 0.199 | -0.537 | 9.7% | 🟢 `QUALIFIED_ROBUST` |
-| `FAM06_ETH_USDT_4h` | Volatility Squeeze | ETH/USDT | 4H | 164 | +103.31R | +0.63R [0.37, 0.89] | 2.62 | 5.65R | **0.139** | **-0.632** | **9.3%** | 🟢 `QUALIFIED_ROBUST` |
-| `FAM06_BTC_USDT_4h` | Volatility Squeeze | BTC/USDT | 4H | 168 | +104.88R | +0.62R [0.37, 0.88] | 2.67 | 5.66R | **0.046** | **-0.512** | **9.1%** | 🟢 `QUALIFIED_ROBUST` |
-| `FAM-10-FUNDINGCARRY` | Dynamic Basis Carry | Multi | 8H funding | 0 | 0.0R | 0.0R | 0.0 | - | - | - | 0.0% | 🔴 `FALSIFIED` |
-| `RV_LONG_HORIZON_COINTEGRATION_V1` | Cross-Asset RV | Pairs | 1D & 4H | 0 | 0.0R | 0.0R | 0.0 | - | - | 0.0% | 🔴 `FALSIFIED` |
+| `FAM06_SOL_USDT_4h` | Volatility Squeeze | SOL/USDT | 4H | 146 | +13.89R | +0.10R [-0.15, 0.34] | 1.17 | 13.93R | 0.148 | -0.654 | 8.4% | 🟡 `SUB_THRESHOLD` |
+| `FAM06_ETH_USDT_4h` | Volatility Squeeze | ETH/USDT | 4H | 171 | +2.99R | +0.02R [-0.21, 0.25] | 1.03 | 18.50R | 0.053 | -0.706 | 8.7% | 🔴 `FALSIFIED` |
+| `FAM06_BTC_USDT_4h` | Volatility Squeeze | BTC/USDT | 4H | 171 | -0.29R | -0.00R [-0.22, 0.22] | 1.00 | 25.28R | 0.051 | -0.579 | 9.4% | 🔴 `FALSIFIED` |
+| `FAM-10-FUNDINGCARRY` | Dynamic Basis Carry | Multi | 8H funding | 0 | 0.0R | 0.0R | 0.0 | - | - | - | 0.0% | 🔴 `FALSIFIED_V1` |
+| `RV_LONG_HORIZON_COINTEGRATION_V1` | Cross-Asset RV | Pairs | 1D & 4H | 0 | 0.0R | 0.0R | 0.0 | - | - | 0.0% | 🔴 `FALSIFIED_V1` |
 
 ### Pairwise Daily Return Correlation Matrix
 
 | Strategy | `FAM-07-MTFCONT_SOLUSDT_Set2` | `FAM06_SOL_USDT_4h` | `FAM06_ETH_USDT_4h` | `FAM06_BTC_USDT_4h` |
 | :--- | :---: | :---: | :---: | :---: |
-| `FAM-07-MTFCONT_SOLUSDT_Set2` | 1.0000 | 0.1994 | 0.1388 | **0.0461** |
-| `FAM06_SOL_USDT_4h` | 0.1994 | 1.0000 | 0.1427 | 0.1122 |
-| `FAM06_ETH_USDT_4h` | 0.1388 | 0.1427 | 1.0000 | 0.1647 |
-| `FAM06_BTC_USDT_4h` | **0.0461** | 0.1122 | 0.1647 | 1.0000 |
+| `FAM-07-MTFCONT_SOLUSDT_Set2` | 1.0000 | 0.1480 | 0.0528 | **0.0508** |
+| `FAM06_SOL_USDT_4h` | 0.1480 | 1.0000 | 0.1741 | 0.1560 |
+| `FAM06_ETH_USDT_4h` | 0.0528 | 0.1741 | 1.0000 | 0.1764 |
+| `FAM06_BTC_USDT_4h` | **0.0508** | 0.1560 | 0.1764 | 1.0000 |
 
-### Pairwise Downside Correlation Matrix (Stress Days)
-
-| Strategy | `FAM-07-MTFCONT_SOLUSDT_Set2` | `FAM06_SOL_USDT_4h` | `FAM06_ETH_USDT_4h` | `FAM06_BTC_USDT_4h` |
-| :--- | :---: | :---: | :---: | :---: |
-| `FAM-07-MTFCONT_SOLUSDT_Set2` | 1.0000 | **-0.5369** | **-0.6316** | **-0.5125** |
-| `FAM06_SOL_USDT_4h` | -0.5369 | 1.0000 | -0.4503 | -0.3871 |
-| `FAM06_ETH_USDT_4h` | -0.6316 | -0.4503 | 1.0000 | -0.4019 |
-| `FAM06_BTC_USDT_4h` | -0.5125 | -0.3871 | -0.4019 | 1.0000 |
-
-> **Key Scientific Discovery:** The downside correlation between Family 07 Trend Continuation and Family 06 Volatility Squeeze is **negative (-0.512 to -0.632)**. During trend-following drawdown periods (chop/contraction), the squeeze mechanism is either flat or capturing short impulses. Simultaneous position concurrency is under **10%**, providing genuine economic diversification.
+### Pairwise Downside Correlation Forensic Audit
+* **The Naive Calculation:** Comparing days where either strategy had negative return yields negative correlation (-0.57 to -0.70) because non-overlapping zero-return days are correlated against negative returns ($(x - \bar{x})(0 - \bar{y}) < 0$).
+* **The True Co-Exposure Calculation:** Restricting analysis strictly to days where both strategies held active market positions reveals downside correlation is near-zero to non-negative (-0.09 to -0.13), confirming that Family 06 does not provide an active hedge during stress.
 
 ---
 
-## Generic Capital Allocator & Multi-Alpha Portfolio Synergy
+## Performance Truth & Historical Reconciliation
+
+The master ledger explicitly reconciles the performance figures appearing across research documents:
+
+| Methodology | Strategy | Dataset Window | Risk Sizing Model | Total Net R | Profit Factor | Max Drawdown |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **Canonical Warehouse Backtest** | `FAM-07-MTFCONT_SOLUSDT_Set2` | 2021-01-01 to 2026-06-30 | Fixed 1.0R non-compounding | **+107.41R** | 1.451 | 12.07R |
+| **Event-Driven Paper Simulation** | `FAM-07-MTFCONT_SOLUSDT_Set2` | 2024-01-01 to 2026-09-01 | Dynamic 0.60% compounding | **+222.92R** | 5.235 | 4.73% |
+
+* **Reconciliation Explanation:** +107.41R is the full 5.5-year multi-partition (DEV + VAL + OOS) non-compounding canonical backtest in `StrategyExecutor`. +222.92R is the compounding event-driven forward paper simulation in `PaperExecutionHarness` evaluated over the 2024–2026 momentum cycle.
+
+---
+
+## Generic Capital Allocator & Portfolio Protection
 
 Full empirical results documented in [`research/results/MULTI_ALPHA_PORTFOLIO_ALLOCATION_AUDIT.json`](file:///home/mrcn2/crypto-platform/research/results/MULTI_ALPHA_PORTFOLIO_ALLOCATION_AUDIT.json):
 
@@ -143,16 +149,16 @@ Full empirical results documented in [`research/results/MULTI_ALPHA_PORTFOLIO_AL
 Every alpha slot passes through a fully auditable calculation pipeline:
 $$\text{Raw Edge } (E) \xrightarrow{-1.96 \cdot \text{SE}} E_{\text{adj}} \xrightarrow{\text{Risk Parity}} w_{\text{raw}} \xrightarrow{\text{Covariance Shrinkage}} w_{\text{cov}} \xrightarrow{\text{Drawdown Throttle}} w_{\text{dd}} \xrightarrow{\text{Cap Constraints}} w_{\text{final}}$$
 
-* **Single-Strategy Ceiling Proof:** When SOL Set 2 was allocated alone, raw proposed risk was $3.00\%$. The allocator constrained it strictly to the $1.50\%$ single-strategy policy ceiling (`is_capped_by_strategy_ceiling: true`).
-* **Asset Concentration Limit:** Two strategies on SOL/USDT compete for the $1.50\%$ single-asset ceiling, preventing correlated exposure clustering.
-* **Portfolio Heat Constraint:** When SOL Set 2, ETH Squeeze, and BTC Squeeze compete, unconstrained risk demand ($4.28\%$) is scaled dynamically to satisfy the $3.00\%$ aggregate portfolio heat limit.
+* **Fail-Closed Gatekeeper:** The allocator evaluated Family 06 BTC ($E_{\text{net}} \le 0$) and Family 06 ETH ($E_{\text{adj}} \le 0$) and strictly **allocated $0.00 capital**, protecting the portfolio.
+* **Capital Protection Proof:** If an unconstrained portfolio had blindly added Family 06 to SOL Set 2, portfolio Sharpe would have degraded from 1.45 to **1.04**, and Max Drawdown would have escalated from 12.07R to **21.17R**. The allocator's risk gate prevented this degradation.
 
-### Historical Multi-Alpha Portfolio Backtest (2021–2026)
+### Historical Multi-Alpha Portfolio Backtest (Causal Reality)
 
-| Portfolio Specification | Total Net R | Maximum Drawdown | Annualized Sharpe | Calmar Ratio | Sharpe Improvement | Calmar Improvement |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Standalone `SOL_SET2_MTFCONT`** | +107.41R | 12.07R | 1.45 | 8.90 | Baseline | Baseline |
-| **Multi-Alpha Diversified Portfolio**<br>*(SOL Set 2 + ETH Squeeze + BTC Squeeze)* | **+312.81R** | **15.05R** | **2.59** | **20.79** | **+78.7%** | **+133.6%** |
+| Portfolio Specification | Total Net R | Maximum Drawdown | Annualized Sharpe | Calmar Ratio | Profit Factor | Status |
+| :--- | :---: | :---: | :---: | :---: | :---: | :--- |
+| **Standalone `SOL_SET2_MTFCONT`** | **+107.41R** | **12.07R** | **1.45** | **8.90** | **1.353** | 🟢 Optimal Baseline |
+| **Unconstrained Multi-Alpha Portfolio**<br>*(SOL Set 2 + ETH Squeeze + BTC Squeeze)* | **+122.99R** | **21.17R** | **1.04** | **5.81** | **1.229** | 🔴 Degraded Edge |
+| **Allocated Constrained Portfolio**<br>*(Allocator filtered BTC/ETH to $0.00)* | **+107.41R** | **12.07R** | **1.45** | **8.90** | **1.353** | 🟢 Capital Protected |
 
 ---
 
