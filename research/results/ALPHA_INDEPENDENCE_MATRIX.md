@@ -1,6 +1,6 @@
 # QCP — Alpha Independence & Diversification Matrix
 
-**Generated:** 2026-09-16 05:17:39 UTC  
+**Generated:** 2026-09-16 11:53:31 UTC  
 **Baseline Candidate:** `FAM-07-MTFCONT_SOLUSDT_Set2`  
 **Verification Horizon:** 2021-01-01 to 2026-06-30 (Canonical 5.5-Year Data Warehouse)  
 

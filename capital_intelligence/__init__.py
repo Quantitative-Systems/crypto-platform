@@ -1,5 +1,7 @@
 """
-Quantitative Systems Platform (QSP) — Capital Intelligence Package.
+Quantitative Crypto Platform (QCP) — Capital Intelligence Package.
+Net-edge decomposition, confidence estimation, capacity analysis, capital feasibility,
+selection scoring and factor attribution for alpha candidates.
 """
 
 from capital_intelligence.feasibility_engine import (
@@ -41,3 +43,4 @@ __all__ = [
     "AlphaHealthEngine",
     "AlphaHealthStatus",
 ]
+

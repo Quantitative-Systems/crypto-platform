@@ -1,45 +1,45 @@
 {
   "platform": "Quantitative Crypto Platform (QCP)",
   "last_heartbeat": {
-    "timestamp": 1789538302,
-    "utc_iso": "2026-09-16T05:58:22.509370+00:00",
+    "timestamp": 1789559735,
+    "utc_iso": "2026-09-16T11:55:35.646756+00:00",
     "status": "HEALTHY",
-    "uptime_seconds": 3695.0,
-    "current_equity_usd": 1000.0,
+    "uptime_seconds": 25128.1,
+    "current_equity_usd": 985.58,
     "peak_equity_usd": 1000.0,
-    "max_drawdown_pct": 0.0,
-    "active_positions": 1,
-    "total_closed_trades": 0,
+    "max_drawdown_pct": 1.44,
+    "active_positions": 0,
+    "total_closed_trades": 2,
     "last_processed_candles": {
-      "4h": 1789516800,
-      "1h": 1789531200,
-      "15m": 1789536600
+      "4h": 1789531200,
+      "1h": 1789552800,
+      "15m": 1789558200
     },
     "clock_drift_sec": 0.0,
     "gap_count": 3
   },
   "state_summary": {
     "starting_capital_usd": 1000.0,
-    "current_equity_usd": 1000.0,
-    "net_profit_usd": 0.0,
-    "total_return_pct": 0.0,
-    "max_drawdown_pct": 0.0,
-    "total_trades": 0
+    "current_equity_usd": 985.58,
+    "net_profit_usd": -14.42,
+    "total_return_pct": -1.44,
+    "max_drawdown_pct": 1.44,
+    "total_trades": 2
   },
   "model_vs_reality_gap": {
-    "total_trades_analyzed": 0,
-    "avg_slippage_error_bps": 0.0,
-    "avg_friction_error_bps": 0.0,
-    "avg_r_realization_delta": 0.0,
+    "total_trades_analyzed": 2,
+    "avg_slippage_error_bps": -2.0,
+    "avg_friction_error_bps": -6.97,
+    "avg_r_realization_delta": -0.1177,
     "backtest_baseline_expectancy_r": 0.6107,
-    "forward_observed_expectancy_r": 0.0,
-    "expectancy_decay_pct": 0.0,
+    "forward_observed_expectancy_r": -1.202,
+    "expectancy_decay_pct": -296.82,
     "backtest_win_rate_pct": 70.14,
     "forward_win_rate_pct": 0.0,
-    "win_rate_decay_pct": 0.0,
-    "total_observed_friction_usd": 0.0,
+    "win_rate_decay_pct": -100.0,
+    "total_observed_friction_usd": 1.41,
     "alerts": [
-      "NO_FORWARD_TRADES_AVAILABLE"
+      "SUBSTANTIAL_ALPHA_DECAY: Forward expectancy decay is -296.8% (threshold -30.0%)"
     ]
   },
   "recent_gaps": [

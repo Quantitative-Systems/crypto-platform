@@ -1,7 +1,7 @@
 {
   "platform": "Quantitative Crypto Platform (QCP)",
   "audit_name": "ALPHA_INDEPENDENCE_MATRIX",
-  "generated_utc": "2026-09-16T05:17:39.153287+00:00",
+  "generated_utc": "2026-09-16T11:53:31.505668+00:00",
   "baseline_candidate": "FAM-07-MTFCONT_SOLUSDT_Set2",
   "sample_period": {
     "start": "2021-01-01",

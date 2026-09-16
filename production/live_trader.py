@@ -1,4 +1,110 @@
 """
+Production - Live Trading Engine.
+
+Master 24/7/365 Production Trading Engine.
+Coordinates market intelligence, regime gating, strategy lifecycle,
+risk firewall, portfolio allocation, live execution, and persistence.
+"""
+from __future__ import annotations
+
+import time
+from datetime import datetime, timezone
+from typing import Any, Dict, List, Optional
+
+from production.persistence.state_store import StateStore
+from production.reconciliation.eod_reconciler import EODReconciler, ReconciliationReport
+from production.telemetry.alert_manager import AlertManager
+
+
+class LiveTradingEngine:
+    def __init__(self, initial_balance: float = 10000.0, enable_paper_mode: bool = True,
+                 state_db_path: str = "production_state.db", capital_locked: bool = True):
+        self.initial_balance = initial_balance
+        self.paper_mode = enable_paper_mode
+        self.capital_locked = capital_locked
+        self.state_store = StateStore(db_path=state_db_path)
+        self.alert_manager = AlertManager(enable_console=True)
+        self.nav = initial_balance
+        self.peak_nav = initial_balance
+        self.active_positions: Dict[str, Dict[str, Any]] = {}
+        self.orders: List[Dict[str, Any]] = []
+        self._running = False
+
+    def is_live(self) -> bool:
+        return not self.paper_mode and not self.capital_locked
+
+    def submit_order(self, symbol: str, side: str, quantity: float, entry_price: float,
+                     stop_loss: float, take_profit: float, alpha_id: str = "UNKNOWN",
+                     strategy_id: str = "UNKNOWN") -> Dict[str, Any]:
+        risk_usd = abs(entry_price - stop_loss) * quantity
+        order = {
+            "order_id": f"QCP-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}-{len(self.orders):04d}",
+            "symbol": symbol, "side": side, "quantity": quantity,
+            "entry_price": entry_price, "stop_loss": stop_loss, "take_profit": take_profit,
+            "risk_usd": round(risk_usd, 2), "alpha_id": alpha_id, "strategy_id": strategy_id,
+            "status": "REJECTED" if self.capital_locked else ("PENDING" if self.paper_mode else "SUBMITTED"),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        }
+        self.orders.append(order)
+        self.alert_manager.add(
+            "INFO" if not self.capital_locked else "WARNING",
+            f"ORDER_{order['status']}",
+            f"{order['order_id']}: {side} {quantity} {symbol} @ {entry_price} (Risk: ${risk_usd:.2f})",
+            {"order_id": order["order_id"], "sl": stop_loss, "tp": take_profit},
+        )
+        return order
+
+    def update_position(self, symbol: str, current_price: float) -> None:
+        if symbol in self.active_positions:
+            pos = self.active_positions[symbol]
+            pos["current_price"] = current_price
+            pos["unrealized_pnl"] = (current_price - pos["entry_price"]) * pos["quantity"] * (1 if pos["side"] == "LONG" else -1)
+
+    def close_position(self, symbol: str, exit_price: float) -> Optional[Dict[str, Any]]:
+        if symbol not in self.active_positions:
+            return None
+        pos = self.active_positions.pop(symbol)
+        realized_pnl = (exit_price - pos["entry_price"]) * pos["quantity"] * (1 if pos["side"] == "LONG" else -1)
+        self.nav += realized_pnl
+        if self.nav > self.peak_nav:
+            self.peak_nav = self.nav
+        self.alert_manager.add("INFO", f"POSITION_CLOSED: {symbol}", f"Realized P&L: ${realized_pnl:.2f}",
+                               {"symbol": symbol, "realized_pnl": round(realized_pnl, 2)})
+        return {"symbol": symbol, "realized_pnl": round(realized_pnl, 2), "exit_price": exit_price}
+
+    def run_eod_reconciliation(self, exchange_balance: float) -> ReconciliationReport:
+        report = EODReconciler.audit(
+            internal_nav=self.nav, exchange_balance=exchange_balance,
+            active_positions=self.active_positions, exchange_positions={},
+            max_tolerable_discrepancy_usd=1.00,
+        )
+        if not report.is_clean:
+            self.alert_manager.add("WARNING", "EOD_RECONCILIATION_DISCREPANCY",
+                                   f"Ledger discrepancy: ${report.discrepancy_usd:.2f}",
+                                   {"mismatches": report.position_mismatches})
+        else:
+            self.alert_manager.add("INFO", "EOD_RECONCILIATION_PASSED",
+                                   f"Reconciliation verified. NAV: ${report.internal_nav:.2f}")
+        return report
+
+    def persist_state(self) -> None:
+        state_data = {
+            "nav": self.nav, "peak_nav": self.peak_nav,
+            "drawdown_pct": ((self.peak_nav - self.nav) / self.peak_nav * 100) if self.peak_nav > 0 else 0,
+            "active_positions": self.active_positions, "timestamp_utc": int(time.time()),
+        }
+        self.state_store.save_state("portfolio_state", state_data)
+
+    def get_status(self) -> Dict[str, Any]:
+        return {
+            "mode": "LIVE" if self.is_live() else ("PAPER" if self.paper_mode else "LOCKED"),
+            "nav": round(self.nav, 2), "peak_nav": round(self.peak_nav, 2),
+            "drawdown_pct": round(((self.peak_nav - self.nav) / self.peak_nav * 100) if self.peak_nav > 0 else 0, 2),
+            "active_positions": len(self.active_positions), "total_orders": len(self.orders),
+            "capital_locked": self.capital_locked, "paper_mode": self.paper_mode,
+        }
+
+"""
 Product 07 — Production Service & Reliability
 LiveTradingEngine: Master 24/7/365 Production Trading Engine.
 Coordinates P01 Market Intelligence, Alpha Regime Gating, P02 Strategy Lifecycle,

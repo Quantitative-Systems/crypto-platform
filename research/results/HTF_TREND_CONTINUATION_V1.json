@@ -1,8 +1,8 @@
 {
   "hypothesis_id": "HTF_TREND_CONTINUATION_V1",
   "parent_id": "NONE",
-  "code_commit": "6858bd9b1f114ec9e2909424f045566a7f744617",
-  "evaluation_timestamp_utc": "2026-09-16T05:58:10.066670+00:00",
+  "code_commit": "786c69e85d89057f4c0bbfe141737c924fa0c18e",
+  "evaluation_timestamp_utc": "2026-09-16T11:55:21.798692+00:00",
   "partition": "Development (2021-01-01 to 2022-12-31)",
   "dataset_hashes": {
     "btc_1d": "804cea4165e59a4fcd9e76a0502c16aa3fb35720733a5b577daa0d9659772e9c",

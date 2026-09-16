@@ -1,7 +1,7 @@
 {
   "platform": "Quantitative Crypto Platform (QCP)",
   "audit_name": "MULTI_ALPHA_PORTFOLIO_ALLOCATION_AUDIT",
-  "generated_utc": "2026-09-16T05:18:34.608841+00:00",
+  "generated_utc": "2026-09-16T11:53:21.399005+00:00",
   "allocator_invariants": {
     "max_single_strategy_risk_ceiling_pct": 1.5,
     "max_single_asset_risk_ceiling_pct": 1.5,
