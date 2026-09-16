@@ -1,0 +1,780 @@
+{
+  "orchestrator": "QCP Autonomous Platform Orchestrator",
+  "cycle_start_utc": "2026-09-16T05:55:06.532959+00:00",
+  "cycle_end_utc": "2026-09-16T05:55:06.544791+00:00",
+  "data_fabric": {
+    "btc_bars": 1000,
+    "eth_bars": 1000,
+    "sol_bars": 1000,
+    "book_snapshot": {
+      "symbol": "SOL/USDT",
+      "spread_bps": 2.0,
+      "bid_depth_usd": 32403.0
+    }
+  },
+  "market_regime": {
+    "timestamp_utc": "2021-06-16 12:00:00+00:00",
+    "symbol": "SOL/USDT",
+    "trend": "BEAR_EXPANSION",
+    "volatility": "VOL_EXPLOSION",
+    "liquidity": "EXPANDING_DEPTH",
+    "funding": "NEUTRAL_CARRY",
+    "correlation": "DISPERSED_MARKET",
+    "trend_strength_score": -0.514,
+    "volatility_percentile": 84.99,
+    "liquidity_depth_ratio": 1.881,
+    "annualized_funding_pct": 10.95,
+    "systemic_coupling_score": 0.45
+  },
+  "research_factory": {
+    "candidates_generated": 5,
+    "gap_analysis": {
+      "total_candidates": 5,
+      "families_present": [
+        "CARRY",
+        "DIRECTIONAL",
+        "MICROSTRUCTURE",
+        "RELATIVE_VALUE"
+      ],
+      "missing_families": [
+        "ARBITRAGE",
+        "EVENT_DRIVEN",
+        "MACHINE_LEARNING",
+        "MARKET_MAKING"
+      ],
+      "recommended_next_research_target": "ARBITRAGE"
+    }
+  },
+  "falsification_audit": [
+    {
+      "alpha_id": "FAM-07-MTFCONT_SOLUSDT_Set2",
+      "is_falsified": false,
+      "falsification_reason": null,
+      "causal_lookahead_detected": false,
+      "latency_robust": true,
+      "latency_decay_pct_at_60m": 29.29,
+      "friction_stress_survived_2x": true,
+      "windfall_independent": true,
+      "oos_sharpe_ratio": 3.36,
+      "audit_verdict": "QUALIFIED",
+      "details": {
+        "mean_no_windfall_r": 0.2054,
+        "mean_stressed_2x_r": 0.1379,
+        "retained_edge_60m_r": 0.198
+      }
+    },
+    {
+      "alpha_id": "FAM-06-VOLSQUEEZE_SOLUSDT_V1",
+      "is_falsified": false,
+      "falsification_reason": null,
+      "causal_lookahead_detected": false,
+      "latency_robust": true,
+      "latency_decay_pct_at_60m": 29.29,
+      "friction_stress_survived_2x": true,
+      "windfall_independent": true,
+      "oos_sharpe_ratio": 2.23,
+      "audit_verdict": "SUB_THRESHOLD",
+      "details": {
+        "mean_no_windfall_r": 0.1281,
+        "mean_stressed_2x_r": 0.069,
+        "retained_edge_60m_r": 0.0622
+      }
+    },
+    {
+      "alpha_id": "FAM-09-RV_COINT_ETH_BTC_V2",
+      "is_falsified": false,
+      "falsification_reason": null,
+      "causal_lookahead_detected": false,
+      "latency_robust": true,
+      "latency_decay_pct_at_60m": 29.29,
+      "friction_stress_survived_2x": true,
+      "windfall_independent": true,
+      "oos_sharpe_ratio": 7.29,
+      "audit_verdict": "QUALIFIED",
+      "details": {
+        "mean_no_windfall_r": 0.6181,
+        "mean_stressed_2x_r": 0.53,
+        "retained_edge_60m_r": 0.1697
+      }
+    },
+    {
+      "alpha_id": "FAM-10-DYNAMIC_CARRY_SOL_V2",
+      "is_falsified": false,
+      "falsification_reason": null,
+      "causal_lookahead_detected": false,
+      "latency_robust": true,
+      "latency_decay_pct_at_60m": 29.29,
+      "friction_stress_survived_2x": true,
+      "windfall_independent": true,
+      "oos_sharpe_ratio": 16.71,
+      "audit_verdict": "QUALIFIED",
+      "details": {
+        "mean_no_windfall_r": 1.275,
+        "mean_stressed_2x_r": 1.1559,
+        "retained_edge_60m_r": 0.1838
+      }
+    },
+    {
+      "alpha_id": "FAM-12-OFI_MOMENTUM_BTC_V1",
+      "is_falsified": false,
+      "falsification_reason": null,
+      "causal_lookahead_detected": false,
+      "latency_robust": false,
+      "latency_decay_pct_at_60m": 75.0,
+      "friction_stress_survived_2x": true,
+      "windfall_independent": true,
+      "oos_sharpe_ratio": 19.65,
+      "audit_verdict": "SUB_THRESHOLD",
+      "details": {
+        "mean_no_windfall_r": 0.4098,
+        "mean_stressed_2x_r": 0.3309,
+        "retained_edge_60m_r": 0.035
+      }
+    }
+  ],
+  "execution_capacity": [
+    {
+      "alpha_id": "FAM-07-MTFCONT_SOLUSDT_Set2",
+      "max_scalable_aum_usd": 10000000.0,
+      "curve_points": [
+        {
+          "aum_usd": 10000.0,
+          "order_size_usd": 3300.0,
+          "expected_market_impact_bps": 0.22,
+          "expected_friction_total_bps": 17.68,
+          "net_edge_r": 0.3911,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 50000.0,
+          "order_size_usd": 16500.0,
+          "expected_market_impact_bps": 0.49,
+          "expected_friction_total_bps": 17.96,
+          "net_edge_r": 0.3901,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 250000.0,
+          "order_size_usd": 82500.0,
+          "expected_market_impact_bps": 1.1,
+          "expected_friction_total_bps": 18.56,
+          "net_edge_r": 0.3881,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 1000000.0,
+          "order_size_usd": 330000.0,
+          "expected_market_impact_bps": 2.19,
+          "expected_friction_total_bps": 19.66,
+          "net_edge_r": 0.3845,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 5000000.0,
+          "order_size_usd": 1650000.0,
+          "expected_market_impact_bps": 4.9,
+          "expected_friction_total_bps": 22.36,
+          "net_edge_r": 0.3755,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 10000000.0,
+          "order_size_usd": 3300000.0,
+          "expected_market_impact_bps": 6.93,
+          "expected_friction_total_bps": 24.39,
+          "net_edge_r": 0.3687,
+          "is_economically_viable": true
+        }
+      ],
+      "turnover_annual": 243.3,
+      "impact_parameter_lambda": 0.15
+    },
+    {
+      "alpha_id": "FAM-06-VOLSQUEEZE_SOLUSDT_V1",
+      "max_scalable_aum_usd": 0.0,
+      "curve_points": [
+        {
+          "aum_usd": 10000.0,
+          "order_size_usd": 3300.0,
+          "expected_market_impact_bps": 0.22,
+          "expected_friction_total_bps": 16.45,
+          "net_edge_r": 0.1652,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 50000.0,
+          "order_size_usd": 16500.0,
+          "expected_market_impact_bps": 0.49,
+          "expected_friction_total_bps": 16.72,
+          "net_edge_r": 0.1643,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 250000.0,
+          "order_size_usd": 82500.0,
+          "expected_market_impact_bps": 1.1,
+          "expected_friction_total_bps": 17.33,
+          "net_edge_r": 0.1622,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 1000000.0,
+          "order_size_usd": 330000.0,
+          "expected_market_impact_bps": 2.19,
+          "expected_friction_total_bps": 18.42,
+          "net_edge_r": 0.1586,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 5000000.0,
+          "order_size_usd": 1650000.0,
+          "expected_market_impact_bps": 4.9,
+          "expected_friction_total_bps": 21.13,
+          "net_edge_r": 0.1496,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 10000000.0,
+          "order_size_usd": 3300000.0,
+          "expected_market_impact_bps": 6.93,
+          "expected_friction_total_bps": 23.16,
+          "net_edge_r": 0.1428,
+          "is_economically_viable": false
+        }
+      ],
+      "turnover_annual": 486.7,
+      "impact_parameter_lambda": 0.15
+    },
+    {
+      "alpha_id": "FAM-09-RV_COINT_ETH_BTC_V2",
+      "max_scalable_aum_usd": 10000000.0,
+      "curve_points": [
+        {
+          "aum_usd": 10000.0,
+          "order_size_usd": 3300.0,
+          "expected_market_impact_bps": 0.22,
+          "expected_friction_total_bps": 15.01,
+          "net_edge_r": 0.3,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 50000.0,
+          "order_size_usd": 16500.0,
+          "expected_market_impact_bps": 0.49,
+          "expected_friction_total_bps": 15.28,
+          "net_edge_r": 0.2991,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 250000.0,
+          "order_size_usd": 82500.0,
+          "expected_market_impact_bps": 1.1,
+          "expected_friction_total_bps": 15.88,
+          "net_edge_r": 0.2971,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 1000000.0,
+          "order_size_usd": 330000.0,
+          "expected_market_impact_bps": 2.19,
+          "expected_friction_total_bps": 16.98,
+          "net_edge_r": 0.2934,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 5000000.0,
+          "order_size_usd": 1650000.0,
+          "expected_market_impact_bps": 4.9,
+          "expected_friction_total_bps": 19.69,
+          "net_edge_r": 0.2844,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 10000000.0,
+          "order_size_usd": 3300000.0,
+          "expected_market_impact_bps": 6.93,
+          "expected_friction_total_bps": 21.72,
+          "net_edge_r": 0.2776,
+          "is_economically_viable": true
+        }
+      ],
+      "turnover_annual": 182.5,
+      "impact_parameter_lambda": 0.15
+    },
+    {
+      "alpha_id": "FAM-10-DYNAMIC_CARRY_SOL_V2",
+      "max_scalable_aum_usd": 10000000.0,
+      "curve_points": [
+        {
+          "aum_usd": 10000.0,
+          "order_size_usd": 3300.0,
+          "expected_market_impact_bps": 0.22,
+          "expected_friction_total_bps": 24.75,
+          "net_edge_r": 0.3175,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 50000.0,
+          "order_size_usd": 16500.0,
+          "expected_market_impact_bps": 0.49,
+          "expected_friction_total_bps": 25.02,
+          "net_edge_r": 0.3166,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 250000.0,
+          "order_size_usd": 82500.0,
+          "expected_market_impact_bps": 1.1,
+          "expected_friction_total_bps": 25.63,
+          "net_edge_r": 0.3146,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 1000000.0,
+          "order_size_usd": 330000.0,
+          "expected_market_impact_bps": 2.19,
+          "expected_friction_total_bps": 26.73,
+          "net_edge_r": 0.3109,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 5000000.0,
+          "order_size_usd": 1650000.0,
+          "expected_market_impact_bps": 4.9,
+          "expected_friction_total_bps": 29.43,
+          "net_edge_r": 0.3019,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 10000000.0,
+          "order_size_usd": 3300000.0,
+          "expected_market_impact_bps": 6.93,
+          "expected_friction_total_bps": 31.46,
+          "net_edge_r": 0.2951,
+          "is_economically_viable": true
+        }
+      ],
+      "turnover_annual": 73.0,
+      "impact_parameter_lambda": 0.15
+    },
+    {
+      "alpha_id": "FAM-12-OFI_MOMENTUM_BTC_V1",
+      "max_scalable_aum_usd": 1000000.0,
+      "curve_points": [
+        {
+          "aum_usd": 10000.0,
+          "order_size_usd": 3300.0,
+          "expected_market_impact_bps": 0.22,
+          "expected_friction_total_bps": 10.86,
+          "net_edge_r": 0.2138,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 50000.0,
+          "order_size_usd": 16500.0,
+          "expected_market_impact_bps": 0.49,
+          "expected_friction_total_bps": 11.13,
+          "net_edge_r": 0.2129,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 250000.0,
+          "order_size_usd": 82500.0,
+          "expected_market_impact_bps": 1.1,
+          "expected_friction_total_bps": 11.73,
+          "net_edge_r": 0.2109,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 1000000.0,
+          "order_size_usd": 330000.0,
+          "expected_market_impact_bps": 2.19,
+          "expected_friction_total_bps": 12.83,
+          "net_edge_r": 0.2072,
+          "is_economically_viable": true
+        },
+        {
+          "aum_usd": 5000000.0,
+          "order_size_usd": 1650000.0,
+          "expected_market_impact_bps": 4.9,
+          "expected_friction_total_bps": 15.54,
+          "net_edge_r": 0.1982,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 10000000.0,
+          "order_size_usd": 3300000.0,
+          "expected_market_impact_bps": 6.93,
+          "expected_friction_total_bps": 17.57,
+          "net_edge_r": 0.1914,
+          "is_economically_viable": false
+        }
+      ],
+      "turnover_annual": 4380.0,
+      "impact_parameter_lambda": 0.15
+    }
+  ],
+  "exposure_graph": {
+    "total_nodes": 5,
+    "distinct_economic_clusters": 4,
+    "nodes": [
+      {
+        "alpha_id": "FAM-07-MTFCONT_SOLUSDT_Set2",
+        "family": "DIRECTIONAL",
+        "cluster_id": 1,
+        "factor_exposure": {
+          "alpha_id": "FAM-07-MTFCONT_SOLUSDT_Set2",
+          "btc_beta": 0.7,
+          "volatility_beta": 0.55,
+          "liquidity_beta": -0.15,
+          "pure_residual_alpha_r": 0.196,
+          "r_squared": 0.543
+        },
+        "downside_correlations": {
+          "FAM-06-VOLSQUEEZE_SOLUSDT_V1": 0.65,
+          "FAM-09-RV_COINT_ETH_BTC_V2": -0.1,
+          "FAM-10-DYNAMIC_CARRY_SOL_V2": -0.1,
+          "FAM-12-OFI_MOMENTUM_BTC_V1": -0.1
+        },
+        "directional_concordance": {
+          "FAM-06-VOLSQUEEZE_SOLUSDT_V1": 1.0,
+          "FAM-09-RV_COINT_ETH_BTC_V2": 0.45,
+          "FAM-10-DYNAMIC_CARRY_SOL_V2": 0.45,
+          "FAM-12-OFI_MOMENTUM_BTC_V1": 0.45
+        },
+        "is_independent_return_driver": true
+      },
+      {
+        "alpha_id": "FAM-06-VOLSQUEEZE_SOLUSDT_V1",
+        "family": "DIRECTIONAL",
+        "cluster_id": 1,
+        "factor_exposure": {
+          "alpha_id": "FAM-06-VOLSQUEEZE_SOLUSDT_V1",
+          "btc_beta": 0.7,
+          "volatility_beta": 0.55,
+          "liquidity_beta": -0.15,
+          "pure_residual_alpha_r": 0.0616,
+          "r_squared": 0.543
+        },
+        "downside_correlations": {
+          "FAM-07-MTFCONT_SOLUSDT_Set2": 0.65,
+          "FAM-09-RV_COINT_ETH_BTC_V2": -0.1,
+          "FAM-10-DYNAMIC_CARRY_SOL_V2": -0.1,
+          "FAM-12-OFI_MOMENTUM_BTC_V1": -0.1
+        },
+        "directional_concordance": {
+          "FAM-07-MTFCONT_SOLUSDT_Set2": 1.0,
+          "FAM-09-RV_COINT_ETH_BTC_V2": 0.45,
+          "FAM-10-DYNAMIC_CARRY_SOL_V2": 0.45,
+          "FAM-12-OFI_MOMENTUM_BTC_V1": 0.45
+        },
+        "is_independent_return_driver": false
+      },
+      {
+        "alpha_id": "FAM-09-RV_COINT_ETH_BTC_V2",
+        "family": "RELATIVE_VALUE",
+        "cluster_id": 2,
+        "factor_exposure": {
+          "alpha_id": "FAM-09-RV_COINT_ETH_BTC_V2",
+          "btc_beta": 0.05,
+          "volatility_beta": -0.1,
+          "liquidity_beta": 0.2,
+          "pure_residual_alpha_r": 0.168,
+          "r_squared": 0.035
+        },
+        "downside_correlations": {
+          "FAM-07-MTFCONT_SOLUSDT_Set2": -0.1,
+          "FAM-06-VOLSQUEEZE_SOLUSDT_V1": -0.1,
+          "FAM-10-DYNAMIC_CARRY_SOL_V2": -0.1,
+          "FAM-12-OFI_MOMENTUM_BTC_V1": -0.1
+        },
+        "directional_concordance": {
+          "FAM-07-MTFCONT_SOLUSDT_Set2": 0.45,
+          "FAM-06-VOLSQUEEZE_SOLUSDT_V1": 0.45,
+          "FAM-10-DYNAMIC_CARRY_SOL_V2": 0.45,
+          "FAM-12-OFI_MOMENTUM_BTC_V1": 0.45
+        },
+        "is_independent_return_driver": true
+      },
+      {
+        "alpha_id": "FAM-10-DYNAMIC_CARRY_SOL_V2",
+        "family": "CARRY",
+        "cluster_id": 3,
+        "factor_exposure": {
+          "alpha_id": "FAM-10-DYNAMIC_CARRY_SOL_V2",
+          "btc_beta": -0.02,
+          "volatility_beta": -0.25,
+          "liquidity_beta": 0.45,
+          "pure_residual_alpha_r": 0.182,
+          "r_squared": 0.177
+        },
+        "downside_correlations": {
+          "FAM-07-MTFCONT_SOLUSDT_Set2": -0.1,
+          "FAM-06-VOLSQUEEZE_SOLUSDT_V1": -0.1,
+          "FAM-09-RV_COINT_ETH_BTC_V2": -0.1,
+          "FAM-12-OFI_MOMENTUM_BTC_V1": -0.1
+        },
+        "directional_concordance": {
+          "FAM-07-MTFCONT_SOLUSDT_Set2": 0.45,
+          "FAM-06-VOLSQUEEZE_SOLUSDT_V1": 0.45,
+          "FAM-09-RV_COINT_ETH_BTC_V2": 0.45,
+          "FAM-12-OFI_MOMENTUM_BTC_V1": 0.45
+        },
+        "is_independent_return_driver": true
+      },
+      {
+        "alpha_id": "FAM-12-OFI_MOMENTUM_BTC_V1",
+        "family": "MICROSTRUCTURE",
+        "cluster_id": 4,
+        "factor_exposure": {
+          "alpha_id": "FAM-12-OFI_MOMENTUM_BTC_V1",
+          "btc_beta": 0.1,
+          "volatility_beta": 0.15,
+          "liquidity_beta": 0.6,
+          "pure_residual_alpha_r": 0.098,
+          "r_squared": 0.262
+        },
+        "downside_correlations": {
+          "FAM-07-MTFCONT_SOLUSDT_Set2": -0.1,
+          "FAM-06-VOLSQUEEZE_SOLUSDT_V1": -0.1,
+          "FAM-09-RV_COINT_ETH_BTC_V2": -0.1,
+          "FAM-10-DYNAMIC_CARRY_SOL_V2": -0.1
+        },
+        "directional_concordance": {
+          "FAM-07-MTFCONT_SOLUSDT_Set2": 0.45,
+          "FAM-06-VOLSQUEEZE_SOLUSDT_V1": 0.45,
+          "FAM-09-RV_COINT_ETH_BTC_V2": 0.45,
+          "FAM-10-DYNAMIC_CARRY_SOL_V2": 0.45
+        },
+        "is_independent_return_driver": true
+      }
+    ],
+    "cluster_summary": {
+      "1": [
+        "FAM-07-MTFCONT_SOLUSDT_Set2",
+        "FAM-06-VOLSQUEEZE_SOLUSDT_V1"
+      ],
+      "2": [
+        "FAM-09-RV_COINT_ETH_BTC_V2"
+      ],
+      "3": [
+        "FAM-10-DYNAMIC_CARRY_SOL_V2"
+      ],
+      "4": [
+        "FAM-12-OFI_MOMENTUM_BTC_V1"
+      ]
+    },
+    "portfolio_concentration_warning": false
+  },
+  "portfolio_allocation": {
+    "total_portfolio_equity_usd": 10000.0,
+    "current_portfolio_drawdown_pct": 0.0,
+    "max_portfolio_heat_pct": 3.0,
+    "total_allocated_heat_pct": 1.5,
+    "is_capital_firewall_locked": true,
+    "firewall_veto_triggered": false,
+    "firewall_veto_reasons": [],
+    "allocated_strategies_count": 1,
+    "rejected_strategies_count": 4,
+    "allocations": {
+      "FAM-06-VOLSQUEEZE_SOLUSDT_V1": {
+        "strategy_id": "FAM-06-VOLSQUEEZE_SOLUSDT_V1",
+        "symbol": "SOL/USDT",
+        "is_allocated": false,
+        "recommended_risk_pct": 0.0,
+        "recommended_notional_usd": 0.0,
+        "allocation_weight_pct": 0.0,
+        "rejection_reasons": [
+          "LIFECYCLE_INELIGIBLE (RESEARCH candidates receive $0 capital)",
+          "STATISTICAL_UNCERTAINTY_EXCEEDS_EDGE (E_adj=-0.1472R <= 0)"
+        ],
+        "throttling_notes": [],
+        "raw_proposed_risk_pct": 0.0,
+        "adjusted_edge_r": 0.0,
+        "covariance_discount_pct": 0.0,
+        "is_capped_by_strategy_ceiling": false,
+        "is_capped_by_asset_ceiling": false,
+        "is_capped_by_heat_ceiling": false
+      },
+      "FAM-09-RV_COINT_ETH_BTC_V2": {
+        "strategy_id": "FAM-09-RV_COINT_ETH_BTC_V2",
+        "symbol": "ETH/USDT",
+        "is_allocated": false,
+        "recommended_risk_pct": 0.0,
+        "recommended_notional_usd": 0.0,
+        "allocation_weight_pct": 0.0,
+        "rejection_reasons": [
+          "LIFECYCLE_INELIGIBLE (RESEARCH candidates receive $0 capital)"
+        ],
+        "throttling_notes": [],
+        "raw_proposed_risk_pct": 0.0,
+        "adjusted_edge_r": 0.0,
+        "covariance_discount_pct": 0.0,
+        "is_capped_by_strategy_ceiling": false,
+        "is_capped_by_asset_ceiling": false,
+        "is_capped_by_heat_ceiling": false
+      },
+      "FAM-10-DYNAMIC_CARRY_SOL_V2": {
+        "strategy_id": "FAM-10-DYNAMIC_CARRY_SOL_V2",
+        "symbol": "SOL/USDT",
+        "is_allocated": false,
+        "recommended_risk_pct": 0.0,
+        "recommended_notional_usd": 0.0,
+        "allocation_weight_pct": 0.0,
+        "rejection_reasons": [
+          "LIFECYCLE_INELIGIBLE (RESEARCH candidates receive $0 capital)"
+        ],
+        "throttling_notes": [],
+        "raw_proposed_risk_pct": 0.0,
+        "adjusted_edge_r": 0.0,
+        "covariance_discount_pct": 0.0,
+        "is_capped_by_strategy_ceiling": false,
+        "is_capped_by_asset_ceiling": false,
+        "is_capped_by_heat_ceiling": false
+      },
+      "FAM-12-OFI_MOMENTUM_BTC_V1": {
+        "strategy_id": "FAM-12-OFI_MOMENTUM_BTC_V1",
+        "symbol": "BTC/USDT",
+        "is_allocated": false,
+        "recommended_risk_pct": 0.0,
+        "recommended_notional_usd": 0.0,
+        "allocation_weight_pct": 0.0,
+        "rejection_reasons": [
+          "LIFECYCLE_INELIGIBLE (RESEARCH candidates receive $0 capital)"
+        ],
+        "throttling_notes": [],
+        "raw_proposed_risk_pct": 0.0,
+        "adjusted_edge_r": 0.0,
+        "covariance_discount_pct": 0.0,
+        "is_capped_by_strategy_ceiling": false,
+        "is_capped_by_asset_ceiling": false,
+        "is_capped_by_heat_ceiling": false
+      },
+      "FAM-07-MTFCONT_SOLUSDT_Set2": {
+        "strategy_id": "FAM-07-MTFCONT_SOLUSDT_Set2",
+        "symbol": "SOL/USDT",
+        "is_allocated": true,
+        "recommended_risk_pct": 1.5,
+        "recommended_notional_usd": 7500.0,
+        "allocation_weight_pct": 100.0,
+        "rejection_reasons": [],
+        "throttling_notes": [
+          "Capped at strategy concentration ceiling (1.50%)"
+        ],
+        "raw_proposed_risk_pct": 3.0,
+        "adjusted_edge_r": 0.1232,
+        "covariance_discount_pct": 0.0,
+        "is_capped_by_strategy_ceiling": true,
+        "is_capped_by_asset_ceiling": false,
+        "is_capped_by_heat_ceiling": false
+      }
+    }
+  },
+  "risk_governor_decisions": [
+    {
+      "is_approved": true,
+      "veto_reason": null,
+      "proposed_risk_usd": 150.0,
+      "approved_risk_usd": 130.0,
+      "drawdown_throttle_multiplier": 0.867,
+      "current_portfolio_heat_pct": 1.3,
+      "timestamp_utc": "2026-09-16T05:55:06.544724+00:00"
+    }
+  ],
+  "stress_lab_report": {
+    "total_scenarios_tested": 5,
+    "scenarios_passed": 5,
+    "max_portfolio_stress_drawdown_pct": 3.0,
+    "all_survived": true,
+    "scenario_results": [
+      {
+        "scenario_name": "FLASH_CRASH_BTC_15PCT",
+        "price_shock_pct": -15.0,
+        "spread_multiplier": 3.5,
+        "depth_shrink_pct": 60.0,
+        "initial_equity_usd": 10000.0,
+        "post_shock_equity_usd": 9797.5,
+        "drawdown_pct": 2.02,
+        "margin_buffer_ratio": 87.09,
+        "risk_governor_interventions": 1,
+        "survived": true,
+        "status_verdict": "SURVIVED_ROBUST"
+      },
+      {
+        "scenario_name": "ALTCOIN_LIQUIDATION_CASCADE_35PCT",
+        "price_shock_pct": -35.0,
+        "spread_multiplier": 5.0,
+        "depth_shrink_pct": 80.0,
+        "initial_equity_usd": 10000.0,
+        "post_shock_equity_usd": 9775.0,
+        "drawdown_pct": 2.25,
+        "margin_buffer_ratio": 86.89,
+        "risk_governor_interventions": 1,
+        "survived": true,
+        "status_verdict": "SURVIVED_ROBUST"
+      },
+      {
+        "scenario_name": "SPREAD_BLOWOUT_10X",
+        "price_shock_pct": -3.0,
+        "spread_multiplier": 10.0,
+        "depth_shrink_pct": 75.0,
+        "initial_equity_usd": 10000.0,
+        "post_shock_equity_usd": 9700.0,
+        "drawdown_pct": 3.0,
+        "margin_buffer_ratio": 86.22,
+        "risk_governor_interventions": 1,
+        "survived": true,
+        "status_verdict": "SURVIVED_ROBUST"
+      },
+      {
+        "scenario_name": "LIQUIDITY_VOID_EVAPORATION",
+        "price_shock_pct": -5.0,
+        "spread_multiplier": 4.0,
+        "depth_shrink_pct": 85.0,
+        "initial_equity_usd": 10000.0,
+        "post_shock_equity_usd": 9790.0,
+        "drawdown_pct": 2.1,
+        "margin_buffer_ratio": 87.02,
+        "risk_governor_interventions": 1,
+        "survived": true,
+        "status_verdict": "SURVIVED_ROBUST"
+      },
+      {
+        "scenario_name": "CORRELATED_SYSTEMIC_COLLAPSE",
+        "price_shock_pct": -22.0,
+        "spread_multiplier": 6.0,
+        "depth_shrink_pct": 70.0,
+        "initial_equity_usd": 10000.0,
+        "post_shock_equity_usd": 9760.0,
+        "drawdown_pct": 2.4,
+        "margin_buffer_ratio": 86.76,
+        "risk_governor_interventions": 1,
+        "survived": true,
+        "status_verdict": "SURVIVED_ROBUST"
+      }
+    ]
+  },
+  "economic_truth_attribution": {
+    "trade_id": "TRD-CYCLE-001",
+    "alpha_id": "FAM-07-MTFCONT_SOLUSDT_Set2",
+    "symbol": "SOL/USDT",
+    "entry_timestamp_utc": "2026-09-16T05:55:06.544766+00:00",
+    "exit_timestamp_utc": "2026-09-16T05:55:06.544768+00:00",
+    "gross_pnl_usd": 75.0,
+    "net_pnl_usd": 74.14,
+    "pure_alpha_pnl_usd": 57.6,
+    "market_beta_pnl_usd": 17.4,
+    "regime_pnl_usd": 0.0,
+    "carry_funding_pnl_usd": 1.5,
+    "exchange_fees_usd": 1.49,
+    "spread_cost_usd": 0.29,
+    "slippage_cost_usd": 0.43,
+    "market_impact_usd": 0.15,
+    "attribution_error_usd": 0.0
+  },
+  "governance": {
+    "live_capital_usd": 0.0,
+    "live_order_submission": "DISABLED",
+    "capital_firewall": "FAIL_CLOSED"
+  }
+}

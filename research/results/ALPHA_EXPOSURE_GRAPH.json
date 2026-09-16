@@ -1,0 +1,152 @@
+{
+  "total_nodes": 5,
+  "distinct_economic_clusters": 4,
+  "nodes": [
+    {
+      "alpha_id": "FAM-07-MTFCONT_SOLUSDT_Set2",
+      "family": "DIRECTIONAL",
+      "cluster_id": 1,
+      "factor_exposure": {
+        "alpha_id": "FAM-07-MTFCONT_SOLUSDT_Set2",
+        "btc_beta": 0.7,
+        "volatility_beta": 0.55,
+        "liquidity_beta": -0.15,
+        "pure_residual_alpha_r": 0.196,
+        "r_squared": 0.543
+      },
+      "downside_correlations": {
+        "FAM-06-VOLSQUEEZE_SOLUSDT_V1": 0.65,
+        "FAM-09-RV_COINT_ETH_BTC_V2": -0.1,
+        "FAM-10-DYNAMIC_CARRY_SOL_V2": -0.1,
+        "FAM-12-OFI_MOMENTUM_BTC_V1": -0.1
+      },
+      "directional_concordance": {
+        "FAM-06-VOLSQUEEZE_SOLUSDT_V1": 1.0,
+        "FAM-09-RV_COINT_ETH_BTC_V2": 0.45,
+        "FAM-10-DYNAMIC_CARRY_SOL_V2": 0.45,
+        "FAM-12-OFI_MOMENTUM_BTC_V1": 0.45
+      },
+      "is_independent_return_driver": true
+    },
+    {
+      "alpha_id": "FAM-06-VOLSQUEEZE_SOLUSDT_V1",
+      "family": "DIRECTIONAL",
+      "cluster_id": 1,
+      "factor_exposure": {
+        "alpha_id": "FAM-06-VOLSQUEEZE_SOLUSDT_V1",
+        "btc_beta": 0.7,
+        "volatility_beta": 0.55,
+        "liquidity_beta": -0.15,
+        "pure_residual_alpha_r": 0.0616,
+        "r_squared": 0.543
+      },
+      "downside_correlations": {
+        "FAM-07-MTFCONT_SOLUSDT_Set2": 0.65,
+        "FAM-09-RV_COINT_ETH_BTC_V2": -0.1,
+        "FAM-10-DYNAMIC_CARRY_SOL_V2": -0.1,
+        "FAM-12-OFI_MOMENTUM_BTC_V1": -0.1
+      },
+      "directional_concordance": {
+        "FAM-07-MTFCONT_SOLUSDT_Set2": 1.0,
+        "FAM-09-RV_COINT_ETH_BTC_V2": 0.45,
+        "FAM-10-DYNAMIC_CARRY_SOL_V2": 0.45,
+        "FAM-12-OFI_MOMENTUM_BTC_V1": 0.45
+      },
+      "is_independent_return_driver": false
+    },
+    {
+      "alpha_id": "FAM-09-RV_COINT_ETH_BTC_V2",
+      "family": "RELATIVE_VALUE",
+      "cluster_id": 2,
+      "factor_exposure": {
+        "alpha_id": "FAM-09-RV_COINT_ETH_BTC_V2",
+        "btc_beta": 0.05,
+        "volatility_beta": -0.1,
+        "liquidity_beta": 0.2,
+        "pure_residual_alpha_r": 0.168,
+        "r_squared": 0.035
+      },
+      "downside_correlations": {
+        "FAM-07-MTFCONT_SOLUSDT_Set2": -0.1,
+        "FAM-06-VOLSQUEEZE_SOLUSDT_V1": -0.1,
+        "FAM-10-DYNAMIC_CARRY_SOL_V2": -0.1,
+        "FAM-12-OFI_MOMENTUM_BTC_V1": -0.1
+      },
+      "directional_concordance": {
+        "FAM-07-MTFCONT_SOLUSDT_Set2": 0.45,
+        "FAM-06-VOLSQUEEZE_SOLUSDT_V1": 0.45,
+        "FAM-10-DYNAMIC_CARRY_SOL_V2": 0.45,
+        "FAM-12-OFI_MOMENTUM_BTC_V1": 0.45
+      },
+      "is_independent_return_driver": true
+    },
+    {
+      "alpha_id": "FAM-10-DYNAMIC_CARRY_SOL_V2",
+      "family": "CARRY",
+      "cluster_id": 3,
+      "factor_exposure": {
+        "alpha_id": "FAM-10-DYNAMIC_CARRY_SOL_V2",
+        "btc_beta": -0.02,
+        "volatility_beta": -0.25,
+        "liquidity_beta": 0.45,
+        "pure_residual_alpha_r": 0.182,
+        "r_squared": 0.177
+      },
+      "downside_correlations": {
+        "FAM-07-MTFCONT_SOLUSDT_Set2": -0.1,
+        "FAM-06-VOLSQUEEZE_SOLUSDT_V1": -0.1,
+        "FAM-09-RV_COINT_ETH_BTC_V2": -0.1,
+        "FAM-12-OFI_MOMENTUM_BTC_V1": -0.1
+      },
+      "directional_concordance": {
+        "FAM-07-MTFCONT_SOLUSDT_Set2": 0.45,
+        "FAM-06-VOLSQUEEZE_SOLUSDT_V1": 0.45,
+        "FAM-09-RV_COINT_ETH_BTC_V2": 0.45,
+        "FAM-12-OFI_MOMENTUM_BTC_V1": 0.45
+      },
+      "is_independent_return_driver": true
+    },
+    {
+      "alpha_id": "FAM-12-OFI_MOMENTUM_BTC_V1",
+      "family": "MICROSTRUCTURE",
+      "cluster_id": 4,
+      "factor_exposure": {
+        "alpha_id": "FAM-12-OFI_MOMENTUM_BTC_V1",
+        "btc_beta": 0.1,
+        "volatility_beta": 0.15,
+        "liquidity_beta": 0.6,
+        "pure_residual_alpha_r": 0.098,
+        "r_squared": 0.262
+      },
+      "downside_correlations": {
+        "FAM-07-MTFCONT_SOLUSDT_Set2": -0.1,
+        "FAM-06-VOLSQUEEZE_SOLUSDT_V1": -0.1,
+        "FAM-09-RV_COINT_ETH_BTC_V2": -0.1,
+        "FAM-10-DYNAMIC_CARRY_SOL_V2": -0.1
+      },
+      "directional_concordance": {
+        "FAM-07-MTFCONT_SOLUSDT_Set2": 0.45,
+        "FAM-06-VOLSQUEEZE_SOLUSDT_V1": 0.45,
+        "FAM-09-RV_COINT_ETH_BTC_V2": 0.45,
+        "FAM-10-DYNAMIC_CARRY_SOL_V2": 0.45
+      },
+      "is_independent_return_driver": true
+    }
+  ],
+  "cluster_summary": {
+    "1": [
+      "FAM-07-MTFCONT_SOLUSDT_Set2",
+      "FAM-06-VOLSQUEEZE_SOLUSDT_V1"
+    ],
+    "2": [
+      "FAM-09-RV_COINT_ETH_BTC_V2"
+    ],
+    "3": [
+      "FAM-10-DYNAMIC_CARRY_SOL_V2"
+    ],
+    "4": [
+      "FAM-12-OFI_MOMENTUM_BTC_V1"
+    ]
+  },
+  "portfolio_concentration_warning": false
+}

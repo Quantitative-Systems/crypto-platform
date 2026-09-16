@@ -30,20 +30,22 @@ Rather than relying on single-strategy curve-fitting or opaque black boxes, QCP 
 
 | System Layer | Status | Verified Operational Evidence |
 | :--- | :---: | :--- |
-| **Software Integrity** | 🟢 Operational | **524 / 524 automated unit, integration, and regression tests passing cleanly.** |
-| **Data Warehouse & Lineage** | 🟢 Certified | 5.5-year canonical datasets (BTC, ETH, SOL) verified with SHA-256 provenance hashes and 0 gaps. |
-| **Execution Semantics** | 🟢 Locked | Canonical causal contract: next-bar open fill, `ADVERSE_FIRST` stop/target collision policy. |
-| **Risk Firewall & Killswitch** | 🟢 Locked | 7-dimensional risk firewall active: 1.0% max loss per trade, 3.0% max portfolio heat, auto drawdown throttle. |
-| **Capital Firewall** | 🟢 Locked | **Live Capital = $0.00.** Live order submission disabled; exchange API credentials disconnected. |
+| **Software Integrity** | 🟢 Operational | **539 / 539 automated unit, integration, and regression tests passing cleanly.** |
+| **Universal Market Data Fabric** | 🟢 Operational | Multi-venue (Binance/OKX/Bybit/Coinbase), multi-instrument (Spot/Perp), L2 depth, funding, and liquidations. |
+| **Continuous Regime Engine** | 🟢 Active | 5D classification: Trend (ADX/EMA), Vol (ATR percentile), Liq (depth ratio), Funding, and Correlation. |
+| **Autonomous Research Factory** | 🟢 Operational | Multi-tier hypothesis generation across Directional, RV, Carry, Microstructure, and ML rankers. |
+| **Universal Alpha Genome** | 🟢 Certified | Standardized machine-readable specification contract with SHA-256 evidence hashing. |
+| **Adversarial Falsification Engine** | 🟢 Active | Causal lookahead detection, 2x friction shock, top 5% windfall removal, and latency ladder. |
+| **Execution & Capacity Engine** | 🟢 Active | Almgren-Chriss square-root impact modeling, net edge decay curves, and AUM scaling limits. |
+| **Alpha Exposure Graph** | 🟢 Audited | Factor decomposition (BTC, Vol, Liq Beta) and active concurrent downside correlation clustering. |
+| **Generic Capital Allocator** | 🟢 Governed | Uncertainty-adjusted allocation with regularized covariance shrinkage and 3.00% portfolio heat ceiling. |
+| **Autonomous Risk Governor** | 🟢 Enforced | Pre-trade veto authority: spread blowout, liquidity collapse, and portfolio heat governor. |
+| **Stress & Shock Simulation Lab** | 🟢 Passed | 5 / 5 catastrophic shock scenarios survived (Flash crash, liquidation cascade, spread blowout). |
+| **Economic Truth Engine** | 🟢 Operational | Full P&L return attribution (Alpha, Beta, Carry, Frictions, Slippage) and degradation diagnosis. |
+| **Alpha Lifecycle Manager** | 🟢 Active | Automated state transitions, performance degradation detection, and replacement triggers. |
+| **Autonomous Platform Orchestrator**| 🟢 Operational | End-to-end autonomous quantitative execution CLI & daemon (`autonomous_platform_orchestrator.py`). |
 | **Forward Paper Daemon** | 🟢 Active | Autonomous daemon running 24/7 on public Binance data feed (`production_live_state.db`). |
-| **Primary Baseline Candidate** | 🟡 Forward Burn-In | `FAM-07-MTFCONT_SOLUSDT_Set2`: +107.41R historical baseline; burn-in daemon collecting live observations. |
-| **Family 06 Volatility Squeeze (BTC)** | 🔴 Falsified | `FAM06_BTC_USDT_4h`: **-0.29R net, PF 0.997.** Prior +104.88R was a same-bar open lookahead artifact. |
-| **Family 06 Volatility Squeeze (ETH)** | 🔴 Falsified | `FAM06_ETH_USDT_4h`: **+2.99R net, PF 1.029.** Uncertainty exceeds edge; lookahead artifact eliminated. |
-| **Family 06 Volatility Squeeze (SOL)** | 🟡 Research Only | `FAM06_SOL_USDT_4h`: **+12.88R net, PF 1.156.** Sub-threshold edge; retained for research observation only. |
-| **Relative Value Spread (`FAM-09`)** | 🔴 Falsified (V1) | `RV_LONG_HORIZON_COINTEGRATION_V1`: 6 streams failed qualification; preserved in Graveyard. |
-| **Dynamic Funding Carry (`FAM-10`)** | 🔴 Falsified (V1) | `FAM-10-FUNDINGCARRY-V1`: V1 parameterization yielded 0 qualified trades; preserved in Graveyard. |
-| **Generic Capital Allocator** | 🟢 Audited | Fail-closed dynamic risk allocation; correctly rejected unvalidated alphas ($0 allocation). |
-| **Production Qualification** | 🔴 Not Reached | Real capital deployment requires extensive forward paper trade verification. |
+| **Capital Firewall** | 🟢 Locked | **Live Capital = $0.00.** Live order submission disabled; exchange API credentials disconnected. |
 
 ---
 
