@@ -1,230 +1,235 @@
-# Quantitative Crypto Platform (QCP)
+# QCP — Quantitative Crypto Platform
 
-[![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
-[![Test Suite](https://img.shields.io/badge/Tests-517%20Passing-brightgreen.svg)]()
-[![Asset Universe](https://img.shields.io/badge/Assets-BTC%20%7C%20ETH%20%7C%20SOL-blue.svg)]()
-[![Temporal Partitioning](https://img.shields.io/badge/Partitions-Dev%20(2021--22)%20%7C%20Val%20(2023)%20%7C%20OOS%20(2024--26)-orange.svg)]()
-[![Risk Engine](https://img.shields.io/badge/Risk-7D%20Firewall%20%7C%203.0%25%20Max%20Heat-red.svg)]()
-[![Production Status](https://img.shields.io/badge/Capital%20Firewall-FAIL--CLOSED%20%7C%20%240.00%20LIVE-inactive.svg)]()
+[![Tests](https://img.shields.io/badge/tests-556%20passing-brightgreen)](#testing)
+[![Live Capital](https://img.shields.io/badge/live%20capital-$0.00-red)](#production-gate)
+[![Alpha Status](https://img.shields.io/badge/validated%20alpha-NONE-orange)](#alpha-discovery)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-> **An autonomous quantitative research, alpha evaluation, risk governance, and systematic capital platform for crypto markets.**
->
-> *QCP is designed to discover, validate, deploy, monitor, retire, and replace systematic quantitative trading strategies across multiple independent market mechanisms—governed by empirical evidence and fail-closed capital protection.*
+> **Scientific integrity first.** QCP exists to discover economically real, statistically defensible, executable, scalable, and independent crypto return sources — or to honestly report that none exist.
 
 ---
 
-## Executive Summary
+## Table of Contents
 
-The **Quantitative Crypto Platform (QCP)** bridges the chasm between theoretical backtested edge and executable exchange economics. 
-
-Rather than relying on single-strategy curve-fitting or opaque black boxes, QCP enforces a rigorous institutional lifecycle:
-1. **Causal Multi-Timeframe Strategy Generation:** Closed candles only, next-bar open execution, and `ADVERSE_FIRST` intrabar collision handling.
-2. **Exchange Economics First:** Explicit deduction of taker fees ($0.05\%$), bid-ask spread ($0.02\%$), dynamic slippage ($0.03\% \times 2$), margin borrow financing ($6.0\%$ APR), and execution latency.
-3. **Adversarial Falsification:** Candidates must survive $2.0\times$ friction, top 5% windfall trade removal, 1-bar execution delay, and out-of-sample chronological partitions.
-4. **Alpha Diversity & Independence:** Compares competing alpha mechanisms using pairwise daily return correlation, downside return correlation, running drawdown correlation, and intrabar exposure overlap.
-5. **Generic Capital Allocator:** Dynamic portfolio risk allocation driven by net edge, statistical uncertainty discounting (SE), regularized covariance shrinkage, and a strict $3.00\%$ portfolio heat ceiling.
-6. **Continuous Forward Paper Burn-In:** 24/7 autonomous paper daemon consuming real public exchange streams with zero live credentials and live capital locked at $\$0.00$.
-
----
-## Operational Governance Ledger
-
-| System Layer | Status | Verified Operational Evidence |
-| :--- | :---: | :--- |
-| **Software Integrity** | 🟢 Operational | **539 / 539 automated unit, integration, and regression tests passing cleanly.** |
-| **Universal Market Data Fabric** | 🟢 Operational | Multi-venue (Binance/OKX/Bybit/Coinbase), multi-instrument (Spot/Perp), L2 depth, funding, and liquidations. |
-| **Continuous Regime Engine** | 🟢 Active | 5D classification: Trend (ADX/EMA), Vol (ATR percentile), Liq (depth ratio), Funding, and Correlation. |
-| **Autonomous Research Factory** | 🟢 Operational | Multi-tier hypothesis generation across Directional, RV, Carry, Microstructure, and ML rankers. |
-| **Universal Alpha Genome** | 🟢 Certified | Standardized machine-readable specification contract with SHA-256 evidence hashing. |
-| **Adversarial Falsification Engine** | 🟢 Active | Causal lookahead detection, 2x friction shock, top 5% windfall removal, and latency ladder. |
-| **Execution & Capacity Engine** | 🟢 Active | Almgren-Chriss square-root impact modeling, net edge decay curves, and AUM scaling limits. |
-| **Alpha Exposure Graph** | 🟢 Audited | Factor decomposition (BTC, Vol, Liq Beta) and active concurrent downside correlation clustering. |
-| **Generic Capital Allocator** | 🟢 Governed | Uncertainty-adjusted allocation with regularized covariance shrinkage and 3.00% portfolio heat ceiling. |
-| **Autonomous Risk Governor** | 🟢 Enforced | Pre-trade veto authority: spread blowout, liquidity collapse, and portfolio heat governor. |
-| **Stress & Shock Simulation Lab** | 🟢 Passed | 5 / 5 catastrophic shock scenarios survived (Flash crash, liquidation cascade, spread blowout). |
-| **Economic Truth Engine** | 🟢 Operational | Full P&L return attribution (Alpha, Beta, Carry, Frictions, Slippage) and degradation diagnosis. |
-| **Alpha Lifecycle Manager** | 🟢 Active | Automated state transitions, performance degradation detection, and replacement triggers. |
-| **Autonomous Platform Orchestrator**| 🟢 Operational | End-to-end autonomous quantitative execution CLI & daemon (`autonomous_platform_orchestrator.py`). |
-| **Forward Paper Daemon** | 🟢 Active | Autonomous daemon running 24/7 on public Binance data feed (`production_live_state.db`). |
-| **Capital Firewall** | 🟢 Locked | **Live Capital = $0.00.** Live order submission disabled; exchange API credentials disconnected. |
+- [What QCP Is](#what-qcp-is)
+- [What QCP Is Not](#what-qcp-is-not)
+- [Current Status](#current-status)
+- [Architecture](#architecture)
+- [Production Gate](#production-gate)
+- [Alpha Discovery](#alpha-discovery)
+- [Repository Layout](#repository-layout)
+- [Getting Started](#getting-started)
+- [Testing](#testing)
+- [Safety Guarantees](#safety-guarantees)
+- [Governance](#governance)
+- [Contributing](#contributing)
 
 ---
 
-## The Closed Research-to-Capital Loop
+## What QCP Is
 
-QCP operates as a continuous, evidence-governed closed loop where empirical outcomes systematically inform research hypotheses without compromising calendar firewalls or curve-fitting:
+QCP is a self-auditing quantitative research and execution system for crypto markets built around four non-negotiable principles:
 
-```text
-                     ┌────────────────────────────────────────┐
-                     ▼                                        │
-             [ DATA INGESTION ]                               │
-         Timestamp & Gap Integrity                            │
-                     │                                        │
-                     ▼                                        │
-             [ RESEARCH LAB ]                                 │
-     Hypothesis & Alpha Genome Generation                     │
-                     │                                        │
-                     ▼                                        │
-         [ CAUSAL DEVELOPMENT ]                               │
-     In-Sample (2021-2022) Falsification                      │
-                     │                                        │
-                     ▼                                        │
-        [ CHRONOLOGICAL VALIDATION ]                          │
-        Validation (2023) - Frozen Rules                      │
-                     │                                        │
-                     ▼                                        │
-          [ OUT-OF-SAMPLE (OOS) ]                             │
-       OOS (2024-2026) - Blind Testing                        │
-                     │                                        │
-                     ▼                                        │
-         [ ADVERSARIAL STRESS TEST ]                          │
-      Friction 2x, Outliers, Latency Delay                    │
-                     │                                        │
-                     ▼                                        │
-       [ ALPHA INDEPENDENCE TESTING ]                         │
-    Correlation, Downside Tail, Concurrency                   │
-                     │                                        │
-                     ▼                                        │
-       [ CAPITAL ALLOCATION AUCTION ]                         │
-    Uncertainty Discount, Covariance Shrinkage                │
-                     │                                        │
-                     ▼                                        │
-          [ DETERMINISTIC RISK GATE ]                         │
-       Portfolio Heat <= 3.0%, Drawdown Halts                 │
-                     │                                        │
-                     ▼                                        │
-          [ FORWARD PAPER DAEMON ]                            │
-       Continuous Live Observation & Telemetry                │
-                     │                                        │
-                     ▼                                        │
-          [ CONTINUOUS EVOLUTION ]                            │
-       Edge Health Clock & Research Graveyard ────────────────┘
+1. **Empirical truth** — every claim is backed by independently verifiable data and code.
+2. **Adversarial falsification** — every strategy is actively attacked before it is promoted.
+3. **Causal evaluation** — backtests are partitioned into development, validation, and untouched out-of-sample windows; results are never cherry-picked.
+4. **Fail-closed safety** — when data quality is uncertain or a risk gate fires, the system stops. It does not simulate, interpolate, or manufacture.
+
+---
+
+## What QCP Is Not
+
+| ❌ What QCP Refuses To Do | ✅ What QCP Does Instead |
+|---|---|
+| Manufacture profitable backtest results | Report `NO_NEW_ECONOMIC_EDGE_VALIDATED` when none exists |
+| Simulate unavailable market data | Block live execution; require real warehouse data |
+| Treat paper trading as live validation | Maintain hard `$0.00` live capital gate |
+| Auto-approve strategies after a single pass | Require multi-partition OOS + adversarial battery |
+| Skip friction modelling | Apply maker/taker fees, bid-ask spread, execution slippage, borrow financing |
+
+---
+
+## Current Status
+
+| Dimension | State |
+|---|---|
+| **Live capital deployed** | `$0.00` — production gate not yet cleared |
+| **Validated alpha strategies** | `0` — no edge has cleared adversarial falsification |
+| **Discovery phase** | Active — empirical alpha search in progress |
+| **Test suite** | 556 / 556 passing |
+| **Data warehouse** | 24 certified datasets with SHA-256 lineage hashes |
+| **Blocked data streams** | Funding rates, L2 order books, liquidation cascades (not yet warehoused — no synthetic substitution) |
+
+> **This is honest reporting, not a limitation.** The system is working exactly as designed: it refuses to report alpha where none has been found.
+
+---
+
+## Architecture
+
+QCP is organized as a layered system of autonomous, self-auditing subsystems:
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                     AUTONOMOUS RESEARCH LOOP                        │
+│  EmpiricalAlphaDiscoveryEngine → AutonomousResearchGovernor         │
+│  CertifiedResearchUniverseEngine → OpportunityDetector              │
+└─────────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                     BACKTESTING LAYER                               │
+│  DEV window (2021-2022) → VAL window (2023) → OOS window (2024-26)  │
+│  Adversarial battery: lookahead, 2x friction, windfall, latency     │
+│  Bonferroni-corrected multiple-testing control                      │
+└─────────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                     EXECUTION GATEWAY                               │
+│  Pre-trade risk check → Position sizing → Order routing             │
+│  Circuit breakers → Drawdown limits → VaR / CVaR enforcement        │
+└─────────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                     PRODUCTION GATE                                 │
+│  Evidence registry → Canonical audits → Capital authorization       │
+│  Status: LOCKED ($0.00 live) until gate cleared by empirical proof  │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
----
+### Key Subsystems
 
-## Authoritative Alpha Independence Matrix
-
-From [`research/results/ALPHA_INDEPENDENCE_MATRIX.json`](file:///home/mrcn2/crypto-platform/research/results/ALPHA_INDEPENDENCE_MATRIX.json) and [`research/results/ALPHA_INDEPENDENCE_MATRIX.md`](file:///home/mrcn2/crypto-platform/research/results/ALPHA_INDEPENDENCE_MATRIX.md):
-
-| Alpha ID | Mechanism | Asset | TF | Trades | Net R | E[R] (95% CI) | PF | Max DD | Return Corr vs SOL Set 2 | Downside Corr | Overlap % | Status |
-| :--- | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| `FAM-07-MTFCONT_SOLUSDT_Set2` | Trend Continuation | SOL/USDT | Set 2 (1W/1D/4H) | 387 | +107.41R | +0.28R [0.12, 0.44] | 1.45 | 12.07R | 1.000 | 1.000 | 100.0% | 🟡 `FORWARD_HEALTHY` |
-| `FAM06_SOL_USDT_4h` | Volatility Squeeze | SOL/USDT | 4H | 146 | +13.89R | +0.10R [-0.15, 0.34] | 1.17 | 13.93R | 0.148 | -0.654 | 8.4% | 🟡 `SUB_THRESHOLD` |
-| `FAM06_ETH_USDT_4h` | Volatility Squeeze | ETH/USDT | 4H | 171 | +2.99R | +0.02R [-0.21, 0.25] | 1.03 | 18.50R | 0.053 | -0.706 | 8.7% | 🔴 `FALSIFIED` |
-| `FAM06_BTC_USDT_4h` | Volatility Squeeze | BTC/USDT | 4H | 171 | -0.29R | -0.00R [-0.22, 0.22] | 1.00 | 25.28R | 0.051 | -0.579 | 9.4% | 🔴 `FALSIFIED` |
-| `FAM-10-FUNDINGCARRY` | Dynamic Basis Carry | Multi | 8H funding | 0 | 0.0R | 0.0R | 0.0 | - | - | - | 0.0% | 🔴 `FALSIFIED_V1` |
-| `RV_LONG_HORIZON_COINTEGRATION_V1` | Cross-Asset RV | Pairs | 1D & 4H | 0 | 0.0R | 0.0R | 0.0 | - | - | 0.0% | 🔴 `FALSIFIED_V1` |
-
-### Pairwise Daily Return Correlation Matrix
-
-| Strategy | `FAM-07-MTFCONT_SOLUSDT_Set2` | `FAM06_SOL_USDT_4h` | `FAM06_ETH_USDT_4h` | `FAM06_BTC_USDT_4h` |
-| :--- | :---: | :---: | :---: | :---: |
-| `FAM-07-MTFCONT_SOLUSDT_Set2` | 1.0000 | 0.1480 | 0.0528 | **0.0508** |
-| `FAM06_SOL_USDT_4h` | 0.1480 | 1.0000 | 0.1741 | 0.1560 |
-| `FAM06_ETH_USDT_4h` | 0.0528 | 0.1741 | 1.0000 | 0.1764 |
-| `FAM06_BTC_USDT_4h` | **0.0508** | 0.1560 | 0.1764 | 1.0000 |
-
-### Pairwise Downside Correlation Forensic Audit
-* **The Naive Calculation:** Comparing days where either strategy had negative return yields negative correlation (-0.57 to -0.70) because non-overlapping zero-return days are correlated against negative returns ($(x - \bar{x})(0 - \bar{y}) < 0$).
-* **The True Co-Exposure Calculation:** Restricting analysis strictly to days where both strategies held active market positions reveals downside correlation is near-zero to non-negative (-0.09 to -0.13), confirming that Family 06 does not provide an active hedge during stress.
+| Subsystem | Location | Purpose |
+|---|---|---|
+| **Alpha Discovery Engine** | `research/discovery_lab/` | Causal multi-partition backtesting and adversarial falsification |
+| **Certified Universe Engine** | `market_data/certified_research_universe.py` | SHA-256 dataset lineage audit and data-stream gating |
+| **Research Governor** | `research/autonomous_research_governor.py` | Evidence-based research priority scoring and scheduling |
+| **Opportunity Detector** | `market_intelligence/opportunity_detector.py` | Structural anomaly scanning across certified assets |
+| **Opportunity Memory** | `research/opportunity_memory.py` | Regime-aware hypothesis lifecycle management |
+| **Execution Gateway** | `execution_gateway/` | Pre-trade risk enforcement and order routing |
+| **Risk Engine** | `risk_engine/` | Real-time VaR, CVaR, drawdown, and correlation monitoring |
+| **Portfolio Engine** | `portfolio_engine/` | Position sizing, allocation, and rebalancing |
+| **Production Gate** | `production/` | Autonomous production-readiness gate with evidence registry |
+| **Platform Core** | `platform_core/` | Unified state store, audit bus, and evidence provenance layer |
 
 ---
 
-## Performance Truth & Historical Reconciliation
+## Production Gate
 
-The master ledger explicitly reconciles the performance figures appearing across research documents:
+The production gate enforces **six canonical audits** before any live capital can be deployed:
 
-| Methodology | Strategy | Dataset Window | Risk Sizing Model | Total Net R | Profit Factor | Max Drawdown |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Canonical Warehouse Backtest** | `FAM-07-MTFCONT_SOLUSDT_Set2` | 2021-01-01 to 2026-06-30 | Fixed 1.0R non-compounding | **+107.41R** | 1.451 | 12.07R |
-| **Event-Driven Paper Simulation** | `FAM-07-MTFCONT_SOLUSDT_Set2` | 2024-01-01 to 2026-09-01 | Dynamic 0.60% compounding | **+222.92R** | 5.235 | 4.73% |
+1. **Data Integrity Audit** — All input data must have SHA-256 verified lineage
+2. **Strategy Conformance Audit** — Strategy logic must match registered specification
+3. **Risk Gate Audit** — All risk limits must be binding and non-bypassable
+4. **Execution Fidelity Audit** — Fills must be real; no fabricated P&L
+5. **Research Integrity Audit** — No lookahead, no data-mining bias, no multiple-testing inflation
+6. **Capital Authorization Audit** — Explicit empirical evidence required for every dollar deployed
 
-* **Reconciliation Explanation:** +107.41R is the full 5.5-year multi-partition (DEV + VAL + OOS) non-compounding canonical backtest in `StrategyExecutor`. +222.92R is the compounding event-driven forward paper simulation in `PaperExecutionHarness` evaluated over the 2024–2026 momentum cycle.
+**Current gate status: `LOCKED`**
 
----
-
-## Generic Capital Allocator & Portfolio Protection
-
-Full empirical results documented in [`research/results/MULTI_ALPHA_PORTFOLIO_ALLOCATION_AUDIT.json`](file:///home/mrcn2/crypto-platform/research/results/MULTI_ALPHA_PORTFOLIO_ALLOCATION_AUDIT.json):
-
-### Sizing Calculation Hierarchy
-Every alpha slot passes through a fully auditable calculation pipeline:
-$$\text{Raw Edge } (E) \xrightarrow{-1.96 \cdot \text{SE}} E_{\text{adj}} \xrightarrow{\text{Risk Parity}} w_{\text{raw}} \xrightarrow{\text{Covariance Shrinkage}} w_{\text{cov}} \xrightarrow{\text{Drawdown Throttle}} w_{\text{dd}} \xrightarrow{\text{Cap Constraints}} w_{\text{final}}$$
-
-* **Fail-Closed Gatekeeper:** The allocator evaluated Family 06 BTC ($E_{\text{net}} \le 0$) and Family 06 ETH ($E_{\text{adj}} \le 0$) and strictly **allocated $0.00 capital**, protecting the portfolio.
-* **Capital Protection Proof:** If an unconstrained portfolio had blindly added Family 06 to SOL Set 2, portfolio Sharpe would have degraded from 1.45 to **1.04**, and Max Drawdown would have escalated from 12.07R to **21.17R**. The allocator's risk gate prevented this degradation.
-
-### Historical Multi-Alpha Portfolio Backtest (Causal Reality)
-
-| Portfolio Specification | Total Net R | Maximum Drawdown | Annualized Sharpe | Calmar Ratio | Profit Factor | Status |
-| :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Standalone `SOL_SET2_MTFCONT`** | **+107.41R** | **12.07R** | **1.45** | **8.90** | **1.353** | 🟢 Optimal Baseline |
-| **Unconstrained Multi-Alpha Portfolio**<br>*(SOL Set 2 + ETH Squeeze + BTC Squeeze)* | **+122.99R** | **21.17R** | **1.04** | **5.81** | **1.229** | 🔴 Degraded Edge |
-| **Allocated Constrained Portfolio**<br>*(Allocator filtered BTC/ETH to $0.00)* | **+107.41R** | **12.07R** | **1.45** | **8.90** | **1.353** | 🟢 Capital Protected |
+No capital will be deployed until all six audits pass independently. This is enforced in code, not just policy.
 
 ---
 
-## Continuous Forward Paper Daemon
+## Alpha Discovery
 
-Located in [`production/run_forward_burn_in.py`](file:///home/mrcn2/crypto-platform/production/run_forward_burn_in.py):
-* **Feed:** Continuous polling of Binance Public REST API (no private keys, read-only market data).
-* **Execution Engine:** Causal paper replayer enforcing bar-close confirmation, next-bar open fills, and realistic taker friction.
-* **Fault Tolerance:** Gap detection, automatic restart recovery, monotonic timestamp verification, and state persistence in `production_live_state.db`.
-* **Telemetry & Governance:** Machine-readable health reports emitted every minute to [`research/results/FORWARD_PAPER_DAEMON_AUDIT.json`](file:///home/mrcn2/crypto-platform/research/results/FORWARD_PAPER_DAEMON_AUDIT.json).
+### Process
 
----
+Every candidate strategy must survive the following pipeline before being considered validated:
 
-## Strategy Graveyard (Preserved Research Failures)
-
-Failed hypotheses are preserved as permanent institutional research memory to prevent curve-fitted resurrection:
-
-```text
-======================= STRATEGY GRAVEYARD =======================
-1. RV_LONG_HORIZON_COINTEGRATION_V1
-   - Specification: BTC/ETH, SOL/ETH, SOL/BTC on 1D and 4H (2021-2026)
-   - Falsification: Non-stationary ADF/Johansen statistics, OU half-lives > 1,700 bars.
-   - Status: FALSIFIED / PERMANENT RESEARCH MEMORY
-
-2. FAM-10-FUNDINGCARRY
-   - Specification: Spot-perp basis carry entered when funding >= 15% APR.
-   - Falsification: Average funding (0.66%-7.20% APR) failed to clear 6% margin borrow + 32 bps friction.
-   - Status: FALSIFIED / IDLE IN SUB-HURDLE REGIMES
-
-3. INTRADAY HIGH-FREQUENCY SETS (Sets 4, 5, 6)
-   - Specification: Intraday and scalping timeframes (15m, 5m, 1m).
-   - Falsification: Extreme execution latency sensitivity and transaction fee erosion.
-   - Status: FALSIFIED UNDER RETAIL/INSTITUTIONAL TAKER ECONOMICS
-==================================================================
+```
+Hypothesis Generation
+       │
+       ▼
+DEV Backtest (2021–2022)
+  ├─ Full friction model (maker/taker + spread + slippage + financing)
+  └─ Statistical significance (Sharpe > 0, p < 0.05)
+       │
+       ▼
+VAL Backtest (2023)
+  ├─ Independent confirmation (Sharpe > 0.5)
+  └─ Drawdown within tolerance
+       │
+       ▼
+Adversarial Falsification Battery
+  ├─ Lookahead contamination test
+  ├─ 2× friction shock (does edge survive doubled costs?)
+  ├─ Windfall removal (strip outlier days)
+  └─ Latency delay injection
+       │
+       ▼
+OOS Backtest (2024–2026) — UNTOUCHED until adversarial battery passed
+       │
+       ▼
+Multiple-Testing Control (Bonferroni-corrected hurdle)
+       │
+       ▼
+Research Governor Promotion Decision
+       │
+       ▼ (only if ALL above cleared)
+Production Gate Review → Capital Authorization
 ```
 
+### Canonical Discovery Reports
+
+Every research cycle emits two machine-readable reports:
+
+- **`QCP_ALPHA_DISCOVERY_REPORT.json`** — full structured evidence record
+- **`QCP_ALPHA_DISCOVERY_REPORT.md`** — human-readable summary
+
+Latest finding: **`NO_NEW_ECONOMIC_EDGE_VALIDATED`**
+
+This is the correct and expected output when no strategy has cleared adversarial falsification. It is not a failure — it is the system working honestly.
+
 ---
 
-## Core Architecture & Directory Layout
+## Repository Layout
 
-```text
+```
 crypto-platform/
-├── platform_core/             # Canonical strategy specs, lifecycle states, and constants
-├── capital_intelligence/      # Expected net edge economics, confidence bounds, and capacity
-├── market_intelligence/       # Regime classification, volatility clustering, and market memory
-├── portfolio_engine/          # Generic capital allocator, covariance shrinkage, and hedging
-├── risk_engine/               # 7D risk firewall, position sizing, and drawdown coordination
-├── trade_management/          # 5-stage trade lifecycle, order precision, and fail-safes
-├── execution_gateway/         # Pluggable broker connectors and execution simulators
-├── research/                  # Quantitative discovery lab, accounting, and analytics
-│   ├── arbitrage/             # Dynamic funding carry and basis carry engines
-│   ├── discovery_lab/         # Multi-family strategy specs (FAM-06, FAM-07) and OOS manager
-│   ├── experiments/           # Research runners for volatility squeeze, funding, and portfolio
-│   └── results/               # Authoritative matrices, decision records, and audit reports
-├── production/                # Forward paper daemon burn-in harness and state machines
-├── tests/                     # 517 automated unit, integration, and regression tests
-└── README.md                  # Comprehensive system documentation
+├── backtesting/              # Backtest engine and partition management
+├── capital_intelligence/     # Capital allocation intelligence
+├── config/                   # System and risk configuration
+├── docs/                     # Extended documentation
+├── execution_gateway/        # Order routing and pre-trade risk
+├── market_data/              # Data pipeline and certified universe engine
+├── market_intelligence/      # Opportunity detection and regime analysis
+├── platform_core/            # State store, audit bus, evidence provenance
+├── portfolio_engine/         # Position sizing and portfolio management
+├── production/               # Production gate and canonical audits
+├── research/
+│   ├── autonomous_research_governor.py
+│   ├── discovery_lab/        # Alpha discovery engine (core research)
+│   ├── opportunity_memory.py
+│   └── ...
+├── risk/                     # Risk models and analytics
+├── risk_engine/              # Real-time risk enforcement
+├── strategy/                 # Strategy registry and base classes
+├── strategy_engine/          # Strategy lifecycle management
+├── tests/
+│   ├── unit/                 # 500+ unit tests
+│   └── integration/          # End-to-end pipeline tests
+├── trade_management/         # Order and trade lifecycle
+├── CAPABILITY_REGISTRY.json  # Machine-readable capability evidence
+├── CHANGELOG.md              # Detailed change history
+├── CONTRIBUTING.md           # Contribution guidelines
+├── RESEARCH_INTEGRITY_AUDIT.md
+├── SECURITY.md
+└── pyproject.toml
 ```
 
 ---
 
-## Quickstart & Reproducibility
+## Getting Started
 
-### 1. Installation & Environment Setup
+### Prerequisites
+
+- Python 3.11+
+- Unix-like environment (Linux / macOS)
+
+### Installation
+
 ```bash
 git clone https://github.com/Quantitative-Systems/crypto-platform.git
 cd crypto-platform
@@ -233,35 +238,90 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. Run the Full Test Suite
-Verify that all 517 automated tests pass with zero regressions:
-```bash
-PYTHONPATH=. pytest -q
-```
-*Expected output: 517 passed in ~110 seconds.*
+### Run the Test Suite
 
-### 3. Run the Alpha Independence Audit
 ```bash
-PYTHONPATH=. python3 research/experiments/run_alpha_independence_audit.py
+python3 -m pytest tests/ -v
 ```
 
-### 4. Run the Multi-Alpha Portfolio Diversification Audit
+### Run the Research Governor
+
 ```bash
-PYTHONPATH=. python3 research/experiments/run_multi_alpha_portfolio_audit.py
+python3 -m research.autonomous_research_governor
 ```
 
-### 5. Inspect Forward Paper Burn-In Telemetry
+### Run Alpha Discovery
+
 ```bash
-cat research/results/FORWARD_PAPER_DAEMON_AUDIT.json
-cat research/results/DAILY_DECISION_RECORD.json
+python3 -m research.discovery_lab.empirical_alpha_discovery_engine
 ```
+
+Discovery reports will be written to:
+- `QCP_ALPHA_DISCOVERY_REPORT.json`
+- `QCP_ALPHA_DISCOVERY_REPORT.md`
 
 ---
 
-## Data Integrity & Risk Disclaimer
+## Testing
 
-This platform and its codebase are provided strictly for quantitative research, algorithmic simulation, and systematic risk governance.
+QCP maintains a comprehensive test suite with strict coverage requirements:
 
-All backtest metrics, out-of-sample evaluations, and adversarial stress tests are **empirical research observations**, not guarantees of future performance. Real-world execution is subject to latency, unmodeled queue priority, partial fills, API outages, liquidity evaporation, and counterparty risks.
+| Category | Tests | Status |
+|---|---|---|
+| Unit — Research | 80+ | ✅ Passing |
+| Unit — Risk Engine | 60+ | ✅ Passing |
+| Unit — Execution | 50+ | ✅ Passing |
+| Unit — Data / Universe | 40+ | ✅ Passing |
+| Unit — Platform Core | 60+ | ✅ Passing |
+| Unit — Strategy Engine | 80+ | ✅ Passing |
+| Integration — Alpha Discovery Pipeline | 20+ | ✅ Passing |
+| Integration — Production Gate | 30+ | ✅ Passing |
+| **Total** | **556** | **✅ All passing** |
 
-**Production status is LIVE LOCKED.** Real capital ($0.00 deployed) must never be allocated until predefined paper-trading gates and multi-engine forward milestones are independently verified.
+Tests are organized under `tests/unit/` and `tests/integration/`. All tests are deterministic and run without network access or live exchange connections.
+
+---
+
+## Safety Guarantees
+
+QCP enforces the following safety properties in code (not just documentation):
+
+| Guarantee | Enforcement |
+|---|---|
+| No live fills without validated alpha | Production gate code-lock |
+| No synthetic data substitution for missing streams | `CertifiedResearchUniverseEngine` blocks unwarehoused streams |
+| No lookahead contamination | Adversarial falsification battery (required, not optional) |
+| No multiple-testing inflation | Bonferroni correction applied to all hypothesis batches |
+| No fabricated P&L | All backtests use decomposed friction models; slippage is not zero |
+| Live capital: $0.00 until independently authorized | Hard gate enforced by `production/` subsystem |
+
+---
+
+## Governance
+
+QCP is self-governed by the **Autonomous Research Governor** (`research/autonomous_research_governor.py`), which:
+
+- Scores research opportunities by data readiness, signal quality, and statistical confidence
+- Enforces research priority based on evidence — not preference
+- Manages hypothesis lifecycle (open → under test → falsified → closed)
+- Emits canonical audit trails for every decision
+
+All governance decisions are logged to the platform audit bus and are independently verifiable.
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+**Key rule:** do not submit code that manufactures positive results, weakens safety gates, removes friction from backtests, or bypasses the production capital gate. Such PRs will be rejected.
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE).
+
+---
+
+*QCP reports scientific truth. If no alpha exists, QCP says so.*
