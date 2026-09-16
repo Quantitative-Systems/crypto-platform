@@ -8,11 +8,6 @@ Governance contract (enforced by platform_core.evidence_provenance):
     RESEARCH. Metrics may only be attached afterwards by
     research.economic_evaluation_engine, which computes them from certified
     market data and stamps them with an EvidenceRecord.
-
-The factory's job is to ask economically-grounded questions, not to answer
-them. A specification that cannot be measured with data the platform actually
-holds is still emitted — but flagged with its missing data dependency so it is
-never mistaken for a testable candidate.
 """
 
 from __future__ import annotations
@@ -27,198 +22,102 @@ from platform_core.alpha_genome import (
     EconomicPerformance,
     MicrostructureProfile,
 )
-
-
-@dataclass
-class AlphaSpecification:
-    """Declarative hypothesis: what to test, on what data, and why it should exist."""
-
-    alpha_id: str
-    family: AlphaFamily
-    version: str
-    asset_universe: List[str]
-    venues: List[str]
-    instruments: List[str]
-    timeframe: str
-    expected_holding_period_hours: float
-    economic_rationale: str
-    features: List[str]
-    entry_mechanism: str
-    exit_mechanism: str
-    required_data: List[str]
-    regime_hypotheses: Dict[str, float] = field(default_factory=dict)
-    failure_modes: List[str] = field(default_factory=list)
-
-
-#: The declared alpha research population. No performance numbers appear here,
-#: by construction: there is nothing to fabricate.
-ALPHA_SPECIFICATIONS: List[AlphaSpecification] = [
-    AlphaSpecification(
-        alpha_id="FAM-07-MTFCONT_SOLUSDT_Set2",
-        family=AlphaFamily.DIRECTIONAL,
-        version="v2.1",
-        asset_universe=["SOL/USDT"],
-        venues=["BINANCE"],
-        instruments=["SPOT", "PERPETUAL"],
-        timeframe="4h",
-        expected_holding_period_hours=36.0,
-        economic_rationale=(
-            "Persistent crypto trends are driven by order-flow herding and slow "
-            "allocator rebalancing. A shallow retracement inside an established "
-            "trend offers continuation exposure without buying the extension."
-        ),
-        features=["ema_fast_slope", "ema_slow_slope", "atr_pullback_distance"],
-        entry_mechanism=(
-            "Bar-close confirmed: fast EMA above rising slow EMA and close retraced "
-            "into the fast EMA band. Executed at next-bar open (causal)."
-        ),
-        exit_mechanism="ATR-based stop (2.0x ATR) with 2.0R target or time stop.",
-        required_data=["OHLCV_4h_SOL"],
-        regime_hypotheses={"BULL_MOMENTUM": 0.85, "SIDEWAYS_CHOP": -0.30},
-        failure_modes=["TREND_FAILURE", "WHIPSAW_IN_CHOP", "LATENCY_SENSITIVE"],
-    ),
-    AlphaSpecification(
-        alpha_id="FAM-06-VOLSQUEEZE_SOLUSDT_V1",
-        family=AlphaFamily.DIRECTIONAL,
-        version="v1.1",
-        asset_universe=["SOL/USDT"],
-        venues=["BINANCE"],
-        instruments=["PERPETUAL"],
-        timeframe="4h",
-        expected_holding_period_hours=24.0,
-        economic_rationale=(
-            "Volatility clusters and mean-reverts. Compression raises the conditional "
-            "probability of an expansion move; trading the range break captures the "
-            "expansion while an ATR stop bounds risk."
-        ),
-        features=["atr_percentile", "range_breakout_distance"],
-        entry_mechanism=(
-            "Bar-close confirmed: ATR percentile below squeeze threshold and close "
-            "breaks the prior N-bar extreme. Executed at next-bar open (causal)."
-        ),
-        exit_mechanism="ATR-based stop (2.0x ATR) with 2.0R target or time stop.",
-        required_data=["OHLCV_4h_SOL"],
-        regime_hypotheses={"LOW_VOL_COMPRESSION": 0.90, "VOL_EXPLOSION": -0.20},
-        failure_modes=["FALSE_BREAKOUT", "REGIME_FLIP", "COMMON_VOL_FACTOR"],
-    ),
-    AlphaSpecification(
-        alpha_id="FAM-09-RV_COINT_ETH_BTC_V2",
-        family=AlphaFamily.RELATIVE_VALUE,
-        version="v2.0",
-        asset_universe=["ETH/USDT"],
-        venues=["BINANCE"],
-        instruments=["SPOT"],
-        timeframe="4h",
-        expected_holding_period_hours=48.0,
-        economic_rationale=(
-            "ETH and BTC share a dominant common crypto factor; transient divergences "
-            "in their log-price ratio are driven by idiosyncratic flow and are "
-            "compensated to revert."
-        ),
-        features=["log_ratio_zscore"],
-        entry_mechanism=(
-            "Bar-close confirmed: ratio z-score beyond entry threshold; executed at "
-            "next-bar open on the ETH leg (causal)."
-        ),
-        exit_mechanism="ATR-based stop with 2.0R target or time stop.",
-        required_data=["OHLCV_4h_ETH", "OHLCV_4h_BTC"],
-        regime_hypotheses={"DISPERSED_MARKET": 0.80, "CORRELATED_CRASH": -0.40},
-        failure_modes=["REGIME_BREAK_NO_REVERSION", "STRUCTURAL_REPRICING"],
-    ),
-    AlphaSpecification(
-        alpha_id="FAM-10-DYNAMIC_CARRY_SOL_V2",
-        family=AlphaFamily.CARRY,
-        version="v2.0",
-        asset_universe=["SOL/USDT"],
-        venues=["BINANCE"],
-        instruments=["SPOT", "PERPETUAL"],
-        timeframe="4h",
-        expected_holding_period_hours=72.0,
-        economic_rationale=(
-            "Perpetual funding transfers a premium from crowded directional "
-            "positioning to liquidity providers. When net funding exceeds borrow plus "
-            "roundtrip friction, a delta-neutral spot/perp carry is compensated."
-        ),
-        features=["funding_rate_apr", "spot_perp_basis", "borrow_interest_rate"],
-        entry_mechanism="Harvest when net funding APR clears borrow + friction hurdle.",
-        exit_mechanism="Exit when net funding APR decays below the hurdle.",
-        required_data=["FUNDING_RATE_HISTORY", "SPOT_PERP_BASIS"],
-        regime_hypotheses={"EXTREME_POSITIVE_FUNDING": 0.95},
-        failure_modes=["FUNDING_REGIME_FLIP", "BASIS_DISLOCATION", "BORROW_ILLIQUIDITY"],
-    ),
-    AlphaSpecification(
-        alpha_id="FAM-12-OFI_MOMENTUM_BTC_V1",
-        family=AlphaFamily.MICROSTRUCTURE,
-        version="v1.0",
-        asset_universe=["BTC/USDT"],
-        venues=["BINANCE"],
-        instruments=["PERPETUAL"],
-        timeframe="15m",
-        expected_holding_period_hours=2.0,
-        economic_rationale=(
-            "Aggressive taker flow into thinning book depth produces short-horizon "
-            "price pressure that is compensated to persist briefly before liquidity "
-            "replenishes."
-        ),
-        features=["order_flow_imbalance", "l2_depth_imbalance"],
-        entry_mechanism="Enter when standardized order-flow imbalance exceeds threshold.",
-        exit_mechanism="Fixed time stop or book-pressure reversal.",
-        required_data=["L2_ORDER_BOOK_DEPTH_TICK", "AGGRESSOR_FLOW"],
-        regime_hypotheses={"NORMAL_VOL": 0.70},
-        failure_modes=["LATENCY_FATAL", "QUEUE_POSITION_UNMODELED", "ADVERSE_SELECTION"],
-    ),
-]
+from research.autonomous_research_governor import ResearchHypothesis
 
 
 class AutonomousResearchFactory:
     """
-    Emits machine-readable alpha specifications with zero asserted performance.
-
-    Availability of the required data is resolved by the caller (the
-    orchestrator) against the certified warehouse, so a specification is never
-    silently upgraded into a measured candidate.
+    Emits machine-readable alpha genomes from prioritized hypotheses.
     """
 
     def __init__(self, certified_universe: Optional[List[str]] = None):
         self.certified_universe = certified_universe or ["BTC/USDT", "ETH/USDT", "SOL/USDT"]
 
-    def get_specifications(self) -> List[AlphaSpecification]:
-        return list(ALPHA_SPECIFICATIONS)
-
-    def get_data_requirements(self) -> Dict[str, List[str]]:
-        return {s.alpha_id: list(s.required_data) for s in ALPHA_SPECIFICATIONS}
-
     @staticmethod
-    def _to_genome(spec: AlphaSpecification) -> AlphaGenome:
+    def _to_genome(hypothesis: ResearchHypothesis) -> AlphaGenome:
+        try:
+            family_enum = AlphaFamily[hypothesis.target_family]
+        except KeyError:
+            family_enum = AlphaFamily.DIRECTIONAL # Fallback
+
+        # V2: Map abstract hypotheses to tangible entry/exit heuristics dynamically
+        if hypothesis.target_family == "CARRY":
+            entry = "Harvest when net funding APR clears borrow + friction hurdle."
+            exit_m = "Exit when net funding APR decays below the hurdle."
+            features = ["annualized_funding_rate_bps", "spot_perp_basis_bps", "borrow_rate_apr"]
+            failure_modes = ["REGIME_FLIP", "FUNDING_INVERSION", "BORROW_SPIKE"]
+            holding_hours = 48.0
+        elif hypothesis.target_family == "RELATIVE_VALUE":
+            entry = "Enter on statistical divergence of z-score (> 2.0 sigma)."
+            exit_m = "Exit on mean reversion to fair value (z-score < 0.5 sigma)."
+            features = ["spread_zscore_4h", "cointegration_residual", "rolling_beta"]
+            failure_modes = ["STRUCTURAL_BREAK", "CORRELATION_BREAKDOWN"]
+            holding_hours = 24.0
+        elif hypothesis.target_family == "MICROSTRUCTURE":
+            entry = "Enter on order flow imbalance (OFI) skew with queue priority."
+            exit_m = "Micro-horizon scalp on book replenishment or latency timeout."
+            features = ["book_imbalance_top10", "trade_flow_skew", "spread_bps"]
+            failure_modes = ["LATENCY_DECAY", "ADVERSE_SELECTION", "QUEUE_CANCELLATION"]
+            holding_hours = 0.5
+        elif hypothesis.target_family == "ARBITRAGE":
+            entry = "Simultaneously execute opposing legs on cross-venue spread > 2x roundtrip fee."
+            exit_m = "Convergence of cross-venue price spread."
+            features = ["cross_venue_spread_bps", "venue_fill_probability", "transfer_latency_ms"]
+            failure_modes = ["LEG_EXECUTION_RISK", "WITHDRAWAL_HALT", "EXCHANGE_OUTAGE"]
+            holding_hours = 0.1
+        elif hypothesis.target_family == "MARKET_MAKING":
+            entry = "Post symmetric passive limit orders around mid-price adjusted for inventory skew."
+            exit_m = "Passive execution or inventory rebalancing threshold breach."
+            features = ["bid_ask_spread_bps", "order_book_depth_usd", "inventory_ratio"]
+            failure_modes = ["TOXIC_FLOW", "INVENTORY_ACCUMULATION", "FLASH_CRASH"]
+            holding_hours = 0.25
+        elif hypothesis.target_family == "EVENT_DRIVEN":
+            entry = "Fade post-liquidation cascade exhaustion with trailing stop."
+            exit_m = "Mean reversion to pre-shock VWAP or fixed R target."
+            features = ["liquidation_volume_usd", "cvd_exhaustion_print", "rebound_velocity"]
+            failure_modes = ["CASCADE_CONTINUATION", "LIQUIDITY_VACUUM"]
+            holding_hours = 4.0
+        elif hypothesis.target_family == "MACHINE_LEARNING":
+            entry = "Execute on non-linear ensemble probability forecast > threshold."
+            exit_m = "Time-decay horizon or forecast confidence degradation."
+            features = ["multi_scale_wavelet", "volatility_dispersion", "regime_entropy"]
+            failure_modes = ["OVERFITTING", "CONCEPT_DRIFT", "REGIME_SHIFT"]
+            holding_hours = 12.0
+        else: # DIRECTIONAL
+            entry = "Enter on momentum breakout confirmation above swing high."
+            exit_m = "ATR-based stop with trailing take-profit."
+            features = ["donchian_breakout_score", "volume_expansion_ratio", "adx_trend_strength"]
+            failure_modes = ["FALSE_BREAKOUT", "WHIPSAW", "REGIME_FLIP"]
+            holding_hours = 24.0
+
         return AlphaGenome(
-            alpha_id=spec.alpha_id,
-            family=spec.family,
-            version=spec.version,
-            asset_universe=list(spec.asset_universe),
-            venues=list(spec.venues),
-            instruments=list(spec.instruments),
-            timeframe=spec.timeframe,
-            expected_holding_period_hours=spec.expected_holding_period_hours,
-            economic_rationale=spec.economic_rationale,
-            features=list(spec.features),
-            entry_mechanism=spec.entry_mechanism,
-            exit_mechanism=spec.exit_mechanism,
+            alpha_id=hypothesis.hypothesis_id,
+            family=family_enum,
+            version="v2.0",
+            asset_universe=[hypothesis.symbol],
+            venues=["BINANCE"],
+            instruments=["PERPETUAL"],
+            timeframe=hypothesis.timeframe,
+            expected_holding_period_hours=holding_hours,
+            economic_rationale=hypothesis.economic_rationale,
+            features=features,
+            entry_mechanism=entry,
+            exit_mechanism=exit_m,
             microstructure=MicrostructureProfile(),
             # ZERO performance: metrics are attached only by the evaluation engine.
             performance=EconomicPerformance(),
-            regime_dependencies=dict(spec.regime_hypotheses),
-            failure_modes=list(spec.failure_modes),
+            regime_dependencies={"AUTONOMOUS_DISCOVERY": hypothesis.priority_score},
+            failure_modes=failure_modes,
             lifecycle_state=AlphaLifecycleState.RESEARCH,
         )
 
     def generate_candidate_population(
-        self, current_active_families: Optional[List[str]] = None
+        self, hypotheses: List[ResearchHypothesis], current_active_families: Optional[List[str]] = None
     ) -> List[AlphaGenome]:
         """
-        Generates the declared specification population, prioritising families
-        that are currently under-represented in the live portfolio.
+        Generates the declared specification population from dynamic hypotheses.
         """
-        genomes = [self._to_genome(s) for s in ALPHA_SPECIFICATIONS]
+        genomes = [self._to_genome(h) for h in hypotheses]
         for g in genomes:
             g.compute_evidence_hash()
 
@@ -236,24 +135,24 @@ class AutonomousResearchFactory:
                 tokens.add(f"OHLCV_{tf}_{sym}")
         return tokens
 
-    def get_research_gap_analysis(self, current_population: List[AlphaGenome]) -> Dict[str, Any]:
+    def get_research_gap_analysis(self, current_population: List[AlphaGenome], raw_hypotheses: List[ResearchHypothesis]) -> Dict[str, Any]:
         """Identifies underrepresented alpha families and unsupported data needs."""
         families_present = {g.family.value for g in current_population}
         all_families = {f.value for f in AlphaFamily}
         missing = sorted(all_families - families_present)
 
         unsupported_data: List[str] = []
-        for spec in ALPHA_SPECIFICATIONS:
-            unmet = [d for d in spec.required_data if d not in self._supported_data_tokens()]
+        for h in raw_hypotheses:
+            unmet = [d for d in h.required_data if d not in self._supported_data_tokens()]
             if unmet:
-                unsupported_data.append(f"{spec.alpha_id}:{','.join(unmet)}")
+                unsupported_data.append(f"{h.hypothesis_id}:{','.join(unmet)}")
 
         return {
             "total_candidates": len(current_population),
             "families_present": sorted(families_present),
             "missing_families": missing,
             "recommended_next_research_target": missing[0] if missing else "REFINEMENT",
-            "specifications_with_unsupported_data": unsupported_data,
+            "hypotheses_with_unsupported_data": unsupported_data,
             # Proof that this module asserts no performance of its own.
             "asserted_performance_metrics": 0,
         }

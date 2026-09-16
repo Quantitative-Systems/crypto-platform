@@ -1,0 +1,57 @@
+{
+  "audit_timestamp_utc": "2026-09-16T15:33:43.153074+00:00",
+  "raw_opportunities_detected": 2,
+  "hypotheses_formulated": 2,
+  "hypotheses_detail": [
+    {
+      "hypothesis_id": "HYP-OPP-ARB-SOLUSDT-0001",
+      "target_family": "ARBITRAGE",
+      "symbol": "SOL/USDT",
+      "timeframe": "5m",
+      "priority_score": 0.51,
+      "scoring_components": {
+        "magnitude": 0.25,
+        "data_readiness": 0.85,
+        "diversification": 1.0,
+        "novelty": 0.4,
+        "cost": 0.3,
+        "total_score": 0.51
+      }
+    },
+    {
+      "hypothesis_id": "HYP-OPP-LIQ-SOLUSDT-0002",
+      "target_family": "EVENT_DRIVEN",
+      "symbol": "SOL/USDT",
+      "timeframe": "15m",
+      "priority_score": 0.495,
+      "scoring_components": {
+        "magnitude": 0.15,
+        "data_readiness": 0.85,
+        "diversification": 1.0,
+        "novelty": 0.4,
+        "cost": 0.1,
+        "total_score": 0.495
+      }
+    }
+  ],
+  "falsification_outcomes": [
+    {
+      "alpha_id": "HYP-OPP-ARB-SOLUSDT-0001",
+      "is_falsified": true,
+      "verdict": "INSUFFICIENT_EVIDENCE"
+    },
+    {
+      "alpha_id": "HYP-OPP-LIQ-SOLUSDT-0002",
+      "is_falsified": true,
+      "verdict": "INSUFFICIENT_EVIDENCE"
+    }
+  ],
+  "memory_vault_stats": {
+    "total_hypotheses_evaluated": 10,
+    "falsified_hypotheses": 10,
+    "survived_hypotheses": 0,
+    "failure_taxonomy_distribution": {
+      "UNKNOWN": 10
+    }
+  }
+}

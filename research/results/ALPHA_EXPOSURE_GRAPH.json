@@ -1,22 +1,13 @@
 {
-  "total_nodes": 5,
-  "distinct_economic_clusters": 4,
+  "total_nodes": 2,
+  "distinct_economic_clusters": 1,
   "cluster_summary": {
-    "1": [
-      "FAM-07-MTFCONT_SOLUSDT_Set2",
-      "FAM-06-VOLSQUEEZE_SOLUSDT_V1"
-    ],
-    "2": [
-      "FAM-09-RV_COINT_ETH_BTC_V2"
-    ],
-    "3": [
-      "FAM-10-DYNAMIC_CARRY_SOL_V2"
-    ],
-    "4": [
-      "FAM-12-OFI_MOMENTUM_BTC_V1"
+    "5": [
+      "HYP-OPP-ARB-SOLUSDT-0001",
+      "HYP-OPP-LIQ-SOLUSDT-0002"
     ]
   },
-  "portfolio_concentration_warning": false,
+  "portfolio_concentration_warning": true,
   "evidence_status": "SYNTHETIC_STRUCTURAL",
   "factors_used": [
     "BTC",
@@ -26,63 +17,27 @@
   "note": "Structural factor proxy fallback. Real empirical returns not supplied.",
   "nodes": [
     {
-      "alpha_id": "FAM-07-MTFCONT_SOLUSDT_Set2",
-      "family": "DIRECTIONAL",
-      "cluster_id": 1,
+      "alpha_id": "HYP-OPP-ARB-SOLUSDT-0001",
+      "family": "ARBITRAGE",
+      "cluster_id": 5,
       "is_independent": true,
-      "btc_beta": 0.7,
-      "volatility_beta": 0.55,
-      "liquidity_beta": -0.15,
+      "btc_beta": 0.3,
+      "volatility_beta": 0.1,
+      "liquidity_beta": 0.1,
       "pure_residual_alpha_r": 0.14,
-      "r_squared": 0.543,
+      "r_squared": 0.073,
       "evidence_status": "SYNTHETIC_STRUCTURAL"
     },
     {
-      "alpha_id": "FAM-06-VOLSQUEEZE_SOLUSDT_V1",
-      "family": "DIRECTIONAL",
-      "cluster_id": 1,
+      "alpha_id": "HYP-OPP-LIQ-SOLUSDT-0002",
+      "family": "EVENT_DRIVEN",
+      "cluster_id": 5,
       "is_independent": false,
-      "btc_beta": 0.7,
-      "volatility_beta": 0.55,
-      "liquidity_beta": -0.15,
+      "btc_beta": 0.3,
+      "volatility_beta": 0.1,
+      "liquidity_beta": 0.1,
       "pure_residual_alpha_r": 0.14,
-      "r_squared": 0.543,
-      "evidence_status": "SYNTHETIC_STRUCTURAL"
-    },
-    {
-      "alpha_id": "FAM-09-RV_COINT_ETH_BTC_V2",
-      "family": "RELATIVE_VALUE",
-      "cluster_id": 2,
-      "is_independent": true,
-      "btc_beta": 0.05,
-      "volatility_beta": -0.1,
-      "liquidity_beta": 0.2,
-      "pure_residual_alpha_r": 0.14,
-      "r_squared": 0.035,
-      "evidence_status": "SYNTHETIC_STRUCTURAL"
-    },
-    {
-      "alpha_id": "FAM-10-DYNAMIC_CARRY_SOL_V2",
-      "family": "CARRY",
-      "cluster_id": 3,
-      "is_independent": true,
-      "btc_beta": -0.02,
-      "volatility_beta": -0.25,
-      "liquidity_beta": 0.45,
-      "pure_residual_alpha_r": 0.14,
-      "r_squared": 0.177,
-      "evidence_status": "SYNTHETIC_STRUCTURAL"
-    },
-    {
-      "alpha_id": "FAM-12-OFI_MOMENTUM_BTC_V1",
-      "family": "MICROSTRUCTURE",
-      "cluster_id": 4,
-      "is_independent": true,
-      "btc_beta": 0.1,
-      "volatility_beta": 0.15,
-      "liquidity_beta": 0.6,
-      "pure_residual_alpha_r": 0.14,
-      "r_squared": 0.262,
+      "r_squared": 0.073,
       "evidence_status": "SYNTHETIC_STRUCTURAL"
     }
   ]

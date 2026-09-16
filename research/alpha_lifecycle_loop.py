@@ -72,7 +72,8 @@ class AlphaLifecycleManager:
         genome: AlphaGenome,
         is_degraded: bool,
         diagnosis_reason: str,
-        factory: AutonomousResearchFactory
+        factory: AutonomousResearchFactory,
+        hypotheses: Optional[List[Any]] = None
     ) -> Optional[AlphaGenome]:
         """
         If alpha is degraded, demotes it to QUARANTINED or GRAVEYARD and
@@ -89,7 +90,7 @@ class AlphaLifecycleManager:
         )
 
         # Trigger Autonomous Research Factory for a replacement
-        population = factory.generate_candidate_population()
+        population = factory.generate_candidate_population(hypotheses or [])
         # Find replacement from same family or unrepresented family
         replacement = None
         for cand in population:

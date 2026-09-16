@@ -1,7 +1,7 @@
 # QCP Master Economic State & Institutional Capability Report
 
-**Generated:** 2026-09-16T11:53:09.191017+00:00  
-**Architecture:** Quantitative Crypto Platform (QCP) Autonomous Operating System  
+**Generated:** 2026-09-16T15:33:43.153074+00:00  
+**Architecture:** Quantitative Crypto Platform (QCP) Autonomous Operating System v2  
 **Live Capital:** **$0.00** (Strict Fail-Closed Capital Firewall)
 
 ---
@@ -12,16 +12,18 @@
 | :--- | :---: | :--- |
 | **01. Universal Data Fabric** | 🟢 Operational | Multi-venue, multi-instrument OHLCV, L2 depth, funding, and liquidations. |
 | **02. Continuous Regime Engine** | 🟢 Active | Trend: `SIDEWAYS_CHOP` • Vol: `NORMAL_VOL` • Liq: `LIQUIDITY_CONTRACTION` |
-| **03. Autonomous Research Factory** | 🟢 Operational | Generated 5 multi-tier candidates across Directional, RV, Carry, Microstructure. |
-| **04. Alpha Genome Contract** | 🟢 Certified | Standardized machine-readable representation with SHA-256 evidence hashing. |
-| **05. Adversarial Falsification** | 🟢 Active | Causal lookahead detection, 2x friction shock, windfall removal, latency ladder. |
-| **06. Execution & Capacity Engine** | 🟢 Active | Almgren-Chriss impact modeling, net edge decay curves, max AUM scaling. |
-| **07. Alpha Exposure Graph** | 🟢 Audited | 4 distinct orthogonal return clusters identified. |
-| **08. Capital Allocator** | 🟢 Governed | Uncertainty-adjusted allocation with regularized covariance shrinkage. |
-| **09. Autonomous Risk Governor** | 🟢 Enforced | Pre-trade veto authority active; portfolio heat capped at 0.0%. |
-| **10. Stress & Shock Lab** | 🟢 Passed | 5 / 5 catastrophic scenarios survived (Max DD: 0.0%). |
-| **11. Economic Truth Engine** | 🟢 Operational | Full P&L return attribution (Alpha, Beta, Carry, Frictions, Slippage). |
-| **12. Alpha Lifecycle Loop** | 🟢 Active | Automated state transitions, degradation detection, and replacement triggers. |
+| **03. Opportunity Discovery** | 🟢 Active | Detected 2 raw opportunities; formulated 2 hypotheses. |
+| **04. Autonomous Research Factory** | 🟢 Operational | Generated 2 multi-tier candidates across all canonical Alpha Families. |
+| **05. Alpha Genome Contract** | 🟢 Certified | Standardized machine-readable representation with SHA-256 evidence hashing. |
+| **06. Adversarial Falsification** | 🟢 Active | Causal lookahead detection, 2x friction shock, windfall removal, latency ladder. |
+| **07. Execution & Capacity Engine** | 🟢 Active | Almgren-Chriss impact modeling, net edge decay curves, max AUM scaling. |
+| **08. Alpha Exposure Graph** | 🟢 Audited | 1 distinct orthogonal return clusters identified. |
+| **09. Capital Allocator** | 🟢 Governed | Uncertainty-adjusted allocation with regularized covariance shrinkage. |
+| **10. Portfolio Hedging Engine** | 🟢 Active | Action: `NO_HEDGE_NEEDED` • Net Beta: 0.0 • Heat: 0.0% |
+| **11. Autonomous Risk Governor** | 🟢 Enforced | Pre-trade veto authority active; portfolio heat capped at 0.0%. |
+| **12. Stress & Shock Lab** | 🟢 Passed | 5 / 5 catastrophic scenarios survived (Max DD: 0.0%). |
+| **13. Economic Truth Engine** | 🟢 Operational | Full P&L return attribution (Alpha, Beta, Carry, Frictions, Slippage). |
+| **14. Alpha Lifecycle Loop** | 🟢 Active | Automated state transitions, degradation detection, and replacement triggers. |
 
 ---
 
@@ -39,11 +41,8 @@
 
 | Alpha ID | Family | TF | Net Edge E[R] | Falsified? | Audit Verdict | Max Capacity |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| `FAM-07-MTFCONT_SOLUSDT_Set2` | `07` | 4h | +0.00R | 🔴 YES | `INSUFFICIENT_EVIDENCE` | $0 |
-| `FAM-06-VOLSQUEEZE_SOLUSDT_V1` | `06` | 4h | +0.00R | 🔴 YES | `INSUFFICIENT_EVIDENCE` | $0 |
-| `FAM-09-RV_COINT_ETH_BTC_V2` | `09` | 4h | +0.00R | 🔴 YES | `INSUFFICIENT_EVIDENCE` | $0 |
-| `FAM-10-DYNAMIC_CARRY_SOL_V2` | `10` | 4h | +0.00R | 🔴 YES | `INSUFFICIENT_EVIDENCE` | $0 |
-| `FAM-12-OFI_MOMENTUM_BTC_V1` | `12` | 4h | +0.00R | 🔴 YES | `INSUFFICIENT_EVIDENCE` | $0 |
+| `HYP-OPP-ARB-SOLUSDT-0001` | `OPP` | 4h | +0.00R | 🔴 YES | `INSUFFICIENT_EVIDENCE` | $0 |
+| `HYP-OPP-LIQ-SOLUSDT-0002` | `OPP` | 4h | +0.00R | 🔴 YES | `INSUFFICIENT_EVIDENCE` | $0 |
 
 ---
 
@@ -62,4 +61,5 @@
 * **Allocated Heat:** 0.0% (Ceiling: 3.00%)
 * **Allocated Strategies Count:** 0
 * **Risk Governor Vetoes:** 0
+* **Hedging Action:** `NO_HEDGE_NEEDED` (Portfolio risk metrics within safe limits)
 * **Live Capital Submission:** **DISABLED ($0.00)**

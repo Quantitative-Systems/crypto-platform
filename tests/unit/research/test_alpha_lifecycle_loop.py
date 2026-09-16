@@ -46,11 +46,25 @@ def test_alpha_lifecycle_transitions(tmp_path):
     assert ev.to_state == "PAPER"
 
     # Degradation and replacement
+    from research.autonomous_research_governor import ResearchHypothesis
+    hypotheses = [
+        ResearchHypothesis(
+            hypothesis_id="HYP-REPLACE-01",
+            target_family="DIRECTIONAL",
+            symbol="SOL/USDT",
+            timeframe="4h",
+            priority_score=9.5,
+            required_data=["OHLCV_4h_SOL"],
+            economic_rationale="Replacement for degraded strategy."
+        )
+    ]
+
     replacement = manager.evaluate_degradation_and_replace(
         genome,
         is_degraded=True,
         diagnosis_reason="Edge dropped below hurdle.",
-        factory=factory
+        factory=factory,
+        hypotheses=hypotheses
     )
     assert genome.lifecycle_state == AlphaLifecycleState.QUARANTINED
     assert replacement is not None
