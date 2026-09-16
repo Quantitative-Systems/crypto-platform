@@ -82,8 +82,16 @@ class AutonomousResearchGovernor:
         mag = max(0.0, min(1.0, obs.magnitude_score))
 
         # 2. Data Readiness [0.0, 1.0]
-        all_ohlcv = all("OHLCV" in t for t in obs.required_data_tokens)
-        data_readiness = 1.0 if all_ohlcv else 0.85
+        has_unavailable = any(
+            any(kw in t for kw in ("ORDER_BOOK", "LIQUIDATION", "FUNDING", "TICK", "DEPTH", "BASIS"))
+            for t in obs.required_data_tokens
+        )
+        if has_unavailable:
+            data_readiness = 0.0
+        elif all("OHLCV" in t for t in obs.required_data_tokens):
+            data_readiness = 1.0
+        else:
+            data_readiness = 0.5
 
         # 3. Expected Portfolio Diversification [0.0, 1.0]
         active_set = set(active_portfolio_families or ["DIRECTIONAL"])
@@ -126,7 +134,9 @@ class AutonomousResearchGovernor:
         self,
         ready_opportunities: List[OpportunityObservation],
         active_portfolio_families: Optional[List[str]] = None,
-        current_regime: Optional[str] = None
+        current_regime: Optional[str] = None,
+        new_features: Optional[List[str]] = None,
+        has_new_features: bool = False
     ) -> List[ResearchHypothesis]:
         """
         Translates raw data-ready opportunities into prioritized research hypotheses.
@@ -140,7 +150,9 @@ class AutonomousResearchGovernor:
             can_reopen, reopen_reason = self.memory.can_reopen_hypothesis(
                 obs.opportunity_type.value,
                 obs.symbol,
-                current_regime=current_regime
+                current_regime=current_regime,
+                new_features=new_features,
+                has_new_features=has_new_features
             )
             if not can_reopen:
                 continue
