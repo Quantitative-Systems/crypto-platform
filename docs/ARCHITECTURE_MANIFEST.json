@@ -1,0 +1,142 @@
+{
+  "platform_name": "Quantitative Crypto Platform (QCP)",
+  "master_specification_version": "1.0.0",
+  "architecture_classification": "Institutional Quantitative Trading & Research Platform",
+  "generated_at_utc": "2026-09-17T06:45:00Z",
+  "governance": {
+    "live_capital_permitted": false,
+    "current_live_capital_usd": 0.00,
+    "capital_firewall_status": "FAIL_CLOSED",
+    "order_submission_mode": "SIMULATED_PAPER_ONLY",
+    "max_portfolio_heat_pct": 3.00
+  },
+  "subsystem_layers": {
+    "foundation": {
+      "layer_index": 0,
+      "description": "Platform foundation, configuration, audit logging, correlation, secrets, clock, and registries",
+      "modules": [
+        "platform_core/foundation/config.py",
+        "platform_core/foundation/secrets_manager.py",
+        "platform_core/foundation/correlation.py",
+        "platform_core/foundation/clock.py",
+        "platform_core/foundation/audit_logger.py",
+        "platform_core/foundation/error_taxonomy.py",
+        "platform_core/foundation/feature_flags.py",
+        "platform_core/service_registry.py",
+        "platform_core/schema_registry.py"
+      ]
+    },
+    "market_data_os": {
+      "layer_index": 1,
+      "description": "Historical warehouse kline archives, 10 exchange-neutral data schemas, realtime WebSocket ingestion, gap detection",
+      "modules": [
+        "market_data/certified_research_universe.py",
+        "market_data/data_quality_engine.py",
+        "market_data/data_acquisition_governor.py",
+        "market_data/schemas/market_data_schemas.py",
+        "market_data/realtime/stream_manager.py",
+        "market_data/realtime/gap_detector.py",
+        "market_data/realtime/market_data_normalizer.py"
+      ]
+    },
+    "research_os": {
+      "layer_index": 2,
+      "description": "Empirical hypothesis formulation, causal backtesting, adversarial stress lab, experiment ledger, Strategy Graveyard",
+      "modules": [
+        "research/economic_evaluation_engine.py",
+        "research/adversarial_falsification_engine.py",
+        "research/autonomous_research_governor.py",
+        "research/opportunity_memory.py",
+        "research/lifecycle/experiment_ledger.py",
+        "research/lifecycle/strategy_graveyard.py",
+        "platform_core/promotion_governor.py"
+      ]
+    },
+    "strategy_factory": {
+      "layer_index": 3,
+      "description": "Pluggable base strategy interface supporting all 11 canonical crypto trading families",
+      "modules": [
+        "strategy_engine/factory/base_strategy.py",
+        "strategy_engine/factory/canonical_families.py",
+        "strategy_engine/canonical_signal_engine.py"
+      ]
+    },
+    "portfolio_intelligence": {
+      "layer_index": 4,
+      "description": "Multi-factor exposure decomposition, covariance shrinkage, volatility normalization, 3% heat ceiling",
+      "modules": [
+        "portfolio_engine/capital_allocator.py",
+        "portfolio_engine/alpha_exposure_graph.py",
+        "portfolio_engine/intelligence/risk_budget_allocator.py",
+        "portfolio_engine/hedging/hedging_engine.py"
+      ]
+    },
+    "risk_engine": {
+      "layer_index": 5,
+      "description": "7-dimensional portfolio risk firewall, pre-trade gates, autonomous kill switch, absolute veto authority",
+      "modules": [
+        "risk_engine/portfolio_risk_firewall.py",
+        "risk_engine/unified_risk_engine.py",
+        "platform_core/capital_barrier.py"
+      ]
+    },
+    "execution_os": {
+      "layer_index": 6,
+      "description": "Order intent, smart order router, algorithmic execution suite, universal multi-venue paper adapters",
+      "modules": [
+        "execution_gateway/execution_os/order_intent.py",
+        "execution_gateway/execution_os/smart_order_router.py",
+        "execution_gateway/execution_os/execution_algorithms.py",
+        "execution_gateway/venues/exchange_adapter_base.py",
+        "execution_gateway/venues/paper_venue_adapters.py"
+      ]
+    },
+    "derivatives_and_market_making": {
+      "layer_index": 7,
+      "description": "Analytical Black-76/Scholes options pricer, Greeks calculator, volatility surface, and Avellaneda-Stoikov market maker",
+      "modules": [
+        "derivatives_engine/options_pricer.py",
+        "derivatives_engine/volatility_surface.py",
+        "market_making/avellaneda_stoikov.py",
+        "market_making/inventory_manager.py"
+      ]
+    },
+    "low_latency_hft": {
+      "layer_index": 8,
+      "description": "In-memory ring buffer event bus, binary serialization, nanosecond latency telemetry, and profiling harness",
+      "modules": [
+        "low_latency/event_bus.py",
+        "low_latency/binary_serializer.py",
+        "low_latency/latency_telemetry.py"
+      ]
+    },
+    "production_and_forward_paper": {
+      "layer_index": 9,
+      "description": "Resilient 24/7 forward paper daemon with isolated telemetry, PID lock, and state crash recovery",
+      "modules": [
+        "production/forward_paper_daemon.py",
+        "production/paper_execution_harness.py",
+        "production/autonomous_platform_orchestrator.py"
+      ]
+    },
+    "security_and_enterprise": {
+      "layer_index": 10,
+      "description": "Multi-tenancy isolation, RBAC security, SaaS subscription billing abstraction, observability, and disaster recovery",
+      "modules": [
+        "multi_tenancy/tenant_manager.py",
+        "security/rbac_manager.py",
+        "billing/saas_engine.py",
+        "observability/metrics_collector.py",
+        "disaster_recovery/chaos_orchestrator.py"
+      ]
+    },
+    "web_and_admin": {
+      "layer_index": 11,
+      "description": "Modern institutional dashboard and administrative console with real-time telemetry and kill switch control",
+      "modules": [
+        "web_app/api_server.py",
+        "web_app/admin_console.py"
+      ]
+    }
+  }
+}

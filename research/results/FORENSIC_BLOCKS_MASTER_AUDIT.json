@@ -1,0 +1,247 @@
+{
+  "audit_timestamp_utc": "2026-09-17T06:21:43.140694+00:00",
+  "block_1_forward_paper": {
+    "daemon_alive": false,
+    "last_heartbeat_utc": "2026-09-16T13:54:17.545152+00:00",
+    "last_heartbeat_timestamp": 1789566857,
+    "last_processed_candles": {
+      "4h": 1789545600,
+      "1h": 1789560000,
+      "15m": 1789565400
+    },
+    "gap_count_recorded": 3,
+    "closed_paper_trades": 2,
+    "current_equity_usd": 985.58,
+    "net_pnl_usd": -14.42,
+    "realized_paper_expectancy_r": -1.202,
+    "active_positions_count": 0,
+    "telemetry_total_records": 2309,
+    "telemetry_unique_trades": 1074,
+    "telemetry_duplicate_trade_count": 365,
+    "telemetry_max_repetition": 21,
+    "contamination_detected": true,
+    "verdict": "FAIL_INTERRUPTED_AND_CONTAMINATED"
+  },
+  "block_2_fam03_dev": {
+    "candidate_id": "FAM-03-BREAKOUT_SOLUSDT_DEV",
+    "family": "BREAKOUT_RANGE_EXPANSION",
+    "symbol": "SOL/USDT",
+    "timeframe": "4h",
+    "dev_trades": 150,
+    "dev_gross_r": 0.2117,
+    "dev_net_r": 0.1786,
+    "dev_win_rate": 38.67,
+    "dev_profit_factor": 1.295,
+    "dev_max_drawdown_r": 11.05,
+    "causal_audit_passed": true,
+    "mean_without_top5pct_windfall": 0.0212,
+    "friction_2x_shock_mean": 0.0286,
+    "retained_edge_60m_latency": 0.1263,
+    "falsification_report": {
+      "alpha_id": "FAM-03-BREAKOUT_SOLUSDT_DEV",
+      "is_falsified": false,
+      "falsification_reason": null,
+      "causal_lookahead_detected": false,
+      "latency_robust": true,
+      "latency_decay_pct_at_60m": 29.29,
+      "friction_stress_survived_2x": true,
+      "windfall_independent": true,
+      "oos_sharpe_ratio": 1.52,
+      "audit_verdict": "QUALIFIED",
+      "returns_provenance": "MEASURED_CERTIFIED_DATA",
+      "returns_supplied": true,
+      "details": {
+        "mean_no_windfall_r": 0.0212,
+        "mean_stressed_2x_r": 0.0286,
+        "retained_edge_60m_r": 0.1263,
+        "returns_used": 150
+      }
+    },
+    "verdict": "QUALIFIED_DEV",
+    "rejection_reasons": []
+  },
+  "block_3_fam08_dev": {
+    "candidate_id": "FAM-08-VOLATILITY_SOLUSDT_DEV",
+    "family": "VOLATILITY_EXPANSION_6R",
+    "symbol": "SOL/USDT",
+    "timeframe": "4h",
+    "dev_trades": 66,
+    "dev_gross_r": 0.4494,
+    "dev_net_r": 0.4072,
+    "dev_win_rate": 31.82,
+    "dev_profit_factor": 1.571,
+    "dev_max_drawdown_r": 8.4,
+    "causal_audit_passed": true,
+    "mean_without_top5pct_windfall": 0.0493,
+    "friction_2x_shock_mean": 0.2572,
+    "retained_edge_60m_latency": 0.2879,
+    "falsification_report": {
+      "alpha_id": "FAM-08-VOLATILITY_SOLUSDT_DEV",
+      "is_falsified": false,
+      "falsification_reason": null,
+      "causal_lookahead_detected": false,
+      "latency_robust": true,
+      "latency_decay_pct_at_60m": 29.29,
+      "friction_stress_survived_2x": true,
+      "windfall_independent": true,
+      "oos_sharpe_ratio": 1.77,
+      "audit_verdict": "QUALIFIED",
+      "returns_provenance": "MEASURED_CERTIFIED_DATA",
+      "returns_supplied": true,
+      "details": {
+        "mean_no_windfall_r": 0.0493,
+        "mean_stressed_2x_r": 0.2572,
+        "retained_edge_60m_r": 0.2879,
+        "returns_used": 66
+      }
+    },
+    "verdict": "QUALIFIED_DEV",
+    "rejection_reasons": []
+  },
+  "baseline_fam07_dev": {
+    "candidate_id": "FAM-07-MTFCONT_SOLUSDT_DEV",
+    "family": "MTF_TREND_CONTINUATION",
+    "symbol": "SOL/USDT",
+    "timeframe": "4h",
+    "dev_trades": 215,
+    "dev_gross_r": 0.1441,
+    "dev_net_r": 0.1121,
+    "dev_win_rate": 40.0,
+    "dev_profit_factor": 1.192,
+    "dev_max_drawdown_r": 17.16,
+    "causal_audit_passed": true,
+    "mean_without_top5pct_windfall": -0.0155,
+    "friction_2x_shock_mean": -0.0379,
+    "retained_edge_60m_latency": 0.0793,
+    "falsification_report": {
+      "alpha_id": "FAM-07-MTFCONT_SOLUSDT_DEV",
+      "is_falsified": true,
+      "falsification_reason": "FAIL_TOP5_WINDFALL_REMOVAL",
+      "causal_lookahead_detected": false,
+      "latency_robust": true,
+      "latency_decay_pct_at_60m": 29.29,
+      "friction_stress_survived_2x": false,
+      "windfall_independent": false,
+      "oos_sharpe_ratio": 0.62,
+      "audit_verdict": "FRAGILE_REJECT",
+      "returns_provenance": "MEASURED_CERTIFIED_DATA",
+      "returns_supplied": true,
+      "details": {
+        "mean_no_windfall_r": -0.0155,
+        "mean_stressed_2x_r": -0.0379,
+        "retained_edge_60m_r": 0.0793,
+        "returns_used": 215
+      }
+    },
+    "verdict": "FALSIFIED_WINDFALL_DEPENDENT",
+    "rejection_reasons": [
+      "Top 5% windfall removal yields negative expectancy (-0.015R)"
+    ]
+  },
+  "block_4_alpha_independence": {
+    "correlation_matrix": {
+      "FAM-07-MTFCONT_SOLUSDT_DEV": {
+        "FAM-07-MTFCONT_SOLUSDT_DEV": 1.0,
+        "FAM-03-BREAKOUT_SOLUSDT_DEV": 0.1248,
+        "FAM-08-VOLATILITY_SOLUSDT_DEV": 0.0692
+      },
+      "FAM-03-BREAKOUT_SOLUSDT_DEV": {
+        "FAM-07-MTFCONT_SOLUSDT_DEV": 0.1248,
+        "FAM-03-BREAKOUT_SOLUSDT_DEV": 1.0,
+        "FAM-08-VOLATILITY_SOLUSDT_DEV": 0.0638
+      },
+      "FAM-08-VOLATILITY_SOLUSDT_DEV": {
+        "FAM-07-MTFCONT_SOLUSDT_DEV": 0.0692,
+        "FAM-03-BREAKOUT_SOLUSDT_DEV": 0.0638,
+        "FAM-08-VOLATILITY_SOLUSDT_DEV": 1.0
+      }
+    },
+    "downside_correlations": {
+      "FAM-07-MTFCONT_SOLUSDT_DEV__vs__FAM-03-BREAKOUT_SOLUSDT_DEV": -0.752,
+      "FAM-07-MTFCONT_SOLUSDT_DEV__vs__FAM-08-VOLATILITY_SOLUSDT_DEV": -0.8294,
+      "FAM-03-BREAKOUT_SOLUSDT_DEV__vs__FAM-08-VOLATILITY_SOLUSDT_DEV": -0.4921
+    },
+    "btc_betas": {
+      "FAM-07-MTFCONT_SOLUSDT_DEV": -0.0603,
+      "FAM-03-BREAKOUT_SOLUSDT_DEV": -0.2463,
+      "FAM-08-VOLATILITY_SOLUSDT_DEV": 0.4834
+    },
+    "distinct_economic_clusters": 1,
+    "portfolio_concentration_warning": true,
+    "cluster_summary": {
+      "0": [
+        "FAM-07-MTFCONT_SOLUSDT_DEV",
+        "FAM-03-BREAKOUT_SOLUSDT_DEV",
+        "FAM-08-VOLATILITY_SOLUSDT_DEV"
+      ]
+    }
+  },
+  "block_5_portfolio_allocator": {
+    "total_portfolio_equity_usd": 100000.0,
+    "current_portfolio_drawdown_pct": 0.0,
+    "max_portfolio_heat_pct": 3.0,
+    "total_allocated_heat_pct": 1.6257,
+    "is_capital_firewall_locked": true,
+    "firewall_veto_triggered": false,
+    "firewall_veto_reasons": [],
+    "allocated_strategies_count": 2,
+    "rejected_strategies_count": 1,
+    "allocations": {
+      "FAM-07-MTFCONT_SOLUSDT_DEV": {
+        "strategy_id": "FAM-07-MTFCONT_SOLUSDT_DEV",
+        "symbol": "SOL/USDT",
+        "is_allocated": false,
+        "recommended_risk_pct": 0.0,
+        "recommended_notional_usd": 0.0,
+        "allocation_weight_pct": 0.0,
+        "rejection_reasons": [
+          "LIFECYCLE_INELIGIBLE (FALSIFIED candidates receive $0 capital)",
+          "STATISTICAL_UNCERTAINTY_EXCEEDS_EDGE (E_adj=-0.0447R <= 0)"
+        ],
+        "throttling_notes": [],
+        "raw_proposed_risk_pct": 0.0,
+        "adjusted_edge_r": 0.0,
+        "covariance_discount_pct": 0.0,
+        "is_capped_by_strategy_ceiling": false,
+        "is_capped_by_asset_ceiling": false,
+        "is_capped_by_heat_ceiling": false
+      },
+      "FAM-03-BREAKOUT_SOLUSDT_DEV": {
+        "strategy_id": "FAM-03-BREAKOUT_SOLUSDT_DEV",
+        "symbol": "SOL/USDT",
+        "is_allocated": true,
+        "recommended_risk_pct": 0.1257,
+        "recommended_notional_usd": 6284.16,
+        "allocation_weight_pct": 4.19,
+        "rejection_reasons": [],
+        "throttling_notes": [
+          "Covariance penalty applied (47.7% reduction)"
+        ],
+        "raw_proposed_risk_pct": 0.1257,
+        "adjusted_edge_r": 0.0218,
+        "covariance_discount_pct": 47.69,
+        "is_capped_by_strategy_ceiling": false,
+        "is_capped_by_asset_ceiling": false,
+        "is_capped_by_heat_ceiling": false
+      },
+      "FAM-08-VOLATILITY_SOLUSDT_DEV": {
+        "strategy_id": "FAM-08-VOLATILITY_SOLUSDT_DEV",
+        "symbol": "SOL/USDT",
+        "is_allocated": true,
+        "recommended_risk_pct": 1.5,
+        "recommended_notional_usd": 75000.0,
+        "allocation_weight_pct": 95.81,
+        "rejection_reasons": [],
+        "throttling_notes": [
+          "Capped at strategy concentration ceiling (1.50%)"
+        ],
+        "raw_proposed_risk_pct": 2.8743,
+        "adjusted_edge_r": 0.2504,
+        "covariance_discount_pct": 0.0,
+        "is_capped_by_strategy_ceiling": true,
+        "is_capped_by_asset_ceiling": false,
+        "is_capped_by_heat_ceiling": false
+      }
+    }
+  }
+}

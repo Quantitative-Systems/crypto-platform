@@ -1,14 +1,18 @@
 import time
 from warehouse_loader import WarehouseLoader
 
-assets = ["BTC/USDT", "ETH/USDT", "SOL/USDT"]
+assets = [
+    "BTC/USDT", "ETH/USDT", "SOL/USDT", "BNB/USDT", "XRP/USDT", 
+    "ADA/USDT", "DOGE/USDT", "AVAX/USDT", "LINK/USDT", "LTC/USDT"
+]
+
 tf_limits = {
-    "1M": 200,
-    "1W": 1000,
-    "1D": 3000,
-    "4H": 15000,
-    "1H": 50000,
-    "15M": 50000
+    "1w": 300,
+    "1d": 1000,
+    "4h": 3000,
+    "15m": 5000,
+    "5m": 10000,
+    "1m": 15000
 }
 
 for asset in assets:

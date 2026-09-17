@@ -39,77 +39,46 @@ class AutonomousResearchFactory:
             family_enum = AlphaFamily[hypothesis.target_family]
         except KeyError:
             family_enum = AlphaFamily.DIRECTIONAL # Fallback
+            
+        from research.alpha_matrix.blueprints.scalp_blueprint import ScalpBlueprint
+        from research.alpha_matrix.blueprints.macro_scalp_blueprint import MacroScalpBlueprint
+        from research.alpha_matrix.blueprints.intraday_blueprint import IntradayBlueprint
+        from research.alpha_matrix.blueprints.swing_blueprint import SwingBlueprint
+        from research.alpha_matrix.blueprints.positional_blueprint import PositionalBlueprint
+        from research.alpha_matrix.blueprints.macro_investing_blueprint import MacroInvestingBlueprint
+        from research.alpha_matrix.timeframe_governor import TradingStyle
 
-        # V2: Map abstract hypotheses to tangible entry/exit heuristics dynamically
-        if hypothesis.target_family == "CARRY":
-            entry = "Harvest when net funding APR clears borrow + friction hurdle."
-            exit_m = "Exit when net funding APR decays below the hurdle."
-            features = ["annualized_funding_rate_bps", "spot_perp_basis_bps", "borrow_rate_apr"]
-            failure_modes = ["REGIME_FLIP", "FUNDING_INVERSION", "BORROW_SPIKE"]
-            holding_hours = 48.0
-        elif hypothesis.target_family == "RELATIVE_VALUE":
-            entry = "Enter on statistical divergence of z-score (> 2.0 sigma)."
-            exit_m = "Exit on mean reversion to fair value (z-score < 0.5 sigma)."
-            features = ["spread_zscore_4h", "cointegration_residual", "rolling_beta"]
-            failure_modes = ["STRUCTURAL_BREAK", "CORRELATION_BREAKDOWN"]
-            holding_hours = 24.0
-        elif hypothesis.target_family == "MICROSTRUCTURE":
-            entry = "Enter on order flow imbalance (OFI) skew with queue priority."
-            exit_m = "Micro-horizon scalp on book replenishment or latency timeout."
-            features = ["book_imbalance_top10", "trade_flow_skew", "spread_bps"]
-            failure_modes = ["LATENCY_DECAY", "ADVERSE_SELECTION", "QUEUE_CANCELLATION"]
-            holding_hours = 0.5
-        elif hypothesis.target_family == "ARBITRAGE":
-            entry = "Simultaneously execute opposing legs on cross-venue spread > 2x roundtrip fee."
-            exit_m = "Convergence of cross-venue price spread."
-            features = ["cross_venue_spread_bps", "venue_fill_probability", "transfer_latency_ms"]
-            failure_modes = ["LEG_EXECUTION_RISK", "WITHDRAWAL_HALT", "EXCHANGE_OUTAGE"]
-            holding_hours = 0.1
-        elif hypothesis.target_family == "MARKET_MAKING":
-            entry = "Post symmetric passive limit orders around mid-price adjusted for inventory skew."
-            exit_m = "Passive execution or inventory rebalancing threshold breach."
-            features = ["bid_ask_spread_bps", "order_book_depth_usd", "inventory_ratio"]
-            failure_modes = ["TOXIC_FLOW", "INVENTORY_ACCUMULATION", "FLASH_CRASH"]
-            holding_hours = 0.25
-        elif hypothesis.target_family == "EVENT_DRIVEN":
-            entry = "Fade post-liquidation cascade exhaustion with trailing stop."
-            exit_m = "Mean reversion to pre-shock VWAP or fixed R target."
-            features = ["liquidation_volume_usd", "cvd_exhaustion_print", "rebound_velocity"]
-            failure_modes = ["CASCADE_CONTINUATION", "LIQUIDITY_VACUUM"]
-            holding_hours = 4.0
-        elif hypothesis.target_family == "MACHINE_LEARNING":
-            entry = "Execute on non-linear ensemble probability forecast > threshold."
-            exit_m = "Time-decay horizon or forecast confidence degradation."
-            features = ["multi_scale_wavelet", "volatility_dispersion", "regime_entropy"]
-            failure_modes = ["OVERFITTING", "CONCEPT_DRIFT", "REGIME_SHIFT"]
-            holding_hours = 12.0
-        else: # DIRECTIONAL
-            entry = "Enter on momentum breakout confirmation above swing high."
-            exit_m = "ATR-based stop with trailing take-profit."
-            features = ["donchian_breakout_score", "volume_expansion_ratio", "adx_trend_strength"]
-            failure_modes = ["FALSE_BREAKOUT", "WHIPSAW", "REGIME_FLIP"]
-            holding_hours = 24.0
-
-        return AlphaGenome(
-            alpha_id=hypothesis.hypothesis_id,
-            family=family_enum,
-            version="v2.0",
-            asset_universe=[hypothesis.symbol],
-            venues=["BINANCE"],
-            instruments=["PERPETUAL"],
-            timeframe=hypothesis.timeframe,
-            expected_holding_period_hours=holding_hours,
-            economic_rationale=hypothesis.economic_rationale,
-            features=features,
-            entry_mechanism=entry,
-            exit_mechanism=exit_m,
-            microstructure=MicrostructureProfile(),
-            # ZERO performance: metrics are attached only by the evaluation engine.
-            performance=EconomicPerformance(),
-            regime_dependencies={"AUTONOMOUS_DISCOVERY": hypothesis.priority_score},
-            failure_modes=failure_modes,
-            lifecycle_state=AlphaLifecycleState.RESEARCH,
-        )
+        tf = hypothesis.timeframe
+        
+        # Route to the correct blueprint based on the timeframe constraints
+        if tf == "1m":
+            # MICRO_SCALP
+            genome = ScalpBlueprint.construct_statarb_genome(hypothesis.symbol)
+        elif tf == "5m":
+            # MACRO_SCALP
+            genome = MacroScalpBlueprint.construct_orderflow_genome(hypothesis.symbol)
+        elif tf in ["15m", "1h"]:
+            # INTRADAY
+            genome = IntradayBlueprint.construct_mean_reversion_genome(hypothesis.symbol)
+        elif tf == "4h":
+            # SWING
+            genome = SwingBlueprint.construct_momentum_genome(hypothesis.symbol)
+        elif tf == "1d":
+            # POSITIONAL
+            genome = PositionalBlueprint.construct_funding_arb_genome(hypothesis.symbol)
+        elif tf in ["1w", "1M"]:
+            # MACRO_INVESTING
+            genome = MacroInvestingBlueprint.construct_macro_trend_genome(hypothesis.symbol)
+        else:
+            # Fallback to positional if timeframe is unknown
+            genome = PositionalBlueprint.construct_funding_arb_genome(hypothesis.symbol)
+            
+        # Override the alpha_id with the hypothesis ID so it traces correctly
+        genome.alpha_id = hypothesis.hypothesis_id
+        genome.regime_dependencies={"AUTONOMOUS_DISCOVERY": hypothesis.priority_score}
+        genome.lifecycle_state = AlphaLifecycleState.RESEARCH
+        
+        return genome
 
     def generate_candidate_population(
         self, hypotheses: List[ResearchHypothesis], current_active_families: Optional[List[str]] = None

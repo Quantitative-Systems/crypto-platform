@@ -96,12 +96,16 @@ class CanonicalStrategySpec:
 def create_fam07_spec(
     symbol: str = "SOLUSDT",
     timeframe_set: int = 2,
-    lifecycle_state: StrategyLifecycleState = StrategyLifecycleState.QUALIFIED_ROBUST,
+    lifecycle_state: StrategyLifecycleState = StrategyLifecycleState.RESEARCH,
     notes: Optional[str] = None,
 ) -> CanonicalStrategySpec:
     """
     Factory creating canonical specification for Family 7: Multi-Timeframe Continuation.
     Default Set 2: HTF=1W, MTF=1D, LTF=4H.
+
+    IMPORTANT (F-04 fix): lifecycle_state defaults to RESEARCH (not QUALIFIED_ROBUST).
+    Any caller promoting this spec to a higher lifecycle state must pass the state
+    explicitly with a documented rationale.
     """
     tf_mapping = {
         1: {"HTF": "1M", "MTF": "1W", "LTF": "1D"},

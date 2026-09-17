@@ -8,7 +8,7 @@ import json
 import time
 import urllib.request
 from typing import List
-from market_intelligence.primitives import Candle
+from market_intelligence.primitives import Candle, FundingRate
 
 CACHE_DIR = os.path.join(os.path.dirname(__file__), "cache")
 
@@ -212,3 +212,132 @@ class BinanceFetcher:
                     raise RuntimeError(f"Binance live fetch failed for {symbol} {timeframe} after {max_retries} attempts: {e}")
                 time.sleep(1.0 * (attempt + 1))
         return []
+
+    @staticmethod
+    def fetch_historical_funding_rates(symbol: str, start_time_ms: int = None, end_time_ms: int = None, limit: int = 1000) -> List[FundingRate]:
+        """
+        Fetches historical perpetual futures funding rates from Binance fapi.
+        Results are cached locally.
+        """
+        os.makedirs(CACHE_DIR, exist_ok=True)
+        binance_symbol = symbol.replace("/", "").upper()
+        if binance_symbol.endswith("USD") and not binance_symbol.endswith("USDT"):
+            binance_symbol = binance_symbol.replace("USD", "USDT")
+            
+        cache_filename = f"binance_funding_{binance_symbol}.json"
+        cache_filepath = os.path.join(CACHE_DIR, cache_filename)
+        
+        all_rates = []
+        if os.path.exists(cache_filepath):
+            try:
+                with open(cache_filepath, "r") as f:
+                    all_rates = json.load(f)
+            except Exception:
+                pass
+                
+        # If cache exists and covers the range, return it
+        if all_rates and len(all_rates) > 0:
+            earliest_cached = all_rates[0]["fundingTime"]
+            latest_cached = all_rates[-1]["fundingTime"]
+            
+            needs_fetch = False
+            if start_time_ms is not None and start_time_ms < earliest_cached:
+                needs_fetch = True
+            if end_time_ms is not None and end_time_ms > latest_cached:
+                needs_fetch = True
+                
+            if not needs_fetch:
+                # Serve from cache
+                filtered = all_rates
+                if start_time_ms is not None:
+                    filtered = [r for r in filtered if r["fundingTime"] >= start_time_ms]
+                if end_time_ms is not None:
+                    filtered = [r for r in filtered if r["fundingTime"] <= end_time_ms]
+                    
+                selected = filtered[-limit:] if len(filtered) > limit else filtered
+                return [
+                    FundingRate(
+                        timestamp=int(r["fundingTime"]),
+                        symbol=symbol,
+                        funding_rate=float(r["fundingRate"]),
+                        mark_price=float(r.get("markPrice", 0.0))
+                    ) for r in selected
+                ]
+
+        print(f"📥 Fetching funding rates for {symbol} from Binance API...")
+        
+        # We need to fetch from API. Binance funding API returns oldest to newest.
+        current_start_time = start_time_ms if start_time_ms else 1577836800000
+        limit = 1000
+        
+        # Start from 2020-01-01 (1577836800000) instead of 0 because Binance might ignore 0
+        current_start_time = 1577836800000
+        
+        new_rates = []
+        
+        while True:
+            url = f"https://fapi.binance.com/fapi/v1/fundingRate?symbol={binance_symbol}&limit={limit}&startTime={current_start_time}"
+            if end_time_ms:
+                url += f"&endTime={end_time_ms}"
+                
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            
+            try:
+                with urllib.request.urlopen(req, timeout=10) as response:
+                    raw_json = json.loads(response.read().decode('utf-8'))
+                    
+                    if not raw_json:
+                        break
+                        
+                    new_rates.extend(raw_json)
+                    
+                    if len(raw_json) == 0:
+                        break
+                        
+                    # Next request's startTime is just after the newest rate in this chunk
+                    current_start_time = raw_json[-1]["fundingTime"] + 1
+                    
+                    time.sleep(0.2)
+            except Exception as e:
+                print(f"⚠️ Binance Funding Rate Fetch Alert: {e}. Stopping fetch.")
+                break
+                
+        # Merge new rates with cached rates
+        if new_rates:
+            merged = {r["fundingTime"]: r for r in all_rates}
+            for r in new_rates:
+                merged[r["fundingTime"]] = r
+                
+            sorted_merged = sorted(merged.values(), key=lambda x: x["fundingTime"])
+            
+            try:
+                with open(cache_filepath, "w") as f:
+                    json.dump(sorted_merged, f)
+            except Exception as e:
+                pass
+                
+            all_rates = sorted_merged
+            
+        filtered = all_rates
+        if start_time_ms is not None:
+            filtered = [r for r in filtered if r["fundingTime"] >= start_time_ms]
+        if end_time_ms is not None:
+            filtered = [r for r in filtered if r["fundingTime"] <= end_time_ms]
+            
+        selected = filtered[-limit:] if len(filtered) > limit else filtered
+        
+        parsed = []
+        for r in selected:
+            mark_price_str = r.get("markPrice", "")
+            mark_price = float(mark_price_str) if str(mark_price_str).strip() else 0.0
+            funding_rate_str = r.get("fundingRate", "0.0")
+            funding_rate = float(funding_rate_str) if str(funding_rate_str).strip() else 0.0
+            
+            parsed.append(FundingRate(
+                timestamp=int(r["fundingTime"]),
+                symbol=symbol,
+                funding_rate=funding_rate,
+                mark_price=mark_price
+            ))
+            
+        return parsed

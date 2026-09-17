@@ -16,6 +16,7 @@ Guarantees:
 """
 
 import os
+import uuid
 import sys
 import json
 import time
@@ -50,6 +51,7 @@ from portfolio_engine.portfolio_intelligence import (
 from production.telemetry.execution_telemetry import (
     ExecutionTelemetryLogger,
     TradeTelemetryRecord,
+    FORWARD_PAPER_LOG_NAME,
 )
 from production.qualification.forward_qualification_engine import (
     ForwardQualificationEngine,
@@ -114,14 +116,19 @@ class ForwardPaperDaemon:
         self,
         config: Optional[DaemonConfig] = None,
         strategy_spec: Optional[CanonicalStrategySpec] = None,
+        session_id: Optional[str] = None,
     ):
         self.config = config or DaemonConfig()
+        # S3 prep: lifecycle state must not be fiat-defaulted to QUALIFIED_ROBUST.
+        # The spec carries the research-derived state; daemon must not override it.
         self.spec = strategy_spec or create_fam07_spec(
             symbol=self.config.symbol,
             timeframe_set=2,
-            lifecycle_state=StrategyLifecycleState.QUALIFIED_ROBUST,
-            notes="Primary robust forward paper candidate",
+            notes="SOL/USDT Set 2 — forward paper validation run (state governed by PromotionGovernor)",
         )
+
+        # S1: One session UUID per daemon startup — identifies all records from this run.
+        self.session_id: str = session_id or str(uuid.uuid4())
 
         self.starting_capital = self.config.starting_capital
         self.current_equity = self.config.starting_capital
@@ -136,7 +143,15 @@ class ForwardPaperDaemon:
         self.cycle_logs: List[Dict[str, Any]] = []
 
         self.trade_manager = TradeManagementEngine()
-        self.telemetry = ExecutionTelemetryLogger()
+        # S1: Explicit forward-paper log directory + environment tag. No defaults.
+        _forward_log_dir = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            "research", "results", "telemetry",
+        )
+        self.telemetry = ExecutionTelemetryLogger.for_forward_paper(
+            log_dir=_forward_log_dir,
+            session_id=self.session_id,
+        )
         self.registry = CanonicalStrategyRegistry()
         self.signal_engine = CanonicalSignalEngine(self.spec)
 
@@ -451,8 +466,10 @@ class ForwardPaperDaemon:
 
                 pos.stage = PositionLifecycleStage.CLOSED_SL if hit_sl else PositionLifecycleStage.CLOSED_TP
 
-                # Telemetry record
+                # Telemetry record — S1: environment + session_id are mandatory
                 rec = TradeTelemetryRecord(
+                    environment="FORWARD_PAPER",
+                    session_id=self.session_id,
                     trade_id=pos.position_id,
                     strategy_id=pos.strategy_id,
                     symbol=pos.symbol,

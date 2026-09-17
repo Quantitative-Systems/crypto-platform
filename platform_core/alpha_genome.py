@@ -23,6 +23,9 @@ class AlphaFamily(str, enum.Enum):
     MICROSTRUCTURE = "MICROSTRUCTURE"
     MACHINE_LEARNING = "MACHINE_LEARNING"
     EVENT_DRIVEN = "EVENT_DRIVEN"
+    STAT_ARB = "STAT_ARB"
+    MOMENTUM = "MOMENTUM"
+    MEAN_REVERSION = "MEAN_REVERSION"
 
 
 class AlphaLifecycleState(str, enum.Enum):

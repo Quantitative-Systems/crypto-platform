@@ -15,6 +15,7 @@ Enforces:
 import os
 import sys
 import json
+import uuid
 from dataclasses import asdict
 from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional
@@ -66,6 +67,9 @@ class PaperExecutionHarness:
         specs: Optional[List[CanonicalStrategySpec]] = None,
         state_file: Optional[str] = None,
         audit_file: Optional[str] = None,
+        telemetry_dir: Optional[str] = None,
+        is_forward_daemon: bool = False,
+        session_id: Optional[str] = None,
     ):
         self.starting_capital = starting_capital
         self.current_equity = starting_capital
@@ -75,14 +79,16 @@ class PaperExecutionHarness:
         self.state_file = state_file or STATE_FILE
         self.audit_file = audit_file or PAPER_LOG_FILE
 
-        # Default to primary robust candidate FAM-07-MTFCONT_SOLUSDT_Set2
+        # S1: one session UUID per harness invocation — carried into every record.
+        self.session_id: str = session_id or str(uuid.uuid4())
+
+        # Default to primary FAM-07 candidate (lifecycle state NOT assumed — governed externally)
         if specs is None:
             self.specs = [
                 create_fam07_spec(
                     symbol="SOL/USDT",
                     timeframe_set=2,
-                    lifecycle_state=StrategyLifecycleState.QUALIFIED_ROBUST,
-                    notes="Primary robust research candidate (+107.41R aggregate, 100% stress pass).",
+                    notes="Research backtest (lifecycle state governed by PromotionGovernor).",
                 )
             ]
         else:
@@ -90,7 +96,22 @@ class PaperExecutionHarness:
 
         self.trade_manager = TradeManagementEngine()
         self.registry = CanonicalStrategyRegistry()
-        self.telemetry = ExecutionTelemetryLogger()
+
+        # S1: Telemetry isolation — research/sim ALWAYS goes to simulations/ sub-dir.
+        # The canonical forward telemetry path is reserved for the live daemon only.
+        if is_forward_daemon:
+            effective_telem_dir = telemetry_dir or os.path.join(RESULTS_DIR, "telemetry")
+            effective_env = "FORWARD_PAPER"
+        else:
+            effective_telem_dir = telemetry_dir or os.path.join(RESULTS_DIR, "telemetry", "simulations")
+            effective_env = "RESEARCH"
+
+        self.environment = effective_env
+        self.telemetry = ExecutionTelemetryLogger(
+            log_dir=effective_telem_dir,
+            environment=effective_env,
+            session_id=self.session_id,
+        )
         self.last_processed_timestamp = 0
         self.closed_trades: List[Dict[str, Any]] = []
         self.execution_events: List[Dict[str, Any]] = []
@@ -282,8 +303,10 @@ class PaperExecutionHarness:
                         if dd_pct > self.max_drawdown_pct:
                             self.max_drawdown_pct = dd_pct
 
-                    # Log telemetry record
+                    # Log telemetry record — S1: environment + session_id mandatory
                     rec = TradeTelemetryRecord(
+                        environment=self.environment,
+                        session_id=self.session_id,
                         trade_id=pos.position_id,
                         strategy_id=pos.strategy_id,
                         symbol=pos.symbol,

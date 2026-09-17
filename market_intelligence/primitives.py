@@ -118,6 +118,14 @@ class Candle:
     volume: float
 
 
+@dataclass(frozen=True)
+class FundingRate:
+    timestamp: int
+    symbol: str
+    funding_rate: float
+    mark_price: float = 0.0
+
+
 @dataclass
 class RawSwing:
     swing_id: str

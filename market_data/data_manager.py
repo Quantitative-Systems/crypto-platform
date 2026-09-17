@@ -15,12 +15,12 @@ from typing import Dict, List, Any, Optional, Tuple
 
 from market_data.binance_fetcher import BinanceFetcher
 from market_data.data_certifier import DataCertifier
-from market_intelligence.primitives import Candle
+from market_intelligence.primitives import Candle, FundingRate
 
 
 CACHE_DIR = os.path.join(os.path.dirname(__file__), "cache")
 ALL_TIMEFRAMES = ["1m", "5m", "15m", "1h", "4h", "1d", "1w", "1M"]
-ALL_ASSETS = ["BTC", "ETH", "SOL"]
+ALL_ASSETS = ["BTC", "ETH", "SOL", "BNB", "XRP", "ADA", "DOGE", "AVAX", "LINK", "LTC"]
 
 
 class CertificationState(str, Enum):
@@ -55,6 +55,41 @@ class DataManager:
         }
         clean_tf = tf_map.get(timeframe, tf_map.get(timeframe.upper(), timeframe.lower()))
         return os.path.join(CACHE_DIR, f"binance_{clean_sym}_{clean_tf}.json")
+
+    @staticmethod
+    def get_funding_rates(symbol: str) -> List[FundingRate]:
+        """Loads historical funding rates for a symbol from local cache or fetches if missing."""
+        clean_sym = symbol.replace("/", "").replace("-", "").upper()
+        if clean_sym.endswith("USD") and not clean_sym.endswith("USDT"):
+            clean_sym = clean_sym.replace("USD", "USDT")
+            
+        cache_filepath = os.path.join(CACHE_DIR, f"binance_funding_{clean_sym}.json")
+        
+        # Always fetch to ensure we have up to date rates if we haven't fetched recently
+        # But for backtesting, we just need whatever is in the cache or fetch it once.
+        if not os.path.exists(cache_filepath):
+            return BinanceFetcher.fetch_historical_funding_rates(symbol)
+            
+        try:
+            with open(cache_filepath, "r") as f:
+                raw_rates = json.load(f)
+                
+            rates = []
+            for r in raw_rates:
+                mark_price_str = r.get("markPrice", "")
+                mark_price = float(mark_price_str) if str(mark_price_str).strip() else 0.0
+                funding_rate_str = r.get("fundingRate", "0.0")
+                funding_rate = float(funding_rate_str) if str(funding_rate_str).strip() else 0.0
+                rates.append(FundingRate(
+                    timestamp=int(r["fundingTime"]),
+                    symbol=symbol,
+                    funding_rate=funding_rate,
+                    mark_price=mark_price
+                ))
+            return rates
+        except Exception as e:
+            print(f"Error loading funding rates for {symbol}: {e}")
+            return []
 
     @staticmethod
     def validate_candle_integrity(candles: List[Candle], timeframe: str) -> Dict[str, Any]:

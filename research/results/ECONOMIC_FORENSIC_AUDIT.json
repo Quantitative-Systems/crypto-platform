@@ -1,0 +1,63 @@
+{
+  "audit_name": "QCP Comprehensive Economic Forensic Audit",
+  "audit_date_utc": "2026-09-17T16:50:00Z",
+  "directive": "EABG-002/003 - Economic Bottleneck Discovery",
+  "inventory": {
+    "strategy_implementations": [
+      "11 Canonical Families (Trend, Mean Reversion, Breakout, Relative Value, Volatility, etc.)",
+      "TimeSeriesMomentumStrategy (TSMOM)"
+    ],
+    "validation_engines": [
+      "EconomicEvaluationEngine (Causal Triple-Barrier, Adverse-First)"
+    ],
+    "cost_models": [
+      "FrictionModel (23bps roundtrip for directional trades)",
+      "Relative Value friction (32bps roundtrip - 4 legs)"
+    ],
+    "telemetry": [
+      "forward_execution_telemetry.jsonl (contaminated by historical simulations and F-03 fail-open writes)"
+    ]
+  },
+  "evidence_integrity": {
+    "FAM-07-MTFCONT_SOLUSDT_Set2": {
+      "claimed_performance": "+278.32% (INADMISSIBLE)",
+      "actual_dev_performance": "-0.9066R expectancy (NEGATIVE)",
+      "actual_forward_performance": "-1.202R expectancy (NEGATIVE)",
+      "verdict": "FRAGILE / NEGATIVE"
+    },
+    "EABG_002_10_Asset_Discovery": {
+      "hypotheses_tested": 240,
+      "falsified": 240,
+      "survivors": 0,
+      "verdict": "FALSIFIED"
+    },
+    "EABG_003_TSMOM_Discovery": {
+      "hypotheses_tested": 320,
+      "falsified_phase1_baseline": 298,
+      "falsified_phase2_adversarial": 12,
+      "falsified_phase3_oos": 10,
+      "survivors": 0,
+      "verdict": "FALSIFIED"
+    },
+    "FAM_09_Relative_Value": {
+      "hypotheses_tested": 6,
+      "falsified": 6,
+      "reason": "Fails Engle-Granger/Johansen cointegration tests (high half-life).",
+      "verdict": "FALSIFIED"
+    },
+    "Friction_Model_Reconciliation": {
+      "verdict": "CONTRADICTION_RESOLVED",
+      "reason": "The 32bps friction model applies to 4-leg Relative Value pairs (4 x 8bps). The 23bps friction model applies to 2-leg directional strategies (2 x 11.5bps). Both models are accurate and aggressively realistic."
+    }
+  },
+  "economic_bottleneck": {
+    "primary_constraint": "Signal/Edge Quality",
+    "description": "The execution infrastructure is structurally sound, rigorously preventing look-ahead bias and applying realistic friction. The constraint is not the architecture. The constraint is that the baseline heuristic signals (basic mean reversion, trend continuation, breakouts, TSMOM) yield a gross expected return that is structurally lower than the deterministic execution friction (23-32 bps roundtrip).",
+    "conclusion": "The platform suffers from a 'weak gross signal, high structural friction' problem."
+  },
+  "next_experiment": {
+    "id": "EABG-004",
+    "name": "Market Microstructure / Order Book Imbalance Discovery",
+    "rationale": "Since high structural friction destroys low-frequency heuristic edge, the next experiment must either (A) move to a much higher frequency where we earn the spread instead of paying it (Market Making) or (B) utilize structural microstructure features (order book imbalance, funding rate arbitrage) that possess significantly higher predictive power than price-only heuristics."
+  }
+}

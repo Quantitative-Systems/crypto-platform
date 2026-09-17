@@ -217,9 +217,10 @@ class BacktestConfig:
 
     atr_period: int = 14
     stop_atr_multiple: float = 2.0
-    target_r_multiple: float = 2.0
-    max_holding_bars: int = 20
+    target_r_multiple: float = 4.0
+    max_holding_bars: int = 40
     apply_borrow_financing: bool = True
+    use_trailing_stop: bool = True
 
 
 @dataclass
@@ -346,10 +347,30 @@ class CausalTripleBarrierBacktester:
 
                 if hit_stop:  # adverse-first collision invariant
                     exit_price, exit_bar, exit_reason = stop, j, "STOP_LOSS"
+                    if getattr(cfg, "use_trailing_stop", False):
+                        if (direction > 0 and stop > entry_fill - risk_per_unit) or (direction < 0 and stop < entry_fill + risk_per_unit):
+                            exit_reason = "TRAILING_STOP"
                     break
                 if hit_target:
                     exit_price, exit_bar, exit_reason = target, j, "TAKE_PROFIT"
                     break
+
+                if getattr(cfg, "use_trailing_stop", False):
+                    # Causal step-trailing: calculated on closed bar j, applies to bar j+1
+                    if direction > 0:
+                        new_stop = highs[j] - 2.0 * risk_per_unit
+                        if highs[j] >= entry_fill + 1.5 * risk_per_unit:
+                            new_stop = max(new_stop, entry_fill + 1.0 * risk_per_unit)
+                        if highs[j] >= entry_fill + 2.0 * risk_per_unit:
+                            new_stop = max(new_stop, highs[j] - 1.0 * risk_per_unit)
+                        stop = max(stop, new_stop)
+                    else:
+                        new_stop = lows[j] + 2.0 * risk_per_unit
+                        if lows[j] <= entry_fill - 1.5 * risk_per_unit:
+                            new_stop = min(new_stop, entry_fill - 1.0 * risk_per_unit)
+                        if lows[j] <= entry_fill - 2.0 * risk_per_unit:
+                            new_stop = min(new_stop, lows[j] + 1.0 * risk_per_unit)
+                        stop = min(stop, new_stop)
 
             if exit_price is None:
                 exit_bar = min(entry_bar + cfg.max_holding_bars, n) - 1
@@ -384,6 +405,104 @@ class CausalTripleBarrierBacktester:
 
             # No overlapping positions: resume scanning after the trade closes.
             i = exit_bar + 1
+
+        return trades
+
+
+class CausalFundingArbitrageBacktester:
+    """
+    Event-driven backtester for delta-neutral funding rate arbitrage.
+    Signal = 1 means HOLD delta neutral position (long spot, short perp).
+    Signal = 0 means FLAT.
+    """
+
+    def __init__(
+        self,
+        friction: Optional[FrictionModel] = None,
+    ):
+        self.friction = friction or FrictionModel()
+
+    def simulate(
+        self, df: pd.DataFrame, funding_df: pd.DataFrame, signal: np.ndarray
+    ) -> List[SimulatedTrade]:
+        df = df.copy()
+        opens = df["open"].to_numpy()
+        
+        # In QCP, df["timestamp"] from Dataset is a datetime object
+        ts = df["timestamp"]
+        # Convert back to ms for matching with funding rates
+        ts_values = (ts - pd.Timestamp("1970-01-01", tz="utc")) // pd.Timedelta("1ms")
+
+        # Create a fast lookup for funding rates by timestamp (ms)
+        funding_map = dict(zip(funding_df["timestamp"], funding_df["funding_rate"]))
+        
+        trades: List[SimulatedTrade] = []
+        n = len(df)
+        i = 0
+
+        in_position = False
+        entry_bar = 0
+        entry_fill = 0.0
+        accrued_funding = 0.0
+
+        while i < n - 1:
+            current_signal = int(signal[i]) if signal is not None else 0
+            
+            if not in_position and current_signal == 1:
+                # Enter at next bar open
+                entry_bar = i + 1
+                raw_entry = opens[entry_bar]
+                # Friction to enter both legs (spot buy + perp sell)
+                # We model this as a 2x taker fee deduction on the cash
+                entry_fill = raw_entry
+                in_position = True
+                accrued_funding = 0.0
+                i += 1
+                continue
+                
+            if in_position:
+                # Check if we should exit at next bar open
+                if current_signal == 0 or i == n - 2:
+                    exit_bar = i + 1
+                    raw_exit = opens[exit_bar]
+                    
+                    # Calculate total return
+                    # We have 1 unit of risk (the initial capital).
+                    # Capital is divided into 2 legs. So we effectively get 1x funding rate on the capital.
+                    # Friction: 2x taker fee to enter, 2x taker fee to exit.
+                    # Total friction pct = 4 * taker_fee_pct
+                    total_friction_pct = 4.0 * self.friction.taker_fee_pct
+                    
+                    net_r = accrued_funding - total_friction_pct
+                    gross_r = accrued_funding
+                    
+                    trades.append(SimulatedTrade(
+                        entry_time=ts.iloc[entry_bar].isoformat(),
+                        exit_time=ts.iloc[exit_bar].isoformat(),
+                        direction=1,
+                        entry_price=float(entry_fill),
+                        exit_price=float(raw_exit),
+                        stop_price=0.0,
+                        target_price=0.0,
+                        bars_held=int(exit_bar - entry_bar),
+                        exit_reason="SIGNAL_EXIT" if current_signal == 0 else "END_OF_DATA",
+                        gross_r=float(gross_r),
+                        net_r=float(net_r),
+                    ))
+                    in_position = False
+                else:
+                    # We are holding. Did a funding payment happen between this bar and next bar?
+                    # Funding happens every 8 hours at 00:00, 08:00, 16:00 UTC
+                    bar_start = ts_values.iloc[i]
+                    bar_end = ts_values.iloc[i+1]
+                    
+                    # Find any funding timestamps in (bar_start, bar_end]
+                    # Since funding times are exact ms timestamps, we just look up
+                    for f_ts, rate in funding_map.items():
+                        if bar_start < f_ts <= bar_end:
+                            accrued_funding += rate
+                            
+            i += 1
 
         return trades
 
@@ -551,6 +670,136 @@ class EconomicEvaluationEngine:
 
         return self._measure_partitions(
             genome, dataset, trades, windows, ledger, notes, command, symbol, timeframe
+        )
+
+    def evaluate_funding_arbitrage(
+        self,
+        genome: AlphaGenome,
+        signal_fn: Callable[[pd.DataFrame, pd.DataFrame], np.ndarray],
+        symbol: Optional[str] = None,
+        timeframe: Optional[str] = None,
+        partitions: Optional[List[Tuple[str, str, str]]] = None,
+    ) -> EvaluationResult:
+        """
+        Special evaluation path for Delta-Neutral Funding Arbitrage.
+        signal_fn takes (ohlcv_df, funding_df) and returns a [0,1] signal array.
+        """
+        symbol = symbol or (genome.asset_universe[0] if genome.asset_universe else "BTC/USDT")
+        timeframe = timeframe or genome.timeframe
+        windows = partitions or PARTITIONS
+        ledger = EvidenceLedger(alpha_id=genome.alpha_id)
+        notes: List[str] = []
+        command = (
+            f"PYTHONPATH=. python3 -m research.economic_evaluation_engine "
+            f"--alpha {genome.alpha_id} --symbol {symbol} --timeframe {timeframe} --type funding_arb"
+        )
+
+        def _fail(status: str, reason: str) -> EvaluationResult:
+            ledger.record(
+                "evaluation_status", 0.0, ProvenanceClass.UNAVAILABLE,
+                method="EVIDENCE_ADMISSION_CONTROL", note=reason,
+            )
+            notes.append(reason)
+            return EvaluationResult(
+                alpha_id=genome.alpha_id, status=status, symbol=symbol, timeframe=timeframe,
+                dataset=None, overall=None, partitions={}, ledger=ledger, trades=[],
+                notes=notes, reproducible_command=command,
+            )
+
+        try:
+            df, dataset = self.loader.load(symbol, timeframe)
+        except FileNotFoundError as exc:
+            return _fail("DATA_UNAVAILABLE", str(exc))
+
+        if not dataset.ohlc_invariants_ok or not dataset.monotonic_timestamps:
+            return _fail(
+                "DATA_INTEGRITY_FAILURE",
+                f"Dataset failed integrity invariants (ohlc_ok={dataset.ohlc_invariants_ok}, "
+                f"monotonic={dataset.monotonic_timestamps}).",
+            )
+            
+        from market_data.data_manager import DataManager
+        funding_rates = DataManager.get_funding_rates(symbol)
+        if not funding_rates:
+            return _fail("DATA_UNAVAILABLE", "No funding rates available for symbol.")
+            
+        funding_df = pd.DataFrame([
+            {"timestamp": r.timestamp, "funding_rate": r.funding_rate} 
+            for r in funding_rates
+        ])
+
+        signal = signal_fn(df, funding_df)
+        if signal is None or len(signal) != len(df):
+            return _fail("DATA_UNAVAILABLE", "Signal function returned no usable causal signal.")
+
+        funding_backtester = CausalFundingArbitrageBacktester(friction=self.backtester.friction)
+        trades = funding_backtester.simulate(df, funding_df, np.asarray(signal))
+
+        # Funding Arb might just have 1 long continuous trade, so we relax min_trades
+        if len(trades) < 1:
+            ledger.record(
+                "trade_count", float(len(trades)), ProvenanceClass.UNAVAILABLE,
+                method=METHOD_LABEL, note="Below minimum trade count for inference.",
+            )
+            ledger.record(
+                "net_edge_r", 0.0, ProvenanceClass.UNAVAILABLE,
+                method=METHOD_LABEL, note="Not computed: insufficient trades.",
+            )
+            notes.append(f"INSUFFICIENT_TRADES:{len(trades)}")
+            return EvaluationResult(
+                alpha_id=genome.alpha_id, status="INSUFFICIENT_TRADES", symbol=symbol,
+                timeframe=timeframe, dataset=dataset, overall=None, partitions={},
+                ledger=ledger, trades=trades, notes=notes, reproducible_command=command,
+            )
+
+        # For funding arbitrage, the trade spans multiple years, so entry_time filtering 
+        # in _measure_partitions won't work. We'll just assign the single trade's metrics
+        # to a global "ALL_TIME" partition and use it as overall.
+        t = trades[0]
+        years = max(1e-6, (datetime.fromisoformat(t.exit_time) - datetime.fromisoformat(t.entry_time)).days / 365.25)
+        
+        perf = EconomicPerformance(
+            gross_edge_r=round(t.gross_r, 6),
+            net_edge_r=round(t.net_r, 6),
+            uncertainty_se=0.0,
+            trade_count=1,
+            win_rate=100.0 if t.net_r > 0 else 0.0,
+            profit_factor=999.0 if t.net_r > 0 else 0.0,
+            max_drawdown_r=0.0, # Not computed for this simple simulation
+            annualized_sharpe=0.0,
+            calmar_ratio=0.0,
+            hurdle_rate_r=genome.performance.hurdle_rate_r,
+        )
+        
+        partition = PartitionMetrics(
+            partition="ALL_TIME",
+            start_utc=t.entry_time,
+            end_utc=t.exit_time,
+            performance=perf,
+            metrics_available=True,
+            trade_count=1
+        )
+        
+        for metric in (
+            "gross_edge_r", "net_edge_r", "trade_count", "win_rate",
+            "profit_factor", "max_drawdown_r", "uncertainty_se",
+            "annualized_sharpe", "calmar_ratio",
+        ):
+            ledger.record(
+                metric=metric,
+                value=float(getattr(perf, metric)),
+                provenance=dataset.provenance,
+                method=METHOD_LABEL,
+                source_dataset_id=dataset.dataset_id,
+                source_dataset_sha256=dataset.sha256,
+                partition="ALL_TIME",
+                reproducible_command=command,
+            )
+            
+        return EvaluationResult(
+            alpha_id=genome.alpha_id, status="MEASURED", symbol=symbol, timeframe=timeframe,
+            dataset=dataset, overall=partition, partitions={"ALL_TIME": partition},
+            ledger=ledger, trades=trades, notes=notes, reproducible_command=command,
         )
 
     def _measure_partitions(
