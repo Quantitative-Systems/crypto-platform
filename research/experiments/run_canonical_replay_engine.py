@@ -31,14 +31,15 @@ from risk_engine.contracts.risk_config import RiskConfig
 from strategy_engine.contracts.strategy_state import CandidateState
 
 ASSETS = ["BTC", "ETH", "SOL"]
-TF_SETS = ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5"]
+TF_SETS = ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5", "SET_6"]
 
 TF_SET_METADATA = {
     "SET_1": {"label": "SET_1 (1M -> 1W -> 1D, Macro)", "htf": "1M", "mtf": "1w", "ltf": "1d"},
     "SET_2": {"label": "SET_2 (1W -> 1D -> 4H, Position)", "htf": "1w", "mtf": "1d", "ltf": "4h"},
     "SET_3": {"label": "SET_3 (1D -> 4H -> 1H, Swing)", "htf": "1d", "mtf": "4h", "ltf": "1h"},
     "SET_4": {"label": "SET_4 (4H -> 1H -> 15M, Intraday)", "htf": "4h", "mtf": "1h", "ltf": "15m"},
-    "SET_5": {"label": "SET_5 (15M -> 5M -> 1M, Intraday Scalping)", "htf": "15m", "mtf": "5m", "ltf": "1m"},
+    "SET_5": {"label": "SET_5 (1H -> 15M -> 5M, Short-Term Intraday)", "htf": "1h", "mtf": "15m", "ltf": "5m"},
+    "SET_6": {"label": "SET_6 (15M -> 5M -> 1M, Scalping)", "htf": "15m", "mtf": "5m", "ltf": "1m"},
 }
 
 

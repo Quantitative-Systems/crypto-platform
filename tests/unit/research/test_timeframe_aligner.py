@@ -19,11 +19,9 @@ def make_candle(ts: int, close_p: float = 100.0) -> Candle:
 
 
 def test_canonical_sets_completeness():
-    assert "SET_1" in CANONICAL_TIMEFRAME_SETS
-    assert "SET_2" in CANONICAL_TIMEFRAME_SETS
-    assert "SET_3" in CANONICAL_TIMEFRAME_SETS
-    assert "SET_4" in CANONICAL_TIMEFRAME_SETS
-    assert "SET_5" in CANONICAL_TIMEFRAME_SETS
+    assert len(CANONICAL_TIMEFRAME_SETS) == 6
+    for set_id in ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5", "SET_6"]:
+        assert set_id in CANONICAL_TIMEFRAME_SETS
 
     s4 = TimeframeAligner.get_set("SET_4")
     assert s4.htf == "4H"
@@ -31,9 +29,14 @@ def test_canonical_sets_completeness():
     assert s4.ltf == "15M"
 
     s5 = TimeframeAligner.get_set("SET_5")
-    assert s5.htf == "15M"
-    assert s5.mtf == "5M"
-    assert s5.ltf in ["1m", "1M"]
+    assert s5.htf == "1H"
+    assert s5.mtf == "15M"
+    assert s5.ltf == "5M"
+
+    s6 = TimeframeAligner.get_set("SET_6")
+    assert s6.htf == "15M"
+    assert s6.mtf == "5M"
+    assert s6.ltf == "1m"
 
 
 def test_point_in_time_filtering_excludes_future_and_open_candles():

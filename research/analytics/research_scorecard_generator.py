@@ -288,7 +288,7 @@ def evaluate_hypothesis_on_development(hypothesis_id: str) -> Dict[str, Any]:
 
     # 2. Timeframe Set Breakdown
     tf_breakdown = {}
-    for s_id in ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5"]:
+    for s_id in ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5", "SET_6"]:
         tf_r = [r_multiples[i] for i, t in enumerate(filtered_trades) if s_id == str(t.get("timeframe_set", ""))]
         if tf_r:
             tf_breakdown[s_id] = {

@@ -38,7 +38,7 @@ from research.experiments.experiment_engine import ExperimentEngine
 
 
 ASSETS = ["BTC", "ETH", "SOL"]
-TF_SETS = ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5"]
+TF_SETS = ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5", "SET_6"]
 
 
 def run_stream_with_reentry_rule(

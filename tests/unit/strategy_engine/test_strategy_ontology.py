@@ -3,7 +3,7 @@ Unit Tests for Canonical Strategy Ontology & Invariants
 Validates:
 1. Single executable strategy (UnifiedStrategy)
 2. Contextual attribution (PULLBACK vs CONTINUATION)
-3. 5 Canonical Timeframe Sets (SET_1 to SET_5)
+3. 6 Canonical Timeframe Sets (SET_1 to SET_6)
 4. Strict Directional Geometry (Long & Short)
 5. Minimum Planned RR Floor (RR >= 4.0R)
 6. Maximum Account Risk Ceiling (Risk <= 1.0%)
@@ -22,7 +22,7 @@ from strategy_engine.hypotheses.unified_strategy import UnifiedStrategy
 from strategy_engine.lifecycle.candidate_tracker import CandidateSetup, CandidateTracker
 from strategy_engine.coordinator.strategy_coordinator import StrategyCoordinator
 from research.replayer.timeframe_aligner import TimeframeAligner, CANONICAL_TIMEFRAME_SETS
-from config.timeframe_sets import TIMEFRAME_SETS, TimeframeSetID
+from config.timeframe_sets import TIMEFRAME_SETS, TimeframeSetID, CANONICAL_6_TIMEFRAME_SETS
 from risk_engine.contracts.account_state import AccountState
 from risk_engine.contracts.risk_config import RiskConfig
 from risk_engine.contracts.risk_plan import RiskApprovedPlan
@@ -74,30 +74,32 @@ def make_dummy_payload(
     )
 
 
-def test_timeframe_matrix_5_sets():
-    """Validates that all 5 canonical timeframe sets are registered with correct scales."""
-    assert len(CANONICAL_TIMEFRAME_SETS) == 5
-    assert "SET_1" in CANONICAL_TIMEFRAME_SETS
-    assert "SET_2" in CANONICAL_TIMEFRAME_SETS
-    assert "SET_3" in CANONICAL_TIMEFRAME_SETS
-    assert "SET_4" in CANONICAL_TIMEFRAME_SETS
-    assert "SET_5" in CANONICAL_TIMEFRAME_SETS
+def test_timeframe_matrix_six_sets():
+    """Validates the authoritative 6-Set ladder (SET_1..SET_6) across config and replayer."""
+    assert len(CANONICAL_TIMEFRAME_SETS) == 6
+    assert len(CANONICAL_6_TIMEFRAME_SETS) == 6
+    for set_id in ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5", "SET_6"]:
+        assert set_id in CANONICAL_TIMEFRAME_SETS
 
     s1 = TimeframeAligner.get_set("SET_1")
     assert s1.htf == "1M" and s1.mtf == "1W" and s1.ltf == "1D"
 
     s5 = TimeframeAligner.get_set("SET_5")
-    assert s5.htf == "15M" and s5.mtf == "5M" and s5.ltf in ["1m", "1M"]
+    assert s5.htf == "1H" and s5.mtf == "15M" and s5.ltf == "5M"
 
-    # Reconcile config source of truth
+    s6 = TimeframeAligner.get_set("SET_6")
+    assert s6.htf == "15M" and s6.mtf == "5M" and s6.ltf == "1m"
+
+    # Configuration layer must agree with the replayer on every set (single source of truth)
+    for set_id, cfg in CANONICAL_6_TIMEFRAME_SETS.items():
+        replayer_set = TimeframeAligner.get_set(set_id)
+        assert (cfg.htf, cfg.mtf, cfg.ltf) == (replayer_set.htf, replayer_set.mtf, replayer_set.ltf)
+
+    # The legacy 5-set alias table remains available for historical artifacts
     assert len(TIMEFRAME_SETS) == 5
-    assert TimeframeSetID.SET_1_INVESTING in TIMEFRAME_SETS
-    assert TimeframeSetID.SET_2_POSITION in TIMEFRAME_SETS
-    assert TimeframeSetID.SET_3_SWING in TIMEFRAME_SETS
-    assert TimeframeSetID.SET_4_INTRADAY in TIMEFRAME_SETS
     assert TimeframeSetID.SET_5_SCALPING in TIMEFRAME_SETS
-    cfg_s5 = TIMEFRAME_SETS[TimeframeSetID.SET_5_SCALPING]
-    assert cfg_s5.htf == "15M" and cfg_s5.mtf == "5M" and cfg_s5.ltf == "1m"
+    cfg_legacy = TIMEFRAME_SETS[TimeframeSetID.SET_5_SCALPING]
+    assert cfg_legacy.htf == "15M" and cfg_legacy.mtf == "5M" and cfg_legacy.ltf == "1m"
 
 
 def test_single_executable_strategy_ontology():

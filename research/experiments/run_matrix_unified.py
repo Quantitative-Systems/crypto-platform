@@ -7,7 +7,8 @@ Executes the Frozen Canonical Unified State Machine across 15 independent stream
       SET_2 (1W -> 1D -> 4H, Position)
       SET_3 (1D -> 4H -> 1H, Swing)
       SET_4 (4H -> 1H -> 15M, Intraday)
-      SET_5 (15M -> 5M -> 1M, Intraday Scalping)
+      SET_5 (1H -> 15M -> 5M, Short-Term Intraday)
+  -   SET_6 (15M -> 5M -> 1M, Scalping)
 Period: Canonical certified 2023 annual benchmark (2023-01-01 to 2024-01-01, 365 days).
 """
 
@@ -32,14 +33,15 @@ from strategy_engine.contracts.strategy_state import CandidateState
 
 
 ASSETS = ["BTC", "ETH", "SOL"]
-TF_SETS = ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5"]
+TF_SETS = ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5", "SET_6"]
 
 TF_SET_LABELS = {
     "SET_1": "SET_1 (1M -> 1W -> 1D)",
     "SET_2": "SET_2 (1W -> 1D -> 4H)",
     "SET_3": "SET_3 (1D -> 4H -> 1H)",
     "SET_4": "SET_4 (4H -> 1H -> 15M)",
-    "SET_5": "SET_5 (15M -> 5M -> 1M)"
+    "SET_5": "SET_5 (1H -> 15M -> 5M)",
+    "SET_6": "SET_6 (15M -> 5M -> 1M)"
 }
 
 

@@ -232,13 +232,32 @@ class EmpiricalAlphaDiscoveryEngine:
             # Build parameter variants to search the economic transformation space
             variants = self._generate_strategy_variants(hyp, df, loaded_dfs)
 
-            for var_name, signal_fn, config in variants:
+            for var_name, signal_fn, configs in variants:
                 tested_variants_count += 1
                 exp_id = self._next_experiment_id()
                 cand_id = f"CAND-{hyp.target_family}-{hyp.symbol.replace('/', '')}-{var_name}"
 
-                # Causal backtest across DEV / VAL / OOS
-                dev_res = self._backtest_partition(df, signal_fn, config, "DEV", "2021-01-01", "2022-12-31")
+                # Walk-Forward Optimization on DEV partition
+                best_config = None
+                best_dev_res = None
+                best_dev_score = -float('inf')
+
+                for cfg in configs:
+                    dev_res = self._backtest_partition(df, signal_fn, cfg, "DEV", "2021-01-01", "2022-12-31")
+                    # Score by net expectancy, require some minimum trades for statistical significance
+                    if dev_res.trade_count >= 20 and dev_res.net_edge_r > best_dev_score:
+                        best_dev_score = dev_res.net_edge_r
+                        best_dev_res = dev_res
+                        best_config = cfg
+                
+                if best_config is None:
+                    # Fallback if no config met trade thresholds
+                    best_config = configs[0]
+                    best_dev_res = self._backtest_partition(df, signal_fn, best_config, "DEV", "2021-01-01", "2022-12-31")
+
+                # Causal backtest across VAL / OOS using the optimized config
+                dev_res = best_dev_res
+                config = best_config
                 val_res = self._backtest_partition(df, signal_fn, config, "VAL", "2023-01-01", "2023-12-31")
                 oos_res = self._backtest_partition(df, signal_fn, config, "OOS", "2024-01-01", "2026-09-01")
 
@@ -247,9 +266,9 @@ class EmpiricalAlphaDiscoveryEngine:
                 rejection_reason = None
                 verdict = "SURVIVED_OOS"
 
-                if dev_res.trade_count < 15:
+                if total_trades < 100:
                     verdict = "FALSIFIED"
-                    rejection_reason = f"Insufficient DEV trades ({dev_res.trade_count} < 15)"
+                    rejection_reason = f"Insufficient trades ({total_trades} < 100)"
                 elif dev_res.gross_edge_r > 0 and dev_res.net_edge_r <= 0:
                     verdict = "FALSIFIED"
                     rejection_reason = "FRICTION_OVERWHELMED: Gross profit wiped out by decomposed taker fees & slippage"
@@ -508,58 +527,46 @@ class EmpiricalAlphaDiscoveryEngine:
         hypothesis: ResearchHypothesis,
         df: pd.DataFrame,
         all_dfs: Dict[str, pd.DataFrame],
-    ) -> List[Tuple[str, Callable[[pd.DataFrame], np.ndarray], BacktestConfig]]:
+    ) -> List[Tuple[str, Callable[[pd.DataFrame], np.ndarray], List[BacktestConfig]]]:
         variants = []
-        tf = hypothesis.timeframe
+        
+        from research.alpha_signal_library import build_signal_registry
+        from research.market_regime import detect_regime
+        
+        configs = []
+        for atr_p in [14]:
+            for stop_m in [1.5, 2.0]:
+                for tgt_m in [2.0, 4.0]:
+                    cfg = BacktestConfig(
+                        atr_period=atr_p, 
+                        stop_atr_multiple=stop_m, 
+                        target_r_multiple=tgt_m, 
+                        max_holding_bars=40
+                    )
+                    setattr(cfg, "use_trailing_stop", True)
+                    configs.append(cfg)
 
-        if hypothesis.target_family == "RELATIVE_VALUE":
-            ref_sym = "BTC/USDT"
-            if ref_sym in all_dfs:
-                ref_df = all_dfs[ref_sym]
-                from research.alpha_signal_library import make_relative_value_signal
-                # Variant 1: 1.5 sigma divergence, 2R target
-                variants.append((
-                    "RV_Z1.5_T2.0",
-                    make_relative_value_signal(ref_df, entry_z=1.5, lookback=100),
-                    BacktestConfig(atr_period=14, stop_atr_multiple=2.0, target_r_multiple=2.0, max_holding_bars=18),
-                ))
-                # Variant 2: 2.0 sigma extreme divergence, 2.5R target
-                variants.append((
-                    "RV_Z2.0_T2.5",
-                    make_relative_value_signal(ref_df, entry_z=2.0, lookback=150),
-                    BacktestConfig(atr_period=14, stop_atr_multiple=2.5, target_r_multiple=2.5, max_holding_bars=24),
-                ))
+        registry = build_signal_registry()
+        for signal_id, spec in registry.items():
+            if not spec.is_measurable:
+                continue
+                
+            # Filter by matching target family string roughly
+            if hypothesis.target_family == "TREND_MOMENTUM" and not signal_id.startswith("TRND"):
+                continue
+            if hypothesis.target_family == "VOLATILITY_SQUEEZE" and not signal_id.startswith("VOL"):
+                continue
 
-        elif hypothesis.target_family in ("DIRECTIONAL", "TREND"):
-            from research.alpha_signal_library import trend_continuation_signal
-            # Variant 1: Fast pullback (EMA 20/50, 1.0 ATR pullback)
-            variants.append((
-                "TREND_CONT_FAST",
-                trend_continuation_signal(fast_span=20, slow_span=50, pullback_atr_tolerance=1.0),
-                BacktestConfig(atr_period=14, stop_atr_multiple=2.0, target_r_multiple=2.0, max_holding_bars=20),
-            ))
-            # Variant 2: Slow trend anchor (EMA 30/100, 1.5 ATR pullback, 3.0R target)
-            variants.append((
-                "TREND_CONT_SLOW",
-                trend_continuation_signal(fast_span=30, slow_span=100, pullback_atr_tolerance=1.5),
-                BacktestConfig(atr_period=14, stop_atr_multiple=2.5, target_r_multiple=3.0, max_holding_bars=30),
-            ))
-
-        else:  # Breakout / Squeeze / Volatility
-            from research.alpha_signal_library import volatility_squeeze_breakout_signal
-            # Variant 1: Tight squeeze 20th percentile, 2.0R target
-            variants.append((
-                "VOL_SQZ_P20",
-                volatility_squeeze_breakout_signal(squeeze_lookback=100, squeeze_percentile=0.20, breakout_lookback=20),
-                BacktestConfig(atr_period=14, stop_atr_multiple=1.8, target_r_multiple=2.0, max_holding_bars=16),
-            ))
-            # Variant 2: Wide squeeze 35th percentile, 2.5R target
-            variants.append((
-                "VOL_SQZ_P35",
-                volatility_squeeze_breakout_signal(squeeze_lookback=80, squeeze_percentile=0.35, breakout_lookback=15),
-                BacktestConfig(atr_period=14, stop_atr_multiple=2.0, target_r_multiple=2.5, max_holding_bars=20),
-            ))
-
+            base_fn = spec.builder()
+            
+            def make_signal_fn(bf):
+                def _wrapped(d):
+                    regimes = detect_regime(d)
+                    return bf(d, regime_series=regimes)
+                return _wrapped
+                
+            variants.append((signal_id, make_signal_fn(base_fn), configs))
+                    
         return variants
 
     def _backtest_partition(

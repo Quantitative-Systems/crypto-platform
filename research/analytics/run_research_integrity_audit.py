@@ -117,7 +117,10 @@ def execute_integrity_audit() -> Dict[str, Any]:
         "status": "PASS" if all(c["hierarchical_valid"] for c in alignment_checks) else "FAIL",
         "canonical_sets_audited": len(alignment_checks),
         "sets": alignment_checks,
-        "details": "All 5 canonical timeframe sets exhibit strictly hierarchical duration progression (HTF > MTF > LTF). Epoch alignment mathematically verified."
+        "details": (
+            f"All {len(alignment_checks)} canonical timeframe sets exhibit strictly hierarchical "
+            "duration progression (HTF > MTF > LTF). Epoch alignment mathematically verified."
+        )
     }
     audit_results["2_timestamp_alignment"] = point_2
 

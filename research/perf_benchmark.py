@@ -19,13 +19,15 @@ from market_intelligence.primitives import Candle
 from research.replayer.causal_replayer import CausalReplayer
 from research.replayer.timeframe_aligner import TIMEFRAME_DURATIONS_MS
 
-CANONICAL_SETS = ["SET_1", "SET_2", "SET_3", "SET_4"]
+CANONICAL_SETS = ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5", "SET_6"]
 
 SET_STEPS_MS = {
     "SET_1": (TIMEFRAME_DURATIONS_MS["1M"], TIMEFRAME_DURATIONS_MS["1W"], TIMEFRAME_DURATIONS_MS["1D"]),
     "SET_2": (TIMEFRAME_DURATIONS_MS["1W"], TIMEFRAME_DURATIONS_MS["1D"], TIMEFRAME_DURATIONS_MS["4H"]),
     "SET_3": (TIMEFRAME_DURATIONS_MS["1D"], TIMEFRAME_DURATIONS_MS["4H"], TIMEFRAME_DURATIONS_MS["1H"]),
     "SET_4": (TIMEFRAME_DURATIONS_MS["4H"], TIMEFRAME_DURATIONS_MS["1H"], TIMEFRAME_DURATIONS_MS["15M"]),
+    "SET_5": (TIMEFRAME_DURATIONS_MS["1H"], TIMEFRAME_DURATIONS_MS["15M"], TIMEFRAME_DURATIONS_MS["5M"]),
+    "SET_6": (TIMEFRAME_DURATIONS_MS["15M"], TIMEFRAME_DURATIONS_MS["5M"], TIMEFRAME_DURATIONS_MS["1m"]),
 }
 
 # Representative sizes (actual historical data volumes)
@@ -34,6 +36,8 @@ LTF_COUNTS = {
     "SET_2": 1500,   # 4H candles over ~250 days
     "SET_3": 3000,   # 1H candles over ~125 days
     "SET_4": 5000,   # 15M candles over ~52 days
+    "SET_5": 5000,   # 5M candles over ~17 days
+    "SET_6": 5000,   # 1m candles over ~3.5 days
 }
 
 

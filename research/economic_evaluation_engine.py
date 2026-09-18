@@ -218,6 +218,7 @@ class BacktestConfig:
     atr_period: int = 14
     stop_atr_multiple: float = 2.0
     target_r_multiple: float = 4.0
+    min_rr_firewall: float = 4.0
     max_holding_bars: int = 40
     apply_borrow_financing: bool = True
     use_trailing_stop: bool = True
@@ -288,8 +289,9 @@ class CausalTripleBarrierBacktester:
         self.last_borrow_r: List[float] = []
 
     def _fee_r(self, entry_fill: float, risk_per_unit: float) -> float:
-        roundtrip_fee_pct = 2.0 * self.friction.taker_fee_pct
+        roundtrip_fee_pct = self.friction.roundtrip_fee_pct()
         return (entry_fill * roundtrip_fee_pct) / risk_per_unit
+
 
     def _borrow_r(self, entry_fill: float, risk_per_unit: float, holding_hours: float) -> float:
         if not self.config.apply_borrow_financing:
@@ -298,7 +300,13 @@ class CausalTripleBarrierBacktester:
         return (entry_fill * borrow_apr * (holding_hours / 8760.0)) / risk_per_unit
 
     def simulate(
-        self, df: pd.DataFrame, signal: np.ndarray, bar_hours: float
+        self,
+        df: pd.DataFrame,
+        signal: np.ndarray,
+        planned_sl: np.ndarray,
+        planned_tp: np.ndarray,
+        bar_hours: float,
+        trailing_id: str = "TRAIL_NONE",
     ) -> List[SimulatedTrade]:
         cfg = self.config
         atr = compute_atr(df, cfg.atr_period)
@@ -313,12 +321,17 @@ class CausalTripleBarrierBacktester:
         n = len(df)
         i = cfg.atr_period
 
+        candidate_signals = 0
+        geometry_valid_count = 0
+        firewall_rejections = 0
+
         while i < n - 1:
             direction = int(signal[i]) if signal is not None else 0
             if direction == 0 or not np.isfinite(atr_arr[i]) or atr_arr[i] <= 0:
                 i += 1
                 continue
 
+            candidate_signals += 1
             entry_bar = i + 1  # next-bar open execution (no same-bar fills)
             raw_entry = opens[entry_bar]
             risk_per_unit = cfg.stop_atr_multiple * atr_arr[i]
@@ -328,16 +341,42 @@ class CausalTripleBarrierBacktester:
 
             if direction > 0:
                 entry_fill = self.friction.calculate_buy_fill(raw_entry)
-                stop = entry_fill - risk_per_unit
-                target = entry_fill + cfg.target_r_multiple * risk_per_unit
+                if not np.isnan(planned_sl[i]) and not np.isnan(planned_tp[i]):
+                    geometry_valid_count += 1
+                    stop = planned_sl[i]
+                    target = planned_tp[i]
+                    planned_rr = abs(target - entry_fill) / max(1e-8, abs(entry_fill - stop))
+                    if planned_rr < getattr(self.config, 'min_rr_firewall', 4.0):
+                        firewall_rejections += 1
+                        i += 1
+                        continue
+                    risk_per_unit = abs(entry_fill - stop)
+                else:
+                    stop = entry_fill - risk_per_unit
+                    target = entry_fill + cfg.target_r_multiple * risk_per_unit
             else:
                 entry_fill = self.friction.calculate_sell_fill(raw_entry)
-                stop = entry_fill + risk_per_unit
-                target = entry_fill - cfg.target_r_multiple * risk_per_unit
+                if not np.isnan(planned_sl[i]) and not np.isnan(planned_tp[i]):
+                    geometry_valid_count += 1
+                    stop = planned_sl[i]
+                    target = planned_tp[i]
+                    planned_rr = abs(target - entry_fill) / max(1e-8, abs(entry_fill - stop))
+                    if planned_rr < getattr(self.config, 'min_rr_firewall', 4.0):
+                        firewall_rejections += 1
+                        i += 1
+                        continue
+                    risk_per_unit = abs(stop - entry_fill)
+                else:
+                    stop = entry_fill + risk_per_unit
+                    target = entry_fill - cfg.target_r_multiple * risk_per_unit
 
+            initial_stop = stop
             exit_price = None
             exit_bar = None
             exit_reason = None
+
+            # Trailing policy: strictly follow hypothesis trailing_id
+            do_trail = (trailing_id != "TRAIL_NONE") and getattr(cfg, "use_trailing_stop", True)
 
             for j in range(entry_bar, min(entry_bar + cfg.max_holding_bars, n)):
                 if direction > 0:
@@ -346,31 +385,45 @@ class CausalTripleBarrierBacktester:
                     hit_stop, hit_target = highs[j] >= stop, lows[j] <= target
 
                 if hit_stop:  # adverse-first collision invariant
-                    exit_price, exit_bar, exit_reason = stop, j, "STOP_LOSS"
-                    if getattr(cfg, "use_trailing_stop", False):
-                        if (direction > 0 and stop > entry_fill - risk_per_unit) or (direction < 0 and stop < entry_fill + risk_per_unit):
-                            exit_reason = "TRAILING_STOP"
+                    exit_price, exit_bar = stop, j
+                    exit_reason = "TRAILING_STOP" if (do_trail and stop != initial_stop) else "STOP_LOSS"
                     break
                 if hit_target:
                     exit_price, exit_bar, exit_reason = target, j, "TAKE_PROFIT"
                     break
 
-                if getattr(cfg, "use_trailing_stop", False):
+                if do_trail:
                     # Causal step-trailing: calculated on closed bar j, applies to bar j+1
-                    if direction > 0:
-                        new_stop = highs[j] - 2.0 * risk_per_unit
-                        if highs[j] >= entry_fill + 1.5 * risk_per_unit:
-                            new_stop = max(new_stop, entry_fill + 1.0 * risk_per_unit)
-                        if highs[j] >= entry_fill + 2.0 * risk_per_unit:
-                            new_stop = max(new_stop, highs[j] - 1.0 * risk_per_unit)
-                        stop = max(stop, new_stop)
+                    if trailing_id in ("TRAIL_MTF_STRUCTURAL", "TRAIL_BOS", "TRAIL_LTF_STRUCTURE"):
+                        lookback_t = 5
+                        if direction > 0:
+                            new_stop = np.min(lows[max(0, j - lookback_t): j + 1])
+                            stop = max(stop, new_stop)
+                        else:
+                            new_stop = np.max(highs[max(0, j - lookback_t): j + 1])
+                            stop = min(stop, new_stop)
+                    elif trailing_id in ("TRAIL_CHANDELIER", "TRAIL_ATR"):
+                        if direction > 0:
+                            new_stop = highs[j] - 2.0 * atr_arr[j]
+                            stop = max(stop, new_stop)
+                        else:
+                            new_stop = lows[j] + 2.0 * atr_arr[j]
+                            stop = min(stop, new_stop)
                     else:
-                        new_stop = lows[j] + 2.0 * risk_per_unit
-                        if lows[j] <= entry_fill - 1.5 * risk_per_unit:
-                            new_stop = min(new_stop, entry_fill - 1.0 * risk_per_unit)
-                        if lows[j] <= entry_fill - 2.0 * risk_per_unit:
-                            new_stop = min(new_stop, lows[j] + 1.0 * risk_per_unit)
-                        stop = min(stop, new_stop)
+                        if direction > 0:
+                            new_stop = highs[j] - 2.0 * risk_per_unit
+                            if highs[j] >= entry_fill + 1.5 * risk_per_unit:
+                                new_stop = max(new_stop, entry_fill + 1.0 * risk_per_unit)
+                            if highs[j] >= entry_fill + 2.0 * risk_per_unit:
+                                new_stop = max(new_stop, highs[j] - 1.0 * risk_per_unit)
+                            stop = max(stop, new_stop)
+                        else:
+                            new_stop = lows[j] + 2.0 * risk_per_unit
+                            if lows[j] <= entry_fill - 1.5 * risk_per_unit:
+                                new_stop = min(new_stop, entry_fill - 1.0 * risk_per_unit)
+                            if lows[j] <= entry_fill - 2.0 * risk_per_unit:
+                                new_stop = min(new_stop, lows[j] + 1.0 * risk_per_unit)
+                            stop = min(stop, new_stop)
 
             if exit_price is None:
                 exit_bar = min(entry_bar + cfg.max_holding_bars, n) - 1
@@ -406,6 +459,12 @@ class CausalTripleBarrierBacktester:
             # No overlapping positions: resume scanning after the trade closes.
             i = exit_bar + 1
 
+        self.last_funnel = {
+            "candidate_signals": candidate_signals,
+            "geometry_valid": geometry_valid_count,
+            "firewall_rejections": firewall_rejections,
+            "executed": len(trades),
+        }
         return trades
 
 
@@ -568,6 +627,7 @@ class EvaluationResult:
     trades: List[SimulatedTrade]
     notes: List[str]
     reproducible_command: str
+    telemetry: Dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -582,6 +642,7 @@ class EvaluationResult:
             "trade_count": len(self.trades),
             "notes": self.notes,
             "reproducible_command": self.reproducible_command,
+            "telemetry": self.telemetry,
         }
 
 
@@ -645,12 +706,34 @@ class EconomicEvaluationEngine:
                 f"monotonic={dataset.monotonic_timestamps}).",
             )
 
-        signal = signal_fn(df)
-        if signal is None or len(signal) != len(df):
+        signal_out = signal_fn(df)
+        if signal_out is None or len(signal_out) != len(df):
             return _fail("DATA_UNAVAILABLE", "Signal function returned no usable causal signal.")
 
+        upstream_funnel = {}
+        if isinstance(signal_out, pd.DataFrame):
+            signal = signal_out["signal"].to_numpy()
+            planned_sl = signal_out.get("planned_sl", pd.Series(np.nan, index=df.index)).to_numpy()
+            planned_tp = signal_out.get("planned_tp", pd.Series(np.nan, index=df.index)).to_numpy()
+            trailing_id = str(signal_out["trailing_id"].iloc[0]) if "trailing_id" in signal_out and len(signal_out) > 0 else "TRAIL_NONE"
+            if hasattr(signal_out, "attrs") and "funnel" in signal_out.attrs:
+                upstream_funnel = signal_out.attrs["funnel"]
+        else:
+            signal = np.asarray(signal_out)
+            planned_sl = np.full(len(df), np.nan)
+            planned_tp = np.full(len(df), np.nan)
+            trailing_id = "TRAIL_NONE"
+
         bar_hours = TIMEFRAME_HOURS.get(timeframe, 4.0)
-        trades = self.backtester.simulate(df, np.asarray(signal), bar_hours)
+        trades = self.backtester.simulate(df, signal, planned_sl, planned_tp, bar_hours, trailing_id=trailing_id)
+
+        telemetry = {
+            "trailing_id": trailing_id,
+            "funnel": {
+                **upstream_funnel,
+                **getattr(self.backtester, "last_funnel", {})
+            }
+        }
 
         if len(trades) < self.min_trades_per_partition:
             ledger.record(
@@ -666,10 +749,11 @@ class EconomicEvaluationEngine:
                 alpha_id=genome.alpha_id, status="INSUFFICIENT_TRADES", symbol=symbol,
                 timeframe=timeframe, dataset=dataset, overall=None, partitions={},
                 ledger=ledger, trades=trades, notes=notes, reproducible_command=command,
+                telemetry=telemetry,
             )
 
         return self._measure_partitions(
-            genome, dataset, trades, windows, ledger, notes, command, symbol, timeframe
+            genome, dataset, trades, windows, ledger, notes, command, symbol, timeframe, telemetry
         )
 
     def evaluate_funding_arbitrage(
@@ -803,7 +887,7 @@ class EconomicEvaluationEngine:
         )
 
     def _measure_partitions(
-        self, genome, dataset, trades, windows, ledger, notes, command, symbol, timeframe
+        self, genome, dataset, trades, windows, ledger, notes, command, symbol, timeframe, telemetry: Optional[Dict[str, Any]] = None
     ) -> EvaluationResult:
         partition_metrics: Dict[str, PartitionMetrics] = {}
 
@@ -861,4 +945,5 @@ class EconomicEvaluationEngine:
             alpha_id=genome.alpha_id, status=status, symbol=symbol, timeframe=timeframe,
             dataset=dataset, overall=overall, partitions=partition_metrics,
             ledger=ledger, trades=trades, notes=notes, reproducible_command=command,
+            telemetry=telemetry or {},
         )

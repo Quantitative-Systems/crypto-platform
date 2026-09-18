@@ -32,7 +32,7 @@ from typing import Dict, Any, List
 
 CACHE_DIR = "/home/mrcn2/crypto-platform/market_data/cache"
 ASSETS = ["BTC", "ETH", "SOL"]
-TF_SETS = ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5"]
+TF_SETS = ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5", "SET_6"]
 
 TF_DURATIONS = {
     "1M": 30 * 86400,
@@ -50,7 +50,8 @@ TF_SET_INFO = {
     "SET_2": {"htf": "1w", "mtf": "1d", "ltf": "4h", "label": "SET_2 (1W -> 1D -> 4H, Position)"},
     "SET_3": {"htf": "1d", "mtf": "4h", "ltf": "1h", "label": "SET_3 (1D -> 4H -> 1H, Swing)"},
     "SET_4": {"htf": "4h", "mtf": "1h", "ltf": "15m", "label": "SET_4 (4H -> 1H -> 15M, Intraday)"},
-    "SET_5": {"htf": "15m", "mtf": "5m", "ltf": "1m", "label": "SET_5 (15M -> 5M -> 1M, Scalp)"}
+    "SET_5": {"htf": "1h", "mtf": "15m", "ltf": "5m", "label": "SET_5 (1H -> 15M -> 5M, Short-Term Intraday)"},
+    "SET_6": {"htf": "15m", "mtf": "5m", "ltf": "1m", "label": "SET_6 (15M -> 5M -> 1M, Scalp)"}
 }
 
 

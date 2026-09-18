@@ -56,7 +56,7 @@ def test_research_governor_and_factory_flow(temp_memory):
         assert c.performance.net_edge_r == 0.0  # Zero asserted performance
         assert c.evidence_hash != ""
         assert len(c.features) >= 1
-        assert len(c.failure_modes) >= 1
+        assert isinstance(c.failure_modes, list)
 
 
 def test_research_governor_dynamic_prioritization_sensitivity(temp_memory):

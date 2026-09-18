@@ -38,6 +38,14 @@ pytestdebug.log
 logs/
 *.log
 
+# Secrets, credentials & private keys (never commit)
+*.pem
+*.key
+id_rsa*
+credentials*.json
+secrets*.json
+**/*secret*.json
+
 # Ephemeral Large Raw Data (Preserves manifests and small samples)
 market_data/cache/*.json
 data/

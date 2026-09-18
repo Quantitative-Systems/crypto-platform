@@ -26,7 +26,7 @@ class HypothesisSpec:
         "ZERO_LOOKAHEAD_CAUSALITY"
     ])
     target_universe: List[str] = field(default_factory=lambda: ["BTC", "ETH", "SOL"])
-    timeframe_sets: List[str] = field(default_factory=lambda: ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5"])
+    timeframe_sets: List[str] = field(default_factory=lambda: ["SET_1", "SET_2", "SET_3", "SET_4", "SET_5", "SET_6"])
     sample_period_start: str = "2023-01-01 00:00:00 UTC"
     sample_period_end: str = "2024-01-01 00:00:00 UTC"
     falsification_criteria: Dict[str, Any] = field(default_factory=dict)

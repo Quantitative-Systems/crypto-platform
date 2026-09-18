@@ -3,7 +3,7 @@
 
 **Product ID:** `PRODUCT-01-CRYPTO-PLATFORM`  
 **Parent Hierarchy:** Wealth Multiplier Systems $\longrightarrow$ Quantitative Systems Platform $\longrightarrow$ Product 01: Crypto Platform  
-**Specification Standard:** `v2.0-UNIFIED-CANONICAL-LOCKED`  
+**Specification Standard:** `v1.0.1-QCP-STRATEGY-GRAMMAR`  
 **Architect Role:** Quantitative Systems Architect  
 
 ---
@@ -25,9 +25,10 @@ The market model is fractal. The exact same 3-timeframe unified strategy operate
 | :--- | :--- | :--- | :--- | :--- |
 | **SET 1** | Macro / Investing | 1 Month (1M) | 1 Week (1W) | 1 Day (1D) |
 | **SET 2** | Position / Swing | 1 Week (1W) | 1 Day (1D) | 4 Hour (4H) |
-| **SET 3** | Swing Horizon | 1 Day (1D) | 4 Hour (4H) | 1 Hour (1H) |
+| **SET 3** | Standard Swing | 1 Day (1D) | 4 Hour (4H) | 1 Hour (1H) |
 | **SET 4** | Tactical Intraday | 4 Hour (4H) | 1 Hour (1H) | 15 Minute (15M) |
-| **SET 5** | Intraday Scalping | 15 Minute (15M) | 5 Minute (5M) | 1 Minute (1M) |
+| **SET 5** | Active Intraday | 1 Hour (1H) | 15 Minute (15M) | 5 Minute (5M) |
+| **SET 6** | High-Velocity Scalping | 15 Minute (15M) | 5 Minute (5M) | 1 Minute (1M) |
 
 ### 4. 15-Stream Research Matrix
 The baseline research population consists of:

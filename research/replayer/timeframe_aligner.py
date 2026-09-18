@@ -1,11 +1,24 @@
 """
 Product 04 — Research Laboratory: Timeframe Aligner
 Enforces canonical multi-timeframe sets and zero-lookahead candle visibility rules.
+
+The canonical ladder is owned by `config.timeframe_sets.CANONICAL_6_TIMEFRAME_SETS`.
+This module DERIVES its `CANONICAL_TIMEFRAME_SETS` from that single source of truth so
+that research replay, configuration, and the strategy grammar enum cannot drift apart.
+
+Canonical 6-Set ladder (HTF -> MTF -> LTF):
+    SET_1  Investing / Macro       1M  -> 1W  -> 1D
+    SET_2  Position Trading        1W  -> 1D  -> 4H
+    SET_3  Swing Trading           1D  -> 4H  -> 1H
+    SET_4  Intraday                4H  -> 1H  -> 15M
+    SET_5  Short-Term Intraday     1H  -> 15M -> 5M
+    SET_6  Scalping                15M -> 5M  -> 1m
 """
 
 from typing import Dict, List, Tuple
 from dataclasses import dataclass
 from market_intelligence.primitives import Candle
+from config.timeframe_sets import CANONICAL_6_TIMEFRAME_SETS as _AUTHORITATIVE_SETS
 
 
 @dataclass(frozen=True)
@@ -18,41 +31,14 @@ class TimeframeSet:
 
 
 CANONICAL_TIMEFRAME_SETS: Dict[str, TimeframeSet] = {
-    "SET_1": TimeframeSet(
-        set_id="SET_1",
-        htf="1M",
-        mtf="1W",
-        ltf="1D",
-        description="Position / Macro Horizon (1 Month -> 1 Week -> 1 Day)"
-    ),
-    "SET_2": TimeframeSet(
-        set_id="SET_2",
-        htf="1W",
-        mtf="1D",
-        ltf="4H",
-        description="Swing Horizon (1 Week -> 1 Day -> 4 Hours)"
-    ),
-    "SET_3": TimeframeSet(
-        set_id="SET_3",
-        htf="1D",
-        mtf="4H",
-        ltf="1H",
-        description="Intraday / Swing Hybrid (1 Day -> 4 Hours -> 1 Hour)"
-    ),
-    "SET_4": TimeframeSet(
-        set_id="SET_4",
-        htf="4H",
-        mtf="1H",
-        ltf="15M",
-        description="Tactical Intraday (4 Hours -> 1 Hour -> 15 Minutes)"
-    ),
-    "SET_5": TimeframeSet(
-        set_id="SET_5",
-        htf="15M",
-        mtf="5M",
-        ltf="1m",
-        description="Intraday Scalping (15 Minutes -> 5 Minutes -> 1 Minute)"
-    ),
+    set_id: TimeframeSet(
+        set_id=set_id,
+        htf=cfg.htf,
+        mtf=cfg.mtf,
+        ltf=cfg.ltf,
+        description=f"{cfg.style_name} ({cfg.htf} -> {cfg.mtf} -> {cfg.ltf})",
+    )
+    for set_id, cfg in _AUTHORITATIVE_SETS.items()
 }
 
 # Seconds per canonical timeframe for precise alignment

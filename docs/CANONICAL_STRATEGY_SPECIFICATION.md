@@ -924,7 +924,16 @@ If reliable historical news data cannot be established, production eligibility m
 
 # 29. TIMEFRAME SYSTEMS
 
-The universal strategy supports five timeframe sets.
+The universal strategy supports **six** timeframe sets.
+
+Each set is the same strategy architecture operating at a different market resolution.
+The ladder is strictly hierarchical (HTF > MTF > LTF) and each layer keeps its own role:
+
+```text
+HTF = Destination & Permission   (bias, expected phase, take-profit)
+MTF = Navigation & Trailing      (setup, realignment, trailing stop)
+LTF = Execution & Invalidation   (liquidity sweep, trigger, initial stop)
+```
 
 ## SET 1 — LONG-TERM
 
@@ -1010,7 +1019,28 @@ Architecture:
 
 ---
 
-## SET 5 — SCALPING
+## SET 5 — SHORT-TERM INTRADAY
+
+```text
+HTF = 1 Hour
+MTF = 15 Minutes
+LTF = 5 Minutes
+```
+
+Architecture:
+
+```text
+1h bias
+→ 15m setup
+→ 5m entry
+→ 5m SL
+→ 1h target
+→ 15m trail
+```
+
+---
+
+## SET 6 — SCALPING
 
 ```text
 HTF = 15 Minutes
@@ -1056,6 +1086,7 @@ BTC / SET 2
 BTC / SET 3
 BTC / SET 4
 BTC / SET 5
+BTC / SET 6
 ```
 
 are separate state machines.
@@ -1143,9 +1174,9 @@ Do not add assets merely to increase trade count.
 The system should eventually run:
 
 ```text
-BTC × 5 timeframe sets
-ETH × 5 timeframe sets
-SOL × 5 timeframe sets
+BTC × 6 timeframe sets
+ETH × 6 timeframe sets
+SOL × 6 timeframe sets
 ```
 
 simultaneously.
@@ -1627,6 +1658,7 @@ SET 2
 SET 3
 SET 4
 SET 5
+SET 6
 ```
 
 Then evaluate the combined portfolio.
@@ -2009,13 +2041,14 @@ ETH
 SOL
 ```
 
-Initial five timeframe systems:
+Initial six timeframe systems:
 
 ```text
 1M / 1W / 1D
 1W / 1D / 4H
 1D / 4H / 1H
 4H / 1H / 15m
+1H / 15m / 5m
 15m / 5m / 1m
 ```
 
@@ -2219,7 +2252,8 @@ SET 1 = 1M / 1W / 1D
 SET 2 = 1W / 1D / 4H
 SET 3 = 1D / 4H / 1H
 SET 4 = 4H / 1H / 15m
-SET 5 = 15m / 5m / 1m
+SET 5 = 1H / 15m / 5m
+SET 6 = 15m / 5m / 1m
 ```
 
 The ultimate objective is not merely to produce a backtest.

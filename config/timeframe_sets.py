@@ -1,6 +1,7 @@
 """
 Product 01: Crypto Platform Configuration
-Defines liquid asset universe and the 5 Canonical Operational Timeframe Execution Scales.
+Defines the liquid asset universe, the authoritative 6-Set HTF -> MTF -> LTF operational
+hierarchy, and the legacy 5-Set execution-scale alias table.
 """
 
 from dataclasses import dataclass
@@ -45,15 +46,49 @@ TIMEFRAME_SETS = {
     ),
 }
 
-# Authoritative 6-Set Operational Market-Resolution Hierarchy
+# ─────────────────────────────────────────────────────────────────────────────
+# AUTHORITATIVE 6-SET OPERATIONAL MARKET-RESOLUTION HIERARCHY
+#
+# This mapping is the SINGLE SOURCE OF TRUTH for the HTF -> MTF -> LTF ladder.
+# `research/replayer/timeframe_aligner.py` derives its `CANONICAL_TIMEFRAME_SETS`
+# from this mapping, so the configuration layer, the strategy grammar enum
+# (`research/strategy_grammar.py`) and the research replayer can never disagree.
+#
+# The foundation is: HTF BIAS -> MTF SETUP -> LTF ENTRY, then
+# LTF structural stop -> HTF structural target -> MTF structural trailing.
+#
+# Style ladder (each set is an INDEPENDENT strategy instance):
+#   SET_1  Investing / Macro        1M  -> 1W  -> 1D
+#   SET_2  Position Trading         1W  -> 1D  -> 4H
+#   SET_3  Swing Trading            1D  -> 4H  -> 1H
+#   SET_4  Intraday                 4H  -> 1H  -> 15M
+#   SET_5  Short-Term Intraday      1H  -> 15M -> 5M
+#   SET_6  Scalping                 15M -> 5M  -> 1m
+#
+# Layer roles (structurally never flattened into one another):
+#   HTF = Destination & Permission  (bias, expected phase, take-profit)
+#   MTF = Navigation & Trailing     (setup, realignment, trailing stop)
+#   LTF = Execution & Invalidation  (liquidity sweep, trigger, initial stop)
+# ─────────────────────────────────────────────────────────────────────────────
 CANONICAL_6_TIMEFRAME_SETS = {
-    "Set 1": TimeframeSet(set_id="Set 1", style_name="Macro / Position", htf="1M", mtf="1W", ltf="1D"),
-    "Set 2": TimeframeSet(set_id="Set 2", style_name="Position / Swing", htf="1W", mtf="1D", ltf="4H"),
-    "Set 3": TimeframeSet(set_id="Set 3", style_name="Swing / Intraday", htf="1D", mtf="4H", ltf="1H"),
-    "Set 4": TimeframeSet(set_id="Set 4", style_name="Intraday", htf="4H", mtf="1H", ltf="15M"),
-    "Set 5": TimeframeSet(set_id="Set 5", style_name="Short-Term Intraday", htf="1H", mtf="15M", ltf="5M"),
-    "Set 6": TimeframeSet(set_id="Set 6", style_name="Scalping", htf="15M", mtf="5M", ltf="1m"),
+    "SET_1": TimeframeSet(set_id="SET_1", style_name="Investing / Macro", htf="1M", mtf="1W", ltf="1D"),
+    "SET_2": TimeframeSet(set_id="SET_2", style_name="Position Trading", htf="1W", mtf="1D", ltf="4H"),
+    "SET_3": TimeframeSet(set_id="SET_3", style_name="Swing Trading", htf="1D", mtf="4H", ltf="1H"),
+    "SET_4": TimeframeSet(set_id="SET_4", style_name="Intraday", htf="4H", mtf="1H", ltf="15M"),
+    "SET_5": TimeframeSet(set_id="SET_5", style_name="Short-Term Intraday", htf="1H", mtf="15M", ltf="5M"),
+    "SET_6": TimeframeSet(set_id="SET_6", style_name="Scalping", htf="15M", mtf="5M", ltf="1m"),
 }
+
+
+def get_canonical_timeframe_set(set_id: str) -> TimeframeSet:
+    """Returns the authoritative TimeframeSet for SET_1..SET_6. Fail-closed on unknown ids."""
+    try:
+        return CANONICAL_6_TIMEFRAME_SETS[set_id]
+    except KeyError:
+        raise ValueError(
+            f"Invalid canonical timeframe set '{set_id}'. "
+            f"Supported sets: {list(CANONICAL_6_TIMEFRAME_SETS.keys())}"
+        ) from None
 
 PRIMARY_ASSET_UNIVERSE: List[str] = ["BTC/USDT", "ETH/USDT", "SOL/USDT"]
 

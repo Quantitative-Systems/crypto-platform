@@ -12,6 +12,7 @@ from strategy.ltf_trigger import LTFTriggerEngine
 from strategy.mtf_setup import MTFSetupResult
 from risk.risk_engine import RiskEngine
 from trade_management.trailing import TrailingEngine
+from strategy_engine.news.news_provider import NewsProvider, NewsImpact
 
 
 @dataclass
@@ -32,6 +33,8 @@ class TradePlan:
     htf_context: str = "PULLBACK_CONTEXT"
 
 
+from typing import Optional
+
 class StrategyOrchestrator:
 
     @staticmethod
@@ -42,10 +45,28 @@ class StrategyOrchestrator:
         latest_candle: Candle,
         account_balance: float = 1000.0,
         risk_pct: float = 0.01,
-        min_confluence_score: float = 60.0
+        min_confluence_score: float = 60.0,
+        news_provider: Optional[NewsProvider] = None
     ) -> TradePlan:
         """Executes 5-gate pipeline and evaluates 0-100 Confluence Quality Score."""
         symbol = htf_state.symbol
+
+        # Gate 0: Macroeconomic Event Blackout Filter
+        if news_provider is not None:
+            # Apply blackout only to Sets 4-6 (LTF 15m or lower)
+            if ltf_state.timeframe.upper() in ("15M", "5M", "1M", "15", "5", "1"):
+                is_blackout, ev = news_provider.is_news_blackout(
+                    symbol=symbol,
+                    timestamp=latest_candle.timestamp
+                )
+                if is_blackout and ev and ev.impact == NewsImpact.HIGH:
+                    return TradePlan(
+                        symbol=symbol, action="NONE", strategy_type="UNIFIED_HTF_TREND_STRATEGY", entry_price=0.0,
+                        stop_loss_price=0.0, target_tp_price=0.0, position_size_units=0.0,
+                        dollar_risk_usd=0.0, reward_to_risk_ratio=0.0, confluence_score=0.0,
+                        status="REJECTED", reason=f"Gate 0 Fail: Macro Blackout for {ev.event_name}",
+                        htf_context="UNKNOWN"
+                    )
 
         # Gate 1: HTF Bias & Target Evaluation
         htf_res = HTFBiasEngine.evaluate_bias(htf_state)
