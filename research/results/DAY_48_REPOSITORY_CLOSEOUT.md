@@ -105,15 +105,19 @@ per negative-artifact rules, flagged for future archival (not deletion).
 ## 8. Files changed tonight
 
 Docs/packaging only: `README.md`, `.gitignore`, `pyproject.toml`,
-`requirements.txt`, this file. Research logic diff: zero lines.
-Commit: `docs: prepare QCP research platform for public portfolio`.
+`requirements.txt`, `CHANGELOG.md`, this file, plus staging of the
+pre-existing Phase C/D research state (grammar/family/regime modules,
+experiment runners, reports, foundation manifest/tests/docs).
+Research logic diff vs freeze head: zero lines altered tonight.
+Closeout commit: `docs: prepare QCP research platform for public portfolio`
+(`aea2135644ff16f94935eceef8732f59b90b44af`).
 
 ## 9. Push status
 
 Remote `origin` = `github.com/Quantitative-Systems/crypto-platform.git`
-(`main`). Push attempted post-commit; result in closing transcript. If
-auth is unavailable here, the remaining step is `git push origin main`
-from an authenticated checkout.
+(`main`). **PUSHED 2026-09-18: `4bd08b0..aea2135 main -> main`
+(PUSH-EXIT 0).** `HEAD`, `origin/main`, and `origin/HEAD` all read
+`aea2135`; working tree clean. Nothing outstanding.
 
 ## 10. Future hypotheses (NOT implemented)
 
