@@ -110,14 +110,15 @@ pre-existing Phase C/D research state (grammar/family/regime modules,
 experiment runners, reports, foundation manifest/tests/docs).
 Research logic diff vs freeze head: zero lines altered tonight.
 Closeout commit: `docs: prepare QCP research platform for public portfolio`
-(`aea2135644ff16f94935eceef8732f59b90b44af`).
+(`aea2135644ff16f94935eceef8732f59b90b44af`), plus follow-up
+`cfae2cc` recording hash/push status in this file.
 
 ## 9. Push status
 
 Remote `origin` = `github.com/Quantitative-Systems/crypto-platform.git`
-(`main`). **PUSHED 2026-09-18: `4bd08b0..aea2135 main -> main`
-(PUSH-EXIT 0).** `HEAD`, `origin/main`, and `origin/HEAD` all read
-`aea2135`; working tree clean. Nothing outstanding.
+(`main`). **PUSHED 2026-09-18: `4bd08b0..aea2135` then `aea2135..cfae2cc`
+(both PUSH-EXIT 0).** `HEAD`, `origin/main`, and `origin/HEAD` all read
+`cfae2cc`; working tree clean. Nothing outstanding.
 
 ## 10. Future hypotheses (NOT implemented)
 
