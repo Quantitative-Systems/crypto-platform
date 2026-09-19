@@ -1,6 +1,7 @@
 # QCP — Quantitative Crypto Platform
 
-[![Tests](https://img.shields.io/badge/tests-604%20passed%2C%202%20failed%2C%2014%20errors-orange)](#5-testing)
+[![Tests](https://img.shields.io/badge/tests-559%20passed%20%28collectible%20suite%29-green)](#5-testing)
+[![Research Lab](https://img.shields.io/badge/research%20lab-qcp%2Fhypotheses-blue)](#qcp-research-laboratory)
 [![Live Capital](https://img.shields.io/badge/live%20capital-$0.00-red)](#4-current-research)
 [![Alpha Status](https://img.shields.io/badge/validated%20alpha-NONE-orange)](#4-current-research)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
@@ -24,6 +25,7 @@ profitability is claimed.
 - [2. Current Architecture](#2-current-architecture)
 - [3. Research Philosophy](#3-research-philosophy)
 - [4. Current Research](#4-current-research)
+- [QCP Research Laboratory](#qcp-research-laboratory-v050)
 - [5. Testing](#5-testing)
 - [6. Research Results](#6-research-results)
 - [7. Repository Structure](#7-repository-structure)
@@ -165,6 +167,52 @@ See `research/results/QCP_ALPHA_DISCOVERY_REPORT.md`.
 the corrected engine. Not implemented, not attempted in this freeze.
 
 ---
+
+## QCP Research Laboratory (v0.5.0)
+
+All hypothesis-centered research now lives in **`qcp/hypotheses/`** under a
+governed hierarchy — a positive Development result is **not** a winner, and
+no candidate can be promoted to validation/OOS/capital from DEV evidence
+alone (enforced structurally, tested in
+`tests/unit/research/test_qcp_lab_governance.py`):
+
+```text
+HYPOTHESIS -> RESEARCH -> CANDIDATES -> TESTS -> RESULTS / EVIDENCE
+```
+
+**Governance model**
+
+- `HYPOTHESIS`: PROPOSED → FORMALIZED → UNDER_RESEARCH → ACTIVE →
+  SUPPORTED / PARTIALLY_SUPPORTED / NOT_SUPPORTED / INVALIDATED / ARCHIVED
+- `CANDIDATE`: DISCOVERED → UNDER_TEST → PROMISING → VALIDATION_CANDIDATE →
+  VALIDATED / REJECTED / INVALIDATED / ARCHIVED
+- `TEST`: PLANNED → RUNNING → COMPLETED → POSITIVE_SIGNAL / NEGATIVE_SIGNAL /
+  MIXED / INCONCLUSIVE / INVALIDATED
+
+Every test carries full provenance: original path, experiment ID, strategy
+version, data version, code commit, asset/timeframe, execution assumptions,
+fees, slippage, collision/re-entry semantics, and result classification.
+Duplicate IDs are rejected, orphan tests are detected, missing provenance
+blocks results, and negative evidence is preserved (its loss is a lab
+integrity error). `python -m qcp.hypotheses.migrate_history` regenerates
+indexes and re-verifies the lab.
+
+**Registered hypotheses (historical migration, DEV 2021-2022)**
+
+| ID | Title | Status | Candidates | Key evidence |
+|---|---|---|---|---|
+| H-TGTGEO-01 | Macro Structural Target Selection | NOT_SUPPORTED | 1 | N=41, -27.66R (negative, preserved) |
+| H-TRDMGT-01 | Post-Entry Trade Management | PARTIALLY_SUPPORTED | 5 | milestone 2.5R +1.44R, composite +0.96R (DEV only, VAL/OOS locked) |
+| H-BASECTL-01 | Canonical Entry Baseline (H0/ANCHOR_2) | NOT_SUPPORTED | 2 | H0 -5.13R, ANCHOR_2 -4.17R |
+| H-REPRO-01 | Certified Baseline Reproducibility | INVALIDATED | 1 | engine drift: -16.54R N=79 vs stored certified |
+| H-MOM-01 | Momentum Treatment | NOT_SUPPORTED | 1 | N=18, -3.61R |
+| H-FRACTAL-01 | Cross-Scale Mechanism Transfer | UNDER_RESEARCH | 0 | registered, **DO NOT TEST yet** |
+
+A/B separation is enforced: cross-scale mechanism transfer (H-FRACTAL-01) and
+multi-timeframe confirmation/confluence are distinct hypothesis families and
+must never be merged into one experiment.
+
+---
 ## 5. Testing
 
 Full run **2026-09-18**:
@@ -226,6 +274,14 @@ crypto-platform/
 ├── platform_core/            # State store, audit bus, provenance, secrets
 ├── portfolio_engine/         # Sizing, allocation, exposure graph
 ├── production/               # Production gate, audits, paper daemon (locked)
+├── qcp/
+│   └── hypotheses/           # HYPOTHESIS-CENTERED RESEARCH LAB (v0.5.0)
+│       ├── README.md / HYPOTHESES_LIST.md / CANDIDATES_LIST.md
+│       ├── HYPOTHESIS-ID/
+│       │   ├── hypothesis.md / candidates.md / MIGRATION_LOG.md (top)
+│       │   ├── candidates/CANDIDATE-ID/candidate.md + tests/TEST-ID/
+│       │   └── research/observations + positive/negative evidence
+│       └── governance: lifecycle states, promotion gates, lab verifier
 ├── quarantine/               # NOT importable: gateway, derivatives, MM prototypes
 ├── research/
 │   ├── *_families.py         # bias / setup / entry / SL / TP / trailing
