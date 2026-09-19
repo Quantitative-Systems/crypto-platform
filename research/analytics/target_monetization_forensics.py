@@ -2,7 +2,7 @@
 Target / Excursion Forensic Pre-Audit Script
 Phase 1 & Phase 2 Analysis of Frozen COMPOSITE_01 Development Results
 
-Examines all 13 trades in scratch/composite_01_dev_results.json:
+Examines all 13 trades in proofs/research/composite_01_dev_results.json:
 - MFE (R), MAE (R), realized R, exit reason
 - Timestamps (mfe_timestamp, exit_timestamp, duration)
 - Peak-to-exit giveback (R and % of MFE)
@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 from typing import Dict, Any, List
 
 def run_forensic_audit(
-    composite_path: str = "/home/mrcn2/crypto-platform/scratch/composite_01_dev_results.json"
+    composite_path: str = "/home/mrcn2/crypto-platform/proofs/research/composite_01_dev_results.json"
 ):
     with open(composite_path, "r") as fp:
         data = json.load(fp)
@@ -131,7 +131,7 @@ def run_forensic_audit(
         "rows": rows
     }
 
-    out_file = "/home/mrcn2/crypto-platform/scratch/target_monetization_forensics.json"
+    out_file = "/home/mrcn2/crypto-platform/proofs/research/target_monetization_forensics.json"
     with open(out_file, "w") as fp:
         json.dump(output_summary, fp, indent=2)
 

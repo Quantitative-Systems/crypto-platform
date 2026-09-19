@@ -91,7 +91,7 @@ class CertifiedSeriesLoader:
     integrity before any research use.
 
     Certification status is resolved from the repository's dataset manifest
-    registry (scratch/dataset_manifests.json) when available. A missing series
+    registry (proofs/work/dataset_manifests.json) when available. A missing series
     raises instead of silently substituting generated data.
     """
 
@@ -104,7 +104,7 @@ class CertifiedSeriesLoader:
         self.cache_dir = Path(cache_dir) if cache_dir else repo_root / "market_data" / "cache"
         self.manifest_path = (
             Path(manifest_path) if manifest_path
-            else repo_root / "scratch" / "dataset_manifests.json"
+            else repo_root / "proofs" / "work" / "dataset_manifests.json"
         )
         self._manifest_cache: Optional[Dict[str, Any]] = None
 

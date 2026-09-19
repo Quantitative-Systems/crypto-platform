@@ -42,6 +42,6 @@ print("=" * 50)
 for idx, t in enumerate(res["closed_trades"], 1):
     print(f"  [{idx:02d}] {t['trade_id']} | Dir: {t['directional_permission']:12s} | Entry: {t['entry_price']} -> Exit: {t['exit_price']} | Net R: {t['net_r']:+5.2f}R | Net PnL: ${t['net_pnl']:+8.2f} | Reason: {t['exit_reason']}")
 
-with open("/home/mrcn2/crypto-platform/scratch/set3_diagnostic_results.json", "w") as f:
+with open("/home/mrcn2/crypto-platform/proofs/research/set3_diagnostic_results.json", "w") as f:
     json.dump(res, f, indent=2)
-print("\n✅ Saved Set 3 diagnostic results to /home/mrcn2/crypto-platform/scratch/set3_diagnostic_results.json")
+print("\n✅ Saved Set 3 diagnostic results to /home/mrcn2/crypto-platform/proofs/research/set3_diagnostic_results.json")

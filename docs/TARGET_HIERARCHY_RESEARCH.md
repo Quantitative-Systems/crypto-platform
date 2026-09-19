@@ -8,8 +8,8 @@
 **Hypothesis Evaluated:** `HYP_TARGET_HIERARCHY_STRUCTURAL_OBJECTIVE_01`  
 **Dataset Partition:** Historical Development Only (`2021-01-01T00:00:00Z` to `2022-12-31T23:59:59Z`, 277,908 market candles)  
 **Universe Audited:** BTC/USDT, ETH/USDT, SOL/USDT across all 5 Canonical Timeframe Sets (15 Streams)  
-**Control Baseline:** Frozen Canonical Baseline (`scratch/composite_01_dev_results_repaired_terminal.json`)  
-**Treatment Experiment:** Isolated Destination Hierarchy (`scratch/exp_target_structural_01_dev_results.json`)  
+**Control Baseline:** Frozen Canonical Baseline (`proofs/research/composite_01_dev_results_repaired_terminal.json`)  
+**Treatment Experiment:** Isolated Destination Hierarchy (`proofs/research/exp_target_structural_01_dev_results.json`)  
 **Audit Policy:** Strictly Controlled. Validation (`2023`) and OOS (`2024–2026`) partitions strictly **LOCKED**.
 
 ---

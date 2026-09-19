@@ -142,7 +142,7 @@ def simulate_cost_stress(trades: List[Dict[str, Any]], multiplier: float) -> Dic
 
 def evaluate_hypothesis_on_development(hypothesis_id: str) -> Dict[str, Any]:
     """Evaluates hypothesis on the clean 2021-2022 Development partition."""
-    dev_path = ROOT_DIR / "scratch/canonical_rebuild_dev_results.json"
+    dev_path = ROOT_DIR / "proofs/research/canonical_rebuild_dev_results.json"
     with open(dev_path, "r") as f:
         dev_data = json.load(f)
 
@@ -162,7 +162,7 @@ def evaluate_hypothesis_on_development(hypothesis_id: str) -> Dict[str, Any]:
             include = True
 
         elif hypothesis_id == "H1.5_HTF_KEYZONE_FRESHNESS_7D":
-            p10_2_path = ROOT_DIR / "scratch/phase10_2_kz_freshness_dev_results.json"
+            p10_2_path = ROOT_DIR / "proofs/research/phase10_2_kz_freshness_dev_results.json"
             if p10_2_path.exists():
                 with open(p10_2_path, "r") as fp:
                     p10_2 = json.load(fp)
@@ -416,7 +416,7 @@ def evaluate_all_registered_hypotheses() -> Dict[str, Any]:
             print(f"Error evaluating {hid}: {e}")
 
     # Build Master Comparison Summary
-    summary_path = ROOT_DIR / "scratch/research_scorecard_master_summary.json"
+    summary_path = ROOT_DIR / "proofs/research/research_scorecard_master_summary.json"
     with open(summary_path, "w") as f:
         json.dump(summary, f, indent=2)
     print(f"\n[Master Summary] Saved: {summary_path}")

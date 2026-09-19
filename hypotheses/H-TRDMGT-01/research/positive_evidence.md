@@ -1,0 +1,9 @@
+# H-TRDMGT-01 — positive evidence
+
+(No entries yet.)
+
+- 2026-09-19T08:02:37.389791+00:00 T-TRDMGT-01-T01 POSITIVE_SIGNAL N=13 net=1.4403 src=scratch/milestone_2_5r_dev_results.json; docs/HYP_TARGET_MILESTONE_01_AUDIT_2021_2022.md
+
+- 2026-09-19T08:02:37.413255+00:00 T-TRDMGT-04-T01 POSITIVE_SIGNAL N=11 net=1.4145 src=scratch/composite_01_dev_results_repaired_terminal.json
+
+- 2026-09-19T08:02:37.416139+00:00 T-TRDMGT-04-T02 POSITIVE_SIGNAL N=13 net=0.9615 src=docs/HYP_COMPOSITE_POLARITY_BREAKEVEN_01_AUDIT_2021_2022.md

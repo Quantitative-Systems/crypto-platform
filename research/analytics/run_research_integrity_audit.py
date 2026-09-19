@@ -18,8 +18,8 @@ Executes PHASE 0 — RESEARCH INTEGRITY AUDIT across all 15 non-negotiable point
 15. Deterministic reproducibility
 
 Generates:
-- scratch/research_integrity_audit_results.json
-- RESEARCH_INTEGRITY_AUDIT.md
+- proofs/research/research_integrity_audit_results.json
+- proofs/research/RESEARCH_INTEGRITY_AUDIT.md
 """
 
 import json
@@ -59,7 +59,7 @@ def execute_integrity_audit() -> Dict[str, Any]:
     # Point 1: Market-Data Ingestion
     # -------------------------------------------------------------
     print("[1/15] Auditing Market-Data Ingestion...")
-    manifest_path = ROOT_DIR / "scratch/dataset_manifests.json"
+    manifest_path = ROOT_DIR / "proofs/work/dataset_manifests.json"
     with open(manifest_path, "r") as f:
         manifest_data = json.load(f)
 
@@ -239,7 +239,7 @@ def execute_integrity_audit() -> Dict[str, Any]:
     # Entry orders trigger on confirmation and fill at market with taker fee & slippage
     # or on subsequent candle open.
     # Check baseline trades to verify entry_timestamp >= setup_timestamp
-    dev_results_path = ROOT_DIR / "scratch/canonical_rebuild_dev_results.json"
+    dev_results_path = ROOT_DIR / "proofs/research/canonical_rebuild_dev_results.json"
     with open(dev_results_path, "r") as f:
         dev_data = json.load(f)
     
@@ -509,7 +509,7 @@ def execute_integrity_audit() -> Dict[str, Any]:
     }
 
     # Write JSON report
-    out_json = ROOT_DIR / "scratch/research_integrity_audit_results.json"
+    out_json = ROOT_DIR / "proofs/research/research_integrity_audit_results.json"
     with open(out_json, "w") as f:
         json.dump(summary_payload, f, indent=2)
     print(f"\nSaved JSON audit artifact: {out_json}")
@@ -566,7 +566,7 @@ def execute_integrity_audit() -> Dict[str, Any]:
     md_lines.append(f"- **Datasets Certified**: {point_1['total_datasets_certified']} dataset manifests audited across BTC, ETH, SOL.")
     md_lines.append(f"- **Timeframes Audited**: `1m`, `5m`, `15m`, `1h`, `4h`, `1d`, `1w`, `1M`.")
     md_lines.append("- **Geometric Sanity**: Every candle satisfies `High >= Low`, `High >= Open/Close`, `Low <= Open/Close`, and `Volume >= 0`.")
-    md_lines.append("- **Cryptographic Fingerprinting**: 100% of datasets indexed with SHA256 checksums in `scratch/dataset_manifests.json`.")
+    md_lines.append("- **Cryptographic Fingerprinting**: 100% of datasets indexed with SHA256 checksums in `proofs/work/dataset_manifests.json`.")
     md_lines.append(f"- **Audit Verdict**: **`{point_1['status']}`**")
     md_lines.append("")
 

@@ -1,7 +1,7 @@
 """
 Script: generate_phase10_2_markdown.py
-Reads scratch/phase10_2_kz_freshness_dev_results.json and compiles the comprehensive,
-exact, human-readable markdown artifact scratch/phase10_2_kz_freshness_dev_results.md
+Reads proofs/research/phase10_2_kz_freshness_dev_results.json and compiles the comprehensive,
+exact, human-readable markdown artifact proofs/research/phase10_2_kz_freshness_dev_results.md
 avoiding shell expansion bugs ($$ and backticks).
 """
 
@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 def generate_markdown():
-    json_path = Path("/home/mrcn2/crypto-platform/scratch/phase10_2_kz_freshness_dev_results.json")
+    json_path = Path("/home/mrcn2/crypto-platform/proofs/research/phase10_2_kz_freshness_dev_results.json")
     if not json_path.exists():
         raise FileNotFoundError(f"Missing {json_path}")
 
@@ -186,7 +186,7 @@ def generate_markdown():
     lines.append("- Research in Phase 10.2 is complete and permanently documented.")
     lines.append("")
 
-    out_md = Path("/home/mrcn2/crypto-platform/scratch/phase10_2_kz_freshness_dev_results.md")
+    out_md = Path("/home/mrcn2/crypto-platform/proofs/research/phase10_2_kz_freshness_dev_results.md")
     out_md.write_text("\n".join(lines))
     print(f"Successfully generated clean markdown report at: {out_md}")
     print(f"File size: {out_md.stat().st_size} bytes, Line count: {len(lines)}")

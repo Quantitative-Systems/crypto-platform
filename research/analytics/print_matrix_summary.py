@@ -1,7 +1,7 @@
 import json
 
 def main():
-    with open("/home/mrcn2/crypto-platform/scratch/unified_context_matrix_results.json") as f:
+    with open("/home/mrcn2/crypto-platform/proofs/research/unified_context_matrix_results.json") as f:
         streams = json.load(f)
 
     print("=" * 100)

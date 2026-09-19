@@ -35,9 +35,9 @@ def match_trade(trade_ref: Dict[str, Any], trade_list: List[Dict[str, Any]]) -> 
 
 
 def run_milestone_attribution(
-    composite_path: str = "/home/mrcn2/crypto-platform/scratch/composite_01_dev_results.json",
-    milestone_path: str = "/home/mrcn2/crypto-platform/scratch/milestone_2_5r_dev_results.json",
-    output_path: str = "/home/mrcn2/crypto-platform/scratch/milestone_2_5r_attribution.json"
+    composite_path: str = "/home/mrcn2/crypto-platform/proofs/research/composite_01_dev_results.json",
+    milestone_path: str = "/home/mrcn2/crypto-platform/proofs/research/milestone_2_5r_dev_results.json",
+    output_path: str = "/home/mrcn2/crypto-platform/proofs/research/milestone_2_5r_attribution.json"
 ) -> Dict[str, Any]:
     with open(composite_path, "r") as fp:
         comp_data = json.load(fp)

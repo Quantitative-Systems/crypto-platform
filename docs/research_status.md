@@ -94,8 +94,8 @@ To determine whether exit management could salvage $H_1$'s entry signals, we pro
 ---
 
 ### B. Pre-Flight Verification & Infrastructure Audit
-1. **Trade Lifecycle Fidelity Trace:** Audited closed trades candle-by-candle against raw warehouse data; entry fills, stop losses, excursions, trailing ratchets, and friction deductions verified with **zero discrepancies** (`scratch/simulator_integrity_trace_report.json`).
-2. **Causality & Lookahead Audit:** Verified monotonic timestamp causality ($\text{HTF} \le \text{MTF} \le \text{LTF} \le \text{Entry} \le \text{Exit}$) across all streams with **zero temporal violations** (`scratch/causality_lookahead_audit_report.json`).
+1. **Trade Lifecycle Fidelity Trace:** Audited closed trades candle-by-candle against raw warehouse data; entry fills, stop losses, excursions, trailing ratchets, and friction deductions verified with **zero discrepancies** (`proofs/research/simulator_integrity_trace_report.json`).
+2. **Causality & Lookahead Audit:** Verified monotonic timestamp causality ($\text{HTF} \le \text{MTF} \le \text{LTF} \le \text{Entry} \le \text{Exit}$) across all streams with **zero temporal violations** (`proofs/research/causality_lookahead_audit_report.json`).
 3. **Reproducibility Provenance Frozen:** Configuration, dataset hashes, and trial lineages committed to [`research/experiments/reproducibility_manifest.json`](file:///home/mrcn2/crypto-platform/research/experiments/reproducibility_manifest.json).
 4. **Execution Infrastructure Optimization:**
    - Identified a single-thread computational bottleneck on SET 4 (316,482 15m bars/asset taking $\sim 27\text{ mins/stream}$).

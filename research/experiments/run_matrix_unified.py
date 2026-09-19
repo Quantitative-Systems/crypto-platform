@@ -631,9 +631,9 @@ def execute_matrix_replay() -> Dict[str, Any]:
         global_trade_ledger.extend(s["trade_ledger"])
         
     # Serialize results to scratch directory
-    os.makedirs("/home/mrcn2/crypto-platform/scratch", exist_ok=True)
-    matrix_output_path = "/home/mrcn2/crypto-platform/scratch/unified_context_matrix_results.json"
-    ledger_output_path = "/home/mrcn2/crypto-platform/scratch/unified_matrix_trade_ledger.json"
+    os.makedirs("/home/mrcn2/crypto-platform/proofs/work", exist_ok=True)
+    matrix_output_path = "/home/mrcn2/crypto-platform/proofs/research/unified_context_matrix_results.json"
+    ledger_output_path = "/home/mrcn2/crypto-platform/proofs/research/unified_matrix_trade_ledger.json"
     
     with open(matrix_output_path, "w") as f:
         json.dump(all_streams_data, f, indent=2)

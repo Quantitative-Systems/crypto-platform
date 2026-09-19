@@ -242,13 +242,13 @@ class PairedAttributionAnalyzer:
 
 
 if __name__ == "__main__":
-    baseline = "/home/mrcn2/crypto-platform/scratch/anchor2_dev_certified_results.json"
-    treatment = "/home/mrcn2/crypto-platform/scratch/polarity_dev_results.json"
+    baseline = "/home/mrcn2/crypto-platform/proofs/research/anchor2_dev_certified_results.json"
+    treatment = "/home/mrcn2/crypto-platform/proofs/research/polarity_dev_results.json"
     if os.path.exists(treatment):
         res = PairedAttributionAnalyzer.analyze(baseline, treatment)
         report = PairedAttributionAnalyzer.format_report(res)
         print(report)
-        with open("/home/mrcn2/crypto-platform/scratch/paired_attribution_results.json", "w") as fp:
+        with open("/home/mrcn2/crypto-platform/proofs/research/paired_attribution_results.json", "w") as fp:
             json.dump(res, fp, indent=2)
     else:
         print(f"Treatment file not found: {treatment}")

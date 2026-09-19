@@ -755,7 +755,7 @@ def run_performance_forensics(h0_path: str, anchor2_path: str) -> Dict[str, Any]
         "trade_dependency": a2_dependency
     }
 
-    out_json = "/home/mrcn2/crypto-platform/scratch/performance_forensics_summary.json"
+    out_json = "/home/mrcn2/crypto-platform/proofs/research/performance_forensics_summary.json"
     with open(out_json, "w") as fp:
         json.dump(report_payload, fp, indent=2)
 
@@ -769,16 +769,16 @@ run_alpha_forensics = run_performance_forensics
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="Performance Forensics Engine")
-    parser.add_argument("--h0", type=str, default="/home/mrcn2/crypto-platform/scratch/h0_dev_certified_results.json", help="H0 results path")
-    parser.add_argument("--anchor2", type=str, default="/home/mrcn2/crypto-platform/scratch/anchor2_dev_certified_results.json", help="ANCHOR_2 results path")
+    parser.add_argument("--h0", type=str, default="/home/mrcn2/crypto-platform/proofs/research/h0_dev_certified_results.json", help="H0 results path")
+    parser.add_argument("--anchor2", type=str, default="/home/mrcn2/crypto-platform/proofs/research/anchor2_dev_certified_results.json", help="ANCHOR_2 results path")
     args = parser.parse_args()
 
     h0_file = args.h0
     a2_file = args.anchor2
     if not os.path.exists(h0_file):
-        h0_file = "/home/mrcn2/crypto-platform/scratch/canonical_h0_dev_results.json"
+        h0_file = "/home/mrcn2/crypto-platform/proofs/research/canonical_h0_dev_results.json"
     if not os.path.exists(a2_file):
-        a2_file = "/home/mrcn2/crypto-platform/scratch/canonical_anchor_2_dev_results.json"
+        a2_file = "/home/mrcn2/crypto-platform/proofs/research/canonical_anchor_2_dev_results.json"
 
     if os.path.exists(h0_file) and os.path.exists(a2_file):
         run_performance_forensics(h0_file, a2_file)

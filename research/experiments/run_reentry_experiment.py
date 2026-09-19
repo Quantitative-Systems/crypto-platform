@@ -416,7 +416,7 @@ def execute_full_reentry_study():
         print(f"| {v_name:28s} | {tm['total_trades']:6d} | {tm['wins']:4d} | {tm['losses']:6d} | {wr_str:8s} | {tm['net_realized_r']:+13.4f}R | {exp_str:12s} | ${tm['net_pnl_usd']:+10.2f} | {res.decision:16s} |")
 
     # Save complete study report
-    report_file = "/home/mrcn2/crypto-platform/scratch/reentry_ab_study_results.json"
+    report_file = "/home/mrcn2/crypto-platform/proofs/research/reentry_ab_study_results.json"
     with open(report_file, "w") as f:
         json.dump({k: v.to_dict() for k, v in study_results.items()}, f, indent=2)
         

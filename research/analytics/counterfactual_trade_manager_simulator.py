@@ -172,7 +172,7 @@ def main():
     print("=" * 100)
     print(json.dumps(report, indent=2))
     
-    out_file = "/home/mrcn2/crypto-platform/scratch/counterfactual_trade_management_results.json"
+    out_file = "/home/mrcn2/crypto-platform/proofs/research/counterfactual_trade_management_results.json"
     os.makedirs(os.path.dirname(out_file), exist_ok=True)
     with open(out_file, "w") as f:
         json.dump(report, f, indent=2)

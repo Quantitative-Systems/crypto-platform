@@ -16,7 +16,7 @@ HYPOTHESIS H0_DEV_CONTROL:
   - Real Maker (2 bps) / Taker (5 bps) fees + 5 bps adverse slippage
   - Zero lookahead protection
 
-Saves artifact: scratch/h0_dev_control_results.json
+Saves artifact: proofs/research/h0_dev_control_results.json
 """
 
 import os
@@ -364,7 +364,7 @@ def run_full_dev_matrix():
         "trade_ledger": all_trades
     }
 
-    output_file = "/home/mrcn2/crypto-platform/scratch/h_mgt_1_profit_lock_1_5_results.json"
+    output_file = "/home/mrcn2/crypto-platform/proofs/research/h_mgt_1_profit_lock_1_5_results.json"
     with open(output_file, "w") as f:
         json.dump(dev_results_payload, f, indent=2)
 

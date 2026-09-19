@@ -1,0 +1,12 @@
+asset: BTC/USDT, ETH/USDT, SOL/USDT
+timeframe: SET_1..SET_5 multi-scale (15 streams)
+fees: 2/5 bps
+slippage: 5 bps
+data_partition: DEV 2021-2022
+execution_assumptions: causal replayer, adverse-first intrabar collision, exited plans
+  terminal (no-reentry invariant, replayer fix 6382061)
+baseline: ANCHOR_2 N=23 -4.1741R
+experiment_id: HYP_COMPOSITE_POLARITY_BREAKEVEN_01
+hypothesis_id: H-TRDMGT-01
+candidate_id: C-TRDMGT-04
+test_id: T-TRDMGT-04-T02

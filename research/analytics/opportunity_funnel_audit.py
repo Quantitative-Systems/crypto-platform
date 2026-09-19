@@ -9,7 +9,7 @@ from typing import Dict, List, Any
 
 
 def main():
-    results_path = "/home/mrcn2/crypto-platform/scratch/unified_context_matrix_results.json"
+    results_path = "/home/mrcn2/crypto-platform/proofs/research/unified_context_matrix_results.json"
     if not os.path.exists(results_path):
         print(f"❌ Results file not found: {results_path}")
         return

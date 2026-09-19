@@ -1,0 +1,130 @@
+{
+  "counterfactual_simulation_matrix": {
+    "POLICY_A_ORIGINAL_H1": {
+      "description": "Original H1 rule (Hold for 4.0R HTF TP, MTF external protected swing trail)",
+      "total_trades": 128,
+      "wins": 35,
+      "losses": 93,
+      "breakevens": 0,
+      "win_rate_pct": 27.34,
+      "net_realized_r": -76.7697,
+      "mean_expectancy_r": -0.5998,
+      "profit_factor": 0.21,
+      "max_drawdown_r": 76.77,
+      "bootstrap_95_ci": [
+        -0.7058,
+        -0.4695
+      ],
+      "prob_positive_edge_pct": 0.0,
+      "cost_shock_2x_exp_r": -0.6118
+    },
+    "POLICY_B_BE_AT_1_0R": {
+      "description": "Ratchet SL to +0.1R once MFE reaches +1.0R",
+      "total_trades": 128,
+      "wins": 35,
+      "losses": 93,
+      "breakevens": 0,
+      "win_rate_pct": 27.34,
+      "net_realized_r": -76.7697,
+      "mean_expectancy_r": -0.5998,
+      "profit_factor": 0.21,
+      "max_drawdown_r": 76.77,
+      "bootstrap_95_ci": [
+        -0.7058,
+        -0.4695
+      ],
+      "prob_positive_edge_pct": 0.0,
+      "cost_shock_2x_exp_r": -0.6118
+    },
+    "POLICY_C_BE_AT_0_75R": {
+      "description": "Ratchet SL to +0.1R once MFE reaches +0.75R",
+      "total_trades": 128,
+      "wins": 40,
+      "losses": 88,
+      "breakevens": 0,
+      "win_rate_pct": 31.25,
+      "net_realized_r": -70.9527,
+      "mean_expectancy_r": -0.5543,
+      "profit_factor": 0.23,
+      "max_drawdown_r": 70.95,
+      "bootstrap_95_ci": [
+        -0.6608,
+        -0.4266
+      ],
+      "prob_positive_edge_pct": 0.0,
+      "cost_shock_2x_exp_r": -0.5663
+    },
+    "POLICY_D_BE_AT_1_5R": {
+      "description": "Ratchet SL to +0.1R once MFE reaches +1.5R",
+      "total_trades": 128,
+      "wins": 35,
+      "losses": 93,
+      "breakevens": 0,
+      "win_rate_pct": 27.34,
+      "net_realized_r": -76.7697,
+      "mean_expectancy_r": -0.5998,
+      "profit_factor": 0.21,
+      "max_drawdown_r": 76.77,
+      "bootstrap_95_ci": [
+        -0.7058,
+        -0.4695
+      ],
+      "prob_positive_edge_pct": 0.0,
+      "cost_shock_2x_exp_r": -0.6118
+    },
+    "POLICY_E_FIXED_1_5R_TP": {
+      "description": "Fixed Target Take-Profit at +1.5R MFE",
+      "total_trades": 128,
+      "wins": 34,
+      "losses": 94,
+      "breakevens": 0,
+      "win_rate_pct": 26.56,
+      "net_realized_r": -73.7498,
+      "mean_expectancy_r": -0.5762,
+      "profit_factor": 0.25,
+      "max_drawdown_r": 73.75,
+      "bootstrap_95_ci": [
+        -0.6939,
+        -0.4302
+      ],
+      "prob_positive_edge_pct": 0.0,
+      "cost_shock_2x_exp_r": -0.5882
+    },
+    "POLICY_F_FIXED_2_0R_TP": {
+      "description": "Fixed Target Take-Profit at +2.0R MFE",
+      "total_trades": 128,
+      "wins": 34,
+      "losses": 94,
+      "breakevens": 0,
+      "win_rate_pct": 26.56,
+      "net_realized_r": -77.541,
+      "mean_expectancy_r": -0.6058,
+      "profit_factor": 0.21,
+      "max_drawdown_r": 77.54,
+      "bootstrap_95_ci": [
+        -0.7123,
+        -0.4694
+      ],
+      "prob_positive_edge_pct": 0.0,
+      "cost_shock_2x_exp_r": -0.6178
+    },
+    "POLICY_G_RATCHET_TWO_TIER": {
+      "description": "Two-Tier: +0.75R -> SL=+0.1R; +1.5R -> SL=+0.75R",
+      "total_trades": 128,
+      "wins": 40,
+      "losses": 88,
+      "breakevens": 0,
+      "win_rate_pct": 31.25,
+      "net_realized_r": -70.9527,
+      "mean_expectancy_r": -0.5543,
+      "profit_factor": 0.23,
+      "max_drawdown_r": 70.95,
+      "bootstrap_95_ci": [
+        -0.6608,
+        -0.4266
+      ],
+      "prob_positive_edge_pct": 0.0,
+      "cost_shock_2x_exp_r": -0.5663
+    }
+  }
+}

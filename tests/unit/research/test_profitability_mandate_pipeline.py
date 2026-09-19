@@ -21,8 +21,8 @@ from research.analytics.research_scorecard_generator import evaluate_hypothesis_
 
 def test_phase0_research_integrity_audit_passed():
     """Verifies that the 15-point Research Integrity Audit passed unconditionally with 0 violations."""
-    audit_json = ROOT_DIR / "scratch/research_integrity_audit_results.json"
-    assert audit_json.exists(), "scratch/research_integrity_audit_results.json must exist"
+    audit_json = ROOT_DIR / "proofs/research/research_integrity_audit_results.json"
+    assert audit_json.exists(), "proofs/research/research_integrity_audit_results.json must exist"
     
     with open(audit_json, "r") as f:
         data = json.load(f)
@@ -41,8 +41,8 @@ def test_phase0_research_integrity_audit_passed():
 
 def test_phase1_forensic_failure_attribution():
     """Verifies that all 18 mandated failure categories are quantitatively analyzed."""
-    forensic_json = ROOT_DIR / "scratch/forensic_failure_analysis.json"
-    assert forensic_json.exists(), "scratch/forensic_failure_analysis.json must exist"
+    forensic_json = ROOT_DIR / "proofs/research/forensic_failure_analysis.json"
+    assert forensic_json.exists(), "proofs/research/forensic_failure_analysis.json must exist"
 
     with open(forensic_json, "r") as f:
         data = json.load(f)

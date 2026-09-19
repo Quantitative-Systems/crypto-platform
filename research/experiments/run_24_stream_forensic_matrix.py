@@ -333,7 +333,7 @@ def main():
         "ablation_no_mtf_trailing": ablation_no_mtf_trailing
     }
     
-    out_file = "/home/mrcn2/crypto-platform/scratch/gate5b_24_stream_forensic_results.json"
+    out_file = "/home/mrcn2/crypto-platform/proofs/research/gate5b_24_stream_forensic_results.json"
     with open(out_file, "w") as f:
         json.dump(output_bundle, f, indent=2)
     print(f"\nSaved full Gate 5B Forensic & Ablation results to {out_file}")

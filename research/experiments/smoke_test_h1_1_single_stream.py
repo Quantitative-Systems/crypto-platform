@@ -87,7 +87,7 @@ def run_h1_1_smoke_test() -> Dict[str, Any]:
     print("=" * 80)
     print(json.dumps(report, indent=2))
     
-    out_file = "/home/mrcn2/crypto-platform/scratch/h1_1_smoke_test_result.json"
+    out_file = "/home/mrcn2/crypto-platform/proofs/research/h1_1_smoke_test_result.json"
     os.makedirs(os.path.dirname(out_file), exist_ok=True)
     with open(out_file, "w") as f:
         json.dump(report, f, indent=2)

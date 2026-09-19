@@ -17,8 +17,8 @@ FROZEN BASELINE RULES:
   - Synthetic Data = FORBIDDEN (Fail-Closed)
   
 ARTIFACTS PRODUCED:
-  - scratch/canonical_trade_ledger.json
-  - scratch/canonical_multiyear_matrix_results.json
+  - proofs/work/canonical_trade_ledger.json
+  - proofs/research/canonical_multiyear_matrix_results.json
 """
 
 import os
@@ -544,10 +544,10 @@ def execute_15_stream_matrix():
         global_trade_ledger.extend(s["trade_ledger"])
         
     # Export artifacts
-    scratch_dir = "/home/mrcn2/crypto-platform/scratch"
-    os.makedirs(scratch_dir, exist_ok=True)
-    matrix_path = os.path.join(scratch_dir, "canonical_multiyear_matrix_results.json")
-    ledger_path = os.path.join(scratch_dir, "canonical_trade_ledger.json")
+    proofs_dir = "/home/mrcn2/crypto-platform/proofs/work"
+    os.makedirs(proofs_dir, exist_ok=True)
+    matrix_path = os.path.join(proofs_dir, "canonical_multiyear_matrix_results.json")
+    ledger_path = os.path.join(proofs_dir, "canonical_trade_ledger.json")
     
     with open(matrix_path, "w") as f:
         json.dump(all_streams, f, indent=2)

@@ -17,7 +17,7 @@ class ExperimentEngine:
     """
 
     @staticmethod
-    def load_baseline_results(baseline_path: str = "/home/mrcn2/crypto-platform/scratch/unified_context_matrix_results.json") -> List[Dict[str, Any]]:
+    def load_baseline_results(baseline_path: str = "/home/mrcn2/crypto-platform/proofs/research/unified_context_matrix_results.json") -> List[Dict[str, Any]]:
         """Loads the certified baseline matrix results."""
         if not os.path.exists(baseline_path):
             raise FileNotFoundError(f"Certified baseline matrix results not found at: {baseline_path}")
@@ -140,8 +140,8 @@ class ExperimentEngine:
     def run_experiment(
         hypothesis: HypothesisSpec,
         treatment_streams: List[Dict[str, Any]],
-        baseline_path: str = "/home/mrcn2/crypto-platform/scratch/unified_context_matrix_results.json",
-        output_dir: str = "/home/mrcn2/crypto-platform/scratch/experiments"
+        baseline_path: str = "/home/mrcn2/crypto-platform/proofs/research/unified_context_matrix_results.json",
+        output_dir: str = "/home/mrcn2/crypto-platform/proofs/research/experiments"
     ) -> ExperimentResult:
         """
         Runs complete A/B experiment analysis against the certified baseline.

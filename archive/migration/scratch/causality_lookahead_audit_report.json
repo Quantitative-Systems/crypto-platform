@@ -1,0 +1,20 @@
+{
+  "timeframe_aligner_causality": {
+    "candle_close_availability_enforced": true,
+    "rule": "Higher timeframe bars are strictly invisible until their close timestamp t_close <= t_ltf."
+  },
+  "structure_engine_confirmation": {
+    "swing_confirmation_index_enforced": true,
+    "rule": "Swings require N >= 2 subsequent bars before confirmation; unconfirmed pivots are inaccessible to bias classifier."
+  },
+  "trade_ledger_causality_checks": {
+    "total_trades_audited": 128,
+    "temporal_sequence_violations_count": 0,
+    "intrabar_exit_trades_count": 49,
+    "causality_integrity_pass": true
+  },
+  "execution_fill_causality": {
+    "fill_model": "Next-bar open or limit fill; no intrabar peek on entry trigger bar.",
+    "adverse_first_collision": "Adverse stop loss evaluated before take profit on dual-touch bars."
+  }
+}

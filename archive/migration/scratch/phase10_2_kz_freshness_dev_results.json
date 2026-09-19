@@ -1,0 +1,1709 @@
+{
+  "metadata": {
+    "title": "PHASE 10.2: HTF KeyZone Freshness Isolation Experiment (H_KZ_FRESH_01)",
+    "experiment_id": "H_KZ_FRESH_01_DEV",
+    "temporal_partition": "DEVELOPMENT (2021-01-01 to 2022-12-31)",
+    "timestamp": "2026-09-07T14:57:30.203369+00:00",
+    "execution_duration_sec": 2423.49,
+    "verdict": "PARTIALLY SUPPORTED",
+    "matrix_dimensions": {
+      "strategy": "UNIFIED_CANONICAL_STRATEGY",
+      "timeframe_sets": [
+        "SET_1",
+        "SET_2",
+        "SET_3",
+        "SET_4",
+        "SET_5"
+      ],
+      "assets": [
+        "BTC",
+        "ETH",
+        "SOL"
+      ],
+      "total_streams": 15
+    }
+  },
+  "configurations_evaluated": [
+    "BASELINE",
+    "7d",
+    "14d",
+    "21d",
+    "30d",
+    "60d",
+    "90d"
+  ],
+  "experiment_metrics": {
+    "BASELINE": {
+      "total_trades": 59,
+      "unique_economic_setups": 31,
+      "duplicate_trades": 28,
+      "active_streams": 9,
+      "zero_trade_streams": 6,
+      "winners": 4,
+      "losers": 55,
+      "breakevens": 0,
+      "win_rate_pct": 6.78,
+      "gross_realized_r": -31.9749,
+      "net_realized_r": -36.7023,
+      "expectancy_r": -0.6221,
+      "profit_factor": 0.38,
+      "max_drawdown_r": 43.27,
+      "avg_winner_r": 5.5103,
+      "avg_loser_r": -1.0681,
+      "mean_mfe_r": 1.0,
+      "mean_mae_r": 1.68,
+      "total_friction_r": 4.7272,
+      "avg_duration_hours": 5.81,
+      "losses_removed": 0,
+      "winners_removed": 0,
+      "winner_preservation_pct": 100.0,
+      "net_r_delta_vs_baseline": 0.0,
+      "drawdown_delta_vs_baseline": 0.0,
+      "profit_factor_delta_vs_baseline": 0.0,
+      "rejections": {
+        "REJECT_RR_BELOW_4R": 175,
+        "REJECT_SETUP_LIFESPAN_EXPIRED": 10,
+        "REJECT_OPPOSING_MTF_STRUCTURE": 354,
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 376,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 82,
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 33,
+        "REJECT_MIN_STOP_DISTANCE_VIOLATION": 32
+      }
+    },
+    "7d": {
+      "total_trades": 39,
+      "unique_economic_setups": 20,
+      "duplicate_trades": 19,
+      "active_streams": 6,
+      "zero_trade_streams": 9,
+      "winners": 4,
+      "losers": 35,
+      "breakevens": 0,
+      "win_rate_pct": 10.26,
+      "gross_realized_r": -12.8176,
+      "net_realized_r": -16.2248,
+      "expectancy_r": -0.416,
+      "profit_factor": 0.58,
+      "max_drawdown_r": 25.26,
+      "avg_winner_r": 5.5103,
+      "avg_loser_r": -1.0933,
+      "mean_mfe_r": 1.15,
+      "mean_mae_r": 1.53,
+      "total_friction_r": 3.4072,
+      "avg_duration_hours": 3.91,
+      "losses_removed": 20,
+      "winners_removed": 0,
+      "winner_preservation_pct": 100.0,
+      "net_r_delta_vs_baseline": 20.4775,
+      "drawdown_delta_vs_baseline": -18.01,
+      "profit_factor_delta_vs_baseline": 0.2,
+      "rejections": {
+        "REJECT_KEYZONE_STALE_AGE": 1504,
+        "REJECT_RR_BELOW_4R": 159,
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 33,
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 336,
+        "REJECT_OPPOSING_MTF_STRUCTURE": 268,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 80,
+        "REJECT_MIN_STOP_DISTANCE_VIOLATION": 30,
+        "REJECT_SETUP_LIFESPAN_EXPIRED": 6
+      }
+    },
+    "14d": {
+      "total_trades": 47,
+      "unique_economic_setups": 25,
+      "duplicate_trades": 22,
+      "active_streams": 7,
+      "zero_trade_streams": 8,
+      "winners": 4,
+      "losers": 43,
+      "breakevens": 0,
+      "win_rate_pct": 8.51,
+      "gross_realized_r": -19.9803,
+      "net_realized_r": -24.0303,
+      "expectancy_r": -0.5113,
+      "profit_factor": 0.48,
+      "max_drawdown_r": 30.6,
+      "avg_winner_r": 5.5103,
+      "avg_loser_r": -1.0714,
+      "mean_mfe_r": 1.12,
+      "mean_mae_r": 1.63,
+      "total_friction_r": 4.05,
+      "avg_duration_hours": 4.22,
+      "losses_removed": 12,
+      "winners_removed": 0,
+      "winner_preservation_pct": 100.0,
+      "net_r_delta_vs_baseline": 12.672,
+      "drawdown_delta_vs_baseline": -12.67,
+      "profit_factor_delta_vs_baseline": 0.1,
+      "rejections": {
+        "REJECT_KEYZONE_STALE_AGE": 589,
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 364,
+        "REJECT_RR_BELOW_4R": 168,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 81,
+        "REJECT_SETUP_LIFESPAN_EXPIRED": 7,
+        "REJECT_OPPOSING_MTF_STRUCTURE": 302,
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 33,
+        "REJECT_MIN_STOP_DISTANCE_VIOLATION": 31
+      }
+    },
+    "21d": {
+      "total_trades": 49,
+      "unique_economic_setups": 26,
+      "duplicate_trades": 23,
+      "active_streams": 8,
+      "zero_trade_streams": 7,
+      "winners": 4,
+      "losers": 45,
+      "breakevens": 0,
+      "win_rate_pct": 8.16,
+      "gross_realized_r": -21.9792,
+      "net_realized_r": -26.1384,
+      "expectancy_r": -0.5334,
+      "profit_factor": 0.46,
+      "max_drawdown_r": 32.71,
+      "avg_winner_r": 5.5103,
+      "avg_loser_r": -1.0707,
+      "mean_mfe_r": 1.09,
+      "mean_mae_r": 1.61,
+      "total_friction_r": 4.1592,
+      "avg_duration_hours": 4.05,
+      "losses_removed": 10,
+      "winners_removed": 0,
+      "winner_preservation_pct": 100.0,
+      "net_r_delta_vs_baseline": 10.5639,
+      "drawdown_delta_vs_baseline": -10.56,
+      "profit_factor_delta_vs_baseline": 0.08,
+      "rejections": {
+        "REJECT_KEYZONE_STALE_AGE": 292,
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 371,
+        "REJECT_RR_BELOW_4R": 169,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 82,
+        "REJECT_SETUP_LIFESPAN_EXPIRED": 7,
+        "REJECT_OPPOSING_MTF_STRUCTURE": 338,
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 33,
+        "REJECT_MIN_STOP_DISTANCE_VIOLATION": 32
+      }
+    },
+    "30d": {
+      "total_trades": 49,
+      "unique_economic_setups": 26,
+      "duplicate_trades": 23,
+      "active_streams": 8,
+      "zero_trade_streams": 7,
+      "winners": 4,
+      "losers": 45,
+      "breakevens": 0,
+      "win_rate_pct": 8.16,
+      "gross_realized_r": -21.9792,
+      "net_realized_r": -26.1384,
+      "expectancy_r": -0.5334,
+      "profit_factor": 0.46,
+      "max_drawdown_r": 32.71,
+      "avg_winner_r": 5.5103,
+      "avg_loser_r": -1.0707,
+      "mean_mfe_r": 1.09,
+      "mean_mae_r": 1.61,
+      "total_friction_r": 4.1592,
+      "avg_duration_hours": 4.05,
+      "losses_removed": 10,
+      "winners_removed": 0,
+      "winner_preservation_pct": 100.0,
+      "net_r_delta_vs_baseline": 10.5639,
+      "drawdown_delta_vs_baseline": -10.56,
+      "profit_factor_delta_vs_baseline": 0.08,
+      "rejections": {
+        "REJECT_KEYZONE_STALE_AGE": 256,
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 373,
+        "REJECT_RR_BELOW_4R": 169,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 82,
+        "REJECT_SETUP_LIFESPAN_EXPIRED": 7,
+        "REJECT_OPPOSING_MTF_STRUCTURE": 338,
+        "REJECT_MIN_STOP_DISTANCE_VIOLATION": 32,
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 33
+      }
+    },
+    "60d": {
+      "total_trades": 51,
+      "unique_economic_setups": 27,
+      "duplicate_trades": 24,
+      "active_streams": 9,
+      "zero_trade_streams": 6,
+      "winners": 4,
+      "losers": 47,
+      "breakevens": 0,
+      "win_rate_pct": 7.84,
+      "gross_realized_r": -23.978,
+      "net_realized_r": -28.2078,
+      "expectancy_r": -0.5531,
+      "profit_factor": 0.44,
+      "max_drawdown_r": 34.78,
+      "avg_winner_r": 5.5103,
+      "avg_loser_r": -1.0691,
+      "mean_mfe_r": 1.08,
+      "mean_mae_r": 1.66,
+      "total_friction_r": 4.2298,
+      "avg_duration_hours": 5.77,
+      "losses_removed": 8,
+      "winners_removed": 0,
+      "winner_preservation_pct": 100.0,
+      "net_r_delta_vs_baseline": 8.4945,
+      "drawdown_delta_vs_baseline": -8.49,
+      "profit_factor_delta_vs_baseline": 0.06,
+      "rejections": {
+        "REJECT_RR_BELOW_4R": 172,
+        "REJECT_KEYZONE_STALE_AGE": 212,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 82,
+        "REJECT_OPPOSING_MTF_STRUCTURE": 341,
+        "REJECT_SETUP_LIFESPAN_EXPIRED": 8,
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 374,
+        "REJECT_MIN_STOP_DISTANCE_VIOLATION": 32,
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 33
+      }
+    },
+    "90d": {
+      "total_trades": 53,
+      "unique_economic_setups": 28,
+      "duplicate_trades": 25,
+      "active_streams": 9,
+      "zero_trade_streams": 6,
+      "winners": 4,
+      "losers": 49,
+      "breakevens": 0,
+      "win_rate_pct": 7.55,
+      "gross_realized_r": -25.9785,
+      "net_realized_r": -30.419,
+      "expectancy_r": -0.5739,
+      "profit_factor": 0.42,
+      "max_drawdown_r": 36.99,
+      "avg_winner_r": 5.5103,
+      "avg_loser_r": -1.0706,
+      "mean_mfe_r": 1.05,
+      "mean_mae_r": 1.67,
+      "total_friction_r": 4.4404,
+      "avg_duration_hours": 5.56,
+      "losses_removed": 6,
+      "winners_removed": 0,
+      "winner_preservation_pct": 100.0,
+      "net_r_delta_vs_baseline": 6.2833,
+      "drawdown_delta_vs_baseline": -6.28,
+      "profit_factor_delta_vs_baseline": 0.04,
+      "rejections": {
+        "REJECT_RR_BELOW_4R": 173,
+        "REJECT_SETUP_LIFESPAN_EXPIRED": 9,
+        "REJECT_KEYZONE_STALE_AGE": 84,
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 376,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 82,
+        "REJECT_OPPOSING_MTF_STRUCTURE": 354,
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 33,
+        "REJECT_MIN_STOP_DISTANCE_VIOLATION": 32
+      }
+    }
+  },
+  "winner_preservation_audit": {
+    "total_baseline_winners": 4,
+    "preserved_winners_at_7d": 4,
+    "preservation_rate_pct": 100.0,
+    "winner_records": [
+      {
+        "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1638824400",
+        "symbol": "BTC/USDT",
+        "timeframe_set": "SET_3",
+        "entry_timestamp": 1638986400,
+        "entry_utc": "2021-12-08T18:00:00+00:00",
+        "htf_keyzone_id": "FVG_BEARISH_1638576000_79",
+        "htf_kz_creation_timestamp": 1638576000,
+        "htf_kz_creation_utc": "2021-12-04T00:00:00+00:00",
+        "htf_interaction_timestamp": 1638824400,
+        "htf_interaction_utc": "2021-12-06T21:00:00+00:00",
+        "zone_age_seconds": 248400,
+        "zone_age_days": 2.875,
+        "realized_r": 5.6957,
+        "exit_reason": "HTF_TP",
+        "preserved_at_7d": true
+      },
+      {
+        "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1639026000",
+        "symbol": "BTC/USDT",
+        "timeframe_set": "SET_3",
+        "entry_timestamp": 1639051200,
+        "entry_utc": "2021-12-09T12:00:00+00:00",
+        "htf_keyzone_id": "FVG_BEARISH_1638576000_76",
+        "htf_kz_creation_timestamp": 1638576000,
+        "htf_kz_creation_utc": "2021-12-04T00:00:00+00:00",
+        "htf_interaction_timestamp": 1639026000,
+        "htf_interaction_utc": "2021-12-09T05:00:00+00:00",
+        "zone_age_seconds": 450000,
+        "zone_age_days": 5.208,
+        "realized_r": 4.0784,
+        "exit_reason": "HTF_TP",
+        "preserved_at_7d": true
+      },
+      {
+        "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1638824400",
+        "symbol": "BTC/USDT",
+        "timeframe_set": "SET_3",
+        "entry_timestamp": 1639332000,
+        "entry_utc": "2021-12-12T18:00:00+00:00",
+        "htf_keyzone_id": "FVG_BEARISH_1638576000_79",
+        "htf_kz_creation_timestamp": 1638576000,
+        "htf_kz_creation_utc": "2021-12-04T00:00:00+00:00",
+        "htf_interaction_timestamp": 1638824400,
+        "htf_interaction_utc": "2021-12-06T21:00:00+00:00",
+        "zone_age_seconds": 248400,
+        "zone_age_days": 2.875,
+        "realized_r": 5.6968,
+        "exit_reason": "HTF_TP",
+        "preserved_at_7d": true
+      },
+      {
+        "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1655429400",
+        "symbol": "ETH/USDT",
+        "timeframe_set": "SET_4",
+        "entry_timestamp": 1655451000,
+        "entry_utc": "2022-06-17T07:30:00+00:00",
+        "htf_keyzone_id": "OB_BEARISH_OB_1655380800_SW_LOW_62",
+        "htf_kz_creation_timestamp": 1655380800,
+        "htf_kz_creation_utc": "2022-06-16T12:00:00+00:00",
+        "htf_interaction_timestamp": 1655429400,
+        "htf_interaction_utc": "2022-06-17T01:30:00+00:00",
+        "zone_age_seconds": 48600,
+        "zone_age_days": 0.562,
+        "realized_r": 6.5704,
+        "exit_reason": "HTF_TP",
+        "preserved_at_7d": true
+      }
+    ]
+  },
+  "loss_removal_audit_7d": {
+    "total_removed_trades": 20,
+    "total_removed_r": -20.4773,
+    "aggregate_net_r_delta": 20.4775,
+    "reconciliation_discrepancy_r": 0.0002,
+    "removed_trades": [
+      {
+        "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1639612800",
+        "symbol": "ETH/USDT",
+        "timeframe_set": "SET_1",
+        "htf_keyzone_id": "OB_BULLISH_OB_1630454400_SW_HIGH_45",
+        "htf_kz_creation_timestamp": 1630454400,
+        "htf_interaction_timestamp": 1639612800,
+        "zone_age_seconds": 9158400,
+        "zone_age_days": 106.0,
+        "realized_r": -1.0347,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1639612800",
+        "symbol": "ETH/USDT",
+        "timeframe_set": "SET_1",
+        "htf_keyzone_id": "OB_BULLISH_OB_1630454400_SW_HIGH_45",
+        "htf_kz_creation_timestamp": 1630454400,
+        "htf_interaction_timestamp": 1639612800,
+        "zone_age_seconds": 9158400,
+        "zone_age_days": 106.0,
+        "realized_r": -1.0347,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1649808000",
+        "symbol": "ETH/USDT",
+        "timeframe_set": "SET_1",
+        "htf_keyzone_id": "OB_BULLISH_OB_1630454400_SW_HIGH_45",
+        "htf_kz_creation_timestamp": 1630454400,
+        "htf_interaction_timestamp": 1649808000,
+        "zone_age_seconds": 19353600,
+        "zone_age_days": 224.0,
+        "realized_r": -1.0759,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1649808000",
+        "symbol": "ETH/USDT",
+        "timeframe_set": "SET_1",
+        "htf_keyzone_id": "OB_BULLISH_OB_1630454400_SW_HIGH_45",
+        "htf_kz_creation_timestamp": 1630454400,
+        "htf_interaction_timestamp": 1649808000,
+        "zone_age_seconds": 19353600,
+        "zone_age_days": 224.0,
+        "realized_r": -1.0759,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1650844800",
+        "symbol": "ETH/USDT",
+        "timeframe_set": "SET_1",
+        "htf_keyzone_id": "OB_BULLISH_OB_1630454400_SW_HIGH_45",
+        "htf_kz_creation_timestamp": 1630454400,
+        "htf_interaction_timestamp": 1650844800,
+        "zone_age_seconds": 20390400,
+        "zone_age_days": 236.0,
+        "realized_r": -1.0356,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1650844800",
+        "symbol": "ETH/USDT",
+        "timeframe_set": "SET_1",
+        "htf_keyzone_id": "OB_BULLISH_OB_1630454400_SW_HIGH_45",
+        "htf_kz_creation_timestamp": 1630454400,
+        "htf_interaction_timestamp": 1650844800,
+        "zone_age_seconds": 20390400,
+        "zone_age_days": 236.0,
+        "realized_r": -1.0356,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1651190400",
+        "symbol": "ETH/USDT",
+        "timeframe_set": "SET_1",
+        "htf_keyzone_id": "OB_BULLISH_OB_1630454400_SW_HIGH_45",
+        "htf_kz_creation_timestamp": 1630454400,
+        "htf_interaction_timestamp": 1651190400,
+        "zone_age_seconds": 20736000,
+        "zone_age_days": 240.0,
+        "realized_r": -1.0301,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1651190400",
+        "symbol": "ETH/USDT",
+        "timeframe_set": "SET_1",
+        "htf_keyzone_id": "OB_BULLISH_OB_1630454400_SW_HIGH_45",
+        "htf_kz_creation_timestamp": 1630454400,
+        "htf_interaction_timestamp": 1651190400,
+        "zone_age_seconds": 20736000,
+        "zone_age_days": 240.0,
+        "realized_r": -1.0301,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1615953600",
+        "symbol": "BTC/USDT",
+        "timeframe_set": "SET_2",
+        "htf_keyzone_id": "OB_BULLISH_OB_1613952000_SW_HIGH_76",
+        "htf_kz_creation_timestamp": 1613952000,
+        "htf_interaction_timestamp": 1615953600,
+        "zone_age_seconds": 2001600,
+        "zone_age_days": 23.167,
+        "realized_r": -1.0805,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1628236800",
+        "symbol": "BTC/USDT",
+        "timeframe_set": "SET_2",
+        "htf_keyzone_id": "FVG_BEARISH_1621209600_70",
+        "htf_kz_creation_timestamp": 1621209600,
+        "htf_interaction_timestamp": 1628236800,
+        "zone_age_seconds": 7027200,
+        "zone_age_days": 81.333,
+        "realized_r": -1.1055,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_BTC/USDT_UNIFIED_STRATEGY_1628236800",
+        "symbol": "BTC/USDT",
+        "timeframe_set": "SET_2",
+        "htf_keyzone_id": "FVG_BEARISH_1621209600_70",
+        "htf_kz_creation_timestamp": 1621209600,
+        "htf_interaction_timestamp": 1628236800,
+        "zone_age_seconds": 7027200,
+        "zone_age_days": 81.333,
+        "realized_r": -1.1056,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1614283200",
+        "symbol": "ETH/USDT",
+        "timeframe_set": "SET_2",
+        "htf_keyzone_id": "FVG_BULLISH_1612137600_78",
+        "htf_kz_creation_timestamp": 1612137600,
+        "htf_interaction_timestamp": 1614283200,
+        "zone_age_seconds": 2145600,
+        "zone_age_days": 24.833,
+        "realized_r": -1.054,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_ETH/USDT_UNIFIED_STRATEGY_1614283200",
+        "symbol": "ETH/USDT",
+        "timeframe_set": "SET_2",
+        "htf_keyzone_id": "FVG_BULLISH_1612137600_78",
+        "htf_kz_creation_timestamp": 1612137600,
+        "htf_interaction_timestamp": 1614283200,
+        "zone_age_seconds": 2145600,
+        "zone_age_days": 24.833,
+        "realized_r": -1.0541,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633741200",
+        "symbol": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "htf_keyzone_id": "FVG_BULLISH_1633046400_73",
+        "htf_kz_creation_timestamp": 1633046400,
+        "htf_interaction_timestamp": 1633741200,
+        "zone_age_seconds": 694800,
+        "zone_age_days": 8.042,
+        "realized_r": -1.034,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633741200",
+        "symbol": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "htf_keyzone_id": "FVG_BULLISH_1633046400_73",
+        "htf_kz_creation_timestamp": 1633046400,
+        "htf_interaction_timestamp": 1633741200,
+        "zone_age_seconds": 694800,
+        "zone_age_days": 8.042,
+        "realized_r": -1.034,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633906800",
+        "symbol": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "htf_keyzone_id": "FVG_BULLISH_1633046400_72",
+        "htf_kz_creation_timestamp": 1633046400,
+        "htf_interaction_timestamp": 1633906800,
+        "zone_age_seconds": 860400,
+        "zone_age_days": 9.958,
+        "realized_r": -1.0957,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1633906800",
+        "symbol": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "htf_keyzone_id": "FVG_BULLISH_1633046400_72",
+        "htf_kz_creation_timestamp": 1633046400,
+        "htf_interaction_timestamp": 1633906800,
+        "zone_age_seconds": 860400,
+        "zone_age_days": 9.958,
+        "realized_r": -1.0957,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1649638800",
+        "symbol": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "htf_keyzone_id": "OB_BULLISH_OB_1648425600_SW_HIGH_17",
+        "htf_kz_creation_timestamp": 1648425600,
+        "htf_interaction_timestamp": 1649638800,
+        "zone_age_seconds": 1213200,
+        "zone_age_days": 14.042,
+        "realized_r": -0.2544,
+        "exit_reason": "MTF_STRUCTURAL_TRAIL"
+      },
+      {
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1649653200",
+        "symbol": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "htf_keyzone_id": "OB_BULLISH_OB_1648425600_SW_HIGH_17",
+        "htf_kz_creation_timestamp": 1648425600,
+        "htf_interaction_timestamp": 1649653200,
+        "zone_age_seconds": 1227600,
+        "zone_age_days": 14.208,
+        "realized_r": -1.1056,
+        "exit_reason": "INITIAL_LTF_SL"
+      },
+      {
+        "trade_id": "cand_SOL/USDT_UNIFIED_STRATEGY_1649653200",
+        "symbol": "SOL/USDT",
+        "timeframe_set": "SET_3",
+        "htf_keyzone_id": "OB_BULLISH_OB_1648425600_SW_HIGH_17",
+        "htf_kz_creation_timestamp": 1648425600,
+        "htf_interaction_timestamp": 1649653200,
+        "zone_age_seconds": 1227600,
+        "zone_age_days": 14.208,
+        "realized_r": -1.1056,
+        "exit_reason": "INITIAL_LTF_SL"
+      }
+    ]
+  },
+  "causality_audit": {
+    "status": "PASSED",
+    "lookahead_violations_count": 0,
+    "methodology": "zone_age = candidate_interaction_timestamp - htf_keyzone_creation_timestamp. Evaluated at candidate arrival bar before entry qualification."
+  },
+  "stream_breakdown": {
+    "BASELINE": {
+      "SOL_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "ZERO_TRADES"
+      },
+      "BTC_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "ETH_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "SOL_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "BTC_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_RR_BELOW_4R": 1
+        },
+        "status": "ZERO_TRADES"
+      },
+      "ETH_SET_1": {
+        "trades": 8,
+        "net_r": -8.3527,
+        "rejections": {
+          "REJECT_RR_BELOW_4R": 3,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 2
+        },
+        "status": "OK"
+      },
+      "SOL_SET_2": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_OPPOSING_MTF_STRUCTURE": 4,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 1
+        },
+        "status": "ZERO_TRADES"
+      },
+      "BTC_SET_2": {
+        "trades": 3,
+        "net_r": -3.2917,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 4,
+          "REJECT_RR_BELOW_4R": 9,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 1,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 13
+        },
+        "status": "OK"
+      },
+      "ETH_SET_2": {
+        "trades": 2,
+        "net_r": -2.1081,
+        "rejections": {
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 1,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 7,
+          "REJECT_RR_BELOW_4R": 1,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1
+        },
+        "status": "OK"
+      },
+      "SOL_SET_3": {
+        "trades": 21,
+        "net_r": -21.9742,
+        "rejections": {
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 2,
+          "REJECT_RR_BELOW_4R": 9,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 38,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 15,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 5,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 2,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1
+        },
+        "status": "OK"
+      },
+      "ETH_SET_3": {
+        "trades": 6,
+        "net_r": -6.4699,
+        "rejections": {
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 3,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 19,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 51,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 2,
+          "REJECT_RR_BELOW_4R": 9
+        },
+        "status": "OK"
+      },
+      "BTC_SET_3": {
+        "trades": 6,
+        "net_r": 12.1382,
+        "rejections": {
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 9,
+          "REJECT_RR_BELOW_4R": 12,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 47,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 19,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 2,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 1
+        },
+        "status": "OK"
+      },
+      "SOL_SET_4": {
+        "trades": 8,
+        "net_r": -8.7863,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 127,
+          "REJECT_RR_BELOW_4R": 51,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 23,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 72,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 12,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 7
+        },
+        "status": "OK"
+      },
+      "ETH_SET_4": {
+        "trades": 2,
+        "net_r": 5.4713,
+        "rejections": {
+          "REJECT_OPPOSING_MTF_STRUCTURE": 75,
+          "REJECT_RR_BELOW_4R": 39,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 98,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 8,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 22,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 10
+        },
+        "status": "OK"
+      },
+      "BTC_SET_4": {
+        "trades": 3,
+        "net_r": -3.3288,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 93,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 19,
+          "REJECT_RR_BELOW_4R": 41,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 47,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 12,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 8,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 3
+        },
+        "status": "OK"
+      }
+    },
+    "7d": {
+      "BTC_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_KEYZONE_STALE_AGE": 1
+        },
+        "status": "ZERO_TRADES"
+      },
+      "SOL_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "ZERO_TRADES"
+      },
+      "ETH_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_KEYZONE_STALE_AGE": 166
+        },
+        "status": "ZERO_TRADES"
+      },
+      "SOL_SET_2": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_KEYZONE_STALE_AGE": 88
+        },
+        "status": "ZERO_TRADES"
+      },
+      "BTC_SET_2": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_KEYZONE_STALE_AGE": 177,
+          "REJECT_RR_BELOW_4R": 1
+        },
+        "status": "ZERO_TRADES"
+      },
+      "ETH_SET_2": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_KEYZONE_STALE_AGE": 55
+        },
+        "status": "ZERO_TRADES"
+      },
+      "BTC_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "ETH_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "SOL_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "ETH_SET_3": {
+        "trades": 6,
+        "net_r": -6.4699,
+        "rejections": {
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 3,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 9,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 22,
+          "REJECT_KEYZONE_STALE_AGE": 240,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 2,
+          "REJECT_RR_BELOW_4R": 9
+        },
+        "status": "OK"
+      },
+      "SOL_SET_3": {
+        "trades": 14,
+        "net_r": -15.2492,
+        "rejections": {
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 2,
+          "REJECT_RR_BELOW_4R": 8,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 18,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 10,
+          "REJECT_KEYZONE_STALE_AGE": 259,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 5,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 1,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1
+        },
+        "status": "OK"
+      },
+      "BTC_SET_3": {
+        "trades": 6,
+        "net_r": 12.1382,
+        "rejections": {
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 9,
+          "REJECT_RR_BELOW_4R": 11,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 34,
+          "REJECT_KEYZONE_STALE_AGE": 265,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 11,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 2,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 1
+        },
+        "status": "OK"
+      },
+      "SOL_SET_4": {
+        "trades": 8,
+        "net_r": -8.7863,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 123,
+          "REJECT_RR_BELOW_4R": 50,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 23,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 72,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 12,
+          "REJECT_KEYZONE_STALE_AGE": 115,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 7
+        },
+        "status": "OK"
+      },
+      "ETH_SET_4": {
+        "trades": 2,
+        "net_r": 5.4713,
+        "rejections": {
+          "REJECT_OPPOSING_MTF_STRUCTURE": 75,
+          "REJECT_RR_BELOW_4R": 39,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 95,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 8,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 22,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 9,
+          "REJECT_KEYZONE_STALE_AGE": 71
+        },
+        "status": "OK"
+      },
+      "BTC_SET_4": {
+        "trades": 3,
+        "net_r": -3.3288,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 88,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 19,
+          "REJECT_RR_BELOW_4R": 41,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 47,
+          "REJECT_KEYZONE_STALE_AGE": 67,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 12,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 8,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 3
+        },
+        "status": "OK"
+      }
+    },
+    "14d": {
+      "BTC_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_KEYZONE_STALE_AGE": 1
+        },
+        "status": "ZERO_TRADES"
+      },
+      "ETH_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_KEYZONE_STALE_AGE": 166
+        },
+        "status": "ZERO_TRADES"
+      },
+      "SOL_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "ZERO_TRADES"
+      },
+      "BTC_SET_2": {
+        "trades": 1,
+        "net_r": -1.0805,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 2,
+          "REJECT_RR_BELOW_4R": 8,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 1,
+          "REJECT_KEYZONE_STALE_AGE": 42,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1
+        },
+        "status": "OK"
+      },
+      "ETH_SET_2": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_KEYZONE_STALE_AGE": 54,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 1
+        },
+        "status": "ZERO_TRADES"
+      },
+      "SOL_SET_2": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_OPPOSING_MTF_STRUCTURE": 4,
+          "REJECT_KEYZONE_STALE_AGE": 69
+        },
+        "status": "ZERO_TRADES"
+      },
+      "SOL_SET_3": {
+        "trades": 21,
+        "net_r": -21.9742,
+        "rejections": {
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 2,
+          "REJECT_RR_BELOW_4R": 8,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 28,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 13,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 5,
+          "REJECT_KEYZONE_STALE_AGE": 101,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 1,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1
+        },
+        "status": "OK"
+      },
+      "BTC_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "ETH_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "SOL_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "BTC_SET_3": {
+        "trades": 6,
+        "net_r": 12.1382,
+        "rejections": {
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 9,
+          "REJECT_RR_BELOW_4R": 12,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 40,
+          "REJECT_KEYZONE_STALE_AGE": 65,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 16,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 2,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 1
+        },
+        "status": "OK"
+      },
+      "ETH_SET_3": {
+        "trades": 6,
+        "net_r": -6.4699,
+        "rejections": {
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 3,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 15,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 35,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 2,
+          "REJECT_KEYZONE_STALE_AGE": 91,
+          "REJECT_RR_BELOW_4R": 9
+        },
+        "status": "OK"
+      },
+      "SOL_SET_4": {
+        "trades": 8,
+        "net_r": -8.7863,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 127,
+          "REJECT_RR_BELOW_4R": 51,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 23,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 72,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 12,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 7
+        },
+        "status": "OK"
+      },
+      "BTC_SET_4": {
+        "trades": 3,
+        "net_r": -3.3288,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 93,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 19,
+          "REJECT_RR_BELOW_4R": 41,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 47,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 12,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 8,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 3
+        },
+        "status": "OK"
+      },
+      "ETH_SET_4": {
+        "trades": 2,
+        "net_r": 5.4713,
+        "rejections": {
+          "REJECT_OPPOSING_MTF_STRUCTURE": 75,
+          "REJECT_RR_BELOW_4R": 39,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 98,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 8,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 22,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 10
+        },
+        "status": "OK"
+      }
+    },
+    "21d": {
+      "BTC_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_KEYZONE_STALE_AGE": 1
+        },
+        "status": "ZERO_TRADES"
+      },
+      "ETH_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_KEYZONE_STALE_AGE": 166
+        },
+        "status": "ZERO_TRADES"
+      },
+      "SOL_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "ZERO_TRADES"
+      },
+      "BTC_SET_2": {
+        "trades": 1,
+        "net_r": -1.0805,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 2,
+          "REJECT_RR_BELOW_4R": 8,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 1,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1,
+          "REJECT_KEYZONE_STALE_AGE": 39
+        },
+        "status": "OK"
+      },
+      "ETH_SET_2": {
+        "trades": 2,
+        "net_r": -2.1081,
+        "rejections": {
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 1,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 4,
+          "REJECT_KEYZONE_STALE_AGE": 14
+        },
+        "status": "OK"
+      },
+      "SOL_SET_2": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_OPPOSING_MTF_STRUCTURE": 4,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 1
+        },
+        "status": "ZERO_TRADES"
+      },
+      "ETH_SET_3": {
+        "trades": 6,
+        "net_r": -6.4699,
+        "rejections": {
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 3,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 17,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 51,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 2,
+          "REJECT_KEYZONE_STALE_AGE": 50,
+          "REJECT_RR_BELOW_4R": 9
+        },
+        "status": "OK"
+      },
+      "SOL_SET_3": {
+        "trades": 21,
+        "net_r": -21.9742,
+        "rejections": {
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 2,
+          "REJECT_RR_BELOW_4R": 9,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 38,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 15,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 5,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 2,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1
+        },
+        "status": "OK"
+      },
+      "BTC_SET_3": {
+        "trades": 6,
+        "net_r": 12.1382,
+        "rejections": {
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 9,
+          "REJECT_RR_BELOW_4R": 12,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 47,
+          "REJECT_KEYZONE_STALE_AGE": 22,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 18,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 2,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 1
+        },
+        "status": "OK"
+      },
+      "BTC_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "ETH_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "SOL_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "SOL_SET_4": {
+        "trades": 8,
+        "net_r": -8.7863,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 127,
+          "REJECT_RR_BELOW_4R": 51,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 23,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 72,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 12,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 7
+        },
+        "status": "OK"
+      },
+      "BTC_SET_4": {
+        "trades": 3,
+        "net_r": -3.3288,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 93,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 19,
+          "REJECT_RR_BELOW_4R": 41,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 47,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 12,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 8,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 3
+        },
+        "status": "OK"
+      },
+      "ETH_SET_4": {
+        "trades": 2,
+        "net_r": 5.4713,
+        "rejections": {
+          "REJECT_OPPOSING_MTF_STRUCTURE": 75,
+          "REJECT_RR_BELOW_4R": 39,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 98,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 8,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 22,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 10
+        },
+        "status": "OK"
+      }
+    },
+    "30d": {
+      "BTC_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_KEYZONE_STALE_AGE": 1
+        },
+        "status": "ZERO_TRADES"
+      },
+      "ETH_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_KEYZONE_STALE_AGE": 166
+        },
+        "status": "ZERO_TRADES"
+      },
+      "SOL_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "ZERO_TRADES"
+      },
+      "BTC_SET_2": {
+        "trades": 1,
+        "net_r": -1.0805,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 2,
+          "REJECT_RR_BELOW_4R": 8,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 1,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1,
+          "REJECT_KEYZONE_STALE_AGE": 39
+        },
+        "status": "OK"
+      },
+      "ETH_SET_2": {
+        "trades": 2,
+        "net_r": -2.1081,
+        "rejections": {
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 1,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 4,
+          "REJECT_KEYZONE_STALE_AGE": 14
+        },
+        "status": "OK"
+      },
+      "SOL_SET_2": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_OPPOSING_MTF_STRUCTURE": 4,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 1
+        },
+        "status": "ZERO_TRADES"
+      },
+      "BTC_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "ETH_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "SOL_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "BTC_SET_3": {
+        "trades": 6,
+        "net_r": 12.1382,
+        "rejections": {
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 9,
+          "REJECT_RR_BELOW_4R": 12,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 47,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 19,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 2,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 1
+        },
+        "status": "OK"
+      },
+      "SOL_SET_3": {
+        "trades": 21,
+        "net_r": -21.9742,
+        "rejections": {
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 2,
+          "REJECT_RR_BELOW_4R": 9,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 38,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 15,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 5,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 2,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1
+        },
+        "status": "OK"
+      },
+      "ETH_SET_3": {
+        "trades": 6,
+        "net_r": -6.4699,
+        "rejections": {
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 3,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 18,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 51,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 2,
+          "REJECT_RR_BELOW_4R": 9,
+          "REJECT_KEYZONE_STALE_AGE": 36
+        },
+        "status": "OK"
+      },
+      "SOL_SET_4": {
+        "trades": 8,
+        "net_r": -8.7863,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 127,
+          "REJECT_RR_BELOW_4R": 51,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 23,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 72,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 12,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 7
+        },
+        "status": "OK"
+      },
+      "ETH_SET_4": {
+        "trades": 2,
+        "net_r": 5.4713,
+        "rejections": {
+          "REJECT_OPPOSING_MTF_STRUCTURE": 75,
+          "REJECT_RR_BELOW_4R": 39,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 98,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 8,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 22,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 10
+        },
+        "status": "OK"
+      },
+      "BTC_SET_4": {
+        "trades": 3,
+        "net_r": -3.3288,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 93,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 19,
+          "REJECT_RR_BELOW_4R": 41,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 47,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 12,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 8,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 3
+        },
+        "status": "OK"
+      }
+    },
+    "60d": {
+      "BTC_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_RR_BELOW_4R": 1
+        },
+        "status": "ZERO_TRADES"
+      },
+      "ETH_SET_1": {
+        "trades": 2,
+        "net_r": -2.0694,
+        "rejections": {
+          "REJECT_RR_BELOW_4R": 1,
+          "REJECT_KEYZONE_STALE_AGE": 143
+        },
+        "status": "OK"
+      },
+      "SOL_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "ZERO_TRADES"
+      },
+      "ETH_SET_2": {
+        "trades": 2,
+        "net_r": -2.1081,
+        "rejections": {
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 1,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 7,
+          "REJECT_RR_BELOW_4R": 1,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1
+        },
+        "status": "OK"
+      },
+      "BTC_SET_2": {
+        "trades": 1,
+        "net_r": -1.0805,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 3,
+          "REJECT_RR_BELOW_4R": 8,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 1,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1,
+          "REJECT_KEYZONE_STALE_AGE": 33
+        },
+        "status": "OK"
+      },
+      "SOL_SET_2": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_OPPOSING_MTF_STRUCTURE": 4,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 1
+        },
+        "status": "ZERO_TRADES"
+      },
+      "BTC_SET_3": {
+        "trades": 6,
+        "net_r": 12.1382,
+        "rejections": {
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 9,
+          "REJECT_RR_BELOW_4R": 12,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 47,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 19,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 2,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 1
+        },
+        "status": "OK"
+      },
+      "BTC_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "ETH_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "SOL_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "SOL_SET_3": {
+        "trades": 21,
+        "net_r": -21.9742,
+        "rejections": {
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 2,
+          "REJECT_RR_BELOW_4R": 9,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 38,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 15,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 5,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 2,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1
+        },
+        "status": "OK"
+      },
+      "ETH_SET_3": {
+        "trades": 6,
+        "net_r": -6.4699,
+        "rejections": {
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 3,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 18,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 51,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 2,
+          "REJECT_RR_BELOW_4R": 9,
+          "REJECT_KEYZONE_STALE_AGE": 36
+        },
+        "status": "OK"
+      },
+      "SOL_SET_4": {
+        "trades": 8,
+        "net_r": -8.7863,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 127,
+          "REJECT_RR_BELOW_4R": 51,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 23,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 72,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 12,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 7
+        },
+        "status": "OK"
+      },
+      "ETH_SET_4": {
+        "trades": 2,
+        "net_r": 5.4713,
+        "rejections": {
+          "REJECT_OPPOSING_MTF_STRUCTURE": 75,
+          "REJECT_RR_BELOW_4R": 39,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 98,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 8,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 22,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 10
+        },
+        "status": "OK"
+      },
+      "BTC_SET_4": {
+        "trades": 3,
+        "net_r": -3.3288,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 93,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 19,
+          "REJECT_RR_BELOW_4R": 41,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 47,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 12,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 8,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 3
+        },
+        "status": "OK"
+      }
+    },
+    "90d": {
+      "BTC_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_RR_BELOW_4R": 1
+        },
+        "status": "ZERO_TRADES"
+      },
+      "ETH_SET_1": {
+        "trades": 2,
+        "net_r": -2.0694,
+        "rejections": {
+          "REJECT_RR_BELOW_4R": 1,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1,
+          "REJECT_KEYZONE_STALE_AGE": 84
+        },
+        "status": "OK"
+      },
+      "SOL_SET_1": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "ZERO_TRADES"
+      },
+      "BTC_SET_2": {
+        "trades": 3,
+        "net_r": -3.2917,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 4,
+          "REJECT_RR_BELOW_4R": 9,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 1,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 13
+        },
+        "status": "OK"
+      },
+      "ETH_SET_2": {
+        "trades": 2,
+        "net_r": -2.1081,
+        "rejections": {
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 1,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 7,
+          "REJECT_RR_BELOW_4R": 1,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1
+        },
+        "status": "OK"
+      },
+      "SOL_SET_2": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {
+          "REJECT_OPPOSING_MTF_STRUCTURE": 4,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 1
+        },
+        "status": "ZERO_TRADES"
+      },
+      "SOL_SET_3": {
+        "trades": 21,
+        "net_r": -21.9742,
+        "rejections": {
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 2,
+          "REJECT_RR_BELOW_4R": 9,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 38,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 15,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 5,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 2,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 1
+        },
+        "status": "OK"
+      },
+      "BTC_SET_3": {
+        "trades": 6,
+        "net_r": 12.1382,
+        "rejections": {
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 9,
+          "REJECT_RR_BELOW_4R": 12,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 47,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 19,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 2,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 1
+        },
+        "status": "OK"
+      },
+      "BTC_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "ETH_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "SOL_SET_5": {
+        "trades": 0,
+        "net_r": 0,
+        "rejections": {},
+        "status": "INSUFFICIENT_HISTORICAL_DEPTH_FAIL_CLOSED"
+      },
+      "ETH_SET_3": {
+        "trades": 6,
+        "net_r": -6.4699,
+        "rejections": {
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 3,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 19,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 51,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 2,
+          "REJECT_RR_BELOW_4R": 9
+        },
+        "status": "OK"
+      },
+      "SOL_SET_4": {
+        "trades": 8,
+        "net_r": -8.7863,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 127,
+          "REJECT_RR_BELOW_4R": 51,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 23,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 72,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 12,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 7
+        },
+        "status": "OK"
+      },
+      "BTC_SET_4": {
+        "trades": 3,
+        "net_r": -3.3288,
+        "rejections": {
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 93,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 19,
+          "REJECT_RR_BELOW_4R": 41,
+          "REJECT_OPPOSING_MTF_STRUCTURE": 47,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 12,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 8,
+          "REJECT_SETUP_LIFESPAN_EXPIRED": 3
+        },
+        "status": "OK"
+      },
+      "ETH_SET_4": {
+        "trades": 2,
+        "net_r": 5.4713,
+        "rejections": {
+          "REJECT_OPPOSING_MTF_STRUCTURE": 75,
+          "REJECT_RR_BELOW_4R": 39,
+          "REJECT_SUPERSEDED_HTF_CONTEXT": 98,
+          "REJECT_INVALID_ANCHOR_GEOMETRY": 8,
+          "REJECT_MISSING_STRUCTURAL_ANCHORS": 22,
+          "REJECT_MIN_STOP_DISTANCE_VIOLATION": 10
+        },
+        "status": "OK"
+      }
+    }
+  }
+}

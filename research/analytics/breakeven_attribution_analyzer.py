@@ -8,9 +8,9 @@ import json
 import os
 from typing import Dict, List, Any
 
-BASELINE_PATH = "/home/mrcn2/crypto-platform/scratch/anchor2_dev_certified_results.json"
-TREATMENT_PATH = "/home/mrcn2/crypto-platform/scratch/breakeven_1r_dev_results.json"
-OUTPUT_JSON_PATH = "/home/mrcn2/crypto-platform/scratch/breakeven_1r_paired_attribution.json"
+BASELINE_PATH = "/home/mrcn2/crypto-platform/proofs/research/anchor2_dev_certified_results.json"
+TREATMENT_PATH = "/home/mrcn2/crypto-platform/proofs/research/breakeven_1r_dev_results.json"
+OUTPUT_JSON_PATH = "/home/mrcn2/crypto-platform/proofs/research/breakeven_1r_paired_attribution.json"
 
 
 def analyze_paired_attribution():

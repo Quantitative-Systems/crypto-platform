@@ -1,0 +1,66 @@
+{
+  "anchor_audit": {
+    "total_missing_anchor_candidates": 6498,
+    "causal_state_at_trigger": {
+      "htf_target_present_count": 6498,
+      "ltf_protected_swing_present_count": 0,
+      "ltf_sweep_confirmed_count": 6498,
+      "explanation": "In 100% of cases, the trigger fired on the micro-sweep bar, but no confirmed Protected Swing existed yet in the structure state because swing confirmation requires subsequent bars."
+    },
+    "equivalence_verdict": {
+      "canonical_protected_swing": "Multi-bar confirmed macro/swing pivot point (N >= 2 bars confirmation latency).",
+      "trigger_sweep_extreme": "Raw micro-extremum of the sweep candle (0-bar confirmation latency).",
+      "is_equivalent": false,
+      "classification": "NEW_RESEARCH_HYPOTHESIS",
+      "rationale": "Using the sweep candle extreme instead of a confirmed protected swing changes the SL definition from 'Macro Structural Pivot' to 'Micro Trigger Invalidation'. It is a legitimate candidate hypothesis (H1.1), NOT an engine bug fix."
+    }
+  },
+  "target_audit": {
+    "total_invalid_geometry_candidates": 4404,
+    "stale_target_traversed_count": 4167,
+    "inverted_sl_count": 406,
+    "causal_target_analysis": {
+      "target_immutable_under_h1": true,
+      "target_traversed_before_ltf_entry_count": 4167,
+      "pct_of_geometry_violations": 94.62,
+      "explanation": "In 38.2% of all rejections, price causally reached and exceeded the initial HTF target anchor during the MTF realignment phase. Under H1 rules, the original trade destination was already reached, so the setup was correctly invalidated."
+    },
+    "target_propagation_verdict": {
+      "immutable_h1_rule": "Initial HTF destination target remains fixed for the lifecycle of the HTF context.",
+      "dynamic_target_propagation": "Re-scans HTF keyzone registry for the NEXT unmitigated zone if current target is reached.",
+      "is_bug": false,
+      "classification": "NEW_RESEARCH_HYPOTHESIS",
+      "rationale": "Selecting a subsequent HTF keyzone introduces trend-extension / runner semantics, which is a new hypothesis (H1.2), NOT a software defect in H1."
+    }
+  },
+  "classification_matrix": [
+    {
+      "mechanism_id": "M1_MISSING_LTF_ANCHOR",
+      "description": "Candidate rejected because ltf_protected_low is None at trigger bar.",
+      "status": "CORRECT_H1_IMPLEMENTATION",
+      "category": "B_CORRECT_H1_RULE",
+      "action": "Preserve H1 baseline control as-is. Formulate H1.1 (Micro-Sweep Extreme SL) as an isolated child hypothesis."
+    },
+    {
+      "mechanism_id": "M2_STALE_HTF_TARGET",
+      "description": "Candidate rejected because price expanded past HTF target during MTF alignment.",
+      "status": "CORRECT_H1_IMPLEMENTATION",
+      "category": "B_CORRECT_H1_RULE",
+      "action": "Preserve H1 baseline control as-is. Formulate H1.2 (Dynamic Next-Keyzone Target) as an isolated child hypothesis."
+    },
+    {
+      "mechanism_id": "M3_TARGET_UNREACHABILITY",
+      "description": "Trades holding for 4.0R fixed target surrender MFE gains when MTF reverses.",
+      "status": "STRATEGY_PAYOFF_MISMATCH",
+      "category": "D_NEW_RESEARCH_HYPOTHESIS",
+      "action": "Test counterfactual trade-management policies (BE at +1.0R, BE at +0.75R, Internal MTF trailing) on identical H1 entries."
+    },
+    {
+      "mechanism_id": "M4_SUPERSEDED_HTF_CONTEXT",
+      "description": "Candidate rejected because HTF event occurred during MTF setup.",
+      "status": "CORRECT_H1_IMPLEMENTATION",
+      "category": "B_CORRECT_H1_RULE",
+      "action": "Preserve H1 baseline control. Research grace-period models as child hypothesis H1.5."
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "HTF_TREND_CONTINUATION_V1": {
+    "n": 59,
+    "win_rate": 6.78,
+    "net_r": -36.7023,
+    "expectancy": -0.6221,
+    "profit_factor": 0.38,
+    "promotion_status": "REJECTED_RESEARCH_ONLY",
+    "rejection_reasons": [
+      "DIM_2_ALPHA_EXPECTANCY: Negative post-friction expectancy (-0.6221R <= 0.0R)",
+      "DIM_3_STATISTICAL_CI: Bootstrap 95% lower bound (-0.9535R <= 0.0R)",
+      "DIM_5_WALK_FORWARD: Generalization ratio None < 0.70",
+      "DIM_7_COST_SHOCK: Edge destroyed under transaction cost shock (-0.7044R <= 0.0R)",
+      "DIM_8_RISK_LIMITS: Max Drawdown 44.4% > 20.0%",
+      "DIM_10_EXECUTION_REALISM: Strategy has not completed Paper/Shadow validation"
+    ]
+  },
+  "H1.1_EARLIER_MTF_ENTRY": {
+    "n": 17,
+    "win_rate": 0.0,
+    "net_r": -18.5148,
+    "expectancy": -1.0891,
+    "profit_factor": 0.0,
+    "promotion_status": "REJECTED_RESEARCH_ONLY",
+    "rejection_reasons": [
+      "DIM_2_ALPHA_EXPECTANCY: Negative post-friction expectancy (-1.0891R <= 0.0R)",
+      "DIM_3_STATISTICAL_SAMPLE: Insufficient sample size (N=17 < 30)",
+      "DIM_5_WALK_FORWARD: Generalization ratio None < 0.70",
+      "DIM_7_COST_SHOCK: Edge destroyed under transaction cost shock (-1.1784R <= 0.0R)",
+      "DIM_10_EXECUTION_REALISM: Strategy has not completed Paper/Shadow validation"
+    ]
+  },
+  "H1.2_MTF_STRUCTURAL_SL_ANCHOR": {
+    "n": 59,
+    "win_rate": 6.78,
+    "net_r": -36.7023,
+    "expectancy": -0.6221,
+    "profit_factor": 0.38,
+    "promotion_status": "REJECTED_RESEARCH_ONLY",
+    "rejection_reasons": [
+      "DIM_2_ALPHA_EXPECTANCY: Negative post-friction expectancy (-0.6221R <= 0.0R)",
+      "DIM_3_STATISTICAL_CI: Bootstrap 95% lower bound (-0.9535R <= 0.0R)",
+      "DIM_5_WALK_FORWARD: Generalization ratio None < 0.70",
+      "DIM_7_COST_SHOCK: Edge destroyed under transaction cost shock (-0.7044R <= 0.0R)",
+      "DIM_8_RISK_LIMITS: Max Drawdown 44.4% > 20.0%",
+      "DIM_10_EXECUTION_REALISM: Strategy has not completed Paper/Shadow validation"
+    ]
+  },
+  "H1.3_DYNAMIC_STRUCTURAL_TARGET": {
+    "n": 59,
+    "win_rate": 16.95,
+    "net_r": -35.189,
+    "expectancy": -0.5964,
+    "profit_factor": 0.33,
+    "promotion_status": "REJECTED_RESEARCH_ONLY",
+    "rejection_reasons": [
+      "DIM_2_ALPHA_EXPECTANCY: Negative post-friction expectancy (-0.5964R <= 0.0R)",
+      "DIM_3_STATISTICAL_CI: Bootstrap 95% lower bound (-0.8017R <= 0.0R)",
+      "DIM_5_WALK_FORWARD: Generalization ratio None < 0.70",
+      "DIM_7_COST_SHOCK: Edge destroyed under transaction cost shock (-0.6787R <= 0.0R)",
+      "DIM_8_RISK_LIMITS: Max Drawdown 36.4% > 20.0%",
+      "DIM_10_EXECUTION_REALISM: Strategy has not completed Paper/Shadow validation"
+    ]
+  },
+  "H1.4_DYNAMIC_PROFIT_LOCK_0_75R": {
+    "n": 59,
+    "win_rate": 33.9,
+    "net_r": -18.5226,
+    "expectancy": -0.3139,
+    "profit_factor": 0.55,
+    "promotion_status": "REJECTED_RESEARCH_ONLY",
+    "rejection_reasons": [
+      "DIM_2_ALPHA_EXPECTANCY: Negative post-friction expectancy (-0.3139R <= 0.0R)",
+      "DIM_3_STATISTICAL_CI: Bootstrap 95% lower bound (-0.6400R <= 0.0R)",
+      "DIM_5_WALK_FORWARD: Generalization ratio None < 0.70",
+      "DIM_7_COST_SHOCK: Edge destroyed under transaction cost shock (-0.3962R <= 0.0R)",
+      "DIM_8_RISK_LIMITS: Max Drawdown 32.1% > 20.0%",
+      "DIM_10_EXECUTION_REALISM: Strategy has not completed Paper/Shadow validation"
+    ]
+  },
+  "H1.5_HTF_KEYZONE_FRESHNESS_7D": {
+    "n": 39,
+    "win_rate": 10.26,
+    "net_r": -16.2248,
+    "expectancy": -0.416,
+    "profit_factor": 0.58,
+    "promotion_status": "REJECTED_RESEARCH_ONLY",
+    "rejection_reasons": [
+      "DIM_2_ALPHA_EXPECTANCY: Negative post-friction expectancy (-0.4160R <= 0.0R)",
+      "DIM_3_STATISTICAL_CI: Bootstrap 95% lower bound (-0.9138R <= 0.0R)",
+      "DIM_5_WALK_FORWARD: Generalization ratio None < 0.70",
+      "DIM_7_COST_SHOCK: Edge destroyed under transaction cost shock (-0.5067R <= 0.0R)",
+      "DIM_8_RISK_LIMITS: Max Drawdown 23.9% > 20.0%",
+      "DIM_10_EXECUTION_REALISM: Strategy has not completed Paper/Shadow validation"
+    ]
+  },
+  "H1.6_VOLATILITY_EXPANSION_QUALIFICATION": {
+    "n": 59,
+    "win_rate": 6.78,
+    "net_r": -36.7023,
+    "expectancy": -0.6221,
+    "profit_factor": 0.38,
+    "promotion_status": "REJECTED_RESEARCH_ONLY",
+    "rejection_reasons": [
+      "DIM_2_ALPHA_EXPECTANCY: Negative post-friction expectancy (-0.6221R <= 0.0R)",
+      "DIM_3_STATISTICAL_CI: Bootstrap 95% lower bound (-0.9535R <= 0.0R)",
+      "DIM_5_WALK_FORWARD: Generalization ratio None < 0.70",
+      "DIM_7_COST_SHOCK: Edge destroyed under transaction cost shock (-0.7044R <= 0.0R)",
+      "DIM_8_RISK_LIMITS: Max Drawdown 44.4% > 20.0%",
+      "DIM_10_EXECUTION_REALISM: Strategy has not completed Paper/Shadow validation"
+    ]
+  },
+  "H1.7_FAST_MTF_RETEST_24H": {
+    "n": 36,
+    "win_rate": 11.11,
+    "net_r": -12.2096,
+    "expectancy": -0.3392,
+    "profit_factor": 0.64,
+    "promotion_status": "REJECTED_RESEARCH_ONLY",
+    "rejection_reasons": [
+      "DIM_2_ALPHA_EXPECTANCY: Negative post-friction expectancy (-0.3392R <= 0.0R)",
+      "DIM_3_STATISTICAL_CI: Bootstrap 95% lower bound (-0.9006R <= 0.0R)",
+      "DIM_5_WALK_FORWARD: Generalization ratio None < 0.70",
+      "DIM_7_COST_SHOCK: Edge destroyed under transaction cost shock (-0.4324R <= 0.0R)",
+      "DIM_10_EXECUTION_REALISM: Strategy has not completed Paper/Shadow validation"
+    ]
+  }
+}

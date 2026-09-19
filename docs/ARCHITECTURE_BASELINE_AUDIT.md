@@ -6,7 +6,7 @@
 **Classification:** Institutional Quantitative Research  
 **Dataset Scope:** Historical Development Partition (`2021-01-01T00:00:00Z` to `2022-12-31T23:59:59Z`, 277,908 market candles)  
 **Universe Audited:** BTC/USDT, ETH/USDT, SOL/USDT across all 5 Canonical Timeframe Sets (15 Streams)  
-**Replay Dataset:** Repaired Composite Baseline (`scratch/composite_01_dev_results_repaired_terminal.json`)  
+**Replay Dataset:** Repaired Composite Baseline (`proofs/research/composite_01_dev_results_repaired_terminal.json`)  
 **Audit Policy:** Strictly Read-Only. Strategy code frozen, zero parameter sweeps, zero target redesigns, Validation (`2023`) and OOS (`2024–2026`) partitions strictly **LOCKED**.
 
 ---

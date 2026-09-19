@@ -13,8 +13,8 @@ CANONICAL STRATEGY REBUILD:
 - Risk <= 1.0% equity ($100 per trade on $10,000 equity). Planned RR >= 4.0R floor.
 - Adverse-first zero-lookahead execution with 2 bps maker, 5 bps taker, 5 bps adverse slippage.
 
-Saves artifact: scratch/canonical_rebuild_dev_results.json
-Preserves untouched: scratch/h0_dev_control_results.json
+Saves artifact: proofs/research/canonical_rebuild_dev_results.json
+Preserves untouched: proofs/research/h0_dev_control_results.json
 """
 
 import os
@@ -293,7 +293,7 @@ def run_full_rebuild_matrix():
         "trade_ledger": all_trades
     }
 
-    out_file = "/home/mrcn2/crypto-platform/scratch/canonical_rebuild_dev_results.json"
+    out_file = "/home/mrcn2/crypto-platform/proofs/research/canonical_rebuild_dev_results.json"
     with open(out_file, "w") as f:
         json.dump(dev_results_payload, f, indent=2)
 

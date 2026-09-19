@@ -1,6 +1,6 @@
 import json
 
-with open("/home/mrcn2/crypto-platform/scratch/forensic_candidate_ledger.json") as f:
+with open("/home/mrcn2/crypto-platform/proofs/research/forensic_candidate_ledger.json") as f:
     d = json.load(f)
 
 print("=" * 120)

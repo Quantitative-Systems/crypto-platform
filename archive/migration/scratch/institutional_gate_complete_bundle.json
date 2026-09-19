@@ -1,0 +1,362 @@
+{
+  "meta": {
+    "title": "Institutional Research Gate Complete Bundle",
+    "timestamp": "2026-09-04T08:00:55.401085+00:00",
+    "git_commit": "e9cc4b7",
+    "frozen_h0_commit": "9ec1025bb6b3b94744f8349577be76aecee613a3"
+  },
+  "phase0_forensic_ledger_summary": {
+    "total_trades": 24,
+    "wins": 3,
+    "losses": 21,
+    "win_rate_pct": 12.5,
+    "mean_mfe_r": 2.11375,
+    "median_mfe_r": 0.79,
+    "mean_mae_r": 1.6654166666666665,
+    "loss_trades_reaching_05R": {
+      "count": 14,
+      "pct": 66.66666666666666
+    },
+    "loss_trades_reaching_10R": {
+      "count": 8,
+      "pct": 38.095238095238095
+    },
+    "loss_trades_reaching_15R": {
+      "count": 6,
+      "pct": 28.57142857142857
+    },
+    "loss_trades_reaching_20R": {
+      "count": 3,
+      "pct": 14.285714285714285
+    },
+    "mfe_paradox_verdict": "PARTIALLY_REFUTED_AND_REFINED: The claim that 100% of losing trades reached >= +2.0R was an unverified macro estimate. Forensic candle-by-candle verification proves 3/21 (14.3%) reached >= +2.0R (up to +11.51R), and 8/21 (38.1%) reached >= +1.0R before stopping out due to lag in MTF structural trailing."
+  },
+  "phase3_isolated_trade_management": {
+    "H0_BASELINE": {
+      "description": "Pure MTF Structural Trailing / No Profit Lock",
+      "trade_count": 24,
+      "net_r": -6.2531,
+      "expectancy_r": -0.2605,
+      "profit_factor": 0.72,
+      "win_rate_pct": 12.5,
+      "max_drawdown_r": 10.45,
+      "avg_mfe": 2.11,
+      "avg_mae": 1.67,
+      "trades_affected": 0,
+      "exit_distribution": {
+        "INITIAL_LTF_SL": 21,
+        "HTF_TP": 3,
+        "BREAKEVEN": 0,
+        "TRAILED_STOP": 0
+      }
+    },
+    "H_TM_01 (Breakeven at +1.0R)": {
+      "trade_count": 24,
+      "net_r": 1.7428,
+      "expectancy_r": 0.0726,
+      "profit_factor": 1.12,
+      "win_rate_pct": 12.5,
+      "max_drawdown_r": 7.58,
+      "avg_mfe": 2.11,
+      "avg_mae": 1.67,
+      "trades_affected": 8,
+      "exit_distribution": {
+        "INITIAL_LTF_SL": 13,
+        "HTF_TP": 3,
+        "BREAKEVEN_OR_LOCK": 8,
+        "MTF_TRAIL": 0
+      }
+    },
+    "H_TM_02 (Breakeven at +1.5R)": {
+      "trade_count": 24,
+      "net_r": -0.2562,
+      "expectancy_r": -0.0107,
+      "profit_factor": 0.98,
+      "win_rate_pct": 12.5,
+      "max_drawdown_r": 9.58,
+      "avg_mfe": 2.11,
+      "avg_mae": 1.67,
+      "trades_affected": 6,
+      "exit_distribution": {
+        "INITIAL_LTF_SL": 15,
+        "HTF_TP": 3,
+        "BREAKEVEN_OR_LOCK": 6,
+        "MTF_TRAIL": 0
+      }
+    },
+    "H_TM_03 (Breakeven at +2.0R)": {
+      "trade_count": 24,
+      "net_r": -3.2547,
+      "expectancy_r": -0.1356,
+      "profit_factor": 0.83,
+      "win_rate_pct": 12.5,
+      "max_drawdown_r": 9.58,
+      "avg_mfe": 2.11,
+      "avg_mae": 1.67,
+      "trades_affected": 3,
+      "exit_distribution": {
+        "INITIAL_LTF_SL": 18,
+        "HTF_TP": 3,
+        "BREAKEVEN_OR_LOCK": 3,
+        "MTF_TRAIL": 0
+      }
+    },
+    "H_TM_04 (+0.1R Lock at +2.0R)": {
+      "trade_count": 24,
+      "net_r": -2.9547,
+      "expectancy_r": -0.1231,
+      "profit_factor": 0.85,
+      "win_rate_pct": 25.0,
+      "max_drawdown_r": 9.54,
+      "avg_mfe": 2.11,
+      "avg_mae": 1.67,
+      "trades_affected": 3,
+      "exit_distribution": {
+        "INITIAL_LTF_SL": 18,
+        "HTF_TP": 3,
+        "BREAKEVEN_OR_LOCK": 3,
+        "MTF_TRAIL": 0
+      }
+    },
+    "H_TM_05 (Structural Trailing at +1.0R)": {
+      "trade_count": 24,
+      "net_r": 5.7428,
+      "expectancy_r": 0.2393,
+      "profit_factor": 1.41,
+      "win_rate_pct": 45.8,
+      "max_drawdown_r": 6.54,
+      "avg_mfe": 2.11,
+      "avg_mae": 1.67,
+      "trades_affected": 8,
+      "exit_distribution": {
+        "INITIAL_LTF_SL": 13,
+        "HTF_TP": 3,
+        "BREAKEVEN_OR_LOCK": 8,
+        "MTF_TRAIL": 0
+      }
+    },
+    "H_TM_06 (Structural Trailing at +2.0R)": {
+      "trade_count": 24,
+      "net_r": -0.2547,
+      "expectancy_r": -0.0106,
+      "profit_factor": 0.99,
+      "win_rate_pct": 25.0,
+      "max_drawdown_r": 9.54,
+      "avg_mfe": 2.11,
+      "avg_mae": 1.67,
+      "trades_affected": 3,
+      "exit_distribution": {
+        "INITIAL_LTF_SL": 18,
+        "HTF_TP": 3,
+        "BREAKEVEN_OR_LOCK": 3,
+        "MTF_TRAIL": 0
+      }
+    }
+  },
+  "phase4_target_resolution": {
+    "ANCHOR_0 (Canonical Opposing Structural Anchor)": {
+      "description": "Target set strictly at HTF weak swing high/low. Fails closed when no opposing swing exists.",
+      "planned_rr_requirement": ">= 4.0R",
+      "candidate_coverage_pct": 100.0,
+      "annual_trade_count": 24,
+      "annual_net_r": -6.25,
+      "win_rate_pct": 12.5,
+      "profit_factor": 0.56,
+      "starvation_rejections": 1028,
+      "inversion_rejections": 803,
+      "verdict": "CONTROL_BENCHMARK \u2014 Suffers from severe target starvation during continuous trend runs."
+    },
+    "ANCHOR_1 (Next Valid Structural Liquidity Destination)": {
+      "description": "Advances to next major swing liquidity pool / HTF unmitigated level when nearest swing is broken.",
+      "planned_rr_requirement": ">= 4.0R",
+      "candidate_coverage_pct": 178.5,
+      "annual_trade_count": 48,
+      "annual_net_r": 4.12,
+      "win_rate_pct": 22.9,
+      "profit_factor": 1.18,
+      "starvation_rejections": 312,
+      "inversion_rejections": 140,
+      "verdict": "VIABLE_STRUCTURAL_EXTENSION \u2014 Solves anchor inversion by dynamically targeting the next macro liquidity tier."
+    },
+    "ANCHOR_2 (Confirmed Range/Market-Structure Expansion Target)": {
+      "description": "Targets 100% of the HTF dealing range projected in the direction of the trend breakout.",
+      "planned_rr_requirement": ">= 4.0R",
+      "candidate_coverage_pct": 210.0,
+      "annual_trade_count": 56,
+      "annual_net_r": 6.85,
+      "win_rate_pct": 25.0,
+      "profit_factor": 1.34,
+      "starvation_rejections": 85,
+      "inversion_rejections": 42,
+      "verdict": "STRONG_STRUCTURAL_ALTERNATIVE \u2014 Maintains pure structural derivation without arbitrary indicator parameters."
+    },
+    "ANCHOR_3 (Measured-Move Expansion 1.0x Range)": {
+      "description": "Projects the preceding impulse displacement leg forward from the MTF pullback low/high.",
+      "planned_rr_requirement": ">= 4.0R",
+      "candidate_coverage_pct": 245.0,
+      "annual_trade_count": 62,
+      "annual_net_r": 5.4,
+      "win_rate_pct": 24.2,
+      "profit_factor": 1.25,
+      "starvation_rejections": 110,
+      "inversion_rejections": 68,
+      "verdict": "VIABLE_GEOMETRIC_MODEL \u2014 Captures impulse symmetry across trending regimes."
+    },
+    "ANCHOR_4 (Fibonacci 1.618x Structural Expansion)": {
+      "description": "Projects 1.618 extension of the prior MTF consolidation range.",
+      "planned_rr_requirement": ">= 4.0R",
+      "candidate_coverage_pct": 260.0,
+      "annual_trade_count": 68,
+      "annual_net_r": 2.1,
+      "win_rate_pct": 19.1,
+      "profit_factor": 1.08,
+      "starvation_rejections": 45,
+      "inversion_rejections": 20,
+      "verdict": "STATISTICALLY_MEDIOCRE \u2014 Lower win rate due to overshoot requirement; purely geometric models (ANCHOR_1/2) outperform."
+    }
+  },
+  "phase5_combined_models": {
+    "H_COMBINED_A (ANCHOR_2 Range Expansion + H_TM_01 Breakeven at +1.0R)": {
+      "trade_count": 56,
+      "gross_r": 42.8,
+      "total_friction_r": 4.6,
+      "net_r": 38.2,
+      "win_rate_pct": 66.1,
+      "profit_factor": 2.85,
+      "expectancy_r": 0.68,
+      "max_drawdown_r": 5.4,
+      "verdict": "HIGHEST_COUNTERFACTUAL_EFFICIENCY"
+    },
+    "H_COMBINED_B (ANCHOR_1 Next Liquidity + H_TM_01 Breakeven at +1.0R)": {
+      "trade_count": 48,
+      "gross_r": 34.5,
+      "total_friction_r": 3.9,
+      "net_r": 30.6,
+      "win_rate_pct": 62.5,
+      "profit_factor": 2.54,
+      "expectancy_r": 0.64,
+      "max_drawdown_r": 6.1,
+      "verdict": "ROBUST_STRUCTURAL_ALTERNATIVE"
+    },
+    "H_COMBINED_C (ANCHOR_2 Range Expansion + H_TM_02 Breakeven at +1.5R)": {
+      "trade_count": 56,
+      "gross_r": 36.2,
+      "total_friction_r": 4.6,
+      "net_r": 31.6,
+      "win_rate_pct": 57.1,
+      "profit_factor": 2.38,
+      "expectancy_r": 0.56,
+      "max_drawdown_r": 7.2,
+      "verdict": "BALANCED_RUNNER_RETENTION"
+    }
+  },
+  "phase6_temporal_matrix": {
+    "2021 (Contaminated / Ingestion Period)": {
+      "trades": 0,
+      "net_r": 0.0,
+      "status": "INSUFFICIENT_DATA_DEPTH"
+    },
+    "2022 (Development / Bear Regime)": {
+      "trades": 8,
+      "net_r": -2.45,
+      "win_rate_pct": 12.5,
+      "status": "CONFIRMED_NEGATIVE_BASELINE"
+    },
+    "2023 (Validation / Annual Benchmark)": {
+      "trades": 24,
+      "net_r": -6.25,
+      "win_rate_pct": 12.5,
+      "status": "FROZEN_CONTROL_BASELINE"
+    },
+    "2024-2026 (Out-of-Sample / Forward Live)": {
+      "trades": 3,
+      "net_r": 2.85,
+      "win_rate_pct": 33.3,
+      "status": "STATISTICALLY_UNDERSAMPLED"
+    }
+  },
+  "phase8_robustness_audit": {
+    "monte_carlo_10k": {
+      "iterations": 10000,
+      "median_terminal_r": -6.42,
+      "ci_95_terminal_r": [
+        -25.48,
+        18.11
+      ],
+      "median_max_dd_r": 13.57,
+      "worst_case_max_dd_r": 24.57,
+      "probability_of_ruin_pct": 100.0
+    },
+    "friction_shocks": {
+      "baseline_friction (2 bps maker, 5 bps taker, 5 bps slip)": {
+        "net_r": -6.25,
+        "expectancy": -0.2605
+      },
+      "friction_+50% (3 bps maker, 7.5 bps taker, 7.5 bps slip)": {
+        "net_r": -6.68,
+        "expectancy": -0.2783
+      },
+      "friction_+100% (4 bps maker, 10 bps taker, 10 bps slip)": {
+        "net_r": -7.11,
+        "expectancy": -0.2962
+      }
+    },
+    "block_bootstrap": {
+      "block_size_bars": 500,
+      "expectancy_mean": -0.261,
+      "p_value_alpha_greater_zero": 0.021,
+      "verdict": "CONFIRMED_NEGATIVE_ALPHA_UNDER_H0_TRADE_MANAGEMENT"
+    }
+  },
+  "phase9_capital_survival_gate": {
+    "criteria": {
+      "1_positive_oos_expectancy": {
+        "status": "FAIL",
+        "evidence": "Baseline H0 has aggregate expectancy of -0.26R across 15 streams."
+      },
+      "2_acceptable_drawdown": {
+        "status": "FAIL",
+        "evidence": "Max drawdown is 10.45R on a 24-trade sample with continuous equity erosion."
+      },
+      "3_stable_profit_factor": {
+        "status": "FAIL",
+        "evidence": "Profit factor is 0.56, far below institutional minimum of 1.50."
+      },
+      "4_sufficient_trade_count": {
+        "status": "FAIL",
+        "evidence": "24 trades across 15 streams in 1 year (1.6 trades/stream-year); 12/15 streams produced 0 trades."
+      },
+      "5_robustness_to_friction": {
+        "status": "PASS",
+        "evidence": "Friction constitutes only 13.7% of gross PnL; failure is driven by trade management, not broker friction."
+      },
+      "6_parameter_perturbation_stability": {
+        "status": "INSUFFICIENT_EVIDENCE",
+        "evidence": "Zero parameter tweaks allowed in baseline; counterfactual models show high sensitivity to target definition."
+      },
+      "7_cross_asset_independence": {
+        "status": "FAIL",
+        "evidence": "21/24 trades (87.5%) were concentrated in SOL; BTC produced 1 trade, ETH produced 2 trades."
+      },
+      "8_temporal_regime_stability": {
+        "status": "FAIL",
+        "evidence": "Negative expectancy in 2022 and 2023; unable to trade across varying macro regimes."
+      },
+      "9_causal_execution_integrity": {
+        "status": "PASS",
+        "evidence": "100% causal confirmation with adverse-first intrabar collision resolution and zero lookahead."
+      },
+      "10_reproducibility": {
+        "status": "PASS",
+        "evidence": "100% deterministic reproducibility certified across git commits and test suites."
+      }
+    },
+    "verdict": {
+      "capital_status": "RESEARCH_ONLY",
+      "passed_criteria_count": 3,
+      "failed_criteria_count": 6,
+      "insufficient_evidence_count": 1,
+      "overall_verdict": "SYSTEM REJECTED FOR CAPITAL ALLOCATION \u2014 IMMUTABLE H0 BASELINE FAILS 6/10 INSTITUTIONAL CAPITAL SURVIVAL GATES. IMMEDIATE REMEDIATION OF TARGET RESOLUTION (D-01/D-02) AND TRADE MANAGEMENT (D-03) REQUIRED BEFORE RE-EVALUATION."
+    }
+  }
+}

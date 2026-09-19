@@ -3,8 +3,8 @@ Script: run_phase10_3_sl_atr_evaluation.py
 Evaluates Phase 10.3 H_SL_ATR_01 (ATR Stop Floor Sweep: 0.50, 0.60, 0.70, 0.80, 0.90, 1.00 ATR)
 against the frozen Phase 10.2 research control (H_KZ_FRESH_01 = 7d).
 Generates:
-- scratch/phase10_3_sl_atr_dev_results.json
-- scratch/phase10_3_sl_atr_dev_results.md
+- proofs/research/phase10_3_sl_atr_dev_results.json
+- proofs/research/phase10_3_sl_atr_dev_results.md
 """
 
 import json
@@ -18,8 +18,8 @@ def run_phase10_3_evaluation():
     print("=" * 80)
 
     # 1. Load Phase 10.1 classifications and Phase 10.2 7d control results
-    p10_1_path = Path("/home/mrcn2/crypto-platform/scratch/phase10_1_regime_forensics.json")
-    p10_2_path = Path("/home/mrcn2/crypto-platform/scratch/phase10_2_kz_freshness_dev_results.json")
+    p10_1_path = Path("/home/mrcn2/crypto-platform/proofs/research/phase10_1_regime_forensics.json")
+    p10_2_path = Path("/home/mrcn2/crypto-platform/proofs/research/phase10_2_kz_freshness_dev_results.json")
 
     with open(p10_1_path, "r") as f:
         d10_1 = json.load(f)
@@ -188,7 +188,7 @@ def run_phase10_3_evaluation():
         }
     }
 
-    out_json = Path("/home/mrcn2/crypto-platform/scratch/phase10_3_sl_atr_dev_results.json")
+    out_json = Path("/home/mrcn2/crypto-platform/proofs/research/phase10_3_sl_atr_dev_results.json")
     with open(out_json, "w") as f:
         json.dump(final_payload, f, indent=2)
     print(f"Saved JSON artifact: {out_json}")
@@ -320,13 +320,13 @@ def run_phase10_3_evaluation():
     lines.append("---")
     lines.append("")
     lines.append("## 6. Execution Directives Completed")
-    lines.append("- `scratch/phase10_3_sl_atr_dev_results.json` created.")
-    lines.append("- `scratch/phase10_3_sl_atr_dev_results.md` created.")
+    lines.append("- `proofs/research/phase10_3_sl_atr_dev_results.json` created.")
+    lines.append("- `proofs/research/phase10_3_sl_atr_dev_results.md` created.")
     lines.append("- No modification to the canonical baseline strategy.")
     lines.append("- Experimental ATR floor implementation rejected.")
     lines.append("")
 
-    out_md = Path("/home/mrcn2/crypto-platform/scratch/phase10_3_sl_atr_dev_results.md")
+    out_md = Path("/home/mrcn2/crypto-platform/proofs/research/phase10_3_sl_atr_dev_results.md")
     out_md.write_text("\n".join(lines))
     print(f"Saved Markdown artifact: {out_md}")
     print("=" * 80)

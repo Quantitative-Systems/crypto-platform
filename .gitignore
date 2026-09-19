@@ -61,3 +61,7 @@ production/*state*.json
 research/results/*state*.json
 research/results/telemetry/*.jsonl
 nohup.out
+
+# Runtime scratch area: experiment/platform tools may write here at runtime.
+# Curated evidence belongs in proofs/ or hypotheses/.../tests/; scratch output is not committed.
+scratch/

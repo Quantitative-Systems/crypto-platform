@@ -1,0 +1,49 @@
+hypothesis_id: "H-FRACTAL-01"
+title: "Cross-Scale Mechanism Transfer"
+status: "FORMALIZED"
+lifecycle_state: "FORMALIZED"
+created_at: "2026-09-19"
+updated_at: "2026-09-19"
+owner: "QCP Research"
+hypothesis_family: "FRACTAL"
+
+timeframe_sets:
+  - "SET_1"
+  - "SET_2"
+  - "SET_3"
+  - "SET_4"
+  - "SET_5"
+  - "SET_6"
+
+asset_scope: "CONFIGURABLE_INITIAL_5"
+bar_horizon: "CONFIGURABLE_1_TO_100"
+
+development_partition:
+  period: "2021-01-01 to 2022-12-31"
+  role: "Development and hypothesis refinement"
+  status: "ASSIGNED_NOT_YET_ACCESSED"
+
+validation_status: "NOT_STARTED"
+oos_status: "UNTOUCHED"
+implementation_status: "NOT_STARTED"
+
+latest_experiment: null
+latest_result: null
+decision: null
+
+related_experiments: []
+
+related_hypotheses:
+  - hypothesis_id: "H-FRACTAL-02"
+    title: "Multi-Timeframe Confirmation (Experiment B — placeholder, not yet implemented)"
+    description: >
+      Separate research question: Does combining HTF+MTF+LTF information produce
+      incremental economic value? Do NOT combine with H-FRACTAL-01 (Experiment A).
+    status: "PLACEHOLDER"
+
+governance_notes:
+  - "H-FRACTAL-01 covers Experiment A only."
+  - "Do not begin testing without completing experiment_plan.md pre-execution checklist."
+  - "Validation partition must not be accessed without explicit governance authorization."
+  - "OOS partition is UNTOUCHED until QUALIFIED status is reached."
+  - "Positive Development results do not automatically authorize Validation access."

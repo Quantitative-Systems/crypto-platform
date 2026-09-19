@@ -1,0 +1,49 @@
+{
+  "total_trades_analyzed": 128,
+  "trend_regimes": {
+    "BEAR_TREND": {
+      "trades": 76,
+      "wins": 18,
+      "losses": 58,
+      "win_rate_pct": 23.68,
+      "net_r": -50.9815,
+      "mean_exp_r": -0.6708
+    },
+    "BULL_TREND": {
+      "trades": 52,
+      "wins": 17,
+      "losses": 35,
+      "win_rate_pct": 32.69,
+      "net_r": -25.7882,
+      "mean_exp_r": -0.4959
+    }
+  },
+  "phase_regimes": {
+    "EXPANSION_CONTINUATION": {
+      "trades": 112,
+      "wins": 31,
+      "losses": 81,
+      "win_rate_pct": 27.68,
+      "net_r": -67.3306,
+      "mean_exp_r": -0.6012
+    },
+    "PULLBACK_RETRACEMENT": {
+      "trades": 16,
+      "wins": 4,
+      "losses": 12,
+      "win_rate_pct": 25.0,
+      "net_r": -9.4391,
+      "mean_exp_r": -0.5899
+    }
+  },
+  "volatility_regimes": {
+    "NORMAL_VOLATILITY": {
+      "trades": 128,
+      "wins": 35,
+      "losses": 93,
+      "win_rate_pct": 27.34,
+      "net_r": -76.7697,
+      "mean_exp_r": -0.5998
+    }
+  }
+}

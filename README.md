@@ -1,7 +1,7 @@
 # QCP — Quantitative Crypto Platform
 
 [![Tests](https://img.shields.io/badge/tests-559%20passed%20%28collectible%20suite%29-green)](#5-testing)
-[![Research Lab](https://img.shields.io/badge/research%20lab-qcp%2Fhypotheses-blue)](#qcp-research-laboratory)
+[![Research Lab](https://img.shields.io/badge/research%20lab-hypotheses%2F-blue)](#qcp-research-laboratory-v050)
 [![Live Capital](https://img.shields.io/badge/live%20capital-$0.00-red)](#4-current-research)
 [![Alpha Status](https://img.shields.io/badge/validated%20alpha-NONE-orange)](#4-current-research)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
@@ -170,7 +170,8 @@ the corrected engine. Not implemented, not attempted in this freeze.
 
 ## QCP Research Laboratory (v0.5.0)
 
-All hypothesis-centered research now lives in **`qcp/hypotheses/`** under a
+All hypothesis-centered research now lives in **`hypotheses/`** at the
+repository root — the single authoritative discovery/research lab — under a
 governed hierarchy — a positive Development result is **not** a winner, and
 no candidate can be promoted to validation/OOS/capital from DEV evidence
 alone (enforced structurally, tested in
@@ -194,7 +195,7 @@ version, data version, code commit, asset/timeframe, execution assumptions,
 fees, slippage, collision/re-entry semantics, and result classification.
 Duplicate IDs are rejected, orphan tests are detected, missing provenance
 blocks results, and negative evidence is preserved (its loss is a lab
-integrity error). `python -m qcp.hypotheses.migrate_history` regenerates
+integrity error). `python -m hypotheses.migrate_history` regenerates
 indexes and re-verifies the lab.
 
 **Registered hypotheses (historical migration, DEV 2021-2022)**
@@ -242,7 +243,7 @@ New grammar/foundation causality tests (30 tests) all pass.
 
 ```bash
 PYTHONPATH=. python3 -m pytest tests/ -p no:cacheprovider --continue-on-collection-errors -q
-PYTHONPATH=. python3 -m pytest tests/test_bias_causality.py tests/test_market_regime.py tests/test_regime_engine.py tests/test_structural_components.py tests/unit/research/test_foundation_registry.py -q
+PYTHONPATH=. python3 -m pytest tests/unit/test_bias_causality.py tests/unit/test_market_regime.py tests/unit/test_regime_engine.py tests/unit/test_structural_components.py tests/unit/research/test_foundation_registry.py -q
 ```
 
 ---
@@ -263,44 +264,79 @@ Negative results included — that is the point:
 ---
 ## 7. Repository Structure
 
+The repository is organized around the strategy research lifecycle:
+**DISCOVERY → TESTING → VALIDATION → QUALIFICATION → DEPLOYMENT → LIVE**.
+
 ```text
 crypto-platform/
-├── backtesting/              # Replay engine, friction model, analytics
-├── capital_intelligence/     # Capacity / feasibility intelligence
-├── config/                   # Canonical 6-set ladder (single source of truth)
-├── docs/                     # 46 documents: specs, audits, methodology
-├── market_data/              # Loader, certifier, universe engine (+ local cache)
-├── market_intelligence/      # Regime engines, opportunity detector
-├── platform_core/            # State store, audit bus, provenance, secrets
-├── portfolio_engine/         # Sizing, allocation, exposure graph
-├── production/               # Production gate, audits, paper daemon (locked)
-├── qcp/
-│   └── hypotheses/           # HYPOTHESIS-CENTERED RESEARCH LAB (v0.5.0)
-│       ├── README.md / HYPOTHESES_LIST.md / CANDIDATES_LIST.md
-│       ├── HYPOTHESIS-ID/
-│       │   ├── hypothesis.md / candidates.md / MIGRATION_LOG.md (top)
-│       │   ├── candidates/CANDIDATE-ID/candidate.md + tests/TEST-ID/
-│       │   └── research/observations + positive/negative evidence
-│       └── governance: lifecycle states, promotion gates, lab verifier
-├── quarantine/               # NOT importable: gateway, derivatives, MM prototypes
-├── research/
-│   ├── *_families.py         # bias / setup / entry / SL / TP / trailing
-│   ├── strategy_grammar.py + grammar_components.py
-│   ├── regime_engine.py + market_regime.py + timeframe_sets.py
-│   ├── foundation_registry.py
-│   ├── economic_evaluation_engine.py + falsification engine
-│   ├── autonomous_research_governor.py + factory
-│   ├── discovery_lab/        # Discovery engine
-│   ├── replayer/ + simulation/
-│   ├── experiments/          # 45 run_*.py harnesses (incl. Phase C/D)
-│   └── results/              # 198 JSON + 20 MD (positives AND negatives)
-├── risk_engine/              # Canonical risk (risk/ is legacy)
-├── strategy/ + strategy_engine/
-├── tests/                    # 142 files: unit / integration / comprehensive
-├── CAPABILITY_REGISTRY.json / CHANGELOG.md / CONTRIBUTING.md
-├── SECURITY.md / LICENSE (MIT)
-└── pyproject.toml / requirements.txt  # numpy + pandas; pytest dev
+├── platform_core/               # Runtime core: state store, audit bus, provenance, secrets
+├── market_intelligence/         # Regime engines, opportunity detector
+├── market_data/                 # Loader, certifier, universe engine (+ local cache)
+├── portfolio_engine/            # Sizing, allocation, exposure graph
+├── risk_engine/                 # Canonical risk (1% sizer, 4R firewall, breakers, veto)
+├── trade_management/            # Post-entry lifecycle + trailing management
+├── config/                      # Canonical timeframe sets, assets (single source of truth)
+├── production/                  # Deployment + live operation gate (capital locked, orders DISABLED)
+│
+├── hypotheses/                  # DISCOVERY: the hypothesis-centered research lab (single root)
+│   ├── README.md / HYPOTHESES_LIST.md / CANDIDATES_LIST.md
+│   ├── registry.yaml + hypothesis_governance.py   # permanent ID registry
+│   ├── governance: lifecycle states, promotion gates, lab verifier
+│   ├── HYPOTHESIS-ID/
+│   │   ├── hypothesis.md / candidates.md
+│   │   ├── candidates/CANDIDATE-ID/candidate.md
+│   │   │   └── tests/TEST-ID/ (test_plan.md, config.yaml, results.json, report.md)
+│   │   └── research/ (observations, positive_evidence, negative_evidence)
+│   └── H-FRACTAL-01: registered, DO NOT TEST yet
+│
+├── tests/                       # Shared TESTING infrastructure only
+│   ├── unit/                    # per-package unit tests (+ research lab governance tests)
+│   ├── integration/             # cross-subsystem tests
+│   └── comprehensive/           # end-to-end suites
+│   # strategy test records live under hypotheses/.../tests/, never here
+│
+├── deployed_strategies/         # PRODUCTION STRATEGY VAULT — only fully qualified
+│   │                            # strategies (full VAL + OOS + qualification chain) may enter
+├── proofs/                      # EVIDENCE VAULT: research results, audit evidence,
+│   │                            # terminal captures, tuning/validation/deployment evidence
+├── bin/                         # executable operational tools: status/test/backtest/
+│                                # research/verify/audit/deploy
+├── docs/                        # specs, audits, methodology, registries
+├── archive/                     # obsolete/legacy material (provenance preserved):
+│   │                            # legacy/, obsolete_implementations/, migration/, retired/
+├── quarantine/                  # NOT importable: gateway, derivatives, MM prototypes
+│
+├── backtesting/                 # causal replay engine, friction model, analytics
+├── simulation/                  # full-system simulator
+├── capital_intelligence/        # capacity / feasibility intelligence
+├── research/                    # research execution infra: grammar families, replayer,
+│                                # discovery lab, experiments, results (positives AND negatives)
+├── strategy/                    # canonical HTF/MTF/LTF strategy source
+├── strategy_engine/             # canonical research signal engine
+├── strategy_candidate/          # candidate harness (active)
+├── strategy_candidate_v2/       # v2 candidate engine (core; debug fixtures archived)
+│
+├── README.md / CHANGELOG.md / CONTRIBUTING.md / SECURITY.md / LICENSE (MIT)
+└── pyproject.toml / requirements.txt
 ```
+
+Lifecycle mapping (where things live):
+
+| Lifecycle stage | Home |
+|---|---|
+| Hypothesis / discovery | `hypotheses/<HYPOTHESIS-ID>/` |
+| Candidate | `hypotheses/<HYPOTHESIS-ID>/candidates/<CANDIDATE-ID>/` |
+| Development test | `hypotheses/.../candidates/.../tests/<TEST-ID>/` |
+| Shared test infrastructure | `tests/` |
+| Evidence / proofs | `proofs/` (+ `hypotheses/.../research/` ledgers) |
+| Qualified + deployed strategy | `deployed_strategies/` (gated; currently empty) |
+| Live operation | `production/` (capital `$0.00`, orders `DISABLED`) |
+| Obsolete material | `archive/` (negative evidence never hidden here) |
+
+Rules enforced structurally: a Development result never promotes a candidate
+to validation/OOS/capital; only the full qualification chain admits a
+strategy to `deployed_strategies/`; negative evidence stays attached to its
+hypothesis/candidate/test lineage and is never silently deleted.
 
 ---
 

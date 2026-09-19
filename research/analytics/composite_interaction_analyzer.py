@@ -46,11 +46,11 @@ def match_trade(trade_ref: Dict[str, Any], trade_list: List[Dict[str, Any]]) -> 
 
 
 def run_interaction_analysis(
-    baseline_path: str = "/home/mrcn2/crypto-platform/scratch/anchor2_dev_certified_results.json",
-    polarity_path: str = "/home/mrcn2/crypto-platform/scratch/polarity_dev_results.json",
-    breakeven_path: str = "/home/mrcn2/crypto-platform/scratch/breakeven_1r_dev_results.json",
-    composite_path: str = "/home/mrcn2/crypto-platform/scratch/composite_01_dev_results.json",
-    output_path: str = "/home/mrcn2/crypto-platform/scratch/composite_interaction_results.json"
+    baseline_path: str = "/home/mrcn2/crypto-platform/proofs/research/anchor2_dev_certified_results.json",
+    polarity_path: str = "/home/mrcn2/crypto-platform/proofs/research/polarity_dev_results.json",
+    breakeven_path: str = "/home/mrcn2/crypto-platform/proofs/research/breakeven_1r_dev_results.json",
+    composite_path: str = "/home/mrcn2/crypto-platform/proofs/research/composite_01_dev_results.json",
+    output_path: str = "/home/mrcn2/crypto-platform/proofs/research/composite_interaction_results.json"
 ) -> Dict[str, Any]:
     
     with open(baseline_path, "r") as fp:

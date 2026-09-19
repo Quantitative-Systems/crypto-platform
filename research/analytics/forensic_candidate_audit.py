@@ -247,8 +247,8 @@ def run_forensic_candidate_audit(
     }
     
     import os
-    os.makedirs("/home/mrcn2/crypto-platform/scratch", exist_ok=True)
-    with open("/home/mrcn2/crypto-platform/scratch/forensic_candidate_ledger.json", "w") as f:
+    os.makedirs("/home/mrcn2/crypto-platform/proofs/research", exist_ok=True)
+    with open("/home/mrcn2/crypto-platform/proofs/research/forensic_candidate_ledger.json", "w") as f:
         json.dump(out_data, f, indent=2)
         
     return out_data

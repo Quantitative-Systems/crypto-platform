@@ -2,7 +2,7 @@ import json
 from datetime import datetime, timezone
 
 def main():
-    with open("/home/mrcn2/crypto-platform/scratch/unified_matrix_trade_ledger.json") as f:
+    with open("/home/mrcn2/crypto-platform/proofs/research/unified_matrix_trade_ledger.json") as f:
         trades = json.load(f)
 
     print("=" * 165)

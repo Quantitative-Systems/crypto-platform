@@ -27,25 +27,25 @@ This index catalogs the primary empirical, forensic, and experimental artifacts 
 * **Role:** Permanent negative-expectancy control benchmark against which all child hypotheses are evaluated.
 
 ### B. Implementation Correctness Audit
-* **Location:** [`scratch/implementation_correctness_audit.json`](file:///home/mrcn2/crypto-platform/scratch/implementation_correctness_audit.json)
+* **Location:** [`proofs/research/implementation_correctness_audit.json`](file:///home/mrcn2/crypto-platform/proofs/research/implementation_correctness_audit.json)
 * **Authority:** `AUTHORITATIVE & COMPLETE`
 * **What it Proves:** The $10,902$ anchor and target candidate rejections under $H_1$ were **not software defects**, but the faithful enforcement of canonical rules (multi-bar confirmed protected swings and immutable targets).
 * **Role:** Establishes the ontological boundary between software bugs and research hypotheses.
 
 ### C. Counterfactual Trade-Management Simulation Matrix
-* **Location:** [`scratch/counterfactual_trade_management_results.json`](file:///home/mrcn2/crypto-platform/scratch/counterfactual_trade_management_results.json)
+* **Location:** [`proofs/research/counterfactual_trade_management_results.json`](file:///home/mrcn2/crypto-platform/proofs/research/counterfactual_trade_management_results.json)
 * **Authority:** `AUTHORITATIVE & COMPLETE`
 * **What it Proves:** Simulating 7 prospective trade-management policies (including break-even at $+0.75\text{R}, +1.0\text{R}, +1.5\text{R}$ and fixed targets) across the identical 128 $H_1$ entries yields negative expectancy ($-0.55\text{R}$ to $-0.61\text{R}$). Proves that exit management is not the primary driver of loss velocity.
 * **Role:** Decomposes signal alpha from execution alpha.
 
 ### D. Trade Lifecycle Simulator Integrity Trace
-* **Location:** [`scratch/simulator_integrity_trace_report.json`](file:///home/mrcn2/crypto-platform/scratch/simulator_integrity_trace_report.json)
+* **Location:** [`proofs/research/simulator_integrity_trace_report.json`](file:///home/mrcn2/crypto-platform/proofs/research/simulator_integrity_trace_report.json)
 * **Authority:** `AUTHORITATIVE & COMPLETE`
 * **What it Proves:** Candle-by-candle independent reconstruction of representative trade lifecycles matches the execution simulator with **zero discrepancies** across entry fills, stop losses, excursions, trailing stops, and realized returns.
 * **Role:** Certifies the simulator engine as a faithful research instrument.
 
 ### E. Causality & Zero-Lookahead Audit
-* **Location:** [`scratch/causality_lookahead_audit_report.json`](file:///home/mrcn2/crypto-platform/scratch/causality_lookahead_audit_report.json)
+* **Location:** [`proofs/research/causality_lookahead_audit_report.json`](file:///home/mrcn2/crypto-platform/proofs/research/causality_lookahead_audit_report.json)
 * **Authority:** `AUTHORITATIVE & COMPLETE`
 * **What it Proves:** Monotonic timestamp causality ($\text{HTF} \le \text{MTF} \le \text{LTF} \le \text{Entry} \le \text{Exit}$) verified across all trades with **zero temporal violations**.
 * **Role:** Certifies that no future data leakage exists in the replayer.
@@ -71,7 +71,7 @@ This index catalogs the primary empirical, forensic, and experimental artifacts 
 * **Status:** Designed for multi-stream execution with dynamic hypothesis keying.
 
 ### C. $H_{1.1}$ Single-Stream Smoke Test
-* **Location:** [`scratch/h1_1_smoke_test_result.json`](file:///home/mrcn2/crypto-platform/scratch/h1_1_smoke_test_result.json)
+* **Location:** [`proofs/research/h1_1_smoke_test_result.json`](file:///home/mrcn2/crypto-platform/proofs/research/h1_1_smoke_test_result.json)
 * **Authority:** `EXPERIMENTAL SMOKE TEST`
 * **Status:** Used to benchmark single-stream throughput ($\sim 140\text{ candles/sec}$) on `BTC_SET_3`.
 

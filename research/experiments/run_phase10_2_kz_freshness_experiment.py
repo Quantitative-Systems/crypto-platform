@@ -10,8 +10,8 @@ Configurations:
 - Run C: PRE-SPECIFIED SENSITIVITY (7d, 14d, 21d, 30d, 60d, 90d)
 
 Produces:
-- scratch/phase10_2_kz_freshness_dev_results.json
-- scratch/phase10_2_kz_freshness_dev_results.md
+- proofs/research/phase10_2_kz_freshness_dev_results.json
+- proofs/research/phase10_2_kz_freshness_dev_results.md
 """
 
 import os
@@ -552,7 +552,7 @@ def main():
         }
     }
 
-    out_json = "/home/mrcn2/crypto-platform/scratch/phase10_2_kz_freshness_dev_results.json"
+    out_json = "/home/mrcn2/crypto-platform/proofs/research/phase10_2_kz_freshness_dev_results.json"
     with open(out_json, "w") as f:
         json.dump(dev_artifact, f, indent=2)
     print(f"\nSaved JSON artifact: {out_json}")
@@ -672,7 +672,7 @@ As mandated by the Phase 10.2 directive:
 - Research concludes here pending review of Phase 10.2 findings.
 """
 
-    out_md = "/home/mrcn2/crypto-platform/scratch/phase10_2_kz_freshness_dev_results.md"
+    out_md = "/home/mrcn2/crypto-platform/proofs/research/phase10_2_kz_freshness_dev_results.md"
     with open(out_md, "w") as f:
         f.write(md_content)
     print(f"Saved Markdown artifact: {out_md}")

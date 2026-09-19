@@ -11,14 +11,14 @@ import json
 
 import pytest
 
-from qcp.hypotheses.governance import (
+from hypotheses.governance import (
     LAB_ROOT, DuplicateIDError, InvalidTransitionError, MissingMetadataError,
     MissingProvenanceError, OrphanTestError, UnauthorizedPromotionError,
     create_candidate, create_hypothesis, create_test, promote_candidate,
     record_test_result, transition_candidate, transition_hypothesis,
     transition_test)
-from qcp.hypotheses.index_gen import generate_indexes
-from qcp.hypotheses.verify_lab import verify_lab
+from hypotheses.index_gen import generate_indexes
+from hypotheses.verify_lab import verify_lab
 
 FULL_PROV_FIELDS = [
     "original_path", "experiment_id", "hypothesis_id", "candidate_id",

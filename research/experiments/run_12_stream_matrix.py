@@ -178,7 +178,7 @@ def main():
             print(f"  -> Trades: {res['total_trades']} | WR: {res['win_rate_pct']:.2f}% | PF: {res['profit_factor']:.2f} | Net PnL: ${res['net_pnl']:+,.2f} | Avg R: {res['avg_realized_r']:+.2f}R | Exits: {res['exit_reasons']}")
 
     # Save summary JSON
-    summary_path = "/home/mrcn2/crypto-platform/scratch/canonical_12_stream_matrix_results.json"
+    summary_path = "/home/mrcn2/crypto-platform/proofs/research/canonical_12_stream_matrix_results.json"
     # Clean non-serializable elements before export
     clean_results = []
     for r in matrix_results:

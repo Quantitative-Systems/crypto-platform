@@ -16,7 +16,7 @@ HYPOTHESIS H_D03_DEV:
   - Real Maker (2 bps) / Taker (5 bps) fees + 5 bps adverse slippage
   - Zero lookahead protection
 
-Saves artifact: scratch/h_d03_dev_results.json
+Saves artifact: proofs/research/h_d03_dev_results.json
 """
 
 import os
@@ -365,7 +365,7 @@ def run_full_dev_matrix():
         "trade_ledger": all_trades
     }
 
-    out_file = "/home/mrcn2/crypto-platform/scratch/h_d03_dev_results.json"
+    out_file = "/home/mrcn2/crypto-platform/proofs/research/h_d03_dev_results.json"
     with open(out_file, "w") as f:
         json.dump(dev_results_payload, f, indent=2)
 

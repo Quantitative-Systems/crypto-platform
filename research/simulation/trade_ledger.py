@@ -231,7 +231,7 @@ class TradeLedger:
         Exports the complete closed trade ledger to an immutable JSON artifact.
         """
         if filepath is None:
-            filepath = os.path.join(os.path.dirname(__file__), "..", "..", "scratch", "canonical_trade_ledger.json")
+            filepath = os.path.join(os.path.dirname(__file__), "..", "..", "proofs", "work", "canonical_trade_ledger.json")
             
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
         data = {

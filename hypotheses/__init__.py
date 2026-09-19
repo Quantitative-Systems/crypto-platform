@@ -1,9 +1,20 @@
 """
-hypotheses — QCP Hypothesis Research Registry package.
+hypotheses — QCP Hypothesis Research Registry + Research Laboratory package.
 
-This package governs the permanent, controlled registry of all QCP research hypotheses.
+Two governance layers live here:
 
-Usage:
-    from hypotheses.hypothesis_governance import HypothesisRegistry
-    registry = HypothesisRegistry()
+1. Registry (ID governance, permanent, never removed):
+       from hypotheses.hypothesis_governance import HypothesisRegistry
+       registry = HypothesisRegistry()
+
+2. Research laboratory (hypothesis -> research -> candidates -> tests ->
+   results lifecycle, promotion gates, indexes):
+       from hypotheses.governance import create_hypothesis, ...
+       from hypotheses.verify_lab import verify_lab
+
+Hierarchy: HYPOTHESIS -> RESEARCH -> CANDIDATES -> TESTS -> RESULTS/EVIDENCE.
+Positive Development evidence never auto-promotes a candidate to
+VALIDATION_CANDIDATE / VALIDATED / capital eligibility.
 """
+__version__ = "1.0.0"
+

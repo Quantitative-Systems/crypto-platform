@@ -343,7 +343,7 @@ def main():
     
     # Save output to scratch artifact
     os.makedirs("/home/mrcn2/crypto-platform/scratch", exist_ok=True)
-    out_file = "/home/mrcn2/crypto-platform/scratch/phase3_baseline_results.json"
+    out_file = "/home/mrcn2/crypto-platform/proofs/research/phase3_baseline_results.json"
     with open(out_file, "w") as f:
         json.dump(results, f, indent=2)
     print(f"\n✅ Saved full baseline replay artifact to {out_file}")

@@ -36,7 +36,7 @@ reports the classification; the repair sequence follows in §7.
 | Test collection | **593 tests in 137 files** | `pytest --collect-only -q` |
 | Test execution | **593 passed, 0 failed, 98.97s** | `pytest tests/ -q` |
 | Split | unit 492, integration 69, comprehensive 32 (7 files) | per-file collection counts |
-| Certified warehouse | 24 datasets = **3 assets** (BTC, ETH, SOL) × 8 timeframes, OHLCV only | `market_data/cache`, `scratch/dataset_manifests.json` |
+| Certified warehouse | 24 datasets = **3 assets** (BTC, ETH, SOL) × 8 timeframes, OHLCV only | `market_data/cache`, `proofs/work/dataset_manifests.json` |
 | Live capital | `$0.00`, order submission disabled, firewall fail-closed | `capital_barrier.py`, architecture manifest, discovery report |
 | Audit ledger | 487 records, **SHA-256 chain verified intact** | `AuditLogger().verify_ledger_integrity() == True` |
 
@@ -117,7 +117,7 @@ taxonomy.
 `evaluation_timestamp_utc` rewritten in place rather than producing a new versioned artifact.
 `DAILY_DECISION_RECORD.json` is opened with `mode="w"` (overwrite). The working tree simultaneously modifies
 `CERTIFIED_RESEARCH_UNIVERSE.json`, `QCP_ALPHA_DISCOVERY_REPORT.{json,md}`, `research_vault.db` and
-`scratch/dataset_manifests.json`. The dataset manifests were re-stamped with new `download_timestamp_utc`
+`proofs/work/dataset_manifests.json`. The dataset manifests were re-stamped with new `download_timestamp_utc`
 values while `sha256` stayed identical — content is unchanged, but lineage metadata moved, so a reader cannot
 tell "re-derived identically" from "rewritten".
 
@@ -152,7 +152,7 @@ files; 9 newer files are uncatalogued (including `ASSET_UNIVERSE_REGISTRY.json`,
 they exist in no commit (`QCP_SYSTEM_BUILD_COMPLETE_AUDIT.{json,md}`, `STRATEGY_GRAVEYARD.json`,
 `FORENSIC_BLOCKS_MASTER_AUDIT.json`, `telemetry/simulations/forward_execution_telemetry.jsonl`).
 
-**F-14 — Data lineage is incomplete.** Manifests live in `scratch/dataset_manifests.json`, not under
+**F-14 — Data lineage is incomplete.** Manifests live in `proofs/work/dataset_manifests.json`, not under
 `market_data/`; 15 of 24 warehouse files are untracked; coverage is OHLCV-only for three assets; the 1m
 dataset spans only 2026-07-30 → 2026-09-03. Funding, open interest, liquidations, order-book depth and
 cross-venue feeds are *missing and explicitly marked blocked* — compliant behaviour, but it means
@@ -178,7 +178,7 @@ The prior inventory's category counts are largely **reasonable** and its per-fil
 | `OUT_OF_SCOPE_FOR_CURRENT_MILESTONE` | 7 | Acceptable (`billing`, `multi_tenancy`, `observability`, `security`, `disaster_recovery`, `web_app`). Support systems only; the web UI additionally carries F-04's fiat promotion seeding and must not display unvalidated strategies as robust. |
 | `DUPLICATE` | 0 | Accepted. |
 | `BROKEN` | 0 | Accepted for syntax/behaviour: 593/593 tests pass. Note that "not broken" ≠ "validated". |
-| `UNKNOWN` | 319 | Mostly `scratch/` diagnostics. Acceptable, but 9 files created after the inventory ran are **not catalogued at all** (F-13). |
+| `UNKNOWN` | 319 | Mostly `proofs/research/` diagnostics. Acceptable, but 9 files created after the inventory ran are **not catalogued at all** (F-13). |
 
 **No file was deleted, moved or quarantined by this audit.** Quarantine is recorded as instructions (§6), not
 as filesystem mutation, so that the directive's "never rewrite historical evidence" rule is respected.

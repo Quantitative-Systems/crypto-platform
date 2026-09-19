@@ -136,7 +136,7 @@ def run_baseline():
         "stream_c_upgraded_profit_lock": analytics_c
     }
 
-    with open("scratch/canonical_btc_s3_baseline_results.json", "w") as f:
+    with open("proofs/research/canonical_btc_s3_baseline_results.json", "w") as f:
         json.dump(out_payload, f, indent=2)
 
     # Output Complete Formatted Report

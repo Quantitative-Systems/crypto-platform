@@ -23,7 +23,7 @@ Evaluates every losing trade across 18 mandatory failure categories:
 18. Market regime
 
 Generates:
-- scratch/forensic_failure_analysis.json
+- proofs/research/forensic_failure_analysis.json
 - FORENSIC_FAILURE_ANALYSIS.md
 """
 
@@ -68,7 +68,7 @@ def load_h1_canonical_trades() -> List[Dict[str, Any]]:
 
 def load_rebuild_dev_trades() -> List[Dict[str, Any]]:
     """Loads all 59 trades from the canonical rebuild development partition (2021-2022)."""
-    dev_path = ROOT_DIR / "scratch/canonical_rebuild_dev_results.json"
+    dev_path = ROOT_DIR / "proofs/research/canonical_rebuild_dev_results.json"
     with open(dev_path, "r") as f:
         data = json.load(f)
     trades = data.get("trade_ledger", [])
@@ -473,7 +473,7 @@ def execute_forensic_failure_analysis() -> Dict[str, Any]:
     }
 
     # Save JSON artifact
-    out_json = ROOT_DIR / "scratch/forensic_failure_analysis.json"
+    out_json = ROOT_DIR / "proofs/research/forensic_failure_analysis.json"
     with open(out_json, "w") as f:
         json.dump(report_payload, f, indent=2)
     print(f"Saved JSON artifact: {out_json}")
