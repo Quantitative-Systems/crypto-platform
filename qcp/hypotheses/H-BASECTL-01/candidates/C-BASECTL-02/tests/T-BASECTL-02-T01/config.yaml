@@ -1,0 +1,11 @@
+asset: BTC/USDT, ETH/USDT, SOL/USDT
+timeframe: SET_1..SET_5 multi-scale (15 streams)
+fees: 2/5 bps
+slippage: 5 bps
+data_partition: DEV 2021-2022
+execution_assumptions: causal replayer, adverse-first intrabar collision, exited plans
+  terminal (no-reentry invariant, replayer fix 6382061)
+experiment_id: ANCHOR_2_TREATMENT_DEV_2021_2022
+hypothesis_id: H-BASECTL-01
+candidate_id: C-BASECTL-02
+test_id: T-BASECTL-02-T01
