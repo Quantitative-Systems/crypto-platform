@@ -36,6 +36,7 @@ where = ["."]
 include = [
     "config*",
     "execution_gateway*",
+    "hypotheses*",
     "market_data*",
     "market_intelligence*",
     "portfolio_engine*",
