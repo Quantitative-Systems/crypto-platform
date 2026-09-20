@@ -1,1 +1,0 @@
-"""QCP hypotheses laboratory package."""

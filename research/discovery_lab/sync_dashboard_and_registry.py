@@ -1,5 +1,5 @@
 """
-PROJECT TOP1 — CEO Dashboard & Strategy Registry Synchronization Engine.
+ CEO Dashboard & Strategy Registry Synchronization Engine.
 
 Parses all experiment logs and autonomous discovery reports to generate:
 1. Updated strategy_library.json with immutable candidate provenance

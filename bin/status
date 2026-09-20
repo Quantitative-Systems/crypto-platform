@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+"""bin/status — platform operational status (registries, lab, vaults)."""
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+from hypotheses.verify_lab import verify_lab  # noqa: E402
+
+
+def main() -> int:
+    print("== QCP Platform Status ==")
+    print(f"root: {ROOT}")
+    for pkg in ["platform_core", "market_intelligence", "market_data",
+                "portfolio_engine", "risk_engine", "trade_management",
+                "backtesting", "research", "hypotheses", "production"]:
+        print(f"  {'OK ' if (ROOT / pkg).exists() else 'MISSING'} {pkg}/")
+    errs = verify_lab()
+    print(f"lab verifier: {'CLEAN' if not errs else f'{len(errs)} ISSUES'}")
+    for e in errs:
+        print(f"  ! {e}")
+    vault = ROOT / "deployed_strategies"
+    deployed = [p.name for p in vault.iterdir()
+                if p.is_dir() and not p.name.startswith(".")]
+    print(f"deployed_strategies: {deployed or 'EMPTY (no qualified strategy)'}")
+    proofs = ROOT / "proofs" / "research"
+    print(f"proofs/research artifacts: "
+          f"{len(list(proofs.glob('*.json'))) + len(list(proofs.glob('*.md'))) - 1}")
+    return 0 if not errs else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
