@@ -17,7 +17,7 @@ from enum import Enum
 from typing import Dict, List, Optional, Any, Tuple
 import numpy as np
 
-from market_intelligence.primitives import Candle
+from market_data.primitives import Candle
 
 TF_SECONDS_MAP: Dict[str, int] = {
     "1m": 60,

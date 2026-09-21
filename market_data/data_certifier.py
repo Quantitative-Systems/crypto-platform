@@ -1,5 +1,5 @@
 from typing import List, Optional
-from market_intelligence.primitives import Candle
+from market_data.primitives import Candle
 
 class DataCertifier:
     """

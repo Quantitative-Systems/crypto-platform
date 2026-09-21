@@ -1,0 +1,208 @@
+{
+  "provenance": {
+    "experiment_name": "TRAILING_AB_EXPERIMENT",
+    "asset": "BTC",
+    "timeframe_set": "SET_4",
+    "hypothesis_id": "AB_COMPARISON",
+    "release_version": "v0.4.0-product-04",
+    "execution_model_version": "1.0.0-causal-adverse-first",
+    "created_at_utc": "2026-08-14T16:42:46.635317+00:00",
+    "config": {
+      "initial_balance": 10000.0
+    },
+    "dataset_info": {
+      "asset": "BTC",
+      "timeframe_set": "SET_4",
+      "bars": 3000
+    },
+    "provenance_hash": "ccf27fa816e19b5f"
+  },
+  "metrics": {
+    "baseline_a": {
+      "total_trades": 0,
+      "win_count": 0,
+      "loss_count": 0,
+      "breakeven_count": 0,
+      "win_rate": 0.0,
+      "loss_rate": 0.0,
+      "gross_profit_usd": 0.0,
+      "gross_loss_usd": 0.0,
+      "net_profit_usd": 0.0,
+      "total_friction_usd": 0.0,
+      "avg_win_usd": 0.0,
+      "avg_loss_usd": 0.0,
+      "profit_factor": "NOT_AVAILABLE",
+      "expectancy_usd": "NOT_AVAILABLE",
+      "expectancy_r": "NOT_AVAILABLE",
+      "max_drawdown_pct": 0.0,
+      "sharpe_ratio": "NOT_AVAILABLE",
+      "sortino_ratio": "NOT_AVAILABLE",
+      "average_r": "NOT_AVAILABLE",
+      "median_r": "NOT_AVAILABLE",
+      "r_multiples": []
+    },
+    "baseline_b": {
+      "total_trades": 0,
+      "win_count": 0,
+      "loss_count": 0,
+      "breakeven_count": 0,
+      "win_rate": 0.0,
+      "loss_rate": 0.0,
+      "gross_profit_usd": 0.0,
+      "gross_loss_usd": 0.0,
+      "net_profit_usd": 0.0,
+      "total_friction_usd": 0.0,
+      "avg_win_usd": 0.0,
+      "avg_loss_usd": 0.0,
+      "profit_factor": "NOT_AVAILABLE",
+      "expectancy_usd": "NOT_AVAILABLE",
+      "expectancy_r": "NOT_AVAILABLE",
+      "max_drawdown_pct": 0.0,
+      "sharpe_ratio": "NOT_AVAILABLE",
+      "sortino_ratio": "NOT_AVAILABLE",
+      "average_r": "NOT_AVAILABLE",
+      "median_r": "NOT_AVAILABLE",
+      "r_multiples": []
+    },
+    "deltas": {
+      "win_rate_delta": 0.0,
+      "net_profit_delta_usd": 0.0,
+      "max_drawdown_delta_pct": 0.0
+    }
+  },
+  "exit_attribution": {
+    "baseline_a": {
+      "HTF_TP": {
+        "trade_count": 0,
+        "percentage_of_total": 0.0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate": 0.0,
+        "total_pnl_usd": 0.0,
+        "avg_realized_r": 0.0,
+        "r_multiples": []
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "trade_count": 0,
+        "percentage_of_total": 0.0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate": 0.0,
+        "total_pnl_usd": 0.0,
+        "avg_realized_r": 0.0,
+        "r_multiples": []
+      },
+      "INITIAL_LTF_SL": {
+        "trade_count": 0,
+        "percentage_of_total": 0.0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate": 0.0,
+        "total_pnl_usd": 0.0,
+        "avg_realized_r": 0.0,
+        "r_multiples": []
+      },
+      "OTHER": {
+        "trade_count": 0,
+        "percentage_of_total": 0.0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate": 0.0,
+        "total_pnl_usd": 0.0,
+        "avg_realized_r": 0.0,
+        "r_multiples": []
+      }
+    },
+    "baseline_b": {
+      "HTF_TP": {
+        "trade_count": 0,
+        "percentage_of_total": 0.0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate": 0.0,
+        "total_pnl_usd": 0.0,
+        "avg_realized_r": 0.0,
+        "r_multiples": []
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "trade_count": 0,
+        "percentage_of_total": 0.0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate": 0.0,
+        "total_pnl_usd": 0.0,
+        "avg_realized_r": 0.0,
+        "r_multiples": []
+      },
+      "INITIAL_LTF_SL": {
+        "trade_count": 0,
+        "percentage_of_total": 0.0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate": 0.0,
+        "total_pnl_usd": 0.0,
+        "avg_realized_r": 0.0,
+        "r_multiples": []
+      },
+      "OTHER": {
+        "trade_count": 0,
+        "percentage_of_total": 0.0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate": 0.0,
+        "total_pnl_usd": 0.0,
+        "avg_realized_r": 0.0,
+        "r_multiples": []
+      }
+    }
+  },
+  "failure_modes": {
+    "baseline_a": {
+      "total_losing_trades": 0,
+      "failure_mode_breakdown": {
+        "INITIAL_STRUCTURAL_INVALIDATION": {
+          "count": 0,
+          "percentage_of_losses": 0.0
+        },
+        "MTF_TRAIL_REVERSAL": {
+          "count": 0,
+          "percentage_of_losses": 0.0
+        },
+        "TARGET_UNREACHED_REVERSAL": {
+          "count": 0,
+          "percentage_of_losses": 0.0
+        },
+        "OTHER": {
+          "count": 0,
+          "percentage_of_losses": 0.0
+        }
+      }
+    },
+    "baseline_b": {
+      "total_losing_trades": 0,
+      "failure_mode_breakdown": {
+        "INITIAL_STRUCTURAL_INVALIDATION": {
+          "count": 0,
+          "percentage_of_losses": 0.0
+        },
+        "MTF_TRAIL_REVERSAL": {
+          "count": 0,
+          "percentage_of_losses": 0.0
+        },
+        "TARGET_UNREACHED_REVERSAL": {
+          "count": 0,
+          "percentage_of_losses": 0.0
+        },
+        "OTHER": {
+          "count": 0,
+          "percentage_of_losses": 0.0
+        }
+      }
+    }
+  },
+  "trades_summary": {
+    "total_trades": 0,
+    "trades": []
+  },
+  "equity_curve": []
+}

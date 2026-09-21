@@ -1,447 +1,74 @@
 # QCP — Quantitative Crypto Platform
 
-[![Tests](https://img.shields.io/badge/tests-559%20passed%20%28collectible%20suite%29-green)](#5-testing)
-[![Research Lab](https://img.shields.io/badge/research%20lab-hypotheses%2F-blue)](#qcp-research-laboratory-v050)
-[![Live Capital](https://img.shields.io/badge/live%20capital-$0.00-red)](#4-current-research)
-[![Alpha Status](https://img.shields.io/badge/validated%20alpha-NONE-orange)](#4-current-research)
+[![Tests](https://img.shields.io/badge/governance%20tests-passing-green)](#running)
+[![Live Capital](https://img.shields.io/badge/live%20capital-%240.00-red)]
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-> **Scientific integrity first.** QCP exists to discover economically real,
-> statistically defensible, executable, scalable, and independent crypto
-> return sources — or to honestly report that none exist.
+> **One deployable platform. Every trading style. Costs included, always.
+> Refusal is a valid output.**
 
-QCP is a **quantitative research and trading-infrastructure system**: a causal
-backtesting laboratory with a modular strategy grammar, a binding risk
-firewall, decomposed friction modelling, adversarial falsification, and full
-negative-result preservation. It is **not** a profitable trading bot. No
-strategy here has cleared validation, no capital is deployed, and no
-profitability is claimed.
+QCP is a single, cost-aware, self-improving trading platform covering all
+styles — scalping, intraday, swing, position, investing and market-neutral
+carry — across 10 assets. It measures every strategy family honestly
+(walk-forward, out-of-sample never tuned, full fee/slippage/spread modelling),
+promotes only what survives 7 governance gates **to paper trading**, and
+automatically archives failed experiments in `research/failed/`.
 
----
-
-## Table of Contents
-
-- [1. Project Overview](#1-project-overview)
-- [2. Current Architecture](#2-current-architecture)
-- [3. Research Philosophy](#3-research-philosophy)
-- [4. Current Research](#4-current-research)
-- [QCP Research Laboratory](#qcp-research-laboratory-v050)
-- [5. Testing](#5-testing)
-- [6. Research Results](#6-research-results)
-- [7. Repository Structure](#7-repository-structure)
-- [8. Current Limitations](#8-current-limitations)
-- [9. Roadmap](#9-roadmap)
-- [Getting Started](#getting-started)
-- [Safety Guarantees](#safety-guarantees)
-- [Governance](#governance)
-- [Contributing](#contributing)
-- [License](#license)
+**No live capital is deployed. Promotion = paper only, by design.**
 
 ---
 
-## 1. Project Overview
+## What is where
 
-**What QCP is.** A reproducible platform for one honest question: *does this
-hypothesis survive causal execution, real friction, and out-of-sample
-validation?* It provides a certified data layer, a strategy grammar
-(HTF bias -> MTF setup -> LTF entry -> structural SL/TP/trailing), causal
-backtesting across DEV (2021-2022) / VAL (2023) / OOS (2024-2026) partitions,
-friction-aware evaluation, adversarial falsification, and a fail-closed
-production gate (live capital `$0.00`, order submission `DISABLED`).
-
-**What problem it solves.** Retail backtests manufacture edge via lookahead
-leakage, ignored costs, cherry-picked windows, and deleted failures. QCP makes
-each failure mode structurally difficult: causality in code, costs before
-claims, chronological partitions, preserved negatives.
-
-**What QCP is not:**
-
-| Refused | Done instead |
+| Path | Purpose |
 |---|---|
-| Manufacture profitable backtests | Report `NO_NEW_ECONOMIC_EDGE_VALIDATED` |
-| Simulate missing market data | Block with `BLOCKED_EXTERNAL_DATA` |
-| Treat paper trading as validation | Hard `$0.00` capital gate |
-| Approve after a single pass | Require OOS + adversarial battery |
-| Skip friction | Fees + spread + slippage + financing |
+| `qcp_platform/` | **The deployable platform** — 13 modules, one command sweep |
+| `market_data/` | Binance cache + data quality pipeline |
+| `config/` | Asset universe + timeframe sets |
+| `research/results/qcp_platform/` | Measured results: REPORT.md, verdicts, economic screen |
+| `research/failed/` | All superseded/failed strategy attempts and their tests (kept for the record, not for use) |
+| `tests/` | Governance + data-layer tests for the deployable platform only |
 
----
-## 2. Current Architecture
+### The platform in one minute
 
-Implemented flow (every box exists in code; aspirations are labelled PLANNED
-in section 9):
+- **6 horizon books** from one risk governor: SCALP, INTRADAY, SWING,
+  POSITION, INVEST, CARRY (funding harvest, market-neutral).
+- **10 assets**, one causal engine: next-bar-open fills, adverse-first stops,
+  full costs on every trade, R-multiple accounting.
+- **7 governance gates**: data sufficiency, dev/val/oos consistency,
+  statistics, cost-shock survival (+50%), walk-forward efficiency,
+  sign stability, and portfolio marginal contribution (G7).
+- **Self-improving**: `cli.py improve` re-runs champion/challenger sweeps on
+  new data; a challenger replaces the baseline only if it beats it
+  out-of-sample.
+- **Anti-blowup**: vol targeting, drawdown tiers (10%/20%/25%), daily/weekly
+  loss limits, kill switch — `qcp_platform/governor.py`.
 
-```text
-Data (market_data/: loader, certifier, universe, manifests)
-  -> Market Intelligence (market_intelligence/: regimes, opportunity detector)
-  -> Research / Alpha (governor, factory, discovery lab, falsification)
-  -> Strategy Grammar (research/*_families.py + strategy_grammar.py)
-  -> Risk (risk_engine/: 1% sizer, 4R firewall, breakers, veto)
-  -> Execution (SIMULATED ONLY: research/simulation/ + friction_model.py)
-  -> Backtesting (research/replayer/: causal replayer + aligner)
-  -> Economic Evaluation (economic_evaluation_engine.py + evidence ledger)
-  -> Telemetry (research/results/telemetry/: audit ledger, telemetry)
-  -> Research Feedback (opportunity_memory, hypothesis registry, reports)
-```
-
-Live order routing is NOT in this path. `execution_gateway/` lives only under
-`quarantine/` (prototype, not importable as a top-level package). Anything
-importing it fails at collection — see section 5 and 8.
-
-| Subsystem | Location | Status |
-|---|---|---|
-| Data layer | `market_data/` | IMPLEMENTED |
-| Regime engines | `research/regime_engine.py`, `research/market_regime.py` | IMPLEMENTED |
-| Strategy grammar | `research/strategy_grammar.py`, `research/*_families.py` | IMPLEMENTED |
-| Foundation registry | `research/foundation_registry.py` | IMPLEMENTED |
-| Causal replayer | `research/replayer/`, `research/simulation/` | IMPLEMENTED |
-| Friction model | `backtesting/friction_model.py` (3 fill models) | IMPLEMENTED |
-| Economic evaluation | `research/economic_evaluation_engine.py` | IMPLEMENTED |
-| Discovery lab | `research/discovery_lab/` | PARTIALLY (known regression, sec 5) |
-| Falsification engine | `research/adversarial_falsification_engine.py` | IMPLEMENTED |
-| Governor + factory | `research/autonomous_research_*.py` | IMPLEMENTED (gap noted, sec 5) |
-| Risk engine | `risk_engine/` | IMPLEMENTED |
-| Production gate | `production/` (capital locked) | IMPLEMENTED |
-| Platform core | `platform_core/` | IMPLEMENTED |
-
-Full IMPLEMENTED / PARTIAL / PLANNED / NOT verdicts:
-`research/results/DAY_48_REPOSITORY_CLOSEOUT.md`.
-
----
-
-## 3. Research Philosophy
-
-1. **Evidence before claims.** Hypotheses are words until measured from
-   checksummed data. The factory ships zeroed metrics by contract.
-2. **Reproducibility.** Same data + config = same result. Hashes, configs,
-   lineages frozen in manifests and evidence records.
-3. **Causal backtesting.** Closed-bar signals fill at the NEXT bar open.
-   Same-bar fills impossible; stop/target collisions resolve adverse-first.
-4. **Friction-aware evaluation.** Fees, spread, slippage, borrow deducted
-   before any claim; 2x cost shock required.
-5. **Negative-result preservation.** Failures are committed artifacts, never
-   deleted.
-6. **Research governance.** One-variable experiments, frozen controls,
-   Bonferroni correction, strict DEV / VAL / untouched-OOS separation.
-
----
-## 4. Current Research
-
-### Phase C — structural + regime edge (DEV 2021-2022, BTC/ETH/SOL x SET_2/3/4)
-
-Five hypotheses under the binding 4R firewall. All failed or inconclusive.
-Preserved, not hidden.
-
-| Hypothesis | Trades | Net R | Verdict |
-|---|---|---|---|
-| H_STRUCT_01 (FVG Tap + Breakout Close) | 77 | -22.64R | FAIL |
-| H_STRUCT_02 (FVG + Displacement) | 14 | -6.68R | INCONCLUSIVE (n<15) |
-| H_STRUCT_03 (Sweep + Reclaim) | 11053 | -3624.04R | FAIL |
-| H_STRUCT_04 (Sweep + CHoCH + BOS trail) | 31 | -7.41R | FAIL |
-| H_STRUCT_05 (Breakout Retest) | 65 | -24.45R | FAIL |
-
-Report: `research/results/STRUCTURAL_REGIME_RESEARCH_REPORT.md`.
-
-### Phase D — H_STRUCT_01 forensics (frozen, no tuning)
-
-- **D-0 control:** 77 trades, **+1.64R gross / -22.64R net**, PF 0.713,
-  WR 24.7%. Friction 24.28R = **1478% of gross**.
-- **D-1 geometry sweep:** target-R sweep (1.5R-4R) **inoperative** — identical
-  populations at every level; structural TP already exceeded the firewall.
-- **D-2 fill models:** TAKER / MAKER_TOUCH / MAKER_CONSERVATIVE gave 77 / 84 /
-  93 trades (net -22.64R / -9.48R / -5.42R). Different populations, because
-  entry fill recomputes risk-per-unit and firewall pass/fail. All negative.
-- Nothing declared profitable or a winner.
-
-Reports: `research/results/EXECUTION_GEOMETRY_SWEEP_REPORT.md` and
-`research/results/execution_geometry_sweep_raw.json`.
-
-### Discovery verdict
-
-Canonical verdict: **`NO_NEW_ECONOMIC_EDGE_VALIDATED`** (148 evaluated, 116
-falsified, 32 blocked on missing data, 0 survivors).
-See `research/results/QCP_ALPHA_DISCOVERY_REPORT.md`.
-
-### Next task (NOT started)
-
-**HISTORICAL_POSITIVE_RECONCILIATION** — which historical positives survive
-the corrected engine. Not implemented, not attempted in this freeze.
-
----
-
-## QCP Research Laboratory (v0.5.0)
-
-All hypothesis-centered research now lives in **`hypotheses/`** at the
-repository root — the single authoritative discovery/research lab — under a
-governed hierarchy — a positive Development result is **not** a winner, and
-no candidate can be promoted to validation/OOS/capital from DEV evidence
-alone (enforced structurally, tested in
-`tests/unit/research/test_qcp_lab_governance.py`):
-
-```text
-HYPOTHESIS -> RESEARCH -> CANDIDATES -> TESTS -> RESULTS / EVIDENCE
-```
-
-**Governance model**
-
-- `HYPOTHESIS`: PROPOSED → FORMALIZED → UNDER_RESEARCH → ACTIVE →
-  SUPPORTED / PARTIALLY_SUPPORTED / NOT_SUPPORTED / INVALIDATED / ARCHIVED
-- `CANDIDATE`: DISCOVERED → UNDER_TEST → PROMISING → VALIDATION_CANDIDATE →
-  VALIDATED / REJECTED / INVALIDATED / ARCHIVED
-- `TEST`: PLANNED → RUNNING → COMPLETED → POSITIVE_SIGNAL / NEGATIVE_SIGNAL /
-  MIXED / INCONCLUSIVE / INVALIDATED
-
-Every test carries full provenance: original path, experiment ID, strategy
-version, data version, code commit, asset/timeframe, execution assumptions,
-fees, slippage, collision/re-entry semantics, and result classification.
-Duplicate IDs are rejected, orphan tests are detected, missing provenance
-blocks results, and negative evidence is preserved (its loss is a lab
-integrity error). `python -m hypotheses.migrate_history` regenerates
-indexes and re-verifies the lab.
-
-**Registered hypotheses (historical migration, DEV 2021-2022)**
-
-| ID | Title | Status | Candidates | Key evidence |
-|---|---|---|---|---|
-| H-TGTGEO-01 | Macro Structural Target Selection | NOT_SUPPORTED | 1 | N=41, -27.66R (negative, preserved) |
-| H-TRDMGT-01 | Post-Entry Trade Management | PARTIALLY_SUPPORTED | 5 | milestone 2.5R +1.44R, composite +0.96R (DEV only, VAL/OOS locked) |
-| H-BASECTL-01 | Canonical Entry Baseline (H0/ANCHOR_2) | NOT_SUPPORTED | 2 | H0 -5.13R, ANCHOR_2 -4.17R |
-| H-REPRO-01 | Certified Baseline Reproducibility | INVALIDATED | 1 | engine drift: -16.54R N=79 vs stored certified |
-| H-MOM-01 | Momentum Treatment | NOT_SUPPORTED | 1 | N=18, -3.61R |
-| H-FRACTAL-01 | Cross-Scale Mechanism Transfer | UNDER_RESEARCH | 0 | registered, **DO NOT TEST yet** |
-
-A/B separation is enforced: cross-scale mechanism transfer (H-FRACTAL-01) and
-multi-timeframe confirmation/confluence are distinct hypothesis families and
-must never be merged into one experiment.
-
----
-## 5. Testing
-
-Full run **2026-09-18**:
-`PYTHONPATH=. python3 -m pytest tests/ -p no:cacheprovider
---continue-on-collection-errors -q` (~140 s):
-
-| Outcome | Count |
-|---|---|
-| Passed | **604** |
-| Failed | **2** |
-| Collection errors | **14** |
-| Total collected | 620 |
-
-Failures documented, not silently fixed (freeze operation):
-
-1. `test_alpha_discovery_pipeline_end_to_end` — discovery engine calls
-   `simulate(df, signal, bar_hours)` but the signature requires
-   `(df, signal, planned_sl, planned_tp, bar_hours)`.
-2. `test_autonomous_research_forensic_pipeline` — blueprint genomes carry
-   empty `failure_modes`, violating the genome-integrity assertion.
-3. 14 collection errors — all `No module named 'execution_gateway'` (plus
-   `derivatives_engine`, `low_latency`): live-gateway code lives under
-   `quarantine/` while tests import it top-level. Boundary intentional;
-   paths never migrated.
-
-New grammar/foundation causality tests (30 tests) all pass.
+## Running
 
 ```bash
-PYTHONPATH=. python3 -m pytest tests/ -p no:cacheprovider --continue-on-collection-errors -q
-PYTHONPATH=. python3 -m pytest tests/unit/test_bias_causality.py tests/unit/test_market_regime.py tests/unit/test_regime_engine.py tests/unit/test_structural_components.py tests/unit/research/test_foundation_registry.py -q
+PYTHONPATH=. python3 -m qcp_platform.cli sweep     # full measure + verdicts (~2.5 min)
+PYTHONPATH=. python3 -m qcp_platform.cli improve   # champion/challenger self-improvement
+PYTHONPATH=. python3 -m qcp_platform.cli report    # regenerate REPORT.md
+PYTHONPATH=. python3 -m pytest tests -q            # governance + data tests
 ```
 
----
+Results land in `research/results/qcp_platform/` (verdicts.json, REPORT.md,
+economic_screen.json, baseline.json).
 
-## 6. Research Results
+## Honest status
 
-Negative results included — that is the point:
+- 113 strategy books measured across all styles/assets with full costs.
+- Governed out-of-sample portfolio: **+5.06% return, 2.13% max drawdown**.
+- Most single-asset books decay out-of-sample; the platform reports that
+  rather than hiding it. Scalping is flagged **cost-impossible** with taker
+  fills (costs > stop distance) and is only permitted in maker mode.
+- **Live trading: disabled.** Promotion means paper-trading eligibility, and
+  forward burn-in is required before any live consideration.
 
-- [Phase D sweep](research/results/EXECUTION_GEOMETRY_SWEEP_REPORT.md) /
-  [raw JSON](research/results/execution_geometry_sweep_raw.json)
-- [Phase C structural regime](research/results/STRUCTURAL_REGIME_RESEARCH_REPORT.md)
-- [Discovery matrix](research/results/DISCOVERY_MATRIX_REPORT.md)
-- [Discovery report](research/results/QCP_ALPHA_DISCOVERY_REPORT.md)
-- [Foundation manifest](research/results/FOUNDATION_MANIFEST.json)
-- [Closeout: audit + test record](research/results/DAY_48_REPOSITORY_CLOSEOUT.md)
-- Full ledger: `research/results/` (198 JSON + 20 MD) and `docs/` (46 docs).
+## Why `research/failed/` exists
 
----
-## 7. Repository Structure
-
-The repository is organized around the strategy research lifecycle:
-**DISCOVERY → TESTING → VALIDATION → QUALIFICATION → DEPLOYMENT → LIVE**.
-
-```text
-crypto-platform/
-├── platform_core/               # Runtime core: state store, audit bus, provenance, secrets
-├── market_intelligence/         # Regime engines, opportunity detector
-├── market_data/                 # Loader, certifier, universe engine (+ local cache)
-├── portfolio_engine/            # Sizing, allocation, exposure graph
-├── risk_engine/                 # Canonical risk (1% sizer, 4R firewall, breakers, veto)
-├── trade_management/            # Post-entry lifecycle + trailing management
-├── config/                      # Canonical timeframe sets, assets (single source of truth)
-├── production/                  # Deployment + live operation gate (capital locked, orders DISABLED)
-│
-├── hypotheses/                  # DISCOVERY: the hypothesis-centered research lab (single root)
-│   ├── README.md / HYPOTHESES_LIST.md / CANDIDATES_LIST.md
-│   ├── registry.yaml + hypothesis_governance.py   # permanent ID registry
-│   ├── governance: lifecycle states, promotion gates, lab verifier
-│   ├── HYPOTHESIS-ID/
-│   │   ├── hypothesis.md / candidates.md
-│   │   ├── candidates/CANDIDATE-ID/candidate.md
-│   │   │   └── tests/TEST-ID/ (test_plan.md, config.yaml, results.json, report.md)
-│   │   └── research/ (observations, positive_evidence, negative_evidence)
-│   └── H-FRACTAL-01: registered, DO NOT TEST yet
-│
-├── tests/                       # Shared TESTING infrastructure only
-│   ├── unit/                    # per-package unit tests (+ research lab governance tests)
-│   ├── integration/             # cross-subsystem tests
-│   └── comprehensive/           # end-to-end suites
-│   # strategy test records live under hypotheses/.../tests/, never here
-│
-├── deployed_strategies/         # PRODUCTION STRATEGY VAULT — only fully qualified
-│   │                            # strategies (full VAL + OOS + qualification chain) may enter
-├── proofs/                      # EVIDENCE VAULT: research results, audit evidence,
-│   │                            # terminal captures, tuning/validation/deployment evidence
-├── bin/                         # executable operational tools: status/test/backtest/
-│                                # research/verify/audit/deploy
-├── docs/                        # specs, audits, methodology, registries
-├── archive/                     # obsolete/legacy material (provenance preserved):
-│   │                            # legacy/, obsolete_implementations/, migration/, retired/
-├── quarantine/                  # NOT importable: gateway, derivatives, MM prototypes
-│
-├── backtesting/                 # causal replay engine, friction model, analytics
-├── simulation/                  # full-system simulator
-├── capital_intelligence/        # capacity / feasibility intelligence
-├── research/                    # research execution infra: grammar families, replayer,
-│                                # discovery lab, experiments, results (positives AND negatives)
-├── strategy/                    # canonical HTF/MTF/LTF strategy source
-├── strategy_engine/             # canonical research signal engine
-├── strategy_candidate/          # candidate harness (active)
-├── strategy_candidate_v2/       # v2 candidate engine (core; debug fixtures archived)
-│
-├── README.md / CHANGELOG.md / CONTRIBUTING.md / SECURITY.md / LICENSE (MIT)
-└── pyproject.toml / requirements.txt
-```
-
-Lifecycle mapping (where things live):
-
-| Lifecycle stage | Home |
-|---|---|
-| Hypothesis / discovery | `hypotheses/<HYPOTHESIS-ID>/` |
-| Candidate | `hypotheses/<HYPOTHESIS-ID>/candidates/<CANDIDATE-ID>/` |
-| Development test | `hypotheses/.../candidates/.../tests/<TEST-ID>/` |
-| Shared test infrastructure | `tests/` |
-| Evidence / proofs | `proofs/` (+ `hypotheses/.../research/` ledgers) |
-| Qualified + deployed strategy | `deployed_strategies/` (gated; currently empty) |
-| Live operation | `production/` (capital `$0.00`, orders `DISABLED`) |
-| Obsolete material | `archive/` (negative evidence never hidden here) |
-
-Rules enforced structurally: a Development result never promotes a candidate
-to validation/OOS/capital; only the full qualification chain admits a
-strategy to `deployed_strategies/`; negative evidence stays attached to its
-hypothesis/candidate/test lineage and is never silently deleted.
-
----
-
-## 8. Current Limitations
-
-- **No validated edge.** 0 strategies cleared falsification + OOS.
-  Capital `$0.00`, orders `DISABLED`.
-- **Small samples.** H_STRUCT_01 = 77 DEV trades; H_STRUCT_02 = 14.
-- **DEV-only for Phase C/D.** VAL/OOS continuation is future work.
-- **Simulated execution.** Two fee schedules coexist
-  (7.5/2 bps vs 0/5 bps maker/taker) — documented, not averaged.
-- **Data gaps.** Funding, L2, liquidations unwarehoused; dependents BLOCKED,
-  never synthesised. Cache: 90 local files, 9 tracked samples.
-- **Known test failures (sec 5).** 2 failed + 14 errors. Frozen, not patched.
-- **Legacy duplication.** `risk/` vs `risk_engine/`; two regime lineages;
-  dual timeframe definitions (canonical: `config/timeframe_sets.py`).
-- **Unfinished.** Live gateway, funding research, H_STRUCT_01B, fractal
-  program: NOT IMPLEMENTED (see sec 9).
-
----
-
-## 9. Roadmap
-
-### CURRENT (frozen tonight)
-
-Research freeze: H_STRUCT_01 logic, 4R firewall, friction, execution models
-unchanged. Audit, closeout, README/docs, clean commit, push.
-
-### NEXT (tomorrow, in order)
-
-1. **HISTORICAL_POSITIVE_RECONCILIATION** — survivors of corrected engine.
-2. VAL/OOS continuation for any survivors.
-3. Reconcile fee schedules; resolve `quarantine/` import boundary; fix the
-   two integration failures as research tasks, not drive-by patches.
-
-### FUTURE (hypotheses only — NOT implemented)
-
-- **Fractal discovery:** per timeframe set (SET_1 = 1M/1W/1D ... SET_6 =
-  15M/5M/1M), independently test scalping/intraday/swing/position/macro,
-  trend/momentum/mean-reversion/volatility/liquidity/statistical/flow/
-  relative-value/event-driven. Never pre-assign style to timeframe.
-- **Composite confirmation:** HTF signal -> MTF confirm -> LTF confirm ->
-  composite entry. Separate research.
-- H_STRUCT_01B, live gateway, funding/microstructure warehousing.
-
----
-## Getting Started
-
-Prerequisites: Python 3.12+, Linux/macOS.
-
-```bash
-git clone https://github.com/Quantitative-Systems/crypto-platform.git
-cd crypto-platform
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-Runtime is minimal (`numpy`, `pandas`); `pytest` for tests; `ccxt` only for
-optional quarantined gateway prototypes.
-
-```bash
-PYTHONPATH=. python3 -m pytest tests/ -p no:cacheprovider --continue-on-collection-errors -q
-PYTHONPATH=. python3 -m research.autonomous_research_governor
-PYTHONPATH=. python3 -m research.discovery_lab.empirical_alpha_discovery_engine
-PYTHONPATH=. python3 -m research.foundation_registry
-```
-
-Reports land in `research/results/QCP_ALPHA_DISCOVERY_REPORT.{json,md}`.
-
----
-
-## Safety Guarantees
-
-| Guarantee | Enforcement |
-|---|---|
-| No live fills without validated alpha | Code-locked gate; `$0.00`; `DISABLED` |
-| No synthetic data | Uncertified streams blocked |
-| No lookahead | Next-bar fills; adverse-first; falsification battery |
-| No multiple-testing inflation | Bonferroni correction |
-| No fabricated P&L | Decomposed friction; slippage never zero |
-| No secret leakage | Fail-closed `SecretsManager`; secrets gitignored |
-
----
-
-## Governance
-
-Governed by `research/autonomous_research_governor.py`: evidence-scored
-priorities, hypothesis lifecycle (open -> test -> falsified -> closed),
-audit trails. See `docs/research_governance.md`. No backtest alone promotes.
-
----
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md). Do not submit code that manufactures
-results, weakens gates, removes friction, bypasses the capital gate, or
-deletes negative results. Such PRs will be rejected.
-
----
-
-## License
-
-MIT — see [LICENSE](LICENSE).
-
----
-
-*QCP reports scientific truth. If no alpha exists, QCP says so.*
+Every prior attempt that failed validation is preserved verbatim — code,
+tests, results — because negative results are the reason the current platform
+looks the way it does. They are not installed, not imported by the platform,
+and not part of the test suite.

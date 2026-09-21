@@ -1,0 +1,75 @@
+{
+  "platform": "Quantitative Crypto Platform (QCP)",
+  "report_name": "QCP_MILESTONE_3_TEST_REPORT",
+  "generated_utc": "2026-09-15T15:05:00.000000+00:00",
+  "test_environment": {
+    "python_version": "3.12.3",
+    "pytest_version": "9.1.1",
+    "platform": "Linux (x86_64)",
+    "numpy_version": "2.2.6"
+  },
+  "summary": {
+    "total_tests_collected": 505,
+    "total_tests_passed": 505,
+    "total_tests_failed": 0,
+    "total_tests_skipped": 0,
+    "total_execution_time_seconds": 97.51,
+    "pass_rate_pct": 100.0,
+    "status": "ALL_TESTS_PASSING"
+  },
+  "test_suites": {
+    "milestone_2_preserved_baseline": {
+      "count": 487,
+      "passed": 487,
+      "failed": 0,
+      "status": "PASSED"
+    },
+    "milestone_3_relative_value_engine_unit": {
+      "file": "tests/unit/research/test_relative_value_engine.py",
+      "count": 6,
+      "passed": 6,
+      "failed": 0,
+      "status": "PASSED"
+    },
+    "milestone_3_relative_value_research_integration": {
+      "file": "tests/integration/test_relative_value_research.py",
+      "count": 1,
+      "passed": 1,
+      "failed": 0,
+      "status": "PASSED"
+    },
+    "milestone_3_generic_capital_allocator_unit": {
+      "file": "tests/unit/portfolio_engine/test_capital_allocator.py",
+      "count": 8,
+      "passed": 8,
+      "failed": 0,
+      "status": "PASSED"
+    },
+    "milestone_3_portfolio_allocation_integration": {
+      "file": "tests/integration/test_portfolio_allocation.py",
+      "count": 2,
+      "passed": 2,
+      "failed": 0,
+      "status": "PASSED"
+    },
+    "milestone_3_portfolio_rv_end_to_end_integration": {
+      "file": "tests/integration/test_portfolio_rv_end_to_end.py",
+      "count": 1,
+      "passed": 1,
+      "failed": 0,
+      "status": "PASSED"
+    }
+  },
+  "operational_acceptance_and_firewall": {
+    "test_forward_daemon_oat": {
+      "file": "tests/integration/test_forward_daemon_oat.py",
+      "count": 7,
+      "passed": 7,
+      "failed": 0,
+      "status": "PASSED"
+    },
+    "capital_firewall_locked": true,
+    "live_capital_usd": 0.0,
+    "live_trading_enabled": false
+  }
+}

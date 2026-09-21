@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from typing import Dict, List, Any, Optional
 
 from market_data.data_manager import DataManager, CertificationState, CACHE_DIR, ALL_TIMEFRAMES, ALL_ASSETS
-from market_intelligence.primitives import Candle
+from market_data.primitives import Candle
 
 
 @dataclass

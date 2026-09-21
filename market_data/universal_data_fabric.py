@@ -139,7 +139,7 @@ class UniversalMarketDataFabric:
         if key in self._cached_dfs:
             return self._cached_dfs[key]
 
-        from research.economic_evaluation_engine import CertifiedSeriesLoader
+        from market_data.certified_loader import CertifiedSeriesLoader
 
         loader = CertifiedSeriesLoader(cache_dir=self.data_root, manifest_path=self.manifest_path)
         df, descriptor = loader.load(symbol, timeframe)

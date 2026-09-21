@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "purpose": "CONTAMINATION_QUARANTINE_RECORD",
+  "directive": "EABG-001 / Finding F-02",
+  "audit_timestamp_utc": "2026-09-17T12:10:40.404637+00:00",
+  "quarantined_file": "/home/mrcn2/crypto-platform/research/results/telemetry/forward_execution_telemetry.jsonl",
+  "total_rows": 2302,
+  "unique_trade_ids": 1074,
+  "duplicate_rows": 1228,
+  "duplicate_pct": 53.34,
+  "max_single_trade_repetition": 20,
+  "file_sha256_at_audit": "dbbc6b20dd380d8918a8b14a3fe372399f969bb5e5ce17c378b06006b62e8b08",
+  "verdict": "FAIL_CONTAMINATED_NON_EVIDENCE",
+  "admissibility": "NON_EVIDENCE_CONTAMINATED_SOURCE",
+  "instructions": "This store is read-only quarantined. Never used as evidence for strategy performance claims. All metrics derived from it are inadmissible per EABG-001 \u00a7F-02. De-duplicated analysis is in FAM07_S2_EVIDENCE_RECONCILIATION.json."
+}

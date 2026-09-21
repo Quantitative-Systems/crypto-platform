@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+"""bin/backtest — delegate to the platform backtest/replay entrypoint."""
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+def main() -> int:
+    args = sys.argv[1:]
+    if not args:
+        print("usage: bin/backtest <args passed to production/cli_launcher>")
+        print("  delegates to production.cli_launcher (backtest subsystem)")
+        return 2
+    r = subprocess.run(
+        [sys.executable, "-m", "production.cli_launcher", *args],
+        cwd=ROOT, check=False)
+    return r.returncode
+
+if __name__ == "__main__":
+    raise SystemExit(main())

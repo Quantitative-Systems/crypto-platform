@@ -5,7 +5,7 @@ Connects BinanceFetcher real market data into the Quant Data Warehouse.
 
 import os
 from typing import List
-from market_intelligence.primitives import Candle
+from market_data.primitives import Candle
 from market_data.binance_fetcher import BinanceFetcher
 
 

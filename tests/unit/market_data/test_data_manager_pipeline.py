@@ -3,7 +3,7 @@ Unit tests for DataManager 5-stage certification pipeline and candle invariant v
 """
 
 import pytest
-from market_intelligence.primitives import Candle
+from market_data.primitives import Candle
 from market_data.data_manager import DataManager, CertificationState
 
 

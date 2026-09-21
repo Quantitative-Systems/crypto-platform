@@ -1,0 +1,466 @@
+{
+  "platform": "Quantitative Crypto Platform (QCP)",
+  "audit_name": "RELATIVE_VALUE_ADVERSARIAL_AUDIT",
+  "generated_utc": "2026-09-15T14:34:03.643472+00:00",
+  "candidates": {
+    "BTC/ETH_1d": {
+      "pair_name": "BTC/ETH",
+      "timeframe": "1d",
+      "baseline": {
+        "partition_name": "",
+        "total_trades": 82,
+        "winning_trades": 42,
+        "losing_trades": 40,
+        "win_rate_pct": 51.22,
+        "total_net_r": -6.68,
+        "mean_expectancy_r": -0.0815,
+        "profit_factor_r": 0.8632,
+        "max_drawdown_r": 16.16,
+        "max_consecutive_losses": 4,
+        "avg_holding_bars": 12.4,
+        "total_friction_drag_r": 5.25
+      },
+      "stress_2x_friction": {
+        "partition_name": "",
+        "total_trades": 82,
+        "winning_trades": 41,
+        "losing_trades": 41,
+        "win_rate_pct": 50.0,
+        "total_net_r": -11.93,
+        "mean_expectancy_r": -0.1455,
+        "profit_factor_r": 0.7678,
+        "max_drawdown_r": 18.91,
+        "max_consecutive_losses": 4,
+        "avg_holding_bars": 12.4,
+        "total_friction_drag_r": 10.5
+      },
+      "latency_1_bar": {
+        "partition_name": "",
+        "total_trades": 82,
+        "winning_trades": 42,
+        "losing_trades": 40,
+        "win_rate_pct": 51.22,
+        "total_net_r": -9.7,
+        "mean_expectancy_r": -0.1183,
+        "profit_factor_r": 0.7959,
+        "max_drawdown_r": 22.56,
+        "max_consecutive_losses": 6,
+        "avg_holding_bars": 12.4,
+        "total_friction_drag_r": 5.25
+      },
+      "outlier_removal": {
+        "net_r_after_10pct_cut": -27.17,
+        "expectancy_after_10pct_cut": -0.3722
+      },
+      "parameter_perturbation": {
+        "partition_name": "",
+        "total_trades": 79,
+        "winning_trades": 39,
+        "losing_trades": 40,
+        "win_rate_pct": 49.37,
+        "total_net_r": -6.79,
+        "mean_expectancy_r": -0.0859,
+        "profit_factor_r": 0.8511,
+        "max_drawdown_r": 14.96,
+        "max_consecutive_losses": 4,
+        "avg_holding_bars": 12.4,
+        "total_friction_drag_r": 5.06
+      },
+      "regime_breakdown": {
+        "dev_net_r": -14.2,
+        "val_net_r": 1.49,
+        "oos_net_r": 6.03
+      },
+      "failure_modes": [
+        "NEGATIVE_BASELINE_EDGE",
+        "HIGH_FRICTION_SENSITIVITY",
+        "HIGH_LATENCY_SENSITIVITY",
+        "WINDFALL_OUTLIER_DEPENDENT"
+      ],
+      "final_classification": "FALSIFIED"
+    },
+    "BTC/ETH_4h": {
+      "pair_name": "BTC/ETH",
+      "timeframe": "4h",
+      "baseline": {
+        "partition_name": "",
+        "total_trades": 522,
+        "winning_trades": 223,
+        "losing_trades": 299,
+        "win_rate_pct": 42.72,
+        "total_net_r": -72.44,
+        "mean_expectancy_r": -0.1388,
+        "profit_factor_r": 0.5032,
+        "max_drawdown_r": 73.55,
+        "max_consecutive_losses": 17,
+        "avg_holding_bars": 12.7,
+        "total_friction_drag_r": 33.41
+      },
+      "stress_2x_friction": {
+        "partition_name": "",
+        "total_trades": 522,
+        "winning_trades": 187,
+        "losing_trades": 335,
+        "win_rate_pct": 35.82,
+        "total_net_r": -105.84,
+        "mean_expectancy_r": -0.2028,
+        "profit_factor_r": 0.3628,
+        "max_drawdown_r": 106.63,
+        "max_consecutive_losses": 17,
+        "avg_holding_bars": 12.7,
+        "total_friction_drag_r": 66.82
+      },
+      "latency_1_bar": {
+        "partition_name": "",
+        "total_trades": 522,
+        "winning_trades": 206,
+        "losing_trades": 316,
+        "win_rate_pct": 39.46,
+        "total_net_r": -66.23,
+        "mean_expectancy_r": -0.1269,
+        "profit_factor_r": 0.5263,
+        "max_drawdown_r": 66.77,
+        "max_consecutive_losses": 11,
+        "avg_holding_bars": 12.7,
+        "total_friction_drag_r": 33.41
+      },
+      "outlier_removal": {
+        "net_r_after_10pct_cut": -117.01,
+        "expectancy_after_10pct_cut": -0.2495
+      },
+      "parameter_perturbation": {
+        "partition_name": "",
+        "total_trades": 475,
+        "winning_trades": 192,
+        "losing_trades": 283,
+        "win_rate_pct": 40.42,
+        "total_net_r": -72.21,
+        "mean_expectancy_r": -0.152,
+        "profit_factor_r": 0.4745,
+        "max_drawdown_r": 73.07,
+        "max_consecutive_losses": 16,
+        "avg_holding_bars": 12.8,
+        "total_friction_drag_r": 30.4
+      },
+      "regime_breakdown": {
+        "dev_net_r": -37.66,
+        "val_net_r": -10.6,
+        "oos_net_r": -24.5
+      },
+      "failure_modes": [
+        "NEGATIVE_BASELINE_EDGE",
+        "HIGH_FRICTION_SENSITIVITY",
+        "HIGH_LATENCY_SENSITIVITY",
+        "WINDFALL_OUTLIER_DEPENDENT",
+        "REGIME_INCONSISTENT_OOS_FAILURE"
+      ],
+      "final_classification": "FALSIFIED"
+    },
+    "SOL/ETH_1d": {
+      "pair_name": "SOL/ETH",
+      "timeframe": "1d",
+      "baseline": {
+        "partition_name": "",
+        "total_trades": 74,
+        "winning_trades": 41,
+        "losing_trades": 33,
+        "win_rate_pct": 55.41,
+        "total_net_r": -56.38,
+        "mean_expectancy_r": -0.7619,
+        "profit_factor_r": 0.6122,
+        "max_drawdown_r": 97.49,
+        "max_consecutive_losses": 5,
+        "avg_holding_bars": 12.8,
+        "total_friction_drag_r": 4.74
+      },
+      "stress_2x_friction": {
+        "partition_name": "",
+        "total_trades": 74,
+        "winning_trades": 41,
+        "losing_trades": 33,
+        "win_rate_pct": 55.41,
+        "total_net_r": -61.12,
+        "mean_expectancy_r": -0.8259,
+        "profit_factor_r": 0.5856,
+        "max_drawdown_r": 100.24,
+        "max_consecutive_losses": 5,
+        "avg_holding_bars": 12.8,
+        "total_friction_drag_r": 9.47
+      },
+      "latency_1_bar": {
+        "partition_name": "",
+        "total_trades": 74,
+        "winning_trades": 43,
+        "losing_trades": 31,
+        "win_rate_pct": 58.11,
+        "total_net_r": -72.37,
+        "mean_expectancy_r": -0.978,
+        "profit_factor_r": 0.5638,
+        "max_drawdown_r": 111.27,
+        "max_consecutive_losses": 4,
+        "avg_holding_bars": 12.8,
+        "total_friction_drag_r": 4.74
+      },
+      "outlier_removal": {
+        "net_r_after_10pct_cut": -102.91,
+        "expectancy_after_10pct_cut": -1.5592
+      },
+      "parameter_perturbation": {
+        "partition_name": "",
+        "total_trades": 67,
+        "winning_trades": 37,
+        "losing_trades": 30,
+        "win_rate_pct": 55.22,
+        "total_net_r": -58.35,
+        "mean_expectancy_r": -0.8708,
+        "profit_factor_r": 0.5775,
+        "max_drawdown_r": 97.67,
+        "max_consecutive_losses": 6,
+        "avg_holding_bars": 13.2,
+        "total_friction_drag_r": 4.29
+      },
+      "regime_breakdown": {
+        "dev_net_r": -89.2,
+        "val_net_r": -7.26,
+        "oos_net_r": 29.03
+      },
+      "failure_modes": [
+        "NEGATIVE_BASELINE_EDGE",
+        "HIGH_FRICTION_SENSITIVITY",
+        "HIGH_LATENCY_SENSITIVITY",
+        "WINDFALL_OUTLIER_DEPENDENT"
+      ],
+      "final_classification": "FALSIFIED"
+    },
+    "SOL/ETH_4h": {
+      "pair_name": "SOL/ETH",
+      "timeframe": "4h",
+      "baseline": {
+        "partition_name": "",
+        "total_trades": 484,
+        "winning_trades": 230,
+        "losing_trades": 254,
+        "win_rate_pct": 47.52,
+        "total_net_r": -110.52,
+        "mean_expectancy_r": -0.2284,
+        "profit_factor_r": 0.6249,
+        "max_drawdown_r": 116.73,
+        "max_consecutive_losses": 10,
+        "avg_holding_bars": 13.0,
+        "total_friction_drag_r": 30.98
+      },
+      "stress_2x_friction": {
+        "partition_name": "",
+        "total_trades": 484,
+        "winning_trades": 216,
+        "losing_trades": 268,
+        "win_rate_pct": 44.63,
+        "total_net_r": -141.5,
+        "mean_expectancy_r": -0.2924,
+        "profit_factor_r": 0.5453,
+        "max_drawdown_r": 147.39,
+        "max_consecutive_losses": 10,
+        "avg_holding_bars": 13.0,
+        "total_friction_drag_r": 61.95
+      },
+      "latency_1_bar": {
+        "partition_name": "",
+        "total_trades": 484,
+        "winning_trades": 229,
+        "losing_trades": 255,
+        "win_rate_pct": 47.31,
+        "total_net_r": -94.91,
+        "mean_expectancy_r": -0.1961,
+        "profit_factor_r": 0.6598,
+        "max_drawdown_r": 106.32,
+        "max_consecutive_losses": 10,
+        "avg_holding_bars": 13.0,
+        "total_friction_drag_r": 30.98
+      },
+      "outlier_removal": {
+        "net_r_after_10pct_cut": -213.42,
+        "expectancy_after_10pct_cut": -0.4906
+      },
+      "parameter_perturbation": {
+        "partition_name": "",
+        "total_trades": 450,
+        "winning_trades": 216,
+        "losing_trades": 234,
+        "win_rate_pct": 48.0,
+        "total_net_r": -99.79,
+        "mean_expectancy_r": -0.2218,
+        "profit_factor_r": 0.6442,
+        "max_drawdown_r": 106.87,
+        "max_consecutive_losses": 10,
+        "avg_holding_bars": 12.8,
+        "total_friction_drag_r": 28.8
+      },
+      "regime_breakdown": {
+        "dev_net_r": -50.7,
+        "val_net_r": -12.61,
+        "oos_net_r": -47.58
+      },
+      "failure_modes": [
+        "NEGATIVE_BASELINE_EDGE",
+        "HIGH_FRICTION_SENSITIVITY",
+        "HIGH_LATENCY_SENSITIVITY",
+        "WINDFALL_OUTLIER_DEPENDENT",
+        "REGIME_INCONSISTENT_OOS_FAILURE"
+      ],
+      "final_classification": "FALSIFIED"
+    },
+    "SOL/BTC_1d": {
+      "pair_name": "SOL/BTC",
+      "timeframe": "1d",
+      "baseline": {
+        "partition_name": "",
+        "total_trades": 74,
+        "winning_trades": 41,
+        "losing_trades": 33,
+        "win_rate_pct": 55.41,
+        "total_net_r": -61.27,
+        "mean_expectancy_r": -0.828,
+        "profit_factor_r": 0.6245,
+        "max_drawdown_r": 83.42,
+        "max_consecutive_losses": 4,
+        "avg_holding_bars": 12.9,
+        "total_friction_drag_r": 4.74
+      },
+      "stress_2x_friction": {
+        "partition_name": "",
+        "total_trades": 74,
+        "winning_trades": 41,
+        "losing_trades": 33,
+        "win_rate_pct": 55.41,
+        "total_net_r": -66.01,
+        "mean_expectancy_r": -0.892,
+        "profit_factor_r": 0.6006,
+        "max_drawdown_r": 85.66,
+        "max_consecutive_losses": 4,
+        "avg_holding_bars": 12.9,
+        "total_friction_drag_r": 9.47
+      },
+      "latency_1_bar": {
+        "partition_name": "",
+        "total_trades": 74,
+        "winning_trades": 40,
+        "losing_trades": 34,
+        "win_rate_pct": 54.05,
+        "total_net_r": -79.85,
+        "mean_expectancy_r": -1.0791,
+        "profit_factor_r": 0.5367,
+        "max_drawdown_r": 102.58,
+        "max_consecutive_losses": 4,
+        "avg_holding_bars": 12.9,
+        "total_friction_drag_r": 4.74
+      },
+      "outlier_removal": {
+        "net_r_after_10pct_cut": -107.31,
+        "expectancy_after_10pct_cut": -1.6259
+      },
+      "parameter_perturbation": {
+        "partition_name": "",
+        "total_trades": 65,
+        "winning_trades": 34,
+        "losing_trades": 31,
+        "win_rate_pct": 52.31,
+        "total_net_r": -71.09,
+        "mean_expectancy_r": -1.0936,
+        "profit_factor_r": 0.5436,
+        "max_drawdown_r": 94.65,
+        "max_consecutive_losses": 5,
+        "avg_holding_bars": 13.6,
+        "total_friction_drag_r": 4.16
+      },
+      "regime_breakdown": {
+        "dev_net_r": -78.54,
+        "val_net_r": 3.74,
+        "oos_net_r": 2.23
+      },
+      "failure_modes": [
+        "NEGATIVE_BASELINE_EDGE",
+        "HIGH_FRICTION_SENSITIVITY",
+        "HIGH_LATENCY_SENSITIVITY",
+        "WINDFALL_OUTLIER_DEPENDENT"
+      ],
+      "final_classification": "FALSIFIED"
+    },
+    "SOL/BTC_4h": {
+      "pair_name": "SOL/BTC",
+      "timeframe": "4h",
+      "baseline": {
+        "partition_name": "",
+        "total_trades": 489,
+        "winning_trades": 252,
+        "losing_trades": 237,
+        "win_rate_pct": 51.53,
+        "total_net_r": -89.57,
+        "mean_expectancy_r": -0.1832,
+        "profit_factor_r": 0.7052,
+        "max_drawdown_r": 94.21,
+        "max_consecutive_losses": 8,
+        "avg_holding_bars": 12.7,
+        "total_friction_drag_r": 31.3
+      },
+      "stress_2x_friction": {
+        "partition_name": "",
+        "total_trades": 489,
+        "winning_trades": 239,
+        "losing_trades": 250,
+        "win_rate_pct": 48.88,
+        "total_net_r": -120.86,
+        "mean_expectancy_r": -0.2472,
+        "profit_factor_r": 0.6216,
+        "max_drawdown_r": 124.86,
+        "max_consecutive_losses": 8,
+        "avg_holding_bars": 12.7,
+        "total_friction_drag_r": 62.59
+      },
+      "latency_1_bar": {
+        "partition_name": "",
+        "total_trades": 489,
+        "winning_trades": 247,
+        "losing_trades": 242,
+        "win_rate_pct": 50.51,
+        "total_net_r": -81.26,
+        "mean_expectancy_r": -0.1662,
+        "profit_factor_r": 0.7137,
+        "max_drawdown_r": 83.69,
+        "max_consecutive_losses": 7,
+        "avg_holding_bars": 12.7,
+        "total_friction_drag_r": 31.3
+      },
+      "outlier_removal": {
+        "net_r_after_10pct_cut": -198.44,
+        "expectancy_after_10pct_cut": -0.451
+      },
+      "parameter_perturbation": {
+        "partition_name": "",
+        "total_trades": 443,
+        "winning_trades": 226,
+        "losing_trades": 217,
+        "win_rate_pct": 51.02,
+        "total_net_r": -82.82,
+        "mean_expectancy_r": -0.187,
+        "profit_factor_r": 0.6954,
+        "max_drawdown_r": 88.12,
+        "max_consecutive_losses": 6,
+        "avg_holding_bars": 12.5,
+        "total_friction_drag_r": 28.35
+      },
+      "regime_breakdown": {
+        "dev_net_r": -42.7,
+        "val_net_r": -33.17,
+        "oos_net_r": -13.7
+      },
+      "failure_modes": [
+        "NEGATIVE_BASELINE_EDGE",
+        "HIGH_FRICTION_SENSITIVITY",
+        "HIGH_LATENCY_SENSITIVITY",
+        "WINDFALL_OUTLIER_DEPENDENT",
+        "REGIME_INCONSISTENT_OOS_FAILURE"
+      ],
+      "final_classification": "FALSIFIED"
+    }
+  }
+}

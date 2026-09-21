@@ -65,3 +65,4 @@ nohup.out
 # Runtime scratch area: experiment/platform tools may write here at runtime.
 # Curated evidence belongs in proofs/ or hypotheses/.../tests/; scratch output is not committed.
 scratch/
+*.db

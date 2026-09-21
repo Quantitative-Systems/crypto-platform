@@ -8,7 +8,7 @@ import json
 import time
 import urllib.request
 from typing import List
-from market_intelligence.primitives import Candle, FundingRate
+from market_data.primitives import Candle, FundingRate
 
 CACHE_DIR = os.path.join(os.path.dirname(__file__), "cache")
 

@@ -1,0 +1,75 @@
+{
+  "audit_timestamp": "2026-09-14T14:56:42.842622+00:00",
+  "audit_phase": "PHASE_E_PORTFOLIO_CORRELATION_AND_RISK",
+  "governance": "Quantitative Systems Platform (QSP) Research Division",
+  "candidate_ids": [
+    "FAM-04-MOMENTUM_SOLUSDT_Set2",
+    "FAM-07-MTFCONT_BTCUSDT_Set2",
+    "FAM-07-MTFCONT_ETHUSDT_Set2",
+    "FAM-07-MTFCONT_SOLUSDT_Set2",
+    "FAM-07-MTFCONT_SOLUSDT_Set3"
+  ],
+  "pairwise_correlation_matrix": {
+    "FAM-04-MOMENTUM_SOLUSDT_Set2": {
+      "FAM-04-MOMENTUM_SOLUSDT_Set2": 1.0,
+      "FAM-07-MTFCONT_BTCUSDT_Set2": 0.0724,
+      "FAM-07-MTFCONT_ETHUSDT_Set2": 0.0922,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.3659,
+      "FAM-07-MTFCONT_SOLUSDT_Set3": 0.2506
+    },
+    "FAM-07-MTFCONT_BTCUSDT_Set2": {
+      "FAM-04-MOMENTUM_SOLUSDT_Set2": 0.0724,
+      "FAM-07-MTFCONT_BTCUSDT_Set2": 1.0,
+      "FAM-07-MTFCONT_ETHUSDT_Set2": 0.2932,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.2142,
+      "FAM-07-MTFCONT_SOLUSDT_Set3": 0.1505
+    },
+    "FAM-07-MTFCONT_ETHUSDT_Set2": {
+      "FAM-04-MOMENTUM_SOLUSDT_Set2": 0.0922,
+      "FAM-07-MTFCONT_BTCUSDT_Set2": 0.2932,
+      "FAM-07-MTFCONT_ETHUSDT_Set2": 1.0,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.1501,
+      "FAM-07-MTFCONT_SOLUSDT_Set3": 0.1134
+    },
+    "FAM-07-MTFCONT_SOLUSDT_Set2": {
+      "FAM-04-MOMENTUM_SOLUSDT_Set2": 0.3659,
+      "FAM-07-MTFCONT_BTCUSDT_Set2": 0.2142,
+      "FAM-07-MTFCONT_ETHUSDT_Set2": 0.1501,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 1.0,
+      "FAM-07-MTFCONT_SOLUSDT_Set3": 0.2874
+    },
+    "FAM-07-MTFCONT_SOLUSDT_Set3": {
+      "FAM-04-MOMENTUM_SOLUSDT_Set2": 0.2506,
+      "FAM-07-MTFCONT_BTCUSDT_Set2": 0.1505,
+      "FAM-07-MTFCONT_ETHUSDT_Set2": 0.1134,
+      "FAM-07-MTFCONT_SOLUSDT_Set2": 0.2874,
+      "FAM-07-MTFCONT_SOLUSDT_Set3": 1.0
+    }
+  },
+  "concurrency_distribution_pct": {
+    "0": 5.31,
+    "1": 15.27,
+    "2": 23.55,
+    "3": 24.41,
+    "4": 18.7,
+    "5": 10.52
+  },
+  "portfolio_performance": {
+    "unconstrained_1pct_heat": {
+      "total_net_r": 510.07,
+      "max_drawdown_r": 40.69,
+      "calmar_ratio": 12.536
+    },
+    "fixed_slot_0.6pct_heat": {
+      "total_net_r": 306.04,
+      "max_drawdown_r": 24.41,
+      "calmar_ratio": 12.536,
+      "max_concurrent_portfolio_heat_pct": 3.0
+    },
+    "dynamic_capped_3pct_heat": {
+      "total_net_r": 18.24,
+      "max_drawdown_r": 69.63,
+      "calmar_ratio": 0.262
+    }
+  }
+}

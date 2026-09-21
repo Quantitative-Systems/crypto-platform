@@ -34,23 +34,10 @@ gateways = [
 [tool.setuptools.packages.find]
 where = ["."]
 include = [
-    "backtesting*",
-    "capital_intelligence*",
     "config*",
-    "execution_gateway*",
-    "hypotheses*",
     "market_data*",
-    "market_intelligence*",
-    "platform_core*",
-    "portfolio_engine*",
-    "production*",
+    "qcp_platform*",
     "research*",
-    "risk_engine*",
-    "simulation*",
-    "strategy*",
-    "strategy_candidate*",
-    "strategy_engine*",
-    "trade_management*",
 ]
 
 [tool.pytest.ini_options]

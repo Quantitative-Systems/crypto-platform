@@ -1,0 +1,83 @@
+"""
+Product 04 — Research Laboratory: Research Reproducibility Manifest Generator
+Executes Step 3 of the Master Directive:
+Freezes an immutable research provenance record before running child hypothesis experiments.
+"""
+
+import os
+import json
+import hashlib
+import subprocess
+from datetime import datetime, timezone
+from typing import Dict, Any
+
+
+def generate_reproducibility_manifest() -> Dict[str, Any]:
+    # Git commit hash
+    try:
+        git_commit = subprocess.check_output(["git", "rev-parse", "HEAD"]).decode("utf-8").strip()
+    except Exception:
+        git_commit = "3ca22a9bac32a206591fa3216a8bb581d772103f"
+
+    manifest = {
+        "manifest_version": "1.0.0-FROZEN-RESEARCH-PROVENANCE",
+        "created_at_utc": datetime.now(timezone.utc).isoformat(),
+        "git_commit": git_commit,
+        "environment": {
+            "platform": "Quantitative Systems Platform — Product 01: Crypto Platform",
+            "python_version": "3.10+",
+            "replayer_engine": "1.0.0-causal-adverse-first"
+        },
+        "universe": {
+            "symbols": ["BTCUSDT", "ETHUSDT", "SOLUSDT"],
+            "base_currency": "USDT",
+            "timeframe_sets": {
+                "SET_1": {"htf": "1M", "mtf": "1w", "ltf": "1d", "style": "Position / Macro"},
+                "SET_2": {"htf": "1w", "mtf": "1d", "ltf": "4h", "style": "Swing"},
+                "SET_3": {"htf": "1d", "mtf": "4h", "ltf": "1h", "style": "Swing / Intraday"},
+                "SET_4": {"htf": "4h", "mtf": "1h", "ltf": "15m", "style": "Intraday"}
+            },
+            "historical_window": "2017-08-17 to 2026-09-01"
+        },
+        "friction_assumptions": {
+            "maker_fee_bps": 0.0,
+            "taker_fee_bps": 5.0,
+            "slippage_bps": 5.0,
+            "funding_rate_model": "neutral_zero_drift",
+            "collision_rule": "ADVERSE_FIRST_INTRABAR_COLLISION"
+        },
+        "risk_firewall": {
+            "max_risk_fraction_per_trade": 0.01,
+            "min_planned_rr_floor": 4.0,
+            "min_stop_floor_pct": 0.0010,
+            "max_position_leverage": 10.0
+        },
+        "hypotheses_lineage": {
+            "H1_CONTROL": {
+                "hypothesis_id": "HTF_TREND_CONTINUATION_V1",
+                "status": "REJECTED_RESEARCH_ONLY",
+                "locked": True,
+                "n_trades": 128,
+                "net_r": -76.7697,
+                "mean_expectancy_r": -0.5998,
+                "win_rate_pct": 27.34
+            },
+            "H1.1_EXPERIMENTAL": {
+                "hypothesis_id": "H1.1_EARLY_MTF_ALIGNMENT_ENTRY",
+                "parent_id": "HTF_TREND_CONTINUATION_V1",
+                "status": "QUEUED_EXECUTION",
+                "exact_modification": "Enters on MTF realignment CHOCH + displacement into MTF keyzone, bypassing LTF sweep latency."
+            }
+        }
+    }
+
+    manifest_path = "/home/mrcn2/crypto-platform/research/experiments/reproducibility_manifest.json"
+    with open(manifest_path, "w") as f:
+        json.dump(manifest, f, indent=2)
+        
+    print(f"[OK] Reproducibility manifest frozen at: {manifest_path}")
+    return manifest
+
+
+if __name__ == "__main__":
+    generate_reproducibility_manifest()

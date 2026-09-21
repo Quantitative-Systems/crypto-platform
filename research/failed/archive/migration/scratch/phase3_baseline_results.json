@@ -1,0 +1,223 @@
+{
+  "symbol": "BTC/USDT",
+  "timeframe_set_id": "SET_1",
+  "timeframe_set": {
+    "htf": "1M",
+    "mtf": "1W",
+    "ltf": "1D",
+    "description": "Position / Macro Horizon (1 Month -> 1 Week -> 1 Day)"
+  },
+  "period": {
+    "start": "2018-06-06 00:00:00 UTC",
+    "split": "2024-03-06 00:00:00 UTC",
+    "end": "2026-08-22 00:00:00 UTC",
+    "total_days": 2999.0
+  },
+  "candles_processed": {
+    "htf_1M": 109,
+    "mtf_1W": 471,
+    "ltf_1D": 3000,
+    "replayed_ticks": 2985
+  },
+  "execution_time_sec": 20.08616065979004,
+  "funnel_counts": {
+    "total_ltf_bars": 2985,
+    "htf_qualified_contexts": 637,
+    "mtf_structural_alignments": 92,
+    "mtf_causal_retests": 34,
+    "ltf_triggers": 0,
+    "risk_evaluations": 0,
+    "risk_approved_candidates": 0,
+    "risk_rejected_candidates": 40,
+    "submitted_orders": 0,
+    "filled_trades": 0,
+    "closed_trades": 0
+  },
+  "rejection_breakdown": {
+    "REJECT_MISSING_STRUCTURAL_ANCHORS": 18,
+    "REJECT_INVALID_ANCHOR_GEOMETRY": 9,
+    "REJECT_SETUP_LIFESPAN_EXPIRED": 7,
+    "REJECT_RR_BELOW_4R": 5,
+    "REJECT_SUPERSEDED_HTF_CONTEXT": 1
+  },
+  "baseline_metrics": {
+    "total_trades": 0,
+    "win_count": 0,
+    "loss_count": 0,
+    "breakeven_count": 0,
+    "win_rate": 0.0,
+    "loss_rate": 0.0,
+    "gross_profit_usd": 0.0,
+    "gross_loss_usd": 0.0,
+    "net_profit_usd": 0.0,
+    "total_friction_usd": 0.0,
+    "avg_win_usd": 0.0,
+    "avg_loss_usd": 0.0,
+    "profit_factor": "NOT_AVAILABLE",
+    "expectancy_usd": "NOT_AVAILABLE",
+    "expectancy_r": "NOT_AVAILABLE",
+    "max_drawdown_pct": 0.0,
+    "sharpe_ratio": "NOT_AVAILABLE",
+    "sortino_ratio": "NOT_AVAILABLE",
+    "average_r": "NOT_AVAILABLE",
+    "median_r": "NOT_AVAILABLE",
+    "max_consecutive_losses": 0,
+    "max_consecutive_wins": 0,
+    "avg_trade_duration_sec": 0.0,
+    "avg_mfe_r": 0.0,
+    "avg_mae_r": 0.0,
+    "max_mfe_r": 0.0,
+    "max_mae_r": 0.0,
+    "r_multiples": []
+  },
+  "exit_attribution": {
+    "HTF_TP": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    },
+    "MTF_STRUCTURAL_TRAIL": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    },
+    "PROFIT_LOCK_TRAIL": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    },
+    "INITIAL_LTF_SL": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    },
+    "OTHER": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    }
+  },
+  "failure_modes": {
+    "total_losing_trades": 0,
+    "failure_mode_breakdown": {
+      "INITIAL_STRUCTURAL_INVALIDATION": {
+        "count": 0,
+        "percentage_of_losses": 0.0
+      },
+      "MTF_TRAIL_REVERSAL": {
+        "count": 0,
+        "percentage_of_losses": 0.0
+      },
+      "TARGET_UNREACHED_REVERSAL": {
+        "count": 0,
+        "percentage_of_losses": 0.0
+      },
+      "OTHER": {
+        "count": 0,
+        "percentage_of_losses": 0.0
+      }
+    }
+  },
+  "oos_partition": {
+    "split_ratio": 0.7,
+    "status": "INSUFFICIENT_SAMPLE",
+    "is_metrics": {
+      "total_trades": 0,
+      "win_count": 0,
+      "loss_count": 0,
+      "breakeven_count": 0,
+      "win_rate": 0.0,
+      "loss_rate": 0.0,
+      "gross_profit_usd": 0.0,
+      "gross_loss_usd": 0.0,
+      "net_profit_usd": 0.0,
+      "total_friction_usd": 0.0,
+      "avg_win_usd": 0.0,
+      "avg_loss_usd": 0.0,
+      "profit_factor": "NOT_AVAILABLE",
+      "expectancy_usd": "NOT_AVAILABLE",
+      "expectancy_r": "NOT_AVAILABLE",
+      "max_drawdown_pct": 0.0,
+      "sharpe_ratio": "NOT_AVAILABLE",
+      "sortino_ratio": "NOT_AVAILABLE",
+      "average_r": "NOT_AVAILABLE",
+      "median_r": "NOT_AVAILABLE",
+      "max_consecutive_losses": 0,
+      "max_consecutive_wins": 0,
+      "avg_trade_duration_sec": 0.0,
+      "avg_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "max_mfe_r": 0.0,
+      "max_mae_r": 0.0,
+      "r_multiples": []
+    },
+    "oos_metrics": {
+      "total_trades": 0,
+      "win_count": 0,
+      "loss_count": 0,
+      "breakeven_count": 0,
+      "win_rate": 0.0,
+      "loss_rate": 0.0,
+      "gross_profit_usd": 0.0,
+      "gross_loss_usd": 0.0,
+      "net_profit_usd": 0.0,
+      "total_friction_usd": 0.0,
+      "avg_win_usd": 0.0,
+      "avg_loss_usd": 0.0,
+      "profit_factor": "NOT_AVAILABLE",
+      "expectancy_usd": "NOT_AVAILABLE",
+      "expectancy_r": "NOT_AVAILABLE",
+      "max_drawdown_pct": 0.0,
+      "sharpe_ratio": "NOT_AVAILABLE",
+      "sortino_ratio": "NOT_AVAILABLE",
+      "average_r": "NOT_AVAILABLE",
+      "median_r": "NOT_AVAILABLE",
+      "max_consecutive_losses": 0,
+      "max_consecutive_wins": 0,
+      "avg_trade_duration_sec": 0.0,
+      "avg_mfe_r": 0.0,
+      "avg_mae_r": 0.0,
+      "max_mfe_r": 0.0,
+      "max_mae_r": 0.0,
+      "r_multiples": []
+    },
+    "retention": {
+      "wr_retention": 0.0,
+      "pf_retention": 0.0,
+      "exp_retention": 0.0
+    }
+  },
+  "closed_trades": [],
+  "equity_curve": [
+    {
+      "timestamp": 0,
+      "equity": 10000.0,
+      "drawdown_pct": 0.0
+    }
+  ]
+}

@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Dict, List, Set, Optional, Any
 
-from market_intelligence.opportunity_detector import OpportunityObservation
+from market_data.primitives import OpportunityObservation
 from market_data.universal_data_fabric import UniversalMarketDataFabric
 
 

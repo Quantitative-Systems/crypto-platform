@@ -1,0 +1,219 @@
+{
+  "provenance": {
+    "experiment": "BASELINE_002_CANONICAL",
+    "stream_key": "SOL_SET_2_HYP_A_PULLBACK_RIDING",
+    "asset": "SOL",
+    "timeframe_set": "SET_2",
+    "htf": "1w",
+    "mtf": "1d",
+    "ltf": "4h",
+    "hypothesis_id": "HYP_A_PULLBACK_RIDING",
+    "strategy_version": "v2.0-UNIFIED-CANONICAL-LOCKED",
+    "control_invariants": [
+      "MAX_RISK_FRACTION_1_PCT",
+      "MIN_RR_FLOOR_4_0R",
+      "MONOTONIC_MTF_STRUCTURAL_TRAILING",
+      "ZERO_LOOKAHEAD_CAUSALITY",
+      "ADVERSE_FIRST_INTRABAR_COLLISION",
+      "LTF_SWEEP_DISPLACEMENT_ENTRY",
+      "MTF_REALIGNMENT_CANDIDATE_ONLY"
+    ],
+    "git_commit": "3ca22a9bac32a206591fa3216a8bb581d772103f",
+    "created_at_utc": "2026-09-02T03:34:21.216362+00:00",
+    "execution_model": "1.0.0-causal-adverse-first",
+    "config": {
+      "initial_balance": 10000.0,
+      "taker_fee_rate": 0.0005,
+      "slippage_bps": 5.0,
+      "enable_mtf_trailing": true,
+      "enable_profit_lock": true,
+      "lockin_r": 1.0,
+      "giveback_r": 0.75,
+      "cache_htf_mtf": true
+    },
+    "dataset_manifests": {
+      "htf": {
+        "sha256_normalized": "452d4fcc3cb5a72ea39a5b71976d0d75566d3746d6a1a85578f4e2f45a1cb5ab",
+        "full_warehouse_rows": 316,
+        "window_rows": 316
+      },
+      "mtf": {
+        "sha256_normalized": "fd2247c9d6cd66aac116e98d63ed14a7e4f504e9ba58ce49e17d0c79e4b80b7c",
+        "full_warehouse_rows": 2209,
+        "window_rows": 2209
+      },
+      "ltf": {
+        "sha256_normalized": "cee7d724ee551215490eac62989e202aeeaf4988a27f4da8ef9240c36bdb83fd",
+        "full_warehouse_rows": 13254,
+        "window_rows": 12619
+      }
+    },
+    "candle_counts": {
+      "htf": 316,
+      "mtf": 2209,
+      "ltf": 12619
+    },
+    "elapsed_sec": 51.3
+  },
+  "metrics": {
+    "total_trades": 0,
+    "win_count": 0,
+    "loss_count": 0,
+    "breakeven_count": 0,
+    "win_rate": null,
+    "loss_rate": null,
+    "gross_profit_usd": 0.0,
+    "gross_loss_usd": 0.0,
+    "net_profit_usd": 0.0,
+    "total_friction_usd": 0.0,
+    "avg_win_usd": null,
+    "avg_loss_usd": null,
+    "profit_factor": "NOT_AVAILABLE",
+    "expectancy_usd": "NOT_AVAILABLE",
+    "expectancy_r": "NOT_AVAILABLE",
+    "max_drawdown_pct": 0.0,
+    "sharpe_ratio": "NOT_AVAILABLE",
+    "sortino_ratio": "NOT_AVAILABLE",
+    "average_r": "NOT_AVAILABLE",
+    "median_r": "NOT_AVAILABLE",
+    "max_consecutive_losses": 0,
+    "max_consecutive_wins": 0,
+    "avg_trade_duration_sec": 0.0,
+    "avg_mfe_r": 0.0,
+    "avg_mae_r": 0.0,
+    "max_mfe_r": 0.0,
+    "max_mae_r": 0.0,
+    "sample_confidence": "INSUFFICIENT_SAMPLE",
+    "r_multiples": []
+  },
+  "exit_attribution": {
+    "HTF_TP": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    },
+    "MTF_STRUCTURAL_TRAIL": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    },
+    "PROFIT_LOCK_TRAIL": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    },
+    "INITIAL_LTF_SL": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    },
+    "OTHER": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    }
+  },
+  "failure_modes": {
+    "total_losing_trades": 0,
+    "failure_mode_breakdown": {
+      "INITIAL_STRUCTURAL_INVALIDATION": {
+        "count": 0,
+        "percentage_of_losses": 0.0
+      },
+      "MTF_TRAIL_REVERSAL": {
+        "count": 0,
+        "percentage_of_losses": 0.0
+      },
+      "TARGET_UNREACHED_REVERSAL": {
+        "count": 0,
+        "percentage_of_losses": 0.0
+      },
+      "OTHER": {
+        "count": 0,
+        "percentage_of_losses": 0.0
+      }
+    }
+  },
+  "trades": [],
+  "rejected_candidates": [
+    {
+      "hypothesis_id": "UNIFIED_STRATEGY",
+      "trade_plan_id": "cand_SOLUSDT_UNIFIED_1648425600",
+      "symbol": "SOLUSDT",
+      "directional_permission": "PERMIT_SHORT",
+      "setup_timestamp": 1649030400,
+      "entry_price": 0.0,
+      "stop_invalidation_price": 0.0,
+      "target_price": 0.0,
+      "raw_rr": 0.0,
+      "status": "REJECTED",
+      "rejection_reason": "REJECT_SUPERSEDED_HTF_CONTEXT",
+      "position_status": null,
+      "mtf_trailing_level": null,
+      "exit_timestamp": null,
+      "structural_provenance": {
+        "htf_context": "PULLBACK",
+        "htf_context_id": "htf_SOLUSDT_1647820800",
+        "htf_context_timestamp": 1647820800,
+        "htf_macro_direction": "BEARISH",
+        "htf_phase": "MarketPhase.PULLBACK",
+        "htf_expected_move": "",
+        "htf_target_price": 75.35,
+        "htf_keyzone_id": "OB_BEARISH_OB_1639958400_SW_LOW_65",
+        "htf_interaction_timestamp": 1647820800,
+        "mtf_setup_id": "",
+        "mtf_setup_timestamp": 0,
+        "mtf_setup_direction": "",
+        "mtf_structural_event": "",
+        "mtf_choch_id": "",
+        "mtf_alignment_timestamp": 0,
+        "mtf_keyzone_id": "",
+        "mtf_kz_creation_timestamp": 0,
+        "mtf_retest_timestamp": 0,
+        "ltf_confirmation_timestamp": 0,
+        "ltf_entry_price": 0.0,
+        "ltf_structural_sl": 0.0,
+        "ltf_entry_reason": "",
+        "invalidation_reason": "REJECT_SUPERSEDED_HTF_CONTEXT",
+        "invalidation_timestamp": 1648425600
+      },
+      "source_timeframes": {
+        "HTF": "1W",
+        "MTF": "1D",
+        "LTF": "4H"
+      }
+    }
+  ],
+  "suspended_intervals_count": 0,
+  "engine_runs": {
+    "htf": 301,
+    "mtf": 2101,
+    "ltf": 12604,
+    "ltf_ticks": 12604
+  }
+}

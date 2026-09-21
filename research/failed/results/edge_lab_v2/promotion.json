@@ -1,0 +1,2470 @@
+{
+  "n_streams": 60,
+  "n_promotable": 6,
+  "n_rejected": 54,
+  "rows": [
+    {
+      "asset": "BTC/USDT",
+      "set": "SET_1",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_SUPER",
+        "params": {
+          "kind": "super"
+        },
+        "atr_mult": 2.5,
+        "target_r": 2.5,
+        "dev_n": 36,
+        "dev_exp": 0.5600322101337268,
+        "dev_net": 20.161159564814167,
+        "dev_wr": 0.5833333333333334,
+        "dev_pf": 2.461794091264723,
+        "dev_dd": 3.988509131492318
+      },
+      "val": {
+        "n": 14,
+        "net": 5.641302445468987,
+        "exp": 0.4029501746763562,
+        "wr": 0.5,
+        "pf": 1.904718142415726,
+        "dd": 1.9978500651241236
+      },
+      "oos": {
+        "n": 9,
+        "net": -2.0900604133662757,
+        "exp": -0.23222893481847506,
+        "wr": 0.2222222222222222,
+        "pf": 0.5981167648990506,
+        "dd": 4.493826798409263
+      },
+      "oos_shock_exp": -0.2416,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -0.415,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true
+      }
+    },
+    {
+      "asset": "BTC/USDT",
+      "set": "SET_2",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 2.5,
+        "target_r": 3.0,
+        "dev_n": 85,
+        "dev_exp": 0.5351514324794219,
+        "dev_net": 45.48787176075086,
+        "dev_wr": 0.5176470588235295,
+        "dev_pf": 2.2733557914949953,
+        "dev_dd": 3.584428765304433
+      },
+      "val": {
+        "n": 33,
+        "net": 5.83682580626232,
+        "exp": 0.17687350928067636,
+        "wr": 0.45454545454545453,
+        "pf": 1.3383527731972544,
+        "dd": 5.344123577269599
+      },
+      "oos": {
+        "n": 35,
+        "net": 7.104419573815944,
+        "exp": 0.20298341639474127,
+        "wr": 0.42857142857142855,
+        "pf": 1.4155189881801125,
+        "dd": 5.832947580455432
+      },
+      "oos_shock_exp": 0.1684,
+      "verdict": "PROMOTABLE_PAPER_ONLY",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": true,
+        "D3_stats": true,
+        "D4_wfr": true,
+        "D4_wfr_value": 0.379,
+        "D5_cost_shock": true,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.801
+      }
+    },
+    {
+      "asset": "BTC/USDT",
+      "set": "SET_3",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_SUPER",
+        "params": {
+          "kind": "super"
+        },
+        "atr_mult": 3.0,
+        "target_r": 3.0,
+        "dev_n": 730,
+        "dev_exp": 0.12519000216489096,
+        "dev_net": 91.3887015803704,
+        "dev_wr": 0.4602739726027397,
+        "dev_pf": 1.3074740984689794,
+        "dev_dd": 15.732420647094372
+      },
+      "val": {
+        "n": 277,
+        "net": 7.312859774081533,
+        "exp": 0.02640021579090806,
+        "wr": 0.4043321299638989,
+        "pf": 1.0555368260012141,
+        "dd": 21.935242379155184
+      },
+      "oos": {
+        "n": 284,
+        "net": -31.405352537352517,
+        "exp": -0.110582227244199,
+        "wr": 0.36619718309859156,
+        "pf": 0.7828252744115989,
+        "dd": 43.50025345527636
+      },
+      "oos_shock_exp": -0.1523,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -0.883,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": false,
+        "D3_bootstrap_p_pos": 0.052
+      }
+    },
+    {
+      "asset": "BTC/USDT",
+      "set": "SET_4",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 3.0,
+        "target_r": 3.0,
+        "dev_n": 1280,
+        "dev_exp": 0.0006088991939777356,
+        "dev_net": 0.7793909682915015,
+        "dev_wr": 0.39296875,
+        "dev_pf": 1.0011624174350284,
+        "dev_dd": 71.30781703958402
+      },
+      "val": {
+        "n": 460,
+        "net": -17.948750954407544,
+        "exp": -0.039019023813929445,
+        "wr": 0.358695652173913,
+        "pf": 0.9295039346919145,
+        "dd": 31.01505911060204
+      },
+      "oos": {
+        "n": 518,
+        "net": -81.63582542723492,
+        "exp": -0.1575981185853956,
+        "wr": 0.3416988416988417,
+        "pf": 0.7287624063793462,
+        "dd": 89.01322670943019
+      },
+      "oos_shock_exp": -0.2284,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -258.825,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": false,
+        "D3_bootstrap_p_pos": 0.001
+      }
+    },
+    {
+      "asset": "BTC/USDT",
+      "set": "SET_5",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 3.0,
+        "target_r": 2.5,
+        "dev_n": 295,
+        "dev_exp": -0.26533806648432834,
+        "dev_net": -78.27472961287685,
+        "dev_wr": 0.31864406779661014,
+        "dev_pf": 0.5465263788691311,
+        "dev_dd": 82.43529428433506
+      },
+      "val": {
+        "n": 104,
+        "net": -37.21581376562282,
+        "exp": -0.35784436313098866,
+        "wr": 0.3173076923076923,
+        "pf": 0.40615400234758264,
+        "dd": 36.216689772512815
+      },
+      "oos": {
+        "n": 99,
+        "net": -27.325980002452518,
+        "exp": -0.2760200000247729,
+        "wr": 0.35353535353535354,
+        "pf": 0.5055261964666516,
+        "dd": 28.628994262722834
+      },
+      "oos_shock_exp": -0.3816,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 1.04,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": false,
+        "D3_bootstrap_p_pos": 0.001
+      }
+    },
+    {
+      "asset": "BTC/USDT",
+      "set": "SET_6",
+      "status": "NO_DEV_CANDIDATE",
+      "verdict": "REJECTED",
+      "reason": "NO_DEV_CANDIDATE",
+      "checks": {}
+    },
+    {
+      "asset": "ETH/USDT",
+      "set": "SET_1",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_TREND",
+        "params": {
+          "kind": "trend"
+        },
+        "atr_mult": 2.5,
+        "target_r": 3.0,
+        "dev_n": 30,
+        "dev_exp": 0.6562671123778474,
+        "dev_net": 19.688013371335423,
+        "dev_wr": 0.6,
+        "dev_pf": 2.939438037708398,
+        "dev_dd": 3.512579517351174
+      },
+      "val": {
+        "n": 17,
+        "net": 3.962175932065876,
+        "exp": 0.2330691724744633,
+        "wr": 0.4117647058823529,
+        "pf": 1.5064929182333135,
+        "dd": 2.9967528586459387
+      },
+      "oos": {
+        "n": 12,
+        "net": 4.995077704252622,
+        "exp": 0.41625647535438515,
+        "wr": 0.5833333333333334,
+        "pf": 2.4030407038899133,
+        "dd": 2.5612571519489835
+      },
+      "oos_shock_exp": 0.4043,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": true,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 0.634,
+        "D5_cost_shock": true,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.847
+      }
+    },
+    {
+      "asset": "ETH/USDT",
+      "set": "SET_2",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 2.0,
+        "target_r": 3.0,
+        "dev_n": 99,
+        "dev_exp": 0.5418596712084043,
+        "dev_net": 53.644107449632024,
+        "dev_wr": 0.47474747474747475,
+        "dev_pf": 2.0665526957580678,
+        "dev_dd": 5.806545936866126
+      },
+      "val": {
+        "n": 38,
+        "net": 1.185341610505423,
+        "exp": 0.031193200276458503,
+        "wr": 0.34210526315789475,
+        "pf": 1.050085371151133,
+        "dd": 8.997933599552692
+      },
+      "oos": {
+        "n": 38,
+        "net": -0.8197270153768742,
+        "exp": -0.02157176356254932,
+        "wr": 0.3157894736842105,
+        "pf": 0.9655290528258934,
+        "dd": 9.855547029135654
+      },
+      "oos_shock_exp": -0.0449,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -0.04,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.445
+      }
+    },
+    {
+      "asset": "ETH/USDT",
+      "set": "SET_3",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 2.5,
+        "target_r": 3.0,
+        "dev_n": 368,
+        "dev_exp": 0.19822536548756542,
+        "dev_net": 72.94693449942407,
+        "dev_wr": 0.4266304347826087,
+        "dev_pf": 1.4069822292180068,
+        "dev_dd": 10.99500151598221
+      },
+      "val": {
+        "n": 135,
+        "net": 9.47989132156913,
+        "exp": 0.07022141719680837,
+        "wr": 0.37037037037037035,
+        "pf": 1.1299622675145828,
+        "dd": 11.28425795918304
+      },
+      "oos": {
+        "n": 142,
+        "net": 7.71309193915347,
+        "exp": 0.05431754886727796,
+        "wr": 0.39436619718309857,
+        "pf": 1.099218592197994,
+        "dd": 16.50131005077472
+      },
+      "oos_shock_exp": 0.0145,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": true,
+        "D3_stats": true,
+        "D4_wfr": false,
+        "D4_wfr_value": 0.274,
+        "D5_cost_shock": true,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.678
+      }
+    },
+    {
+      "asset": "ETH/USDT",
+      "set": "SET_4",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 3.0,
+        "target_r": 2.5,
+        "dev_n": 1348,
+        "dev_exp": 0.08553592531082847,
+        "dev_net": 115.30242731899678,
+        "dev_wr": 0.4198813056379822,
+        "dev_pf": 1.1731735720340712,
+        "dev_dd": 26.986187129455885
+      },
+      "val": {
+        "n": 496,
+        "net": -61.56357628477364,
+        "exp": -0.1241201134773662,
+        "wr": 0.36088709677419356,
+        "pf": 0.7744892670775156,
+        "dd": 67.00314961700435
+      },
+      "oos": {
+        "n": 495,
+        "net": -56.095462386426085,
+        "exp": -0.11332416643722441,
+        "wr": 0.3474747474747475,
+        "pf": 0.8059787585663933,
+        "dd": 61.36575633110492
+      },
+      "oos_shock_exp": -0.1651,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -1.325,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": false,
+        "D3_bootstrap_p_pos": 0.013
+      }
+    },
+    {
+      "asset": "ETH/USDT",
+      "set": "SET_5",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 3.0,
+        "target_r": 1.5,
+        "dev_n": 269,
+        "dev_exp": -0.21577817032948393,
+        "dev_net": -58.044327818631174,
+        "dev_wr": 0.3903345724907063,
+        "dev_pf": 0.5909912461896114,
+        "dev_dd": 59.442021077463075
+      },
+      "val": {
+        "n": 92,
+        "net": -33.92555573502619,
+        "exp": -0.36875604059811073,
+        "wr": 0.34782608695652173,
+        "pf": 0.36697306534728336,
+        "dd": 34.07174756588569
+      },
+      "oos": {
+        "n": 93,
+        "net": -33.98678861574238,
+        "exp": -0.36544933995421913,
+        "wr": 0.34408602150537637,
+        "pf": 0.39615041016569685,
+        "dd": 35.400445141616
+      },
+      "oos_shock_exp": -0.4384,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 1.694,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": false,
+        "D3_bootstrap_p_pos": 0.001
+      }
+    },
+    {
+      "asset": "ETH/USDT",
+      "set": "SET_6",
+      "status": "NO_DEV_CANDIDATE",
+      "verdict": "REJECTED",
+      "reason": "NO_DEV_CANDIDATE",
+      "checks": {}
+    },
+    {
+      "asset": "SOL/USDT",
+      "set": "SET_1",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_SUPER",
+        "params": {
+          "kind": "super"
+        },
+        "atr_mult": 2.0,
+        "target_r": 3.0,
+        "dev_n": 34,
+        "dev_exp": 0.4841329350851855,
+        "dev_net": 16.460519792896307,
+        "dev_wr": 0.4117647058823529,
+        "dev_pf": 1.8574992322821902,
+        "dev_dd": 7.370513306856649
+      },
+      "val": {
+        "n": 9,
+        "net": -5.0748940977161645,
+        "exp": -0.5638771219684627,
+        "wr": 0.1111111111111111,
+        "pf": 0.364950190136018,
+        "dd": 4.075977681692844
+      },
+      "oos": {
+        "n": 9,
+        "net": -2.9486628704391165,
+        "exp": -0.3276292078265685,
+        "wr": 0.3333333333333333,
+        "pf": 0.5085573878051458,
+        "dd": 2.9778711887102656
+      },
+      "oos_shock_exp": -0.3347,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -0.677,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true
+      }
+    },
+    {
+      "asset": "SOL/USDT",
+      "set": "SET_2",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 3.0,
+        "target_r": 3.0,
+        "dev_n": 62,
+        "dev_exp": 0.710362574096605,
+        "dev_net": 44.042479593989505,
+        "dev_wr": 0.5806451612903226,
+        "dev_pf": 3.119114478772258,
+        "dev_dd": 5.608479708458113
+      },
+      "val": {
+        "n": 24,
+        "net": -2.658763073979627,
+        "exp": -0.11078179474915112,
+        "wr": 0.4166666666666667,
+        "pf": 0.7930714625401871,
+        "dd": 5.157904123278158
+      },
+      "oos": {
+        "n": 20,
+        "net": 6.915469097088707,
+        "exp": 0.34577345485443534,
+        "wr": 0.45,
+        "pf": 1.991076570948671,
+        "dd": 4.305045484888401
+      },
+      "oos_shock_exp": 0.3242,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 0.487,
+        "D5_cost_shock": true,
+        "D6_sign_stable": "False",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.864
+      }
+    },
+    {
+      "asset": "SOL/USDT",
+      "set": "SET_3",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 2.5,
+        "target_r": 3.0,
+        "dev_n": 330,
+        "dev_exp": 0.14047688584609463,
+        "dev_net": 46.35737232921123,
+        "dev_wr": 0.4121212121212121,
+        "dev_pf": 1.272904532120128,
+        "dev_dd": 14.853852799392179
+      },
+      "val": {
+        "n": 112,
+        "net": 6.295008583911951,
+        "exp": 0.056205433784928135,
+        "wr": 0.38392857142857145,
+        "pf": 1.1011042305274048,
+        "dd": 11.528643681033103
+      },
+      "oos": {
+        "n": 119,
+        "net": 5.976304064967349,
+        "exp": 0.05022104256275083,
+        "wr": 0.4117647058823529,
+        "pf": 1.0990580832713133,
+        "dd": 17.072158187120326
+      },
+      "oos_shock_exp": 0.0134,
+      "verdict": "PROMOTABLE_PAPER_ONLY",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": true,
+        "D3_stats": true,
+        "D4_wfr": true,
+        "D4_wfr_value": 0.358,
+        "D5_cost_shock": true,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.648
+      }
+    },
+    {
+      "asset": "SOL/USDT",
+      "set": "SET_4",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 3.0,
+        "target_r": 1.5,
+        "dev_n": 438,
+        "dev_exp": 0.042171110523416065,
+        "dev_net": 18.470946409256236,
+        "dev_wr": 0.4589041095890411,
+        "dev_pf": 1.0857447980806136,
+        "dev_dd": 20.93896518172533
+      },
+      "val": {
+        "n": 152,
+        "net": -5.999249093474908,
+        "exp": -0.03946874403601913,
+        "wr": 0.4407894736842105,
+        "pf": 0.9229275684625948,
+        "dd": 10.822033963404493
+      },
+      "oos": {
+        "n": 137,
+        "net": -12.899148274804073,
+        "exp": -0.0941543669693728,
+        "wr": 0.40145985401459855,
+        "pf": 0.821341809394551,
+        "dd": 20.59519202478925
+      },
+      "oos_shock_exp": -0.133,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -2.233,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.147
+      }
+    },
+    {
+      "asset": "SOL/USDT",
+      "set": "SET_5",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_SUPER",
+        "params": {
+          "kind": "super"
+        },
+        "atr_mult": 3.0,
+        "target_r": 2.0,
+        "dev_n": 435,
+        "dev_exp": -0.2361448379519572,
+        "dev_net": -102.72300450910139,
+        "dev_wr": 0.34942528735632183,
+        "dev_pf": 0.5848754022813966,
+        "dev_dd": 106.45039813322984
+      },
+      "val": {
+        "n": 144,
+        "net": -43.7283807323804,
+        "exp": -0.3036693106415306,
+        "wr": 0.3194444444444444,
+        "pf": 0.4812708835716129,
+        "dd": 45.34386965908341
+      },
+      "oos": {
+        "n": 151,
+        "net": -22.46316647226233,
+        "exp": -0.14876269186928695,
+        "wr": 0.423841059602649,
+        "pf": 0.7083891093079956,
+        "dd": 28.775720252158663
+      },
+      "oos_shock_exp": -0.2446,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 0.63,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": false,
+        "D3_bootstrap_p_pos": 0.034
+      }
+    },
+    {
+      "asset": "SOL/USDT",
+      "set": "SET_6",
+      "status": "NO_DEV_CANDIDATE",
+      "verdict": "REJECTED",
+      "reason": "NO_DEV_CANDIDATE",
+      "checks": {}
+    },
+    {
+      "asset": "BNB/USDT",
+      "set": "SET_1",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_SUPER",
+        "params": {
+          "kind": "super"
+        },
+        "atr_mult": 3.0,
+        "target_r": 3.0,
+        "dev_n": 34,
+        "dev_exp": 0.6724934444932843,
+        "dev_net": 22.864777112771666,
+        "dev_wr": 0.5882352941176471,
+        "dev_pf": 2.843689902554671,
+        "dev_dd": 3.0011007430853667
+      },
+      "val": {
+        "n": 13,
+        "net": 8.925046406610988,
+        "exp": 0.6865420312777684,
+        "wr": 0.7692307692307693,
+        "pf": 13.51347470421591,
+        "dd": 0.43270578198439424
+      },
+      "oos": {
+        "n": 8,
+        "net": 1.5253601928060627,
+        "exp": 0.19067002410075784,
+        "wr": 0.625,
+        "pf": 1.5090017948145424,
+        "dd": 1.9978526688892018
+      },
+      "oos_shock_exp": 0.1785,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": true,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": 0.284,
+        "D5_cost_shock": true,
+        "D6_sign_stable": "True",
+        "D7_dd": true
+      }
+    },
+    {
+      "asset": "BNB/USDT",
+      "set": "SET_2",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 1.5,
+        "target_r": 3.0,
+        "dev_n": 125,
+        "dev_exp": 0.5916926075537995,
+        "dev_net": 73.96157594422493,
+        "dev_wr": 0.44,
+        "dev_pf": 2.1011101267504944,
+        "dev_dd": 9.104374719298072
+      },
+      "val": {
+        "n": 50,
+        "net": 9.922501635199781,
+        "exp": 0.19845003270399564,
+        "wr": 0.34,
+        "pf": 1.3071973551914289,
+        "dd": 5.025131973464601
+      },
+      "oos": {
+        "n": 42,
+        "net": 11.265876429373462,
+        "exp": 0.26823515308032053,
+        "wr": 0.35714285714285715,
+        "pf": 1.4174821687127335,
+        "dd": 9.581653229189621
+      },
+      "oos_shock_exp": 0.216,
+      "verdict": "PROMOTABLE_PAPER_ONLY",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": true,
+        "D3_stats": true,
+        "D4_wfr": true,
+        "D4_wfr_value": 0.453,
+        "D5_cost_shock": true,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.855
+      }
+    },
+    {
+      "asset": "BNB/USDT",
+      "set": "SET_3",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 3.0,
+        "target_r": 3.0,
+        "dev_n": 222,
+        "dev_exp": 0.14761832192328778,
+        "dev_net": 32.77126746696989,
+        "dev_wr": 0.4189189189189189,
+        "dev_pf": 1.3227819342065488,
+        "dev_dd": 16.947882374750947
+      },
+      "val": {
+        "n": 85,
+        "net": -8.61727695309069,
+        "exp": -0.10137972885989047,
+        "wr": 0.3411764705882353,
+        "pf": 0.8317619530355707,
+        "dd": 14.855930730079102
+      },
+      "oos": {
+        "n": 87,
+        "net": -0.12479291768004142,
+        "exp": -0.0014344013526441542,
+        "wr": 0.3103448275862069,
+        "pf": 0.9971650664918764,
+        "dd": 17.07795695613136
+      },
+      "oos_shock_exp": -0.047,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -0.01,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.499
+      }
+    },
+    {
+      "asset": "BNB/USDT",
+      "set": "SET_4",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_SUPER",
+        "params": {
+          "kind": "super"
+        },
+        "atr_mult": 3.0,
+        "target_r": 3.0,
+        "dev_n": 418,
+        "dev_exp": -0.11705709550895663,
+        "dev_net": -48.92986592274387,
+        "dev_wr": 0.3444976076555024,
+        "dev_pf": 0.7984736345915954,
+        "dev_dd": 57.48173808200516
+      },
+      "val": {
+        "n": 136,
+        "net": -9.466316801799444,
+        "exp": -0.0696052706014665,
+        "wr": 0.4117647058823529,
+        "pf": 0.8696049779562605,
+        "dd": 25.171539983861926
+      },
+      "oos": {
+        "n": 139,
+        "net": -26.870133435236944,
+        "exp": -0.19331031248371902,
+        "wr": 0.31654676258992803,
+        "pf": 0.6619012714927314,
+        "dd": 30.965686178246045
+      },
+      "oos_shock_exp": -0.2631,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 1.651,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": false,
+        "D3_bootstrap_p_pos": 0.019
+      }
+    },
+    {
+      "asset": "BNB/USDT",
+      "set": "SET_5",
+      "status": "NO_DEV_CANDIDATE",
+      "verdict": "REJECTED",
+      "reason": "NO_DEV_CANDIDATE",
+      "checks": {}
+    },
+    {
+      "asset": "BNB/USDT",
+      "set": "SET_6",
+      "status": "NO_DEV_CANDIDATE",
+      "verdict": "REJECTED",
+      "reason": "NO_DEV_CANDIDATE",
+      "checks": {}
+    },
+    {
+      "asset": "XRP/USDT",
+      "set": "SET_1",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_TREND",
+        "params": {
+          "kind": "trend"
+        },
+        "atr_mult": 1.5,
+        "target_r": 3.0,
+        "dev_n": 30,
+        "dev_exp": -0.19474083811617668,
+        "dev_net": -5.8422251434853,
+        "dev_wr": 0.3,
+        "dev_pf": 0.7119106202156622,
+        "dev_dd": 8.355812195851072
+      },
+      "val": {
+        "n": 24,
+        "net": -5.02737231595326,
+        "exp": -0.20947384649805248,
+        "wr": 0.2916666666666667,
+        "pf": 0.703954230870602,
+        "dd": 11.507039888290983
+      },
+      "oos": {
+        "n": 19,
+        "net": -7.063510588418877,
+        "exp": -0.3717637151799409,
+        "wr": 0.21052631578947367,
+        "pf": 0.5059003352373479,
+        "dd": 9.978635279119372
+      },
+      "oos_shock_exp": -0.3791,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 1.909,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.098
+      }
+    },
+    {
+      "asset": "XRP/USDT",
+      "set": "SET_2",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 3.0,
+        "target_r": 3.0,
+        "dev_n": 55,
+        "dev_exp": 0.28978119602649044,
+        "dev_net": 15.937965781456974,
+        "dev_wr": 0.4727272727272727,
+        "dev_pf": 1.642827544936752,
+        "dev_dd": 7.128651859246439
+      },
+      "val": {
+        "n": 24,
+        "net": 1.45368972914775,
+        "exp": 0.060570405381156246,
+        "wr": 0.375,
+        "pf": 1.110243517220062,
+        "dd": 7.039648917369079
+      },
+      "oos": {
+        "n": 20,
+        "net": 10.232345949429494,
+        "exp": 0.5116172974714747,
+        "wr": 0.6,
+        "pf": 2.5151221482257395,
+        "dd": 2.2357249385404687
+      },
+      "oos_shock_exp": 0.4874,
+      "verdict": "PROMOTABLE_PAPER_ONLY",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": true,
+        "D3_stats": true,
+        "D4_wfr": true,
+        "D4_wfr_value": 1.766,
+        "D5_cost_shock": true,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.953
+      }
+    },
+    {
+      "asset": "XRP/USDT",
+      "set": "SET_3",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_SUPER",
+        "params": {
+          "kind": "super"
+        },
+        "atr_mult": 3.0,
+        "target_r": 3.0,
+        "dev_n": 469,
+        "dev_exp": -0.05863563722151279,
+        "dev_net": -27.5001138568895,
+        "dev_wr": 0.36673773987206826,
+        "dev_pf": 0.875044882787569,
+        "dev_dd": 44.92925083067616
+      },
+      "val": {
+        "n": 156,
+        "net": 20.671291958247558,
+        "exp": 0.1325082817836382,
+        "wr": 0.4166666666666667,
+        "pf": 1.2878864594515789,
+        "dd": 10.624796677313915
+      },
+      "oos": {
+        "n": 169,
+        "net": -23.252974260204976,
+        "exp": -0.13759156366985192,
+        "wr": 0.30177514792899407,
+        "pf": 0.7499792244586381,
+        "dd": 28.387893739514702
+      },
+      "oos_shock_exp": -0.1678,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 2.347,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": false,
+        "D3_bootstrap_p_pos": 0.062
+      }
+    },
+    {
+      "asset": "XRP/USDT",
+      "set": "SET_4",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 2.5,
+        "target_r": 2.5,
+        "dev_n": 283,
+        "dev_exp": 0.039882836229271405,
+        "dev_net": 11.286842652883808,
+        "dev_wr": 0.38515901060070673,
+        "dev_pf": 1.0701774553219743,
+        "dev_dd": 14.709924470321887
+      },
+      "val": {
+        "n": 86,
+        "net": -7.685597479144194,
+        "exp": -0.08936741254818831,
+        "wr": 0.3372093023255814,
+        "pf": 0.8478669091723344,
+        "dd": 19.91156696117259
+      },
+      "oos": {
+        "n": 94,
+        "net": -14.887813870309367,
+        "exp": -0.1583809986203124,
+        "wr": 0.32978723404255317,
+        "pf": 0.7498602010369328,
+        "dd": 29.302473261702037
+      },
+      "oos_shock_exp": -0.2198,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -3.971,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.093
+      }
+    },
+    {
+      "asset": "XRP/USDT",
+      "set": "SET_5",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_TREND",
+        "params": {
+          "kind": "trend"
+        },
+        "atr_mult": 3.0,
+        "target_r": 3.0,
+        "dev_n": 97,
+        "dev_exp": -0.056565392777930205,
+        "dev_net": -5.48684309945923,
+        "dev_wr": 0.36082474226804123,
+        "dev_pf": 0.8906088362800775,
+        "dev_dd": 17.479945218886044
+      },
+      "val": {
+        "n": 31,
+        "net": -14.255377245747773,
+        "exp": -0.45985087889508947,
+        "wr": 0.1935483870967742,
+        "pf": 0.2802402449504435,
+        "dd": 15.187381219769279
+      },
+      "oos": {
+        "n": 38,
+        "net": -9.901829416181144,
+        "exp": -0.2605744583205564,
+        "wr": 0.23684210526315788,
+        "pf": 0.6162711739965808,
+        "dd": 9.096264839166029
+      },
+      "oos_shock_exp": -0.3277,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 4.607,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.096
+      }
+    },
+    {
+      "asset": "XRP/USDT",
+      "set": "SET_6",
+      "status": "NO_DEV_CANDIDATE",
+      "verdict": "REJECTED",
+      "reason": "NO_DEV_CANDIDATE",
+      "checks": {}
+    },
+    {
+      "asset": "ADA/USDT",
+      "set": "SET_1",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_TREND",
+        "params": {
+          "kind": "trend"
+        },
+        "atr_mult": 1.5,
+        "target_r": 3.0,
+        "dev_n": 32,
+        "dev_exp": 0.19126823463435044,
+        "dev_net": 6.120583508299214,
+        "dev_wr": 0.375,
+        "dev_pf": 1.354141383753616,
+        "dev_dd": 9.763001380512087
+      },
+      "val": {
+        "n": 15,
+        "net": -8.49497235861654,
+        "exp": -0.566331490574436,
+        "wr": 0.2,
+        "pf": 0.25606791683719937,
+        "dd": 10.486323135408304
+      },
+      "oos": {
+        "n": 6,
+        "net": -0.11476204980505143,
+        "exp": -0.019127008300841904,
+        "wr": 0.3333333333333333,
+        "pf": 0.9630610946791797,
+        "dd": 1.0354048996462561
+      },
+      "oos_shock_exp": -0.0284,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -0.1,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true
+      }
+    },
+    {
+      "asset": "ADA/USDT",
+      "set": "SET_2",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 2.5,
+        "target_r": 3.0,
+        "dev_n": 76,
+        "dev_exp": 0.37884219103584976,
+        "dev_net": 28.792006518724584,
+        "dev_wr": 0.4605263157894737,
+        "dev_pf": 1.788126222214029,
+        "dev_dd": 7.157108367930679
+      },
+      "val": {
+        "n": 28,
+        "net": 14.01567610009194,
+        "exp": 0.5005598607175693,
+        "wr": 0.5357142857142857,
+        "pf": 2.1346122552974447,
+        "dd": 5.96260577743984
+      },
+      "oos": {
+        "n": 23,
+        "net": 8.837332559918044,
+        "exp": 0.3842318504312193,
+        "wr": 0.5217391304347826,
+        "pf": 1.9017799469645094,
+        "dd": 4.132951158334305
+      },
+      "oos_shock_exp": 0.3628,
+      "verdict": "PROMOTABLE_PAPER_ONLY",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": true,
+        "D3_stats": true,
+        "D4_wfr": true,
+        "D4_wfr_value": 1.014,
+        "D5_cost_shock": true,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.911
+      }
+    },
+    {
+      "asset": "ADA/USDT",
+      "set": "SET_3",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 2.5,
+        "target_r": 2.0,
+        "dev_n": 289,
+        "dev_exp": 0.1621458589929964,
+        "dev_net": 46.86015324897596,
+        "dev_wr": 0.45674740484429066,
+        "dev_pf": 1.3377769156522479,
+        "dev_dd": 9.32676545258844
+      },
+      "val": {
+        "n": 113,
+        "net": 22.073491287007172,
+        "exp": 0.19534063085847056,
+        "wr": 0.4690265486725664,
+        "pf": 1.406195035836639,
+        "dd": 7.334569768175704
+      },
+      "oos": {
+        "n": 117,
+        "net": 2.73544617182693,
+        "exp": 0.023379881810486582,
+        "wr": 0.38461538461538464,
+        "pf": 1.0459023702149848,
+        "dd": 13.464000386989593
+      },
+      "oos_shock_exp": -0.0076,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": true,
+        "D4_wfr": false,
+        "D4_wfr_value": 0.144,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.579
+      }
+    },
+    {
+      "asset": "ADA/USDT",
+      "set": "SET_4",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 2.5,
+        "target_r": 3.0,
+        "dev_n": 238,
+        "dev_exp": -0.061977614640809815,
+        "dev_net": -14.750672284512737,
+        "dev_wr": 0.33613445378151263,
+        "dev_pf": 0.8991538118658154,
+        "dev_dd": 34.10958999967659
+      },
+      "val": {
+        "n": 76,
+        "net": -4.60987615555976,
+        "exp": -0.06065626520473368,
+        "wr": 0.32894736842105265,
+        "pf": 0.9041554976370295,
+        "dd": 22.028679243140346
+      },
+      "oos": {
+        "n": 71,
+        "net": -7.090948557294789,
+        "exp": -0.0998725148914759,
+        "wr": 0.36619718309859156,
+        "pf": 0.8320370508421087,
+        "dd": 10.59154491934245
+      },
+      "oos_shock_exp": -0.1472,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 1.611,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": false,
+        "D3_bootstrap_p_pos": 0.255
+      }
+    },
+    {
+      "asset": "ADA/USDT",
+      "set": "SET_5",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 3.0,
+        "target_r": 2.5,
+        "dev_n": 49,
+        "dev_exp": -0.07976138405966349,
+        "dev_net": -3.908307818923511,
+        "dev_wr": 0.3673469387755102,
+        "dev_pf": 0.8497028094817183,
+        "dev_dd": 12.759561524814712
+      },
+      "val": {
+        "n": 20,
+        "net": -10.11919050044464,
+        "exp": -0.505959525022232,
+        "wr": 0.2,
+        "pf": 0.2893889861814535,
+        "dd": 9.99161364036285
+      },
+      "oos": {
+        "n": 11,
+        "net": -2.7009217541448507,
+        "exp": -0.24553834128589552,
+        "wr": 0.36363636363636365,
+        "pf": 0.5808568339992907,
+        "dd": 3.9981871684463313
+      },
+      "oos_shock_exp": -0.3123,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 3.078,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.208
+      }
+    },
+    {
+      "asset": "ADA/USDT",
+      "set": "SET_6",
+      "status": "NO_DEV_CANDIDATE",
+      "verdict": "REJECTED",
+      "reason": "NO_DEV_CANDIDATE",
+      "checks": {}
+    },
+    {
+      "asset": "DOGE/USDT",
+      "set": "SET_1",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_TREND",
+        "params": {
+          "kind": "trend"
+        },
+        "atr_mult": 2.0,
+        "target_r": 1.5,
+        "dev_n": 31,
+        "dev_exp": 0.17732138901023675,
+        "dev_net": 5.4969630593173395,
+        "dev_wr": 0.5161290322580645,
+        "dev_pf": 1.4056287067055468,
+        "dev_dd": 5.009327819046024
+      },
+      "val": {
+        "n": 20,
+        "net": 8.32404892701494,
+        "exp": 0.41620244635074705,
+        "wr": 0.6,
+        "pf": 2.215877784187866,
+        "dd": 2.3730945019370537
+      },
+      "oos": {
+        "n": 9,
+        "net": -4.920691368686654,
+        "exp": -0.5467434854096282,
+        "wr": 0.2222222222222222,
+        "pf": 0.24744997161722004,
+        "dd": 3.921776280965494
+      },
+      "oos_shock_exp": -0.5497,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -3.083,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true
+      }
+    },
+    {
+      "asset": "DOGE/USDT",
+      "set": "SET_2",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 3.0,
+        "target_r": 3.0,
+        "dev_n": 58,
+        "dev_exp": 0.4308448300111472,
+        "dev_net": 24.98900014064654,
+        "dev_wr": 0.4482758620689655,
+        "dev_pf": 1.9532020410557855,
+        "dev_dd": 10.645868072920042
+      },
+      "val": {
+        "n": 30,
+        "net": 2.683728159643856,
+        "exp": 0.08945760532146187,
+        "wr": 0.4666666666666667,
+        "pf": 1.1804023109069417,
+        "dd": 5.576463961449665
+      },
+      "oos": {
+        "n": 26,
+        "net": -0.9197114219184663,
+        "exp": -0.03537351622763332,
+        "wr": 0.34615384615384615,
+        "pf": 0.9397043532887502,
+        "dd": 4.531068148964315
+      },
+      "oos_shock_exp": -0.0482,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": true,
+        "D4_wfr": false,
+        "D4_wfr_value": -0.082,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.434
+      }
+    },
+    {
+      "asset": "DOGE/USDT",
+      "set": "SET_3",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 2.5,
+        "target_r": 2.5,
+        "dev_n": 254,
+        "dev_exp": 0.11984965562757761,
+        "dev_net": 30.441812529404714,
+        "dev_wr": 0.4015748031496063,
+        "dev_pf": 1.2250003547467416,
+        "dev_dd": 16.44297123312244
+      },
+      "val": {
+        "n": 103,
+        "net": 28.25203662233255,
+        "exp": 0.274291617692549,
+        "wr": 0.4368932038834951,
+        "pf": 1.5564270513423277,
+        "dd": 6.994678994214418
+      },
+      "oos": {
+        "n": 108,
+        "net": -13.619478436488798,
+        "exp": -0.12610628181934072,
+        "wr": 0.32407407407407407,
+        "pf": 0.7820545268477493,
+        "dd": 18.782965623004152
+      },
+      "oos_shock_exp": -0.1546,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": true,
+        "D4_wfr": false,
+        "D4_wfr_value": -1.052,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.14
+      }
+    },
+    {
+      "asset": "DOGE/USDT",
+      "set": "SET_4",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 3.0,
+        "target_r": 3.0,
+        "dev_n": 265,
+        "dev_exp": 0.006210139041920719,
+        "dev_net": 1.6456868461089904,
+        "dev_wr": 0.3886792452830189,
+        "dev_pf": 1.0114681154890537,
+        "dev_dd": 12.75875415292702
+      },
+      "val": {
+        "n": 88,
+        "net": -22.454462818135898,
+        "exp": -0.25516435020608974,
+        "wr": 0.2840909090909091,
+        "pf": 0.5793104315238179,
+        "dd": 31.025766610033436
+      },
+      "oos": {
+        "n": 78,
+        "net": -12.84907410914997,
+        "exp": -0.16473171934807654,
+        "wr": 0.3717948717948718,
+        "pf": 0.7175880037630648,
+        "dd": 24.54872480776835
+      },
+      "oos_shock_exp": -0.2165,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -26.526,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": false,
+        "D3_bootstrap_p_pos": 0.119
+      }
+    },
+    {
+      "asset": "DOGE/USDT",
+      "set": "SET_5",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 2.5,
+        "target_r": 1.5,
+        "dev_n": 69,
+        "dev_exp": -0.10608507880168117,
+        "dev_net": -7.319870437316,
+        "dev_wr": 0.463768115942029,
+        "dev_pf": 0.7831971110373096,
+        "dev_dd": 13.038188696524724
+      },
+      "val": {
+        "n": 20,
+        "net": -6.49987464058933,
+        "exp": -0.3249937320294665,
+        "wr": 0.3,
+        "pf": 0.467915390188372,
+        "dd": 9.226499794212616
+      },
+      "oos": {
+        "n": 19,
+        "net": -4.023741790024765,
+        "exp": -0.21177588368551395,
+        "wr": 0.3684210526315789,
+        "pf": 0.6040385680746473,
+        "dd": 5.71413988416842
+      },
+      "oos_shock_exp": -0.2913,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 1.996,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.156
+      }
+    },
+    {
+      "asset": "DOGE/USDT",
+      "set": "SET_6",
+      "status": "NO_DEV_CANDIDATE",
+      "verdict": "REJECTED",
+      "reason": "NO_DEV_CANDIDATE",
+      "checks": {}
+    },
+    {
+      "asset": "AVAX/USDT",
+      "set": "SET_1",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_TREND",
+        "params": {
+          "kind": "trend"
+        },
+        "atr_mult": 2.0,
+        "target_r": 3.0,
+        "dev_n": 30,
+        "dev_exp": 0.18086680749098388,
+        "dev_net": 5.426004224729517,
+        "dev_wr": 0.4,
+        "dev_pf": 1.3343094405175502,
+        "dev_dd": 6.046608707981251
+      },
+      "val": {
+        "n": 5,
+        "net": 0.5452678797292997,
+        "exp": 0.10905357594585993,
+        "wr": 0.2,
+        "pf": 1.2286547552123872,
+        "dd": 2.147836801404506
+      },
+      "oos": {
+        "n": 5,
+        "net": -0.6824066993160811,
+        "exp": -0.13648133986321623,
+        "wr": 0.4,
+        "pf": 0.6912708015152899,
+        "dd": 0.9989167496618148
+      },
+      "oos_shock_exp": -0.141,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -0.755,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true
+      }
+    },
+    {
+      "asset": "AVAX/USDT",
+      "set": "SET_2",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 2.5,
+        "target_r": 3.0,
+        "dev_n": 59,
+        "dev_exp": 0.4698001572559234,
+        "dev_net": 27.71820927809948,
+        "dev_wr": 0.4745762711864407,
+        "dev_pf": 1.9917855414984147,
+        "dev_dd": 6.996790063145401
+      },
+      "val": {
+        "n": 23,
+        "net": -9.156547876718365,
+        "exp": -0.3981107772486246,
+        "wr": 0.2608695652173913,
+        "pf": 0.4174191427639193,
+        "dd": 9.435216330759012
+      },
+      "oos": {
+        "n": 18,
+        "net": 1.1649188743818004,
+        "exp": 0.06471771524343335,
+        "wr": 0.5555555555555556,
+        "pf": 1.1554820250681925,
+        "dd": 3.5043768788230074
+      },
+      "oos_shock_exp": 0.0487,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": 0.138,
+        "D5_cost_shock": true,
+        "D6_sign_stable": "False",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.56
+      }
+    },
+    {
+      "asset": "AVAX/USDT",
+      "set": "SET_3",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 2.5,
+        "target_r": 3.0,
+        "dev_n": 293,
+        "dev_exp": 0.14243342410094828,
+        "dev_net": 41.732993261577846,
+        "dev_wr": 0.4334470989761092,
+        "dev_pf": 1.2881755428117192,
+        "dev_dd": 12.502873678402107
+      },
+      "val": {
+        "n": 110,
+        "net": -9.068973117577256,
+        "exp": -0.08244521015979324,
+        "wr": 0.32727272727272727,
+        "pf": 0.8646323287458947,
+        "dd": 20.284782501600024
+      },
+      "oos": {
+        "n": 98,
+        "net": -3.0618616130962897,
+        "exp": -0.031243485847921325,
+        "wr": 0.3673469387755102,
+        "pf": 0.9404151823537501,
+        "dd": 16.072759902777918
+      },
+      "oos_shock_exp": -0.0614,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -0.219,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.376
+      }
+    },
+    {
+      "asset": "AVAX/USDT",
+      "set": "SET_4",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_SUPER",
+        "params": {
+          "kind": "super"
+        },
+        "atr_mult": 2.5,
+        "target_r": 3.0,
+        "dev_n": 460,
+        "dev_exp": 0.01117732189558353,
+        "dev_net": 5.141568071968424,
+        "dev_wr": 0.3739130434782609,
+        "dev_pf": 1.0194856959435619,
+        "dev_dd": 22.335747470317074
+      },
+      "val": {
+        "n": 149,
+        "net": -23.360872270945084,
+        "exp": -0.15678437765734957,
+        "wr": 0.3422818791946309,
+        "pf": 0.7322183487084404,
+        "dd": 39.99611086090303
+      },
+      "oos": {
+        "n": 151,
+        "net": -40.05289770007167,
+        "exp": -0.26525097814617,
+        "wr": 0.2980132450331126,
+        "pf": 0.5868560571269098,
+        "dd": 43.6277655021904
+      },
+      "oos_shock_exp": -0.3143,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -23.731,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": false,
+        "D3_bootstrap_p_pos": 0.004
+      }
+    },
+    {
+      "asset": "AVAX/USDT",
+      "set": "SET_5",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_TREND",
+        "params": {
+          "kind": "trend"
+        },
+        "atr_mult": 3.0,
+        "target_r": 2.0,
+        "dev_n": 112,
+        "dev_exp": -0.1687056037118108,
+        "dev_net": -18.895027615722807,
+        "dev_wr": 0.36607142857142855,
+        "dev_pf": 0.6872491246653144,
+        "dev_dd": 24.08657557484679
+      },
+      "val": {
+        "n": 38,
+        "net": -13.895229723939849,
+        "exp": -0.36566394010368025,
+        "wr": 0.34210526315789475,
+        "pf": 0.37724466553769626,
+        "dd": 15.705653276654129
+      },
+      "oos": {
+        "n": 32,
+        "net": -15.564548242578375,
+        "exp": -0.48639213258057423,
+        "wr": 0.25,
+        "pf": 0.3107631948373069,
+        "dd": 15.748872629948062
+      },
+      "oos_shock_exp": -0.5308,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 2.883,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.001
+      }
+    },
+    {
+      "asset": "AVAX/USDT",
+      "set": "SET_6",
+      "status": "NO_DEV_CANDIDATE",
+      "verdict": "REJECTED",
+      "reason": "NO_DEV_CANDIDATE",
+      "checks": {}
+    },
+    {
+      "asset": "LINK/USDT",
+      "set": "SET_1",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_TREND",
+        "params": {
+          "kind": "trend"
+        },
+        "atr_mult": 2.0,
+        "target_r": 2.0,
+        "dev_n": 39,
+        "dev_exp": 0.33436967549831853,
+        "dev_net": 13.040417344434422,
+        "dev_wr": 0.4358974358974359,
+        "dev_pf": 1.6930632840118918,
+        "dev_dd": 6.175711982214539
+      },
+      "val": {
+        "n": 15,
+        "net": -0.06932421344500406,
+        "exp": -0.004621614229666937,
+        "wr": 0.4,
+        "pf": 0.9918035559609027,
+        "dd": 3.9956714824261805
+      },
+      "oos": {
+        "n": 7,
+        "net": -0.10541103864502573,
+        "exp": -0.015058719806432247,
+        "wr": 0.2857142857142857,
+        "pf": 0.9736655907885604,
+        "dd": 3.0038653751761557
+      },
+      "oos_shock_exp": -0.0229,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -0.045,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true
+      }
+    },
+    {
+      "asset": "LINK/USDT",
+      "set": "SET_2",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 2.5,
+        "target_r": 2.5,
+        "dev_n": 73,
+        "dev_exp": 0.21133531297025135,
+        "dev_net": 15.427477846828348,
+        "dev_wr": 0.4383561643835616,
+        "dev_pf": 1.3935751698024903,
+        "dev_dd": 10.714842166405829
+      },
+      "val": {
+        "n": 38,
+        "net": 4.35156809034855,
+        "exp": 0.11451494974601448,
+        "wr": 0.39473684210526316,
+        "pf": 1.204925195143806,
+        "dd": 4.994641872494022
+      },
+      "oos": {
+        "n": 30,
+        "net": 15.795801126219125,
+        "exp": 0.5265267042073042,
+        "wr": 0.6,
+        "pf": 2.4386688949273703,
+        "dd": 2.8198032687065497
+      },
+      "oos_shock_exp": 0.4991,
+      "verdict": "PROMOTABLE_PAPER_ONLY",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": true,
+        "D3_stats": true,
+        "D4_wfr": true,
+        "D4_wfr_value": 2.491,
+        "D5_cost_shock": true,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.984
+      }
+    },
+    {
+      "asset": "LINK/USDT",
+      "set": "SET_3",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 2.0,
+        "target_r": 3.0,
+        "dev_n": 304,
+        "dev_exp": 0.08515746462746736,
+        "dev_net": 25.88786924675008,
+        "dev_wr": 0.3782894736842105,
+        "dev_pf": 1.145498023537985,
+        "dev_dd": 24.914411754826222
+      },
+      "val": {
+        "n": 119,
+        "net": -9.107885449682122,
+        "exp": -0.07653685251833717,
+        "wr": 0.3025210084033613,
+        "pf": 0.8818021212157979,
+        "dd": 14.510692244524487
+      },
+      "oos": {
+        "n": 109,
+        "net": -3.0839003074866294,
+        "exp": -0.028292663371436967,
+        "wr": 0.3302752293577982,
+        "pf": 0.9536954141135594,
+        "dd": 15.108547337000985
+      },
+      "oos_shock_exp": -0.0661,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -0.332,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.411
+      }
+    },
+    {
+      "asset": "LINK/USDT",
+      "set": "SET_4",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 3.0,
+        "target_r": 3.0,
+        "dev_n": 225,
+        "dev_exp": -0.03325384261291781,
+        "dev_net": -7.4821145879065085,
+        "dev_wr": 0.3688888888888889,
+        "dev_pf": 0.940728220573353,
+        "dev_dd": 20.230636060696867
+      },
+      "val": {
+        "n": 62,
+        "net": -4.47091392886803,
+        "exp": -0.07211151498174243,
+        "wr": 0.3870967741935484,
+        "pf": 0.8579991551866749,
+        "dd": 12.442448068409917
+      },
+      "oos": {
+        "n": 68,
+        "net": -5.440453081761843,
+        "exp": -0.08000666296708593,
+        "wr": 0.35294117647058826,
+        "pf": 0.8681978213308398,
+        "dd": 15.62417611877712
+      },
+      "oos_shock_exp": -0.137,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 2.406,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.316
+      }
+    },
+    {
+      "asset": "LINK/USDT",
+      "set": "SET_5",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK20",
+        "params": {
+          "kind": "break",
+          "lookback": 20
+        },
+        "atr_mult": 2.5,
+        "target_r": 1.5,
+        "dev_n": 64,
+        "dev_exp": -0.10445858912089068,
+        "dev_net": -6.685349703737003,
+        "dev_wr": 0.453125,
+        "dev_pf": 0.794888194001638,
+        "dev_dd": 11.473754483252453
+      },
+      "val": {
+        "n": 27,
+        "net": -9.853519403579256,
+        "exp": -0.364945163095528,
+        "wr": 0.3333333333333333,
+        "pf": 0.45257845851565526,
+        "dd": 9.723861648766004
+      },
+      "oos": {
+        "n": 24,
+        "net": -1.8560171468307058,
+        "exp": -0.07733404778461274,
+        "wr": 0.4583333333333333,
+        "pf": 0.8386305322221445,
+        "dd": 3.358562678966935
+      },
+      "oos_shock_exp": -0.1693,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 0.74,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.344
+      }
+    },
+    {
+      "asset": "LINK/USDT",
+      "set": "SET_6",
+      "status": "NO_DEV_CANDIDATE",
+      "verdict": "REJECTED",
+      "reason": "NO_DEV_CANDIDATE",
+      "checks": {}
+    },
+    {
+      "asset": "LTC/USDT",
+      "set": "SET_1",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_SUPER",
+        "params": {
+          "kind": "super"
+        },
+        "atr_mult": 1.5,
+        "target_r": 1.5,
+        "dev_n": 30,
+        "dev_exp": 0.04313469955407372,
+        "dev_net": 1.2940409866222118,
+        "dev_wr": 0.4,
+        "dev_pf": 1.0815601397943873,
+        "dev_dd": 3.995669287588434
+      },
+      "val": {
+        "n": 13,
+        "net": -8.58385973996054,
+        "exp": -0.6602969030738877,
+        "wr": 0.15384615384615385,
+        "pf": 0.1562376741947414,
+        "dd": 7.582780393847978
+      },
+      "oos": {
+        "n": 15,
+        "net": -8.48545194747099,
+        "exp": -0.565696796498066,
+        "wr": 0.2,
+        "pf": 0.29262500998966917,
+        "dd": 7.560797456542433
+      },
+      "oos_shock_exp": -0.5703,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -13.115,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.013
+      }
+    },
+    {
+      "asset": "LTC/USDT",
+      "set": "SET_2",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 2.0,
+        "target_r": 2.5,
+        "dev_n": 87,
+        "dev_exp": 0.25359055125527497,
+        "dev_net": 22.06237795920892,
+        "dev_wr": 0.40229885057471265,
+        "dev_pf": 1.459513026304178,
+        "dev_dd": 7.6243253154061605
+      },
+      "val": {
+        "n": 33,
+        "net": -11.47190989441797,
+        "exp": -0.3476336331641809,
+        "wr": 0.21212121212121213,
+        "pf": 0.4932241400589394,
+        "dd": 13.198887134677214
+      },
+      "oos": {
+        "n": 26,
+        "net": -0.826706211922127,
+        "exp": -0.03179639276623565,
+        "wr": 0.34615384615384615,
+        "pf": 0.9513613238354988,
+        "dd": 7.001004281844082
+      },
+      "oos_shock_exp": -0.0541,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -0.125,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.443
+      }
+    },
+    {
+      "asset": "LTC/USDT",
+      "set": "SET_3",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_SUPER",
+        "params": {
+          "kind": "super"
+        },
+        "atr_mult": 3.0,
+        "target_r": 3.0,
+        "dev_n": 482,
+        "dev_exp": 0.0006907254179589675,
+        "dev_net": 0.33292965145622233,
+        "dev_wr": 0.4170124481327801,
+        "dev_pf": 1.0015075412787016,
+        "dev_dd": 23.197531412319645
+      },
+      "val": {
+        "n": 175,
+        "net": -13.343589465537605,
+        "exp": -0.07624908266021488,
+        "wr": 0.37142857142857144,
+        "pf": 0.8551873319190372,
+        "dd": 23.068114391702967
+      },
+      "oos": {
+        "n": 171,
+        "net": -24.217846327597833,
+        "exp": -0.14162483232513354,
+        "wr": 0.32748538011695905,
+        "pf": 0.7288037706969862,
+        "dd": 33.42949566221026
+      },
+      "oos_shock_exp": -0.1713,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": false,
+        "D4_wfr_value": -205.038,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "False",
+        "D7_dd": false,
+        "D3_bootstrap_p_pos": 0.041
+      }
+    },
+    {
+      "asset": "LTC/USDT",
+      "set": "SET_4",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_BREAK50",
+        "params": {
+          "kind": "break",
+          "lookback": 50
+        },
+        "atr_mult": 3.0,
+        "target_r": 1.5,
+        "dev_n": 254,
+        "dev_exp": -0.16360418464943444,
+        "dev_net": -41.55546290095635,
+        "dev_wr": 0.3779527559055118,
+        "dev_pf": 0.7094005498640782,
+        "dev_dd": 42.9247826609207
+      },
+      "val": {
+        "n": 85,
+        "net": -19.99593111056243,
+        "exp": -0.235246248359558,
+        "wr": 0.38823529411764707,
+        "pf": 0.5871488225680828,
+        "dd": 24.536506328768613
+      },
+      "oos": {
+        "n": 87,
+        "net": -25.119367333418104,
+        "exp": -0.2887283601542311,
+        "wr": 0.3448275862068966,
+        "pf": 0.5147347172335411,
+        "dd": 24.958012823803095
+      },
+      "oos_shock_exp": -0.3396,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 1.765,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": false,
+        "D3_bootstrap_p_pos": 0.001
+      }
+    },
+    {
+      "asset": "LTC/USDT",
+      "set": "SET_5",
+      "status": "MEASURED",
+      "best": {
+        "param": "V2_SUPER",
+        "params": {
+          "kind": "super"
+        },
+        "atr_mult": 3.0,
+        "target_r": 3.0,
+        "dev_n": 95,
+        "dev_exp": -0.17473765752594908,
+        "dev_net": -16.600077464965164,
+        "dev_wr": 0.3263157894736842,
+        "dev_pf": 0.696981606606748,
+        "dev_dd": 19.708679561625814
+      },
+      "val": {
+        "n": 34,
+        "net": -8.782536192889125,
+        "exp": -0.25830988802615074,
+        "wr": 0.23529411764705882,
+        "pf": 0.599350518194999,
+        "dd": 11.910960692458627
+      },
+      "oos": {
+        "n": 26,
+        "net": -5.866090484545661,
+        "exp": -0.22561886479021773,
+        "wr": 0.34615384615384615,
+        "pf": 0.5871794722823392,
+        "dd": 7.941395969858311
+      },
+      "oos_shock_exp": -0.3031,
+      "verdict": "REJECTED",
+      "checks": {
+        "D1_data": true,
+        "D2_alpha": false,
+        "D3_stats": false,
+        "D4_wfr": true,
+        "D4_wfr_value": 1.291,
+        "D5_cost_shock": false,
+        "D6_sign_stable": "True",
+        "D7_dd": true,
+        "D3_bootstrap_p_pos": 0.118
+      }
+    },
+    {
+      "asset": "LTC/USDT",
+      "set": "SET_6",
+      "status": "NO_DEV_CANDIDATE",
+      "verdict": "REJECTED",
+      "reason": "NO_DEV_CANDIDATE",
+      "checks": {}
+    }
+  ]
+}

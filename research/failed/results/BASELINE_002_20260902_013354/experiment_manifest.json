@@ -1,0 +1,416 @@
+{
+  "experiment_id": "BASELINE_002_CANONICAL_20260902_013354",
+  "strategy_version": "v2.0-UNIFIED-CANONICAL-LOCKED",
+  "control_invariants": [
+    "MAX_RISK_FRACTION_1_PCT",
+    "MIN_RR_FLOOR_4_0R",
+    "MONOTONIC_MTF_STRUCTURAL_TRAILING",
+    "ZERO_LOOKAHEAD_CAUSALITY",
+    "ADVERSE_FIRST_INTRABAR_COLLISION",
+    "LTF_SWEEP_DISPLACEMENT_ENTRY",
+    "MTF_REALIGNMENT_CANDIDATE_ONLY"
+  ],
+  "git_commit": "3ca22a9bac32a206591fa3216a8bb581d772103f",
+  "created_at_utc": "2026-09-02T01:34:03.231215+00:00",
+  "research_window_start_utc": "2021-01-01",
+  "research_universe": {
+    "BTC_15m": {
+      "rows": 316482,
+      "missing_bars": 565,
+      "incomplete_pct": 0.1782,
+      "first_utc": "2017-08-17 04:00",
+      "last_utc": "2026-09-01 17:30",
+      "sha256": "2d56a436d7622424a7a7d607bd7341e87c8e595deb792bad195cb13da56b316d",
+      "window_rows": 198825,
+      "full_warehouse_rows": 316482
+    },
+    "BTC_1M": {
+      "rows": 110,
+      "missing_bars": 0,
+      "incomplete_pct": 0.0,
+      "first_utc": "2017-08-01 00:00",
+      "last_utc": "2026-09-01 00:00",
+      "sha256": "ca08b065075816c3626b3149acdde8f2107e2d5b8950eb3934cc4e241dc60993",
+      "window_rows": 110,
+      "full_warehouse_rows": 110
+    },
+    "BTC_1d": {
+      "rows": 3303,
+      "missing_bars": 0,
+      "incomplete_pct": 0.0,
+      "first_utc": "2017-08-17 00:00",
+      "last_utc": "2026-09-01 00:00",
+      "sha256": "804cea4165e59a4fcd9e76a0502c16aa3fb35720733a5b577daa0d9659772e9c",
+      "window_rows": 2270,
+      "full_warehouse_rows": 3303
+    },
+    "BTC_1h": {
+      "rows": 79134,
+      "missing_bars": 128,
+      "incomplete_pct": 0.1615,
+      "first_utc": "2017-08-17 04:00",
+      "last_utc": "2026-09-01 17:00",
+      "sha256": "ace1fd19d1e006ca7bde4f6b43ada8a98c9be09cc36689b47f494d792b22358d",
+      "window_rows": 49859,
+      "full_warehouse_rows": 79134
+    },
+    "BTC_1w": {
+      "rows": 473,
+      "missing_bars": 0,
+      "incomplete_pct": 0.0,
+      "first_utc": "2017-08-14 00:00",
+      "last_utc": "2026-08-31 00:00",
+      "sha256": "b87177c7f8c5b485c036e9d009f1459508b9ebc0ec7f5b5708f08de771829ff8",
+      "window_rows": 473,
+      "full_warehouse_rows": 473
+    },
+    "BTC_4h": {
+      "rows": 19800,
+      "missing_bars": 16,
+      "incomplete_pct": 0.0807,
+      "first_utc": "2017-08-17 04:00",
+      "last_utc": "2026-09-01 16:00",
+      "sha256": "585633ad47d6062f86a5ea838fcf27f31dc5e444f2a6c196aa66e521cc9a6f3a",
+      "window_rows": 12619,
+      "full_warehouse_rows": 19800
+    },
+    "ETH_15m": {
+      "rows": 316482,
+      "missing_bars": 565,
+      "incomplete_pct": 0.1782,
+      "first_utc": "2017-08-17 04:00",
+      "last_utc": "2026-09-01 17:30",
+      "sha256": "6e68981533e48abd4b410b2eb90f2b97d467362af66948a63252bb67dd3c0dea",
+      "window_rows": 198825,
+      "full_warehouse_rows": 316482
+    },
+    "ETH_1M": {
+      "rows": 110,
+      "missing_bars": 0,
+      "incomplete_pct": 0.0,
+      "first_utc": "2017-08-01 00:00",
+      "last_utc": "2026-09-01 00:00",
+      "sha256": "76f6dcd10bead9121926cf7befaff243d06b02f64b57bcebb9985887035dba2c",
+      "window_rows": 110,
+      "full_warehouse_rows": 110
+    },
+    "ETH_1d": {
+      "rows": 3303,
+      "missing_bars": 0,
+      "incomplete_pct": 0.0,
+      "first_utc": "2017-08-17 00:00",
+      "last_utc": "2026-09-01 00:00",
+      "sha256": "0bf98d2e6e3d7c16dc6ebfc573016f9c8d37df5fff94f1f898c01b2c1da26ff8",
+      "window_rows": 2270,
+      "full_warehouse_rows": 3303
+    },
+    "ETH_1h": {
+      "rows": 79134,
+      "missing_bars": 128,
+      "incomplete_pct": 0.1615,
+      "first_utc": "2017-08-17 04:00",
+      "last_utc": "2026-09-01 17:00",
+      "sha256": "67df1f3acd4645beb70e9728cf6cc2dab54cceb867caba4db9ee63982017ef44",
+      "window_rows": 49859,
+      "full_warehouse_rows": 79134
+    },
+    "ETH_1w": {
+      "rows": 473,
+      "missing_bars": 0,
+      "incomplete_pct": 0.0,
+      "first_utc": "2017-08-14 00:00",
+      "last_utc": "2026-08-31 00:00",
+      "sha256": "5c60574f8e5bd1e92500d6b65a2e58206d45e3bb0abcfa57a1e37c3a98a9a9e5",
+      "window_rows": 473,
+      "full_warehouse_rows": 473
+    },
+    "ETH_4h": {
+      "rows": 19800,
+      "missing_bars": 16,
+      "incomplete_pct": 0.0807,
+      "first_utc": "2017-08-17 04:00",
+      "last_utc": "2026-09-01 16:00",
+      "sha256": "1c87c8f7c7b3e380b2fa04616affc81dbf11c55dfeb504bd8a5f41d07f91abae",
+      "window_rows": 12619,
+      "full_warehouse_rows": 19800
+    },
+    "SOL_15m": {
+      "rows": 211973,
+      "missing_bars": 94,
+      "incomplete_pct": 0.0443,
+      "first_utc": "2020-08-14 17:00",
+      "last_utc": "2026-09-01 17:30",
+      "sha256": "7ac6e95d5aa8305aaaa578e213f99099f8859778efda8674a9eac1ee95fd19fd",
+      "window_rows": 198825,
+      "full_warehouse_rows": 211973
+    },
+    "SOL_1M": {
+      "rows": 73,
+      "missing_bars": 0,
+      "incomplete_pct": 0.0,
+      "first_utc": "2020-09-01 00:00",
+      "last_utc": "2026-09-01 00:00",
+      "sha256": "6b8b90c2a70401ad2538a926ef6ef55ade457a213a86ffb0b98501fb0b962a2f",
+      "window_rows": 73,
+      "full_warehouse_rows": 73
+    },
+    "SOL_1d": {
+      "rows": 2209,
+      "missing_bars": 0,
+      "incomplete_pct": 0.0,
+      "first_utc": "2020-08-15 00:00",
+      "last_utc": "2026-09-01 00:00",
+      "sha256": "fd2247c9d6cd66aac116e98d63ed14a7e4f504e9ba58ce49e17d0c79e4b80b7c",
+      "window_rows": 2209,
+      "full_warehouse_rows": 2209
+    },
+    "SOL_1h": {
+      "rows": 52997,
+      "missing_bars": 20,
+      "incomplete_pct": 0.0377,
+      "first_utc": "2020-08-14 17:00",
+      "last_utc": "2026-09-01 17:00",
+      "sha256": "38f28171249ef8de8b22af9678e9f08d58c15d2b24febfbe44b3085d443841da",
+      "window_rows": 49859,
+      "full_warehouse_rows": 52997
+    },
+    "SOL_1w": {
+      "rows": 316,
+      "missing_bars": 0,
+      "incomplete_pct": 0.0,
+      "first_utc": "2020-08-17 00:00",
+      "last_utc": "2026-08-31 00:00",
+      "sha256": "452d4fcc3cb5a72ea39a5b71976d0d75566d3746d6a1a85578f4e2f45a1cb5ab",
+      "window_rows": 316,
+      "full_warehouse_rows": 316
+    },
+    "SOL_4h": {
+      "rows": 13254,
+      "missing_bars": 0,
+      "incomplete_pct": 0.0,
+      "first_utc": "2020-08-14 20:00",
+      "last_utc": "2026-09-01 16:00",
+      "sha256": "cee7d724ee551215490eac62989e202aeeaf4988a27f4da8ef9240c36bdb83fd",
+      "window_rows": 12619,
+      "full_warehouse_rows": 13254
+    }
+  },
+  "streams": [
+    {
+      "stream_key": "BTC_SET_1_HYP_A_PULLBACK_RIDING",
+      "asset": "BTC",
+      "timeframe_set": "SET_1",
+      "htf": "1M",
+      "mtf": "1w",
+      "ltf": "1d",
+      "hypothesis_id": "HYP_A_PULLBACK_RIDING"
+    },
+    {
+      "stream_key": "BTC_SET_1_HYP_B_CONTINUATION_RIDING",
+      "asset": "BTC",
+      "timeframe_set": "SET_1",
+      "htf": "1M",
+      "mtf": "1w",
+      "ltf": "1d",
+      "hypothesis_id": "HYP_B_CONTINUATION_RIDING"
+    },
+    {
+      "stream_key": "BTC_SET_2_HYP_A_PULLBACK_RIDING",
+      "asset": "BTC",
+      "timeframe_set": "SET_2",
+      "htf": "1w",
+      "mtf": "1d",
+      "ltf": "4h",
+      "hypothesis_id": "HYP_A_PULLBACK_RIDING"
+    },
+    {
+      "stream_key": "BTC_SET_2_HYP_B_CONTINUATION_RIDING",
+      "asset": "BTC",
+      "timeframe_set": "SET_2",
+      "htf": "1w",
+      "mtf": "1d",
+      "ltf": "4h",
+      "hypothesis_id": "HYP_B_CONTINUATION_RIDING"
+    },
+    {
+      "stream_key": "BTC_SET_3_HYP_A_PULLBACK_RIDING",
+      "asset": "BTC",
+      "timeframe_set": "SET_3",
+      "htf": "1d",
+      "mtf": "4h",
+      "ltf": "1h",
+      "hypothesis_id": "HYP_A_PULLBACK_RIDING"
+    },
+    {
+      "stream_key": "BTC_SET_3_HYP_B_CONTINUATION_RIDING",
+      "asset": "BTC",
+      "timeframe_set": "SET_3",
+      "htf": "1d",
+      "mtf": "4h",
+      "ltf": "1h",
+      "hypothesis_id": "HYP_B_CONTINUATION_RIDING"
+    },
+    {
+      "stream_key": "BTC_SET_4_HYP_A_PULLBACK_RIDING",
+      "asset": "BTC",
+      "timeframe_set": "SET_4",
+      "htf": "4h",
+      "mtf": "1h",
+      "ltf": "15m",
+      "hypothesis_id": "HYP_A_PULLBACK_RIDING"
+    },
+    {
+      "stream_key": "BTC_SET_4_HYP_B_CONTINUATION_RIDING",
+      "asset": "BTC",
+      "timeframe_set": "SET_4",
+      "htf": "4h",
+      "mtf": "1h",
+      "ltf": "15m",
+      "hypothesis_id": "HYP_B_CONTINUATION_RIDING"
+    },
+    {
+      "stream_key": "ETH_SET_1_HYP_A_PULLBACK_RIDING",
+      "asset": "ETH",
+      "timeframe_set": "SET_1",
+      "htf": "1M",
+      "mtf": "1w",
+      "ltf": "1d",
+      "hypothesis_id": "HYP_A_PULLBACK_RIDING"
+    },
+    {
+      "stream_key": "ETH_SET_1_HYP_B_CONTINUATION_RIDING",
+      "asset": "ETH",
+      "timeframe_set": "SET_1",
+      "htf": "1M",
+      "mtf": "1w",
+      "ltf": "1d",
+      "hypothesis_id": "HYP_B_CONTINUATION_RIDING"
+    },
+    {
+      "stream_key": "ETH_SET_2_HYP_A_PULLBACK_RIDING",
+      "asset": "ETH",
+      "timeframe_set": "SET_2",
+      "htf": "1w",
+      "mtf": "1d",
+      "ltf": "4h",
+      "hypothesis_id": "HYP_A_PULLBACK_RIDING"
+    },
+    {
+      "stream_key": "ETH_SET_2_HYP_B_CONTINUATION_RIDING",
+      "asset": "ETH",
+      "timeframe_set": "SET_2",
+      "htf": "1w",
+      "mtf": "1d",
+      "ltf": "4h",
+      "hypothesis_id": "HYP_B_CONTINUATION_RIDING"
+    },
+    {
+      "stream_key": "ETH_SET_3_HYP_A_PULLBACK_RIDING",
+      "asset": "ETH",
+      "timeframe_set": "SET_3",
+      "htf": "1d",
+      "mtf": "4h",
+      "ltf": "1h",
+      "hypothesis_id": "HYP_A_PULLBACK_RIDING"
+    },
+    {
+      "stream_key": "ETH_SET_3_HYP_B_CONTINUATION_RIDING",
+      "asset": "ETH",
+      "timeframe_set": "SET_3",
+      "htf": "1d",
+      "mtf": "4h",
+      "ltf": "1h",
+      "hypothesis_id": "HYP_B_CONTINUATION_RIDING"
+    },
+    {
+      "stream_key": "ETH_SET_4_HYP_A_PULLBACK_RIDING",
+      "asset": "ETH",
+      "timeframe_set": "SET_4",
+      "htf": "4h",
+      "mtf": "1h",
+      "ltf": "15m",
+      "hypothesis_id": "HYP_A_PULLBACK_RIDING"
+    },
+    {
+      "stream_key": "ETH_SET_4_HYP_B_CONTINUATION_RIDING",
+      "asset": "ETH",
+      "timeframe_set": "SET_4",
+      "htf": "4h",
+      "mtf": "1h",
+      "ltf": "15m",
+      "hypothesis_id": "HYP_B_CONTINUATION_RIDING"
+    },
+    {
+      "stream_key": "SOL_SET_1_HYP_A_PULLBACK_RIDING",
+      "asset": "SOL",
+      "timeframe_set": "SET_1",
+      "htf": "1M",
+      "mtf": "1w",
+      "ltf": "1d",
+      "hypothesis_id": "HYP_A_PULLBACK_RIDING"
+    },
+    {
+      "stream_key": "SOL_SET_1_HYP_B_CONTINUATION_RIDING",
+      "asset": "SOL",
+      "timeframe_set": "SET_1",
+      "htf": "1M",
+      "mtf": "1w",
+      "ltf": "1d",
+      "hypothesis_id": "HYP_B_CONTINUATION_RIDING"
+    },
+    {
+      "stream_key": "SOL_SET_2_HYP_A_PULLBACK_RIDING",
+      "asset": "SOL",
+      "timeframe_set": "SET_2",
+      "htf": "1w",
+      "mtf": "1d",
+      "ltf": "4h",
+      "hypothesis_id": "HYP_A_PULLBACK_RIDING"
+    },
+    {
+      "stream_key": "SOL_SET_2_HYP_B_CONTINUATION_RIDING",
+      "asset": "SOL",
+      "timeframe_set": "SET_2",
+      "htf": "1w",
+      "mtf": "1d",
+      "ltf": "4h",
+      "hypothesis_id": "HYP_B_CONTINUATION_RIDING"
+    },
+    {
+      "stream_key": "SOL_SET_3_HYP_A_PULLBACK_RIDING",
+      "asset": "SOL",
+      "timeframe_set": "SET_3",
+      "htf": "1d",
+      "mtf": "4h",
+      "ltf": "1h",
+      "hypothesis_id": "HYP_A_PULLBACK_RIDING"
+    },
+    {
+      "stream_key": "SOL_SET_3_HYP_B_CONTINUATION_RIDING",
+      "asset": "SOL",
+      "timeframe_set": "SET_3",
+      "htf": "1d",
+      "mtf": "4h",
+      "ltf": "1h",
+      "hypothesis_id": "HYP_B_CONTINUATION_RIDING"
+    },
+    {
+      "stream_key": "SOL_SET_4_HYP_A_PULLBACK_RIDING",
+      "asset": "SOL",
+      "timeframe_set": "SET_4",
+      "htf": "4h",
+      "mtf": "1h",
+      "ltf": "15m",
+      "hypothesis_id": "HYP_A_PULLBACK_RIDING"
+    },
+    {
+      "stream_key": "SOL_SET_4_HYP_B_CONTINUATION_RIDING",
+      "asset": "SOL",
+      "timeframe_set": "SET_4",
+      "htf": "4h",
+      "mtf": "1h",
+      "ltf": "15m",
+      "hypothesis_id": "HYP_B_CONTINUATION_RIDING"
+    }
+  ]
+}

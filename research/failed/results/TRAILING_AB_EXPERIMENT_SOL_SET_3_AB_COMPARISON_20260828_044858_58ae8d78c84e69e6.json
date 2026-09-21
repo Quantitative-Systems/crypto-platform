@@ -1,0 +1,276 @@
+{
+  "provenance": {
+    "experiment_name": "TRAILING_AB_EXPERIMENT",
+    "asset": "SOL",
+    "timeframe_set": "SET_3",
+    "hypothesis_id": "AB_COMPARISON",
+    "release_version": "v0.4.0-product-04",
+    "execution_model_version": "1.0.0-causal-adverse-first",
+    "created_at_utc": "2026-08-28T04:48:58.830514+00:00",
+    "config": {
+      "initial_balance": 10000.0
+    },
+    "dataset_info": {
+      "asset": "SOL",
+      "timeframe_set": "SET_3",
+      "bars": 9000
+    },
+    "provenance_hash": "58ae8d78c84e69e6"
+  },
+  "metrics": {
+    "baseline_a": {
+      "total_trades": 16,
+      "win_count": 1,
+      "loss_count": 15,
+      "breakeven_count": 0,
+      "win_rate": 0.0625,
+      "loss_rate": 0.9375,
+      "gross_profit_usd": 730.33,
+      "gross_loss_usd": 1531.73,
+      "net_profit_usd": -801.4,
+      "total_friction_usd": 35.61,
+      "avg_win_usd": 730.33,
+      "avg_loss_usd": 102.12,
+      "profit_factor": 0.4768,
+      "expectancy_usd": -50.09,
+      "expectancy_r": -0.4975,
+      "max_drawdown_pct": 0.0915,
+      "sharpe_ratio": -0.2485,
+      "sortino_ratio": -0.9924,
+      "average_r": -0.4975,
+      "median_r": -1.0447,
+      "r_multiples": [
+        -1.0391,
+        -1.0391,
+        -1.013,
+        -1.013,
+        -1.0518,
+        -1.0518,
+        7.7736,
+        -1.0797,
+        -1.048,
+        -1.0447,
+        -1.0447,
+        -1.0738,
+        -1.025,
+        -1.025,
+        -1.0923,
+        -1.0923
+      ]
+    },
+    "baseline_b": {
+      "total_trades": 15,
+      "win_count": 1,
+      "loss_count": 14,
+      "breakeven_count": 0,
+      "win_rate": 0.0667,
+      "loss_rate": 0.9333,
+      "gross_profit_usd": 737.81,
+      "gross_loss_usd": 1445.07,
+      "net_profit_usd": -707.26,
+      "total_friction_usd": 35.29,
+      "avg_win_usd": 737.81,
+      "avg_loss_usd": 103.22,
+      "profit_factor": 0.5106,
+      "expectancy_usd": -47.15,
+      "expectancy_r": -0.4631,
+      "max_drawdown_pct": 0.0915,
+      "sharpe_ratio": -0.2247,
+      "sortino_ratio": -0.8691,
+      "average_r": -0.4631,
+      "median_r": -1.0447,
+      "r_multiples": [
+        -1.0391,
+        -1.0391,
+        -1.013,
+        -1.0518,
+        -1.0518,
+        7.7736,
+        -1.0797,
+        -1.048,
+        -1.0447,
+        -1.0447,
+        -1.0738,
+        -1.025,
+        -1.025,
+        -1.0923,
+        -1.0923
+      ]
+    },
+    "deltas": {
+      "win_rate_delta": 0.0042,
+      "net_profit_delta_usd": 94.14,
+      "max_drawdown_delta_pct": 0.0
+    }
+  },
+  "exit_attribution": {
+    "baseline_a": {
+      "HTF_TP": {
+        "trade_count": 1,
+        "percentage_of_total": 0.0625,
+        "win_count": 1,
+        "loss_count": 0,
+        "win_rate": 1.0,
+        "total_pnl_usd": 730.33,
+        "avg_realized_r": 7.7736,
+        "r_multiples": [
+          7.7736
+        ]
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "trade_count": 0,
+        "percentage_of_total": 0.0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate": 0.0,
+        "total_pnl_usd": 0.0,
+        "avg_realized_r": 0.0,
+        "r_multiples": []
+      },
+      "INITIAL_LTF_SL": {
+        "trade_count": 15,
+        "percentage_of_total": 0.9375,
+        "win_count": 0,
+        "loss_count": 15,
+        "win_rate": 0.0,
+        "total_pnl_usd": -1531.73,
+        "avg_realized_r": -1.0489,
+        "r_multiples": [
+          -1.0391,
+          -1.0391,
+          -1.013,
+          -1.013,
+          -1.0518,
+          -1.0518,
+          -1.0797,
+          -1.048,
+          -1.0447,
+          -1.0447,
+          -1.0738,
+          -1.025,
+          -1.025,
+          -1.0923,
+          -1.0923
+        ]
+      },
+      "OTHER": {
+        "trade_count": 0,
+        "percentage_of_total": 0.0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate": 0.0,
+        "total_pnl_usd": 0.0,
+        "avg_realized_r": 0.0,
+        "r_multiples": []
+      }
+    },
+    "baseline_b": {
+      "HTF_TP": {
+        "trade_count": 1,
+        "percentage_of_total": 0.0667,
+        "win_count": 1,
+        "loss_count": 0,
+        "win_rate": 1.0,
+        "total_pnl_usd": 737.81,
+        "avg_realized_r": 7.7736,
+        "r_multiples": [
+          7.7736
+        ]
+      },
+      "MTF_STRUCTURAL_TRAIL": {
+        "trade_count": 0,
+        "percentage_of_total": 0.0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate": 0.0,
+        "total_pnl_usd": 0.0,
+        "avg_realized_r": 0.0,
+        "r_multiples": []
+      },
+      "INITIAL_LTF_SL": {
+        "trade_count": 14,
+        "percentage_of_total": 0.9333,
+        "win_count": 0,
+        "loss_count": 14,
+        "win_rate": 0.0,
+        "total_pnl_usd": -1445.07,
+        "avg_realized_r": -1.0515,
+        "r_multiples": [
+          -1.0391,
+          -1.0391,
+          -1.013,
+          -1.0518,
+          -1.0518,
+          -1.0797,
+          -1.048,
+          -1.0447,
+          -1.0447,
+          -1.0738,
+          -1.025,
+          -1.025,
+          -1.0923,
+          -1.0923
+        ]
+      },
+      "OTHER": {
+        "trade_count": 0,
+        "percentage_of_total": 0.0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate": 0.0,
+        "total_pnl_usd": 0.0,
+        "avg_realized_r": 0.0,
+        "r_multiples": []
+      }
+    }
+  },
+  "failure_modes": {
+    "baseline_a": {
+      "total_losing_trades": 15,
+      "failure_mode_breakdown": {
+        "INITIAL_STRUCTURAL_INVALIDATION": {
+          "count": 15,
+          "percentage_of_losses": 1.0
+        },
+        "MTF_TRAIL_REVERSAL": {
+          "count": 0,
+          "percentage_of_losses": 0.0
+        },
+        "TARGET_UNREACHED_REVERSAL": {
+          "count": 0,
+          "percentage_of_losses": 0.0
+        },
+        "OTHER": {
+          "count": 0,
+          "percentage_of_losses": 0.0
+        }
+      }
+    },
+    "baseline_b": {
+      "total_losing_trades": 14,
+      "failure_mode_breakdown": {
+        "INITIAL_STRUCTURAL_INVALIDATION": {
+          "count": 14,
+          "percentage_of_losses": 1.0
+        },
+        "MTF_TRAIL_REVERSAL": {
+          "count": 0,
+          "percentage_of_losses": 0.0
+        },
+        "TARGET_UNREACHED_REVERSAL": {
+          "count": 0,
+          "percentage_of_losses": 0.0
+        },
+        "OTHER": {
+          "count": 0,
+          "percentage_of_losses": 0.0
+        }
+      }
+    }
+  },
+  "trades_summary": {
+    "total_trades": 0,
+    "trades": []
+  },
+  "equity_curve": []
+}

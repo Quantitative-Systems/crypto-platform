@@ -1,0 +1,426 @@
+{
+  "orchestrator": "QCP Autonomous Platform Orchestrator (v2)",
+  "cycle_start_utc": "2026-09-16T15:33:42.826217+00:00",
+  "cycle_end_utc": "2026-09-16T15:33:43.153074+00:00",
+  "data_fabric": {
+    "btc_bars": 19800,
+    "eth_bars": 19800,
+    "sol_bars": 13254,
+    "book_snapshot": {
+      "symbol": "SOL/USDT",
+      "spread_bps": 2.0,
+      "bid_depth_usd": 32403.0
+    }
+  },
+  "market_regime": {
+    "timestamp_utc": "2026-09-01 16:00:00+00:00",
+    "symbol": "SOL/USDT",
+    "trend": "SIDEWAYS_CHOP",
+    "volatility": "NORMAL_VOL",
+    "liquidity": "LIQUIDITY_CONTRACTION",
+    "funding": "NEUTRAL_CARRY",
+    "correlation": "DISPERSED_MARKET",
+    "trend_strength_score": 0.4141,
+    "volatility_percentile": 47.9,
+    "liquidity_depth_ratio": 0.54,
+    "annualized_funding_pct": 10.95,
+    "systemic_coupling_score": 0.45
+  },
+  "discovery": {
+    "raw_opportunities": 2,
+    "data_acquired_tokens": [
+      "SPOT_PERP_BASIS_SOLUSDT",
+      "ORDER_BOOK_L2_SOLUSDT",
+      "AGGRESSOR_FLOW_SOLUSDT",
+      "LIQUIDATIONS_SOLUSDT"
+    ],
+    "ready_opportunities": 2,
+    "hypotheses_dispatched": 2
+  },
+  "research_factory": {
+    "candidates_generated": 2,
+    "gap_analysis": {
+      "total_candidates": 2,
+      "families_present": [
+        "ARBITRAGE",
+        "EVENT_DRIVEN"
+      ],
+      "missing_families": [
+        "CARRY",
+        "DIRECTIONAL",
+        "MACHINE_LEARNING",
+        "MARKET_MAKING",
+        "MICROSTRUCTURE",
+        "RELATIVE_VALUE"
+      ],
+      "recommended_next_research_target": "CARRY",
+      "hypotheses_with_unsupported_data": [
+        "HYP-OPP-ARB-SOLUSDT-0001:SPOT_PERP_BASIS_SOLUSDT,ORDER_BOOK_L2_SOLUSDT",
+        "HYP-OPP-LIQ-SOLUSDT-0002:LIQUIDATIONS_SOLUSDT,AGGRESSOR_FLOW_SOLUSDT"
+      ],
+      "asserted_performance_metrics": 0
+    },
+    "memory_stats": {
+      "total_hypotheses_evaluated": 10,
+      "falsified_hypotheses": 10,
+      "survived_hypotheses": 0,
+      "failure_taxonomy_distribution": {
+        "UNKNOWN": 10
+      }
+    }
+  },
+  "falsification_audit": [
+    {
+      "alpha_id": "HYP-OPP-ARB-SOLUSDT-0001",
+      "is_falsified": true,
+      "falsification_reason": "NO_EMPIRICAL_TRADE_RETURNS",
+      "causal_lookahead_detected": false,
+      "latency_robust": false,
+      "latency_decay_pct_at_60m": 0.0,
+      "friction_stress_survived_2x": false,
+      "windfall_independent": false,
+      "oos_sharpe_ratio": 0.0,
+      "audit_verdict": "INSUFFICIENT_EVIDENCE",
+      "returns_provenance": "UNAVAILABLE",
+      "returns_supplied": false,
+      "details": {
+        "note": "No measured trade returns with empirical provenance were supplied. The engine refuses to synthesise returns from the genome's own self-reported statistics.",
+        "required_action": "Run research.economic_evaluation_engine over a certified dataset and pass the realised net-R series with its provenance."
+      }
+    },
+    {
+      "alpha_id": "HYP-OPP-LIQ-SOLUSDT-0002",
+      "is_falsified": true,
+      "falsification_reason": "NO_EMPIRICAL_TRADE_RETURNS",
+      "causal_lookahead_detected": false,
+      "latency_robust": false,
+      "latency_decay_pct_at_60m": 0.0,
+      "friction_stress_survived_2x": false,
+      "windfall_independent": false,
+      "oos_sharpe_ratio": 0.0,
+      "audit_verdict": "INSUFFICIENT_EVIDENCE",
+      "returns_provenance": "UNAVAILABLE",
+      "returns_supplied": false,
+      "details": {
+        "note": "No measured trade returns with empirical provenance were supplied. The engine refuses to synthesise returns from the genome's own self-reported statistics.",
+        "required_action": "Run research.economic_evaluation_engine over a certified dataset and pass the realised net-R series with its provenance."
+      }
+    }
+  ],
+  "execution_capacity": [
+    {
+      "alpha_id": "HYP-OPP-ARB-SOLUSDT-0001",
+      "max_scalable_aum_usd": 0.0,
+      "curve_points": [
+        {
+          "aum_usd": 10000.0,
+          "order_size_usd": 3300.0,
+          "expected_market_impact_bps": 0.22,
+          "expected_friction_total_bps": 15.23,
+          "net_edge_r": -0.0508,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 50000.0,
+          "order_size_usd": 16500.0,
+          "expected_market_impact_bps": 0.49,
+          "expected_friction_total_bps": 15.5,
+          "net_edge_r": -0.0517,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 250000.0,
+          "order_size_usd": 82500.0,
+          "expected_market_impact_bps": 1.1,
+          "expected_friction_total_bps": 16.1,
+          "net_edge_r": -0.0537,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 1000000.0,
+          "order_size_usd": 330000.0,
+          "expected_market_impact_bps": 2.19,
+          "expected_friction_total_bps": 17.2,
+          "net_edge_r": -0.0573,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 5000000.0,
+          "order_size_usd": 1650000.0,
+          "expected_market_impact_bps": 4.9,
+          "expected_friction_total_bps": 19.91,
+          "net_edge_r": -0.0664,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 10000000.0,
+          "order_size_usd": 3300000.0,
+          "expected_market_impact_bps": 6.93,
+          "expected_friction_total_bps": 21.94,
+          "net_edge_r": -0.0731,
+          "is_economically_viable": false
+        }
+      ],
+      "turnover_annual": 8760.0,
+      "impact_parameter_lambda": 0.15
+    },
+    {
+      "alpha_id": "HYP-OPP-LIQ-SOLUSDT-0002",
+      "max_scalable_aum_usd": 0.0,
+      "curve_points": [
+        {
+          "aum_usd": 10000.0,
+          "order_size_usd": 3300.0,
+          "expected_market_impact_bps": 0.22,
+          "expected_friction_total_bps": 15.49,
+          "net_edge_r": -0.0516,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 50000.0,
+          "order_size_usd": 16500.0,
+          "expected_market_impact_bps": 0.49,
+          "expected_friction_total_bps": 15.76,
+          "net_edge_r": -0.0525,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 250000.0,
+          "order_size_usd": 82500.0,
+          "expected_market_impact_bps": 1.1,
+          "expected_friction_total_bps": 16.37,
+          "net_edge_r": -0.0546,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 1000000.0,
+          "order_size_usd": 330000.0,
+          "expected_market_impact_bps": 2.19,
+          "expected_friction_total_bps": 17.46,
+          "net_edge_r": -0.0582,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 5000000.0,
+          "order_size_usd": 1650000.0,
+          "expected_market_impact_bps": 4.9,
+          "expected_friction_total_bps": 20.17,
+          "net_edge_r": -0.0672,
+          "is_economically_viable": false
+        },
+        {
+          "aum_usd": 10000000.0,
+          "order_size_usd": 3300000.0,
+          "expected_market_impact_bps": 6.93,
+          "expected_friction_total_bps": 22.2,
+          "net_edge_r": -0.074,
+          "is_economically_viable": false
+        }
+      ],
+      "turnover_annual": 2190.0,
+      "impact_parameter_lambda": 0.15
+    }
+  ],
+  "exposure_graph": {
+    "total_nodes": 2,
+    "distinct_economic_clusters": 1,
+    "cluster_summary": {
+      "5": [
+        "HYP-OPP-ARB-SOLUSDT-0001",
+        "HYP-OPP-LIQ-SOLUSDT-0002"
+      ]
+    },
+    "portfolio_concentration_warning": true,
+    "evidence_status": "SYNTHETIC_STRUCTURAL",
+    "factors_used": [
+      "BTC",
+      "VOL",
+      "LIQ"
+    ],
+    "note": "Structural factor proxy fallback. Real empirical returns not supplied.",
+    "nodes": [
+      {
+        "alpha_id": "HYP-OPP-ARB-SOLUSDT-0001",
+        "family": "ARBITRAGE",
+        "cluster_id": 5,
+        "is_independent": true,
+        "btc_beta": 0.3,
+        "volatility_beta": 0.1,
+        "liquidity_beta": 0.1,
+        "pure_residual_alpha_r": 0.14,
+        "r_squared": 0.073,
+        "evidence_status": "SYNTHETIC_STRUCTURAL"
+      },
+      {
+        "alpha_id": "HYP-OPP-LIQ-SOLUSDT-0002",
+        "family": "EVENT_DRIVEN",
+        "cluster_id": 5,
+        "is_independent": false,
+        "btc_beta": 0.3,
+        "volatility_beta": 0.1,
+        "liquidity_beta": 0.1,
+        "pure_residual_alpha_r": 0.14,
+        "r_squared": 0.073,
+        "evidence_status": "SYNTHETIC_STRUCTURAL"
+      }
+    ]
+  },
+  "portfolio_allocation": {
+    "total_portfolio_equity_usd": 10000.0,
+    "current_portfolio_drawdown_pct": 0.0,
+    "max_portfolio_heat_pct": 3.0,
+    "total_allocated_heat_pct": 0.0,
+    "is_capital_firewall_locked": true,
+    "firewall_veto_triggered": false,
+    "firewall_veto_reasons": [],
+    "allocated_strategies_count": 0,
+    "rejected_strategies_count": 2,
+    "allocations": {
+      "HYP-OPP-ARB-SOLUSDT-0001": {
+        "strategy_id": "HYP-OPP-ARB-SOLUSDT-0001",
+        "symbol": "SOL/USDT",
+        "is_allocated": false,
+        "recommended_risk_pct": 0.0,
+        "recommended_notional_usd": 0.0,
+        "allocation_weight_pct": 0.0,
+        "rejection_reasons": [
+          "LIFECYCLE_INELIGIBLE (RESEARCH candidates receive $0 capital)",
+          "NEGATIVE_OR_ZERO_NET_EDGE (E_net=0.0000R <= 0)",
+          "STATISTICAL_UNCERTAINTY_EXCEEDS_EDGE (E_adj=0.0000R <= 0)"
+        ],
+        "throttling_notes": [],
+        "raw_proposed_risk_pct": 0.0,
+        "adjusted_edge_r": 0.0,
+        "covariance_discount_pct": 0.0,
+        "is_capped_by_strategy_ceiling": false,
+        "is_capped_by_asset_ceiling": false,
+        "is_capped_by_heat_ceiling": false
+      },
+      "HYP-OPP-LIQ-SOLUSDT-0002": {
+        "strategy_id": "HYP-OPP-LIQ-SOLUSDT-0002",
+        "symbol": "SOL/USDT",
+        "is_allocated": false,
+        "recommended_risk_pct": 0.0,
+        "recommended_notional_usd": 0.0,
+        "allocation_weight_pct": 0.0,
+        "rejection_reasons": [
+          "LIFECYCLE_INELIGIBLE (RESEARCH candidates receive $0 capital)",
+          "NEGATIVE_OR_ZERO_NET_EDGE (E_net=0.0000R <= 0)",
+          "STATISTICAL_UNCERTAINTY_EXCEEDS_EDGE (E_adj=0.0000R <= 0)"
+        ],
+        "throttling_notes": [],
+        "raw_proposed_risk_pct": 0.0,
+        "adjusted_edge_r": 0.0,
+        "covariance_discount_pct": 0.0,
+        "is_capped_by_strategy_ceiling": false,
+        "is_capped_by_asset_ceiling": false,
+        "is_capped_by_heat_ceiling": false
+      }
+    }
+  },
+  "hedging_decision": {
+    "action": "NO_HEDGE_NEEDED",
+    "net_portfolio_beta": 0.0,
+    "total_portfolio_heat_pct": 0.0,
+    "recommended_hedge_symbol": "BTCUSDT",
+    "target_hedge_notional": 0.0,
+    "reason": "Portfolio risk metrics within safe limits"
+  },
+  "risk_governor_decisions": [],
+  "stress_lab_report": {
+    "total_scenarios_tested": 5,
+    "scenarios_passed": 5,
+    "max_portfolio_stress_drawdown_pct": 0.0,
+    "all_survived": true,
+    "scenario_results": [
+      {
+        "scenario_name": "FLASH_CRASH_BTC_15PCT",
+        "price_shock_pct": -15.0,
+        "spread_multiplier": 3.5,
+        "depth_shrink_pct": 60.0,
+        "initial_equity_usd": 10000.0,
+        "post_shock_equity_usd": 10000.0,
+        "drawdown_pct": 0.0,
+        "margin_buffer_ratio": 10000.0,
+        "risk_governor_interventions": 1,
+        "survived": true,
+        "status_verdict": "SURVIVED_ROBUST"
+      },
+      {
+        "scenario_name": "ALTCOIN_LIQUIDATION_CASCADE_35PCT",
+        "price_shock_pct": -35.0,
+        "spread_multiplier": 5.0,
+        "depth_shrink_pct": 80.0,
+        "initial_equity_usd": 10000.0,
+        "post_shock_equity_usd": 10000.0,
+        "drawdown_pct": 0.0,
+        "margin_buffer_ratio": 10000.0,
+        "risk_governor_interventions": 1,
+        "survived": true,
+        "status_verdict": "SURVIVED_ROBUST"
+      },
+      {
+        "scenario_name": "SPREAD_BLOWOUT_10X",
+        "price_shock_pct": -3.0,
+        "spread_multiplier": 10.0,
+        "depth_shrink_pct": 75.0,
+        "initial_equity_usd": 10000.0,
+        "post_shock_equity_usd": 10000.0,
+        "drawdown_pct": 0.0,
+        "margin_buffer_ratio": 10000.0,
+        "risk_governor_interventions": 1,
+        "survived": true,
+        "status_verdict": "SURVIVED_ROBUST"
+      },
+      {
+        "scenario_name": "LIQUIDITY_VOID_EVAPORATION",
+        "price_shock_pct": -5.0,
+        "spread_multiplier": 4.0,
+        "depth_shrink_pct": 85.0,
+        "initial_equity_usd": 10000.0,
+        "post_shock_equity_usd": 10000.0,
+        "drawdown_pct": 0.0,
+        "margin_buffer_ratio": 10000.0,
+        "risk_governor_interventions": 1,
+        "survived": true,
+        "status_verdict": "SURVIVED_ROBUST"
+      },
+      {
+        "scenario_name": "CORRELATED_SYSTEMIC_COLLAPSE",
+        "price_shock_pct": -22.0,
+        "spread_multiplier": 6.0,
+        "depth_shrink_pct": 70.0,
+        "initial_equity_usd": 10000.0,
+        "post_shock_equity_usd": 10000.0,
+        "drawdown_pct": 0.0,
+        "margin_buffer_ratio": 10000.0,
+        "risk_governor_interventions": 1,
+        "survived": true,
+        "status_verdict": "SURVIVED_ROBUST"
+      }
+    ]
+  },
+  "economic_truth_attribution": {
+    "trade_id": "TRD-CYCLE-001",
+    "alpha_id": "FAM-07-MTFCONT_SOLUSDT_Set2",
+    "symbol": "SOL/USDT",
+    "entry_timestamp_utc": "2026-09-16T15:33:43.153051+00:00",
+    "exit_timestamp_utc": "2026-09-16T15:33:43.153061+00:00",
+    "gross_pnl_usd": 75.0,
+    "net_pnl_usd": 74.14,
+    "pure_alpha_pnl_usd": 57.6,
+    "market_beta_pnl_usd": 17.4,
+    "regime_pnl_usd": 0.0,
+    "carry_funding_pnl_usd": 1.5,
+    "exchange_fees_usd": 1.49,
+    "spread_cost_usd": 0.29,
+    "slippage_cost_usd": 0.43,
+    "market_impact_usd": 0.15,
+    "attribution_error_usd": 0.0
+  },
+  "governance": {
+    "live_capital_usd": 0.0,
+    "live_order_submission": "DISABLED",
+    "capital_firewall": "FAIL_CLOSED"
+  }
+}

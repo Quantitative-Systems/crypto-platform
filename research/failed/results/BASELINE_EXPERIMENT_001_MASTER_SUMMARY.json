@@ -1,0 +1,3695 @@
+{
+  "experiment_name": "BASELINE_EXPERIMENT_001",
+  "total_streams": 24,
+  "streams": {
+    "BTC_SET_1_PULLBACK": {
+      "stream_key": "BTC_SET_1_PULLBACK",
+      "asset": "BTC",
+      "timeframe_set": "SET_1",
+      "strategy": "HYP_A_PULLBACK_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "BTC_SET_1_CONTINUATION": {
+      "stream_key": "BTC_SET_1_CONTINUATION",
+      "asset": "BTC",
+      "timeframe_set": "SET_1",
+      "strategy": "HYP_B_CONTINUATION_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "BTC_SET_2_PULLBACK": {
+      "stream_key": "BTC_SET_2_PULLBACK",
+      "asset": "BTC",
+      "timeframe_set": "SET_2",
+      "strategy": "HYP_A_PULLBACK_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "BTC_SET_2_CONTINUATION": {
+      "stream_key": "BTC_SET_2_CONTINUATION",
+      "asset": "BTC",
+      "timeframe_set": "SET_2",
+      "strategy": "HYP_B_CONTINUATION_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "BTC_SET_3_PULLBACK": {
+      "stream_key": "BTC_SET_3_PULLBACK",
+      "asset": "BTC",
+      "timeframe_set": "SET_3",
+      "strategy": "HYP_A_PULLBACK_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "BTC_SET_3_CONTINUATION": {
+      "stream_key": "BTC_SET_3_CONTINUATION",
+      "asset": "BTC",
+      "timeframe_set": "SET_3",
+      "strategy": "HYP_B_CONTINUATION_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "BTC_SET_4_PULLBACK": {
+      "stream_key": "BTC_SET_4_PULLBACK",
+      "asset": "BTC",
+      "timeframe_set": "SET_4",
+      "strategy": "HYP_A_PULLBACK_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "BTC_SET_4_CONTINUATION": {
+      "stream_key": "BTC_SET_4_CONTINUATION",
+      "asset": "BTC",
+      "timeframe_set": "SET_4",
+      "strategy": "HYP_B_CONTINUATION_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "ETH_SET_1_PULLBACK": {
+      "stream_key": "ETH_SET_1_PULLBACK",
+      "asset": "ETH",
+      "timeframe_set": "SET_1",
+      "strategy": "HYP_A_PULLBACK_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "ETH_SET_1_CONTINUATION": {
+      "stream_key": "ETH_SET_1_CONTINUATION",
+      "asset": "ETH",
+      "timeframe_set": "SET_1",
+      "strategy": "HYP_B_CONTINUATION_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "ETH_SET_2_PULLBACK": {
+      "stream_key": "ETH_SET_2_PULLBACK",
+      "asset": "ETH",
+      "timeframe_set": "SET_2",
+      "strategy": "HYP_A_PULLBACK_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "ETH_SET_2_CONTINUATION": {
+      "stream_key": "ETH_SET_2_CONTINUATION",
+      "asset": "ETH",
+      "timeframe_set": "SET_2",
+      "strategy": "HYP_B_CONTINUATION_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "ETH_SET_3_PULLBACK": {
+      "stream_key": "ETH_SET_3_PULLBACK",
+      "asset": "ETH",
+      "timeframe_set": "SET_3",
+      "strategy": "HYP_A_PULLBACK_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "ETH_SET_3_CONTINUATION": {
+      "stream_key": "ETH_SET_3_CONTINUATION",
+      "asset": "ETH",
+      "timeframe_set": "SET_3",
+      "strategy": "HYP_B_CONTINUATION_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "ETH_SET_4_PULLBACK": {
+      "stream_key": "ETH_SET_4_PULLBACK",
+      "asset": "ETH",
+      "timeframe_set": "SET_4",
+      "strategy": "HYP_A_PULLBACK_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "ETH_SET_4_CONTINUATION": {
+      "stream_key": "ETH_SET_4_CONTINUATION",
+      "asset": "ETH",
+      "timeframe_set": "SET_4",
+      "strategy": "HYP_B_CONTINUATION_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "SOL_SET_1_PULLBACK": {
+      "stream_key": "SOL_SET_1_PULLBACK",
+      "asset": "SOL",
+      "timeframe_set": "SET_1",
+      "strategy": "HYP_A_PULLBACK_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "SOL_SET_1_CONTINUATION": {
+      "stream_key": "SOL_SET_1_CONTINUATION",
+      "asset": "SOL",
+      "timeframe_set": "SET_1",
+      "strategy": "HYP_B_CONTINUATION_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "SOL_SET_2_PULLBACK": {
+      "stream_key": "SOL_SET_2_PULLBACK",
+      "asset": "SOL",
+      "timeframe_set": "SET_2",
+      "strategy": "HYP_A_PULLBACK_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "SOL_SET_2_CONTINUATION": {
+      "stream_key": "SOL_SET_2_CONTINUATION",
+      "asset": "SOL",
+      "timeframe_set": "SET_2",
+      "strategy": "HYP_B_CONTINUATION_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "SOL_SET_3_PULLBACK": {
+      "stream_key": "SOL_SET_3_PULLBACK",
+      "asset": "SOL",
+      "timeframe_set": "SET_3",
+      "strategy": "HYP_A_PULLBACK_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "SOL_SET_3_CONTINUATION": {
+      "stream_key": "SOL_SET_3_CONTINUATION",
+      "asset": "SOL",
+      "timeframe_set": "SET_3",
+      "strategy": "HYP_B_CONTINUATION_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "SOL_SET_4_PULLBACK": {
+      "stream_key": "SOL_SET_4_PULLBACK",
+      "asset": "SOL",
+      "timeframe_set": "SET_4",
+      "strategy": "HYP_A_PULLBACK_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    },
+    "SOL_SET_4_CONTINUATION": {
+      "stream_key": "SOL_SET_4_CONTINUATION",
+      "asset": "SOL",
+      "timeframe_set": "SET_4",
+      "strategy": "HYP_B_CONTINUATION_RIDING",
+      "metrics": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "breakeven_count": 0,
+        "win_rate": 0.0,
+        "loss_rate": 0.0,
+        "gross_profit_usd": 0.0,
+        "gross_loss_usd": 0.0,
+        "net_profit_usd": 0.0,
+        "total_friction_usd": 0.0,
+        "avg_win_usd": 0.0,
+        "avg_loss_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_usd": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "sharpe_ratio": "NOT_AVAILABLE",
+        "sortino_ratio": "NOT_AVAILABLE",
+        "average_r": "NOT_AVAILABLE",
+        "median_r": "NOT_AVAILABLE",
+        "r_multiples": []
+      },
+      "exit_attribution": {
+        "HTF_TP": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "MTF_STRUCTURAL_TRAIL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "INITIAL_LTF_SL": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        },
+        "OTHER": {
+          "trade_count": 0,
+          "percentage_of_total": 0.0,
+          "win_count": 0,
+          "loss_count": 0,
+          "win_rate": 0.0,
+          "total_pnl_usd": 0.0,
+          "avg_realized_r": 0.0,
+          "r_multiples": []
+        }
+      },
+      "failure_modes": {
+        "total_losing_trades": 0,
+        "failure_mode_breakdown": {
+          "INITIAL_STRUCTURAL_INVALIDATION": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "MTF_TRAIL_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "TARGET_UNREACHED_REVERSAL": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          },
+          "OTHER": {
+            "count": 0,
+            "percentage_of_losses": 0.0
+          }
+        }
+      },
+      "trades": []
+    }
+  },
+  "trailing_ab_comparison": [
+    {
+      "asset": "BTC",
+      "timeframe_set": "SET_1",
+      "baseline_a_no_trail": {
+        "total_trades": 0,
+        "win_rate": 0.0,
+        "net_profit_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "baseline_b_with_trail": {
+        "total_trades": 0,
+        "win_rate": 0.0,
+        "net_profit_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "deltas": {
+        "win_rate_delta": 0.0,
+        "net_profit_delta_usd": 0.0,
+        "max_drawdown_delta_pct": 0.0
+      }
+    },
+    {
+      "asset": "BTC",
+      "timeframe_set": "SET_2",
+      "baseline_a_no_trail": {
+        "total_trades": 2,
+        "win_rate": 0.0,
+        "net_profit_usd": -206.91,
+        "profit_factor": 0.0,
+        "expectancy_r": -1.0399,
+        "max_drawdown_pct": 0.0207,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 2,
+            "percentage_of_total": 1.0,
+            "win_count": 0,
+            "loss_count": 2,
+            "win_rate": 0.0,
+            "total_pnl_usd": -206.91,
+            "avg_realized_r": -1.0399,
+            "r_multiples": [
+              -1.0403,
+              -1.0396
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "baseline_b_with_trail": {
+        "total_trades": 2,
+        "win_rate": 0.0,
+        "net_profit_usd": -206.91,
+        "profit_factor": 0.0,
+        "expectancy_r": -1.0399,
+        "max_drawdown_pct": 0.0207,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 2,
+            "percentage_of_total": 1.0,
+            "win_count": 0,
+            "loss_count": 2,
+            "win_rate": 0.0,
+            "total_pnl_usd": -206.91,
+            "avg_realized_r": -1.0399,
+            "r_multiples": [
+              -1.0403,
+              -1.0396
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "deltas": {
+        "win_rate_delta": 0.0,
+        "net_profit_delta_usd": 0.0,
+        "max_drawdown_delta_pct": 0.0
+      }
+    },
+    {
+      "asset": "BTC",
+      "timeframe_set": "SET_3",
+      "baseline_a_no_trail": {
+        "total_trades": 10,
+        "win_rate": 0.0,
+        "net_profit_usd": -1008.08,
+        "profit_factor": 0.0,
+        "expectancy_r": -1.0537,
+        "max_drawdown_pct": 0.1008,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 10,
+            "percentage_of_total": 1.0,
+            "win_count": 0,
+            "loss_count": 10,
+            "win_rate": 0.0,
+            "total_pnl_usd": -1008.08,
+            "avg_realized_r": -1.0537,
+            "r_multiples": [
+              -1.0575,
+              -1.0575,
+              -1.0276,
+              -1.0277,
+              -1.0279,
+              -1.0446,
+              -1.0509,
+              -1.0508,
+              -1.0964,
+              -1.0959
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "baseline_b_with_trail": {
+        "total_trades": 15,
+        "win_rate": 0.1333,
+        "net_profit_usd": -987.91,
+        "profit_factor": 0.215,
+        "expectancy_r": -0.6866,
+        "max_drawdown_pct": 0.1033,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 3,
+            "percentage_of_total": 0.2,
+            "win_count": 2,
+            "loss_count": 1,
+            "win_rate": 0.6667,
+            "total_pnl_usd": 252.61,
+            "avg_realized_r": 0.8732,
+            "r_multiples": [
+              -0.1799,
+              1.755,
+              1.0446
+            ]
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 12,
+            "percentage_of_total": 0.8,
+            "win_count": 0,
+            "loss_count": 12,
+            "win_rate": 0.0,
+            "total_pnl_usd": -1240.52,
+            "avg_realized_r": -1.0766,
+            "r_multiples": [
+              -1.051,
+              -1.0508,
+              -1.0962,
+              -1.0957,
+              -1.0827,
+              -1.083,
+              -1.099,
+              -1.099,
+              -1.0822,
+              -1.0509,
+              -1.0643,
+              -1.0643
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "deltas": {
+        "win_rate_delta": 0.1333,
+        "net_profit_delta_usd": 20.17,
+        "max_drawdown_delta_pct": 0.0025
+      }
+    },
+    {
+      "asset": "BTC",
+      "timeframe_set": "SET_4",
+      "baseline_a_no_trail": {
+        "total_trades": 2,
+        "win_rate": 0.0,
+        "net_profit_usd": -215.56,
+        "profit_factor": 0.0,
+        "expectancy_r": -1.0837,
+        "max_drawdown_pct": 0.0216,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 2,
+            "percentage_of_total": 1.0,
+            "win_count": 0,
+            "loss_count": 2,
+            "win_rate": 0.0,
+            "total_pnl_usd": -215.56,
+            "avg_realized_r": -1.0837,
+            "r_multiples": [
+              -1.0836,
+              -1.0838
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "baseline_b_with_trail": {
+        "total_trades": 2,
+        "win_rate": 0.0,
+        "net_profit_usd": -215.56,
+        "profit_factor": 0.0,
+        "expectancy_r": -1.0837,
+        "max_drawdown_pct": 0.0216,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 2,
+            "percentage_of_total": 1.0,
+            "win_count": 0,
+            "loss_count": 2,
+            "win_rate": 0.0,
+            "total_pnl_usd": -215.56,
+            "avg_realized_r": -1.0837,
+            "r_multiples": [
+              -1.0836,
+              -1.0838
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "deltas": {
+        "win_rate_delta": 0.0,
+        "net_profit_delta_usd": 0.0,
+        "max_drawdown_delta_pct": 0.0
+      }
+    },
+    {
+      "asset": "ETH",
+      "timeframe_set": "SET_1",
+      "baseline_a_no_trail": {
+        "total_trades": 2,
+        "win_rate": 0.0,
+        "net_profit_usd": -217.68,
+        "profit_factor": 0.0,
+        "expectancy_r": -1.0944,
+        "max_drawdown_pct": 0.0218,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 2,
+            "percentage_of_total": 1.0,
+            "win_count": 0,
+            "loss_count": 2,
+            "win_rate": 0.0,
+            "total_pnl_usd": -217.68,
+            "avg_realized_r": -1.0944,
+            "r_multiples": [
+              -1.0944,
+              -1.0944
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "baseline_b_with_trail": {
+        "total_trades": 2,
+        "win_rate": 0.0,
+        "net_profit_usd": -217.68,
+        "profit_factor": 0.0,
+        "expectancy_r": -1.0944,
+        "max_drawdown_pct": 0.0218,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 2,
+            "percentage_of_total": 1.0,
+            "win_count": 0,
+            "loss_count": 2,
+            "win_rate": 0.0,
+            "total_pnl_usd": -217.68,
+            "avg_realized_r": -1.0944,
+            "r_multiples": [
+              -1.0944,
+              -1.0944
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "deltas": {
+        "win_rate_delta": 0.0,
+        "net_profit_delta_usd": 0.0,
+        "max_drawdown_delta_pct": 0.0
+      }
+    },
+    {
+      "asset": "ETH",
+      "timeframe_set": "SET_2",
+      "baseline_a_no_trail": {
+        "total_trades": 12,
+        "win_rate": 0.0833,
+        "net_profit_usd": -680.79,
+        "profit_factor": 0.401,
+        "expectancy_r": -0.5724,
+        "max_drawdown_pct": 0.1087,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 1,
+            "percentage_of_total": 0.0833,
+            "win_count": 1,
+            "loss_count": 0,
+            "win_rate": 1.0,
+            "total_pnl_usd": 455.85,
+            "avg_realized_r": 4.5585,
+            "r_multiples": [
+              4.5585
+            ]
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 11,
+            "percentage_of_total": 0.9167,
+            "win_count": 0,
+            "loss_count": 11,
+            "win_rate": 0.0,
+            "total_pnl_usd": -1136.64,
+            "avg_realized_r": -1.0388,
+            "r_multiples": [
+              -1.0297,
+              -1.0297,
+              -1.0885,
+              -1.0886,
+              -1.0431,
+              -1.0431,
+              -1.0326,
+              -1.02,
+              -1.0201,
+              -1.0175,
+              -1.0139
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "baseline_b_with_trail": {
+        "total_trades": 12,
+        "win_rate": 0.0833,
+        "net_profit_usd": -680.79,
+        "profit_factor": 0.401,
+        "expectancy_r": -0.5724,
+        "max_drawdown_pct": 0.1087,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 1,
+            "percentage_of_total": 0.0833,
+            "win_count": 1,
+            "loss_count": 0,
+            "win_rate": 1.0,
+            "total_pnl_usd": 455.85,
+            "avg_realized_r": 4.5585,
+            "r_multiples": [
+              4.5585
+            ]
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 11,
+            "percentage_of_total": 0.9167,
+            "win_count": 0,
+            "loss_count": 11,
+            "win_rate": 0.0,
+            "total_pnl_usd": -1136.64,
+            "avg_realized_r": -1.0388,
+            "r_multiples": [
+              -1.0297,
+              -1.0297,
+              -1.0885,
+              -1.0886,
+              -1.0431,
+              -1.0431,
+              -1.0326,
+              -1.02,
+              -1.0201,
+              -1.0175,
+              -1.0139
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "deltas": {
+        "win_rate_delta": 0.0,
+        "net_profit_delta_usd": 0.0,
+        "max_drawdown_delta_pct": 0.0
+      }
+    },
+    {
+      "asset": "ETH",
+      "timeframe_set": "SET_3",
+      "baseline_a_no_trail": {
+        "total_trades": 12,
+        "win_rate": 0.1667,
+        "net_profit_usd": 183.13,
+        "profit_factor": 1.1609,
+        "expectancy_r": 0.1887,
+        "max_drawdown_pct": 0.1006,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 2,
+            "percentage_of_total": 0.1667,
+            "win_count": 2,
+            "loss_count": 0,
+            "win_rate": 1.0,
+            "total_pnl_usd": 1321.56,
+            "avg_realized_r": 6.4028,
+            "r_multiples": [
+              6.4028,
+              6.4028
+            ]
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 10,
+            "percentage_of_total": 0.8333,
+            "win_count": 0,
+            "loss_count": 10,
+            "win_rate": 0.0,
+            "total_pnl_usd": -1138.44,
+            "avg_realized_r": -1.0542,
+            "r_multiples": [
+              -1.0284,
+              -1.0284,
+              -1.0824,
+              -1.0824,
+              -1.04,
+              -1.04,
+              -1.0442,
+              -1.0442,
+              -1.0759,
+              -1.0759
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "baseline_b_with_trail": {
+        "total_trades": 12,
+        "win_rate": 0.1667,
+        "net_profit_usd": 183.13,
+        "profit_factor": 1.1609,
+        "expectancy_r": 0.1887,
+        "max_drawdown_pct": 0.1006,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 2,
+            "percentage_of_total": 0.1667,
+            "win_count": 2,
+            "loss_count": 0,
+            "win_rate": 1.0,
+            "total_pnl_usd": 1321.56,
+            "avg_realized_r": 6.4028,
+            "r_multiples": [
+              6.4028,
+              6.4028
+            ]
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 10,
+            "percentage_of_total": 0.8333,
+            "win_count": 0,
+            "loss_count": 10,
+            "win_rate": 0.0,
+            "total_pnl_usd": -1138.44,
+            "avg_realized_r": -1.0542,
+            "r_multiples": [
+              -1.0284,
+              -1.0284,
+              -1.0824,
+              -1.0824,
+              -1.04,
+              -1.04,
+              -1.0442,
+              -1.0442,
+              -1.0759,
+              -1.0759
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "deltas": {
+        "win_rate_delta": 0.0,
+        "net_profit_delta_usd": 0.0,
+        "max_drawdown_delta_pct": 0.0
+      }
+    },
+    {
+      "asset": "ETH",
+      "timeframe_set": "SET_4",
+      "baseline_a_no_trail": {
+        "total_trades": 0,
+        "win_rate": 0.0,
+        "net_profit_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "baseline_b_with_trail": {
+        "total_trades": 0,
+        "win_rate": 0.0,
+        "net_profit_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "deltas": {
+        "win_rate_delta": 0.0,
+        "net_profit_delta_usd": 0.0,
+        "max_drawdown_delta_pct": 0.0
+      }
+    },
+    {
+      "asset": "SOL",
+      "timeframe_set": "SET_1",
+      "baseline_a_no_trail": {
+        "total_trades": 0,
+        "win_rate": 0.0,
+        "net_profit_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "baseline_b_with_trail": {
+        "total_trades": 0,
+        "win_rate": 0.0,
+        "net_profit_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "deltas": {
+        "win_rate_delta": 0.0,
+        "net_profit_delta_usd": 0.0,
+        "max_drawdown_delta_pct": 0.0
+      }
+    },
+    {
+      "asset": "SOL",
+      "timeframe_set": "SET_2",
+      "baseline_a_no_trail": {
+        "total_trades": 3,
+        "win_rate": 0.3333,
+        "net_profit_usd": 428.84,
+        "profit_factor": 2.9,
+        "expectancy_r": 1.4757,
+        "max_drawdown_pct": 0.0212,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 1,
+            "percentage_of_total": 0.3333,
+            "win_count": 1,
+            "loss_count": 0,
+            "win_rate": 1.0,
+            "total_pnl_usd": 654.55,
+            "avg_realized_r": 6.5455,
+            "r_multiples": [
+              6.5455
+            ]
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 2,
+            "percentage_of_total": 0.6667,
+            "win_count": 0,
+            "loss_count": 2,
+            "win_rate": 0.0,
+            "total_pnl_usd": -225.71,
+            "avg_realized_r": -1.0592,
+            "r_multiples": [
+              -1.0573,
+              -1.0611
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "baseline_b_with_trail": {
+        "total_trades": 3,
+        "win_rate": 0.3333,
+        "net_profit_usd": 428.84,
+        "profit_factor": 2.9,
+        "expectancy_r": 1.4757,
+        "max_drawdown_pct": 0.0212,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 1,
+            "percentage_of_total": 0.3333,
+            "win_count": 1,
+            "loss_count": 0,
+            "win_rate": 1.0,
+            "total_pnl_usd": 654.55,
+            "avg_realized_r": 6.5455,
+            "r_multiples": [
+              6.5455
+            ]
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 2,
+            "percentage_of_total": 0.6667,
+            "win_count": 0,
+            "loss_count": 2,
+            "win_rate": 0.0,
+            "total_pnl_usd": -225.71,
+            "avg_realized_r": -1.0592,
+            "r_multiples": [
+              -1.0573,
+              -1.0611
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "deltas": {
+        "win_rate_delta": 0.0,
+        "net_profit_delta_usd": 0.0,
+        "max_drawdown_delta_pct": 0.0
+      }
+    },
+    {
+      "asset": "SOL",
+      "timeframe_set": "SET_3",
+      "baseline_a_no_trail": {
+        "total_trades": 16,
+        "win_rate": 0.0625,
+        "net_profit_usd": -801.4,
+        "profit_factor": 0.4768,
+        "expectancy_r": -0.4975,
+        "max_drawdown_pct": 0.0915,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 1,
+            "percentage_of_total": 0.0625,
+            "win_count": 1,
+            "loss_count": 0,
+            "win_rate": 1.0,
+            "total_pnl_usd": 730.33,
+            "avg_realized_r": 7.7736,
+            "r_multiples": [
+              7.7736
+            ]
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 15,
+            "percentage_of_total": 0.9375,
+            "win_count": 0,
+            "loss_count": 15,
+            "win_rate": 0.0,
+            "total_pnl_usd": -1531.73,
+            "avg_realized_r": -1.0489,
+            "r_multiples": [
+              -1.0391,
+              -1.0391,
+              -1.013,
+              -1.013,
+              -1.0518,
+              -1.0518,
+              -1.0797,
+              -1.048,
+              -1.0447,
+              -1.0447,
+              -1.0738,
+              -1.025,
+              -1.025,
+              -1.0923,
+              -1.0923
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "baseline_b_with_trail": {
+        "total_trades": 15,
+        "win_rate": 0.0667,
+        "net_profit_usd": -707.26,
+        "profit_factor": 0.5106,
+        "expectancy_r": -0.4631,
+        "max_drawdown_pct": 0.0915,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 1,
+            "percentage_of_total": 0.0667,
+            "win_count": 1,
+            "loss_count": 0,
+            "win_rate": 1.0,
+            "total_pnl_usd": 737.81,
+            "avg_realized_r": 7.7736,
+            "r_multiples": [
+              7.7736
+            ]
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 14,
+            "percentage_of_total": 0.9333,
+            "win_count": 0,
+            "loss_count": 14,
+            "win_rate": 0.0,
+            "total_pnl_usd": -1445.07,
+            "avg_realized_r": -1.0515,
+            "r_multiples": [
+              -1.0391,
+              -1.0391,
+              -1.013,
+              -1.0518,
+              -1.0518,
+              -1.0797,
+              -1.048,
+              -1.0447,
+              -1.0447,
+              -1.0738,
+              -1.025,
+              -1.025,
+              -1.0923,
+              -1.0923
+            ]
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "deltas": {
+        "win_rate_delta": 0.0042,
+        "net_profit_delta_usd": 94.14,
+        "max_drawdown_delta_pct": 0.0
+      }
+    },
+    {
+      "asset": "SOL",
+      "timeframe_set": "SET_4",
+      "baseline_a_no_trail": {
+        "total_trades": 0,
+        "win_rate": 0.0,
+        "net_profit_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "baseline_b_with_trail": {
+        "total_trades": 0,
+        "win_rate": 0.0,
+        "net_profit_usd": 0.0,
+        "profit_factor": "NOT_AVAILABLE",
+        "expectancy_r": "NOT_AVAILABLE",
+        "max_drawdown_pct": 0.0,
+        "exit_attribution": {
+          "HTF_TP": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "MTF_STRUCTURAL_TRAIL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "INITIAL_LTF_SL": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          },
+          "OTHER": {
+            "trade_count": 0,
+            "percentage_of_total": 0.0,
+            "win_count": 0,
+            "loss_count": 0,
+            "win_rate": 0.0,
+            "total_pnl_usd": 0.0,
+            "avg_realized_r": 0.0,
+            "r_multiples": []
+          }
+        }
+      },
+      "deltas": {
+        "win_rate_delta": 0.0,
+        "net_profit_delta_usd": 0.0,
+        "max_drawdown_delta_pct": 0.0
+      }
+    }
+  ]
+}

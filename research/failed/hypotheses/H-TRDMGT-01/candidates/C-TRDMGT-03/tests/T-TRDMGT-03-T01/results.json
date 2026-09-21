@@ -1,0 +1,31 @@
+{
+  "test_id": "T-TRDMGT-03-T01",
+  "candidate_id": "C-TRDMGT-03",
+  "hypothesis_id": "H-TRDMGT-01",
+  "status": "INCONCLUSIVE",
+  "metrics": {
+    "total_trades": 12,
+    "net_r": -0.0685,
+    "profit_factor": null,
+    "note": "N=12/13 retained; near-breakeven but entry-quality gate composes cleanly; enables the positive composite"
+  },
+  "provenance": {
+    "original_path": "docs/HYP_COMPOSITE_POLARITY_BREAKEVEN_01_AUDIT_2021_2022.md",
+    "experiment_id": "HYP_ENTRY_DISPLACEMENT_POLARITY_01",
+    "hypothesis_id": "H-TRDMGT-01",
+    "candidate_id": "C-TRDMGT-03",
+    "test_id": "T-TRDMGT-03-T01",
+    "strategy_mechanism_version": "v1.0.0-causal-adverse-first + displacement polarity gate",
+    "data_version": "Certified DEV partition 2021-01-01..2022-12-31 (277,908 candles, 15 streams, BTC/ETH/SOL x SET_1..SET_5)",
+    "code_commit": "unrecorded (branch feat/exp-composite-polarity-breakeven)",
+    "timeframe": "SET_1..SET_5 multi-scale (15 streams)",
+    "asset": "BTC/USDT, ETH/USDT, SOL/USDT",
+    "execution_assumptions": "causal replayer, adverse-first intrabar collision, exited plans terminal (no-reentry invariant, replayer fix 6382061)",
+    "fees": "maker 2 bps / taker 5 bps",
+    "slippage": "5 bps adverse",
+    "collision_reentry_semantics": "ADVERSE_FIRST + terminal-plan no-reentry",
+    "result_classification": "INCONCLUSIVE"
+  },
+  "recorded_at_utc": "2026-09-19T08:02:37.406119+00:00",
+  "promotion_note": "POSITIVE DEV RESULT IS NOT A WINNER. No promotion."
+}

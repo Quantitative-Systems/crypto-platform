@@ -19,7 +19,7 @@ from datetime import datetime, timezone
 from typing import Any, Callable, Dict, List, Optional, Set
 
 from market_data.schemas.market_data_schemas import OHLCVRecord, TradeRecord, OrderBookL2Record
-from platform_core.foundation.error_taxonomy import DataCorruptionError, MarketDataError
+from market_data.errors import DataCorruptionError, MarketDataError
 
 
 @dataclass

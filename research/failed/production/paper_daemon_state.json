@@ -1,0 +1,18 @@
+{
+  "platform": "Quantitative Crypto Platform (QCP)",
+  "saved_at_utc": "2026-09-16T13:54:34.599412+00:00",
+  "symbol": "SOL/USDT",
+  "strategy_id": "FAM-07-MTFCONT_SOLUSDT_Set2",
+  "current_equity": 985.5759,
+  "peak_equity": 1000.0,
+  "max_drawdown_usd": 14.4241,
+  "max_drawdown_pct": 1.4424,
+  "last_processed_ts": {
+    "4h": 1789545600,
+    "1h": 1789560000,
+    "15m": 1789565400
+  },
+  "active_positions": [],
+  "total_closed_trades": 2,
+  "gaps_count": 3
+}

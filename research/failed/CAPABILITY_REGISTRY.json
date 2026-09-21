@@ -1,0 +1,171 @@
+{
+  "system": "Quantitative Crypto Platform (QCP)",
+  "version": "2.0",
+  "status": "AUTONOMOUS_OPERATING_SYSTEM",
+  "live_capital_status": "FAIL_CLOSED",
+  "lifecycle_tiers_definition": [
+    "NOT_IMPLEMENTED",
+    "RESEARCH_STAGE",
+    "IMPLEMENTED_PROTOTYPE",
+    "TESTED",
+    "HISTORICALLY_VALIDATED",
+    "OOS_VALIDATED",
+    "FORWARD_VALIDATED",
+    "PRODUCTION_QUALIFIED"
+  ],
+  "subsystems": {
+    "market_data": {
+      "universal_data_fabric": {
+        "status": "HISTORICALLY_VALIDATED",
+        "description": "Multi-venue OHLCV historical archive (BTC, ETH, SOL from 1m to 1M) with SHA-256 integrity; L2 and funding feeds operate as verified prototype stubs.",
+        "evidence_reference": "market_data/cache/, market_data/data_certifier.py, market_data/dataset_manifest.py"
+      },
+      "data_acquisition_governor": {
+        "status": "TESTED",
+        "description": "Evaluates expected value of missing data, manages acquisition lifecycle, and flags external data blockers.",
+        "evidence_reference": "tests/unit/market_data/test_data_acquisition_governor.py"
+      }
+    },
+    "market_intelligence": {
+      "continuous_regime_engine": {
+        "status": "HISTORICALLY_VALIDATED",
+        "description": "Multi-dimensional regime classification (Trend, Volatility, Liquidity, Funding, Systemic Coupling) empirically validated on historical OHLCV series.",
+        "evidence_reference": "market_intelligence/continuous_regime_engine.py, tests/unit/market_intelligence/test_continuous_regime_engine.py"
+      },
+      "opportunity_detector": {
+        "status": "TESTED",
+        "description": "Evaluates market regime, depth imbalance, cross-venue spread, and liquidation indicators to emit OpportunityObservations.",
+        "evidence_reference": "tests/unit/market_intelligence/test_opportunity_detector.py"
+      }
+    },
+    "research": {
+      "autonomous_research_governor": {
+        "status": "TESTED",
+        "description": "Multi-factor hypothesis prioritization and memory filtering across 8 canonical crypto alpha families.",
+        "evidence_reference": "tests/unit/research/test_autonomous_research_governor.py"
+      },
+      "autonomous_research_factory": {
+        "status": "TESTED",
+        "description": "Synthesizes AlphaGenome specifications with zero asserted performance across 8 canonical families.",
+        "evidence_reference": "research/autonomous_research_factory.py, tests/unit/research/test_autonomous_research_governor.py"
+      },
+      "adversarial_falsification_engine": {
+        "status": "HISTORICALLY_VALIDATED",
+        "description": "Forensic audit executing causal lookahead detection, 2x friction shock, windfall removal, and latency ladder.",
+        "evidence_reference": "research/results/AUDIT_PHASE_B_EXECUTION_FORENSICS.json, research/results/AUDIT_PHASE_C_FRICTION_BATTERY.json, tests/unit/research/test_adversarial_falsification.py"
+      },
+      "opportunity_memory": {
+        "status": "TESTED",
+        "description": "SQLite relational research vault with forensic failure taxonomy and conditional reopening logic.",
+        "evidence_reference": "research/research_vault.db, tests/unit/research/test_opportunity_memory.py"
+      }
+    },
+    "capital_intelligence": {
+      "execution_capacity_engine": {
+        "status": "HISTORICALLY_VALIDATED",
+        "description": "Kyle/Almgren-Chriss market impact modeling and net edge capacity decay curves.",
+        "evidence_reference": "capital_intelligence/execution_capacity_engine.py, tests/unit/test_execution_capacity.py"
+      },
+      "alpha_exposure_graph": {
+        "status": "HISTORICALLY_VALIDATED",
+        "description": "Correlation graph and exposure clustering identifying orthogonal economic engines vs duplicate beta.",
+        "evidence_reference": "research/results/ALPHA_EXPOSURE_GRAPH.json, research/results/ALPHA_INDEPENDENCE_MATRIX.json, tests/unit/portfolio_engine/test_alpha_exposure_graph.py"
+      },
+      "capital_allocator": {
+        "status": "HISTORICALLY_VALIDATED",
+        "description": "Ledoit-Wolf regularized covariance shrinkage and uncertainty-penalized capital allocation.",
+        "evidence_reference": "portfolio_engine/capital_allocator.py, tests/unit/portfolio_engine/test_capital_allocator.py"
+      },
+      "portfolio_hedging_engine": {
+        "status": "TESTED",
+        "description": "Monitors net portfolio crypto beta and triggers dynamically sized defensive hedges during hostile regimes.",
+        "evidence_reference": "portfolio_engine/hedging_engine.py, tests/unit/portfolio_engine/test_hedging_engine.py"
+      },
+      "autonomous_risk_governor": {
+        "status": "HISTORICALLY_VALIDATED",
+        "description": "Pre-trade risk firewall with veto authority enforcing portfolio heat ceilings.",
+        "evidence_reference": "risk_engine/autonomous_risk_governor.py, tests/unit/risk_engine/test_autonomous_risk_governor.py, tests/unit/risk_engine/test_risk_firewall.py"
+      },
+      "stress_shock_lab": {
+        "status": "HISTORICALLY_VALIDATED",
+        "description": "Simulates 5 catastrophic crypto stress scenarios (Flash Crash, Vol Spike, Liquidity Collapse, Exchange Outage, Funding Shock).",
+        "evidence_reference": "research/results/STRESS_SHOCK_REPORT.json, tests/unit/risk_engine/test_stress_shock_lab.py"
+      }
+    },
+    "production": {
+      "economic_truth_engine": {
+        "status": "HISTORICALLY_VALIDATED",
+        "description": "Trade attribution framework decomposing gross returns into Alpha, Beta, Carry, Fees, and Slippage frictions.",
+        "evidence_reference": "production/economic_truth_engine.py, tests/unit/production/test_economic_truth_engine.py, research/results/PERFORMANCE_TRUTH_RECONCILIATION.json"
+      },
+      "alpha_lifecycle_loop": {
+        "status": "FORWARD_VALIDATED",
+        "description": "Automated alpha lifecycle state management, real-time burn-in observation, and degradation detection.",
+        "evidence_reference": "research/results/FORWARD_PAPER_DAEMON_AUDIT.json, production/run_forward_burn_in.py, tests/unit/research/test_alpha_lifecycle_loop.py"
+      },
+      "autonomous_platform_orchestrator": {
+        "status": "TESTED",
+        "description": "Coordinates 14-step continuous autonomous quantitative research and governance loop.",
+        "evidence_reference": "production/autonomous_platform_orchestrator.py, tests/integration/test_v2_orchestrator_autonomous_loop.py"
+      }
+    }
+  },
+  "alpha_families": {
+    "DIRECTIONAL": {
+      "status": "FORWARD_VALIDATED",
+      "active_candidates": [
+        "FAM-07-MTFCONT_SOLUSDT_Set2 (Forward Observation)"
+      ],
+      "evidence_reference": "research/results/FORWARD_PAPER_DAEMON_AUDIT.json"
+    },
+    "RELATIVE_VALUE": {
+      "status": "HISTORICALLY_VALIDATED",
+      "active_candidates": [
+        "FAM-09-RV (Sub-threshold edge +0.06R, research stage)"
+      ],
+      "evidence_reference": "research/results/FAMILY_09_RELATIVE_VALUE_RESEARCH.json"
+    },
+    "CARRY": {
+      "status": "RESEARCH_STAGE",
+      "active_candidates": [
+        "Synthetic funding carry models; live archive blocked"
+      ],
+      "evidence_reference": "research/results/DYNAMIC_FUNDING_CARRY_AUDIT.json"
+    },
+    "MICROSTRUCTURE": {
+      "status": "RESEARCH_STAGE",
+      "active_candidates": [
+        "OFI / Imbalance prototypes; historical L2 tick archive blocked"
+      ],
+      "evidence_reference": "market_intelligence/opportunity_detector.py"
+    },
+    "LIQUIDITY_PROVISION": {
+      "status": "IMPLEMENTED_PROTOTYPE",
+      "active_candidates": [
+        "Spread capture / inventory skew models"
+      ],
+      "evidence_reference": "research/autonomous_research_factory.py"
+    },
+    "ARBITRAGE": {
+      "status": "IMPLEMENTED_PROTOTYPE",
+      "active_candidates": [
+        "Cross-venue dislocation models"
+      ],
+      "evidence_reference": "research/autonomous_research_factory.py"
+    },
+    "EVENT_DRIVEN": {
+      "status": "IMPLEMENTED_PROTOTYPE",
+      "active_candidates": [
+        "Liquidation exhaustion models"
+      ],
+      "evidence_reference": "research/autonomous_research_factory.py"
+    },
+    "MACHINE_LEARNING": {
+      "status": "IMPLEMENTED_PROTOTYPE",
+      "active_candidates": [
+        "Statistical ensemble forecasting models"
+      ],
+      "evidence_reference": "research/autonomous_research_factory.py"
+    }
+  }
+}

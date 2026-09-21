@@ -1,0 +1,171 @@
+{
+  "provenance": {
+    "experiment": "BASELINE_002_CANONICAL",
+    "stream_key": "BTC_SET_1_HYP_A_PULLBACK_RIDING",
+    "asset": "BTC",
+    "timeframe_set": "SET_1",
+    "htf": "1M",
+    "mtf": "1w",
+    "ltf": "1d",
+    "hypothesis_id": "HYP_A_PULLBACK_RIDING",
+    "strategy_version": "v2.0-UNIFIED-CANONICAL-LOCKED",
+    "control_invariants": [
+      "MAX_RISK_FRACTION_1_PCT",
+      "MIN_RR_FLOOR_4_0R",
+      "MONOTONIC_MTF_STRUCTURAL_TRAILING",
+      "ZERO_LOOKAHEAD_CAUSALITY",
+      "ADVERSE_FIRST_INTRABAR_COLLISION",
+      "LTF_SWEEP_DISPLACEMENT_ENTRY",
+      "MTF_REALIGNMENT_CANDIDATE_ONLY"
+    ],
+    "git_commit": "3ca22a9bac32a206591fa3216a8bb581d772103f",
+    "created_at_utc": "2026-09-02T01:04:06.755473+00:00",
+    "execution_model": "1.0.0-causal-adverse-first",
+    "config": {
+      "initial_balance": 10000.0,
+      "taker_fee_rate": 0.0005,
+      "slippage_bps": 5.0,
+      "enable_mtf_trailing": true,
+      "enable_profit_lock": true,
+      "lockin_r": 1.0,
+      "giveback_r": 0.75,
+      "cache_htf_mtf": true
+    },
+    "dataset_manifests": {
+      "htf": {
+        "sha256_normalized": "ca08b065075816c3626b3149acdde8f2107e2d5b8950eb3934cc4e241dc60993",
+        "full_warehouse_rows": 110,
+        "window_rows": 110
+      },
+      "mtf": {
+        "sha256_normalized": "b87177c7f8c5b485c036e9d009f1459508b9ebc0ec7f5b5708f08de771829ff8",
+        "full_warehouse_rows": 473,
+        "window_rows": 473
+      },
+      "ltf": {
+        "sha256_normalized": "804cea4165e59a4fcd9e76a0502c16aa3fb35720733a5b577daa0d9659772e9c",
+        "full_warehouse_rows": 3303,
+        "window_rows": 2270
+      }
+    },
+    "candle_counts": {
+      "htf": 110,
+      "mtf": 473,
+      "ltf": 2270
+    },
+    "elapsed_sec": 14.34
+  },
+  "metrics": {
+    "total_trades": 0,
+    "win_count": 0,
+    "loss_count": 0,
+    "breakeven_count": 0,
+    "win_rate": null,
+    "loss_rate": null,
+    "gross_profit_usd": 0.0,
+    "gross_loss_usd": 0.0,
+    "net_profit_usd": 0.0,
+    "total_friction_usd": 0.0,
+    "avg_win_usd": null,
+    "avg_loss_usd": null,
+    "profit_factor": "NOT_AVAILABLE",
+    "expectancy_usd": "NOT_AVAILABLE",
+    "expectancy_r": "NOT_AVAILABLE",
+    "max_drawdown_pct": 0.0,
+    "sharpe_ratio": "NOT_AVAILABLE",
+    "sortino_ratio": "NOT_AVAILABLE",
+    "average_r": "NOT_AVAILABLE",
+    "median_r": "NOT_AVAILABLE",
+    "max_consecutive_losses": 0,
+    "max_consecutive_wins": 0,
+    "avg_trade_duration_sec": 0.0,
+    "avg_mfe_r": 0.0,
+    "avg_mae_r": 0.0,
+    "max_mfe_r": 0.0,
+    "max_mae_r": 0.0,
+    "sample_confidence": "INSUFFICIENT_SAMPLE",
+    "r_multiples": []
+  },
+  "exit_attribution": {
+    "HTF_TP": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    },
+    "MTF_STRUCTURAL_TRAIL": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    },
+    "PROFIT_LOCK_TRAIL": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    },
+    "INITIAL_LTF_SL": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    },
+    "OTHER": {
+      "trade_count": 0,
+      "percentage_of_total": 0.0,
+      "win_count": 0,
+      "loss_count": 0,
+      "win_rate": 0.0,
+      "total_pnl_usd": 0.0,
+      "avg_realized_r": 0.0,
+      "r_multiples": []
+    }
+  },
+  "failure_modes": {
+    "total_losing_trades": 0,
+    "failure_mode_breakdown": {
+      "INITIAL_STRUCTURAL_INVALIDATION": {
+        "count": 0,
+        "percentage_of_losses": 0.0
+      },
+      "MTF_TRAIL_REVERSAL": {
+        "count": 0,
+        "percentage_of_losses": 0.0
+      },
+      "TARGET_UNREACHED_REVERSAL": {
+        "count": 0,
+        "percentage_of_losses": 0.0
+      },
+      "OTHER": {
+        "count": 0,
+        "percentage_of_losses": 0.0
+      }
+    }
+  },
+  "trades": [],
+  "rejected_candidates": [],
+  "suspended_intervals_count": 0,
+  "engine_runs": {
+    "htf": 76,
+    "mtf": 323,
+    "ltf": 2255,
+    "ltf_ticks": 2255
+  }
+}

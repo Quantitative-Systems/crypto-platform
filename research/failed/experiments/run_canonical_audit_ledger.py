@@ -1,0 +1,1 @@
+    ledger_path = "/home/mrcn2/crypto-platform/proofs/research/canonical_35_trade_audit_ledger.json"

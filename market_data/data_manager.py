@@ -15,7 +15,7 @@ from typing import Dict, List, Any, Optional, Tuple
 
 from market_data.binance_fetcher import BinanceFetcher
 from market_data.data_certifier import DataCertifier
-from market_intelligence.primitives import Candle, FundingRate
+from market_data.primitives import Candle, FundingRate
 
 
 CACHE_DIR = os.path.join(os.path.dirname(__file__), "cache")

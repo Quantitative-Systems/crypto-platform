@@ -5,7 +5,7 @@ Unit tests for QCP DataAcquisitionGovernor.
 import pytest
 from market_data.universal_data_fabric import UniversalMarketDataFabric
 from market_data.data_acquisition_governor import DataAcquisitionGovernor
-from market_intelligence.opportunity_detector import OpportunityObservation, OpportunityType
+from market_data.primitives import OpportunityObservation, OpportunityType
 
 
 def test_data_acquisition_governor_evaluation():

@@ -1,0 +1,378 @@
+{
+  "audit_name": "FAM06_EXECUTION_SENSITIVITY_AUDIT",
+  "generated_utc": "2026-09-16T05:15:33.868156+00:00",
+  "methodology": {
+    "strategy": "FAM-06-VOLSQUEEZE_4H",
+    "canonical_horizon": "2021-01-01T00:00:00Z to 2026-06-30T00:00:00Z",
+    "collision_policy": "ADVERSE_FIRST",
+    "friction_model": "8.0 bps roundtrip (4.0 bps entry + 4.0 bps exit)",
+    "discovery_root_cause": "The reported +104.88R baseline for BTC was an intrabar lookahead artifact. The original research runner evaluated signals at bar i close but entered at bar i open (4 hours BEFORE signal confirmation). The '1-bar latency test' (sig_bar = i - 1) filled at bar i open, which was actually the zero-latency causal next-bar open fill (yielding -0.29R). The 91.4% degradation was not latency sensitivity; it was lookahead deflation."
+  },
+  "assets": {
+    "BTCUSDT": {
+      "symbol": "BTC/USDT",
+      "flawed_lookahead_baseline": {
+        "trade_count": 168,
+        "net_r": 104.88,
+        "expectancy_r": 0.6243,
+        "profit_factor": 2.675,
+        "win_rate_pct": 63.1,
+        "max_drawdown_r": 5.66,
+        "avg_friction_r": 0.0404
+      },
+      "causal_latency_ladder": {
+        "0m": {
+          "trade_count": 171,
+          "net_r": -0.29,
+          "expectancy_r": -0.0017,
+          "profit_factor": 0.997,
+          "win_rate_pct": 42.69,
+          "max_drawdown_r": 25.28,
+          "avg_friction_r": 0.0399,
+          "description": "Next-bar open immediately upon bar close (0m delay)",
+          "retention_pct_of_causal_baseline": 100.0
+        },
+        "15m": {
+          "trade_count": 170,
+          "net_r": -6.75,
+          "expectancy_r": -0.0397,
+          "profit_factor": 0.933,
+          "win_rate_pct": 41.76,
+          "max_drawdown_r": 26.27,
+          "avg_friction_r": 0.04,
+          "description": "15-minute delayed execution",
+          "retention_pct_of_causal_baseline": 2327.6
+        },
+        "30m": {
+          "trade_count": 171,
+          "net_r": -6.59,
+          "expectancy_r": -0.0385,
+          "profit_factor": 0.935,
+          "win_rate_pct": 41.52,
+          "max_drawdown_r": 25.97,
+          "avg_friction_r": 0.0402,
+          "description": "30-minute delayed execution",
+          "retention_pct_of_causal_baseline": 2272.4
+        },
+        "60m": {
+          "trade_count": 169,
+          "net_r": -4.06,
+          "expectancy_r": -0.024,
+          "profit_factor": 0.959,
+          "win_rate_pct": 42.01,
+          "max_drawdown_r": 30.99,
+          "avg_friction_r": 0.04,
+          "description": "60-minute delayed execution (1 hour)",
+          "retention_pct_of_causal_baseline": 1400.0
+        },
+        "120m": {
+          "trade_count": 170,
+          "net_r": 0.77,
+          "expectancy_r": 0.0045,
+          "profit_factor": 1.008,
+          "win_rate_pct": 43.53,
+          "max_drawdown_r": 23.74,
+          "avg_friction_r": 0.0403,
+          "description": "120-minute delayed execution (2 hours)",
+          "retention_pct_of_causal_baseline": -265.5
+        },
+        "240m": {
+          "trade_count": 173,
+          "net_r": -9.05,
+          "expectancy_r": -0.0523,
+          "profit_factor": 0.914,
+          "win_rate_pct": 39.88,
+          "max_drawdown_r": 33.32,
+          "avg_friction_r": 0.0402,
+          "description": "240-minute delayed execution (1 full 4H candle delay)",
+          "retention_pct_of_causal_baseline": 3120.7
+        }
+      },
+      "high_frequency_subperiod_audit": {
+        "evaluation_window": "2026-07-30 23:53:00+00:00 to 2026-09-03 17:10:00+00:00",
+        "hf_0m": {
+          "trade_count": 1,
+          "net_r": 0.16,
+          "expectancy_r": 0.1608,
+          "profit_factor": 0.0,
+          "win_rate_pct": 100.0,
+          "max_drawdown_r": 0.0,
+          "avg_friction_r": 0.0786
+        },
+        "hf_1m": {
+          "trade_count": 1,
+          "net_r": 0.16,
+          "expectancy_r": 0.1608,
+          "profit_factor": 0.0,
+          "win_rate_pct": 100.0,
+          "max_drawdown_r": 0.0,
+          "avg_friction_r": 0.0786
+        },
+        "hf_5m": {
+          "trade_count": 1,
+          "net_r": 0.16,
+          "expectancy_r": 0.1608,
+          "profit_factor": 0.0,
+          "win_rate_pct": 100.0,
+          "max_drawdown_r": 0.0,
+          "avg_friction_r": 0.0786
+        },
+        "hf_15m": {
+          "trade_count": 1,
+          "net_r": 0.16,
+          "expectancy_r": 0.1608,
+          "profit_factor": 0.0,
+          "win_rate_pct": 100.0,
+          "max_drawdown_r": 0.0,
+          "avg_friction_r": 0.0786
+        }
+      },
+      "final_governance_classification": "FALSIFIED_NEGATIVE_EDGE",
+      "audit_verdict": "BTC/USDT Family 06 under true causal next-bar open fill generates -0.29R (PF 0.997, WR 42.69%), confirming that the strategy does not possess deployable edge. Classification: FALSIFIED_NEGATIVE_EDGE."
+    },
+    "ETHUSDT": {
+      "symbol": "ETH/USDT",
+      "flawed_lookahead_baseline": {
+        "trade_count": 164,
+        "net_r": 103.31,
+        "expectancy_r": 0.6299,
+        "profit_factor": 2.616,
+        "win_rate_pct": 61.59,
+        "max_drawdown_r": 5.65,
+        "avg_friction_r": 0.0319
+      },
+      "causal_latency_ladder": {
+        "0m": {
+          "trade_count": 171,
+          "net_r": 2.99,
+          "expectancy_r": 0.0175,
+          "profit_factor": 1.029,
+          "win_rate_pct": 40.94,
+          "max_drawdown_r": 18.5,
+          "avg_friction_r": 0.0321,
+          "description": "Next-bar open immediately upon bar close (0m delay)",
+          "retention_pct_of_causal_baseline": 100.0
+        },
+        "15m": {
+          "trade_count": 170,
+          "net_r": 6.29,
+          "expectancy_r": 0.037,
+          "profit_factor": 1.062,
+          "win_rate_pct": 41.18,
+          "max_drawdown_r": 24.75,
+          "avg_friction_r": 0.032,
+          "description": "15-minute delayed execution",
+          "retention_pct_of_causal_baseline": 210.4
+        },
+        "30m": {
+          "trade_count": 171,
+          "net_r": 2.8,
+          "expectancy_r": 0.0164,
+          "profit_factor": 1.027,
+          "win_rate_pct": 40.94,
+          "max_drawdown_r": 27.35,
+          "avg_friction_r": 0.0321,
+          "description": "30-minute delayed execution",
+          "retention_pct_of_causal_baseline": 93.6
+        },
+        "60m": {
+          "trade_count": 170,
+          "net_r": 2.21,
+          "expectancy_r": 0.013,
+          "profit_factor": 1.022,
+          "win_rate_pct": 42.94,
+          "max_drawdown_r": 19.9,
+          "avg_friction_r": 0.032,
+          "description": "60-minute delayed execution (1 hour)",
+          "retention_pct_of_causal_baseline": 73.9
+        },
+        "120m": {
+          "trade_count": 171,
+          "net_r": -6.09,
+          "expectancy_r": -0.0356,
+          "profit_factor": 0.939,
+          "win_rate_pct": 42.11,
+          "max_drawdown_r": 25.77,
+          "avg_friction_r": 0.0321,
+          "description": "120-minute delayed execution (2 hours)",
+          "retention_pct_of_causal_baseline": -203.7
+        },
+        "240m": {
+          "trade_count": 165,
+          "net_r": -4.26,
+          "expectancy_r": -0.0258,
+          "profit_factor": 0.957,
+          "win_rate_pct": 40.61,
+          "max_drawdown_r": 29.47,
+          "avg_friction_r": 0.0321,
+          "description": "240-minute delayed execution (1 full 4H candle delay)",
+          "retention_pct_of_causal_baseline": -142.5
+        }
+      },
+      "high_frequency_subperiod_audit": {
+        "evaluation_window": "2026-07-30 23:54:00+00:00 to 2026-09-03 17:10:00+00:00",
+        "hf_0m": {
+          "trade_count": 3,
+          "net_r": -3.09,
+          "expectancy_r": -1.0285,
+          "profit_factor": 0.0,
+          "win_rate_pct": 0.0,
+          "max_drawdown_r": 2.06,
+          "avg_friction_r": 0.0572
+        },
+        "hf_1m": {
+          "trade_count": 3,
+          "net_r": -3.09,
+          "expectancy_r": -1.0285,
+          "profit_factor": 0.0,
+          "win_rate_pct": 0.0,
+          "max_drawdown_r": 2.06,
+          "avg_friction_r": 0.0572
+        },
+        "hf_5m": {
+          "trade_count": 3,
+          "net_r": -3.09,
+          "expectancy_r": -1.0285,
+          "profit_factor": 0.0,
+          "win_rate_pct": 0.0,
+          "max_drawdown_r": 2.06,
+          "avg_friction_r": 0.0572
+        },
+        "hf_15m": {
+          "trade_count": 3,
+          "net_r": -3.09,
+          "expectancy_r": -1.0285,
+          "profit_factor": 0.0,
+          "win_rate_pct": 0.0,
+          "max_drawdown_r": 2.06,
+          "avg_friction_r": 0.0572
+        }
+      },
+      "final_governance_classification": "RESEARCH_SURVIVOR_SUB_THRESHOLD",
+      "audit_verdict": "ETH/USDT Family 06 under true causal next-bar open fill generates 2.99R (PF 1.029, WR 40.94%), confirming that the strategy does not possess deployable edge. Classification: RESEARCH_SURVIVOR_SUB_THRESHOLD."
+    },
+    "SOLUSDT": {
+      "symbol": "SOL/USDT",
+      "flawed_lookahead_baseline": {
+        "trade_count": 141,
+        "net_r": 96.03,
+        "expectancy_r": 0.681,
+        "profit_factor": 2.864,
+        "win_rate_pct": 63.83,
+        "max_drawdown_r": 5.04,
+        "avg_friction_r": 0.0213
+      },
+      "causal_latency_ladder": {
+        "0m": {
+          "trade_count": 147,
+          "net_r": 12.88,
+          "expectancy_r": 0.0876,
+          "profit_factor": 1.156,
+          "win_rate_pct": 44.22,
+          "max_drawdown_r": 13.93,
+          "avg_friction_r": 0.0213,
+          "description": "Next-bar open immediately upon bar close (0m delay)",
+          "retention_pct_of_causal_baseline": 100.0
+        },
+        "15m": {
+          "trade_count": 147,
+          "net_r": 7.09,
+          "expectancy_r": 0.0482,
+          "profit_factor": 1.087,
+          "win_rate_pct": 44.9,
+          "max_drawdown_r": 19.73,
+          "avg_friction_r": 0.0213,
+          "data_coverage_note": "Partial 15m coverage; fallback to hourly interpolation.",
+          "description": "15-minute delayed execution",
+          "retention_pct_of_causal_baseline": 55.0
+        },
+        "30m": {
+          "trade_count": 147,
+          "net_r": 11.08,
+          "expectancy_r": 0.0754,
+          "profit_factor": 1.137,
+          "win_rate_pct": 45.58,
+          "max_drawdown_r": 15.73,
+          "avg_friction_r": 0.0213,
+          "data_coverage_note": "Partial 15m coverage; fallback to hourly interpolation.",
+          "description": "30-minute delayed execution",
+          "retention_pct_of_causal_baseline": 86.0
+        },
+        "60m": {
+          "trade_count": 147,
+          "net_r": 22.58,
+          "expectancy_r": 0.1536,
+          "profit_factor": 1.287,
+          "win_rate_pct": 46.94,
+          "max_drawdown_r": 13.39,
+          "avg_friction_r": 0.0213,
+          "description": "60-minute delayed execution (1 hour)",
+          "retention_pct_of_causal_baseline": 175.3
+        },
+        "120m": {
+          "trade_count": 147,
+          "net_r": 13.57,
+          "expectancy_r": 0.0923,
+          "profit_factor": 1.166,
+          "win_rate_pct": 44.9,
+          "max_drawdown_r": 17.26,
+          "avg_friction_r": 0.0213,
+          "description": "120-minute delayed execution (2 hours)",
+          "retention_pct_of_causal_baseline": 105.4
+        },
+        "240m": {
+          "trade_count": 144,
+          "net_r": 16.94,
+          "expectancy_r": 0.1176,
+          "profit_factor": 1.225,
+          "win_rate_pct": 47.22,
+          "max_drawdown_r": 9.05,
+          "avg_friction_r": 0.0216,
+          "description": "240-minute delayed execution (1 full 4H candle delay)",
+          "retention_pct_of_causal_baseline": 131.5
+        }
+      },
+      "high_frequency_subperiod_audit": {
+        "evaluation_window": "2026-07-30 23:56:00+00:00 to 2026-09-03 17:10:00+00:00",
+        "hf_0m": {
+          "trade_count": 1,
+          "net_r": 0.17,
+          "expectancy_r": 0.1716,
+          "profit_factor": 0.0,
+          "win_rate_pct": 100.0,
+          "max_drawdown_r": 0.0,
+          "avg_friction_r": 0.0567
+        },
+        "hf_1m": {
+          "trade_count": 1,
+          "net_r": 0.17,
+          "expectancy_r": 0.1715,
+          "profit_factor": 0.0,
+          "win_rate_pct": 100.0,
+          "max_drawdown_r": 0.0,
+          "avg_friction_r": 0.0568
+        },
+        "hf_5m": {
+          "trade_count": 1,
+          "net_r": 0.17,
+          "expectancy_r": 0.1715,
+          "profit_factor": 0.0,
+          "win_rate_pct": 100.0,
+          "max_drawdown_r": 0.0,
+          "avg_friction_r": 0.0567
+        },
+        "hf_15m": {
+          "trade_count": 1,
+          "net_r": 2.97,
+          "expectancy_r": 2.9705,
+          "profit_factor": 0.0,
+          "win_rate_pct": 100.0,
+          "max_drawdown_r": 0.0,
+          "avg_friction_r": 0.0566
+        }
+      },
+      "final_governance_classification": "RESEARCH_SURVIVOR_SUB_THRESHOLD",
+      "audit_verdict": "SOL/USDT Family 06 under true causal next-bar open fill generates 12.88R (PF 1.156, WR 44.22%), confirming that the strategy does not possess deployable edge. Classification: RESEARCH_SURVIVOR_SUB_THRESHOLD."
+    }
+  }
+}

@@ -1,0 +1,330 @@
+{
+    "best_performers": {
+        "SCALPING": {
+            "asset": "XRP/USDT",
+            "stats": {
+                "net": 0.283924,
+                "wr": 45.6522,
+                "pf": 1.4524,
+                "trades": 46
+            }
+        },
+        "INTRADAY": {
+            "asset": "ADA/USDT",
+            "stats": {
+                "net": 0.001679,
+                "wr": 42.2053,
+                "pf": 1.0027,
+                "trades": 263
+            }
+        },
+        "SWING": {
+            "asset": "SOL/USDT",
+            "stats": {
+                "net": 0.084124,
+                "wr": 45.0704,
+                "pf": 1.1593,
+                "trades": 213
+            }
+        },
+        "POSITIONAL": {
+            "asset": "ETH/USDT",
+            "stats": {
+                "net": 0.019713,
+                "wr": 37.2549,
+                "pf": 1.034,
+                "trades": 51
+            }
+        }
+    },
+    "all_results": [
+        {
+            "style": "MICRO_SCALPING",
+            "asset": "BTC/USDT",
+            "net_edge": -0.550373,
+            "win_rate": 33.3333,
+            "pf": 0.4144,
+            "trades": 36
+        },
+        {
+            "style": "MICRO_SCALPING",
+            "asset": "ETH/USDT",
+            "net_edge": -0.565456,
+            "win_rate": 35.7143,
+            "pf": 0.3769,
+            "trades": 56
+        },
+        {
+            "style": "MICRO_SCALPING",
+            "asset": "ADA/USDT",
+            "net_edge": -0.263299,
+            "win_rate": 38.7097,
+            "pf": 0.6579,
+            "trades": 31
+        },
+        {
+            "style": "SCALPING",
+            "asset": "BTC/USDT",
+            "net_edge": -0.289066,
+            "win_rate": 42.6667,
+            "pf": 0.6104,
+            "trades": 150
+        },
+        {
+            "style": "SCALPING",
+            "asset": "ETH/USDT",
+            "net_edge": -0.1443,
+            "win_rate": 42.1687,
+            "pf": 0.795,
+            "trades": 166
+        },
+        {
+            "style": "SCALPING",
+            "asset": "BNB/USDT",
+            "net_edge": -0.119948,
+            "win_rate": 47.3684,
+            "pf": 0.8273,
+            "trades": 38
+        },
+        {
+            "style": "SCALPING",
+            "asset": "XRP/USDT",
+            "net_edge": 0.283924,
+            "win_rate": 45.6522,
+            "pf": 1.4524,
+            "trades": 46
+        },
+        {
+            "style": "SCALPING",
+            "asset": "ADA/USDT",
+            "net_edge": -0.23003,
+            "win_rate": 37.5,
+            "pf": 0.6647,
+            "trades": 40
+        },
+        {
+            "style": "SCALPING",
+            "asset": "DOGE/USDT",
+            "net_edge": -0.233018,
+            "win_rate": 34.1463,
+            "pf": 0.6866,
+            "trades": 41
+        },
+        {
+            "style": "SCALPING",
+            "asset": "AVAX/USDT",
+            "net_edge": -0.306923,
+            "win_rate": 31.25,
+            "pf": 0.6191,
+            "trades": 32
+        },
+        {
+            "style": "SCALPING",
+            "asset": "LINK/USDT",
+            "net_edge": -0.313956,
+            "win_rate": 34.2857,
+            "pf": 0.594,
+            "trades": 35
+        },
+        {
+            "style": "SCALPING",
+            "asset": "LTC/USDT",
+            "net_edge": -0.063036,
+            "win_rate": 43.3333,
+            "pf": 0.9118,
+            "trades": 30
+        },
+        {
+            "style": "INTRADAY",
+            "asset": "BTC/USDT",
+            "net_edge": -0.105584,
+            "win_rate": 40.076,
+            "pf": 0.8389,
+            "trades": 1315
+        },
+        {
+            "style": "INTRADAY",
+            "asset": "ETH/USDT",
+            "net_edge": -0.01958,
+            "win_rate": 42.462,
+            "pf": 0.968,
+            "trades": 1446
+        },
+        {
+            "style": "INTRADAY",
+            "asset": "SOL/USDT",
+            "net_edge": -0.046311,
+            "win_rate": 39.0805,
+            "pf": 0.9248,
+            "trades": 348
+        },
+        {
+            "style": "INTRADAY",
+            "asset": "BNB/USDT",
+            "net_edge": -0.054448,
+            "win_rate": 42.4084,
+            "pf": 0.917,
+            "trades": 191
+        },
+        {
+            "style": "INTRADAY",
+            "asset": "XRP/USDT",
+            "net_edge": -0.149194,
+            "win_rate": 36.715,
+            "pf": 0.7739,
+            "trades": 207
+        },
+        {
+            "style": "INTRADAY",
+            "asset": "ADA/USDT",
+            "net_edge": 0.001679,
+            "win_rate": 42.2053,
+            "pf": 1.0027,
+            "trades": 263
+        },
+        {
+            "style": "INTRADAY",
+            "asset": "DOGE/USDT",
+            "net_edge": -0.010609,
+            "win_rate": 42.1053,
+            "pf": 0.983,
+            "trades": 247
+        },
+        {
+            "style": "INTRADAY",
+            "asset": "AVAX/USDT",
+            "net_edge": -0.109281,
+            "win_rate": 42.3237,
+            "pf": 0.8271,
+            "trades": 241
+        },
+        {
+            "style": "INTRADAY",
+            "asset": "LINK/USDT",
+            "net_edge": -0.013993,
+            "win_rate": 42.0354,
+            "pf": 0.9776,
+            "trades": 226
+        },
+        {
+            "style": "INTRADAY",
+            "asset": "LTC/USDT",
+            "net_edge": -0.146099,
+            "win_rate": 39.3365,
+            "pf": 0.7841,
+            "trades": 211
+        },
+        {
+            "style": "SWING",
+            "asset": "BTC/USDT",
+            "net_edge": -0.066157,
+            "win_rate": 39.521,
+            "pf": 0.8938,
+            "trades": 334
+        },
+        {
+            "style": "SWING",
+            "asset": "ETH/USDT",
+            "net_edge": 0.0005,
+            "win_rate": 41.1243,
+            "pf": 1.0009,
+            "trades": 338
+        },
+        {
+            "style": "SWING",
+            "asset": "SOL/USDT",
+            "net_edge": 0.084124,
+            "win_rate": 45.0704,
+            "pf": 1.1593,
+            "trades": 213
+        },
+        {
+            "style": "SWING",
+            "asset": "BNB/USDT",
+            "net_edge": 0.009228,
+            "win_rate": 41.1765,
+            "pf": 1.0155,
+            "trades": 187
+        },
+        {
+            "style": "SWING",
+            "asset": "XRP/USDT",
+            "net_edge": -0.046099,
+            "win_rate": 36.1582,
+            "pf": 0.927,
+            "trades": 177
+        },
+        {
+            "style": "SWING",
+            "asset": "ADA/USDT",
+            "net_edge": -0.078138,
+            "win_rate": 34.4,
+            "pf": 0.8814,
+            "trades": 250
+        },
+        {
+            "style": "SWING",
+            "asset": "DOGE/USDT",
+            "net_edge": 0.045538,
+            "win_rate": 40.5941,
+            "pf": 1.0763,
+            "trades": 202
+        },
+        {
+            "style": "SWING",
+            "asset": "AVAX/USDT",
+            "net_edge": -0.023675,
+            "win_rate": 40.5983,
+            "pf": 0.961,
+            "trades": 234
+        },
+        {
+            "style": "SWING",
+            "asset": "LINK/USDT",
+            "net_edge": -0.08017,
+            "win_rate": 39.8964,
+            "pf": 0.8655,
+            "trades": 193
+        },
+        {
+            "style": "SWING",
+            "asset": "LTC/USDT",
+            "net_edge": -0.068321,
+            "win_rate": 39.5556,
+            "pf": 0.8885,
+            "trades": 225
+        },
+        {
+            "style": "POSITIONAL",
+            "asset": "BTC/USDT",
+            "net_edge": -0.003803,
+            "win_rate": 43.1373,
+            "pf": 0.993,
+            "trades": 51
+        },
+        {
+            "style": "POSITIONAL",
+            "asset": "ETH/USDT",
+            "net_edge": 0.019713,
+            "win_rate": 37.2549,
+            "pf": 1.034,
+            "trades": 51
+        },
+        {
+            "style": "POSITIONAL",
+            "asset": "DOGE/USDT",
+            "net_edge": -0.089757,
+            "win_rate": 35.4839,
+            "pf": 0.8609,
+            "trades": 31
+        },
+        {
+            "style": "POSITIONAL",
+            "asset": "LTC/USDT",
+            "net_edge": -0.294964,
+            "win_rate": 28.5714,
+            "pf": 0.5896,
+            "trades": 35
+        }
+    ]
+}

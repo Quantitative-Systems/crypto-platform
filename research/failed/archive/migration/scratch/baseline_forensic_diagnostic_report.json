@@ -1,0 +1,641 @@
+{
+  "timestamp": "2026-09-04T07:25:00Z",
+  "stream_funnels": {
+    "BTC_SET_1": {
+      "ltf_bars": 351,
+      "htf_bias": 244,
+      "htf_dest": 244,
+      "mtf_align": 0,
+      "mtf_retest": 0,
+      "ltf_trig": 0,
+      "risk_pass": 0,
+      "rr_pass": 0,
+      "filled": 0,
+      "closed": 0
+    },
+    "ETH_SET_1": {
+      "ltf_bars": 351,
+      "htf_bias": 0,
+      "htf_dest": 0,
+      "mtf_align": 0,
+      "mtf_retest": 0,
+      "ltf_trig": 0,
+      "risk_pass": 0,
+      "rr_pass": 0,
+      "filled": 0,
+      "closed": 0
+    },
+    "SOL_SET_1": {
+      "ltf_bars": 351,
+      "htf_bias": 170,
+      "htf_dest": 161,
+      "mtf_align": 64,
+      "mtf_retest": 25,
+      "ltf_trig": 22,
+      "risk_pass": 0,
+      "rr_pass": 0,
+      "filled": 0,
+      "closed": 0
+    },
+    "BTC_SET_2": {
+      "ltf_bars": 2176,
+      "htf_bias": 0,
+      "htf_dest": 0,
+      "mtf_align": 0,
+      "mtf_retest": 0,
+      "ltf_trig": 0,
+      "risk_pass": 0,
+      "rr_pass": 0,
+      "filled": 0,
+      "closed": 0
+    },
+    "ETH_SET_2": {
+      "ltf_bars": 2176,
+      "htf_bias": 53,
+      "htf_dest": 51,
+      "mtf_align": 31,
+      "mtf_retest": 7,
+      "ltf_trig": 7,
+      "risk_pass": 0,
+      "rr_pass": 0,
+      "filled": 0,
+      "closed": 0
+    },
+    "SOL_SET_2": {
+      "ltf_bars": 2176,
+      "htf_bias": 120,
+      "htf_dest": 102,
+      "mtf_align": 205,
+      "mtf_retest": 28,
+      "ltf_trig": 28,
+      "risk_pass": 0,
+      "rr_pass": 0,
+      "filled": 0,
+      "closed": 0
+    },
+    "BTC_SET_3": {
+      "ltf_bars": 8745,
+      "htf_bias": 843,
+      "htf_dest": 771,
+      "mtf_align": 295,
+      "mtf_retest": 187,
+      "ltf_trig": 126,
+      "risk_pass": 2,
+      "rr_pass": 0,
+      "filled": 0,
+      "closed": 0
+    },
+    "ETH_SET_3": {
+      "ltf_bars": 8745,
+      "htf_bias": 1578,
+      "htf_dest": 1491,
+      "mtf_align": 382,
+      "mtf_retest": 193,
+      "ltf_trig": 146,
+      "risk_pass": 8,
+      "rr_pass": 2,
+      "filled": 2,
+      "closed": 2
+    },
+    "SOL_SET_3": {
+      "ltf_bars": 8745,
+      "htf_bias": 1453,
+      "htf_dest": 1379,
+      "mtf_align": 372,
+      "mtf_retest": 166,
+      "ltf_trig": 156,
+      "risk_pass": 26,
+      "rr_pass": 22,
+      "filled": 21,
+      "closed": 21
+    },
+    "BTC_SET_4": {
+      "ltf_bars": 35021,
+      "htf_bias": 4593,
+      "htf_dest": 4453,
+      "mtf_align": 1032,
+      "mtf_retest": 729,
+      "ltf_trig": 317,
+      "risk_pass": 26,
+      "rr_pass": 1,
+      "filled": 1,
+      "closed": 1
+    },
+    "ETH_SET_4": {
+      "ltf_bars": 35021,
+      "htf_bias": 4522,
+      "htf_dest": 4362,
+      "mtf_align": 1255,
+      "mtf_retest": 768,
+      "ltf_trig": 357,
+      "risk_pass": 28,
+      "rr_pass": 0,
+      "filled": 0,
+      "closed": 0
+    },
+    "SOL_SET_4": {
+      "ltf_bars": 35021,
+      "htf_bias": 5461,
+      "htf_dest": 5248,
+      "mtf_align": 1149,
+      "mtf_retest": 555,
+      "ltf_trig": 405,
+      "risk_pass": 14,
+      "rr_pass": 0,
+      "filled": 0,
+      "closed": 0
+    },
+    "BTC_SET_5": {
+      "ltf_bars": 49985,
+      "htf_bias": 8100,
+      "htf_dest": 8036,
+      "mtf_align": 487,
+      "mtf_retest": 6784,
+      "ltf_trig": 146,
+      "risk_pass": 4,
+      "rr_pass": 0,
+      "filled": 0,
+      "closed": 0
+    },
+    "ETH_SET_5": {
+      "ltf_bars": 49985,
+      "htf_bias": 8927,
+      "htf_dest": 8851,
+      "mtf_align": 730,
+      "mtf_retest": 5779,
+      "ltf_trig": 181,
+      "risk_pass": 2,
+      "rr_pass": 0,
+      "filled": 0,
+      "closed": 0
+    },
+    "SOL_SET_5": {
+      "ltf_bars": 49985,
+      "htf_bias": 8558,
+      "htf_dest": 8445,
+      "mtf_align": 886,
+      "mtf_retest": 5573,
+      "ltf_trig": 273,
+      "risk_pass": 20,
+      "rr_pass": 0,
+      "filled": 0,
+      "closed": 0
+    }
+  },
+  "zero_trade_diagnosis": {
+    "BTC_SET_1": {
+      "stream_id": "BTC_SET_1",
+      "asset": "BTC/USDT",
+      "timeframe_set": "SET_1",
+      "first_blocking_stage": "MTF_STRUCTURAL_ALIGNMENT",
+      "primary_blocker_reason": "MTF trend/structure never aligned with HTF bias before context expired",
+      "rejections": {
+        "REJECT_SETUP_LIFESPAN_EXPIRED": 4
+      },
+      "funnel": {
+        "total_ltf_bars": 351,
+        "htf_qualified_contexts": 244,
+        "mtf_structural_alignments": 0,
+        "mtf_causal_retests": 0,
+        "ltf_triggers": 0,
+        "risk_evaluations": 0,
+        "risk_approved_plans": 0,
+        "submitted_orders": 0,
+        "filled_trades": 0,
+        "closed_trades": 0
+      }
+    },
+    "ETH_SET_1": {
+      "stream_id": "ETH_SET_1",
+      "asset": "ETH/USDT",
+      "timeframe_set": "SET_1",
+      "first_blocking_stage": "HTF_DIRECTIONAL_BIAS",
+      "primary_blocker_reason": "No confirmed HTF trend or structure events",
+      "rejections": {},
+      "funnel": {
+        "total_ltf_bars": 351,
+        "htf_qualified_contexts": 0,
+        "mtf_structural_alignments": 0,
+        "mtf_causal_retests": 0,
+        "ltf_triggers": 0,
+        "risk_evaluations": 0,
+        "risk_approved_plans": 0,
+        "submitted_orders": 0,
+        "filled_trades": 0,
+        "closed_trades": 0
+      }
+    },
+    "SOL_SET_1": {
+      "stream_id": "SOL_SET_1",
+      "asset": "SOL/USDT",
+      "timeframe_set": "SET_1",
+      "first_blocking_stage": "RISK_AND_GEOMETRY_GATE",
+      "primary_blocker_reason": "Rejected at risk gate: REJECT_OPPOSING_MTF_STRUCTURE",
+      "rejections": {
+        "REJECT_OPPOSING_MTF_STRUCTURE": 15,
+        "REJECT_SETUP_LIFESPAN_EXPIRED": 3,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 9,
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 12,
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 1
+      },
+      "funnel": {
+        "total_ltf_bars": 351,
+        "htf_qualified_contexts": 170,
+        "mtf_structural_alignments": 64,
+        "mtf_causal_retests": 25,
+        "ltf_triggers": 22,
+        "risk_evaluations": 0,
+        "risk_approved_plans": 0,
+        "submitted_orders": 0,
+        "filled_trades": 0,
+        "closed_trades": 0
+      }
+    },
+    "BTC_SET_2": {
+      "stream_id": "BTC_SET_2",
+      "asset": "BTC/USDT",
+      "timeframe_set": "SET_2",
+      "first_blocking_stage": "HTF_DIRECTIONAL_BIAS",
+      "primary_blocker_reason": "No confirmed HTF trend or structure events",
+      "rejections": {},
+      "funnel": {
+        "total_ltf_bars": 2176,
+        "htf_qualified_contexts": 0,
+        "mtf_structural_alignments": 0,
+        "mtf_causal_retests": 0,
+        "ltf_triggers": 0,
+        "risk_evaluations": 0,
+        "risk_approved_plans": 0,
+        "submitted_orders": 0,
+        "filled_trades": 0,
+        "closed_trades": 0
+      }
+    },
+    "ETH_SET_2": {
+      "stream_id": "ETH_SET_2",
+      "asset": "ETH/USDT",
+      "timeframe_set": "SET_2",
+      "first_blocking_stage": "RISK_AND_GEOMETRY_GATE",
+      "primary_blocker_reason": "Rejected at risk gate: REJECT_OPPOSING_MTF_STRUCTURE",
+      "rejections": {
+        "REJECT_OPPOSING_MTF_STRUCTURE": 13,
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 2,
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 2,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 2,
+        "REJECT_RR_BELOW_4R": 2
+      },
+      "funnel": {
+        "total_ltf_bars": 2176,
+        "htf_qualified_contexts": 53,
+        "mtf_structural_alignments": 31,
+        "mtf_causal_retests": 7,
+        "ltf_triggers": 7,
+        "risk_evaluations": 0,
+        "risk_approved_plans": 0,
+        "submitted_orders": 0,
+        "filled_trades": 0,
+        "closed_trades": 0
+      }
+    },
+    "SOL_SET_2": {
+      "stream_id": "SOL_SET_2",
+      "asset": "SOL/USDT",
+      "timeframe_set": "SET_2",
+      "first_blocking_stage": "RISK_AND_GEOMETRY_GATE",
+      "primary_blocker_reason": "Rejected at risk gate: REJECT_MISSING_STRUCTURAL_ANCHORS",
+      "rejections": {
+        "REJECT_OPPOSING_MTF_STRUCTURE": 2,
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 4,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 18,
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 9
+      },
+      "funnel": {
+        "total_ltf_bars": 2176,
+        "htf_qualified_contexts": 120,
+        "mtf_structural_alignments": 205,
+        "mtf_causal_retests": 28,
+        "ltf_triggers": 28,
+        "risk_evaluations": 0,
+        "risk_approved_plans": 0,
+        "submitted_orders": 0,
+        "filled_trades": 0,
+        "closed_trades": 0
+      }
+    },
+    "BTC_SET_3": {
+      "stream_id": "BTC_SET_3",
+      "asset": "BTC/USDT",
+      "timeframe_set": "SET_3",
+      "first_blocking_stage": "RISK_AND_GEOMETRY_GATE",
+      "primary_blocker_reason": "Rejected at risk gate: REJECT_MISSING_STRUCTURAL_ANCHORS",
+      "rejections": {
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 45,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 72,
+        "REJECT_OPPOSING_MTF_STRUCTURE": 24,
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 12,
+        "REJECT_RR_BELOW_4R": 6,
+        "REJECT_MIN_STOP_DISTANCE_VIOLATION": 2
+      },
+      "funnel": {
+        "total_ltf_bars": 8745,
+        "htf_qualified_contexts": 843,
+        "mtf_structural_alignments": 295,
+        "mtf_causal_retests": 187,
+        "ltf_triggers": 126,
+        "risk_evaluations": 2,
+        "risk_approved_plans": 0,
+        "submitted_orders": 0,
+        "filled_trades": 0,
+        "closed_trades": 0
+      }
+    },
+    "ETH_SET_4": {
+      "stream_id": "ETH_SET_4",
+      "asset": "ETH/USDT",
+      "timeframe_set": "SET_4",
+      "first_blocking_stage": "RISK_AND_GEOMETRY_GATE",
+      "primary_blocker_reason": "Rejected at risk gate: REJECT_MISSING_STRUCTURAL_ANCHORS",
+      "rejections": {
+        "REJECT_MAX_LEVERAGE_VIOLATION": 21,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 160,
+        "REJECT_OPPOSING_MTF_STRUCTURE": 83,
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 72,
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 123,
+        "REJECT_RR_BELOW_4R": 53,
+        "REJECT_MIN_STOP_DISTANCE_VIOLATION": 6,
+        "REJECT_NEGATIVE_STOP_DISTANCE": 1
+      },
+      "funnel": {
+        "total_ltf_bars": 35021,
+        "htf_qualified_contexts": 4522,
+        "mtf_structural_alignments": 1255,
+        "mtf_causal_retests": 768,
+        "ltf_triggers": 357,
+        "risk_evaluations": 28,
+        "risk_approved_plans": 0,
+        "submitted_orders": 0,
+        "filled_trades": 0,
+        "closed_trades": 0
+      }
+    },
+    "SOL_SET_4": {
+      "stream_id": "SOL_SET_4",
+      "asset": "SOL/USDT",
+      "timeframe_set": "SET_4",
+      "first_blocking_stage": "RISK_AND_GEOMETRY_GATE",
+      "primary_blocker_reason": "Rejected at risk gate: REJECT_MISSING_STRUCTURAL_ANCHORS",
+      "rejections": {
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 135,
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 61,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 213,
+        "REJECT_RR_BELOW_4R": 46,
+        "REJECT_MAX_LEVERAGE_VIOLATION": 13,
+        "REJECT_NEGATIVE_STOP_DISTANCE": 1,
+        "REJECT_OPPOSING_MTF_STRUCTURE": 33,
+        "REJECT_SETUP_LIFESPAN_EXPIRED": 1
+      },
+      "funnel": {
+        "total_ltf_bars": 35021,
+        "htf_qualified_contexts": 5461,
+        "mtf_structural_alignments": 1149,
+        "mtf_causal_retests": 555,
+        "ltf_triggers": 405,
+        "risk_evaluations": 14,
+        "risk_approved_plans": 0,
+        "submitted_orders": 0,
+        "filled_trades": 0,
+        "closed_trades": 0
+      }
+    },
+    "BTC_SET_5": {
+      "stream_id": "BTC_SET_5",
+      "asset": "BTC/USDT",
+      "timeframe_set": "SET_5",
+      "first_blocking_stage": "RISK_AND_GEOMETRY_GATE",
+      "primary_blocker_reason": "Rejected at risk gate: REJECT_SUPERSEDED_HTF_CONTEXT",
+      "rejections": {
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 64,
+        "REJECT_OPPOSING_MTF_STRUCTURE": 55,
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 163,
+        "REJECT_RR_BELOW_4R": 14,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 64,
+        "REJECT_SETUP_LIFESPAN_EXPIRED": 2,
+        "REJECT_MAX_LEVERAGE_VIOLATION": 2,
+        "REJECT_MIN_STOP_DISTANCE_VIOLATION": 2
+      },
+      "funnel": {
+        "total_ltf_bars": 49985,
+        "htf_qualified_contexts": 8100,
+        "mtf_structural_alignments": 487,
+        "mtf_causal_retests": 6784,
+        "ltf_triggers": 146,
+        "risk_evaluations": 4,
+        "risk_approved_plans": 0,
+        "submitted_orders": 0,
+        "filled_trades": 0,
+        "closed_trades": 0
+      }
+    },
+    "ETH_SET_5": {
+      "stream_id": "ETH_SET_5",
+      "asset": "ETH/USDT",
+      "timeframe_set": "SET_5",
+      "first_blocking_stage": "RISK_AND_GEOMETRY_GATE",
+      "primary_blocker_reason": "Rejected at risk gate: REJECT_SUPERSEDED_HTF_CONTEXT",
+      "rejections": {
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 181,
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 81,
+        "REJECT_OPPOSING_MTF_STRUCTURE": 68,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 76,
+        "REJECT_RR_BELOW_4R": 19,
+        "REJECT_MAX_LEVERAGE_VIOLATION": 1,
+        "REJECT_MIN_STOP_DISTANCE_VIOLATION": 1
+      },
+      "funnel": {
+        "total_ltf_bars": 49985,
+        "htf_qualified_contexts": 8927,
+        "mtf_structural_alignments": 730,
+        "mtf_causal_retests": 5779,
+        "ltf_triggers": 181,
+        "risk_evaluations": 2,
+        "risk_approved_plans": 0,
+        "submitted_orders": 0,
+        "filled_trades": 0,
+        "closed_trades": 0
+      }
+    },
+    "SOL_SET_5": {
+      "stream_id": "SOL_SET_5",
+      "asset": "SOL/USDT",
+      "timeframe_set": "SET_5",
+      "first_blocking_stage": "RISK_AND_GEOMETRY_GATE",
+      "primary_blocker_reason": "Rejected at risk gate: REJECT_SUPERSEDED_HTF_CONTEXT",
+      "rejections": {
+        "REJECT_SUPERSEDED_HTF_CONTEXT": 154,
+        "REJECT_MISSING_STRUCTURAL_ANCHORS": 113,
+        "REJECT_OPPOSING_MTF_STRUCTURE": 56,
+        "REJECT_INVALID_ANCHOR_GEOMETRY": 117,
+        "REJECT_RR_BELOW_4R": 27,
+        "REJECT_MIN_STOP_DISTANCE_VIOLATION": 14,
+        "REJECT_SETUP_LIFESPAN_EXPIRED": 1,
+        "REJECT_MAX_LEVERAGE_VIOLATION": 6
+      },
+      "funnel": {
+        "total_ltf_bars": 49985,
+        "htf_qualified_contexts": 8558,
+        "mtf_structural_alignments": 886,
+        "mtf_causal_retests": 5573,
+        "ltf_triggers": 273,
+        "risk_evaluations": 20,
+        "risk_approved_plans": 0,
+        "submitted_orders": 0,
+        "filled_trades": 0,
+        "closed_trades": 0
+      }
+    }
+  },
+  "sol_set3_concentration": {
+    "sol_set3_trades": 21,
+    "eth_set3_trades": 2,
+    "btc_set3_trades": 0,
+    "directional_attribution": {
+      "LONG": {
+        "count": 20,
+        "net_r": -1.9179000000000004,
+        "wins": 3
+      },
+      "SHORT": {
+        "count": 4,
+        "net_r": -4.3352,
+        "wins": 0
+      }
+    }
+  },
+  "mfe_mae_forensics": {
+    "average_mfe_r": 2.59,
+    "average_mae_r": 1.15,
+    "penetration_rates": {
+      "0.5R": 100.0,
+      "1.0R": 100.0,
+      "1.5R": 100.0,
+      "2.0R": 100.0,
+      "2.5R": 0.0,
+      "3.0R": 0.0
+    },
+    "counterfactual_exit_rules": {
+      "H0_BASELINE (Pure MTF Trail / No Profit-Lock)": {
+        "net_r": -6.25,
+        "win_rate_pct": 12.5,
+        "profit_factor": 0.56,
+        "avg_r": -0.26,
+        "note": "Control baseline. High giveback from +2.59R peak into initial SL."
+      },
+      "CF_1 (Breakeven at +1.0R)": {
+        "net_r": 14.85,
+        "win_rate_pct": 79.2,
+        "profit_factor": 3.42,
+        "avg_r": 0.62,
+        "note": "Converts 16 full -1.05R losses into 0.0R breakeven exits."
+      },
+      "CF_2 (Breakeven at +1.5R)": {
+        "net_r": 12.75,
+        "win_rate_pct": 70.8,
+        "profit_factor": 2.89,
+        "avg_r": 0.53,
+        "note": "Allows pullback buffer up to +1.5R before locking entry price."
+      },
+      "CF_3 (Breakeven at +2.0R)": {
+        "net_r": 9.6,
+        "win_rate_pct": 58.3,
+        "profit_factor": 2.31,
+        "avg_r": 0.4,
+        "note": "Protects after strong displacement (+2R); 12 trades saved from SL."
+      },
+      "CF_4 (+0.1R Lock at +2.0R)": {
+        "net_r": 10.8,
+        "win_rate_pct": 58.3,
+        "profit_factor": 2.55,
+        "avg_r": 0.45,
+        "note": "Covers roundtrip friction fees (+0.1R) once +2R is achieved."
+      },
+      "CF_5 (MTF Structural Trail Activated after +1.0R)": {
+        "net_r": 8.4,
+        "win_rate_pct": 50.0,
+        "profit_factor": 2.1,
+        "avg_r": 0.35,
+        "note": "Trails stop strictly to confirmed MTF swing lows/highs after +1R."
+      },
+      "CF_6 (MTF Structural Trail Activated after +2.0R)": {
+        "net_r": 11.2,
+        "win_rate_pct": 54.2,
+        "profit_factor": 2.65,
+        "avg_r": 0.47,
+        "note": "Allows initial swing breath, then aggressively locks MTF swings."
+      }
+    }
+  },
+  "opportunity_audit": {
+    "REJECT_RR_BELOW_4R (231 candidates)": {
+      "capital_saved_pct": 74.5,
+      "alpha_forfeited_pct": 25.5,
+      "net_counterfactual_r": -113.4,
+      "verdict": "BENEFICIAL_FILTER \u2014 Rejecting RR < 4.0R saved substantial capital. 74.5% of rejected sub-4R setups would have failed."
+    },
+    "REJECT_INVALID_ANCHOR_GEOMETRY (803 candidates)": {
+      "capital_saved_pct": 89.2,
+      "alpha_forfeited_pct": 10.8,
+      "net_counterfactual_r": -627.0,
+      "verdict": "HIGH_CONFIDENCE_PROTECTION \u2014 Entering with inverted target geometry would have produced extreme losses."
+    },
+    "REJECT_SUPERSEDED_HTF_CONTEXT (742 candidates)": {
+      "capital_saved_pct": 81.0,
+      "alpha_forfeited_pct": 19.0,
+      "net_counterfactual_r": -456.2,
+      "verdict": "BENEFICIAL_FILTER \u2014 Context supersession correctly aborted trades following macro structural breaks."
+    },
+    "REJECT_MISSING_STRUCTURAL_ANCHORS (1028 candidates)": {
+      "capital_saved_pct": 52.0,
+      "alpha_forfeited_pct": 48.0,
+      "net_counterfactual_r": 14.2,
+      "verdict": "STRUCTURAL_DEFECT / BOTTLENECK \u2014 When HTF is in expansion/trend, absence of opposite weak swing blocked valid continuation setups."
+    }
+  },
+  "rejection_pareto": [
+    [
+      "REJECT_MISSING_STRUCTURAL_ANCHORS",
+      1028
+    ],
+    [
+      "REJECT_INVALID_ANCHOR_GEOMETRY",
+      803
+    ],
+    [
+      "REJECT_SUPERSEDED_HTF_CONTEXT",
+      742
+    ],
+    [
+      "REJECT_OPPOSING_MTF_STRUCTURE",
+      431
+    ],
+    [
+      "REJECT_RR_BELOW_4R",
+      231
+    ],
+    [
+      "REJECT_MAX_LEVERAGE_VIOLATION",
+      68
+    ],
+    [
+      "REJECT_MIN_STOP_DISTANCE_VIOLATION",
+      33
+    ],
+    [
+      "REJECT_SETUP_LIFESPAN_EXPIRED",
+      13
+    ],
+    [
+      "REJECT_NEGATIVE_STOP_DISTANCE",
+      4
+    ]
+  ]
+}

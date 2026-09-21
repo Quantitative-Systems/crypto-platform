@@ -5,7 +5,7 @@ cryptographic SHA-256 lineage hashing, and automated candle sanitization.
 """
 
 import pytest
-from market_intelligence.primitives import Candle
+from market_data.primitives import Candle
 from market_data.data_quality_engine import (
     DataQualityEngine,
     DataCertificationVerdict,

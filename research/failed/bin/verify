@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+"""bin/verify — repository integrity: lab verification + structural tests."""
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+from hypotheses.verify_lab import verify_lab  # noqa: E402
+
+
+def main() -> int:
+    rc = 0
+    errs = verify_lab()
+    print(f"[1/2] hypothesis lab verifier: {'CLEAN' if not errs else 'FAILED'}")
+    for e in errs:
+        print(f"  ! {e}")
+        rc = 1
+    print("[2/2] structural governance tests:")
+    r = subprocess.run(
+        [sys.executable, "-m", "pytest", "-q",
+         "tests/unit/research/test_qcp_lab_governance.py"],
+        cwd=ROOT, check=False)
+    if r.returncode != 0:
+        rc = 1
+    print("VERIFY:", "PASS" if rc == 0 else "FAIL")
+    return rc
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

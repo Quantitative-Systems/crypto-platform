@@ -1,5 +1,5 @@
 import pytest
-from market_intelligence.primitives import Candle
+from market_data.primitives import Candle
 from market_data.data_certifier import DataCertifier
 
 def create_candle(ts: int, p: float) -> Candle:

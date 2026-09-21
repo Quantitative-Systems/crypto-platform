@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from market_data.data_manager import DataManager, CACHE_DIR
-from market_intelligence.primitives import Candle
+from market_data.primitives import Candle
 
 
 class BinanceArchiveIngestion:

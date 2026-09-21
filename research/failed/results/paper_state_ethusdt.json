@@ -1,0 +1,10 @@
+{
+  "current_equity": 3160.3272,
+  "peak_equity": 3266.8863,
+  "max_drawdown_usd": 226.5102,
+  "max_drawdown_pct": 6.9335,
+  "last_processed_timestamp": 1788278400,
+  "active_positions_count": 0,
+  "total_closed_trades": 333,
+  "saved_at": "2026-09-15T07:45:09.173751+00:00"
+}

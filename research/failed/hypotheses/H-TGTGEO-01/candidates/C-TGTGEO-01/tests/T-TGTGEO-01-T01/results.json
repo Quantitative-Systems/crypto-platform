@@ -1,0 +1,32 @@
+{
+  "test_id": "T-TGTGEO-01-T01",
+  "candidate_id": "C-TGTGEO-01",
+  "hypothesis_id": "H-TGTGEO-01",
+  "status": "NEGATIVE_SIGNAL",
+  "metrics": {
+    "total_trades": 41,
+    "net_r": -27.66,
+    "profit_factor": 0.1905,
+    "expectancy_r": -0.6746,
+    "note": "vs control N=29 net -15.52R PF 0.3871; reach 6.90%->2.44%; winner truncation -4.13R on trade 20"
+  },
+  "provenance": {
+    "original_path": "docs/TARGET_GEOMETRY_EXPERIMENT_AUDIT.md; scratch/exp_base_tgtstruct_legacy_stop_01_dev_results.json",
+    "experiment_id": "EXP_TARGET_STRUCTURAL_01",
+    "hypothesis_id": "H-TGTGEO-01",
+    "candidate_id": "C-TGTGEO-01",
+    "test_id": "T-TGTGEO-01-T01",
+    "strategy_mechanism_version": "v1.0.0-causal-adverse-first + STRUCTURAL_OBJECTIVE ranking",
+    "data_version": "Certified DEV partition 2021-01-01..2022-12-31 (277,908 candles, 15 streams, BTC/ETH/SOL x SET_1..SET_5)",
+    "code_commit": "unrecorded (pre-registry artifact, milestone branch lineage)",
+    "timeframe": "SET_1..SET_5 multi-scale (15 streams)",
+    "asset": "BTC/USDT, ETH/USDT, SOL/USDT",
+    "execution_assumptions": "causal replayer, adverse-first intrabar collision, exited plans terminal (no-reentry invariant, replayer fix 6382061)",
+    "fees": "maker 2 bps / taker 5 bps",
+    "slippage": "5 bps adverse",
+    "collision_reentry_semantics": "ADVERSE_FIRST + terminal-plan no-reentry",
+    "result_classification": "NEGATIVE_SIGNAL"
+  },
+  "recorded_at_utc": "2026-09-19T08:02:37.379021+00:00",
+  "promotion_note": "POSITIVE DEV RESULT IS NOT A WINNER. No promotion."
+}
