@@ -1,0 +1,72 @@
+{
+  "measured_atr_bps": {
+    "SCALP": 8.394611950264036,
+    "INTRADAY": 49.49513943559828,
+    "SWING": 115.29796413793031,
+    "POSITION": 251.80389367744525,
+    "INVEST": 683.4073122568884
+  },
+  "atr_bps_by_timeframe": {
+    "1m": 8.394611950264036,
+    "15m": 49.49513943559828,
+    "1h": 115.29796413793031,
+    "4h": 251.80389367744525,
+    "1d": 683.4073122568884
+  },
+  "rows": [
+    {
+      "horizon": "SCALP",
+      "style": "seconds-minutes",
+      "stop_bps": 16.8,
+      "cost_bps": 5.0,
+      "cost_to_stop": 0.804,
+      "economic": false,
+      "note": ""
+    },
+    {
+      "horizon": "INTRADAY",
+      "style": "hours",
+      "stop_bps": 99.0,
+      "cost_bps": 5.0,
+      "cost_to_stop": 0.136,
+      "economic": true,
+      "note": ""
+    },
+    {
+      "horizon": "SWING",
+      "style": "days",
+      "stop_bps": 288.2,
+      "cost_bps": 22.0,
+      "cost_to_stop": 0.076,
+      "economic": true,
+      "note": ""
+    },
+    {
+      "horizon": "POSITION",
+      "style": "weeks-months",
+      "stop_bps": 755.4,
+      "cost_bps": 22.0,
+      "cost_to_stop": 0.029,
+      "economic": true,
+      "note": ""
+    },
+    {
+      "horizon": "INVEST",
+      "style": "months-years",
+      "stop_bps": 2733.6,
+      "cost_bps": 22.0,
+      "cost_to_stop": 0.008,
+      "economic": true,
+      "note": ""
+    },
+    {
+      "horizon": "CARRY",
+      "style": "weeks-months",
+      "stop_bps": null,
+      "cost_bps": 49.0,
+      "cost_to_stop": null,
+      "economic": null,
+      "note": "market-neutral carry: costs vs funding yield"
+    }
+  ]
+}
