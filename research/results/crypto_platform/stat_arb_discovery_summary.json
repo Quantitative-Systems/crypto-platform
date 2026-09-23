@@ -1,0 +1,16 @@
+{
+  "total_candidates": 4,
+  "results": {
+    "ETH_BTC_1H": "FAILED_BACKTEST_DEV",
+    "SOL_ETH_1H": "FAILED_BACKTEST_DEV",
+    "ADA_BTC_1H": "FAILED_BACKTEST_DEV",
+    "BNB_BTC_1H": "FAILED_BACKTEST_DEV"
+  },
+  "promoted_paper_only": [],
+  "failed_archived": [
+    "ETH_BTC_1H",
+    "SOL_ETH_1H",
+    "ADA_BTC_1H",
+    "BNB_BTC_1H"
+  ]
+}

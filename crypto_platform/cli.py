@@ -131,6 +131,55 @@ def cmd_forward_paper(args) -> int:
     return 0
 
 
+def cmd_compare(args) -> int:
+    """Run Backtest vs OOS vs Forward Paper comparison report."""
+    from crypto_platform.research_engine.comparison_engine import ComparisonEngine
+    engine = ComparisonEngine()
+    print("Building Backtest vs Validation vs OOS vs Forward Paper comparison report...")
+    res = engine.build_comparison_report()
+    pf = res.get("portfolio", {})
+    metrics = pf.get("METRIC", [])
+    dev = pf.get("HISTORICAL_DEV (2021-2022)", [])
+    val = pf.get("VALIDATION (2023-2024)", [])
+    oos = pf.get("OUT_OF_SAMPLE (2024-2026)", [])
+    paper = pf.get("FORWARD_PAPER (LIVE FEED)", [])
+    live = pf.get("LIVE_TRADING", [])
+
+    print("\n" + "=" * 95)
+    print(f"{'METRIC':<20} | {'DEV':<12} | {'VAL':<12} | {'OOS':<15} | {'FORWARD PAPER':<18} | {'LIVE'}")
+    print("-" * 95)
+    for i in range(len(metrics)):
+        print(f"{metrics[i]:<20} | {dev[i]:<12} | {val[i]:<12} | {oos[i]:<15} | {paper[i]:<18} | {live[i]}")
+    print("=" * 95)
+    print("\nSaved artifacts:")
+    print("  research/results/crypto_platform/backtest_vs_oos_vs_paper.json")
+    print("  research/results/crypto_platform/profitability_validation_report.md")
+    return 0
+
+
+def cmd_soak(args) -> int:
+    """Run real public WebSocket forward paper soak session."""
+    import asyncio
+    from crypto_platform.paper_trading.soak_runner import PaperSoakHarness
+    harness = PaperSoakHarness()
+    print(f"Starting forward paper trading soak session for {args.duration}s with public Binance feeds...")
+    summary = asyncio.run(harness.run_soak_session(duration_seconds=float(args.duration), test_restart=True))
+    print("\nSoak Session Completed Successfully:")
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
+def cmd_discover_arb(args) -> int:
+    """Run relative-value / statistical arbitrage discovery across cointegrated pairs."""
+    from crypto_platform.discovery.statistical_arbitrage_discovery import StatisticalArbitrageDiscovery
+    disc = StatisticalArbitrageDiscovery()
+    print("Executing 8-Stage Statistical Arbitrage candidate discovery...")
+    summary = disc.run_discovery_campaign()
+    print("\nDiscovery Campaign Summary:")
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def main():
     p = argparse.ArgumentParser(
         prog="crypto_platform",
@@ -164,6 +213,16 @@ def main():
     p_fp = sub.add_parser("forward-paper", help="Controlled forward paper trading session with SQLite ledger")
     p_fp.add_argument("--duration", default=5.0, type=float, help="Session duration in seconds")
 
+    # compare
+    sub.add_parser("compare", help="Compare Backtest vs Validation vs OOS vs Forward Paper performance")
+
+    # soak
+    p_soak = sub.add_parser("soak", help="Public WebSocket forward paper soak session with restart verification")
+    p_soak.add_argument("--duration", default=10.0, type=float, help="Soak duration in seconds")
+
+    # discover-arb
+    sub.add_parser("discover-arb", help="Discover relative-value / statistical arbitrage pair strategies")
+
     # status
     sub.add_parser("status", help="Current platform status and promoted books")
 
@@ -176,6 +235,9 @@ def main():
         "paper": cmd_paper,
         "carry-stress": cmd_carry_stress,
         "forward-paper": cmd_forward_paper,
+        "compare": cmd_compare,
+        "soak": cmd_soak,
+        "discover-arb": cmd_discover_arb,
         "status": cmd_status,
     }
     sys.exit(dispatch[args.cmd](args))

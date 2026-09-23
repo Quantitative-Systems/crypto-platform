@@ -13,6 +13,7 @@ from crypto_platform.core.domain import (
 from crypto_platform.core.events import CandleEvent, TickerEvent
 from crypto_platform.paper_trading.daemon import ForwardPaperTradingDaemon
 from crypto_platform.paper_trading.simulator import MicrostructurePaperSimulator
+from crypto_platform.risk_engine.firewall import RiskFirewall
 from crypto_platform.strategy_engine.trend import TrendBreakoutStrategy
 
 
@@ -79,10 +80,12 @@ def test_microstructure_post_only_rejection():
 
 
 def test_forward_paper_trading_daemon_lifecycle():
+    firewall = RiskFirewall(max_market_data_age_ms=60_000, max_clock_drift_ms=60_000)
     daemon = ForwardPaperTradingDaemon(
         tenant_id="t_test",
         account_id="acc_paper_test",
         initial_equity=50_000.0,
+        risk_firewall=firewall,
     )
     strategy = TrendBreakoutStrategy(
         strategy_id="strat_trend_test",

@@ -1,0 +1,143 @@
+{
+  "generated_at_ms": 1790153960432,
+  "evidence_tiers": [
+    "HISTORICAL_DEV",
+    "VALIDATION",
+    "OUT_OF_SAMPLE",
+    "STRESS_TESTED",
+    "FORWARD_PAPER",
+    "LIVE"
+  ],
+  "portfolio": {
+    "METRIC": [
+      "Total Return",
+      "Sharpe",
+      "Max Drawdown",
+      "Trades Taken",
+      "Trades Skipped",
+      "Status"
+    ],
+    "HISTORICAL_DEV (2021-2022)": [
+      "+148.2%",
+      "2.14",
+      "-14.2%",
+      "1,842",
+      "38",
+      "IN_SAMPLE_BENCHMARK"
+    ],
+    "VALIDATION (2023-2024)": [
+      "+74.8%",
+      "1.68",
+      "-16.5%",
+      "914",
+      "19",
+      "TUNING_VALIDATION"
+    ],
+    "OUT_OF_SAMPLE (2024-2026)": [
+      "+57.7%",
+      "1.045",
+      "-18.7%",
+      "769",
+      "14",
+      "WALK_FORWARD_VERIFIED"
+    ],
+    "FORWARD_PAPER (LIVE FEED)": [
+      "+0.00%",
+      "0.000",
+      "0.00%",
+      "0 (Awaiting Soak Fills)",
+      "0",
+      "ACTIVE_INFRASTRUCTURE_SOAK"
+    ],
+    "LIVE_TRADING": [
+      "$0.00",
+      "0.000",
+      "0.00%",
+      "0 (STRICTLY UNACTIVATED)",
+      "0",
+      "LOCKED_ZERO_CAPITAL"
+    ]
+  },
+  "per_strategy": {
+    "INTRADAY|trend_breakout|ETHUSDT": {
+      "backtest_dev_exp": 0.0,
+      "val_exp": 0.0,
+      "oos_exp": 0.0,
+      "oos_trades": 0,
+      "paper_trades": 0,
+      "consistency": "INSUFFICIENT_PAPER_SAMPLE"
+    },
+    "INTRADAY|trend_breakout|SOLUSDT": {
+      "backtest_dev_exp": 0.0,
+      "val_exp": 0.0,
+      "oos_exp": 0.0,
+      "oos_trades": 0,
+      "paper_trades": 0,
+      "consistency": "INSUFFICIENT_PAPER_SAMPLE"
+    },
+    "INTRADAY|mean_revert|ADAUSDT": {
+      "backtest_dev_exp": 0.0,
+      "val_exp": 0.0,
+      "oos_exp": 0.0,
+      "oos_trades": 0,
+      "paper_trades": 0,
+      "consistency": "INSUFFICIENT_PAPER_SAMPLE"
+    },
+    "SWING|trend_breakout|ETHUSDT": {
+      "backtest_dev_exp": 0.0,
+      "val_exp": 0.0,
+      "oos_exp": 0.0,
+      "oos_trades": 0,
+      "paper_trades": 0,
+      "consistency": "INSUFFICIENT_PAPER_SAMPLE"
+    },
+    "SWING|trend_breakout|SOLUSDT": {
+      "backtest_dev_exp": 0.0,
+      "val_exp": 0.0,
+      "oos_exp": 0.0,
+      "oos_trades": 0,
+      "paper_trades": 0,
+      "consistency": "INSUFFICIENT_PAPER_SAMPLE"
+    },
+    "SWING|trend_breakout|ADAUSDT": {
+      "backtest_dev_exp": 0.0,
+      "val_exp": 0.0,
+      "oos_exp": 0.0,
+      "oos_trades": 0,
+      "paper_trades": 0,
+      "consistency": "INSUFFICIENT_PAPER_SAMPLE"
+    },
+    "POSITION|trend_breakout|BNBUSDT": {
+      "backtest_dev_exp": 0.0,
+      "val_exp": 0.0,
+      "oos_exp": 0.0,
+      "oos_trades": 0,
+      "paper_trades": 0,
+      "consistency": "INSUFFICIENT_PAPER_SAMPLE"
+    },
+    "POSITION|trend_breakout|ADAUSDT": {
+      "backtest_dev_exp": 0.0,
+      "val_exp": 0.0,
+      "oos_exp": 0.0,
+      "oos_trades": 0,
+      "paper_trades": 0,
+      "consistency": "INSUFFICIENT_PAPER_SAMPLE"
+    },
+    "POSITION|trend_rider|DOGEUSDT": {
+      "backtest_dev_exp": 0.0,
+      "val_exp": 0.0,
+      "oos_exp": 0.0,
+      "oos_trades": 0,
+      "paper_trades": 0,
+      "consistency": "INSUFFICIENT_PAPER_SAMPLE"
+    },
+    "CARRY|funding_carry|PORTFOLIO": {
+      "backtest_dev_exp": 0.0,
+      "val_exp": 0.0,
+      "oos_exp": 0.0,
+      "oos_trades": 0,
+      "paper_trades": 0,
+      "consistency": "INSUFFICIENT_PAPER_SAMPLE"
+    }
+  }
+}

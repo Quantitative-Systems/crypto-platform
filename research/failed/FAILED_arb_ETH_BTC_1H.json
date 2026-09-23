@@ -1,0 +1,35 @@
+{
+  "pair_id": "ETH_BTC_1H",
+  "candidate": {
+    "pair_id": "ETH_BTC_1H",
+    "leg_a": "ETHUSDT",
+    "leg_b": "BTCUSDT",
+    "timeframe": "1h",
+    "lookback": 40,
+    "entry_z": 2.0,
+    "exit_z": 0.5,
+    "stop_z": 3.5
+  },
+  "verdict": "FAILED_BACKTEST_DEV",
+  "evaluated_at_ms": 1790153973441,
+  "stages": [
+    {
+      "stage_name": "STAGE_1_DATA",
+      "passed": true,
+      "metrics": {
+        "bars_a": 79134,
+        "bars_b": 79134
+      },
+      "failure_reason": ""
+    },
+    {
+      "stage_name": "STAGE_2_BACKTEST_DEV",
+      "passed": false,
+      "metrics": {
+        "trade_count": 1380,
+        "expectancy": -0.249
+      },
+      "failure_reason": "No in-sample statistical edge in DEV (trades=1380, exp=-0.249R)"
+    }
+  ]
+}

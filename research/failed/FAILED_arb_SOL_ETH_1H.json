@@ -1,0 +1,35 @@
+{
+  "pair_id": "SOL_ETH_1H",
+  "candidate": {
+    "pair_id": "SOL_ETH_1H",
+    "leg_a": "SOLUSDT",
+    "leg_b": "ETHUSDT",
+    "timeframe": "1h",
+    "lookback": 30,
+    "entry_z": 2.0,
+    "exit_z": 0.5,
+    "stop_z": 3.5
+  },
+  "verdict": "FAILED_BACKTEST_DEV",
+  "evaluated_at_ms": 1790153974389,
+  "stages": [
+    {
+      "stage_name": "STAGE_1_DATA",
+      "passed": true,
+      "metrics": {
+        "bars_a": 52997,
+        "bars_b": 79134
+      },
+      "failure_reason": ""
+    },
+    {
+      "stage_name": "STAGE_2_BACKTEST_DEV",
+      "passed": false,
+      "metrics": {
+        "trade_count": 1177,
+        "expectancy": -0.241
+      },
+      "failure_reason": "No in-sample statistical edge in DEV (trades=1177, exp=-0.241R)"
+    }
+  ]
+}

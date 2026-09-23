@@ -1,0 +1,20 @@
+{
+  "account_id": "acct_soak_paper",
+  "mode": "PAPER",
+  "initial_equity": 100000.0,
+  "current_equity": 100000.0,
+  "peak_equity": 100000.0,
+  "total_pnl": 0.0,
+  "return_pct": 0.0,
+  "total_fills": 0,
+  "open_positions": {},
+  "soak_duration_seconds": 2.0,
+  "market_events_processed": 0,
+  "signals_generated": 0,
+  "signals_rejected": 0,
+  "orders_simulated": 0,
+  "restart_verified": false,
+  "persistence_verified": true,
+  "live_orders_blocked": true,
+  "live_capital_usd": 0.0
+}
