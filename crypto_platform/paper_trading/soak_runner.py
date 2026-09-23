@@ -117,39 +117,66 @@ class PaperSoakHarness:
 
         self.ws_client.start()
 
-        # Run for first segment
+        out_path = "research/results/crypto_platform/soak_test_summary.json"
+        os.makedirs(os.path.dirname(out_path), exist_ok=True)
+
         run_segment = duration_seconds / 2.0 if test_restart else duration_seconds
-        await asyncio.sleep(run_segment)
 
-        segment1_summary = self.daemon.get_summary()
+        async def _run_loop(segment_duration: float):
+            elapsed = 0.0
+            step = 5.0
+            while elapsed < segment_duration:
+                sleep_chunk = min(step, segment_duration - elapsed)
+                await asyncio.sleep(sleep_chunk)
+                elapsed += sleep_chunk
 
-        if test_restart:
-            logger.info("Triggering controlled soak restart to verify SQLite persistence...")
-            # Simulate daemon shutdown
-            pre_restart_equity = self.daemon.current_equity
-            pre_restart_fills = len(self.daemon.fills_history)
+                # Periodic snapshot save
+                snap = self.daemon.get_summary()
+                snap.update({
+                    "elapsed_seconds": round(elapsed, 1),
+                    "target_soak_duration": duration_seconds,
+                    "market_events_processed": self.daemon.market_events_count,
+                    "signals_generated": self.daemon.signals_generated_count,
+                    "signals_rejected": self.daemon.signals_rejected_count,
+                    "orders_simulated": self.daemon.orders_simulated_count,
+                    "live_orders_blocked": True,
+                    "live_capital_usd": 0.00,
+                })
+                with open(out_path, "w") as f:
+                    json.dump(snap, f, indent=2)
 
-            # Re-initialize daemon from same SQLite database
-            self.daemon = ForwardPaperTradingDaemon(
-                tenant_id=self.tenant_id,
-                account_id=self.account_id,
-                initial_equity=self.initial_equity,
-                ledger=self.ledger,
-            )
-            # Register strategies again
-            self.daemon.register_strategy(
-                TrendBreakoutStrategy("soak_trend_btc", lookback=5, supported_symbols=["BTCUSDT", "ETHUSDT"])
-            )
-            self.daemon.connect_market_data(self.ws_client)
+        try:
+            # Run for first segment
+            await _run_loop(run_segment)
 
-            # Verify restored state
-            assert self.daemon.current_equity == pre_restart_equity
-            assert len(self.daemon.fills_history) == pre_restart_fills
+            if test_restart:
+                logger.info("Triggering controlled soak restart to verify SQLite persistence...")
+                # Simulate daemon shutdown
+                pre_restart_equity = self.daemon.current_equity
+                pre_restart_fills = len(self.daemon.fills_history)
 
-            # Run second segment
-            await asyncio.sleep(run_segment)
+                # Re-initialize daemon from same SQLite database
+                self.daemon = ForwardPaperTradingDaemon(
+                    tenant_id=self.tenant_id,
+                    account_id=self.account_id,
+                    initial_equity=self.initial_equity,
+                    ledger=self.ledger,
+                )
+                # Register strategies again
+                self.daemon.register_strategy(
+                    TrendBreakoutStrategy("soak_trend_btc", lookback=5, supported_symbols=["BTCUSDT", "ETHUSDT"])
+                )
+                self.daemon.connect_market_data(self.ws_client)
 
-        await self.ws_client.stop()
+                # Verify restored state
+                assert self.daemon.current_equity == pre_restart_equity
+                assert len(self.daemon.fills_history) == pre_restart_fills
+
+                # Run second segment
+                await _run_loop(run_segment)
+        finally:
+            if self.ws_client is not None:
+                await self.ws_client.stop()
 
         final_summary = self.daemon.get_summary()
         final_summary.update({
@@ -164,9 +191,6 @@ class PaperSoakHarness:
             "live_capital_usd": 0.00,
         })
 
-        # Save soak audit result
-        out_path = "research/results/crypto_platform/soak_test_summary.json"
-        os.makedirs(os.path.dirname(out_path), exist_ok=True)
         with open(out_path, "w") as f:
             json.dump(final_summary, f, indent=2)
 
