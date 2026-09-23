@@ -1,0 +1,310 @@
+{
+  "audit_timestamp_ms": 1790151601613,
+  "tested_symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "BNBUSDT",
+    "ADAUSDT"
+  ],
+  "scenarios_evaluated": 9,
+  "results": {
+    "S0_BASELINE": {
+      "description": "Historical baseline funding with standard maker/taker frictions",
+      "per_asset": {
+        "BTCUSDT": {
+          "trades": 27,
+          "win_rate": 0.63,
+          "net_return_pct": 56.29
+        },
+        "ETHUSDT": {
+          "trades": 23,
+          "win_rate": 0.783,
+          "net_return_pct": 74.95
+        },
+        "SOLUSDT": {
+          "trades": 26,
+          "win_rate": 0.615,
+          "net_return_pct": 40.96
+        },
+        "BNBUSDT": {
+          "trades": 21,
+          "win_rate": 0.524,
+          "net_return_pct": 32.51
+        },
+        "ADAUSDT": {
+          "trades": 31,
+          "win_rate": 0.613,
+          "net_return_pct": 74.92
+        }
+      },
+      "aggregate_net_return_pct": 55.93,
+      "aggregate_trade_count": 128,
+      "aggregate_win_rate": 0.625
+    },
+    "S1_COMPRESSION_25": {
+      "description": "25% funding yield compression (institutional crowding)",
+      "per_asset": {
+        "BTCUSDT": {
+          "trades": 19,
+          "win_rate": 0.737,
+          "net_return_pct": 39.23
+        },
+        "ETHUSDT": {
+          "trades": 17,
+          "win_rate": 0.824,
+          "net_return_pct": 52.01
+        },
+        "SOLUSDT": {
+          "trades": 20,
+          "win_rate": 0.45,
+          "net_return_pct": 27.91
+        },
+        "BNBUSDT": {
+          "trades": 20,
+          "win_rate": 0.55,
+          "net_return_pct": 21.98
+        },
+        "ADAUSDT": {
+          "trades": 22,
+          "win_rate": 0.682,
+          "net_return_pct": 54.29
+        }
+      },
+      "aggregate_net_return_pct": 39.08,
+      "aggregate_trade_count": 98,
+      "aggregate_win_rate": 0.643
+    },
+    "S2_COMPRESSION_50": {
+      "description": "50% funding yield compression (moderate bear/low volatility regime)",
+      "per_asset": {
+        "BTCUSDT": {
+          "trades": 10,
+          "win_rate": 0.8,
+          "net_return_pct": 21.7
+        },
+        "ETHUSDT": {
+          "trades": 12,
+          "win_rate": 1.0,
+          "net_return_pct": 30.46
+        },
+        "SOLUSDT": {
+          "trades": 11,
+          "win_rate": 0.727,
+          "net_return_pct": 18.03
+        },
+        "BNBUSDT": {
+          "trades": 16,
+          "win_rate": 0.75,
+          "net_return_pct": 12.71
+        },
+        "ADAUSDT": {
+          "trades": 11,
+          "win_rate": 1.0,
+          "net_return_pct": 31.57
+        }
+      },
+      "aggregate_net_return_pct": 22.89,
+      "aggregate_trade_count": 60,
+      "aggregate_win_rate": 0.833
+    },
+    "S3_COMPRESSION_75": {
+      "description": "75% funding yield compression (severe prolonged bear chop)",
+      "per_asset": {
+        "BTCUSDT": {
+          "trades": 7,
+          "win_rate": 0.857,
+          "net_return_pct": 7.72
+        },
+        "ETHUSDT": {
+          "trades": 9,
+          "win_rate": 0.667,
+          "net_return_pct": 10.12
+        },
+        "SOLUSDT": {
+          "trades": 7,
+          "win_rate": 0.571,
+          "net_return_pct": 5.94
+        },
+        "BNBUSDT": {
+          "trades": 12,
+          "win_rate": 0.417,
+          "net_return_pct": 2.63
+        },
+        "ADAUSDT": {
+          "trades": 10,
+          "win_rate": 0.7,
+          "net_return_pct": 10.92
+        }
+      },
+      "aggregate_net_return_pct": 7.47,
+      "aggregate_trade_count": 45,
+      "aggregate_win_rate": 0.578
+    },
+    "S4_ZERO_FUNDING": {
+      "description": "Zero funding rate environment (flat markets with zero demand for leverage)",
+      "per_asset": {
+        "BTCUSDT": {
+          "trades": 0,
+          "win_rate": 0.0,
+          "net_return_pct": 0.0
+        },
+        "ETHUSDT": {
+          "trades": 0,
+          "win_rate": 0.0,
+          "net_return_pct": 0.0
+        },
+        "SOLUSDT": {
+          "trades": 0,
+          "win_rate": 0.0,
+          "net_return_pct": 0.0
+        },
+        "BNBUSDT": {
+          "trades": 0,
+          "win_rate": 0.0,
+          "net_return_pct": 0.0
+        },
+        "ADAUSDT": {
+          "trades": 0,
+          "win_rate": 0.0,
+          "net_return_pct": 0.0
+        }
+      },
+      "aggregate_net_return_pct": 0.0,
+      "aggregate_trade_count": 0,
+      "aggregate_win_rate": 0.0
+    },
+    "S5_NEGATIVE_REGIME": {
+      "description": "Negative funding regime (shorts pay longs, e.g. -10% APR average)",
+      "per_asset": {
+        "BTCUSDT": {
+          "trades": 3,
+          "win_rate": 0.0,
+          "net_return_pct": -1.31
+        },
+        "ETHUSDT": {
+          "trades": 1,
+          "win_rate": 1.0,
+          "net_return_pct": 0.11
+        },
+        "SOLUSDT": {
+          "trades": 12,
+          "win_rate": 0.333,
+          "net_return_pct": 17.79
+        },
+        "BNBUSDT": {
+          "trades": 32,
+          "win_rate": 0.375,
+          "net_return_pct": 2.33
+        },
+        "ADAUSDT": {
+          "trades": 9,
+          "win_rate": 0.0,
+          "net_return_pct": -3.26
+        }
+      },
+      "aggregate_net_return_pct": 3.13,
+      "aggregate_trade_count": 57,
+      "aggregate_win_rate": 0.281
+    },
+    "S6_ELEVATED_FRICTIONS": {
+      "description": "Double taker fees + 2x slippage + 30 bps adverse basis divergence",
+      "per_asset": {
+        "BTCUSDT": {
+          "trades": 27,
+          "win_rate": 0.444,
+          "net_return_pct": 29.56
+        },
+        "ETHUSDT": {
+          "trades": 23,
+          "win_rate": 0.565,
+          "net_return_pct": 52.18
+        },
+        "SOLUSDT": {
+          "trades": 26,
+          "win_rate": 0.308,
+          "net_return_pct": 15.22
+        },
+        "BNBUSDT": {
+          "trades": 21,
+          "win_rate": 0.429,
+          "net_return_pct": 11.72
+        },
+        "ADAUSDT": {
+          "trades": 31,
+          "win_rate": 0.452,
+          "net_return_pct": 44.23
+        }
+      },
+      "aggregate_net_return_pct": 30.58,
+      "aggregate_trade_count": 128,
+      "aggregate_win_rate": 0.422
+    },
+    "S7_BORROW_AND_REBALANCE_DRAG": {
+      "description": "8% margin borrow rate + 20 bps/month hedge rebalance drag",
+      "per_asset": {
+        "BTCUSDT": {
+          "trades": 27,
+          "win_rate": 0.333,
+          "net_return_pct": 16.32
+        },
+        "ETHUSDT": {
+          "trades": 23,
+          "win_rate": 0.391,
+          "net_return_pct": 34.04
+        },
+        "SOLUSDT": {
+          "trades": 26,
+          "win_rate": 0.269,
+          "net_return_pct": 12.14
+        },
+        "BNBUSDT": {
+          "trades": 21,
+          "win_rate": 0.524,
+          "net_return_pct": 17.19
+        },
+        "ADAUSDT": {
+          "trades": 31,
+          "win_rate": 0.355,
+          "net_return_pct": 32.1
+        }
+      },
+      "aggregate_net_return_pct": 22.36,
+      "aggregate_trade_count": 128,
+      "aggregate_win_rate": 0.344
+    },
+    "S8_COMPOUND_CATASTROPHIC_STRESS": {
+      "description": "50% compression + 50 bps basis shock + 8% borrow drag + 2x fees",
+      "per_asset": {
+        "BTCUSDT": {
+          "trades": 10,
+          "win_rate": 0.2,
+          "net_return_pct": -6.87
+        },
+        "ETHUSDT": {
+          "trades": 12,
+          "win_rate": 0.25,
+          "net_return_pct": -5.83
+        },
+        "SOLUSDT": {
+          "trades": 11,
+          "win_rate": 0.091,
+          "net_return_pct": -9.95
+        },
+        "BNBUSDT": {
+          "trades": 16,
+          "win_rate": 0.188,
+          "net_return_pct": -14.96
+        },
+        "ADAUSDT": {
+          "trades": 11,
+          "win_rate": 0.455,
+          "net_return_pct": -0.05
+        }
+      },
+      "aggregate_net_return_pct": -7.53,
+      "aggregate_trade_count": 60,
+      "aggregate_win_rate": 0.233
+    }
+  }
+}
