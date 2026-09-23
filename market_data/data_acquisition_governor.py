@@ -1,5 +1,5 @@
 """
-QCP Data Acquisition Governor.
+Data Acquisition Governor.
 Evaluates the expected economic information value of missing data required by detected opportunities,
 tracks data tokens through their formal acquisition lifecycle:
 MISSING -> REQUESTED -> SOURCE_IDENTIFIED -> ACQUIRED -> INGESTED -> QUALITY_CHECK -> LINEAGE_HASH -> CERTIFIED -> AVAILABLE / BLOCKED_EXTERNAL_DATA.

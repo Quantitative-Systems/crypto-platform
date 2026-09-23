@@ -1,4 +1,4 @@
-"""QCP Platform — promotion gates and honesty statistics.
+"""Crypto Trading Platform — promotion gates and honesty statistics.
 
 A book is only promoted when it passes ALL gates. Gates are ordered from
 cheapest to most expensive so junk dies early:

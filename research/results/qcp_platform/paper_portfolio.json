@@ -1,0 +1,33 @@
+{
+  "summary": {
+    "final_equity": 1.5768,
+    "total_return": 0.5768,
+    "max_drawdown": 0.1867,
+    "sharpe": 1.045,
+    "trades_taken": 769,
+    "trades_skipped": 14,
+    "skip_reasons": {
+      "MAX_CONCURRENT": 1,
+      "COOLDOWN": 13
+    },
+    "governor": {
+      "equity": 1.576645,
+      "peak": 1.576787,
+      "drawdown": 0.0001,
+      "tripped": false,
+      "trip_reason": ""
+    }
+  },
+  "books": [
+    "INTRADAY|trend_breakout|ETHUSDT",
+    "INTRADAY|trend_breakout|SOLUSDT",
+    "INTRADAY|mean_revert|ADAUSDT",
+    "SWING|trend_breakout|ETHUSDT",
+    "SWING|trend_breakout|SOLUSDT",
+    "SWING|trend_breakout|ADAUSDT",
+    "POSITION|trend_breakout|BNBUSDT",
+    "POSITION|trend_breakout|ADAUSDT",
+    "POSITION|trend_rider|DOGEUSDT",
+    "CARRY|funding_carry|PORTFOLIO"
+  ]
+}

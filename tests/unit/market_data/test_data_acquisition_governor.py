@@ -1,5 +1,5 @@
 """
-Unit tests for QCP DataAcquisitionGovernor.
+Unit tests for DataAcquisitionGovernor.
 """
 
 import pytest

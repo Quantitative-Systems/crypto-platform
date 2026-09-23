@@ -1,4 +1,4 @@
-"""QCP Platform — all-horizon, all-asset, cost-aware, self-improving trading platform.
+"""Crypto Trading Platform — all-horizon, all-asset, cost-aware, self-improving trading platform.
 
 Horizon ladder (one book, many clocks):
     SCALP     15m/5m/1m     seconds-minutes     (data + cost gated)

@@ -1,4 +1,4 @@
-"""QCP Platform — signal families across ALL horizons.
+"""Crypto Trading Platform — signal families across ALL horizons.
 
 Directional families emit (long, short) boolean arrays and are resolved by
 `engine.resolve_trades`. Allocation families (cross-sectional momentum, funding

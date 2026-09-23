@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "crypto-platform"
 version = "0.5.0"
-description = "Institutional Quantitative Systems Platform - Product 01 Crypto Platform"
+description = "Crypto Trading Platform - strategy research, backtesting, validation, portfolio construction and paper-trading infrastructure"
 readme = "README.md"
 requires-python = ">=3.12"
 authors = [
@@ -35,6 +35,7 @@ gateways = [
 where = ["."]
 include = [
     "config*",
+    "crypto_platform*",
     "market_data*",
     "qcp_platform*",
     "research*",

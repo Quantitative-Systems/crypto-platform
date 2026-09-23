@@ -1,4 +1,4 @@
-"""QCP Platform — single source of truth for trading costs.
+"""Crypto Trading Platform — single source of truth for trading costs.
 
 The decisive fact of this platform: costs are roughly FIXED in bps (~22bps
 roundtrip on a market-in/market-out taker trade) while the natural stop

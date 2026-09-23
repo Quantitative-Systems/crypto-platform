@@ -1,5 +1,5 @@
 """
-QCP Universal Market Data Fabric.
+Universal Market Data Fabric.
 Institutional multi-venue, multi-instrument data abstraction unifying:
 - Spot, Perpetual Swaps, Dated Futures
 - Order book depth L2 distributions
@@ -112,7 +112,7 @@ class UniversalMarketDataFabric:
     """
 
     def __init__(self, data_root: Optional[Path] = None, manifest_path: Optional[Path] = None):
-        self.data_root = data_root or Path("/home/mrcn2/crypto-platform/market_data/cache")
+        self.data_root = data_root or (Path(__file__).resolve().parent / "cache")
         self.manifest_path = manifest_path
         self._cached_dfs: Dict[str, pd.DataFrame] = {}
         self._provenance_registry: Dict[str, str] = {}
@@ -165,7 +165,7 @@ class UniversalMarketDataFabric:
         """
         Returns an order-book depth snapshot.
 
-        QCP has no historical or live L2 archive, so callers requesting mode="live"
+        The platform has no historical or live L2 archive, so callers requesting mode="live"
         receive None — the platform reports that the data does not exist
         rather than inventing a book. A shape-only book is produced with
         mode="synthetic" for interface wiring tests; it is flagged SYNTHETIC and
@@ -206,7 +206,7 @@ class UniversalMarketDataFabric:
         """
         Returns historical 8h funding intervals.
 
-        QCP holds no funding-rate archive, so callers requesting mode="live" receive
+        The platform holds no funding-rate archive, so callers requesting mode="live" receive
         an empty list and callers must treat funding-dependent alphas as
         DATA_UNAVAILABLE. mode="synthetic" exists for interface wiring.
         """
@@ -266,7 +266,7 @@ class UniversalMarketDataFabric:
 
     def get_data_availability(self) -> Dict[str, Any]:
         """
-        Declares what data QCP actually holds. Used by the research factory and
+        Declares what data the platform actually holds. Used by the research factory and
         the orchestrator so unavailable-input alphas are reported honestly
         instead of being simulated.
         """

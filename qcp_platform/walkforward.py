@@ -1,4 +1,4 @@
-"""QCP Platform — walk-forward protocol (the anti-overfit spine).
+"""Crypto Trading Platform — walk-forward protocol (the anti-overfit spine).
 
 Protocol, applied identically to every strategy, asset and horizon:
 

@@ -1,4 +1,4 @@
-"""QCP Platform — the all-horizon ladder.
+"""Crypto Trading Platform — the all-horizon ladder.
 
 One platform, six books, each with its own clock, cost floor, risk budget and
 capacity. Capital is allocated by measured out-of-sample performance, not by

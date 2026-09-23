@@ -1,5 +1,5 @@
 """
-Quantitative Crypto Platform (QCP) — Realtime Market Data Stream Manager.
+Crypto Trading Platform — Realtime Market Data Stream Manager.
 
 Orchestrates:
 - WebSocket message ingestion with REST fallback polling

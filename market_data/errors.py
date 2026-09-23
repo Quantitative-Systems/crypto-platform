@@ -1,5 +1,5 @@
 """
-Quantitative Crypto Platform (QCP) — Canonical Error Taxonomy.
+Crypto Trading Platform — Canonical Error Taxonomy.
 
 Hierarchical exception taxonomy providing precise error classification,
 fail-closed panics, and telemetry error codes.
@@ -29,7 +29,7 @@ class ErrorSeverity(str, Enum):
 
 
 class QCPError(Exception):
-    """Root base exception for all QCP platform components."""
+    """Root base exception for all platform components."""
 
     error_code: str = "ERR_GENERIC_PLATFORM"
 

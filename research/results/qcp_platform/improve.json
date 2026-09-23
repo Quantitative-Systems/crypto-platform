@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-09-21T16:05:50",
-  "n_books_measured": 103,
-  "n_rows": 113,
+  "generated_at": "2026-09-22T10:47:53",
+  "n_books_measured": 94,
+  "n_rows": 104,
   "promoted": [],
   "rejected": [
     {
@@ -1214,130 +1214,13 @@
       }
     },
     {
-      "key": "CARRY|funding_carry|BTCUSDT",
-      "verdict": "REJECTED_G1",
+      "key": "CARRY|funding_carry|PORTFOLIO",
+      "verdict": "MEASURED",
       "gates": {
-        "G1_data": false,
+        "G1_data": true,
         "G2_alpha": true,
         "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|ETHUSDT",
-      "verdict": "REJECTED_G1",
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|SOLUSDT",
-      "verdict": "REJECTED_G1",
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|BNBUSDT",
-      "verdict": "REJECTED_G1",
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|XRPUSDT",
-      "verdict": "REJECTED_G1",
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|ADAUSDT",
-      "verdict": "REJECTED_G1",
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|DOGEUSDT",
-      "verdict": "REJECTED_G1",
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|AVAXUSDT",
-      "verdict": "REJECTED_G1",
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|LINKUSDT",
-      "verdict": "REJECTED_G1",
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|LTCUSDT",
-      "verdict": "REJECTED_G1",
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
+        "G4_wfr": true,
         "G5_costs": "not_tested",
         "G6_risk": true,
         "G7_portfolio": "not_tested"
@@ -1507,8 +1390,8 @@
     },
     {
       "key": "INTRADAY|trend_breakout|ETHUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +0.080 vs chall +0.080)",
+      "action": "RETIRE",
+      "reason": "champion no longer passes gates (MEASURED)",
       "champion": {
         "key": "INTRADAY|trend_breakout|ETHUSDT",
         "family": "trend_breakout",
@@ -1524,7 +1407,7 @@
           "trail_atr_mult": 0.0,
           "maker_entry": true
         },
-        "verdict": "REJECTED_G7",
+        "verdict": "PROMOTABLE_PAPER_ONLY",
         "stats": {
           "dev_n": 930,
           "val_n": 321,
@@ -1560,7 +1443,7 @@
           "G4_wfr": true,
           "G5_costs": true,
           "G6_risk": true,
-          "G7_portfolio": "no_marginal_sharpe_contribution"
+          "G7_portfolio": true
         }
       },
       "challenger": {
@@ -1611,8 +1494,8 @@
     },
     {
       "key": "INTRADAY|trend_breakout|SOLUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +0.082 vs chall +0.082)",
+      "action": "RETIRE",
+      "reason": "champion no longer passes gates (MEASURED)",
       "champion": {
         "key": "INTRADAY|trend_breakout|SOLUSDT",
         "family": "trend_breakout",
@@ -1628,7 +1511,7 @@
           "trail_atr_mult": 0.0,
           "maker_entry": true
         },
-        "verdict": "REJECTED_G7",
+        "verdict": "PROMOTABLE_PAPER_ONLY",
         "stats": {
           "dev_n": 259,
           "val_n": 70,
@@ -1664,7 +1547,7 @@
           "G4_wfr": true,
           "G5_costs": true,
           "G6_risk": true,
-          "G7_portfolio": "no_marginal_sharpe_contribution"
+          "G7_portfolio": true
         }
       },
       "challenger": {
@@ -2963,8 +2846,8 @@
     },
     {
       "key": "INTRADAY|mean_revert|ADAUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +0.267 vs chall +0.267)",
+      "action": "RETIRE",
+      "reason": "champion no longer passes gates (MEASURED)",
       "champion": {
         "key": "INTRADAY|mean_revert|ADAUSDT",
         "family": "mean_revert",
@@ -2980,7 +2863,7 @@
           "trail_atr_mult": 0.0,
           "maker_entry": true
         },
-        "verdict": "REJECTED_G7",
+        "verdict": "PROMOTABLE_PAPER_ONLY",
         "stats": {
           "dev_n": 91,
           "val_n": 44,
@@ -3016,7 +2899,7 @@
           "G4_wfr": true,
           "G5_costs": true,
           "G6_risk": true,
-          "G7_portfolio": "no_marginal_sharpe_contribution"
+          "G7_portfolio": true
         }
       },
       "challenger": {
@@ -5647,8 +5530,8 @@
     },
     {
       "key": "SWING|trend_breakout|ETHUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +0.145 vs chall +0.145)",
+      "action": "RETIRE",
+      "reason": "champion no longer passes gates (MEASURED)",
       "champion": {
         "key": "SWING|trend_breakout|ETHUSDT",
         "family": "trend_breakout",
@@ -5664,7 +5547,7 @@
           "trail_atr_mult": 0.0,
           "maker_entry": false
         },
-        "verdict": "REJECTED_G7",
+        "verdict": "PROMOTABLE_PAPER_ONLY",
         "stats": {
           "dev_n": 229,
           "val_n": 88,
@@ -5700,7 +5583,7 @@
           "G4_wfr": true,
           "G5_costs": true,
           "G6_risk": true,
-          "G7_portfolio": "no_marginal_sharpe_contribution"
+          "G7_portfolio": true
         }
       },
       "challenger": {
@@ -5751,8 +5634,8 @@
     },
     {
       "key": "SWING|trend_breakout|SOLUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +0.167 vs chall +0.167)",
+      "action": "RETIRE",
+      "reason": "champion no longer passes gates (MEASURED)",
       "champion": {
         "key": "SWING|trend_breakout|SOLUSDT",
         "family": "trend_breakout",
@@ -5768,7 +5651,7 @@
           "trail_atr_mult": 0.0,
           "maker_entry": false
         },
-        "verdict": "REJECTED_G7",
+        "verdict": "PROMOTABLE_PAPER_ONLY",
         "stats": {
           "dev_n": 201,
           "val_n": 69,
@@ -5804,7 +5687,7 @@
           "G4_wfr": true,
           "G5_costs": true,
           "G6_risk": true,
-          "G7_portfolio": "no_marginal_sharpe_contribution"
+          "G7_portfolio": true
         }
       },
       "challenger": {
@@ -6061,8 +5944,8 @@
     },
     {
       "key": "SWING|trend_breakout|ADAUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +0.086 vs chall +0.086)",
+      "action": "RETIRE",
+      "reason": "champion no longer passes gates (MEASURED)",
       "champion": {
         "key": "SWING|trend_breakout|ADAUSDT",
         "family": "trend_breakout",
@@ -6077,7 +5960,7 @@
           "trail_atr_mult": 0.0,
           "maker_entry": false
         },
-        "verdict": "REJECTED_G7",
+        "verdict": "PROMOTABLE_PAPER_ONLY",
         "stats": {
           "dev_n": 241,
           "val_n": 92,
@@ -6113,7 +5996,7 @@
           "G4_wfr": true,
           "G5_costs": true,
           "G6_risk": true,
-          "G7_portfolio": "no_marginal_sharpe_contribution"
+          "G7_portfolio": true
         }
       },
       "challenger": {
@@ -9173,8 +9056,8 @@
     },
     {
       "key": "POSITION|trend_breakout|ADAUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +0.265 vs chall +0.265)",
+      "action": "RETIRE",
+      "reason": "champion no longer passes gates (MEASURED)",
       "champion": {
         "key": "POSITION|trend_breakout|ADAUSDT",
         "family": "trend_breakout",
@@ -9190,7 +9073,7 @@
           "trail_atr_mult": 0.0,
           "maker_entry": false
         },
-        "verdict": "REJECTED_G7",
+        "verdict": "PROMOTABLE_PAPER_ONLY",
         "stats": {
           "dev_n": 55,
           "val_n": 24,
@@ -9226,7 +9109,7 @@
           "G4_wfr": true,
           "G5_costs": true,
           "G6_risk": true,
-          "G7_portfolio": "no_marginal_sharpe_contribution"
+          "G7_portfolio": true
         }
       },
       "challenger": {
@@ -10313,8 +10196,8 @@
     },
     {
       "key": "POSITION|trend_rider|DOGEUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +0.152 vs chall +0.152)",
+      "action": "RETIRE",
+      "reason": "champion no longer passes gates (MEASURED)",
       "champion": {
         "key": "POSITION|trend_rider|DOGEUSDT",
         "family": "trend_rider",
@@ -10330,7 +10213,7 @@
           "trail_atr_mult": 0.0,
           "maker_entry": false
         },
-        "verdict": "REJECTED_G7",
+        "verdict": "PROMOTABLE_PAPER_ONLY",
         "stats": {
           "dev_n": 126,
           "val_n": 52,
@@ -10366,7 +10249,7 @@
           "G4_wfr": true,
           "G5_costs": true,
           "G6_risk": true,
-          "G7_portfolio": "no_marginal_sharpe_contribution"
+          "G7_portfolio": true
         }
       },
       "challenger": {
@@ -10986,892 +10869,100 @@
       }
     },
     {
-      "key": "CARRY|funding_carry|BTCUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +6.198 vs chall +6.198)",
+      "key": "CARRY|funding_carry|PORTFOLIO",
+      "action": "RETIRE",
+      "reason": "champion no longer passes gates (MEASURED)",
       "champion": {
-        "key": "CARRY|funding_carry|BTCUSDT",
+        "key": "CARRY|funding_carry|PORTFOLIO",
         "family": "funding_carry",
-        "symbol": "BTCUSDT",
+        "symbol": "PORTFOLIO",
         "horizon": "CARRY",
         "params": {},
-        "verdict": "REJECTED_G1",
+        "verdict": "PROMOTABLE_PAPER_ONLY",
         "stats": {
-          "dev_n": 8,
-          "val_n": 3,
-          "oos_n": 3,
+          "dev_n": 78,
+          "val_n": 29,
+          "oos_n": 26,
           "dev_span_days": 10000,
-          "dev_exp": 9.69534275,
-          "val_exp": 5.7691993333333365,
-          "oos_exp": 6.197982666666673,
-          "dev_total_r": 77.562742,
-          "oos_total_r": 18.59394800000002,
-          "oos_win_rate": 1.0,
-          "oos_pf": Infinity,
-          "oos_sharpe": 8.79923724156659,
-          "dev_sharpe": 2.8245396510818455,
-          "val_sharpe": 2.9230916298015006,
-          "oos_avg_bars": 78.0,
+          "dev_exp": 11.159509948717947,
+          "val_exp": 5.485809793103452,
+          "oos_exp": 4.790386923076925,
+          "dev_total_r": 870.4417759999999,
+          "oos_total_r": 124.55006000000006,
+          "oos_win_rate": 0.8076923076923077,
+          "oos_pf": 74.72487110732278,
+          "oos_sharpe": 6.022315398418403,
+          "dev_sharpe": 8.066253516770141,
+          "val_sharpe": 8.444575927999844,
+          "oos_avg_bars": 54.0,
           "stop_bps_median": 0.0,
           "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 2.6421149124265697,
-          "t_oos": 7.184547122511035,
+          "boot_p_oos": 1.0,
+          "t_dev": 8.014379965743396,
+          "t_oos": 5.905366102604952,
           "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 0.6846960000000006,
-          "best_trade_share": 0.23177804245318287,
-          "total_net": 0.4875,
-          "days_in_market": 700,
-          "net_per_year": 0.2542
+          "chunk_stability": 1.0,
+          "max_dd_r": 2.6508599999999944,
+          "best_trade_share": 0.0414017145643587,
+          "total_net": 5.5605,
+          "days_in_market": 6777,
+          "net_per_year": 0.2995
         },
         "gates": {
-          "G1_data": false,
+          "G1_data": true,
           "G2_alpha": true,
           "G3_stats": true,
-          "G4_wfr": false,
+          "G4_wfr": true,
           "G5_costs": "not_tested",
           "G6_risk": true,
-          "G7_portfolio": "not_tested"
+          "G7_portfolio": true
         }
       },
       "challenger": {
-        "key": "CARRY|funding_carry|BTCUSDT",
+        "key": "CARRY|funding_carry|PORTFOLIO",
         "family": "funding_carry",
-        "symbol": "BTCUSDT",
+        "symbol": "PORTFOLIO",
         "horizon": "CARRY",
         "params": {},
-        "verdict": "REJECTED_G1",
+        "verdict": "MEASURED",
         "stats": {
-          "dev_n": 8,
-          "val_n": 3,
-          "oos_n": 3,
+          "dev_n": 78,
+          "val_n": 29,
+          "oos_n": 26,
           "dev_span_days": 10000,
-          "dev_exp": 9.69534275,
-          "val_exp": 5.7691993333333365,
-          "oos_exp": 6.197982666666673,
-          "dev_total_r": 77.562742,
-          "oos_total_r": 18.59394800000002,
-          "oos_win_rate": 1.0,
-          "oos_pf": Infinity,
-          "oos_sharpe": 8.79923724156659,
-          "dev_sharpe": 2.8245396510818455,
-          "val_sharpe": 2.9230916298015006,
-          "oos_avg_bars": 78.0,
+          "dev_exp": 11.159509948717947,
+          "val_exp": 5.485809793103452,
+          "oos_exp": 4.790386923076925,
+          "dev_total_r": 870.4417759999999,
+          "oos_total_r": 124.55006000000006,
+          "oos_win_rate": 0.8076923076923077,
+          "oos_pf": 74.72487110732278,
+          "oos_sharpe": 6.022315398418403,
+          "dev_sharpe": 8.066253516770141,
+          "val_sharpe": 8.444575927999844,
+          "oos_avg_bars": 54.0,
           "stop_bps_median": 0.0,
           "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 2.6421149124265697,
-          "t_oos": 7.184547122511035,
+          "boot_p_oos": 1.0,
+          "t_dev": 8.014379965743396,
+          "t_oos": 5.905366102604952,
           "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 0.6846960000000006,
-          "best_trade_share": 0.23177804245318287,
-          "total_net": 0.4875,
-          "days_in_market": 700,
-          "net_per_year": 0.2542
-        }
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|ETHUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +4.856 vs chall +4.856)",
-      "champion": {
-        "key": "CARRY|funding_carry|ETHUSDT",
-        "family": "funding_carry",
-        "symbol": "ETHUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 8,
-          "val_n": 4,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 14.055537750000006,
-          "val_exp": 5.989442000000006,
-          "oos_exp": 4.855954666666669,
-          "dev_total_r": 112.44430200000005,
-          "oos_total_r": 14.567864000000007,
-          "oos_win_rate": 1.0,
-          "oos_pf": Infinity,
-          "oos_sharpe": 3.390435635833065,
-          "dev_sharpe": 3.526007019222523,
-          "val_sharpe": 4.716958048580951,
-          "oos_avg_bars": 66.7,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 3.2982775523226806,
-          "t_oos": 2.768279104513218,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 0.0,
-          "best_trade_share": 0.25412576520037417,
-          "total_net": 0.6773,
-          "days_in_market": 908,
-          "net_per_year": 0.2723
-        },
-        "gates": {
-          "G1_data": false,
-          "G2_alpha": true,
-          "G3_stats": true,
-          "G4_wfr": false,
-          "G5_costs": "not_tested",
-          "G6_risk": true,
-          "G7_portfolio": "not_tested"
-        }
-      },
-      "challenger": {
-        "key": "CARRY|funding_carry|ETHUSDT",
-        "family": "funding_carry",
-        "symbol": "ETHUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 8,
-          "val_n": 4,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 14.055537750000006,
-          "val_exp": 5.989442000000006,
-          "oos_exp": 4.855954666666669,
-          "dev_total_r": 112.44430200000005,
-          "oos_total_r": 14.567864000000007,
-          "oos_win_rate": 1.0,
-          "oos_pf": Infinity,
-          "oos_sharpe": 3.390435635833065,
-          "dev_sharpe": 3.526007019222523,
-          "val_sharpe": 4.716958048580951,
-          "oos_avg_bars": 66.7,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 3.2982775523226806,
-          "t_oos": 2.768279104513218,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 0.0,
-          "best_trade_share": 0.25412576520037417,
-          "total_net": 0.6773,
-          "days_in_market": 908,
-          "net_per_year": 0.2723
-        }
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|SOLUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +4.655 vs chall +4.655)",
-      "champion": {
-        "key": "CARRY|funding_carry|SOLUSDT",
-        "family": "funding_carry",
-        "symbol": "SOLUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 7,
-          "val_n": 3,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 8.564786571428574,
-          "val_exp": 6.363930666666671,
-          "oos_exp": 4.654910666666669,
-          "dev_total_r": 59.95350600000001,
-          "oos_total_r": 13.964732000000007,
-          "oos_win_rate": 0.6666666666666666,
-          "oos_pf": 106.66054809860314,
-          "oos_sharpe": 1.6517689722986544,
-          "dev_sharpe": 1.7833272129831064,
-          "val_sharpe": 2.3527708569068126,
-          "oos_avg_bars": 40.3,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 0.999,
-          "boot_p_oos": 0.0,
-          "t_dev": 1.6510401782511253,
-          "t_oos": 1.3486637183643555,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 1.1308839999999998,
-          "best_trade_share": 0.40140171510255085,
-          "total_net": 0.4078,
-          "days_in_market": 555,
-          "net_per_year": 0.2682
-        },
-        "gates": {
-          "G1_data": false,
-          "G2_alpha": true,
-          "G3_stats": true,
-          "G4_wfr": false,
-          "G5_costs": "not_tested",
-          "G6_risk": true,
-          "G7_portfolio": "not_tested"
-        }
-      },
-      "challenger": {
-        "key": "CARRY|funding_carry|SOLUSDT",
-        "family": "funding_carry",
-        "symbol": "SOLUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 7,
-          "val_n": 3,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 8.564786571428574,
-          "val_exp": 6.363930666666671,
-          "oos_exp": 4.654910666666669,
-          "dev_total_r": 59.95350600000001,
-          "oos_total_r": 13.964732000000007,
-          "oos_win_rate": 0.6666666666666666,
-          "oos_pf": 106.66054809860314,
-          "oos_sharpe": 1.6517689722986544,
-          "dev_sharpe": 1.7833272129831064,
-          "val_sharpe": 2.3527708569068126,
-          "oos_avg_bars": 40.3,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 0.999,
-          "boot_p_oos": 0.0,
-          "t_dev": 1.6510401782511253,
-          "t_oos": 1.3486637183643555,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 1.1308839999999998,
-          "best_trade_share": 0.40140171510255085,
-          "total_net": 0.4078,
-          "days_in_market": 555,
-          "net_per_year": 0.2682
-        }
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|BNBUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +1.423 vs chall +1.423)",
-      "champion": {
-        "key": "CARRY|funding_carry|BNBUSDT",
-        "family": "funding_carry",
-        "symbol": "BNBUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 10,
-          "val_n": 4,
-          "oos_n": 4,
-          "dev_span_days": 10000,
-          "dev_exp": 5.9103552000000015,
-          "val_exp": 5.277622,
-          "oos_exp": 1.4231544999999999,
-          "dev_total_r": 59.103552000000015,
-          "oos_total_r": 5.6926179999999995,
-          "oos_win_rate": 0.75,
-          "oos_pf": 7.448541872456885,
-          "oos_sharpe": 2.1255157027898557,
-          "dev_sharpe": 3.140680095216414,
-          "val_sharpe": 1.6088584111809614,
-          "oos_avg_bars": 28.2,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 2.979510750851509,
-          "t_oos": 1.8407505947587497,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 2.337748,
-          "best_trade_share": 0.18145542138442844,
-          "total_net": 0.338,
-          "days_in_market": 409,
-          "net_per_year": 0.3016
-        },
-        "gates": {
-          "G1_data": false,
-          "G2_alpha": true,
-          "G3_stats": true,
-          "G4_wfr": false,
-          "G5_costs": "not_tested",
-          "G6_risk": true,
-          "G7_portfolio": "not_tested"
-        }
-      },
-      "challenger": {
-        "key": "CARRY|funding_carry|BNBUSDT",
-        "family": "funding_carry",
-        "symbol": "BNBUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 10,
-          "val_n": 4,
-          "oos_n": 4,
-          "dev_span_days": 10000,
-          "dev_exp": 5.9103552000000015,
-          "val_exp": 5.277622,
-          "oos_exp": 1.4231544999999999,
-          "dev_total_r": 59.103552000000015,
-          "oos_total_r": 5.6926179999999995,
-          "oos_win_rate": 0.75,
-          "oos_pf": 7.448541872456885,
-          "oos_sharpe": 2.1255157027898557,
-          "dev_sharpe": 3.140680095216414,
-          "val_sharpe": 1.6088584111809614,
-          "oos_avg_bars": 28.2,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 2.979510750851509,
-          "t_oos": 1.8407505947587497,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 2.337748,
-          "best_trade_share": 0.18145542138442844,
-          "total_net": 0.338,
-          "days_in_market": 409,
-          "net_per_year": 0.3016
-        }
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|XRPUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +5.375 vs chall +5.375)",
-      "champion": {
-        "key": "CARRY|funding_carry|XRPUSDT",
-        "family": "funding_carry",
-        "symbol": "XRPUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 8,
-          "val_n": 4,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 15.432433249999997,
-          "val_exp": 8.632363500000004,
-          "oos_exp": 5.375146666666669,
-          "dev_total_r": 123.45946599999998,
-          "oos_total_r": 16.125440000000008,
-          "oos_win_rate": 1.0,
-          "oos_pf": Infinity,
-          "oos_sharpe": 2.264570929496578,
-          "dev_sharpe": 3.0892905363188587,
-          "val_sharpe": 3.276598215290621,
-          "oos_avg_bars": 60.3,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 2.8897666887770725,
-          "t_oos": 1.8490144212022783,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 1.3498540000000006,
-          "best_trade_share": 0.27505712361382123,
-          "total_net": 0.7415,
-          "days_in_market": 807,
-          "net_per_year": 0.3354
-        },
-        "gates": {
-          "G1_data": false,
-          "G2_alpha": true,
-          "G3_stats": true,
-          "G4_wfr": false,
-          "G5_costs": "not_tested",
-          "G6_risk": true,
-          "G7_portfolio": "not_tested"
-        }
-      },
-      "challenger": {
-        "key": "CARRY|funding_carry|XRPUSDT",
-        "family": "funding_carry",
-        "symbol": "XRPUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 8,
-          "val_n": 4,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 15.432433249999997,
-          "val_exp": 8.632363500000004,
-          "oos_exp": 5.375146666666669,
-          "dev_total_r": 123.45946599999998,
-          "oos_total_r": 16.125440000000008,
-          "oos_win_rate": 1.0,
-          "oos_pf": Infinity,
-          "oos_sharpe": 2.264570929496578,
-          "dev_sharpe": 3.0892905363188587,
-          "val_sharpe": 3.276598215290621,
-          "oos_avg_bars": 60.3,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 2.8897666887770725,
-          "t_oos": 1.8490144212022783,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 1.3498540000000006,
-          "best_trade_share": 0.27505712361382123,
-          "total_net": 0.7415,
-          "days_in_market": 807,
-          "net_per_year": 0.3354
-        }
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|ADAUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +5.260 vs chall +5.260)",
-      "champion": {
-        "key": "CARRY|funding_carry|ADAUSDT",
-        "family": "funding_carry",
-        "symbol": "ADAUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 8,
-          "val_n": 3,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 14.410165500000002,
-          "val_exp": 6.209553333333338,
-          "oos_exp": 5.259859333333337,
-          "dev_total_r": 115.28132400000001,
-          "oos_total_r": 15.779578000000011,
-          "oos_win_rate": 0.6666666666666666,
-          "oos_pf": 48.84125858012567,
-          "oos_sharpe": 1.9926960838663916,
-          "dev_sharpe": 3.042721138247737,
-          "val_sharpe": 2.682284594607741,
-          "oos_avg_bars": 56.0,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 2.846205005704465,
-          "t_oos": 1.6270295393049783,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 0.32983200000001034,
-          "best_trade_share": 0.3055722648766331,
-          "total_net": 0.6887,
-          "days_in_market": 740,
-          "net_per_year": 0.3397
-        },
-        "gates": {
-          "G1_data": false,
-          "G2_alpha": true,
-          "G3_stats": true,
-          "G4_wfr": false,
-          "G5_costs": "not_tested",
-          "G6_risk": true,
-          "G7_portfolio": "not_tested"
-        }
-      },
-      "challenger": {
-        "key": "CARRY|funding_carry|ADAUSDT",
-        "family": "funding_carry",
-        "symbol": "ADAUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 8,
-          "val_n": 3,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 14.410165500000002,
-          "val_exp": 6.209553333333338,
-          "oos_exp": 5.259859333333337,
-          "dev_total_r": 115.28132400000001,
-          "oos_total_r": 15.779578000000011,
-          "oos_win_rate": 0.6666666666666666,
-          "oos_pf": 48.84125858012567,
-          "oos_sharpe": 1.9926960838663916,
-          "dev_sharpe": 3.042721138247737,
-          "val_sharpe": 2.682284594607741,
-          "oos_avg_bars": 56.0,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 2.846205005704465,
-          "t_oos": 1.6270295393049783,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 0.32983200000001034,
-          "best_trade_share": 0.3055722648766331,
-          "total_net": 0.6887,
-          "days_in_market": 740,
-          "net_per_year": 0.3397
-        }
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|DOGEUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +4.692 vs chall +4.692)",
-      "champion": {
-        "key": "CARRY|funding_carry|DOGEUSDT",
-        "family": "funding_carry",
-        "symbol": "DOGEUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 8,
-          "val_n": 4,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 9.038472500000001,
-          "val_exp": 8.301935000000004,
-          "oos_exp": 4.692149333333333,
-          "dev_total_r": 72.30778000000001,
-          "oos_total_r": 14.076448,
-          "oos_win_rate": 0.6666666666666666,
-          "oos_pf": 54.600877326590876,
-          "oos_sharpe": 1.7697119253481233,
-          "dev_sharpe": 3.498966932977249,
-          "val_sharpe": 6.408584662704379,
-          "oos_avg_bars": 39.7,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 3.272983867713021,
-          "t_oos": 1.444963736273766,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 0.7885419999999999,
-          "best_trade_share": 0.19460694345735033,
-          "total_net": 0.4923,
-          "days_in_market": 598,
-          "net_per_year": 0.3005
-        },
-        "gates": {
-          "G1_data": false,
-          "G2_alpha": true,
-          "G3_stats": true,
-          "G4_wfr": false,
-          "G5_costs": "not_tested",
-          "G6_risk": true,
-          "G7_portfolio": "not_tested"
-        }
-      },
-      "challenger": {
-        "key": "CARRY|funding_carry|DOGEUSDT",
-        "family": "funding_carry",
-        "symbol": "DOGEUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 8,
-          "val_n": 4,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 9.038472500000001,
-          "val_exp": 8.301935000000004,
-          "oos_exp": 4.692149333333333,
-          "dev_total_r": 72.30778000000001,
-          "oos_total_r": 14.076448,
-          "oos_win_rate": 0.6666666666666666,
-          "oos_pf": 54.600877326590876,
-          "oos_sharpe": 1.7697119253481233,
-          "dev_sharpe": 3.498966932977249,
-          "val_sharpe": 6.408584662704379,
-          "oos_avg_bars": 39.7,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 3.272983867713021,
-          "t_oos": 1.444963736273766,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 0.7885419999999999,
-          "best_trade_share": 0.19460694345735033,
-          "total_net": 0.4923,
-          "days_in_market": 598,
-          "net_per_year": 0.3005
-        }
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|AVAXUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +5.298 vs chall +5.298)",
-      "champion": {
-        "key": "CARRY|funding_carry|AVAXUSDT",
-        "family": "funding_carry",
-        "symbol": "AVAXUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 8,
-          "val_n": 4,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 7.583199250000002,
-          "val_exp": 5.0927570000000015,
-          "oos_exp": 5.297620666666668,
-          "dev_total_r": 60.66559400000001,
-          "oos_total_r": 15.892862000000004,
-          "oos_win_rate": 0.6666666666666666,
-          "oos_pf": 194.8153902439026,
-          "oos_sharpe": 1.9373861264264711,
-          "dev_sharpe": 1.7364740248523958,
-          "val_sharpe": 2.130996168861841,
-          "oos_avg_bars": 54.7,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 1.6243227155075108,
-          "t_oos": 1.581869148164025,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 0.6849199999999982,
-          "best_trade_share": 0.38791499640324223,
-          "total_net": 0.4182,
-          "days_in_market": 604,
-          "net_per_year": 0.2527
-        },
-        "gates": {
-          "G1_data": false,
-          "G2_alpha": true,
-          "G3_stats": true,
-          "G4_wfr": false,
-          "G5_costs": "not_tested",
-          "G6_risk": true,
-          "G7_portfolio": "not_tested"
-        }
-      },
-      "challenger": {
-        "key": "CARRY|funding_carry|AVAXUSDT",
-        "family": "funding_carry",
-        "symbol": "AVAXUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 8,
-          "val_n": 4,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 7.583199250000002,
-          "val_exp": 5.0927570000000015,
-          "oos_exp": 5.297620666666668,
-          "dev_total_r": 60.66559400000001,
-          "oos_total_r": 15.892862000000004,
-          "oos_win_rate": 0.6666666666666666,
-          "oos_pf": 194.8153902439026,
-          "oos_sharpe": 1.9373861264264711,
-          "dev_sharpe": 1.7364740248523958,
-          "val_sharpe": 2.130996168861841,
-          "oos_avg_bars": 54.7,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 1.6243227155075108,
-          "t_oos": 1.581869148164025,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 0.6849199999999982,
-          "best_trade_share": 0.38791499640324223,
-          "total_net": 0.4182,
-          "days_in_market": 604,
-          "net_per_year": 0.2527
-        }
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|LINKUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +7.473 vs chall +7.473)",
-      "champion": {
-        "key": "CARRY|funding_carry|LINKUSDT",
-        "family": "funding_carry",
-        "symbol": "LINKUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 8,
-          "val_n": 4,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 10.91372825,
-          "val_exp": 10.473529500000009,
-          "oos_exp": 7.473460666666671,
-          "dev_total_r": 87.309826,
-          "oos_total_r": 22.420382000000014,
-          "oos_win_rate": 1.0,
-          "oos_pf": Infinity,
-          "oos_sharpe": 8.14222046587161,
-          "dev_sharpe": 2.2091349844993005,
-          "val_sharpe": 3.939085501834378,
-          "oos_avg_bars": 78.3,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 2.066456558283136,
-          "t_oos": 6.648095171543927,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 1.8814340000000005,
-          "best_trade_share": 0.2867396506815118,
-          "total_net": 0.6291,
-          "days_in_market": 708,
-          "net_per_year": 0.3243
-        },
-        "gates": {
-          "G1_data": false,
-          "G2_alpha": true,
-          "G3_stats": true,
-          "G4_wfr": false,
-          "G5_costs": "not_tested",
-          "G6_risk": true,
-          "G7_portfolio": "not_tested"
-        }
-      },
-      "challenger": {
-        "key": "CARRY|funding_carry|LINKUSDT",
-        "family": "funding_carry",
-        "symbol": "LINKUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 8,
-          "val_n": 4,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 10.91372825,
-          "val_exp": 10.473529500000009,
-          "oos_exp": 7.473460666666671,
-          "dev_total_r": 87.309826,
-          "oos_total_r": 22.420382000000014,
-          "oos_win_rate": 1.0,
-          "oos_pf": Infinity,
-          "oos_sharpe": 8.14222046587161,
-          "dev_sharpe": 2.2091349844993005,
-          "val_sharpe": 3.939085501834378,
-          "oos_avg_bars": 78.3,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 2.066456558283136,
-          "t_oos": 6.648095171543927,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 1.8814340000000005,
-          "best_trade_share": 0.2867396506815118,
-          "total_net": 0.6291,
-          "days_in_market": 708,
-          "net_per_year": 0.3243
-        }
-      }
-    },
-    {
-      "key": "CARRY|funding_carry|LTCUSDT",
-      "action": "KEEP",
-      "reason": "no improvement (champ +5.545 vs chall +5.545)",
-      "champion": {
-        "key": "CARRY|funding_carry|LTCUSDT",
-        "family": "funding_carry",
-        "symbol": "LTCUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 8,
-          "val_n": 3,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 14.026143999999995,
-          "val_exp": 8.310842000000006,
-          "oos_exp": 5.544606666666669,
-          "dev_total_r": 112.20915199999996,
-          "oos_total_r": 16.633820000000007,
-          "oos_win_rate": 1.0,
-          "oos_pf": Infinity,
-          "oos_sharpe": 2.0661956569019906,
-          "dev_sharpe": 2.9548077013410987,
-          "val_sharpe": 5.926385270963756,
-          "oos_avg_bars": 61.7,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 2.763969515554863,
-          "t_oos": 1.6870416893881919,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 0.0,
-          "best_trade_share": 0.2933605456442742,
-          "total_net": 0.6801,
-          "days_in_market": 748,
-          "net_per_year": 0.3319
-        },
-        "gates": {
-          "G1_data": false,
-          "G2_alpha": true,
-          "G3_stats": true,
-          "G4_wfr": false,
-          "G5_costs": "not_tested",
-          "G6_risk": true,
-          "G7_portfolio": "not_tested"
-        }
-      },
-      "challenger": {
-        "key": "CARRY|funding_carry|LTCUSDT",
-        "family": "funding_carry",
-        "symbol": "LTCUSDT",
-        "horizon": "CARRY",
-        "params": {},
-        "verdict": "REJECTED_G1",
-        "stats": {
-          "dev_n": 8,
-          "val_n": 3,
-          "oos_n": 3,
-          "dev_span_days": 10000,
-          "dev_exp": 14.026143999999995,
-          "val_exp": 8.310842000000006,
-          "oos_exp": 5.544606666666669,
-          "dev_total_r": 112.20915199999996,
-          "oos_total_r": 16.633820000000007,
-          "oos_win_rate": 1.0,
-          "oos_pf": Infinity,
-          "oos_sharpe": 2.0661956569019906,
-          "dev_sharpe": 2.9548077013410987,
-          "val_sharpe": 5.926385270963756,
-          "oos_avg_bars": 61.7,
-          "stop_bps_median": 0.0,
-          "boot_p_dev": 1.0,
-          "boot_p_oos": 0.0,
-          "t_dev": 2.763969515554863,
-          "t_oos": 1.6870416893881919,
-          "wfr": 1.0,
-          "chunk_stability": 0.0,
-          "max_dd_r": 0.0,
-          "best_trade_share": 0.2933605456442742,
-          "total_net": 0.6801,
-          "days_in_market": 748,
-          "net_per_year": 0.3319
+          "chunk_stability": 1.0,
+          "max_dd_r": 2.6508599999999944,
+          "best_trade_share": 0.0414017145643587,
+          "total_net": 5.5605,
+          "days_in_market": 6777,
+          "net_per_year": 0.2995
         }
       }
     }
   ],
   "action_counts": {
-    "KEEP": 102,
-    "RETIRE": 1
+    "KEEP": 84,
+    "RETIRE": 10
   },
   "data_notes": [],
-  "elapsed_s": 139.8,
+  "elapsed_s": 120.5,
   "books": {
     "INTRADAY|trend_breakout|BTCUSDT": {
       "key": "INTRADAY|trend_breakout|BTCUSDT",
@@ -11942,7 +11033,7 @@
         "trail_atr_mult": 0.0,
         "maker_entry": true
       },
-      "verdict": "REJECTED_G7",
+      "verdict": "PROMOTABLE_PAPER_ONLY",
       "stats": {
         "dev_n": 930,
         "val_n": 321,
@@ -11978,7 +11069,7 @@
         "G4_wfr": true,
         "G5_costs": true,
         "G6_risk": true,
-        "G7_portfolio": "no_marginal_sharpe_contribution"
+        "G7_portfolio": true
       }
     },
     "INTRADAY|trend_breakout|SOLUSDT": {
@@ -11996,7 +11087,7 @@
         "trail_atr_mult": 0.0,
         "maker_entry": true
       },
-      "verdict": "REJECTED_G7",
+      "verdict": "PROMOTABLE_PAPER_ONLY",
       "stats": {
         "dev_n": 259,
         "val_n": 70,
@@ -12032,7 +11123,7 @@
         "G4_wfr": true,
         "G5_costs": true,
         "G6_risk": true,
-        "G7_portfolio": "no_marginal_sharpe_contribution"
+        "G7_portfolio": true
       }
     },
     "INTRADAY|trend_breakout|BNBUSDT": {
@@ -12698,7 +11789,7 @@
         "trail_atr_mult": 0.0,
         "maker_entry": true
       },
-      "verdict": "REJECTED_G7",
+      "verdict": "PROMOTABLE_PAPER_ONLY",
       "stats": {
         "dev_n": 91,
         "val_n": 44,
@@ -12734,7 +11825,7 @@
         "G4_wfr": true,
         "G5_costs": true,
         "G6_risk": true,
-        "G7_portfolio": "no_marginal_sharpe_contribution"
+        "G7_portfolio": true
       }
     },
     "INTRADAY|mean_revert|DOGEUSDT": {
@@ -14092,7 +13183,7 @@
         "trail_atr_mult": 0.0,
         "maker_entry": false
       },
-      "verdict": "REJECTED_G7",
+      "verdict": "PROMOTABLE_PAPER_ONLY",
       "stats": {
         "dev_n": 229,
         "val_n": 88,
@@ -14128,7 +13219,7 @@
         "G4_wfr": true,
         "G5_costs": true,
         "G6_risk": true,
-        "G7_portfolio": "no_marginal_sharpe_contribution"
+        "G7_portfolio": true
       }
     },
     "SWING|trend_breakout|SOLUSDT": {
@@ -14146,7 +13237,7 @@
         "trail_atr_mult": 0.0,
         "maker_entry": false
       },
-      "verdict": "REJECTED_G7",
+      "verdict": "PROMOTABLE_PAPER_ONLY",
       "stats": {
         "dev_n": 201,
         "val_n": 69,
@@ -14182,7 +13273,7 @@
         "G4_wfr": true,
         "G5_costs": true,
         "G6_risk": true,
-        "G7_portfolio": "no_marginal_sharpe_contribution"
+        "G7_portfolio": true
       }
     },
     "SWING|trend_breakout|BNBUSDT": {
@@ -14306,7 +13397,7 @@
         "trail_atr_mult": 0.0,
         "maker_entry": false
       },
-      "verdict": "REJECTED_G7",
+      "verdict": "PROMOTABLE_PAPER_ONLY",
       "stats": {
         "dev_n": 241,
         "val_n": 92,
@@ -14342,7 +13433,7 @@
         "G4_wfr": true,
         "G5_costs": true,
         "G6_risk": true,
-        "G7_portfolio": "no_marginal_sharpe_contribution"
+        "G7_portfolio": true
       }
     },
     "SWING|trend_breakout|DOGEUSDT": {
@@ -15923,7 +15014,7 @@
         "trail_atr_mult": 0.0,
         "maker_entry": false
       },
-      "verdict": "REJECTED_G7",
+      "verdict": "PROMOTABLE_PAPER_ONLY",
       "stats": {
         "dev_n": 55,
         "val_n": 24,
@@ -15959,7 +15050,7 @@
         "G4_wfr": true,
         "G5_costs": true,
         "G6_risk": true,
-        "G7_portfolio": "no_marginal_sharpe_contribution"
+        "G7_portfolio": true
       }
     },
     "POSITION|trend_breakout|DOGEUSDT": {
@@ -16515,7 +15606,7 @@
         "trail_atr_mult": 0.0,
         "maker_entry": false
       },
-      "verdict": "REJECTED_G7",
+      "verdict": "PROMOTABLE_PAPER_ONLY",
       "stats": {
         "dev_n": 126,
         "val_n": 52,
@@ -16551,7 +15642,7 @@
         "G4_wfr": true,
         "G5_costs": true,
         "G6_risk": true,
-        "G7_portfolio": "no_marginal_sharpe_contribution"
+        "G7_portfolio": true
       }
     },
     "POSITION|trend_rider|AVAXUSDT": {
@@ -16851,464 +15942,50 @@
         "G7_portfolio": "not_tested"
       }
     },
-    "CARRY|funding_carry|BTCUSDT": {
-      "key": "CARRY|funding_carry|BTCUSDT",
+    "CARRY|funding_carry|PORTFOLIO": {
+      "key": "CARRY|funding_carry|PORTFOLIO",
       "family": "funding_carry",
-      "symbol": "BTCUSDT",
+      "symbol": "PORTFOLIO",
       "horizon": "CARRY",
       "params": {},
-      "verdict": "REJECTED_G1",
+      "verdict": "PROMOTABLE_PAPER_ONLY",
       "stats": {
-        "dev_n": 8,
-        "val_n": 3,
-        "oos_n": 3,
+        "dev_n": 78,
+        "val_n": 29,
+        "oos_n": 26,
         "dev_span_days": 10000,
-        "dev_exp": 9.69534275,
-        "val_exp": 5.7691993333333365,
-        "oos_exp": 6.197982666666673,
-        "dev_total_r": 77.562742,
-        "oos_total_r": 18.59394800000002,
-        "oos_win_rate": 1.0,
-        "oos_pf": Infinity,
-        "oos_sharpe": 8.79923724156659,
-        "dev_sharpe": 2.8245396510818455,
-        "val_sharpe": 2.9230916298015006,
-        "oos_avg_bars": 78.0,
+        "dev_exp": 11.159509948717947,
+        "val_exp": 5.485809793103452,
+        "oos_exp": 4.790386923076925,
+        "dev_total_r": 870.4417759999999,
+        "oos_total_r": 124.55006000000006,
+        "oos_win_rate": 0.8076923076923077,
+        "oos_pf": 74.72487110732278,
+        "oos_sharpe": 6.022315398418403,
+        "dev_sharpe": 8.066253516770141,
+        "val_sharpe": 8.444575927999844,
+        "oos_avg_bars": 54.0,
         "stop_bps_median": 0.0,
         "boot_p_dev": 1.0,
-        "boot_p_oos": 0.0,
-        "t_dev": 2.6421149124265697,
-        "t_oos": 7.184547122511035,
+        "boot_p_oos": 1.0,
+        "t_dev": 8.014379965743396,
+        "t_oos": 5.905366102604952,
         "wfr": 1.0,
-        "chunk_stability": 0.0,
-        "max_dd_r": 0.6846960000000006,
-        "best_trade_share": 0.23177804245318287,
-        "total_net": 0.4875,
-        "days_in_market": 700,
-        "net_per_year": 0.2542
+        "chunk_stability": 1.0,
+        "max_dd_r": 2.6508599999999944,
+        "best_trade_share": 0.0414017145643587,
+        "total_net": 5.5605,
+        "days_in_market": 6777,
+        "net_per_year": 0.2995
       },
       "gates": {
-        "G1_data": false,
+        "G1_data": true,
         "G2_alpha": true,
         "G3_stats": true,
-        "G4_wfr": false,
+        "G4_wfr": true,
         "G5_costs": "not_tested",
         "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    "CARRY|funding_carry|ETHUSDT": {
-      "key": "CARRY|funding_carry|ETHUSDT",
-      "family": "funding_carry",
-      "symbol": "ETHUSDT",
-      "horizon": "CARRY",
-      "params": {},
-      "verdict": "REJECTED_G1",
-      "stats": {
-        "dev_n": 8,
-        "val_n": 4,
-        "oos_n": 3,
-        "dev_span_days": 10000,
-        "dev_exp": 14.055537750000006,
-        "val_exp": 5.989442000000006,
-        "oos_exp": 4.855954666666669,
-        "dev_total_r": 112.44430200000005,
-        "oos_total_r": 14.567864000000007,
-        "oos_win_rate": 1.0,
-        "oos_pf": Infinity,
-        "oos_sharpe": 3.390435635833065,
-        "dev_sharpe": 3.526007019222523,
-        "val_sharpe": 4.716958048580951,
-        "oos_avg_bars": 66.7,
-        "stop_bps_median": 0.0,
-        "boot_p_dev": 1.0,
-        "boot_p_oos": 0.0,
-        "t_dev": 3.2982775523226806,
-        "t_oos": 2.768279104513218,
-        "wfr": 1.0,
-        "chunk_stability": 0.0,
-        "max_dd_r": 0.0,
-        "best_trade_share": 0.25412576520037417,
-        "total_net": 0.6773,
-        "days_in_market": 908,
-        "net_per_year": 0.2723
-      },
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    "CARRY|funding_carry|SOLUSDT": {
-      "key": "CARRY|funding_carry|SOLUSDT",
-      "family": "funding_carry",
-      "symbol": "SOLUSDT",
-      "horizon": "CARRY",
-      "params": {},
-      "verdict": "REJECTED_G1",
-      "stats": {
-        "dev_n": 7,
-        "val_n": 3,
-        "oos_n": 3,
-        "dev_span_days": 10000,
-        "dev_exp": 8.564786571428574,
-        "val_exp": 6.363930666666671,
-        "oos_exp": 4.654910666666669,
-        "dev_total_r": 59.95350600000001,
-        "oos_total_r": 13.964732000000007,
-        "oos_win_rate": 0.6666666666666666,
-        "oos_pf": 106.66054809860314,
-        "oos_sharpe": 1.6517689722986544,
-        "dev_sharpe": 1.7833272129831064,
-        "val_sharpe": 2.3527708569068126,
-        "oos_avg_bars": 40.3,
-        "stop_bps_median": 0.0,
-        "boot_p_dev": 0.999,
-        "boot_p_oos": 0.0,
-        "t_dev": 1.6510401782511253,
-        "t_oos": 1.3486637183643555,
-        "wfr": 1.0,
-        "chunk_stability": 0.0,
-        "max_dd_r": 1.1308839999999998,
-        "best_trade_share": 0.40140171510255085,
-        "total_net": 0.4078,
-        "days_in_market": 555,
-        "net_per_year": 0.2682
-      },
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    "CARRY|funding_carry|BNBUSDT": {
-      "key": "CARRY|funding_carry|BNBUSDT",
-      "family": "funding_carry",
-      "symbol": "BNBUSDT",
-      "horizon": "CARRY",
-      "params": {},
-      "verdict": "REJECTED_G1",
-      "stats": {
-        "dev_n": 10,
-        "val_n": 4,
-        "oos_n": 4,
-        "dev_span_days": 10000,
-        "dev_exp": 5.9103552000000015,
-        "val_exp": 5.277622,
-        "oos_exp": 1.4231544999999999,
-        "dev_total_r": 59.103552000000015,
-        "oos_total_r": 5.6926179999999995,
-        "oos_win_rate": 0.75,
-        "oos_pf": 7.448541872456885,
-        "oos_sharpe": 2.1255157027898557,
-        "dev_sharpe": 3.140680095216414,
-        "val_sharpe": 1.6088584111809614,
-        "oos_avg_bars": 28.2,
-        "stop_bps_median": 0.0,
-        "boot_p_dev": 1.0,
-        "boot_p_oos": 0.0,
-        "t_dev": 2.979510750851509,
-        "t_oos": 1.8407505947587497,
-        "wfr": 1.0,
-        "chunk_stability": 0.0,
-        "max_dd_r": 2.337748,
-        "best_trade_share": 0.18145542138442844,
-        "total_net": 0.338,
-        "days_in_market": 409,
-        "net_per_year": 0.3016
-      },
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    "CARRY|funding_carry|XRPUSDT": {
-      "key": "CARRY|funding_carry|XRPUSDT",
-      "family": "funding_carry",
-      "symbol": "XRPUSDT",
-      "horizon": "CARRY",
-      "params": {},
-      "verdict": "REJECTED_G1",
-      "stats": {
-        "dev_n": 8,
-        "val_n": 4,
-        "oos_n": 3,
-        "dev_span_days": 10000,
-        "dev_exp": 15.432433249999997,
-        "val_exp": 8.632363500000004,
-        "oos_exp": 5.375146666666669,
-        "dev_total_r": 123.45946599999998,
-        "oos_total_r": 16.125440000000008,
-        "oos_win_rate": 1.0,
-        "oos_pf": Infinity,
-        "oos_sharpe": 2.264570929496578,
-        "dev_sharpe": 3.0892905363188587,
-        "val_sharpe": 3.276598215290621,
-        "oos_avg_bars": 60.3,
-        "stop_bps_median": 0.0,
-        "boot_p_dev": 1.0,
-        "boot_p_oos": 0.0,
-        "t_dev": 2.8897666887770725,
-        "t_oos": 1.8490144212022783,
-        "wfr": 1.0,
-        "chunk_stability": 0.0,
-        "max_dd_r": 1.3498540000000006,
-        "best_trade_share": 0.27505712361382123,
-        "total_net": 0.7415,
-        "days_in_market": 807,
-        "net_per_year": 0.3354
-      },
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    "CARRY|funding_carry|ADAUSDT": {
-      "key": "CARRY|funding_carry|ADAUSDT",
-      "family": "funding_carry",
-      "symbol": "ADAUSDT",
-      "horizon": "CARRY",
-      "params": {},
-      "verdict": "REJECTED_G1",
-      "stats": {
-        "dev_n": 8,
-        "val_n": 3,
-        "oos_n": 3,
-        "dev_span_days": 10000,
-        "dev_exp": 14.410165500000002,
-        "val_exp": 6.209553333333338,
-        "oos_exp": 5.259859333333337,
-        "dev_total_r": 115.28132400000001,
-        "oos_total_r": 15.779578000000011,
-        "oos_win_rate": 0.6666666666666666,
-        "oos_pf": 48.84125858012567,
-        "oos_sharpe": 1.9926960838663916,
-        "dev_sharpe": 3.042721138247737,
-        "val_sharpe": 2.682284594607741,
-        "oos_avg_bars": 56.0,
-        "stop_bps_median": 0.0,
-        "boot_p_dev": 1.0,
-        "boot_p_oos": 0.0,
-        "t_dev": 2.846205005704465,
-        "t_oos": 1.6270295393049783,
-        "wfr": 1.0,
-        "chunk_stability": 0.0,
-        "max_dd_r": 0.32983200000001034,
-        "best_trade_share": 0.3055722648766331,
-        "total_net": 0.6887,
-        "days_in_market": 740,
-        "net_per_year": 0.3397
-      },
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    "CARRY|funding_carry|DOGEUSDT": {
-      "key": "CARRY|funding_carry|DOGEUSDT",
-      "family": "funding_carry",
-      "symbol": "DOGEUSDT",
-      "horizon": "CARRY",
-      "params": {},
-      "verdict": "REJECTED_G1",
-      "stats": {
-        "dev_n": 8,
-        "val_n": 4,
-        "oos_n": 3,
-        "dev_span_days": 10000,
-        "dev_exp": 9.038472500000001,
-        "val_exp": 8.301935000000004,
-        "oos_exp": 4.692149333333333,
-        "dev_total_r": 72.30778000000001,
-        "oos_total_r": 14.076448,
-        "oos_win_rate": 0.6666666666666666,
-        "oos_pf": 54.600877326590876,
-        "oos_sharpe": 1.7697119253481233,
-        "dev_sharpe": 3.498966932977249,
-        "val_sharpe": 6.408584662704379,
-        "oos_avg_bars": 39.7,
-        "stop_bps_median": 0.0,
-        "boot_p_dev": 1.0,
-        "boot_p_oos": 0.0,
-        "t_dev": 3.272983867713021,
-        "t_oos": 1.444963736273766,
-        "wfr": 1.0,
-        "chunk_stability": 0.0,
-        "max_dd_r": 0.7885419999999999,
-        "best_trade_share": 0.19460694345735033,
-        "total_net": 0.4923,
-        "days_in_market": 598,
-        "net_per_year": 0.3005
-      },
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    "CARRY|funding_carry|AVAXUSDT": {
-      "key": "CARRY|funding_carry|AVAXUSDT",
-      "family": "funding_carry",
-      "symbol": "AVAXUSDT",
-      "horizon": "CARRY",
-      "params": {},
-      "verdict": "REJECTED_G1",
-      "stats": {
-        "dev_n": 8,
-        "val_n": 4,
-        "oos_n": 3,
-        "dev_span_days": 10000,
-        "dev_exp": 7.583199250000002,
-        "val_exp": 5.0927570000000015,
-        "oos_exp": 5.297620666666668,
-        "dev_total_r": 60.66559400000001,
-        "oos_total_r": 15.892862000000004,
-        "oos_win_rate": 0.6666666666666666,
-        "oos_pf": 194.8153902439026,
-        "oos_sharpe": 1.9373861264264711,
-        "dev_sharpe": 1.7364740248523958,
-        "val_sharpe": 2.130996168861841,
-        "oos_avg_bars": 54.7,
-        "stop_bps_median": 0.0,
-        "boot_p_dev": 1.0,
-        "boot_p_oos": 0.0,
-        "t_dev": 1.6243227155075108,
-        "t_oos": 1.581869148164025,
-        "wfr": 1.0,
-        "chunk_stability": 0.0,
-        "max_dd_r": 0.6849199999999982,
-        "best_trade_share": 0.38791499640324223,
-        "total_net": 0.4182,
-        "days_in_market": 604,
-        "net_per_year": 0.2527
-      },
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    "CARRY|funding_carry|LINKUSDT": {
-      "key": "CARRY|funding_carry|LINKUSDT",
-      "family": "funding_carry",
-      "symbol": "LINKUSDT",
-      "horizon": "CARRY",
-      "params": {},
-      "verdict": "REJECTED_G1",
-      "stats": {
-        "dev_n": 8,
-        "val_n": 4,
-        "oos_n": 3,
-        "dev_span_days": 10000,
-        "dev_exp": 10.91372825,
-        "val_exp": 10.473529500000009,
-        "oos_exp": 7.473460666666671,
-        "dev_total_r": 87.309826,
-        "oos_total_r": 22.420382000000014,
-        "oos_win_rate": 1.0,
-        "oos_pf": Infinity,
-        "oos_sharpe": 8.14222046587161,
-        "dev_sharpe": 2.2091349844993005,
-        "val_sharpe": 3.939085501834378,
-        "oos_avg_bars": 78.3,
-        "stop_bps_median": 0.0,
-        "boot_p_dev": 1.0,
-        "boot_p_oos": 0.0,
-        "t_dev": 2.066456558283136,
-        "t_oos": 6.648095171543927,
-        "wfr": 1.0,
-        "chunk_stability": 0.0,
-        "max_dd_r": 1.8814340000000005,
-        "best_trade_share": 0.2867396506815118,
-        "total_net": 0.6291,
-        "days_in_market": 708,
-        "net_per_year": 0.3243
-      },
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
-      }
-    },
-    "CARRY|funding_carry|LTCUSDT": {
-      "key": "CARRY|funding_carry|LTCUSDT",
-      "family": "funding_carry",
-      "symbol": "LTCUSDT",
-      "horizon": "CARRY",
-      "params": {},
-      "verdict": "REJECTED_G1",
-      "stats": {
-        "dev_n": 8,
-        "val_n": 3,
-        "oos_n": 3,
-        "dev_span_days": 10000,
-        "dev_exp": 14.026143999999995,
-        "val_exp": 8.310842000000006,
-        "oos_exp": 5.544606666666669,
-        "dev_total_r": 112.20915199999996,
-        "oos_total_r": 16.633820000000007,
-        "oos_win_rate": 1.0,
-        "oos_pf": Infinity,
-        "oos_sharpe": 2.0661956569019906,
-        "dev_sharpe": 2.9548077013410987,
-        "val_sharpe": 5.926385270963756,
-        "oos_avg_bars": 61.7,
-        "stop_bps_median": 0.0,
-        "boot_p_dev": 1.0,
-        "boot_p_oos": 0.0,
-        "t_dev": 2.763969515554863,
-        "t_oos": 1.6870416893881919,
-        "wfr": 1.0,
-        "chunk_stability": 0.0,
-        "max_dd_r": 0.0,
-        "best_trade_share": 0.2933605456442742,
-        "total_net": 0.6801,
-        "days_in_market": 748,
-        "net_per_year": 0.3319
-      },
-      "gates": {
-        "G1_data": false,
-        "G2_alpha": true,
-        "G3_stats": true,
-        "G4_wfr": false,
-        "G5_costs": "not_tested",
-        "G6_risk": true,
-        "G7_portfolio": "not_tested"
+        "G7_portfolio": true
       }
     }
   }

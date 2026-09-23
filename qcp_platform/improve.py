@@ -1,4 +1,4 @@
-"""QCP Platform — self-improvement loop (champion vs challenger).
+"""Crypto Trading Platform — self-improvement loop (champion vs challenger).
 
 The platform gets better on its own in three concrete ways, all of which are
 implemented here rather than promised:
@@ -30,8 +30,9 @@ import numpy as np
 from . import data as D
 from . import runner as R
 from . import walkforward as WF
+from .evaluate import GateConfig, PROMOTABLE, apply_g7
+from .portfolio import run_portfolio
 from .costs import DEFAULT, CostModel
-from .evaluate import GateConfig, PROMOTABLE
 from .horizons import HORIZONS, HORIZON_ORDER
 
 
@@ -77,6 +78,26 @@ def improve(baseline_path: Optional[str] = None,
 
     sweep = R.run_all(horizons=horizons, symbols=symbols, gate=gate, cost=cost,
                       verbose=verbose)
+    # Apply G7 (portfolio marginal-Sharpe gate) to the fresh sweep's measured
+    # books, exactly as `cmd_sweep` does. `run_all` does not apply G7 itself;
+    # without this step every book stays at verdict "MEASURED" and the
+    # self-improvement loop reports zero promoted books.
+    measured = {k: v for k, v in sweep.books.items()
+                if v["verdict"].verdict == "MEASURED"}
+    if measured:
+        pf = run_portfolio(measured, use_window="oos")
+        sel = set(pf["selection"]["selected"])
+        for k, v in sweep.books.items():
+            if v["verdict"].verdict == "MEASURED":
+                apply_g7(v["verdict"], passed=k in sel,
+                         reason="no_marginal_sharpe_contribution")
+        portfolio = pf["summary"]
+        portfolio["selected"] = sorted(sel)
+        portfolio["dropped_g7"] = [d["key"] for d in pf["selection"]["dropped"]]
+        portfolio["weights"] = pf["selection"]["weights"]
+    else:
+        portfolio = None
+
     changes: List[ChangeRecord] = []
     new_books: Dict[str, dict] = {}
 
@@ -122,7 +143,8 @@ def improve(baseline_path: Optional[str] = None,
         action_counts=_count_actions(changes),
         data_notes=sweep.data_notes[:50],
         elapsed_s=sweep.elapsed_s,
-        books=new_books)
+        books=new_books,
+        portfolio=portfolio)
     if out_path:
         os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
         with open(out_path, "w") as f:

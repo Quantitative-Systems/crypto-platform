@@ -8,7 +8,8 @@ import json
 import hashlib
 from datetime import datetime, timezone
 
-CACHE_DIR = "/home/mrcn2/crypto-platform/market_data/cache"
+# Resolved relative to this module so the tool works from any checkout location.
+CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cache")
 
 TIMEFRAME_MS = {
     "15M": 15 * 60 * 1000,

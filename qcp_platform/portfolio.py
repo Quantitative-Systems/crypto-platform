@@ -1,4 +1,4 @@
-"""QCP Platform — portfolio construction: many books, ONE account.
+"""Crypto Trading Platform — portfolio construction: many books, ONE account.
 
 The research layer measures edges in R. This layer turns them into an account
 P&L under real constraints, and it is where blow-up risk is actually removed:
@@ -243,6 +243,51 @@ def select_books(books: Dict[str, dict],
         trials.sort(key=lambda x: (-x[0], x[1]))
         sh, key, _ = trials[0]
         if sh <= best_sharpe + min_sharpe_gain and selected:
+            # Phase 1 (greedy forward selection) exhausted: no remaining
+            # candidate improves the portfolio Sharpe. Before dropping
+            # everything, give each surviving book a second chance: books
+            # that passed G1-G6 and are individually profitable out-of-sample
+            # add diversification and standalone return even when they do not
+            # lift the combined Sharpe metric (the greedy algorithm is
+            # undersized when the candidate pool is small — it cannot find
+            # diversifying combinations that a human portfolio builder would
+            # keep).
+            #
+            # Per-horizon cap: prevent overexposure to a single factor within
+            # one horizon. Three books per horizon is enough to capture
+            # strategy diversity (e.g. trend + mean-revert + rotation) without
+            # stacking correlated positions that the Governor must skip.
+            second_chance: list = []
+            for k in candidates:
+                rec = books[k]
+                v = rec["verdict"]
+                oos_exp = float(v.stats.get("oos_exp", 0) or 0)
+                oos_n = int(v.stats.get("oos_n", 0) or 0)
+                oos_sharpe = float(v.stats.get("oos_sharpe", 0) or 0)
+                if oos_exp > 0 and oos_n >= 15 and oos_sharpe > 0:
+                    second_chance.append((oos_exp, oos_sharpe, k))
+            if second_chance:
+                horizon_counts: dict = {}
+                for k in selected:
+                    hz = books[k]["verdict"].horizon
+                    horizon_counts[hz] = horizon_counts.get(hz, 0) + 1
+                second_chance.sort(key=lambda x: (-x[0], -x[1]))
+                admitted = False
+                for _, _, k in second_chance:
+                    hz = books[k]["verdict"].horizon
+                    if horizon_counts.get(hz, 0) >= 3:
+                        continue
+                    selected[k] = books[k]
+                    candidates.remove(k)
+                    horizon_counts[hz] = horizon_counts.get(hz, 0) + 1
+                    best_sharpe = simulate_portfolio(
+                        selected, cfg, gov_cfg, use_window=use_window).sharpe()
+                    admitted = True
+                    break
+                if admitted:
+                    continue
+            # No book qualifies for second chance (or all horizons full) —
+            # drop the rest.
             for k in candidates:
                 dropped.append(dict(key=k, reason="G7_no_marginal_sharpe"))
             break

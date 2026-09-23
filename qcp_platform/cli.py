@@ -1,4 +1,4 @@
-"""QCP Platform — command line interface.
+"""Crypto Trading Platform — command line interface.
 
     python3 -m qcp_platform.cli screen      # pre-trade cost economics per horizon
     python3 -m qcp_platform.cli sweep       # full walk-forward sweep + gates
@@ -132,12 +132,25 @@ def cmd_improve(args) -> int:
 
 
 def cmd_paper(args) -> int:
-    from .runner import run_all
-    from .portfolio import simulate_portfolio
+    from .evaluate import apply_g7
+    from .portfolio import run_portfolio, simulate_portfolio
     from .report import portfolio_section
+    from .runner import run_all
     sweep = run_all(verbose=False)
+    books_measured = {k: v for k, v in sweep.books.items()
+                      if v["verdict"].verdict == "MEASURED"}
+    if books_measured:
+        pf = run_portfolio(books_measured, use_window=args.window)
+        sel = set(pf["selection"]["selected"])
+        for k, v in sweep.books.items():
+            if v["verdict"].verdict == "MEASURED":
+                apply_g7(v["verdict"], passed=k in sel,
+                         reason="no_marginal_sharpe_contribution")
     books = {k: v for k, v in sweep.books.items()
              if v["verdict"].verdict.startswith("PROMOTABLE")}
+    if not books:
+        print("no books qualified for paper promotion")
+        return 0
     res = simulate_portfolio(books, use_window=args.window)
     summary = res.summary()
     out = _ensure()
@@ -172,6 +185,12 @@ def cmd_status(args) -> int:
     return 0
 
 
+def cmd_carry_sweep(args) -> int:
+    from .carry_sweep import sweep_carry
+    sweep_carry(verbose=True)
+    return 0
+
+
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="qcp_platform", description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -198,6 +217,10 @@ def main(argv=None) -> int:
 
     s = sub.add_parser("status", help="current beliefs of the platform")
     s.set_defaults(fn=cmd_status)
+
+    s = sub.add_parser("carry_sweep",
+                       help="parameter sweep for funding_carry hypothesis")
+    s.set_defaults(fn=cmd_carry_sweep)
 
     args = p.parse_args(argv)
     return args.fn(args)

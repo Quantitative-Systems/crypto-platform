@@ -1,6 +1,6 @@
-# QCP Platform — All-Horizon, Cost-Aware, Self-Improving Trading System
+# Crypto Trading Platform — Strategy Research Engine
 
-One platform, six books (scalping → investing + market-neutral carry), 10
+One research engine, six books (scalping → investing + market-neutral carry), 10
 assets, every verdict produced by the same walk-forward, cost-included,
 out-of-sample-untouched pipeline. **Nothing here is tradable with real money:
 promotion means "paper-trade next", never "wire funds".**

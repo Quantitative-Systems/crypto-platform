@@ -1,4 +1,4 @@
-"""QCP — certified series loader (self-contained, data layer only).
+"""Certified series loader (self-contained, data layer only).
 
 Loads real Binance kline archives from the local warehouse, asserts their
 integrity (SHA-256 + OHLC invariants + monotonic timestamps) and resolves
@@ -113,7 +113,7 @@ class CertifiedSeriesLoader:
         if not path.exists():
             raise FileNotFoundError(
                 f"NO_CERTIFIED_SERIES_FOR:{symbol}:{timeframe} at {path}. "
-                "QCP does not fabricate market data; ingest the dataset first.")
+                "The platform does not fabricate market data; ingest the dataset first.")
 
         with open(path, "r") as f:
             raw = json.load(f)

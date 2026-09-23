@@ -1,4 +1,4 @@
-"""QCP Platform — allocation families: rotation, accumulation, pairs, carry.
+"""Crypto Trading Platform — allocation families: rotation, accumulation, pairs, carry.
 
 These cover the horizons that single-asset breakout logic does not serve well:
 

@@ -1,4 +1,4 @@
-"""QCP Platform — report generation (markdown + JSON artefacts).
+"""Crypto Trading Platform — report generation (markdown + JSON artefacts).
 
 Every number in the report is produced by the measurement pipeline in this
 package and is reproducible from the local cache. The report deliberately leads
@@ -117,7 +117,7 @@ def portfolio_section(portfolio: Optional[dict]) -> list:
 def build_report(sweep: R.SweepResult, outdir: str,
                  cost: Optional[CostModel] = None,
                  portfolio: Optional[dict] = None,
-                 title: str = "QCP Platform — All-Horizon Edge Report") -> str:
+                 title: str = "Crypto Trading Platform — Strategy Research Report") -> str:
     """Write JSON + markdown artefacts and return the markdown text."""
     cost = cost or DEFAULT
     os.makedirs(outdir, exist_ok=True)
@@ -131,7 +131,7 @@ def build_report(sweep: R.SweepResult, outdir: str,
           "> Every figure below is computed from the local price/funding cache "
           "with full transaction costs, next-bar-open fills and adverse-first "
           "stop resolution. Out-of-sample data is never used for selection.",
-          "", "## 1. Horizon economics (the gate that decides everything)", "",
+          "", "## 1. Horizon cost economics", "",
           horizon_table(median_atr, cost), "",
           "`Median ATR` is measured live from the cache; the cost column is the "
           "all-in roundtrip cost from `costs.CostModel`. Where **Cost/Stop** "

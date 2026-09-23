@@ -1,4 +1,4 @@
-"""QCP Platform — the multiplatform runner.
+"""Crypto Trading Platform — the multiplatform runner.
 
 For every (horizon, family, asset) it:
   1. loads the BASE timeframe once,
@@ -403,26 +403,42 @@ def _alloc_sweep(out, symbols, cost, gate):
                                    reason=f"error:{type(e).__name__}:{e}"))
 
     try:
-        for b in funding_carry_books(cost, symbols):
-            if b.n < 3:
-                continue
-            d0, d1, v0, v1, o0, o1 = _bounds(b)
-            dev = WF.slice_book(b, d0, d1)
-            val = WF.slice_book(b, v0, v1)
-            oos = WF.slice_book(b, o0, o1)
-            net = sum(t.meta.get("net", 0.0) for t in b.trades)
-            held = sum(t.bars_held for t in b.trades)
-            sym = b.trades[0].symbol
-            v = evaluate_book("funding_carry", sym, "CARRY", dev, val, oos,
-                              cfg=gate,
-                              extra_stats=dict(
-                                  total_net=round(net, 4),
-                                  days_in_market=held,
-                                  net_per_year=round(net / max(1, held) * 365, 4)))
-            out.rows.append(dict(v.as_row(), note="market neutral spot+perp"))
-            out.books[f"CARRY|funding_carry|{sym}"] = dict(
-                verdict=v, dev=dev, val=val, oos=oos, full=b, params={},
-                symbol=sym, family="funding_carry", horizon="CARRY")
+        # Carry is inherently low-frequency per asset (~2-8 entries/year), so
+        # a single-asset book can never reach G1's 15-trade OOS floor. We
+        # aggregate across all eligible assets into one PORTFOLIO-level book —
+        # exactly the pattern used by xs_momentum and invest_dca — so the
+        # family has enough trades to be statistically governable.
+        #
+        # Params are fixed to the platform's carry cost-coverage floor
+        # (apr_entry=15%, apr_exit=5%, lb=7d). A separate parameter sweep
+        # (carry_sweep.py) explores the grid and writes its recommendation to
+        # carry_sweep.json; if and when that recommendation is promoted into
+        # the main platform, the params below are updated here.
+        cb = funding_carry_books(cost, symbols,
+                                 apr_entry=0.15, apr_exit=0.05, lookback_days=7)
+        if cb:
+            agg = BookResult(strategy="funding_carry", horizon="CARRY")
+            for b in cb:
+                agg.trades.extend(b.trades)
+            agg.trades.sort(key=lambda t: t.exit_ts)
+            agg.signal_count = sum(b.signal_count for b in cb)
+            if agg.n >= 3:
+                d0, d1, v0, v1, o0, o1 = _bounds(agg)
+                dev = WF.slice_book(agg, d0, d1)
+                val = WF.slice_book(agg, v0, v1)
+                oos = WF.slice_book(agg, o0, o1)
+                net = sum(t.meta.get("net", 0.0) for t in agg.trades)
+                held = sum(t.bars_held for t in agg.trades)
+                v = evaluate_book("funding_carry", "PORTFOLIO", "CARRY",
+                                  dev, val, oos, cfg=gate,
+                                  extra_stats=dict(
+                                      total_net=round(net, 4),
+                                      days_in_market=held,
+                                      net_per_year=round(net / max(1, held) * 365, 4)))
+                out.rows.append(dict(v.as_row(), note="market-neutral spot+perp (10-asset agg)"))
+                out.books["CARRY|funding_carry|PORTFOLIO"] = dict(
+                    verdict=v, dev=dev, val=val, oos=oos, full=agg, params={},
+                    symbol="PORTFOLIO", family="funding_carry", horizon="CARRY")
     except Exception as e:
         out.data_notes.append(dict(symbol="PORTFOLIO", horizon="CARRY",
                                    reason=f"error:{type(e).__name__}:{e}"))

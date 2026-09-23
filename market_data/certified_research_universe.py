@@ -1,5 +1,5 @@
 """
-QCP Certified Research Universe Inventory.
+Certified Research Universe Inventory.
 Audits the physical warehouse kline archives and emits the authoritative
 machine-readable inventory required by Directive Point 2.
 

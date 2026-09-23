@@ -1,5 +1,5 @@
 """
-Quantitative Crypto Platform (QCP) — Exchange-Neutral Market Data Schemas.
+Crypto Trading Platform — Exchange-Neutral Market Data Schemas.
 
 Defines canonical dataclass models for the 10 core market data streams:
 1. OHLCVRecord

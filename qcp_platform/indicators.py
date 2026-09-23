@@ -1,4 +1,4 @@
-"""QCP Platform — vectorized, causal indicators.
+"""Crypto Trading Platform — vectorized, causal indicators.
 
 All functions return float arrays the same length as input, aligned to the
 CLOSE of bar i. A value at index i is computable using bars 0..i only, so any

@@ -1,4 +1,4 @@
-"""QCP Platform — data access, causal resampling, multi-asset panels.
+"""Crypto Trading Platform — data access, causal resampling, multi-asset panels.
 
 Reads only the local cache (market_data/cache) so results are reproducible
 offline. Every panel carries per-bar close timestamps; alignment to a higher

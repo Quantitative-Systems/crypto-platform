@@ -1,5 +1,5 @@
 """
-Unit tests for QCP Data Quality & Lineage Engine.
+Unit tests for Data Quality & Lineage Engine.
 Tests impossible OHLC detection, duplicate detection, missing bar gap tracking,
 cryptographic SHA-256 lineage hashing, and automated candle sanitization.
 """

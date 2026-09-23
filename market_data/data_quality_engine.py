@@ -1,5 +1,5 @@
 """
-Quantitative Crypto Platform (QCP) — Data Quality & Lineage Engine.
+Crypto Trading Platform — Data Quality & Lineage Engine.
 
 Institutional gatekeeper auditing data integrity and lineage provenance:
 - Impossible OHLC detection (Low > High, Open/Close out of bounds, Zero/Negative prices)
@@ -82,7 +82,7 @@ class DataQualityReport:
 
 class DataQualityEngine:
     """
-    Data Quality and Provenance Gatekeeper for QCP.
+    Data Quality and Provenance Gatekeeper for the platform.
     """
 
     @classmethod

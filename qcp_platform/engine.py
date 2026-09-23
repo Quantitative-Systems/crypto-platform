@@ -1,4 +1,4 @@
-"""QCP Platform — trade contracts and the shared directional resolver.
+"""Crypto Trading Platform — trade contracts and the shared directional resolver.
 
 Every directional strategy is reduced to two boolean arrays (long_sig,
 short_sig) plus risk parameters, then resolved by ONE shared function so that

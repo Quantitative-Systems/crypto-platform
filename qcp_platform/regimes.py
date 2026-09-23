@@ -1,4 +1,4 @@
-"""QCP Platform — causal market regime classification.
+"""Crypto Trading Platform — causal market regime classification.
 
 Regimes exist so capital can be routed to a family that is actually suited to
 current conditions (trend vs range vs high-vol stress) instead of running one

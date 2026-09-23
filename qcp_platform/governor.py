@@ -1,4 +1,4 @@
-"""QCP Platform — portfolio risk governor (anti-blowup layer).
+"""Crypto Trading Platform — portfolio risk governor (anti-blowup layer).
 
 The governor is deliberately boring and non-negotiable. It scales or blocks new
 risk based on the *account's* state, never on the strategy's opinion:
