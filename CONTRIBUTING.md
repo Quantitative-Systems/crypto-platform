@@ -1,4 +1,4 @@
-# Contributing to Crypto Quantitative Systems Platform
+# Contributing to Crypto Trading Platform
 
 We welcome contributions from quantitative developers, systems engineers, and researchers.
 
@@ -16,7 +16,7 @@ Before submitting a pull request, ensure your contribution adheres to the platfo
 
 ## Pull Request Guidelines
 - Create a feature branch with a descriptive name (`feat/market-structure-enhancement`).
-- Ensure all 145+ tests pass.
+- Ensure the full test suite passes.
 - Do not introduce optimization parameters without robust justification and corresponding test logic.
 - Follow the exact architectural separation defined in the README.
 

@@ -1,28 +1,32 @@
 # Changelog
 
-All notable changes to the Crypto Quantitative Systems Platform will be documented in this file.
+All notable changes to the Crypto Trading Platform will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to Semantic Versioning.
 
-## [Unreleased] - Day 48 repository closeout (document / freeze / publish)
+> **Note:** Entries dated before the repository consolidation refer to the
+> historical research program whose artifacts are archived under
+> `research/failed/` (see the archive README). Paths in those entries reflect
+> the layout at the time of writing.
+
+## [Unreleased] — Repository closeout (documentation, freeze, publication preparation)
 
 ### Added
-- **Closeout report (`research/results/DAY_48_REPOSITORY_CLOSEOUT.md`)**:
+- **Closeout report (archived at `research/failed/results/DAY_48_REPOSITORY_CLOSEOUT.md`)**:
   full IMPLEMENTED / PARTIAL / PLANNED / NOT inventory, 604/2/14 test
   record with failure diagnosis, Phase D findings, reconciliation status,
   limitations, GitHub readiness, and future fractal/composite hypotheses
   (recorded only, not implemented).
-- **Portfolio summary (`docs/SOCIAL_PORTFOLIO_SUMMARY.md`)**: short factual
+- **Portfolio summary (archived at `research/failed/docs/SOCIAL_PORTFOLIO_SUMMARY.md`)**: short factual
   summary for later social use (not auto-published, no profit claims).
-### Added
-- **Foundation Registry (`research/foundation_registry.py`)**: Machine-readable inventory of the canonical `HTF BIAS → MTF SETUP → LTF ENTRY` foundation. Reads every bias / setup / entry / stop / target / trailing family live from `ComponentRegistry`, classifies each one, flags registry aliases explicitly, and emits `research/results/FOUNDATION_MANIFEST.json`. `classification_complete` fails loudly if a new family is left unclassified.
-- **Foundation Specification (`docs/FOUNDATION_HTF_BIAS_MTF_SETUP_LTF_ENTRY.md`)**: Canonical reference for the 6-Set ladder, the full family inventory per layer, the risk contract (1% risk, 1:4 planned RR, LTF stop → HTF target → MTF trailing), the news blackout policy, and the declared win-rate / profit-factor targets stated explicitly as unproven acceptance gates with breakeven arithmetic.
-- **Foundation test suite (`tests/unit/research/test_foundation_registry.py`)**: 16 tests asserting the 6-Set ladder, config↔replayer↔grammar agreement, strict hierarchy, complete family classification, alias reporting, risk-constant parity with `risk_engine`, news-window parity with the live `NewsProvider`, and target arithmetic.
+- **Foundation Registry (archived at `research/failed/foundation_registry.py`)**: Machine-readable inventory of the canonical `HTF BIAS → MTF SETUP → LTF ENTRY` foundation. Reads every bias / setup / entry / stop / target / trailing family live from `ComponentRegistry`, classifies each one, flags registry aliases explicitly, and emits `research/results/FOUNDATION_MANIFEST.json`. `classification_complete` fails loudly if a new family is left unclassified.
+- **Foundation Specification (archived at `research/failed/docs/FOUNDATION_HTF_BIAS_MTF_SETUP_LTF_ENTRY.md`)**: Canonical reference for the 6-Set ladder, the full family inventory per layer, the risk contract (1% risk, 1:4 planned RR, LTF stop → HTF target → MTF trailing), the news blackout policy, and the declared win-rate / profit-factor targets stated explicitly as unproven acceptance gates with breakeven arithmetic.
+- **Foundation test suite (archived at `research/failed/tests/unit/research/test_foundation_registry.py`)**: 16 tests asserting the 6-Set ladder, config↔replayer↔grammar agreement, strict hierarchy, complete family classification, alias reporting, risk-constant parity with `risk_engine`, news-window parity with the live `NewsProvider`, and target arithmetic.
 
 ### Fixed
-- **Canonical Timeframe Sets reconciled to the authoritative 6-Set ladder.** `config/timeframe_sets.py::CANONICAL_6_TIMEFRAME_SETS` is now keyed `SET_1`..`SET_6` and `research/replayer/timeframe_aligner.py` **derives** its `CANONICAL_TIMEFRAME_SETS` from it, eliminating a second hard-coded copy. The replayer previously exposed only 5 sets with stale numbering (`SET_5 = 15m/5m/1m`), so `SET_5 (1H → 15M → 5M)` was entirely absent and `SET_6 (15M → 5M → 1m)` was mis-numbered. All three layers (config, replayer, strategy grammar) now agree, verified by test.
-- **`docs/CANONICAL_STRATEGY_SPECIFICATION.md` §29–§33, §50, §60, §64** updated from five to six timeframe sets, with `SET 5 — SHORT-TERM INTRADAY` inserted and the scalping set renumbered to `SET 6`.
-- **`research/analytics/run_research_integrity_audit.py`** now reports the audited set count dynamically instead of hard-coding "5".
+- **Canonical Timeframe Sets reconciled to the authoritative 6-Set ladder.** `config/timeframe_sets.py::CANONICAL_6_TIMEFRAME_SETS` is now keyed `SET_1`..`SET_6` and the historical replayer `timeframe_aligner.py` (archived) **derives** its `CANONICAL_TIMEFRAME_SETS` from it, eliminating a second hard-coded copy. The replayer previously exposed only 5 sets with stale numbering (`SET_5 = 15m/5m/1m`), so `SET_5 (1H → 15M → 5M)` was entirely absent and `SET_6 (15M → 5M → 1m)` was mis-numbered. All three layers (config, replayer, strategy grammar) now agree, verified by test.
+- **`docs/CANONICAL_STRATEGY_SPECIFICATION.md` §29–§33, §50, §60, §64** updated from five to six timeframe sets, with `SET 5 — SHORT-TERM INTRADAY` inserted and the scalping set renumbered to `SET 6` (historical specification, now archived).
+- **`run_research_integrity_audit.py`** (archived) now reports the audited set count dynamically instead of hard-coding "5".
 - **Stale test assertions** in `test_timeframe_aligner.py` and `test_strategy_ontology.py` updated to the 6-Set ladder (the legacy 5-Set alias table `TIMEFRAME_SETS` is retained for historical artifacts).
 
 ### Planned
