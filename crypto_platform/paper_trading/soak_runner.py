@@ -53,15 +53,8 @@ class PaperSoakHarness:
         self.daemon: Optional[ForwardPaperTradingDaemon] = None
         self.ws_client: Optional[PublicWebSocketClient] = None
 
-    def initialize_daemon(self) -> ForwardPaperTradingDaemon:
-        """Instantiates daemon and attaches multi-horizon strategy plugins."""
-        daemon = ForwardPaperTradingDaemon(
-            tenant_id=self.tenant_id,
-            account_id=self.account_id,
-            initial_equity=self.initial_equity,
-            ledger=self.ledger,
-        )
-        # Register core strategy plugins
+    def _attach_strategies(self, daemon: ForwardPaperTradingDaemon) -> None:
+        """Register core strategy plugins with consistent risk sizing."""
         strat_trend = TrendBreakoutStrategy(
             strategy_id="soak_trend_btc",
             lookback=5,
@@ -77,6 +70,16 @@ class PaperSoakHarness:
         )
         daemon.register_strategy(strat_trend)
         daemon.register_strategy(strat_mr)
+
+    def initialize_daemon(self) -> ForwardPaperTradingDaemon:
+        """Instantiates daemon and attaches multi-horizon strategy plugins."""
+        daemon = ForwardPaperTradingDaemon(
+            tenant_id=self.tenant_id,
+            account_id=self.account_id,
+            initial_equity=self.initial_equity,
+            ledger=self.ledger,
+        )
+        self._attach_strategies(daemon)
         self.daemon = daemon
         return daemon
 
@@ -108,7 +111,7 @@ class PaperSoakHarness:
         self.verify_live_order_blocker()
 
         # Instantiate live public websocket
-        self.ws_client = PublicWebSocketClient(venue="binance")
+        self.ws_client = PublicWebSocketClient(venue="binance", is_futures=False)
 
         logger.info(f"Connecting to public Binance WebSocket feeds for {target_symbols}...")
         self.daemon.connect_market_data(self.ws_client)
@@ -155,6 +158,10 @@ class PaperSoakHarness:
                 pre_restart_equity = self.daemon.current_equity
                 pre_restart_fills = len(self.daemon.fills_history)
 
+                # Disconnect old daemon callbacks before replacing instance
+                if self.ws_client is not None:
+                    self.daemon.disconnect_market_data(self.ws_client)
+
                 # Re-initialize daemon from same SQLite database
                 self.daemon = ForwardPaperTradingDaemon(
                     tenant_id=self.tenant_id,
@@ -162,10 +169,7 @@ class PaperSoakHarness:
                     initial_equity=self.initial_equity,
                     ledger=self.ledger,
                 )
-                # Register strategies again
-                self.daemon.register_strategy(
-                    TrendBreakoutStrategy("soak_trend_btc", lookback=5, supported_symbols=["BTCUSDT", "ETHUSDT"])
-                )
+                self._attach_strategies(self.daemon)
                 self.daemon.connect_market_data(self.ws_client)
 
                 # Verify restored state
@@ -175,6 +179,8 @@ class PaperSoakHarness:
                 # Run second segment
                 await _run_loop(run_segment)
         finally:
+            if self.daemon and self.ws_client:
+                self.daemon.disconnect_market_data(self.ws_client)
             if self.ws_client is not None:
                 await self.ws_client.stop()
 

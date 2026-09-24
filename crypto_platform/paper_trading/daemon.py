@@ -8,7 +8,9 @@ and commits state to durable SQLite storage for seamless crash recovery.
 from __future__ import annotations
 
 import asyncio
+import json
 import logging
+import os
 import time
 from typing import Any, Dict, List, Optional
 
@@ -114,6 +116,12 @@ class ForwardPaperTradingDaemon:
         """Wire this daemon to a PublicWebSocketClient instance."""
         ws_client.subscribe("ticker", self.on_ticker)
         ws_client.subscribe("candle", self.on_candle)
+
+    def disconnect_market_data(self, ws_client: Any) -> None:
+        """Unwire this daemon from a PublicWebSocketClient instance."""
+        if hasattr(ws_client, "unsubscribe"):
+            ws_client.unsubscribe("ticker", self.on_ticker)
+            ws_client.unsubscribe("candle", self.on_candle)
 
     def on_ticker(self, ticker: TickerEvent) -> List[Fill]:
         """Update market price, check resting limit orders, and update unrealized PnL."""
@@ -257,23 +265,51 @@ class ForwardPaperTradingDaemon:
         duration_seconds: float = 10.0,
         symbols: Optional[List[str]] = None,
         ws_client: Optional[Any] = None,
+        summary_out_path: Optional[str] = None,
     ) -> Dict[str, Any]:
         """Runs an asynchronous controlled forward paper trading session."""
         target_symbols = symbols or ["BTCUSDT", "ETHUSDT", "SOLUSDT"]
         start_ts = time.time()
         logger.info(f"Starting controlled paper session for {duration_seconds}s on {target_symbols}...")
 
-        if ws_client is not None:
-            self.connect_market_data(ws_client)
-            for s in target_symbols:
-                await ws_client.add_symbol_stream(s)
-            ws_client.start()
+        def _save_snapshot(elapsed_sec: float) -> None:
+            if not summary_out_path:
+                return
+            snap = self.get_summary()
+            avg_lat = sum(self.latencies_ms) / len(self.latencies_ms) if self.latencies_ms else 0.0
+            snap.update({
+                "elapsed_seconds": round(elapsed_sec, 2),
+                "target_duration_seconds": duration_seconds,
+                "market_events_processed": self.market_events_count,
+                "signals_generated": self.signals_generated_count,
+                "signals_rejected": self.signals_rejected_count,
+                "orders_simulated": self.orders_simulated_count,
+                "average_latency_ms": round(avg_lat, 3),
+                "reconnect_count": ws_client.reconnect_count if ws_client else 0,
+                "dropped_messages": ws_client.dropped_messages if ws_client else 0,
+            })
+            os.makedirs(os.path.dirname(summary_out_path), exist_ok=True)
+            with open(summary_out_path, "w") as f:
+                json.dump(snap, f, indent=2)
 
-        # Wait for requested duration
-        await asyncio.sleep(duration_seconds)
+        try:
+            if ws_client is not None:
+                self.connect_market_data(ws_client)
+                for s in target_symbols:
+                    await ws_client.add_symbol_stream(s)
+                ws_client.start()
 
-        if ws_client is not None:
-            await ws_client.stop()
+            elapsed = 0.0
+            step = 5.0
+            while elapsed < duration_seconds:
+                sleep_chunk = min(step, duration_seconds - elapsed)
+                await asyncio.sleep(sleep_chunk)
+                elapsed += sleep_chunk
+                _save_snapshot(elapsed)
+        finally:
+            if ws_client is not None:
+                self.disconnect_market_data(ws_client)
+                await ws_client.stop()
 
         elapsed = time.time() - start_ts
         avg_latency = sum(self.latencies_ms) / len(self.latencies_ms) if self.latencies_ms else 0.0
@@ -289,6 +325,11 @@ class ForwardPaperTradingDaemon:
             "reconnect_count": ws_client.reconnect_count if ws_client else 0,
             "dropped_messages": ws_client.dropped_messages if ws_client else 0,
         })
+        if summary_out_path:
+            os.makedirs(os.path.dirname(summary_out_path), exist_ok=True)
+            with open(summary_out_path, "w") as f:
+                json.dump(summary, f, indent=2)
+
         logger.info(f"Forward paper session complete: {summary}")
         return summary
 

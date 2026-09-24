@@ -111,6 +111,7 @@ def cmd_carry_stress(args) -> int:
 def cmd_forward_paper(args) -> int:
     """Run forward paper trading session with live market data feeds."""
     import asyncio
+    from crypto_platform.market_data.websocket_client import PublicWebSocketClient
     from crypto_platform.paper_trading.daemon import ForwardPaperTradingDaemon
     from crypto_platform.paper_trading.persistence import SQLitePaperLedger
     from crypto_platform.strategy_engine.trend import TrendBreakoutStrategy
@@ -124,8 +125,19 @@ def cmd_forward_paper(args) -> int:
     )
     strat = TrendBreakoutStrategy("trend_breakout_v1", lookback=10, supported_symbols=["BTCUSDT"])
     daemon.register_strategy(strat)
-    print(f"Starting forward paper trading daemon for {args.duration}s...")
-    summary = asyncio.run(daemon.run_forward_session(duration_seconds=float(args.duration)))
+
+    ws_client = PublicWebSocketClient(venue="binance", is_futures=False)
+    summary_path = "research/results/crypto_platform/forward_paper_summary.json"
+
+    print(f"Starting forward paper trading daemon for {args.duration}s with public Binance feeds...")
+    summary = asyncio.run(
+        daemon.run_forward_session(
+            duration_seconds=float(args.duration),
+            symbols=["BTCUSDT"],
+            ws_client=ws_client,
+            summary_out_path=summary_path,
+        )
+    )
     print("Paper Trading Session Summary:")
     print(json.dumps(summary, indent=2))
     return 0

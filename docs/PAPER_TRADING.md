@@ -45,8 +45,32 @@ All forward paper sessions are backed by `SQLitePaperLedger` running in WAL mode
 * **Equity History Table:** Periodic equity snapshots, drawdown tracking, and cumulative fees.
 * **Audit Log:** Records every risk firewall rejection, sequence gap, and reconnect event.
 
-### Crash Recovery
+### Crash Recovery & Reconnection Safety
 When `ForwardPaperTradingDaemon` restarts:
 1. It queries the local SQLite database for the account ID.
 2. Rehydrates active open positions and loads the last recorded equity and peak equity.
-3. Resumes streaming from the live WebSocket without duplicating orders or resetting performance curves.
+3. Explicitly unsubscribes prior daemon callbacks via `disconnect_market_data()` before attaching the newly rehydrated daemon, preventing duplicate callback executions and duplicate SQLite ledger writes.
+4. Resumes streaming from the live WebSocket without duplicating orders or resetting performance curves.
+
+---
+
+## 4. Execution Commands & Telemetry Artifacts
+
+Forward paper trading can be run via two supported CLI commands:
+
+```bash
+# 1. Forward Paper Soak Test (Multi-strategy soak with controlled restart audit and public Binance feed)
+python3 -m crypto_platform.cli soak --duration 10
+
+# 2. Forward Paper Trading Daemon (Dedicated forward paper session with real-time public feeds)
+python3 -m crypto_platform.cli forward-paper --duration 10
+
+# 3. Reconcile and compare backtest, validation, OOS, and forward-paper evidence
+python3 -m crypto_platform.cli compare
+```
+
+### Telemetry Artifacts
+- `research/results/crypto_platform/soak_test_summary.json`: Multi-strategy soak run status, events processed, restart audit verification, and zero live capital invariant check.
+- `research/results/crypto_platform/forward_paper_summary.json`: Forward paper session metrics, latency, reconnect count, and open positions.
+- `research/results/crypto_platform/backtest_vs_oos_vs_paper.json`: Quantitative multi-tier reconciliation across DEV, VAL, OOS, FORWARD PAPER, and LIVE tiers.
+- `research/results/crypto_platform/profitability_validation_report.md`: Institutional profitability audit report.

@@ -124,3 +124,41 @@ def test_timestamp_inversion_rejected():
     ticker = client.parse_binance_message(raw_old)
     assert ticker is None
     assert client.dropped_messages == 1
+
+
+def test_websocket_subscriber_unsubscribe_and_clear():
+    client = PublicWebSocketClient(venue="binance")
+    ticks_a = []
+    ticks_b = []
+
+    cb_a = lambda t: ticks_a.append(t)
+    cb_b = lambda t: ticks_b.append(t)
+
+    client.subscribe("ticker", cb_a)
+    client.subscribe("ticker", cb_b)
+
+    raw_msg = {
+        "e": "24hrTicker",
+        "E": 1700000000000,
+        "s": "BTCUSDT",
+        "c": "50000.0",
+        "b": "49999.0",
+        "a": "50001.0",
+    }
+    client.parse_binance_message(raw_msg)
+    assert len(ticks_a) == 1
+    assert len(ticks_b) == 1
+
+    # Unsubscribe cb_a
+    client.unsubscribe("ticker", cb_a)
+    raw_msg["E"] = 1700000001000
+    client.parse_binance_message(raw_msg)
+    assert len(ticks_a) == 1  # Not called
+    assert len(ticks_b) == 2  # Called
+
+    # Clear all subscribers
+    client.clear_subscribers("ticker")
+    raw_msg["E"] = 1700000002000
+    client.parse_binance_message(raw_msg)
+    assert len(ticks_a) == 1
+    assert len(ticks_b) == 2

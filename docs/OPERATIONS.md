@@ -25,7 +25,16 @@ python3 -m crypto_platform.cli report
 # 5. Launch Forward Paper Trading Session (Connects to Live Binance/Bybit feeds with SQLite persistence)
 python3 -m crypto_platform.cli paper
 
-# 6. Query Subsystem Health, Positions, and Account Status
+# 6. Run Forward Paper Soak Session with Public WebSocket Stream & Restart Audit
+python3 -m crypto_platform.cli soak --duration 10
+
+# 7. Run Forward Paper Trading Daemon with Real-Time Market Feeds
+python3 -m crypto_platform.cli forward-paper --duration 10
+
+# 8. Reconcile Evidence across DEV, VAL, OOS, and Forward Paper Tiers
+python3 -m crypto_platform.cli compare
+
+# 9. Query Subsystem Health, Positions, and Account Status
 python3 -m crypto_platform.cli status
 ```
 

@@ -73,6 +73,18 @@ class PublicWebSocketClient:
         """Register a subscriber callback for an event type ('ticker', 'candle', 'orderbook')."""
         self._subscribers.setdefault(event_type, []).append(callback)
 
+    def unsubscribe(self, event_type: str, callback: Callable[[Any], None]) -> None:
+        """Unregister a subscriber callback for an event type."""
+        if event_type in self._subscribers and callback in self._subscribers[event_type]:
+            self._subscribers[event_type].remove(callback)
+
+    def clear_subscribers(self, event_type: Optional[str] = None) -> None:
+        """Clear all subscribers for a specific event type or all event types."""
+        if event_type is None:
+            self._subscribers.clear()
+        elif event_type in self._subscribers:
+            self._subscribers[event_type].clear()
+
     def _notify(self, event_type: str, payload: Any) -> None:
         for cb in self._subscribers.get(event_type, []):
             try:

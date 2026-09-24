@@ -1,4 +1,6 @@
 """Tests for Forward Real-Time Paper Trading Engine and Microstructure Simulator."""
+import json
+import os
 import pytest
 import time
 from crypto_platform.core.domain import (
@@ -117,3 +119,36 @@ def test_forward_paper_trading_daemon_lifecycle():
     assert summary["mode"] == "PAPER"
     assert summary["total_fills"] > 0
     assert "BTCUSDT" in summary["open_positions"]
+
+
+def test_daemon_disconnect_market_data():
+    from crypto_platform.market_data.websocket_client import PublicWebSocketClient
+    daemon = ForwardPaperTradingDaemon(account_id="acc_disconnect_test")
+    ws_client = PublicWebSocketClient(venue="binance")
+
+    daemon.connect_market_data(ws_client)
+    assert daemon.on_ticker in ws_client._subscribers.get("ticker", [])
+    assert daemon.on_candle in ws_client._subscribers.get("candle", [])
+
+    daemon.disconnect_market_data(ws_client)
+    assert daemon.on_ticker not in ws_client._subscribers.get("ticker", [])
+    assert daemon.on_candle not in ws_client._subscribers.get("candle", [])
+
+
+@pytest.mark.anyio
+async def test_daemon_run_forward_session_snapshot(tmp_path):
+    summary_file = str(tmp_path / "forward_summary_test.json")
+    daemon = ForwardPaperTradingDaemon(account_id="acc_snapshot_test")
+
+    # Short session without ws_client should produce summary file and return summary dict
+    summary = await daemon.run_forward_session(
+        duration_seconds=0.1,
+        symbols=["BTCUSDT"],
+        summary_out_path=summary_file,
+    )
+    assert summary["account_id"] == "acc_snapshot_test"
+    assert summary["mode"] == "PAPER"
+    assert os.path.exists(summary_file)
+    with open(summary_file, "r") as f:
+        data = json.load(f)
+    assert data["account_id"] == "acc_snapshot_test"

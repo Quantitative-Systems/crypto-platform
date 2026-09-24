@@ -9,7 +9,7 @@
   "total_fills": 0,
   "open_positions": {},
   "soak_duration_seconds": 2.0,
-  "market_events_processed": 0,
+  "market_events_processed": 2,
   "signals_generated": 0,
   "signals_rejected": 0,
   "orders_simulated": 0,
