@@ -300,6 +300,11 @@ def main():
     p_web.add_argument("--host", default="0.0.0.0", help="Host interface to bind (default 0.0.0.0)")
     p_web.add_argument("--port", default=8080, type=int, help="Port to listen on (default 8080)")
 
+    # service (24/7 Production Supervisor)
+    p_svc = sub.add_parser("service", help="Launch 24/7 continuous production trading and API supervisor")
+    p_svc.add_argument("--host", default="0.0.0.0", help="Host interface to bind (default 0.0.0.0)")
+    p_svc.add_argument("--port", default=8080, type=int, help="Port to listen on (default 8080)")
+
     args = p.parse_args()
     dispatch = {
         "screen": cmd_screen,
@@ -316,6 +321,7 @@ def main():
         "demo": cmd_demo,
         "health": cmd_health,
         "web": cmd_web,
+        "service": cmd_service,
     }
     sys.exit(dispatch[args.cmd](args))
 
@@ -415,6 +421,26 @@ def cmd_web(args) -> int:
     app = create_app()
     print(f"Launching Quantitative Platform Web Dashboard at http://{args.host}:{args.port}")
     web.run_app(app, host=args.host, port=args.port)
+    return 0
+
+
+def cmd_service(args) -> int:
+    """Launch 24/7 continuous production trading and API supervisor."""
+    import asyncio
+    from crypto_platform.production.supervisor import ProductionSupervisor
+    supervisor = ProductionSupervisor(host=args.host, port=args.port)
+    print(f"Launching 24/7 Production Supervisor at http://{args.host}:{args.port}")
+
+    async def _run():
+        await supervisor.start()
+        # Keep running until cancelled
+        while supervisor.is_running:
+            await asyncio.sleep(1.0)
+
+    try:
+        asyncio.run(_run())
+    except (KeyboardInterrupt, SystemExit):
+        asyncio.run(supervisor.stop())
     return 0
 
 

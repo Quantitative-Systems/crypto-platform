@@ -341,3 +341,25 @@ class SQLitePaperLedger:
                 )
                 fills.append(f)
         return fills
+
+    def load_audit_events(self, account_id: Optional[str] = None, limit: int = 50) -> List[Dict[str, Any]]:
+        """Retrieve recent audit events from disk."""
+        events: List[Dict[str, Any]] = []
+        with self._get_connection() as conn:
+            if account_id:
+                query = "SELECT * FROM paper_audit_log WHERE account_id = ? ORDER BY timestamp_ms DESC LIMIT ?;"
+                rows = conn.execute(query, (account_id, limit)).fetchall()
+            else:
+                query = "SELECT * FROM paper_audit_log ORDER BY timestamp_ms DESC LIMIT ?;"
+                rows = conn.execute(query, (limit,)).fetchall()
+
+            for r in rows:
+                events.append({
+                    "account_id": r["account_id"],
+                    "timestamp_ms": r["timestamp_ms"],
+                    "event_type": r["event_type"],
+                    "severity": r["severity"],
+                    "message": r["message"],
+                    "details": json.loads(r["details_json"]) if r["details_json"] else {},
+                })
+        return events
