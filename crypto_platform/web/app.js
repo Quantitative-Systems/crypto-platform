@@ -59,12 +59,13 @@ function appendLog(message, type = 'info') {
 // Fetch Initial Data
 async function loadPlatformData() {
   try {
-    const [statusRes, portRes, funnelRes, stratRes, accRes] = await Promise.all([
+    const [statusRes, portRes, funnelRes, stratRes, accRes, canaryRes] = await Promise.all([
       fetch('/api/status').then(r => r.json()),
       fetch('/api/portfolio').then(r => r.json()),
       fetch('/api/funnel').then(r => r.json()),
       fetch('/api/strategies').then(r => r.json()),
       fetch('/api/accounts').then(r => r.json()),
+      fetch('/api/canary/status').then(r => r.json()).catch(() => ({})),
     ]);
 
     state.status = statusRes;
@@ -72,6 +73,7 @@ async function loadPlatformData() {
     state.funnel = funnelRes;
     state.strategies = stratRes.strategies || [];
     state.accounts = accRes.accounts || [];
+    state.canary = canaryRes || {};
 
     renderUI();
   } catch (err) {
@@ -90,7 +92,46 @@ function renderUI() {
     el.systemStatusPill.className = 'status-pill status-healthy';
   }
 
-  el.planeText.textContent = `${state.status.environment || 'PAPER'} MODE`;
+  const isCanary = (state.status.environment || '').toUpperCase().includes('CANARY');
+  if (isCanary) {
+    el.planeText.textContent = 'OPERATING PLANE: LIVE-CANARY';
+    el.planeText.parentElement.className = 'status-pill status-canary';
+    const lockTxt = document.getElementById('txt-capital-lock');
+    if (lockTxt) {
+      lockTxt.textContent = `CANARY CAPITAL: $${Number(state.status.canary_capital_limit_usd || 0).toFixed(2)} (${state.status.canary_state || 'DISARMED'})`;
+      lockTxt.parentElement.className = (state.status.canary_state === 'ACTIVE') ? 'status-pill status-canary' : 'status-pill status-locked';
+    }
+  } else {
+    el.planeText.textContent = `OPERATING PLANE: ${state.status.environment || 'PAPER'}`;
+    el.planeText.parentElement.className = 'status-pill status-plane';
+    const lockTxt = document.getElementById('txt-capital-lock');
+    if (lockTxt) {
+      lockTxt.textContent = 'LIVE CAPITAL: $0.00 (LOCKED)';
+      lockTxt.parentElement.className = 'status-pill status-locked';
+    }
+  }
+
+  // LIVE-CANARY HUD Panel
+  if (state.canary && Object.keys(state.canary).length > 0) {
+    const c = state.canary;
+    const badgeState = document.getElementById('badge-canary-state');
+    if (badgeState) {
+      badgeState.textContent = `STATE: ${c.state || 'DISARMED'}`;
+      badgeState.style.background = c.state === 'ACTIVE' ? 'var(--color-green)' : (c.state === 'ARMED' ? 'var(--color-amber)' : 'rgba(255,255,255,0.1)');
+    }
+    const setVal = (id, val) => { const elem = document.getElementById(id); if (elem) elem.textContent = val; };
+    setVal('canary-val-real-capital', `$${Number(c.canary_capital_limit_usd || 0).toFixed(2)}`);
+    setVal('canary-val-allocation', `$${Number(c.canary_capital_limit_usd || 0).toFixed(2)}`);
+    setVal('canary-val-equity', `$${Number(c.current_equity_usd || 0).toFixed(2)}`);
+    setVal('canary-val-peak', `Peak: $${Number(c.peak_equity_usd || 0).toFixed(2)}`);
+    setVal('canary-val-realized-pnl', `$${Number(c.realized_pnl_usd || 0).toFixed(2)}`);
+    setVal('canary-val-unrealized-pnl', `$${Number(c.unrealized_pnl_usd || 0).toFixed(2)}`);
+    setVal('canary-val-drawdown', `${Number(c.drawdown_pct || 0).toFixed(2)}%`);
+    setVal('canary-val-orders', `${c.total_orders || 0} / ${c.total_fills || 0}`);
+    setVal('canary-val-fees', `$${Number(c.total_fees_usd || 0).toFixed(4)}`);
+    setVal('canary-val-broker', c.broker_connected ? 'CONNECTED' : 'STANDBY');
+    setVal('canary-val-kill-status', c.emergency_kill_active ? 'TRIPPED / HALTED' : 'STANDBY (READY)');
+  }
 
   // Metrics
   if (state.portfolio) {
@@ -301,8 +342,71 @@ el.btnCloseBrokerModal.addEventListener('click', () => el.brokerModal.classList.
 el.btnCancelModal.addEventListener('click', () => el.brokerModal.classList.remove('open'));
 el.formConnectBroker.addEventListener('submit', handleBrokerSubmit);
 el.btnEmergencyKill.addEventListener('click', triggerEmergencyKill);
-el.btnRefreshPortfolio.addEventListener('click', loadPlatformData);
-el.btnClearLogs.addEventListener('click', () => { el.terminalLog.innerHTML = ''; });
+// LIVE-CANARY Action Handlers
+const btnCanaryVerify = document.getElementById('btn-canary-verify');
+if (btnCanaryVerify) {
+  btnCanaryVerify.addEventListener('click', async () => {
+    appendLog('Starting 14-Step LIVE-CANARY Broker Pre-Flight Audit...', 'info');
+    try {
+      const res = await fetch('/api/canary/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ symbol: 'BTCUSDT' }) });
+      const report = await res.json();
+      const txtVerif = document.getElementById('txt-verification-status');
+      if (txtVerif) {
+        txtVerif.textContent = report.passed ? 'ALL 14 CHECKS PASSED (READY TO ARM)' : `FAILED: ${report.failure_reason}`;
+        txtVerif.style.color = report.passed ? 'var(--color-green)' : 'var(--color-red)';
+      }
+      appendLog(`14-Step Audit complete: ${report.passed ? 'ALL 14 CHECKS PASSED' : report.failure_reason}`, report.passed ? 'success' : 'error');
+    } catch (err) {
+      appendLog(`Verification error: ${err.message}`, 'error');
+    }
+  });
+}
+
+const btnCanaryArm = document.getElementById('btn-canary-arm');
+if (btnCanaryArm) {
+  btnCanaryArm.addEventListener('click', async () => {
+    appendLog('Arming LIVE-CANARY...', 'warn');
+    try {
+      const res = await fetch('/api/canary/arm', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ authorized_by: 'OPERATOR' }) });
+      const data = await res.json();
+      appendLog(`Arm response: ${data.message}`, data.success ? 'success' : 'error');
+      await loadPlatformData();
+    } catch (err) {
+      appendLog(`Arm error: ${err.message}`, 'error');
+    }
+  });
+}
+
+const btnCanaryActivate = document.getElementById('btn-canary-activate');
+if (btnCanaryActivate) {
+  btnCanaryActivate.addEventListener('click', async () => {
+    if (!confirm('ATTENTION: You are about to ACTIVATE real-money LIVE-CANARY trading. Proceed?')) return;
+    appendLog('Activating LIVE-CANARY trading...', 'warn');
+    try {
+      const res = await fetch('/api/canary/activate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ authorized_by: 'OPERATOR' }) });
+      const data = await res.json();
+      appendLog(`Activate response: ${data.message}`, data.success ? 'warn' : 'error');
+      await loadPlatformData();
+    } catch (err) {
+      appendLog(`Activate error: ${err.message}`, 'error');
+    }
+  });
+}
+
+const btnCanaryDisarm = document.getElementById('btn-canary-disarm');
+if (btnCanaryDisarm) {
+  btnCanaryDisarm.addEventListener('click', async () => {
+    appendLog('Disarming LIVE-CANARY...', 'info');
+    try {
+      const res = await fetch('/api/canary/disarm', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ reason: 'Operator manual disarm' }) });
+      const data = await res.json();
+      appendLog(data.message, 'info');
+      await loadPlatformData();
+    } catch (err) {
+      appendLog(`Disarm error: ${err.message}`, 'error');
+    }
+  });
+}
 
 // Initialize on Load
 window.addEventListener('DOMContentLoaded', () => {

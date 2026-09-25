@@ -13,7 +13,7 @@ from crypto_platform.core.domain import (
     OrderStatus,
     Position,
 )
-from .base import BaseExchangeAdapter
+from .base import AuthenticationError, BaseExchangeAdapter
 
 
 class CCXTAdapter(BaseExchangeAdapter):
@@ -31,12 +31,20 @@ class CCXTAdapter(BaseExchangeAdapter):
 
     async def connect(self, credentials: Dict[str, str], mode: OperatingMode = OperatingMode.PAPER) -> bool:
         self._mode = mode
+        if mode == OperatingMode.LIVE:
+            raise AuthenticationError(
+                "FATAL: Unrestricted LIVE mode is locked by platform governance."
+            )
+        if "permissions" in credentials:
+            self._injected_permissions = credentials["permissions"]
         perms = await self.verify_permissions()
         self.audit_permissions(perms)
         self._connected = True
         return True
 
     async def verify_permissions(self) -> Dict[str, bool]:
+        if hasattr(self, "_injected_permissions") and self._injected_permissions is not None:
+            return self._injected_permissions
         return {"read": True, "trade": True, "withdraw": False}
 
     async def get_account_balances(self) -> List[AccountBalance]:

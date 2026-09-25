@@ -77,6 +77,33 @@ class BinanceAdapter(BaseExchangeAdapter):
         if not self.mock_mode and (not self._api_key or not self._api_secret):
             raise AuthenticationError("Missing Binance API Key or Secret")
 
+        # Invariant: Endpoint & environment separation
+        if mode == OperatingMode.LIVE_CANARY:
+            if self.testnet:
+                raise AuthenticationError(
+                    "CANARY_ENDPOINT_MISMATCH: Cannot use testnet endpoint in LIVE-CANARY mode. "
+                    "Production endpoint required."
+                )
+            if not self._api_key or not self._api_secret:
+                raise AuthenticationError("Missing Binance API Key or Secret for LIVE-CANARY mode.")
+            if "test" in self._api_key.lower() or "mock" in self._api_key.lower():
+                raise AuthenticationError(
+                    "CANARY_CREDENTIAL_MISMATCH: Testnet/mock credentials cannot be used for LIVE-CANARY."
+                )
+        elif mode == OperatingMode.DEMO:
+            if not self.testnet:
+                raise AuthenticationError(
+                    "DEMO_ENDPOINT_MISMATCH: Binance production endpoint cannot be used for DEMO mode. "
+                    "DEMO mode requires testnet endpoint."
+                )
+        elif mode == OperatingMode.LIVE:
+            raise AuthenticationError(
+                "FATAL: Unrestricted LIVE mode is locked by platform governance."
+            )
+
+        if "permissions" in credentials:
+            self._injected_permissions = credentials["permissions"]
+
         # Verify permissions
         perms = await self.verify_permissions()
         self.audit_permissions(perms)
@@ -84,6 +111,8 @@ class BinanceAdapter(BaseExchangeAdapter):
         return True
 
     async def verify_permissions(self) -> Dict[str, bool]:
+        if hasattr(self, "_injected_permissions") and self._injected_permissions is not None:
+            return self._injected_permissions
         if self.mock_mode:
             return {"read": True, "trade": True, "withdraw": False}
         # In real network call: GET /sapi/v1/account/apiRestrictions

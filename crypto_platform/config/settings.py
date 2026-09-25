@@ -36,17 +36,21 @@ class PlatformSettings:
     log_level: str = "INFO"
     metrics_port: int = 9100
     stale_data_timeout_ms: int = 5000
+    canary_capital_limit_usd: float = 0.0
+    canary_risk_limit: float = 0.02
+    canary_max_position_size: float = 500.0
+    canary_max_daily_loss: float = 0.02
+    canary_max_total_drawdown: float = 0.05
+    canary_max_leverage: float = 1.5
+    live_canary_authorized: bool = False
+    live_canary_state: str = "DISARMED"
 
     def validate(self) -> None:
         """Enforce inviolable security and risk safety constraints."""
         env_upper = self.environment.upper()
-        if env_upper not in ("PAPER", "DEMO", "LIVE"):
-            raise ValueError(f"Invalid environment '{self.environment}'. Must be PAPER, DEMO, or LIVE.")
-
-        if self.live_capital_usd > 0.0:
-            raise RuntimeError(
-                f"FATAL SECURITY VIOLATION: Live capital is configured at ${self.live_capital_usd:.2f}. "
-                "Capital MUST remain strictly locked at $0.00."
+        if env_upper not in ("PAPER", "DEMO", "LIVE-CANARY", "LIVE"):
+            raise ValueError(
+                f"Invalid environment '{self.environment}'. Must be PAPER, DEMO, or LIVE / LIVE-CANARY."
             )
 
         if env_upper == "LIVE":
@@ -54,6 +58,27 @@ class PlatformSettings:
                 "FATAL: Operating mode LIVE is strictly disabled by platform governance. "
                 "All trading must execute via PAPER or DEMO."
             )
+
+        if env_upper == "LIVE-CANARY":
+            if not self.live_canary_authorized:
+                raise RuntimeError(
+                    "FATAL SECURITY VIOLATION: LIVE-CANARY requires explicit authorization via LIVE_CANARY_AUTHORIZED=true."
+                )
+            if self.canary_capital_limit_usd <= 0.0:
+                raise RuntimeError(
+                    "FATAL: LIVE-CANARY requires explicit CANARY_CAPITAL_LIMIT_USD > $0.00."
+                )
+            if self.live_capital_usd > self.canary_capital_limit_usd:
+                raise RuntimeError(
+                    f"FATAL SECURITY VIOLATION: Live capital ${self.live_capital_usd:.2f} "
+                    f"exceeds authorized CANARY_CAPITAL_LIMIT_USD ${self.canary_capital_limit_usd:.2f}."
+                )
+        else:
+            if self.live_capital_usd > 0.0:
+                raise RuntimeError(
+                    f"FATAL SECURITY VIOLATION: Live capital is configured at ${self.live_capital_usd:.2f}. "
+                    "Capital MUST remain strictly locked at $0.00."
+                )
 
     @classmethod
     def load_from_env(cls, env_file: Optional[str] = ".env") -> PlatformSettings:
@@ -105,6 +130,14 @@ class PlatformSettings:
             log_level=os.environ.get("LOG_LEVEL", "INFO"),
             metrics_port=_get_int("METRICS_PORT", 9100),
             stale_data_timeout_ms=_get_int("STALE_DATA_TIMEOUT_MS", 5000),
+            canary_capital_limit_usd=_get_float("CANARY_CAPITAL_LIMIT_USD", 0.0),
+            canary_risk_limit=_get_float("CANARY_RISK_LIMIT", 0.02),
+            canary_max_position_size=_get_float("CANARY_MAX_POSITION_SIZE", 500.0),
+            canary_max_daily_loss=_get_float("CANARY_MAX_DAILY_LOSS", 0.02),
+            canary_max_total_drawdown=_get_float("CANARY_MAX_TOTAL_DRAWDOWN", 0.05),
+            canary_max_leverage=_get_float("CANARY_MAX_LEVERAGE", 1.5),
+            live_canary_authorized=_get_bool("LIVE_CANARY_AUTHORIZED", False),
+            live_canary_state=os.environ.get("LIVE_CANARY_STATE", "DISARMED"),
         )
         settings.validate()
         return settings

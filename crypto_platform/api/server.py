@@ -21,6 +21,7 @@ from crypto_platform.exchange_adapters.base import BaseExchangeAdapter, Permissi
 from crypto_platform.exchange_adapters.binance_adapter import BinanceAdapter
 from crypto_platform.exchange_adapters.bybit_adapter import BybitAdapter
 from crypto_platform.exchange_adapters.ccxt_adapter import CCXTAdapter
+from crypto_platform.live_canary import CanaryBrokerVerifier, CanaryState, LiveCanaryHarness
 from crypto_platform.security.vault import SecurityVault
 
 logger = logging.getLogger("crypto_platform.api")
@@ -73,6 +74,20 @@ class PlatformWebServer:
                 mode=OperatingMode.PAPER,
             )
 
+        # Initialize LIVE-CANARY harness
+        self.canary_adapter = BinanceAdapter(is_futures=True, testnet=False, mock_mode=True)
+        self.canary_harness = LiveCanaryHarness(
+            adapter=self.canary_adapter,
+            account_id="acc_canary_primary",
+            tenant_id=self.default_tenant.tenant_id,
+            canary_capital_limit_usd=self.settings.canary_capital_limit_usd,
+            canary_risk_limit=self.settings.canary_risk_limit,
+            canary_max_position_size=self.settings.canary_max_position_size,
+            canary_max_daily_loss=self.settings.canary_max_daily_loss,
+            canary_max_total_drawdown=self.settings.canary_max_total_drawdown,
+            canary_max_leverage=self.settings.canary_max_leverage,
+        )
+
     async def handle_index(self, request: web.Request) -> web.Response:
         """Serve the institutional single-page application dashboard."""
         index_path = os.path.join(self.static_dir, "index.html")
@@ -83,14 +98,22 @@ class PlatformWebServer:
 
     async def handle_status(self, request: web.Request) -> web.Response:
         """Return platform health, live lock status, and active operational mode."""
+        is_canary = self.settings.environment.upper() in ("LIVE-CANARY", "LIVE_CANARY")
         status = {
-            "status": "EMERGENCY_HALTED" if self.is_emergency_killed else "HEALTHY",
+            "status": "EMERGENCY_HALTED" if (self.is_emergency_killed or self.canary_harness.state == CanaryState.HALTED) else "HEALTHY",
             "environment": self.settings.environment,
-            "live_trading_locked": True,
-            "live_capital_usd": self.settings.live_capital_usd,
+            "operating_plane": "LIVE-CANARY" if is_canary else self.settings.environment,
+            "live_trading_locked": False if (is_canary and self.canary_harness.state == CanaryState.ACTIVE) else True,
+            "live_capital_usd": self.settings.canary_capital_limit_usd if is_canary else self.settings.live_capital_usd,
+            "canary_capital_limit_usd": self.settings.canary_capital_limit_usd,
+            "canary_state": self.canary_harness.state.value,
+            "canary_max_position_size": self.settings.canary_max_position_size,
+            "canary_max_leverage": self.settings.canary_max_leverage,
+            "canary_max_daily_loss": self.settings.canary_max_daily_loss,
+            "canary_max_total_drawdown": self.settings.canary_max_total_drawdown,
             "active_tenants": len(self.account_manager.tenants),
             "active_accounts": len(self.account_manager.accounts),
-            "emergency_kill_active": self.is_emergency_killed,
+            "emergency_kill_active": self.is_emergency_killed or self.canary_harness.state == CanaryState.HALTED,
             "uptime_seconds": 3600.0,
             "ws_subscribers": len(self.ws_clients),
         }
@@ -133,15 +156,31 @@ class PlatformWebServer:
             return web.json_response({
                 "error": "Live trading is strictly locked at $0.00 capital by construction."
             }, status=403)
+        elif mode_str in ("LIVE-CANARY", "LIVE_CANARY"):
+            if not self.settings.live_canary_authorized:
+                return web.json_response({
+                    "error": "LIVE-CANARY is not authorized in platform settings."
+                }, status=403)
+            if self.settings.canary_capital_limit_usd <= 0.0:
+                return web.json_response({
+                    "error": "LIVE-CANARY requires explicit CANARY_CAPITAL_LIMIT_USD > $0.00."
+                }, status=400)
+            mode = OperatingMode.LIVE_CANARY
+            is_canary = True
+        elif mode_str == "DEMO":
+            mode = OperatingMode.DEMO
+            is_canary = False
+        else:
+            mode = OperatingMode.PAPER
+            is_canary = False
 
-        mode = OperatingMode.LIVE if mode_str == "LIVE" else OperatingMode.PAPER
-
-        # Instantiate appropriate adapter to run testnet connectivity & non-custodial audit
+        # Instantiate appropriate adapter to run connectivity & non-custodial audit
         adapter: BaseExchangeAdapter
+        testnet = not is_canary
         if "binance" in venue:
-            adapter = BinanceAdapter(is_futures=True, testnet=True, mock_mode=False)
+            adapter = BinanceAdapter(is_futures=True, testnet=testnet, mock_mode=False)
         elif "bybit" in venue:
-            adapter = BybitAdapter(testnet=True, mock_mode=False)
+            adapter = BybitAdapter(testnet=testnet, mock_mode=False)
         else:
             adapter = CCXTAdapter(venue_id="kraken", mock_mode=True)
 
@@ -361,6 +400,9 @@ class PlatformWebServer:
         for k in self._strategy_status:
             self._strategy_status[k] = False
 
+        if hasattr(self, "canary_harness") and self.canary_harness is not None:
+            await self.canary_harness.emergency_kill(reason="EMERGENCY_KILL_ENGAGED_VIA_API")
+
         await self.broadcast_event({
             "event": "EMERGENCY_KILL_ACTIVATED",
             "status": "HALTED",
@@ -372,19 +414,94 @@ class PlatformWebServer:
             "message": "Emergency circuit breaker triggered. Risk firewall engaged fail-closed.",
         })
 
+    async def handle_canary_status(self, request: web.Request) -> web.Response:
+        """Return real-time LIVE-CANARY status, capital allocation, and telemetry."""
+        return web.json_response(self.canary_harness.get_telemetry())
+
+    async def handle_canary_verify(self, request: web.Request) -> web.Response:
+        """Execute the 14-step broker pre-flight verification."""
+        symbol = "BTCUSDT"
+        try:
+            body = await request.json()
+            symbol = body.get("symbol", "BTCUSDT")
+        except Exception:
+            pass
+        report = await self.canary_harness.run_preflight_verification(target_symbol=symbol)
+        return web.json_response(report.to_dict())
+
+    async def handle_canary_arm(self, request: web.Request) -> web.Response:
+        """Transition LIVE-CANARY from DISARMED to ARMED."""
+        auth_by = "WEB_DASHBOARD_OPERATOR"
+        try:
+            body = await request.json()
+            auth_by = body.get("authorized_by", auth_by)
+        except Exception:
+            pass
+        success = await self.canary_harness.arm(authorized_by=auth_by)
+        await self.broadcast_event({
+            "event": "CANARY_STATE_CHANGED",
+            "state": self.canary_harness.state.value,
+        })
+        return web.json_response({
+            "success": success,
+            "state": self.canary_harness.state.value,
+            "message": f"LIVE-CANARY is now {self.canary_harness.state.value}.",
+        }, status=200 if success else 400)
+
+    async def handle_canary_activate(self, request: web.Request) -> web.Response:
+        """Transition LIVE-CANARY from ARMED to ACTIVE."""
+        auth_by = "WEB_DASHBOARD_OPERATOR"
+        try:
+            body = await request.json()
+            auth_by = body.get("authorized_by", auth_by)
+        except Exception:
+            pass
+        success = await self.canary_harness.activate(authorized_by=auth_by)
+        await self.broadcast_event({
+            "event": "CANARY_STATE_CHANGED",
+            "state": self.canary_harness.state.value,
+        })
+        return web.json_response({
+            "success": success,
+            "state": self.canary_harness.state.value,
+            "message": f"LIVE-CANARY is now {self.canary_harness.state.value}.",
+        }, status=200 if success else 400)
+
+    async def handle_canary_disarm(self, request: web.Request) -> web.Response:
+        """Disarm LIVE-CANARY back to DISARMED state."""
+        reason = "Operator manual disarm"
+        try:
+            body = await request.json()
+            reason = body.get("reason", reason)
+        except Exception:
+            pass
+        self.canary_harness.disarm(reason=reason)
+        await self.broadcast_event({
+            "event": "CANARY_STATE_CHANGED",
+            "state": self.canary_harness.state.value,
+        })
+        return web.json_response({
+            "success": True,
+            "state": self.canary_harness.state.value,
+            "message": f"LIVE-CANARY disarmed: {reason}",
+        })
+
     async def handle_ws(self, request: web.Request) -> web.WebSocketResponse:
         """Real-time WebSocket connection for live telemetry, prices, and events."""
         ws = web.WebSocketResponse()
         await ws.prepare(request)
         self.ws_clients.add(ws)
 
+        is_canary = self.settings.environment.upper() in ("LIVE-CANARY", "LIVE_CANARY")
         # Send initial snapshot
         await ws.send_json({
             "event": "CONNECTED",
             "environment": self.settings.environment,
-            "live_locked": True,
-            "capital_usd": 0.0,
-            "emergency_halt": self.is_emergency_killed,
+            "operating_plane": "LIVE-CANARY" if is_canary else self.settings.environment,
+            "live_locked": False if (is_canary and self.canary_harness.state == CanaryState.ACTIVE) else True,
+            "capital_usd": self.settings.canary_capital_limit_usd if is_canary else 0.0,
+            "emergency_halt": self.is_emergency_killed or self.canary_harness.state == CanaryState.HALTED,
+            "canary_state": self.canary_harness.state.value,
         })
 
         try:
@@ -426,6 +543,11 @@ def create_app(server: Optional[PlatformWebServer] = None) -> web.Application:
     app.router.add_get("/api/strategies", srv.handle_get_strategies)
     app.router.add_post("/api/strategies/{strategy_id}/toggle", srv.handle_toggle_strategy)
     app.router.add_post("/api/emergency_kill", srv.handle_emergency_kill)
+    app.router.add_get("/api/canary/status", srv.handle_canary_status)
+    app.router.add_post("/api/canary/verify", srv.handle_canary_verify)
+    app.router.add_post("/api/canary/arm", srv.handle_canary_arm)
+    app.router.add_post("/api/canary/activate", srv.handle_canary_activate)
+    app.router.add_post("/api/canary/disarm", srv.handle_canary_disarm)
     app.router.add_get("/ws/stream", srv.handle_ws)
 
     # Static assets
@@ -433,3 +555,4 @@ def create_app(server: Optional[PlatformWebServer] = None) -> web.Application:
         app.router.add_static("/static/", path=srv.static_dir, name="static")
 
     return app
+

@@ -12,9 +12,10 @@ import time
 
 
 class OperatingMode(str, Enum):
-    DEMO = "DEMO"        # Exchange native sandbox/testnet
-    PAPER = "PAPER"      # Forward paper simulation on live data
-    LIVE = "LIVE"        # Real capital deployment
+    PAPER = "PAPER"              # Forward paper simulation on live data
+    DEMO = "DEMO"                # Exchange native sandbox/testnet
+    LIVE_CANARY = "LIVE-CANARY"  # Real capital micro-canary deployment
+    LIVE = "LIVE"                # Full real capital deployment (strictly locked)
 
 
 class OrderSide(str, Enum):

@@ -34,6 +34,7 @@ from typing import Dict, List, Optional, Set
 
 from crypto_platform.core.domain import (
     AccountBalance,
+    OperatingMode,
     OrderIntent,
     OrderStatus,
     Position,
@@ -65,6 +66,13 @@ class RiskFirewall(IRiskEngine):
         max_concurrent_strategy_trades: int = 5,
         max_orders_per_second: int = 5,
         dedup_window_ms: int = 5000,
+        canary_capital_limit_usd: float = 0.0,
+        canary_risk_limit: float = 0.02,
+        canary_max_position_size: float = 500.0,
+        canary_max_daily_loss: float = 0.02,
+        canary_max_total_drawdown: float = 0.05,
+        canary_max_leverage: float = 1.5,
+        canary_state: str = "DISARMED",
     ):
         self.circuit_config = circuit_config or CircuitBreakerConfig()
         self.kill_switches = KillSwitchManager()
@@ -84,12 +92,38 @@ class RiskFirewall(IRiskEngine):
         self.max_orders_per_second = max_orders_per_second
         self.dedup_window_ms = dedup_window_ms
 
+        # LIVE-CANARY limits & state
+        self.canary_capital_limit_usd = canary_capital_limit_usd
+        self.canary_risk_limit = canary_risk_limit
+        self.canary_max_position_size = canary_max_position_size
+        self.canary_max_daily_loss = canary_max_daily_loss
+        self.canary_max_total_drawdown = canary_max_total_drawdown
+        self.canary_max_leverage = canary_max_leverage
+        self.canary_state = canary_state
+
         # State tracking
         self._order_timestamps: Dict[str, List[int]] = {}
         self._seen_intents: Dict[str, int] = {}  # intent_id -> timestamp_ms
         self._disconnected_venues: Set[str] = set()
         self._reconciliation_out_of_sync: Set[str] = set()  # account_ids
         self._accounts_with_unknown_orders: Set[str] = set()
+
+    def configure_canary(
+        self,
+        capital_limit_usd: float,
+        max_position_size: float = 500.0,
+        max_leverage: float = 1.5,
+        max_daily_loss: float = 0.02,
+        max_total_drawdown: float = 0.05,
+        canary_state: str = "ARMED",
+    ) -> None:
+        """Dynamically configure LIVE-CANARY capital bounds and state."""
+        self.canary_capital_limit_usd = capital_limit_usd
+        self.canary_max_position_size = max_position_size
+        self.canary_max_leverage = max_leverage
+        self.canary_max_daily_loss = max_daily_loss
+        self.canary_max_total_drawdown = max_total_drawdown
+        self.canary_state = canary_state
 
     def set_venue_connected(self, venue: str, connected: bool) -> None:
         """Mark venue connection status."""
@@ -144,14 +178,47 @@ class RiskFirewall(IRiskEngine):
         risk_state: RiskState,
         latest_ticker: Optional[TickerEvent] = None,
         venue: str = "BINANCE",
+        operating_mode: OperatingMode = OperatingMode.PAPER,
     ) -> RiskDecision:
-        """Evaluate order intent through all 22 risk boundaries.
+        """Evaluate order intent through all 22 risk boundaries plus LIVE-CANARY limits.
 
         FAIL-CLOSED INVARIANT: Any violation or exception results in NO NEW ORDER.
         """
         now_ms = int(time.time() * 1000)
 
         try:
+            # Mode Gating
+            mode_val = intent.meta.get("operating_mode") if hasattr(intent, "meta") and intent.meta else None
+            if mode_val is None:
+                mode_val = operating_mode.value if isinstance(operating_mode, OperatingMode) else str(operating_mode)
+            mode_upper = mode_val.upper()
+
+            if mode_upper == "LIVE":
+                return RiskDecision(
+                    approved=False,
+                    reason="FATAL: Unrestricted LIVE trading is locked by platform governance.",
+                    rule_code="LIVE_MODE_LOCKED",
+                )
+
+            if mode_upper in ("LIVE-CANARY", "LIVE_CANARY"):
+                if self.canary_state != "ACTIVE":
+                    return RiskDecision(
+                        approved=False,
+                        reason=f"LIVE-CANARY trading rejected: Canary state is '{self.canary_state}', not 'ACTIVE'.",
+                        rule_code="CANARY_NOT_ACTIVE",
+                    )
+                if self.canary_capital_limit_usd <= 0.0:
+                    return RiskDecision(
+                        approved=False,
+                        reason="LIVE-CANARY trading rejected: CANARY_CAPITAL_LIMIT_USD is unallocated or <= $0.00.",
+                        rule_code="CANARY_CAPITAL_UNALLOCATED",
+                    )
+                if risk_state.drawdown_pct > self.canary_max_total_drawdown:
+                    return RiskDecision(
+                        approved=False,
+                        reason=f"LIVE-CANARY drawdown breach: {risk_state.drawdown_pct*100:.2f}% > CANARY_MAX_TOTAL_DRAWDOWN {self.canary_max_total_drawdown*100:.2f}%.",
+                        rule_code="CANARY_DRAWDOWN_BREACH",
+                    )
             # -----------------------------------------------------------------
             # BOUNDARY 1-6: Hierarchical Kill Switches
             # -----------------------------------------------------------------
@@ -302,6 +369,16 @@ class RiskFirewall(IRiskEngine):
                     rule_code="DRAWDOWN_LIMIT_BREACH",
                 )
 
+            if mode_upper in ("LIVE-CANARY", "LIVE_CANARY"):
+                if risk_state.peak_equity > 0:
+                    daily_loss_pct = max(0.0, (risk_state.peak_equity - risk_state.equity) / risk_state.peak_equity)
+                    if daily_loss_pct > self.canary_max_daily_loss:
+                        return RiskDecision(
+                            approved=False,
+                            reason=f"LIVE-CANARY daily loss breach: {daily_loss_pct*100:.2f}% > CANARY_MAX_DAILY_LOSS {self.canary_max_daily_loss*100:.2f}%",
+                            rule_code="CANARY_DAILY_LOSS_BREACH",
+                        )
+
             size_multiplier = cb.get_sizing_multiplier()
             adjusted_size = intent.target_size * size_multiplier
             if adjusted_size <= 0:
@@ -354,6 +431,15 @@ class RiskFirewall(IRiskEngine):
             existing_pos = current_positions.get(intent.symbol)
             existing_notional = abs(existing_pos.size * existing_pos.mark_price) if existing_pos else 0.0
             new_pos_notional = existing_notional + order_notional
+
+            if mode_upper in ("LIVE-CANARY", "LIVE_CANARY"):
+                if new_pos_notional > self.canary_max_position_size:
+                    return RiskDecision(
+                        approved=False,
+                        reason=f"LIVE-CANARY position size breach on {intent.symbol}: ${new_pos_notional:.2f} > CANARY_MAX_POSITION_SIZE ${self.canary_max_position_size:.2f}",
+                        rule_code="CANARY_MAX_POSITION_BREACH",
+                    )
+
             if new_pos_notional > self.max_position_notional:
                 return RiskDecision(
                     approved=False,
@@ -368,6 +454,15 @@ class RiskFirewall(IRiskEngine):
                 abs(p.size * p.mark_price) for p in current_positions.values()
             )
             new_total_notional = current_total_notional + order_notional
+
+            if mode_upper in ("LIVE-CANARY", "LIVE_CANARY"):
+                if new_total_notional > self.canary_capital_limit_usd:
+                    return RiskDecision(
+                        approved=False,
+                        reason=f"LIVE-CANARY capital limit breach: total exposure ${new_total_notional:.2f} > CANARY_CAPITAL_LIMIT_USD ${self.canary_capital_limit_usd:.2f}",
+                        rule_code="CANARY_CAPITAL_LIMIT_BREACH",
+                    )
+
             if new_total_notional > self.max_portfolio_exposure:
                 return RiskDecision(
                     approved=False,
@@ -380,6 +475,15 @@ class RiskFirewall(IRiskEngine):
             # -----------------------------------------------------------------
             current_equity = max(1.0, risk_state.equity)
             new_leverage = new_total_notional / current_equity
+
+            if mode_upper in ("LIVE-CANARY", "LIVE_CANARY"):
+                if new_leverage > self.canary_max_leverage:
+                    return RiskDecision(
+                        approved=False,
+                        reason=f"LIVE-CANARY leverage breach: {new_leverage:.2f}x > CANARY_MAX_LEVERAGE {self.canary_max_leverage:.2f}x",
+                        rule_code="CANARY_LEVERAGE_BREACH",
+                    )
+
             if new_leverage > self.max_gross_leverage:
                 return RiskDecision(
                     approved=False,

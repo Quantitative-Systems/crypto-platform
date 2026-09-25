@@ -130,6 +130,13 @@ body {
   border: 1px solid rgba(255, 165, 2, 0.3);
 }
 
+.status-canary {
+  background-color: rgba(255, 75, 43, 0.15);
+  color: #ff4b2b;
+  border: 1px solid rgba(255, 75, 43, 0.6);
+  box-shadow: 0 0 12px rgba(255, 75, 43, 0.3);
+}
+
 .pulse-dot {
   width: 7px;
   height: 7px;

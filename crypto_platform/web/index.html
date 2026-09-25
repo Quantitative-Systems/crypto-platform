@@ -27,11 +27,11 @@
         </div>
         <div class="status-pill status-plane" id="pill-plane">
           <span class="plane-icon">⚡</span>
-          <span id="txt-plane">DEMO / PAPER</span>
+          <span id="txt-plane">OPERATING PLANE: PAPER</span>
         </div>
         <div class="status-pill status-locked" id="pill-live-lock">
-          <span class="lock-icon">🔒</span>
-          <span>LIVE CAPITAL: $0.00 (LOCKED)</span>
+          <span class="lock-icon" id="icon-capital-lock">🔒</span>
+          <span id="txt-capital-lock">LIVE CAPITAL: $0.00 (LOCKED)</span>
         </div>
       </div>
     </div>
@@ -47,6 +47,107 @@
 
   <!-- Main Container -->
   <main class="app-main">
+    <!-- Dedicated LIVE-CANARY Institutional HUD Panel -->
+    <section class="content-panel full-panel" id="panel-live-canary">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <h2>LIVE-CANARY // Real-Money Controlled Micro-Validation</h2>
+          <span class="counter-badge" id="badge-canary-state">STATE: DISARMED</span>
+        </div>
+        <div class="canary-actions" style="display: flex; gap: 8px;">
+          <button class="btn btn-secondary btn-sm" id="btn-canary-verify">Audit 14 Checks</button>
+          <button class="btn btn-secondary btn-sm" id="btn-canary-arm">Arm Canary</button>
+          <button class="btn btn-connect btn-sm" id="btn-canary-activate">Activate Trading</button>
+          <button class="btn btn-secondary btn-sm" id="btn-canary-disarm">Disarm</button>
+        </div>
+      </div>
+      <div class="metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin-bottom: 0;">
+        <div class="metric-card">
+          <div class="card-caption">OPERATING PLANE</div>
+          <div class="card-value" id="canary-val-plane" style="font-size: 13px;">LIVE-CANARY</div>
+          <div class="card-subtext" id="canary-val-env-badge">Production API</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">REAL CAPITAL</div>
+          <div class="card-value" id="canary-val-real-capital">$0.00</div>
+          <div class="card-subtext" id="canary-val-capital-status">Isolated Funds</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">CAPITAL ALLOCATION</div>
+          <div class="card-value" id="canary-val-allocation">$0.00</div>
+          <div class="card-subtext" id="canary-val-limit">CANARY_CAPITAL_LIMIT_USD</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">CURRENT EQUITY</div>
+          <div class="card-value" id="canary-val-equity">$0.00</div>
+          <div class="card-subtext" id="canary-val-peak">Peak: $0.00</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">REALIZED P&L</div>
+          <div class="card-value" id="canary-val-realized-pnl">$0.00</div>
+          <div class="card-subtext">Cumulative</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">UNREALIZED P&L</div>
+          <div class="card-value" id="canary-val-unrealized-pnl">$0.00</div>
+          <div class="card-subtext">Mark-to-Market</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">DRAWDOWN</div>
+          <div class="card-value neutral" id="canary-val-drawdown">0.00%</div>
+          <div class="card-subtext" id="canary-val-max-dd">Max: 5.0%</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">EXPOSURE</div>
+          <div class="card-value" id="canary-val-exposure">$0.00</div>
+          <div class="card-subtext" id="canary-val-pos-size">Max Pos: $500.00</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">LEVERAGE</div>
+          <div class="card-value" id="canary-val-leverage">0.00x</div>
+          <div class="card-subtext" id="canary-val-max-lev">Max: 1.5x</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">OPEN POSITIONS</div>
+          <div class="card-value" id="canary-val-positions">0</div>
+          <div class="card-subtext">One-Way Mode</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">ORDERS / FILLS</div>
+          <div class="card-value" id="canary-val-orders">0 / 0</div>
+          <div class="card-subtext" id="canary-val-fill-rate">Post-Only Enforced</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">FEES / SLIPPAGE</div>
+          <div class="card-value" id="canary-val-fees">$0.00</div>
+          <div class="card-subtext" id="canary-val-slippage">0.0 bps</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">FUNDING ACCRUED</div>
+          <div class="card-value" id="canary-val-funding">$0.00</div>
+          <div class="card-subtext">8h Cycle</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">BROKER CONNECTION</div>
+          <div class="card-value positive" id="canary-val-broker">DISCONNECTED</div>
+          <div class="card-subtext" id="canary-val-venue">Production REST/WSS</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">RISK STATUS</div>
+          <div class="card-value positive" id="canary-val-risk">ENFORCED</div>
+          <div class="card-subtext">22 Risk Boundaries</div>
+        </div>
+        <div class="metric-card">
+          <div class="card-caption">KILL SWITCH STATUS</div>
+          <div class="card-value positive" id="canary-val-kill-status">STANDBY</div>
+          <div class="card-subtext">Instant Halt Ready</div>
+        </div>
+      </div>
+      <div id="canary-verification-box" style="margin-top: 12px; font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono); background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 6px;">
+        14-Step Broker Pre-Flight Status: <span id="txt-verification-status">PENDING AUDIT</span>
+      </div>
+    </section>
+
     <!-- Row 1: High Level Quantitative Metric Cards -->
     <section class="metrics-grid">
       <div class="metric-card">
@@ -280,8 +381,9 @@
           <select id="select-mode" required>
             <option value="DEMO">Demo (Broker Testnet API)</option>
             <option value="PAPER">Paper (Simulated Order Book)</option>
+            <option value="LIVE-CANARY">LIVE-CANARY (Real Capital Micro-Test)</option>
           </select>
-          <small class="form-help">Live trading with real money is strictly locked at $0.00.</small>
+          <small class="form-help">Live trading with real money is strictly locked at $0.00 except under explicit LIVE-CANARY authorization.</small>
         </div>
         <div class="form-group">
           <label for="input-api-key">API Key</label>
