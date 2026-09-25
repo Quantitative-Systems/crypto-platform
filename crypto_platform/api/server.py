@@ -187,7 +187,8 @@ class PlatformWebServer:
         try:
             # Connect and audit permissions (will reject withdrawal keys)
             await adapter.connect({"api_key": api_key, "api_secret": api_secret}, mode=mode)
-            await adapter.verify_non_custodial_permissions()
+            perms = await adapter.verify_permissions()
+            adapter.audit_permissions(perms)
         except PermissionSecurityError as e:
             return web.json_response({
                 "error": f"Security Guard Rejected Key: {str(e)}",
@@ -414,6 +415,32 @@ class PlatformWebServer:
             "message": "Emergency circuit breaker triggered. Risk firewall engaged fail-closed.",
         })
 
+    async def handle_emergency_kill_reset(self, request: web.Request) -> web.Response:
+        """Reset emergency circuit breaker to restore normal operation."""
+        auth_by = "WEB_DASHBOARD_OPERATOR"
+        try:
+            body = await request.json()
+            auth_by = body.get("authorized_by", auth_by)
+        except Exception:
+            pass
+        self.is_emergency_killed = False
+        for k in self._strategy_status:
+            self._strategy_status[k] = True
+
+        if hasattr(self, "canary_harness") and self.canary_harness is not None:
+            self.canary_harness.reset_emergency_halt(authorized_by=auth_by)
+
+        await self.broadcast_event({
+            "event": "EMERGENCY_KILL_RESET",
+            "status": "HEALTHY",
+            "message": f"Global emergency kill switch reset by {auth_by}. Platform is healthy.",
+        })
+
+        return web.json_response({
+            "status": "HEALTHY",
+            "message": f"Emergency circuit breaker reset by {auth_by}. Normal operations restored.",
+        })
+
     async def handle_canary_status(self, request: web.Request) -> web.Response:
         """Return real-time LIVE-CANARY status, capital allocation, and telemetry."""
         return web.json_response(self.canary_harness.get_telemetry())
@@ -421,13 +448,20 @@ class PlatformWebServer:
     async def handle_canary_verify(self, request: web.Request) -> web.Response:
         """Execute the 14-step broker pre-flight verification."""
         symbol = "BTCUSDT"
-        try:
-            body = await request.json()
-            symbol = body.get("symbol", "BTCUSDT")
-        except Exception:
-            pass
+        if request.method == "POST":
+            try:
+                body = await request.json()
+                symbol = body.get("symbol", "BTCUSDT")
+            except Exception:
+                pass
+        elif request.method == "GET":
+            symbol = request.query.get("symbol", "BTCUSDT")
         report = await self.canary_harness.run_preflight_verification(target_symbol=symbol)
-        return web.json_response(report.to_dict())
+        data = report.to_dict()
+        data["canary_state"] = self.canary_harness.state.value
+        data["live_capital_usd"] = self.canary_harness.canary_capital_limit_usd if self.canary_harness.state == CanaryState.ACTIVE else 0.0
+        data["live_trading_locked"] = self.canary_harness.state != CanaryState.ACTIVE
+        return web.json_response(data)
 
     async def handle_canary_arm(self, request: web.Request) -> web.Response:
         """Transition LIVE-CANARY from DISARMED to ARMED."""
@@ -543,8 +577,11 @@ def create_app(server: Optional[PlatformWebServer] = None) -> web.Application:
     app.router.add_get("/api/strategies", srv.handle_get_strategies)
     app.router.add_post("/api/strategies/{strategy_id}/toggle", srv.handle_toggle_strategy)
     app.router.add_post("/api/emergency_kill", srv.handle_emergency_kill)
+    app.router.add_post("/api/emergency_kill/reset", srv.handle_emergency_kill_reset)
     app.router.add_get("/api/canary/status", srv.handle_canary_status)
+    app.router.add_get("/api/canary/verify", srv.handle_canary_verify)
     app.router.add_post("/api/canary/verify", srv.handle_canary_verify)
+    app.router.add_post("/api/connect_broker", srv.handle_post_account)
     app.router.add_post("/api/canary/arm", srv.handle_canary_arm)
     app.router.add_post("/api/canary/activate", srv.handle_canary_activate)
     app.router.add_post("/api/canary/disarm", srv.handle_canary_disarm)

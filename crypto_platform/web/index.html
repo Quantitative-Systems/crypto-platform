@@ -39,6 +39,9 @@
       <button class="btn btn-connect" id="btn-open-broker-modal">
         <span class="btn-icon">🔌</span> Connect Broker
       </button>
+      <button class="btn btn-secondary" id="btn-reset-kill" style="display: none;">
+        <span class="btn-icon">↺</span> RESET HALT
+      </button>
       <button class="btn btn-emergency-kill" id="btn-emergency-kill">
         <span class="btn-icon">⚠</span> KILL SWITCH
       </button>
@@ -143,8 +146,12 @@
           <div class="card-subtext">Instant Halt Ready</div>
         </div>
       </div>
-      <div id="canary-verification-box" style="margin-top: 12px; font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono); background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 6px;">
-        14-Step Broker Pre-Flight Status: <span id="txt-verification-status">PENDING AUDIT</span>
+      <div id="canary-verification-box" style="margin-top: 12px; font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono); background: rgba(0,0,0,0.25); padding: 10px 14px; border-radius: 6px; border: 1px solid var(--border-color);">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span>14-Step Broker Pre-Flight Status: <strong id="txt-verification-status">PENDING AUDIT</strong></span>
+          <button class="btn btn-secondary btn-sm" id="btn-toggle-verification-details" style="font-size: 11px; padding: 2px 10px;">Show Forensic Breakdown</button>
+        </div>
+        <div id="canary-checks-detail-list" style="display: none; margin-top: 10px; border-top: 1px solid var(--border-color); padding-top: 8px;"></div>
       </div>
     </section>
 

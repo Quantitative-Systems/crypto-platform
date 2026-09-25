@@ -84,12 +84,19 @@ async function loadPlatformData() {
 // Render Dashboard UI
 function renderUI() {
   // System Status
-  if (state.status.status === 'EMERGENCY_HALTED') {
+  const isHalted = state.status.status === 'EMERGENCY_HALTED' || state.status.emergency_kill_active;
+  if (isHalted) {
     el.systemStatusText.textContent = 'EMERGENCY HALTED';
     el.systemStatusPill.className = 'status-pill status-locked';
   } else {
     el.systemStatusText.textContent = 'OPERATIONAL';
     el.systemStatusPill.className = 'status-pill status-healthy';
+  }
+
+  // Toggle Reset Kill button
+  const btnResetKill = document.getElementById('btn-reset-kill');
+  if (btnResetKill) {
+    btnResetKill.style.display = isHalted ? 'inline-flex' : 'none';
   }
 
   const isCanary = (state.status.environment || '').toUpperCase().includes('CANARY');
@@ -120,6 +127,7 @@ function renderUI() {
       badgeState.style.background = c.state === 'ACTIVE' ? 'var(--color-green)' : (c.state === 'ARMED' ? 'var(--color-amber)' : 'rgba(255,255,255,0.1)');
     }
     const setVal = (id, val) => { const elem = document.getElementById(id); if (elem) elem.textContent = val; };
+    setVal('canary-val-plane', c.operating_plane || 'LIVE-CANARY');
     setVal('canary-val-real-capital', `$${Number(c.canary_capital_limit_usd || 0).toFixed(2)}`);
     setVal('canary-val-allocation', `$${Number(c.canary_capital_limit_usd || 0).toFixed(2)}`);
     setVal('canary-val-equity', `$${Number(c.current_equity_usd || 0).toFixed(2)}`);
@@ -127,9 +135,14 @@ function renderUI() {
     setVal('canary-val-realized-pnl', `$${Number(c.realized_pnl_usd || 0).toFixed(2)}`);
     setVal('canary-val-unrealized-pnl', `$${Number(c.unrealized_pnl_usd || 0).toFixed(2)}`);
     setVal('canary-val-drawdown', `${Number(c.drawdown_pct || 0).toFixed(2)}%`);
+    setVal('canary-val-exposure', `$${Number(c.canary_max_position_size || 500).toFixed(2)} limit`);
+    setVal('canary-val-leverage', `${Number(c.canary_max_leverage || 1.5).toFixed(2)}x max`);
+    setVal('canary-val-positions', `${c.open_positions_count || 0}`);
     setVal('canary-val-orders', `${c.total_orders || 0} / ${c.total_fills || 0}`);
     setVal('canary-val-fees', `$${Number(c.total_fees_usd || 0).toFixed(4)}`);
-    setVal('canary-val-broker', c.broker_connected ? 'CONNECTED' : 'STANDBY');
+    setVal('canary-val-funding', `$${Number(c.funding_accrued_usd || 0).toFixed(4)}`);
+    setVal('canary-val-broker', c.broker_connected ? 'CONNECTED' : (c.broker_venue ? `${c.broker_venue.toUpperCase()} (STANDBY)` : 'STANDBY'));
+    setVal('canary-val-risk', c.state === 'HALTED' ? 'BLOCKED' : 'ENFORCED');
     setVal('canary-val-kill-status', c.emergency_kill_active ? 'TRIPPED / HALTED' : 'STANDBY (READY)');
   }
 
@@ -177,6 +190,8 @@ function renderUI() {
           <td>${f.slippage_bps || 0.0} bps</td>
         </tr>
       `).join('');
+    } else {
+      el.tbodyFills.innerHTML = '<tr><td colspan="7" class="cell-muted" style="text-align: center;">No recent executions</td></tr>';
     }
   }
 
@@ -189,6 +204,19 @@ function renderUI() {
     el.funnelRiskPassed.textContent = `${state.funnel.risk_accepted || 0} (${state.funnel.risk_rejections || 0} Gated)`;
     el.funnelOrders.textContent = Number(state.funnel.oms_acceptances || 0).toLocaleString();
     el.funnelFills.textContent = `${state.funnel.total_fills || 0} (Partial Fill)`;
+
+    // Dynamically render failure codes in Funnel
+    const rejContainer = document.getElementById('rejection-tags');
+    if (rejContainer && state.funnel.rejection_reasons) {
+      const keys = Object.keys(state.funnel.rejection_reasons);
+      if (keys.length > 0) {
+        rejContainer.innerHTML = keys.map(k => `
+          <span class="rej-badge">${k}: ${Number(state.funnel.rejection_reasons[k]).toLocaleString()}</span>
+        `).join('');
+      } else {
+        rejContainer.innerHTML = '<span class="cell-muted" style="font-size: 11px;">Zero risk rejections recorded</span>';
+      }
+    }
   }
 
   // Strategies Grid
@@ -311,7 +339,7 @@ function initWebSocket() {
     appendLog('Real-time WebSocket telemetry stream established.', 'success');
   };
 
-  state.ws.onmessage = (event) => {
+  state.ws.onmessage = async (event) => {
     try {
       const data = JSON.parse(event.data);
       if (data.event === 'STRATEGY_TOGGLED') {
@@ -322,8 +350,15 @@ function initWebSocket() {
         }
       } else if (data.event === 'EMERGENCY_KILL_ACTIVATED') {
         state.status.status = 'EMERGENCY_HALTED';
+        state.status.emergency_kill_active = true;
         state.strategies.forEach(s => s.active = false);
         renderUI();
+      } else if (data.event === 'EMERGENCY_KILL_RESET') {
+        state.status.status = 'HEALTHY';
+        state.status.emergency_kill_active = false;
+        await loadPlatformData();
+      } else if (data.event === 'CANARY_STATE_CHANGED') {
+        await loadPlatformData();
       }
     } catch (e) {
       // Non-JSON ping/pong or raw message
@@ -342,8 +377,56 @@ el.btnCloseBrokerModal.addEventListener('click', () => el.brokerModal.classList.
 el.btnCancelModal.addEventListener('click', () => el.brokerModal.classList.remove('open'));
 el.formConnectBroker.addEventListener('submit', handleBrokerSubmit);
 el.btnEmergencyKill.addEventListener('click', triggerEmergencyKill);
+
+// Portfolio Refresh Listener
+if (el.btnRefreshPortfolio) {
+  el.btnRefreshPortfolio.addEventListener('click', async () => {
+    appendLog('Refreshing portfolio and execution telemetry...', 'info');
+    await loadPlatformData();
+    appendLog('Portfolio metrics refreshed.', 'success');
+  });
+}
+
+// Clear Terminal Logs Listener
+if (el.btnClearLogs) {
+  el.btnClearLogs.addEventListener('click', () => {
+    el.terminalLog.innerHTML = '<div class="log-line log-info">[AUDIT] Terminal log cleared by operator.</div>';
+  });
+}
+
+// Reset Emergency Halt Listener
+const btnResetKill = document.getElementById('btn-reset-kill');
+if (btnResetKill) {
+  btnResetKill.addEventListener('click', async () => {
+    if (!confirm('CONFIRM RESET: Restore normal operations and unhalt risk firewall?')) return;
+    try {
+      const res = await fetch('/api/emergency_kill/reset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ authorized_by: 'OPERATOR' }),
+      });
+      const data = await res.json();
+      appendLog(data.message, 'success');
+      await loadPlatformData();
+    } catch (err) {
+      appendLog(`Failed to reset emergency kill: ${err.message}`, 'error');
+    }
+  });
+}
+
 // LIVE-CANARY Action Handlers
 const btnCanaryVerify = document.getElementById('btn-canary-verify');
+const btnToggleVerif = document.getElementById('btn-toggle-verification-details');
+const listVerif = document.getElementById('canary-checks-detail-list');
+
+if (btnToggleVerif && listVerif) {
+  btnToggleVerif.addEventListener('click', () => {
+    const isHidden = listVerif.style.display === 'none';
+    listVerif.style.display = isHidden ? 'block' : 'none';
+    btnToggleVerif.textContent = isHidden ? 'Hide Forensic Breakdown' : 'Show Forensic Breakdown';
+  });
+}
+
 if (btnCanaryVerify) {
   btnCanaryVerify.addEventListener('click', async () => {
     appendLog('Starting 14-Step LIVE-CANARY Broker Pre-Flight Audit...', 'info');
@@ -355,6 +438,23 @@ if (btnCanaryVerify) {
         txtVerif.textContent = report.passed ? 'ALL 14 CHECKS PASSED (READY TO ARM)' : `FAILED: ${report.failure_reason}`;
         txtVerif.style.color = report.passed ? 'var(--color-green)' : 'var(--color-red)';
       }
+
+      if (listVerif && report.checks) {
+        listVerif.innerHTML = report.checks.map(chk => `
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px dotted rgba(255,255,255,0.08); font-size: 11px;">
+            <span>Step ${chk.step}: <strong>${chk.name}</strong></span>
+            <span style="color: ${chk.passed ? 'var(--color-green)' : 'var(--color-red)'}; font-weight: 600;">
+              ${chk.passed ? '✓ PASSED' : '✗ FAILED'}
+            </span>
+          </div>
+          <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px; padding-left: 8px;">
+            ${chk.message}
+          </div>
+        `).join('');
+        listVerif.style.display = 'block';
+        if (btnToggleVerif) btnToggleVerif.textContent = 'Hide Forensic Breakdown';
+      }
+
       appendLog(`14-Step Audit complete: ${report.passed ? 'ALL 14 CHECKS PASSED' : report.failure_reason}`, report.passed ? 'success' : 'error');
     } catch (err) {
       appendLog(`Verification error: ${err.message}`, 'error');
@@ -365,6 +465,7 @@ if (btnCanaryVerify) {
 const btnCanaryArm = document.getElementById('btn-canary-arm');
 if (btnCanaryArm) {
   btnCanaryArm.addEventListener('click', async () => {
+    if (!confirm('ATTENTION: Arm LIVE-CANARY operating plane? Requires pre-flight pass and explicit operator authorization.')) return;
     appendLog('Arming LIVE-CANARY...', 'warn');
     try {
       const res = await fetch('/api/canary/arm', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ authorized_by: 'OPERATOR' }) });
@@ -380,7 +481,7 @@ if (btnCanaryArm) {
 const btnCanaryActivate = document.getElementById('btn-canary-activate');
 if (btnCanaryActivate) {
   btnCanaryActivate.addEventListener('click', async () => {
-    if (!confirm('ATTENTION: You are about to ACTIVATE real-money LIVE-CANARY trading. Proceed?')) return;
+    if (!confirm('CRITICAL SAFETY CONFIRMATION: You are about to ACTIVATE real-money LIVE-CANARY trading. Proceed?')) return;
     appendLog('Activating LIVE-CANARY trading...', 'warn');
     try {
       const res = await fetch('/api/canary/activate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ authorized_by: 'OPERATOR' }) });
@@ -407,6 +508,18 @@ if (btnCanaryDisarm) {
     }
   });
 }
+
+// Modal Dismiss UX (Escape Key & Outside Click)
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && el.brokerModal.classList.contains('open')) {
+    el.brokerModal.classList.remove('open');
+  }
+});
+el.brokerModal.addEventListener('click', (e) => {
+  if (e.target === el.brokerModal) {
+    el.brokerModal.classList.remove('open');
+  }
+});
 
 // Initialize on Load
 window.addEventListener('DOMContentLoaded', () => {

@@ -103,3 +103,52 @@ class TestPlatformWebAPI(AioHTTPTestCase):
         status_data = await status_resp.json()
         assert status_data["status"] == "EMERGENCY_HALTED"
         assert status_data["emergency_kill_active"] is True
+
+    async def test_api_connect_broker_alias(self):
+        resp = await self.client.request("POST", "/api/connect_broker", json={
+            "venue": "binance_futures_testnet",
+            "api_key": "testnet_key_demo_2",
+            "api_secret": "testnet_secret_demo_2",
+            "mode": "DEMO",
+        })
+        assert resp.status == 200
+        data = await resp.json()
+        assert data["status"] == "CONNECTED"
+
+    async def test_api_canary_verify_get_and_post(self):
+        resp_get = await self.client.request("GET", "/api/canary/verify")
+        assert resp_get.status == 200
+        data_get = await resp_get.json()
+        assert data_get["canary_state"] == "DISARMED"
+        assert data_get["live_trading_locked"] is True
+        assert len(data_get["checks"]) == 14
+
+        resp_post = await self.client.request("POST", "/api/canary/verify", json={"symbol": "BTCUSDT"})
+        assert resp_post.status == 200
+        data_post = await resp_post.json()
+        assert len(data_post["checks"]) == 14
+
+    async def test_api_emergency_kill_and_reset(self):
+        kill_resp = await self.client.request("POST", "/api/emergency_kill")
+        assert kill_resp.status == 200
+        data_kill = await kill_resp.json()
+        assert data_kill["status"] == "EMERGENCY_HALTED"
+
+        reset_resp = await self.client.request("POST", "/api/emergency_kill/reset", json={"authorized_by": "TEST_OPERATOR"})
+        assert reset_resp.status == 200
+        data_reset = await reset_resp.json()
+        assert data_reset["status"] == "HEALTHY"
+
+        status_resp = await self.client.request("GET", "/api/status")
+        status_data = await status_resp.json()
+        assert status_data["status"] == "HEALTHY"
+        assert status_data["emergency_kill_active"] is False
+
+    async def test_api_canary_arm_and_activate_fail_closed(self):
+        # Arming with $0 limit fails closed
+        arm_resp = await self.client.request("POST", "/api/canary/arm", json={"authorized_by": "TEST_OP"})
+        assert arm_resp.status == 400
+
+        # Activating from DISARMED state fails closed
+        act_resp = await self.client.request("POST", "/api/canary/activate", json={"authorized_by": "TEST_OP"})
+        assert act_resp.status == 400
