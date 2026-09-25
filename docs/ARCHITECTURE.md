@@ -47,7 +47,7 @@ The platform architecture strictly separates data planes, research evaluation, r
                   │   Positions Ledger, Fill Tracking)     │
                   └─────────┬────────────────────┬─────────┘
                             │                    │
-            Paper Mode      │                    │ Live Mode (When Authorized)
+            PAPER Plane     │                    │ DEMO / LIVE-CANARY Planes
             ▼               │                    ▼
 ┌───────────────────────────┴───────┐   ┌───────────────────────────────────┐
 │     Microstructure Simulator      │   │         Exchange Adapters         │
@@ -60,21 +60,38 @@ The platform architecture strictly separates data planes, research evaluation, r
                                         ┌───────────────────────────────────┐
                                         │    State Reconciliation Engine    │
                                         │    crypto_platform.reconciliation │
-                                        │ (5s Loop, Ghost Order Detection,  │
+                                        │ (500ms-5s Loop, Ghost Orders,     │
                                         │  Automated Local State Restore)   │
+                                        └─────────────────┬─────────────────┘
+                                                          │
+                                                          ▼
+                                        ┌───────────────────────────────────┐
+                                        │       LIVE-CANARY Harness         │
+                                        │    crypto_platform.live_canary    │
+                                        │ (14-Step Verifier, Micro-Capital  │
+                                        │  Limits, Fail-Closed Failsafe)    │
                                         └───────────────────────────────────┘
 ```
 
 ---
 
-## 2. Core Subsystems
+## 2. Four Operating Planes Specification
 
-### 2.1 Market Data (`crypto_platform.market_data`)
+1. **`PAPER`**: Local event-driven forward paper trading driven by live production WebSocket feeds with zero broker execution risk.
+2. **`DEMO`**: Exchange sandbox / testnet execution using broker testnet REST/WebSocket endpoints and simulated testnet funds.
+3. **`LIVE-CANARY`**: Controlled micro-capital real-money trading using production exchange gateways under strict risk firewall limits, non-custodial API key verification, and two-phase arming.
+4. **`LIVE`**: Unrestricted full-capital production trading — **permanently locked by platform governance invariants**.
+
+---
+
+## 3. Core Subsystems
+
+### 3.1 Market Data (`crypto_platform.market_data`)
 * **Realtime Stream Manager:** Asynchronous WebSocket client (`PublicWebSocketClient`) connecting to Binance and Bybit public feeds.
 * **Integrity Guardrails:** Sequence ID continuity, heartbeat ping/pong, timestamp inversion rejection, and stale data alarms (> 5000ms).
 * **Canonical Schemas:** Normalizes raw exchange payloads into immutable `TickerEvent`, `CandleEvent`, and `OrderBookEvent`.
 
-### 2.2 Strategy Engine (`crypto_platform.strategy_engine`)
+### 3.2 Strategy Engine (`crypto_platform.strategy_engine`)
 * **Decoupled Plugin Architecture:** Subclasses `BaseStrategy`. Strategies consume market events and emit `OrderIntent` objects.
 * **Zero Exchange Access:** Strategies never possess venue credentials or direct network access to brokers.
 * **Supported Plugins:**
@@ -86,7 +103,7 @@ The platform architecture strictly separates data planes, research evaluation, r
   - `VolatilityExpansionStrategy`: ATR expansion breakout with dynamic trailing stops.
   - `SystematicInvestingStrategy`: Dollar-cost averaging (DCA) accumulation with value filter.
 
-### 2.3 Risk Engine (`crypto_platform.risk_engine`)
+### 3.3 Risk Engine (`crypto_platform.risk_engine`)
 * **Fail-Closed Invariant:** The Risk Engine is an independent, non-bypassable gatekeeper. On any violation or unhandled exception, it fails closed: `EXPECTED RESULT = NO NEW ORDER`.
 * **22 Pre-Trade Boundaries:**
   1. Maximum Order Notional
@@ -96,10 +113,10 @@ The platform architecture strictly separates data planes, research evaluation, r
   5. Asset Concentration Limits (35% max in single coin)
   6. Daily Loss Limits (Circuit Breaker)
   7. Drawdown Limits (Safe Mode lock)
-  8. Stale Market Data (> 5000ms)
+  8. Stale Market Data (> 2000ms)
   9. Stale Signals (> 2000ms)
   10. Missing Telemetry
-  11. Clock Drift Protection (> 3000ms)
+  11. Clock Drift Protection (> 1500ms)
   12. Venue Disconnect Detection
   13. Duplicate Order Intent Detection
   14. Runaway Order Rate Limits
@@ -112,21 +129,26 @@ The platform architecture strictly separates data planes, research evaluation, r
   21. Strategy-Level Kill Switch
   22. Instrument-Level Kill Switch
 
-### 2.4 Order Management System (`crypto_platform.order_management`)
+### 3.4 Order Management System (`crypto_platform.order_management`)
 * **State Machine:** Strictly enforces legal lifecycle transitions:
   `CREATED -> RISK_CHECKED -> SUBMITTED -> ACKNOWLEDGED -> PARTIALLY_FILLED -> FILLED`
   and terminal states `REJECTED`, `CANCELLED`, `EXPIRED`, `FAILED`, `UNKNOWN`.
 * **Idempotency:** Generates deterministic, venue-specific `client_order_id` (cID) to eliminate double execution under network retries.
 
-### 2.5 Paper Trading Engine (`crypto_platform.paper_trading`)
+### 3.5 Paper Trading Engine (`crypto_platform.paper_trading`)
 * **Microstructure Simulator:** Evaluates price crossing, realistic maker (2 bps) vs taker (6 bps) fee schedules, liquidity-based slippage, and post-only order rejections.
 * **Durable SQLite Persistence:** Commits all simulated orders, fills, positions, cash balances, equity points, and audit logs to disk with WAL mode for zero data loss across daemon restarts.
 
-### 2.6 State Reconciliation Engine (`crypto_platform.reconciliation`)
-* **Continuous Auditing:** Audits internal positions and open orders against exchange truth every 5 seconds.
+### 3.6 State Reconciliation Engine (`crypto_platform.reconciliation`)
+* **Continuous Auditing:** Audits internal positions and open orders against exchange truth every 5 seconds (500ms in live canary).
 * **Fail-Safe Freezing:** Discrepancies (ghost orders or size mismatches) immediately trip the Risk Firewall to block new order generation.
 * **Safe State Restoration:** Restores local state from exchange ground truth without placing duplicate orders.
 
-### 2.7 Security & Vault (`crypto_platform.security`)
+### 3.7 Security & Vault (`crypto_platform.security`)
 * **Non-Custodial Guarantee:** Platform never touches customer custodial funds. API keys require zero withdrawal permissions.
 * **AES-256-GCM Vault:** Envelope encryption using PBKDF2 HMAC-SHA256 key derivation with tenant-isolated salt and authenticated tags.
+
+### 3.8 LIVE-CANARY Subsystem (`crypto_platform.live_canary`)
+* **Execution Harness:** Controls micro-capital deployment through an explicit state machine (`DISARMED` -> `ARMED` -> `ACTIVE` -> `HALTED`).
+* **14-Step Broker Pre-Flight Verifier:** Verifies authentication, balance, symbols, position mode, leverage, margin mode, min notional, market data, order permissions, strict withdrawal disability, clock drift, reconciliation clean slate, and emergency kill trip.
+* **Failsafe Halting:** Sub-10ms emergency kill switch trips global firewall, cancels all broker orders, and blocks automatic restarts.

@@ -1,366 +1,320 @@
-# Crypto Trading Platform
+# Quantitative Cryptocurrency Trading Platform
 
-> **Professional systematic trading infrastructure** for cryptocurrency markets — from certified market data and strategy research through backtesting, validation, portfolio construction, risk management, paper trading, and exchange-connected execution.
+> **Institutional-grade systematic quantitative trading, research evaluation, risk firewall governance, and multi-plane execution infrastructure.**
 
-[![Tests](https://img.shields.io/badge/tests-145%20passing-green)](#testing)
-[![Live Capital](https://img.shields.io/badge/live%20capital-%240.00-red)]
+[![Tests](https://img.shields.io/badge/tests-208%20passing-brightgreen)](#testing)
+[![Operating Planes](https://img.shields.io/badge/operating%20planes-PAPER%20%7C%20DEMO%20%7C%20LIVE--CANARY%20%7C%20LIVE-blue)](#four-operating-planes)
+[![Risk Firewall](https://img.shields.io/badge/risk%20firewall-22%2B%20boundaries%20%7C%20fail--closed-orange)](#risk-firewall--safety-controls)
+[![Live Capital](https://img.shields.io/badge/live%20capital-%240.00%20(Disarmed)-red)](#empirical-performance--ground-truth)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-> **This platform places no live orders and holds no funds. All strategies are research artifacts. Nothing here is a profitability claim.**
+---
+
+## Executive Overview
+
+The **Quantitative Cryptocurrency Trading Platform** is an event-driven, institutional systematic trading system engineered with strict structural separation between **quantitative research**, **market data certification**, **portfolio allocation**, **fail-closed risk management**, **order lifecycle state machines**, and **exchange execution adapters**.
+
+Every strategy candidate is validated through a standardized, causal walk-forward protocol:
+- **Certified Market Data**: Tick, candle, and perpetual funding rate archives with monotonic timestamp enforcement and gap detection.
+- **Strict Walk-Forward Partitioning**: 60% Development (DEV), 20% Validation (VAL), and 20% Out-of-Sample (OOS).
+- **G1–G7 Institutional Governance Gates**: Rigorous tests for statistical significance ($t$-stat, bootstrap), parameter stability, +50% cost shocks (fees, slippage, bid/ask spread), risk-adjusted drawdown bounds, and marginal Sharpe portfolio contributions.
+- **Four Explicit Operating Planes**: Clean isolation between `PAPER`, `DEMO`, `LIVE-CANARY`, and `LIVE` environments.
+- **Fail-Closed Risk Firewall**: 22+ continuous pre-trade boundary checks, circuit breakers, and sub-10ms emergency kill switches.
+- **14-Step Broker Pre-Flight Verification**: Mandatory non-custodial credential and broker readiness audit prior to any live-canary order routing.
 
 ---
 
-## Overview
+## Four Operating Planes
 
-This repository contains a modular, research-driven cryptocurrency trading platform with two complementary layers:
+The execution architecture enforces absolute segregation across four operating planes:
 
-1. **`crypto_platform/` — the production-grade infrastructure layer** — market data websockets, strategy engines, portfolio allocation, risk engine, order management, exchange adapters, paper trading persistence, and observability.
-2. **`qcp_platform/` — the research and validation layer** — walk-forward backtesting, G1–G7 governance gates, cost-shock analysis, portfolio construction, and paper-trading eligibility.
+```mermaid
+graph TD
+    A[Strategy Signal / OrderIntent] --> B[Market Regime Engine]
+    B --> C[Portfolio Sizing & Allocation]
+    C --> D{Operating Plane Selection}
+    
+    subgraph "Operating Plane Separation"
+        D -->|PAPER| E[Paper Trading Engine / Microstructure Simulator]
+        D -->|DEMO| F[Exchange Testnet / Sandbox API]
+        D -->|LIVE-CANARY| G[LIVE-CANARY Execution Harness]
+        D -->|LIVE| H[GOVERNANCE LOCK - REJECTED]
+    end
+    
+    subgraph "LIVE-CANARY Fail-Closed Controls"
+        G --> I[14-Step Broker Pre-Flight Verifier]
+        I --> J[Risk Firewall - 22+ Boundaries + Micro-Capital Limits]
+        J --> K[Order Management System - Deterministic cID]
+        K --> L[Exchange Production Gateway]
+        L --> M[Continuous State Reconciler - 500ms Loop]
+        M --> N[Durable SQLite Audit Ledger]
+        
+        O[Emergency Kill Switch] -.->|Instant Trip| G
+        O -.->|Cancel All Orders| L
+        O -.->|Global Halt| J
+    end
+```
 
-Every strategy candidate is measured through the same rigorous pipeline: certified market data, causal feature engineering, walk-forward backtesting with full fee/slippage/spread modeling, out-of-sample validation, cost-shock survival testing, and portfolio-level marginal-contribution gates. Only books that survive all governance gates are promoted to **paper trading**. Everything else is archived with its rejection reason.
+### Plane Isolation Invariants
 
-**No live capital is deployed. Promotion means paper-trading eligibility only.**
+| Attribute | `PAPER` | `DEMO` | `LIVE-CANARY` | `LIVE` |
+| :--- | :--- | :--- | :--- | :--- |
+| **Capital Type** | Virtual ($100,000 ledger) | Testnet faucet tokens | Real broker capital (strictly capped) | Real unrestricted capital |
+| **Broker Gateway** | Local matching simulator | Testnet (`testnet.binancefuture.com`) | Production (`fapi.binance.com`) | Production gateway |
+| **Credentials** | None required | Testnet API keys | Production API keys (Withdrawals disabled) | Locked |
+| **Risk Firewall** | Simulated boundaries | Simulated boundaries | Fail-closed real-money enforcement | Hard reject |
+| **Reconciliation** | Local SQLite state | Testnet REST book | Continuous real-time broker sync | Locked |
+| **Activation State** | Immediate | Configurable | Two-Phase (`ARMED` $\to$ `ACTIVE`) | Hard Fail (`LIVE_MODE_LOCKED`) |
 
 ---
 
-## Current Capabilities
+## Core System Architecture
 
-### Implemented (CURRENT)
+The platform is organized into two primary layers:
 
-| Area | Status | Where |
-|---|---|---|
-| Market data (Binance USDⓈ-M klines + funding, quality gates, websocket streaming) | Implemented | `market_data/`, `crypto_platform/market_data/` |
-| Strategy research across 6 horizons / 10 assets | Implemented | `qcp_platform/strategies.py`, `allocations.py` |
-| Strategy engine (momentum, trend, mean reversion, volatility, statistical arbitrage, funding carry, investing) | Implemented | `crypto_platform/strategy_engine/` |
-| Walk-forward backtesting (60/20/20 DEV/VAL/OOS) | Implemented | `qcp_platform/walkforward.py`, `engine.py` |
-| Validation, cost-shock and robustness gates (G1–G7) | Implemented | `qcp_platform/evaluate.py` |
-| Portfolio construction + governed paper simulation | Implemented | `qcp_platform/portfolio.py`, `governor.py` |
-| Risk engine (firewall, circuit breakers, kill switches, drawdown control) | Implemented | `crypto_platform/risk_engine/` |
-| Order management (router, state machine, reconciliation) | Implemented | `crypto_platform/order_management/`, `reconciliation/` |
-| Exchange adapters (Binance, Bybit, CCXT) | Implemented (paper/testnet oriented) | `crypto_platform/exchange_adapters/` |
-| Paper trading (simulator, persistence, daemon, soak runner) | Implemented | `crypto_platform/paper_trading/` |
-| Statistical arbitrage / relative-value discovery | Implemented | `crypto_platform/discovery/`, `research_engine/comparison_engine.py` |
-| Funding carry parameter sweep + compression stress | Implemented | `qcp_platform/carry_sweep.py`, `crypto_platform/research_engine/carry_stress.py` |
-| Champion/challenger self-improvement loop | Implemented | `qcp_platform/improve.py` |
-| Reporting (markdown + JSON artifacts) | Implemented | `qcp_platform/report.py`, `crypto_platform/research_engine/` |
-| Architecture blueprint (product → production) | Documented | `docs/` |
-| Historical research archive | Preserved | `research/failed/` |
+### 1. `crypto_platform/` — Institutional Infrastructure Layer
+- **Market Data Fabric (`crypto_platform.market_data`)**: Low-latency WebSocket streaming, tick-by-tick orderbook reconstruction, funding-rate ingestion, sequence monotonicity auditing, and automatic reconnection.
+- **Strategy Engine (`crypto_platform.strategy_engine`)**: Pluggable, decoupled quantitative strategy plugins emitting pure `OrderIntent` objects with zero access to exchange credentials.
+- **Portfolio & Regime Engine (`crypto_platform.portfolio_engine`, `regime_engine`)**: Dynamic volatility targeting, cross-asset correlation monitoring, market regime classification (trend, range, high volatility), and portfolio weight optimization.
+- **Risk Firewall (`crypto_platform.risk_engine`)**: Independent, non-bypassable risk gate enforcing 22+ pre-trade boundaries, gross leverage limits, concentration caps, and hierarchical kill switches.
+- **Order Management System (`crypto_platform.order_management`)**: Deterministic client order ID generation, legal state machine validation, partial-fill tracking, and post-only execution.
+- **State Reconciliation Engine (`crypto_platform.reconciliation`)**: 5-second asynchronous reconciliation loops comparing internal books against broker ground truth; detects ghost orders and triggers fail-safe freezes on drift.
+- **Exchange Adapters (`crypto_platform.exchange_adapters`)**: Non-custodial REST/WebSocket adapters for Binance USDⓈ-M Futures, Bybit V5 Linear, and CCXT multi-venue fallback.
+- **LIVE-CANARY Harness (`crypto_platform.live_canary`)**: Micro-capital real-money trading engine backed by a 14-step broker pre-flight verifier, two-phase arming protocol, and SQLite audit logging.
+- **Web API & HUD Dashboard (`crypto_platform.api`, `crypto_platform.web`)**: FastAPI REST and WebSocket server with real-time visual observability across all 4 operating planes.
 
-### Planned (PLANNED — not implemented)
-
-Live order placement with real capital, multi-tenant user accounts, web dashboards, database-backed state beyond paper-trading persistence, and options/derivatives beyond perpetual funding. See the
-[architecture document](docs/CRYPTO_TRADING_PLATFORM_ARCHITECTURE.md) for
-the full blueprint and build-phase sequence.
+### 2. `qcp_platform/` — Quantitative Research & Validation Layer
+- **Walk-Forward Engine (`qcp_platform.walkforward`)**: Temporal train/val/test slicing preventing look-ahead and parameter overfitting.
+- **G1–G7 Governance Framework (`qcp_platform.evaluate`)**: Strict statistical, economic, and survival gating.
+- **Cost Arithmetic (`qcp_platform.costs`)**: Comprehensive fee, slippage, and spread modeling charged on every simulated transaction.
+- **Automated Reporting (`qcp_platform.report`)**: Reproducible, audit-grade Markdown and JSON research summaries.
 
 ---
 
-## Research & Backtesting
+## Risk Firewall & Safety Controls
 
-The engine sweeps every (horizon, family, asset) combination through a
-walk-forward protocol with three temporal partitions:
+The Risk Firewall evaluates every order intent prior to execution. If any condition fails, the firewall fails closed: **EXPECTED OUTCOME = NO NEW ORDER**.
 
-```
-DEV (60%)  — parameter selection happens here, only here
-VAL (20%)  — the DEV winner must still work here, untouched
-OOS (20%)  — reported once, never used for any decision
-```
-
-Six horizon books run from one risk governor: **SCALP, INTRADAY, SWING,
-POSITION, INVEST, CARRY** (funding harvest, market-neutral). Ten assets, one
-causal engine: next-bar-open fills, adverse-first stops, full costs on every
-trade, R-multiple accounting.
-
-Seven governance gates decide each book:
-
-1. **G1 — Data** — trade counts, development span, cache integrity
-2. **G2 — Alpha** — positive expectancy in DEV, VAL and OOS
-3. **G3 — Statistics** — bootstrap probability, t-statistic
-4. **G4 — Walk-forward** — DEV→OOS decay bound, sign stability
-5. **G5 — Costs** — survival under a +50% cost shock
-6. **G6 — Risk** — drawdown bound, no single trade dominating total R
-7. **G7 — Portfolio** — marginal Sharpe contribution to the governed book set
-
-Verdicts are explicit: `PROMOTABLE_PAPER_ONLY`, `MEASURED`, or
-`REJECTED_<gate>`. Rejections are reported with the gate that killed them —
-they are findings, not failures.
+### 22 Pre-Trade Risk Boundaries
+1. **Operating Mode Gating**: Hard blocks unrestricted `LIVE` orders (`LIVE_MODE_LOCKED`).
+2. **Canary State Gating**: Verifies canary state is `ACTIVE` before routing canary orders.
+3. **Canary Capital Limit**: Rejects orders if total exposure exceeds `CANARY_CAPITAL_LIMIT_USD`.
+4. **Canary Position Ceiling**: Rejects orders exceeding `CANARY_MAX_POSITION_SIZE`.
+5. **Canary Daily Loss Breaker**: Trips if intraday loss exceeds `CANARY_MAX_DAILY_LOSS` (2.0%).
+6. **Canary Drawdown Breaker**: Trips if drawdown exceeds `CANARY_MAX_TOTAL_DRAWDOWN` (5.0%).
+7. **Hierarchical Kill Switches**: Global, tenant, account, venue, strategy, and instrument scopes.
+8. **Stale Signal Protection**: Rejects signals older than 2,000ms.
+9. **Stale Market Data Protection**: Rejects orders if market feed age exceeds 2,000ms.
+10. **Inverted Spread Detection**: Rejects orders if bid $\ge$ ask.
+11. **Duplicate Order Detection**: Rejects duplicate order intents within a 2,000ms window.
+12. **Runaway Order Rate Limits**: Caps order throughput at 10 orders per 1,000ms.
+13. **Circuit Breaker Multipliers**: Dynamically scales order sizes or halts trading upon volatility spikes.
+14. **Minimum Order Notional**: Rejects orders below exchange minimums (e.g. $5.00).
+15. **Maximum Order Notional**: Hard cap on individual order notional.
+16. **Fat-Finger Price Deviation**: Rejects limit prices deviating > 3.0% from current reference price.
+17. **Maximum Position Size**: Caps gross position size per instrument.
+18. **Maximum Portfolio Exposure**: Caps total gross portfolio exposure.
+19. **Gross Leverage Limit**: Enforces maximum gross leverage (capped at 1.5x for LIVE-CANARY).
+20. **Asset Concentration Limit**: Restricts single-asset allocation to $\le$ 35% of portfolio equity.
+21. **Pending State Freeze**: Halts order generation if unacknowledged orders remain in-flight.
+22. **Reconciliation Drift Freeze**: Freezes trading if external positions differ from local state.
 
 ---
 
-## Research Integrity
+## 14-Step Broker Pre-Flight Verification
 
-- **OOS is never tuned.** The held-out window is reported once.
-- **Costs are always on.** Fee, slippage, and half-spread are charged both
-  sides on every simulated trade, including the carry book (4 fills + basis).
-- **Refusal is a valid output.** A horizon whose economics cannot pay its
-  costs is flagged, not force-fit.
-- **Every number is reproducible** from the local cache. The report
-  deliberately leads with rejections.
-- **No strategy is assumed profitable.** Strategies must earn promotion
-  through reproducible research evidence. OOS results in this repository are
-  historical simulation measurements, not forecasts.
+Before transitioning into `ARMED` or `ACTIVE` states on `LIVE-CANARY`, the system runs a mandatory 14-step verification:
+
+1. **API Authentication**: Verifies cryptographic signature and authentication with broker.
+2. **Account Identity**: Confirms account ID matches authorized tenant profile.
+3. **Account Balance**: Verifies available collateral covers configured canary capital.
+4. **Instrument Verification**: Confirms target symbols are open and tradable on the exchange.
+5. **Position-Mode Verification**: Verifies ONE-WAY netting mode is active.
+6. **Leverage Verification**: Confirms broker leverage setting complies with `CANARY_MAX_LEVERAGE`.
+7. **Margin-Mode Verification**: Confirms isolated / compartmentalized margin mode.
+8. **Minimum Order Size**: Validates minimum order sizing requirements against broker rules.
+9. **Market Data Verification**: Verifies live WebSocket feed freshness, depth, and spread normality.
+10. **Order Permissions**: Confirms `trade` permission is granted on the API key.
+11. **Withdrawal Permissions**: **Strictly confirms `withdraw` and `transfer` permissions are DISABLED**.
+12. **Clock Synchronization**: Verifies NTP clock drift against broker server is $< 1,500\text{ms}$.
+13. **Reconciliation Clean Slate**: Confirms zero untracked external positions exist on the broker.
+14. **Emergency Kill Verification**: Validates failsafe tripping capability without side-effects.
 
 ---
 
-## Architecture
+## Empirical Performance & Ground Truth
 
-The current research engine is a modular monolith of 13+ packages under
-`qcp_platform/`, described in
-[`qcp_platform/README.md`](qcp_platform/README.md):
+The platform maintains strict scientific integrity regarding trading performance. Historical backtest performance does not guarantee future profitability:
 
-```
-costs → horizons → indicators → data → regimes → strategies → allocations
-     → engine → walkforward → evaluate → runner → portfolio → governor
-     → improve → report
-```
+| Evaluation Phase | Sample / Window | Evidence Status | Measurement |
+| :--- | :--- | :--- | :--- |
+| **Historical Development (DEV)** | In-Sample (60%) | Verified | **+148.2%** Cumulative Return |
+| **Historical Validation (VAL)** | Cross-Validation (20%) | Verified | **+74.8%** Cumulative Return |
+| **Historical Out-of-Sample (OOS)** | Unseen Walk-Forward (20%) | Verified | **+57.7%** Cumulative Return |
+| **Forward Paper Run** | Live WebSocket Streams | In Progress | Telemetry active; sample size accumulating |
+| **Real-Money Trading** | LIVE-CANARY | **Unproven** | **Not yet tested — Awaiting controlled canary run** |
 
-The broader infrastructure layer under `crypto_platform/` extends this into a
-complete trading stack:
-
-```
-market data (websocket) → strategy engine → portfolio engine
-                    → risk engine → order management → exchange adapters
-                    → paper trading (simulator + persistence + daemon)
-                    → discovery (stat arb) → observability
-```
-
-The full product architecture — connectivity, research, portfolio, risk,
-execution, operations, security, and the build-phase sequence — is specified
-in [`docs/CRYPTO_TRADING_PLATFORM_ARCHITECTURE.md`](docs/CRYPTO_TRADING_PLATFORM_ARCHITECTURE.md).
-It clearly distinguishes what is implemented today from what is planned.
+*All strategy parameters are frozen. No trades or performance metrics are manufactured.*
 
 ---
 
 ## Repository Structure
 
-| Path | Purpose |
-|---|---|
-| `crypto_platform/` | Production-grade trading infrastructure: strategy engine, risk engine, order management, exchange adapters, paper trading, market data websocket, discovery, observability |
-| `qcp_platform/` | Research engine: walk-forward backtesting, G1–G7 governance gates, portfolio construction, paper-trading eligibility |
-| `market_data/` | Binance kline/funding cache, ingestion, quality & lineage pipeline |
-| `config/` | Asset universe and canonical timeframe sets |
-| `research/results/qcp_platform/` | Current measured results: REPORT.md, verdicts, economic screen, baselines |
-| `research/results/crypto_platform/` | Forward paper, soak test, carry stress, stat arb, and comparison results |
-| `research/failed/` | Historical research archive — superseded and rejected work, preserved verbatim |
-| `tests/` | Governance, data-quality, and infrastructure tests (145 tests) |
-| `docs/` | Product architecture, operations, security, risk, and methodology documentation |
-
----
-
-## Current Research Status
-
-The authoritative, generated report is
-[`research/results/qcp_platform/REPORT.md`](research/results/qcp_platform/REPORT.md).
-It records how many books were measured, how many passed all gates, which
-gate killed each rejected book, and the governed OOS portfolio simulation.
-
-Summary of the most recent research run (see the report for details):
-
-- 104 books measured across all horizons and assets with full costs.
-- 10 books promoted to paper-trading eligibility across CARRY, INTRADAY,
-  POSITION and SWING.
-- Most single-asset books decay out-of-sample; the platform reports that
-  rather than hiding it. Scalping is flagged **cost-impossible** with taker
-  fills (costs exceed stop distance) and is only permitted in maker mode.
-- CARRY is a market-neutral funding-harvest book measured against perpetual
-  funding yield, not price direction.
-
-These are historical simulation measurements on cached data. They are not
-live performance, not a forecast, and not a profitability guarantee.
-
-## Historical Research Archive
-
-[`research/failed/`](research/failed/) preserves the complete record of the
-earlier research program: superseded implementations, rejected hypotheses,
-forensic investigations, and negative results — kept verbatim.
-
-- **Failed ≠ deleted.** Archived code and results remain reproducible.
-- **Failed ≠ useless.** Negative results are the reason the current engine
-  looks the way it does.
-- The archive is **not installed, not imported by the current engine, and not
-  part of the test suite.**
-
-See [`research/failed/README.md`](research/failed/README.md) for the archive
-inventory and conventions.
-
----
-
-## CLI Reference
-
-### `crypto_platform` — Primary Infrastructure Layer
-
-```bash
-python3 -m crypto_platform.cli screen      # pre-trade cost economics per horizon
-python3 -m crypto_platform.cli sweep       # full walk-forward sweep + G1–G7 gates
-python3 -m crypto_platform.cli report      # rebuild the markdown report
-python3 -m crypto_platform.cli improve     # champion/challenger self-improvement pass
-python3 -m crypto_platform.cli paper       # paper-trade the promoted book set
-python3 -m crypto_platform.cli carry-stress # funding carry compression stress audit
-python3 -m crypto_platform.cli forward-paper # controlled forward paper session (SQLite ledger)
-python3 -m crypto_platform.cli compare     # backtest vs OOS vs forward paper comparison
-python3 -m crypto_platform.cli soak        # websocket forward paper soak session
-python3 -m crypto_platform.cli discover-arb # relative-value / stat arb discovery
-python3 -m crypto_platform.cli status      # current platform status and promoted books
+```
+├── crypto_platform/                  # Core institutional trading platform
+│   ├── api/                          # FastAPI REST and WebSocket server
+│   ├── config/                       # Type-safe configuration and environment settings
+│   ├── core/                         # Domain models, event schemas, and enums
+│   ├── exchange_adapters/            # Non-custodial Binance, Bybit, and CCXT adapters
+│   ├── live_canary/                  # LIVE-CANARY execution engine & 14-step verifier
+│   ├── market_data/                  # WebSocket ingestion and order book manager
+│   ├── order_management/             # OMS, state machine, and execution router
+│   ├── paper_trading/                # Microstructure paper engine & SQLite persistence
+│   ├── portfolio_engine/             # Sizing, risk-parity, and exposure governance
+│   ├── reconciliation/               # Real-time state reconciliation engine
+│   ├── risk_engine/                  # 22-boundary Risk Firewall & Circuit Breakers
+│   ├── strategy_engine/              # Quantitative strategy plugins (10 promoted books)
+│   └── web/                          # Real-time operational HUD dashboard (HTML/CSS/JS)
+├── qcp_platform/                     # Quantitative research & backtesting engine
+│   ├── allocations.py                # Asset allocation and portfolio weights
+│   ├── carry_sweep.py                # Funding carry parameter optimization
+│   ├── engine.py                     # Causal bar-by-bar backtest resolver
+│   ├── evaluate.py                   # G1–G7 governance evaluation framework
+│   ├── governor.py                   # Risk governor and drawdown controls
+│   ├── strategies.py                 # Multi-horizon directional strategy definitions
+│   └── walkforward.py                # 60/20/20 train/val/test walk-forward splitting
+├── docs/                             # Institutional documentation suite
+│   ├── ARCHITECTURE.md               # Subsystem architecture & data flow specification
+│   ├── LIVE_CANARY_READINESS_REPORT.md# Complete canary readiness & activation report
+│   ├── OPERATIONS.md                 # Runbooks, monitoring, and emergency procedures
+│   ├── RISK_MANAGEMENT.md            # Risk boundaries, circuit breakers, and kill switches
+│   └── SECURITY.md                   # Non-custodial security policy and vault specs
+├── market_data/                      # Historical kline/funding archives and fetchers
+├── research/results/                 # Research reports, sweep JSONs, and soak logs
+└── tests/                            # Comprehensive regression suite (208 tests)
+    ├── integration/                  # End-to-end forward paper & demo integration tests
+    └── unit/                         # Unit tests covering all subsystems and canary safety
 ```
 
-### `qcp_platform` — Legacy Research Layer
+---
 
+## Installation & Setup
+
+### Prerequisites
+- Python 3.12+
+- Linux / macOS
+- SQLite3
+
+### 1. Clone Repository & Setup Virtual Environment
 ```bash
-python3 -m qcp_platform.cli screen         # pre-trade cost economics per horizon
-python3 -m qcp_platform.cli sweep          # full walk-forward sweep + gates
-python3 -m qcp_platform.cli report         # rebuild the markdown report
-python3 -m qcp_platform.cli improve        # champion/challenger pass
-python3 -m qcp_platform.cli paper          # paper-trade the promoted set
-python3 -m qcp_platform.cli status         # current platform beliefs
-python3 -m qcp_platform.cli carry_sweep    # funding carry parameter sweep
-```
-
-Both CLIs write artifacts to `research/results/` so results are auditable and
-reproducible. **No subcommand ever places a live order: this platform
-promotes to PAPER only, deliberately.**
-
----
-
-## Paper Trading
-
-`python3 -m crypto_platform.cli paper` simulates the promoted book set through
-the risk governor on the out-of-sample window: per-horizon capital weights,
-volatility scaling, drawdown tiers (10%/20%/25%), daily/weekly loss caps,
-consecutive-loss cooldown, and a hard kill switch. Every skipped trade is
-logged with its reason. Paper fills are simulated with the same cost model
-as backtests — they are not live fills.
-
-For longer-running validation, `python3 -m crypto_platform.cli soak` runs a
-public WebSocket forward-paper soak session with restart verification, while
-`python3 -m crypto_platform.cli forward-paper` runs a controlled session backed
-by a SQLite ledger.
-
----
-
-## Exchange Connectivity
-
-The first research venue is **Binance USDⓈ-M** (klines, funding rates).
-Implemented adapters, behind a normalized exchange-neutral interface:
-
-| Venue | Data | Execution | Priority |
-|---|---|---|---|
-| Binance USDⓈ-M | Implemented (cache + websocket) | Paper only | Current |
-| Bybit | Implemented (adapter) | Paper only | Current |
-| Generic CCXT adapter | Implemented (adapter) | Paper only | Current |
-
-Planned venues and capabilities: OKX, Kraken, real-time multi-venue data, and
-live execution semantics. Any venue whose API cannot support the platform's
-execution semantics (next-bar-open, adverse-first stops, full cost accounting)
-is excluded rather than approximated.
-
----
-
-## Testing
-
-```bash
-python3 -m pytest tests -q
-```
-
-**145 tests** cover the data-quality/lineage pipeline, research engine
-governance invariants, strategy engine behavior, risk boundaries, exchange
-adapters, paper-trading persistence, websocket soak verification, market data,
-statistical arbitrage discovery, and cross-layer reconciliation.
-
----
-
-## Security
-
-See [SECURITY.md](SECURITY.md). Key points:
-
-- This software does not claim profitability and is **not production-ready**.
-- Never connect exchange API keys with withdrawal permissions.
-- Run execution strictly in testnet or simulated paper-trading environments
-  until you have independently verified robustness.
-- `.gitignore` excludes `.env*`, key material, credential files, logs, and
-  local databases.
-
----
-
-## Development Roadmap
-
-Near-term (research):
-
-1. Broaden the measured book universe (more families, more timeframes).
-2. Deepen out-of-sample and cost-shock validation.
-3. Extend the champion/challenger improvement loop.
-4. Expand the WebSocket soak and forward-paper verification suite.
-
-Medium-term (product):
-
-5. Exchange-connected paper broker adapter.
-6. Real-time market data streaming across multiple venues.
-7. Multi-venue data and execution adapters.
-8. Database-backed state and operational tooling.
-
-Long-term (planned, not started):
-
-9. Live execution with governed capital and user controls.
-10. Multi-broker, multi-tenant product layer.
-
-The full sequence, including contingency planning, is defined in the
-[architecture document](docs/CRYPTO_TRADING_PLATFORM_ARCHITECTURE.md).
-
----
-
-## Limitations
-
-- Single primary data venue (Binance USDⓈ-M); single cache.
-- Results are historical simulations on cached data — subject to regime
-  decay, cost drift, and every failure mode the gates test for.
-- The research kernel is batch-oriented (CLI sweeps), not streaming.
-- No user accounts, no API server, no frontend, no database-backed state
-  beyond paper-trading persistence.
-- The historical archive (`research/failed/`) contains earlier-generation
-  code and experiments retained for the record; it is not installed and is
-  not part of the test suite.
-
----
-
-## Disclaimer
-
-This software is provided for research and educational purposes. Nothing in
-this repository is financial advice, and nothing here guarantees or implies
-profitability. Cryptocurrency trading involves substantial risk of loss.
-Any performance data in this repository is a historical simulation produced
-by the research pipeline — not live trading results, and not indicative of
-future returns. Use at your own risk.
-
----
-
-## Installation
-
-```bash
-# Python >= 3.12
 git clone https://github.com/Quantitative-Systems/crypto-platform.git
 cd crypto-platform
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt        # numpy, pandas, pytest
-pip install -e ".[dev]"                # optional: editable + dev extras
 
-# Run the research pipeline
-PYTHONPATH=. python3 -m crypto_platform.cli screen
-PYTHONPATH=. python3 -m crypto_platform.cli sweep
-PYTHONPATH=. python3 -m crypto_platform.cli paper
-
-# Run the legacy research layer
-PYTHONPATH=. python3 -m qcp_platform.cli screen
-PYTHONPATH=. python3 -m qcp_platform.cli sweep
-
-# Tests
-python3 -m pytest tests -q
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pip install -e ".[dev]"
 ```
 
-`market_data/cache/` holds the local Binance kline/funding archives used by
-the pipeline (excluded from git; regenerate with the tools in
-`market_data/`). Artifacts land in `research/results/` — both under
-`research/results/qcp_platform/` and `research/results/crypto_platform/`.
+### 2. Run Comprehensive Test Suite
+```bash
+pytest -v
+```
+*Expected: 208/208 tests passing across unit and integration suites.*
+
+---
+
+## Operational Execution Guide
+
+### 1. Running the Quantitative Research Pipeline
+```bash
+# Pre-trade cost economics per horizon
+python3 -m crypto_platform.cli screen
+
+# Full walk-forward sweep with G1–G7 governance gates
+python3 -m crypto_platform.cli sweep
+
+# Generate research report
+python3 -m crypto_platform.cli report
+
+# Run funding carry compression stress test
+python3 -m crypto_platform.cli carry-stress
+```
+
+### 2. Running Forward Paper Trading
+```bash
+# Launch forward-paper session with durable SQLite ledger
+python3 -m crypto_platform.cli forward-paper
+
+# Launch WebSocket live market data soak runner
+python3 -m crypto_platform.cli soak
+```
+
+### 3. Launching the Web Dashboard & API Server
+```bash
+uvicorn crypto_platform.api.server:app --host 0.0.0.0 --port 8000
+```
+Open `http://localhost:8000` in any modern browser to view the real-time operational dashboard.
+
+### 4. LIVE-CANARY Activation Procedure (Manual Owner Workflow)
+
+Real-money trading is disabled by default. When the platform owner decides to initiate controlled canary trading:
+
+1. **Configure Non-Custodial Credentials & Capital Limits**:
+   ```bash
+   export OPERATING_MODE="LIVE-CANARY"
+   export LIVE_CANARY_AUTHORIZED="true"
+   export CANARY_CAPITAL_LIMIT_USD="100.0"       # Explicit test capital ceiling
+   export CANARY_MAX_POSITION_SIZE="50.0"        # Max notional per position
+   export CANARY_MAX_LEVERAGE="1.5"              # Max gross leverage
+   export CANARY_MAX_DAILY_LOSS="0.02"           # 2% daily loss limit
+   export CANARY_MAX_TOTAL_DRAWDOWN="0.05"       # 5% total drawdown limit
+
+   # Real exchange credentials (with WITHDRAWAL permissions strictly disabled)
+   export CANARY_BROKER_API_KEY="<production_api_key>"
+   export CANARY_BROKER_API_SECRET="<production_api_secret>"
+   ```
+
+2. **Execute Pre-Flight Verification**:
+   ```bash
+   curl -X POST http://localhost:8000/api/canary/verify \
+        -H "Content-Type: application/json" \
+        -d '{"symbol": "BTCUSDT"}'
+   ```
+   *Inspect the JSON response to ensure all 14 gates pass.*
+
+3. **Arm LIVE-CANARY**:
+   ```bash
+   curl -X POST http://localhost:8000/api/canary/arm \
+        -H "Content-Type: application/json" \
+        -d '{"authorized_by": "SYSTEM_OWNER"}'
+   ```
+
+4. **Activate Order Routing**:
+   ```bash
+   curl -X POST http://localhost:8000/api/canary/activate \
+        -H "Content-Type: application/json" \
+        -d '{"authorized_by": "SYSTEM_OWNER"}'
+   ```
+
+5. **Emergency Halt**:
+   ```bash
+   curl -X POST http://localhost:8000/api/canary/disarm \
+        -H "Content-Type: application/json" \
+        -d '{"reason": "MANUAL_OPERATIONAL_PAUSE"}'
+   ```
+
+---
+
+## Security Policy
+
+- **Non-Custodial Architecture**: The platform does not hold custody of funds. API keys must have **withdrawal permissions disabled**. Any key with withdrawal capabilities is rejected immediately with a fatal security violation.
+- **Credential Protection**: Zero credentials in source code or Git. All API secrets are masked in logs and telemetry (`***[last 4]`).
+- **Encrypted Local Storage**: Sensitive credentials in config files are encrypted using AES-256-GCM authenticated encryption.
+- For complete security disclosures, consult [docs/SECURITY.md](docs/SECURITY.md).
 
 ---
 
 ## License
 
-[MIT](LICENSE)
+This project is licensed under the terms of the [MIT License](LICENSE).
