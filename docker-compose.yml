@@ -1,0 +1,83 @@
+version: "3.8"
+
+services:
+  # Forward-paper trading service (live market ingestion, paper execution)
+  forward-paper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crypto-platform-paper
+    restart: unless-stopped
+    command: ["forward-paper", "--duration-hours", "24"]
+    env_file:
+      - .env
+    volumes:
+      - ./research:/app/research
+      - ./market_data:/app/market_data
+    environment:
+      - PLATFORM_ENV=PAPER
+      - PLATFORM_LIVE_CAPITAL_USD=0.0
+      - PLATFORM_LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "python3", "-m", "crypto_platform.cli", "health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Broker / Exchange Demo Trading service (Binance Testnet / Bybit Testnet)
+  demo-trading:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crypto-platform-demo
+    restart: "no"
+    command: ["demo", "--venue", "binance", "--mock"]
+    env_file:
+      - .env
+    volumes:
+      - ./research:/app/research
+      - ./market_data:/app/market_data
+    environment:
+      - PLATFORM_ENV=DEMO
+      - PLATFORM_LIVE_CAPITAL_USD=0.0
+      - PLATFORM_LOG_LEVEL=INFO
+
+  # Periodic health check & telemetry reporter
+  health-check:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crypto-platform-health
+    command: ["health"]
+    env_file:
+      - .env
+    environment:
+      - PLATFORM_ENV=PAPER
+      - PLATFORM_LIVE_CAPITAL_USD=0.0
+
+  # Institutional Web Dashboard & REST/WebSocket API Gateway
+  web-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crypto-platform-web
+    restart: unless-stopped
+    command: ["web", "--host", "0.0.0.0", "--port", "8080"]
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    volumes:
+      - ./research:/app/research
+      - ./market_data:/app/market_data
+    environment:
+      - PLATFORM_ENV=PAPER
+      - PLATFORM_LIVE_CAPITAL_USD=0.0
+      - PLATFORM_LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s

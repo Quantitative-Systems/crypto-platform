@@ -20,8 +20,43 @@ from crypto_platform.core.domain import (
 from crypto_platform.core.interfaces import IExchangeAdapter
 
 
-class PermissionSecurityError(Exception):
+class ExchangeAdapterError(Exception):
+    """Base exception for all exchange and broker adapter errors."""
+    pass
+
+
+class PermissionSecurityError(ExchangeAdapterError):
     """Raised when an API key carries dangerous or prohibited permissions (e.g. Withdraw)."""
+    pass
+
+
+class AuthenticationError(ExchangeAdapterError):
+    """Raised when broker/exchange authentication fails."""
+    pass
+
+
+class NetworkConnectivityError(ExchangeAdapterError):
+    """Raised on connection timeout, disconnect, or network transport failure."""
+    pass
+
+
+class RateLimitExceededError(ExchangeAdapterError):
+    """Raised when local or remote exchange rate limits are exceeded."""
+    pass
+
+
+class InvalidOrderError(ExchangeAdapterError):
+    """Raised when an order fails broker/exchange validation (e.g. tick size, min notional)."""
+    pass
+
+
+class InsufficientMarginError(ExchangeAdapterError):
+    """Raised when an account lacks sufficient margin or balance to place an order."""
+    pass
+
+
+class OrderNotFoundError(ExchangeAdapterError):
+    """Raised when querying, cancelling, or modifying an order that does not exist."""
     pass
 
 
@@ -72,4 +107,4 @@ class BaseExchangeAdapter(IExchangeAdapter):
 
     def check_rate_limit(self, weight: int = 1) -> None:
         if not self._rate_limiter.acquire(weight):
-            raise RuntimeError(f"Local rate limit budget exceeded on {self._venue_name}")
+            raise RateLimitExceededError(f"Local rate limit budget exceeded on {self._venue_name}")

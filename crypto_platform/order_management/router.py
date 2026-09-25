@@ -50,11 +50,19 @@ class OrderRouter:
         size = decision.adjusted_size if decision.adjusted_size is not None else intent.target_size
         side = OrderSide.BUY if intent.direction > 0 else OrderSide.SELL
 
+        is_post_only = bool(intent.meta.get("post_only", False)) or (
+            intent.urgency == ExecutionUrgency.LOW and intent.limit_price is not None
+        )
+
         # Determine order type and time in force
         if intent.urgency == ExecutionUrgency.EMERGENCY:
             order_type = OrderType.MARKET
             tif = TimeInForce.IOC
             price = None
+        elif is_post_only and intent.limit_price is not None:
+            order_type = OrderType.POST_ONLY
+            tif = TimeInForce.PO
+            price = intent.limit_price
         elif intent.limit_price is not None:
             order_type = OrderType.LIMIT
             tif = TimeInForce.GTC

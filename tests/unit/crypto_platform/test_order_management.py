@@ -132,3 +132,23 @@ def test_oms_position_tracking_and_pnl():
     assert pos.size == 0.5
     # Realized PnL: (62,000 - 60,000) * 0.5 = 1,000 USDT
     assert pos.realized_pnl == 1_000.0
+
+
+def test_order_router_post_only():
+    intent = OrderIntent(
+        intent_id="i_po",
+        strategy_id="s_po",
+        tenant_id="t1",
+        account_id="a1",
+        symbol="BTCUSDT",
+        direction=1,
+        target_size=0.1,
+        urgency=ExecutionUrgency.LOW,
+        limit_price=64_000.0,
+    )
+    decision = RiskDecision(approved=True, reason="PASS")
+    order = OrderRouter.route_intent(intent, decision, "binance")
+    assert order.order_type == OrderType.POST_ONLY
+    assert order.time_in_force == TimeInForce.PO
+    assert order.price == 64_000.0
+

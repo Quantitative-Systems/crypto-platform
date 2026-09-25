@@ -7,6 +7,7 @@ They NEVER place orders directly on exchanges.
 from __future__ import annotations
 
 from abc import abstractmethod
+import hashlib
 from typing import Any, Dict, List, Optional
 import time
 import uuid
@@ -67,10 +68,20 @@ class BaseStrategy(IStrategy):
         stop_price: Optional[float] = None,
         target_price: Optional[float] = None,
         reason: str = "",
+        event_ts: Optional[int] = None,
     ) -> OrderIntent:
         """Helper to create an OrderIntent."""
+        if event_ts is not None:
+            # Deterministic, reproducible intent ID for duplicate detection and auditability
+            raw = f"{self.strategy_id}:{self.account_id}:{symbol}:{event_ts}:{direction}"
+            intent_id = f"i_{hashlib.sha256(raw.encode()).hexdigest()[:20]}"
+            created_at_ms = event_ts
+        else:
+            intent_id = str(uuid.uuid4())
+            created_at_ms = int(time.time() * 1000)
+
         return OrderIntent(
-            intent_id=str(uuid.uuid4()),
+            intent_id=intent_id,
             strategy_id=self.strategy_id,
             tenant_id=self.tenant_id,
             account_id=self.account_id,
@@ -82,7 +93,7 @@ class BaseStrategy(IStrategy):
             stop_price=stop_price,
             target_price=target_price,
             horizon=self.horizon,
-            created_at_ms=int(time.time() * 1000),
+            created_at_ms=created_at_ms,
             signal_reason=reason,
         )
 

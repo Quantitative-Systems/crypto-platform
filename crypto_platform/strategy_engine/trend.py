@@ -92,6 +92,7 @@ class TrendBreakoutStrategy(BaseStrategy):
                     stop_price=stop_px,
                     target_price=target_px,
                     reason=f"Breakout above {highest_high:.2f}",
+                    event_ts=event.close_ts,
                 )
             )
 
@@ -109,7 +110,105 @@ class TrendBreakoutStrategy(BaseStrategy):
                     stop_price=stop_px,
                     target_price=target_px,
                     reason=f"Breakdown below {lowest_low:.2f}",
+                    event_ts=event.close_ts,
                 )
             )
 
         return intents
+
+
+class TrendRiderStrategy(BaseStrategy):
+    """Trend continuation entered on shallow pullbacks across higher timeframes."""
+
+    def __init__(
+        self,
+        strategy_id: str = "trend_rider_v1",
+        horizon: str = "POSITION",
+        supported_symbols: Optional[List[str]] = None,
+        fast_period: int = 20,
+        slow_period: int = 50,
+        atr_mult: float = 2.5,
+        target_r: float = 3.0,
+        risk_per_trade_usd: float = 250.0,
+    ):
+        symbols = supported_symbols or ["DOGEUSDT"]
+        super().__init__(
+            strategy_id=strategy_id,
+            family="TREND",
+            horizon=horizon,
+            supported_symbols=symbols,
+        )
+        self.fast_period = fast_period
+        self.slow_period = slow_period
+        self.atr_mult = atr_mult
+        self.target_r = target_r
+        self.risk_per_trade_usd = risk_per_trade_usd
+        self.lookback = slow_period
+
+    def on_candle(self, event: CandleEvent) -> List[OrderIntent]:
+        if event.symbol not in self.supported_symbols:
+            return []
+
+        history = self.recent_candles.setdefault(event.symbol, [])
+        history.append(event)
+        if len(history) > self.slow_period + 20:
+            history.pop(0)
+
+        if len(history) < self.slow_period + 1:
+            return []
+
+        closes = np.array([c.close for c in history])
+        highs = np.array([c.high for c in history])
+        lows = np.array([c.low for c in history])
+
+        fast_ma = float(np.mean(closes[-self.fast_period:]))
+        slow_ma = float(np.mean(closes[-self.slow_period:]))
+
+        if len(highs) > 1:
+            tr = np.maximum(
+                highs[1:] - lows[1:],
+                np.maximum(abs(highs[1:] - closes[:-1]), abs(lows[1:] - closes[:-1])),
+            )
+            atr = float(np.mean(tr[-14:])) if len(tr) >= 14 else float(event.high - event.low)
+        else:
+            atr = float(event.high - event.low)
+
+        if atr <= 0:
+            atr = float(event.close * 0.01)
+
+        curr_close = event.close
+        stop_dist = self.atr_mult * atr
+        target_size = self.risk_per_trade_usd / stop_dist
+        intents: List[OrderIntent] = []
+
+        # Long: fast MA > slow MA and shallow pullback (price near fast MA)
+        if fast_ma > slow_ma and curr_close >= fast_ma * 0.98 and self.active_positions.get(event.symbol, 0.0) <= 0:
+            intents.append(
+                self.create_intent(
+                    symbol=event.symbol,
+                    direction=1,
+                    target_size=target_size,
+                    urgency=ExecutionUrgency.NORMAL,
+                    limit_price=curr_close,
+                    stop_price=curr_close - stop_dist,
+                    target_price=curr_close + self.target_r * stop_dist,
+                    reason=f"Trend rider long: fast_ma={fast_ma:.4f} > slow_ma={slow_ma:.4f}",
+                    event_ts=event.close_ts,
+                )
+            )
+        elif fast_ma < slow_ma and curr_close <= fast_ma * 1.02 and self.active_positions.get(event.symbol, 0.0) >= 0:
+            intents.append(
+                self.create_intent(
+                    symbol=event.symbol,
+                    direction=-1,
+                    target_size=target_size,
+                    urgency=ExecutionUrgency.NORMAL,
+                    limit_price=curr_close,
+                    stop_price=curr_close + stop_dist,
+                    target_price=curr_close - self.target_r * stop_dist,
+                    reason=f"Trend rider short: fast_ma={fast_ma:.4f} < slow_ma={slow_ma:.4f}",
+                    event_ts=event.close_ts,
+                )
+            )
+        return intents
+

@@ -114,7 +114,9 @@ def cmd_forward_paper(args) -> int:
     from crypto_platform.market_data.websocket_client import PublicWebSocketClient
     from crypto_platform.paper_trading.daemon import ForwardPaperTradingDaemon
     from crypto_platform.paper_trading.persistence import SQLitePaperLedger
-    from crypto_platform.strategy_engine.trend import TrendBreakoutStrategy
+    from crypto_platform.strategy_engine.trend import TrendBreakoutStrategy, TrendRiderStrategy
+    from crypto_platform.strategy_engine.mean_reversion import BollingerMeanReversionStrategy
+    from crypto_platform.strategy_engine.funding_carry import FundingCarryStrategy
 
     ledger = SQLitePaperLedger("research/paper_trading.db")
     daemon = ForwardPaperTradingDaemon(
@@ -123,21 +125,68 @@ def cmd_forward_paper(args) -> int:
         initial_equity=50_000.0,
         ledger=ledger,
     )
-    strat = TrendBreakoutStrategy("trend_breakout_v1", lookback=10, supported_symbols=["BTCUSDT"])
-    daemon.register_strategy(strat)
+    # Register the 10 promoted strategy books across their target instruments & horizons
+    # 1. INTRADAY (15m)
+    daemon.register_strategy(TrendBreakoutStrategy("promoted_intraday_trend_eth", horizon="INTRADAY", supported_symbols=["ETHUSDT"]))
+    daemon.register_strategy(TrendBreakoutStrategy("promoted_intraday_trend_sol", horizon="INTRADAY", supported_symbols=["SOLUSDT"]))
+    daemon.register_strategy(BollingerMeanReversionStrategy("promoted_intraday_mr_ada", horizon="INTRADAY", supported_symbols=["ADAUSDT"]))
+    # 2. SWING (1h)
+    daemon.register_strategy(TrendBreakoutStrategy("promoted_swing_trend_eth", horizon="SWING", supported_symbols=["ETHUSDT"]))
+    daemon.register_strategy(TrendBreakoutStrategy("promoted_swing_trend_sol", horizon="SWING", supported_symbols=["SOLUSDT"]))
+    daemon.register_strategy(TrendBreakoutStrategy("promoted_swing_trend_ada", horizon="SWING", supported_symbols=["ADAUSDT"]))
+    # 3. POSITION (4h)
+    daemon.register_strategy(TrendBreakoutStrategy("promoted_pos_trend_bnb", horizon="POSITION", supported_symbols=["BNBUSDT"]))
+    daemon.register_strategy(TrendBreakoutStrategy("promoted_pos_trend_ada", horizon="POSITION", supported_symbols=["ADAUSDT"]))
+    daemon.register_strategy(TrendRiderStrategy("promoted_pos_rider_doge", horizon="POSITION", supported_symbols=["DOGEUSDT"]))
+    # 4. CARRY (Portfolio Funding)
+    daemon.register_strategy(FundingCarryStrategy("promoted_carry_portfolio", horizon="CARRY", supported_symbols=["ETHUSDT", "SOLUSDT", "ADAUSDT", "BNBUSDT", "DOGEUSDT"]))
 
-    ws_client = PublicWebSocketClient(venue="binance", is_futures=False)
+    # Pre-warm strategy lookbacks from certified cache to eliminate cold-start starvation
+    print("Pre-warming strategy lookbacks from certified market data cache...")
+    daemon.warm_up(cache_dir="market_data/cache", bars=60)
+
+    ws_client = PublicWebSocketClient(
+        venue="binance",
+        is_futures=False,
+        timeframes=["15m", "1h", "4h"],
+    )
     summary_path = "research/results/crypto_platform/forward_paper_summary.json"
+    symbols = ["ETHUSDT", "SOLUSDT", "ADAUSDT", "BNBUSDT", "DOGEUSDT"]
 
     print(f"Starting forward paper trading daemon for {args.duration}s with public Binance feeds...")
+    print(f"Active Promoted Symbols: {symbols}")
+    print(f"Registered Books ({len(daemon.strategies)}): {list(daemon.strategies.keys())}")
     summary = asyncio.run(
         daemon.run_forward_session(
             duration_seconds=float(args.duration),
-            symbols=["BTCUSDT"],
+            symbols=symbols,
             ws_client=ws_client,
             summary_out_path=summary_path,
         )
     )
+    funnel = summary.get("funnel", {})
+    print("\n" + "=" * 65)
+    print("FORWARD-PAPER EXECUTION FUNNEL")
+    print("=" * 65)
+    print(f"Market events:          {funnel.get('market_events', 0)}")
+    print(f"Closed candles:         {funnel.get('closed_candles', 0)}")
+    print(f"Strategy evaluations:   {funnel.get('strategy_evaluations', 0)}")
+    print(f"Signals:                {funnel.get('signals', 0)}")
+    print(f"Order intents:          {funnel.get('order_intents', 0)}")
+    print(f"Risk accepted:          {funnel.get('risk_accepted', 0)}")
+    print(f"OMS accepted:           {funnel.get('oms_acceptances', 0)}")
+    print(f"Simulator submitted:    {funnel.get('simulator_submissions', 0)}")
+    print(f"Resting:                {funnel.get('resting_orders', 0)}")
+    print(f"Expired:                {funnel.get('expired_orders', 0)}")
+    print(f"Cancelled:              {funnel.get('cancelled_orders', 0)}")
+    print(f"Partial fills:          {funnel.get('partial_fills', 0)}")
+    print(f"Full fills:             {funnel.get('full_fills', 0)}")
+    print("=" * 65)
+    if funnel.get("rejection_reasons"):
+        print("REJECTION REASONS BREAKDOWN:")
+        for r_code, count in funnel["rejection_reasons"].items():
+            print(f"  {r_code:30}: {count}")
+        print("=" * 65)
     print("Paper Trading Session Summary:")
     print(json.dumps(summary, indent=2))
     return 0
@@ -238,6 +287,19 @@ def main():
     # status
     sub.add_parser("status", help="Current platform status and promoted books")
 
+    # demo
+    p_demo = sub.add_parser("demo", help="Run Demo / Testnet broker harness session")
+    p_demo.add_argument("--venue", default="binance", choices=["binance", "bybit", "ccxt"], help="Target exchange adapter")
+    p_demo.add_argument("--mock", action="store_true", default=True, help="Use deterministic contract-verified mock adapter")
+
+    # health
+    sub.add_parser("health", help="Run comprehensive system health, security, and connectivity checks")
+
+    # web
+    p_web = sub.add_parser("web", help="Launch institutional web dashboard and API gateway")
+    p_web.add_argument("--host", default="0.0.0.0", help="Host interface to bind (default 0.0.0.0)")
+    p_web.add_argument("--port", default=8080, type=int, help="Port to listen on (default 8080)")
+
     args = p.parse_args()
     dispatch = {
         "screen": cmd_screen,
@@ -251,9 +313,111 @@ def main():
         "soak": cmd_soak,
         "discover-arb": cmd_discover_arb,
         "status": cmd_status,
+        "demo": cmd_demo,
+        "health": cmd_health,
+        "web": cmd_web,
     }
     sys.exit(dispatch[args.cmd](args))
 
 
+def cmd_demo(args) -> int:
+    """Run Demo / Testnet broker trading harness session."""
+    import asyncio
+    from crypto_platform.demo_trading.harness import DemoTradingHarness
+    from crypto_platform.exchange_adapters.binance_adapter import BinanceAdapter
+    from crypto_platform.exchange_adapters.bybit_adapter import BybitAdapter
+    from crypto_platform.exchange_adapters.ccxt_adapter import CCXTAdapter
+    from crypto_platform.strategy_engine.trend import TrendBreakoutStrategy
+
+    venue = getattr(args, "venue", "binance").lower()
+    print(f"Initializing Demo / Testnet broker harness on venue: {venue}...")
+    if venue == "bybit":
+        adapter = BybitAdapter(testnet=True, mock_mode=getattr(args, "mock", True))
+    elif venue == "ccxt":
+        adapter = CCXTAdapter(venue_id="kraken", mock_mode=True)
+    else:
+        adapter = BinanceAdapter(is_futures=True, testnet=True, mock_mode=getattr(args, "mock", True))
+
+    harness = DemoTradingHarness(
+        adapter=adapter,
+        account_id=f"acc_demo_{venue}",
+        initial_equity=100_000.0,
+    )
+    harness.register_strategy(TrendBreakoutStrategy("promoted_intraday_trend_eth", horizon="INTRADAY", supported_symbols=["ETHUSDT"]))
+
+    async def _run():
+        await harness.initialize()
+        rec = await harness.reconcile()
+        return harness.get_summary(), rec
+
+    summary, reconciliation = asyncio.run(_run())
+    print("\nDemo Trading Pre-Flight & State Reconciliation:")
+    print(json.dumps(reconciliation, indent=2))
+    print("\nDemo Trading Session Summary:")
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
+def cmd_health(args) -> int:
+    """Run comprehensive platform health, configuration, and security pre-flight checks."""
+    from crypto_platform.config.settings import PlatformSettings
+    import os
+
+    health_status = {
+        "status": "HEALTHY",
+        "live_trading_locked": True,
+        "live_capital_usd": 0.0,
+        "environment": "PAPER",
+        "checks": {},
+    }
+
+    try:
+        settings = PlatformSettings.load_from_env()
+        health_status["checks"]["settings_validation"] = "PASSED"
+        health_status["environment"] = settings.environment
+        health_status["live_capital_usd"] = settings.live_capital_usd
+    except Exception as e:
+        health_status["checks"]["settings_validation"] = f"FAILED: {e}"
+        health_status["status"] = "UNHEALTHY"
+
+    # Database check
+    db_file = "research/paper_trading.db"
+    try:
+        from crypto_platform.paper_trading.persistence import SQLitePaperLedger
+        ledger = SQLitePaperLedger(db_path=db_file)
+        conn = ledger._get_connection()
+        conn.close()
+        health_status["checks"]["database_connectivity"] = "PASSED"
+    except Exception as e:
+        health_status["checks"]["database_connectivity"] = f"FAILED: {e}"
+        health_status["status"] = "UNHEALTHY"
+
+    # Market data cache check
+    cache_dir = "market_data/cache"
+    if os.path.exists(cache_dir) and len(os.listdir(cache_dir)) > 5:
+        health_status["checks"]["market_data_cache"] = f"PASSED ({len(os.listdir(cache_dir))} files)"
+    else:
+        health_status["checks"]["market_data_cache"] = "WARNING: Sparse cache directory"
+
+    # Adapter endpoints check
+    from crypto_platform.exchange_adapters.binance_adapter import BinanceAdapter
+    b_adapter = BinanceAdapter(is_futures=True, testnet=True)
+    health_status["checks"]["broker_testnet_endpoints"] = b_adapter.get_endpoints()
+
+    print(json.dumps(health_status, indent=2))
+    return 0 if health_status["status"] == "HEALTHY" else 1
+
+
+def cmd_web(args) -> int:
+    """Launch institutional REST and WebSocket web dashboard."""
+    from aiohttp import web
+    from crypto_platform.api.server import create_app
+    app = create_app()
+    print(f"Launching Quantitative Platform Web Dashboard at http://{args.host}:{args.port}")
+    web.run_app(app, host=args.host, port=args.port)
+    return 0
+
+
 if __name__ == "__main__":
     main()
+

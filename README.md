@@ -1,48 +1,27 @@
 # Crypto Trading Platform
 
-[![Tests](https://img.shields.io/badge/tests-43%20passing-green)](#testing)
+> **Professional systematic trading infrastructure** for cryptocurrency markets — from certified market data and strategy research through backtesting, validation, portfolio construction, risk management, paper trading, and exchange-connected execution.
+
+[![Tests](https://img.shields.io/badge/tests-145%20passing-green)](#testing)
 [![Live Capital](https://img.shields.io/badge/live%20capital-%240.00-red)]
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-A research-driven cryptocurrency trading platform for market-data
-infrastructure, strategy research, historical backtesting, validation,
-portfolio construction, risk management, paper trading, and eventual
-exchange-connected automated execution.
-
-> **The platform places no live orders and holds no funds. All strategies are
-> research artifacts. Nothing here is a profitability claim.**
+> **This platform places no live orders and holds no funds. All strategies are research artifacts. Nothing here is a profitability claim.**
 
 ---
 
 ## Overview
 
-This repository contains a cost-aware, self-improving strategy research
-engine covering six trading horizons — scalping, intraday, swing, position,
-investing, and market-neutral carry — across ten liquid crypto assets. Every
-strategy candidate is measured through the same pipeline: walk-forward
-backtesting with full fee/slippage/spread modeling, out-of-sample validation,
-a +50% cost-shock survival test, and a portfolio-level marginal-contribution
-gate. Only books that survive all seven governance gates are promoted to
-**paper trading**. Everything else is archived, with its rejection reason.
+This repository contains a modular, research-driven cryptocurrency trading platform with two complementary layers:
 
-**No live capital is deployed. Promotion means paper-trading eligibility.**
+1. **`crypto_platform/` — the production-grade infrastructure layer** — market data websockets, strategy engines, portfolio allocation, risk engine, order management, exchange adapters, paper trading persistence, and observability.
+2. **`qcp_platform/` — the research and validation layer** — walk-forward backtesting, G1–G7 governance gates, cost-shock analysis, portfolio construction, and paper-trading eligibility.
+
+Every strategy candidate is measured through the same rigorous pipeline: certified market data, causal feature engineering, walk-forward backtesting with full fee/slippage/spread modeling, out-of-sample validation, cost-shock survival testing, and portfolio-level marginal-contribution gates. Only books that survive all governance gates are promoted to **paper trading**. Everything else is archived with its rejection reason.
+
+**No live capital is deployed. Promotion means paper-trading eligibility only.**
 
 ---
-
-## Project Goals
-
-1. **Honest measurement.** Every strategy verdict is produced by one
-   deterministic pipeline: next-bar-open fills, adverse-first stop
-   resolution, costs charged on both sides, R-multiple accounting.
-2. **No lookahead.** Parameters are selected on a development window,
-   confirmed on a validation window, and reported on a held-out
-   out-of-sample window that is never used for selection.
-3. **Economic realism.** A horizon whose stop cannot pay its roundtrip cost
-   is flagged `NOT_ECONOMIC` instead of being force-fit.
-4. **Governed risk.** Volatility targeting, drawdown tiers, daily/weekly loss
-   caps, consecutive-loss cooldown, and a hard kill switch.
-5. **Preserved negative evidence.** Failed and superseded experiments are
-   archived verbatim — they are part of the research record.
 
 ## Current Capabilities
 
@@ -50,23 +29,26 @@ gate. Only books that survive all seven governance gates are promoted to
 
 | Area | Status | Where |
 |---|---|---|
-| Market data (Binance USDⓈ-M klines + funding, quality gates) | Implemented | `market_data/`, `qcp_platform/data.py` |
+| Market data (Binance USDⓈ-M klines + funding, quality gates, websocket streaming) | Implemented | `market_data/`, `crypto_platform/market_data/` |
 | Strategy research across 6 horizons / 10 assets | Implemented | `qcp_platform/strategies.py`, `allocations.py` |
+| Strategy engine (momentum, trend, mean reversion, volatility, statistical arbitrage, funding carry, investing) | Implemented | `crypto_platform/strategy_engine/` |
 | Walk-forward backtesting (60/20/20 DEV/VAL/OOS) | Implemented | `qcp_platform/walkforward.py`, `engine.py` |
-| Validation, cost-shock and robustness gates (G1–G6) | Implemented | `qcp_platform/evaluate.py` |
+| Validation, cost-shock and robustness gates (G1–G7) | Implemented | `qcp_platform/evaluate.py` |
 | Portfolio construction + governed paper simulation | Implemented | `qcp_platform/portfolio.py`, `governor.py` |
+| Risk engine (firewall, circuit breakers, kill switches, drawdown control) | Implemented | `crypto_platform/risk_engine/` |
+| Order management (router, state machine, reconciliation) | Implemented | `crypto_platform/order_management/`, `reconciliation/` |
+| Exchange adapters (Binance, Bybit, CCXT) | Implemented (paper/testnet oriented) | `crypto_platform/exchange_adapters/` |
+| Paper trading (simulator, persistence, daemon, soak runner) | Implemented | `crypto_platform/paper_trading/` |
+| Statistical arbitrage / relative-value discovery | Implemented | `crypto_platform/discovery/`, `research_engine/comparison_engine.py` |
+| Funding carry parameter sweep + compression stress | Implemented | `qcp_platform/carry_sweep.py`, `crypto_platform/research_engine/carry_stress.py` |
 | Champion/challenger self-improvement loop | Implemented | `qcp_platform/improve.py` |
-| Funding-carry parameter sweep | Implemented | `qcp_platform/carry_sweep.py` |
-| Reporting (markdown + JSON artifacts) | Implemented | `qcp_platform/report.py` |
+| Reporting (markdown + JSON artifacts) | Implemented | `qcp_platform/report.py`, `crypto_platform/research_engine/` |
 | Architecture blueprint (product → production) | Documented | `docs/` |
 | Historical research archive | Preserved | `research/failed/` |
 
 ### Planned (PLANNED — not implemented)
 
-Live exchange connectivity & order routing, multi-broker adapters beyond
-Binance, real-time streaming execution, user accounts / multi-tenant SaaS,
-web dashboards, database-backed state, and options/derivatives beyond
-perpetual funding. See the
+Live order placement with real capital, multi-tenant user accounts, web dashboards, database-backed state beyond paper-trading persistence, and options/derivatives beyond perpetual funding. See the
 [architecture document](docs/CRYPTO_TRADING_PLATFORM_ARCHITECTURE.md) for
 the full blueprint and build-phase sequence.
 
@@ -117,6 +99,8 @@ they are findings, not failures.
   through reproducible research evidence. OOS results in this repository are
   historical simulation measurements, not forecasts.
 
+---
+
 ## Architecture
 
 The current research engine is a modular monolith of 13+ packages under
@@ -127,6 +111,16 @@ The current research engine is a modular monolith of 13+ packages under
 costs → horizons → indicators → data → regimes → strategies → allocations
      → engine → walkforward → evaluate → runner → portfolio → governor
      → improve → report
+```
+
+The broader infrastructure layer under `crypto_platform/` extends this into a
+complete trading stack:
+
+```
+market data (websocket) → strategy engine → portfolio engine
+                    → risk engine → order management → exchange adapters
+                    → paper trading (simulator + persistence + daemon)
+                    → discovery (stat arb) → observability
 ```
 
 The full product architecture — connectivity, research, portfolio, risk,
@@ -140,13 +134,15 @@ It clearly distinguishes what is implemented today from what is planned.
 
 | Path | Purpose |
 |---|---|
-| `qcp_platform/` | The deployable research engine (13+ modules, one command sweep) |
+| `crypto_platform/` | Production-grade trading infrastructure: strategy engine, risk engine, order management, exchange adapters, paper trading, market data websocket, discovery, observability |
+| `qcp_platform/` | Research engine: walk-forward backtesting, G1–G7 governance gates, portfolio construction, paper-trading eligibility |
 | `market_data/` | Binance kline/funding cache, ingestion, quality & lineage pipeline |
 | `config/` | Asset universe and canonical timeframe sets |
 | `research/results/qcp_platform/` | Current measured results: REPORT.md, verdicts, economic screen, baselines |
+| `research/results/crypto_platform/` | Forward paper, soak test, carry stress, stat arb, and comparison results |
 | `research/failed/` | Historical research archive — superseded and rejected work, preserved verbatim |
-| `tests/` | Governance and data-layer tests for the current platform |
-| `docs/` | Product architecture blueprint |
+| `tests/` | Governance, data-quality, and infrastructure tests (145 tests) |
+| `docs/` | Product architecture, operations, security, risk, and methodology documentation |
 
 ---
 
@@ -188,16 +184,86 @@ inventory and conventions.
 
 ---
 
+## CLI Reference
+
+### `crypto_platform` — Primary Infrastructure Layer
+
+```bash
+python3 -m crypto_platform.cli screen      # pre-trade cost economics per horizon
+python3 -m crypto_platform.cli sweep       # full walk-forward sweep + G1–G7 gates
+python3 -m crypto_platform.cli report      # rebuild the markdown report
+python3 -m crypto_platform.cli improve     # champion/challenger self-improvement pass
+python3 -m crypto_platform.cli paper       # paper-trade the promoted book set
+python3 -m crypto_platform.cli carry-stress # funding carry compression stress audit
+python3 -m crypto_platform.cli forward-paper # controlled forward paper session (SQLite ledger)
+python3 -m crypto_platform.cli compare     # backtest vs OOS vs forward paper comparison
+python3 -m crypto_platform.cli soak        # websocket forward paper soak session
+python3 -m crypto_platform.cli discover-arb # relative-value / stat arb discovery
+python3 -m crypto_platform.cli status      # current platform status and promoted books
+```
+
+### `qcp_platform` — Legacy Research Layer
+
+```bash
+python3 -m qcp_platform.cli screen         # pre-trade cost economics per horizon
+python3 -m qcp_platform.cli sweep          # full walk-forward sweep + gates
+python3 -m qcp_platform.cli report         # rebuild the markdown report
+python3 -m qcp_platform.cli improve        # champion/challenger pass
+python3 -m qcp_platform.cli paper          # paper-trade the promoted set
+python3 -m qcp_platform.cli status         # current platform beliefs
+python3 -m qcp_platform.cli carry_sweep    # funding carry parameter sweep
+```
+
+Both CLIs write artifacts to `research/results/` so results are auditable and
+reproducible. **No subcommand ever places a live order: this platform
+promotes to PAPER only, deliberately.**
+
+---
+
+## Paper Trading
+
+`python3 -m crypto_platform.cli paper` simulates the promoted book set through
+the risk governor on the out-of-sample window: per-horizon capital weights,
+volatility scaling, drawdown tiers (10%/20%/25%), daily/weekly loss caps,
+consecutive-loss cooldown, and a hard kill switch. Every skipped trade is
+logged with its reason. Paper fills are simulated with the same cost model
+as backtests — they are not live fills.
+
+For longer-running validation, `python3 -m crypto_platform.cli soak` runs a
+public WebSocket forward-paper soak session with restart verification, while
+`python3 -m crypto_platform.cli forward-paper` runs a controlled session backed
+by a SQLite ledger.
+
+---
+
+## Exchange Connectivity
+
+The first research venue is **Binance USDⓈ-M** (klines, funding rates).
+Implemented adapters, behind a normalized exchange-neutral interface:
+
+| Venue | Data | Execution | Priority |
+|---|---|---|---|
+| Binance USDⓈ-M | Implemented (cache + websocket) | Paper only | Current |
+| Bybit | Implemented (adapter) | Paper only | Current |
+| Generic CCXT adapter | Implemented (adapter) | Paper only | Current |
+
+Planned venues and capabilities: OKX, Kraken, real-time multi-venue data, and
+live execution semantics. Any venue whose API cannot support the platform's
+execution semantics (next-bar-open, adverse-first stops, full cost accounting)
+is excluded rather than approximated.
+
+---
+
 ## Testing
 
 ```bash
 python3 -m pytest tests -q
 ```
 
-43 tests cover the data-quality/lineage pipeline and the research engine's
-governance invariants: causal HTF alignment, next-open entries, adverse-first
-resolution, always-on costs, horizon economics, governor tiers,
-funding-carry neutrality, and rotation without look-ahead.
+**145 tests** cover the data-quality/lineage pipeline, research engine
+governance invariants, strategy engine behavior, risk boundaries, exchange
+adapters, paper-trading persistence, websocket soak verification, market data,
+statistical arbitrage discovery, and cross-layer reconciliation.
 
 ---
 
@@ -221,66 +287,33 @@ Near-term (research):
 1. Broaden the measured book universe (more families, more timeframes).
 2. Deepen out-of-sample and cost-shock validation.
 3. Extend the champion/challenger improvement loop.
+4. Expand the WebSocket soak and forward-paper verification suite.
 
 Medium-term (product):
 
-4. Exchange-connected paper broker adapter.
-5. Real-time market data streaming.
-6. Multi-venue data and execution adapters.
+5. Exchange-connected paper broker adapter.
+6. Real-time market data streaming across multiple venues.
+7. Multi-venue data and execution adapters.
+8. Database-backed state and operational tooling.
 
 Long-term (planned, not started):
 
-7. Live execution with governed capital and user controls.
-8. Multi-broker, multi-tenant product layer.
+9. Live execution with governed capital and user controls.
+10. Multi-broker, multi-tenant product layer.
 
 The full sequence, including contingency planning, is defined in the
 [architecture document](docs/CRYPTO_TRADING_PLATFORM_ARCHITECTURE.md).
-
-## Planned Exchange Connectivity
-
-The first research venue is **Binance USDⓈ-M** (klines, funding rates).
-Planned adapters, behind a normalized exchange-neutral interface:
-
-| Venue | Data | Execution | Priority |
-|---|---|---|---|
-| Binance USDⓈ-M | Implemented (cache) | Paper only | Current |
-| Bybit / OKX / Kraken | Planned | Planned | Phase 4+ |
-| Generic CCXT adapter | Planned | Planned | Phase 4+ |
-
-Any venue whose API cannot support the platform's execution semantics
-(next-bar-open, adverse-first stops, full cost accounting) is excluded
-rather than approximated.
-
----
-
-## Paper Trading
-
-`python3 -m qcp_platform.cli paper` simulates the promoted book set through
-the risk governor on the out-of-sample window: per-horizon capital weights,
-volatility scaling, drawdown tiers (10%/20%/25%), daily/weekly loss caps,
-consecutive-loss cooldown, and a hard kill switch. Every skipped trade is
-logged with its reason. Paper fills are simulated with the same cost model
-as backtests — they are not live fills.
-
----
-
-## Future Live Execution
-
-**Not implemented.** Live trading is disabled by construction. Before any
-live consideration the platform requires: a validated forward burn-in on
-paper, exchange-connected execution with reconciliation, per-user capital
-isolation, and the full safety architecture described in the blueprint.
-This repository currently contains none of that, and says so.
 
 ---
 
 ## Limitations
 
-- Single data venue (Binance USDⓈ-M); single cache.
+- Single primary data venue (Binance USDⓈ-M); single cache.
 - Results are historical simulations on cached data — subject to regime
   decay, cost drift, and every failure mode the gates test for.
 - The research kernel is batch-oriented (CLI sweeps), not streaming.
-- No user accounts, no API server, no frontend, no database-backed state.
+- No user accounts, no API server, no frontend, no database-backed state
+  beyond paper-trading persistence.
 - The historical archive (`research/failed/`) contains earlier-generation
   code and experiments retained for the record; it is not installed and is
   not part of the test suite.
@@ -306,13 +339,16 @@ git clone https://github.com/Quantitative-Systems/crypto-platform.git
 cd crypto-platform
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt        # numpy, pandas, pytest
+pip install -e ".[dev]"                # optional: editable + dev extras
 
 # Run the research pipeline
-PYTHONPATH=. python3 -m qcp_platform.cli screen        # cost economics per horizon
-PYTHONPATH=. python3 -m qcp_platform.cli sweep         # full walk-forward sweep + gates
-PYTHONPATH=. python3 -m qcp_platform.cli improve       # champion/challenger pass
-PYTHONPATH=. python3 -m qcp_platform.cli paper         # governed paper simulation
-PYTHONPATH=. python3 -m qcp_platform.cli status        # current platform beliefs
+PYTHONPATH=. python3 -m crypto_platform.cli screen
+PYTHONPATH=. python3 -m crypto_platform.cli sweep
+PYTHONPATH=. python3 -m crypto_platform.cli paper
+
+# Run the legacy research layer
+PYTHONPATH=. python3 -m qcp_platform.cli screen
+PYTHONPATH=. python3 -m qcp_platform.cli sweep
 
 # Tests
 python3 -m pytest tests -q
@@ -320,7 +356,8 @@ python3 -m pytest tests -q
 
 `market_data/cache/` holds the local Binance kline/funding archives used by
 the pipeline (excluded from git; regenerate with the tools in
-`market_data/`). Artifacts land in `research/results/qcp_platform/`.
+`market_data/`). Artifacts land in `research/results/` — both under
+`research/results/qcp_platform/` and `research/results/crypto_platform/`.
 
 ---
 

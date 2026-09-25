@@ -19,7 +19,7 @@ import time
 from typing import Any, Callable, Dict, List, Optional, Set
 import websockets
 
-from crypto_platform.core.events import CandleEvent, Level, OrderBookEvent, TickerEvent
+from crypto_platform.core.events import CandleEvent, FundingRateEvent, Level, OrderBookEvent, TickerEvent
 
 logger = logging.getLogger("crypto_platform.market_data.websocket")
 
@@ -33,11 +33,13 @@ class PublicWebSocketClient:
         is_futures: bool = True,
         max_reconnect_attempts: int = 10,
         stale_threshold_ms: int = 5000,
+        timeframes: Optional[List[str]] = None,
     ):
         self.venue = venue.lower()
         self.is_futures = is_futures
         self.max_reconnect_attempts = max_reconnect_attempts
         self.stale_threshold_ms = stale_threshold_ms
+        self.timeframes = list(timeframes) if timeframes is not None else ["15m"]
 
         self.running = False
         self.connected = False
@@ -108,7 +110,10 @@ class PublicWebSocketClient:
             for s in symbols:
                 sym_lower = s.lower()
                 params.append(f"{sym_lower}@ticker")
-                params.append(f"{sym_lower}@kline_15m")
+                for tf in self.timeframes:
+                    params.append(f"{sym_lower}@kline_{tf}")
+                if self.is_futures:
+                    params.append(f"{sym_lower}@markPrice")
             sub_msg = {
                 "method": "SUBSCRIBE",
                 "params": params,
@@ -179,6 +184,24 @@ class PublicWebSocketClient:
             )
             self._notify("candle", candle)
             return candle
+
+        # Mark Price & Funding Rate Update
+        elif event_type == "markPriceUpdate":
+            symbol = raw.get("s", "")
+            ts = int(raw.get("E", time.time() * 1000))
+            funding_rate = float(raw.get("r", 0.0) or 0.0)
+            mark_px = float(raw.get("p", 0.0) or 0.0)
+            funding_event = FundingRateEvent(
+                venue=self.venue,
+                symbol=symbol,
+                timestamp_ms=ts,
+                funding_rate=funding_rate,
+                mark_price=mark_px,
+                index_price=float(raw.get("i", mark_px) or mark_px),
+                next_funding_time_ms=int(raw.get("T", 0) or 0),
+            )
+            self._notify("funding_rate", funding_event)
+            return funding_event
 
         return None
 
