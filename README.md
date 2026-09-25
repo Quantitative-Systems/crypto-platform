@@ -354,12 +354,19 @@ The platform integrates three production-ready exchange adapter implementations 
 
 ---
 
-## 13. Security Architecture
+## 13. Security Architecture & Open-Source Boundary
 
-- **Non-Custodial Policy:** The platform strictly prohibits custody of customer or investor capital. API keys must have **withdrawal permissions disabled**. Any key detected with withdrawal capability is rejected with `WITHDRAWAL_KEY_PROHIBITED`.
+The platform enforces strict boundaries between open-source code and operational security:
+
+- **Zero Credentials in Git:** API keys, secrets, private keys, and passwords must **never** be committed to version control. Repository visibility is not a security boundary.
+- **Environment Variables & Secret Management:** All configuration is injected via process environment variables or external secret managers (e.g., HashiCorp Vault, AWS Secrets Manager).
+- **Template Isolation (`.env.example`):** The repository provides only `.env.example` containing empty dummy placeholders. Actual `.env` files are permanently gitignored.
+- **Production Credentials Outside Repository:** Any future production or live-canary credentials must remain strictly external to the codebase.
+- **No Real Account Data Committed:** Account identifiers, live balances, orders, and trading ledgers are excluded from the repository.
+- **Open-Source vs. Private Architecture:** The public repository hosts the foundational quantitative framework, backtesting engine, and safety verification layer. Proprietary alphas and private production configurations belong in private operational repositories (see [Public Repository Security Policy](file:///home/mrcn2/crypto-platform/docs/PUBLIC_REPOSITORY_SECURITY_POLICY.md)).
+- **Non-Custodial Policy:** The platform strictly prohibits custody of customer capital. API keys must have **withdrawal permissions disabled**. Any key detected with withdrawal capability is rejected with `WITHDRAWAL_KEY_PROHIBITED`.
 - **Encrypted Vault:** Sensitive credentials stored locally are encrypted using PBKDF2 key derivation and AES-256-GCM authenticated encryption (`SecurityVault`).
 - **Credential Masking:** API keys are never rendered in plain text; all telemetry and logs display masked identifiers (`demo..._key`).
-- **Git Protection:** `.gitignore` protects `.env`, `*.db*`, `*.pem`, `*.key`, and secret JSON archives from accidental commits.
 - **Fail-Closed Live Lock:** `PlatformSettings` and `ProductionSupervisor` fail closed if live capital exceeds `$0.00` or if `environment == "LIVE"`.
 
 ---

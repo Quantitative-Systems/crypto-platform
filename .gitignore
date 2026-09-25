@@ -43,10 +43,21 @@ logs/
 # Secrets, credentials & private keys (never commit)
 *.pem
 *.key
+*.crt
+*.p12
+*.pfx
 id_rsa*
-credentials*.json
-secrets*.json
-**/*secret*.json
+credentials*
+secrets*
+*credential*.json
+*secret*.json
+*.env.local
+*.env.production
+*.env.staging
+dist/
+build/
+node_modules/
+*.pid
 
 # Ephemeral Large Raw Data (Preserves manifests and small samples)
 market_data/cache/*.json
