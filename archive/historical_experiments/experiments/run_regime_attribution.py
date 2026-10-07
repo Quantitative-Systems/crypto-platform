@@ -1,1 +1,0 @@
-    regime_results = "/home/mrcn2/crypto-platform/proofs/research/regime_attribution_results.json"

@@ -55,16 +55,16 @@ def cmd_health() -> int:
         checks_passed = False
 
     # 4. Inventory file
-    inv_file = REPO_ROOT / "DATA_INVENTORY.json"
+    inv_file = REPO_ROOT / "research" / "datasets" / "DATA_INVENTORY.json"
     if inv_file.exists():
-        print(" [PASS] DATA_INVENTORY.json available")
+        print(" [PASS] DATA_INVENTORY.json available (research/datasets)")
     else:
         print(" [WARN] DATA_INVENTORY.json not built")
 
     # 5. Leaderboard file
-    lead_file = REPO_ROOT / "RESEARCH_LEADERBOARD.json"
+    lead_file = REPO_ROOT / "research" / "leaderboard" / "RESEARCH_LEADERBOARD.json"
     if lead_file.exists():
-        print(" [PASS] RESEARCH_LEADERBOARD.json available")
+        print(" [PASS] RESEARCH_LEADERBOARD.json available (research/leaderboard)")
     else:
         print(" [WARN] RESEARCH_LEADERBOARD.json not built")
 
@@ -78,8 +78,8 @@ def cmd_health() -> int:
 
 def cmd_status() -> int:
     """Print high-level status of data inventory, experiments, and leaderboard."""
-    lead_file = REPO_ROOT / "RESEARCH_LEADERBOARD.json"
-    inv_file = REPO_ROOT / "DATA_INVENTORY.json"
+    lead_file = REPO_ROOT / "research" / "leaderboard" / "RESEARCH_LEADERBOARD.json"
+    inv_file = REPO_ROOT / "research" / "datasets" / "DATA_INVENTORY.json"
 
     print("==================================================")
     print("CRYPTO PLATFORM: SYSTEM STATUS")
@@ -110,9 +110,9 @@ def cmd_status() -> int:
 
 def cmd_leaderboard(top_n: int = 10) -> int:
     """Display top qualified strategy candidates."""
-    lead_file = REPO_ROOT / "RESEARCH_LEADERBOARD.json"
+    lead_file = REPO_ROOT / "research" / "leaderboard" / "RESEARCH_LEADERBOARD.json"
     if not lead_file.exists():
-        print("RESEARCH_LEADERBOARD.json not found. Run discovery first.")
+        print("RESEARCH_LEADERBOARD.json not found in research/leaderboard. Run discovery first.")
         return 1
 
     with open(lead_file, "r") as f:

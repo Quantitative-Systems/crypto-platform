@@ -1,1 +1,0 @@
-    out_json = "/home/mrcn2/crypto-platform/proofs/work/counterfactual_trade_management_results.json"

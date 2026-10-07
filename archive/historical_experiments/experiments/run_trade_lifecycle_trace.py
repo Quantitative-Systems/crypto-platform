@@ -1,1 +1,0 @@
-    trace_report_path = "/home/mrcn2/crypto-platform/proofs/research/simulator_integrity_trace_report.json"

@@ -79,3 +79,4 @@ nohup.out
 # Curated evidence belongs in proofs/ or hypotheses/.../tests/; scratch output is not committed.
 scratch/
 *.db
+.archive/

@@ -1,1 +1,0 @@
-    out_json = "/home/mrcn2/crypto-platform/proofs/work/causality_lookahead_audit_report.json"

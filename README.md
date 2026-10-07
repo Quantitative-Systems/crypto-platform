@@ -288,7 +288,9 @@ crypto-platform/
 │       ├── market_model/          # Market state primitives, regimes, observation
 │       ├── research/              # Walk-forward folds, discovery engines
 │       └── validation/            # Adversarial target geometry, robustness
-└── docs/                          # Institutional architecture & security manuals
+├── docs/                          # Categorized documentation (architecture, operations, security)
+├── config/                        # Configuration & timeframe sets
+└── deploy/                        # Docker containerization & systemd service units
 ```
 
 ---

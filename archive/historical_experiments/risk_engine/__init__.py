@@ -1,1 +1,0 @@
-"""Archived legacy experiment component."""
