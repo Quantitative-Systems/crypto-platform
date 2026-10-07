@@ -46,5 +46,15 @@ executed under the systematic STRATA Production Hardening Program.
 - **Replay Regression:** 9,608 / 9,608 opportunities 100% matched.
 - **Safety Status:** Real Capital: $0.00 | Live Adapter: HARD-DISABLED FAIL-CLOSED.
 
+---
+
+### `feature/observability-deployment-docs`
+- **Subsystems Hardened:** DEPLOYMENT (18), OBSERVABILITY (13), DOCUMENTATION (20), RELEASE CERTIFICATION (26/28).
+- **Production Guides & Runbooks:** Created `DEPLOYMENT_GUIDE.md` (Docker & systemd orchestration), `ROLLBACK_GUIDE.md` (emergency rollback to certified baseline), and `DISASTER_RECOVERY.md` (SOPs for process crashes, network partitions, and state corruption).
+- **Release Certification:** Created `STRATA_RELEASE_CERTIFICATION.md` verifying all 192 unit tests, 9,608 historical replay regression match, and zero-capital live gate invariants.
+- **Test Suite:** 192 / 192 PASS.
+- **Replay Regression:** 9,608 / 9,608 opportunities 100% matched.
+- **Safety Status:** Real Capital: $0.00 | Live Adapter: HARD-DISABLED FAIL-CLOSED.
+
 
 
