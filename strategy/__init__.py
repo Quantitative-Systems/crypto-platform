@@ -17,6 +17,8 @@ from strategy.baseline_v1 import BaselineStrategyHypothesisV1
 from strategy.trend_breakout import TrendBreakoutHypothesis
 from strategy.mean_reversion import MeanReversionHypothesis
 from strategy.momentum_ignition import MomentumIgnitionHypothesis
+from strategy.adaptive.adaptive_causal_engine import AdaptiveCausalEngine
+from strategy.adaptive.adaptive_engine_v1 import AdaptiveEngineV1
 
 __all__ = [
     "CandidateSignal",
@@ -25,4 +27,6 @@ __all__ = [
     "TrendBreakoutHypothesis",
     "MeanReversionHypothesis",
     "MomentumIgnitionHypothesis",
+    "AdaptiveCausalEngine",
+    "AdaptiveEngineV1",
 ]

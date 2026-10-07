@@ -34,18 +34,26 @@ if "pytest" not in sys.modules:
     dummy_pytest.raises = DummyRaises
     sys.modules["pytest"] = dummy_pytest
 
-def run_all_tests():
-    unit_dir = ROOT_DIR / "tests" / "unit"
-    test_files = sorted(unit_dir.glob("**/test_*.py"))
+def run_all_tests(scope="unit"):
+    if scope == "all":
+        test_dir = ROOT_DIR / "tests"
+        test_files = sorted([f for f in test_dir.glob("**/test_*.py") if "failed" not in str(f)])
+    elif scope == "integration":
+        test_dir = ROOT_DIR / "tests" / "integration"
+        test_files = sorted(test_dir.glob("**/test_*.py"))
+    else:
+        test_dir = ROOT_DIR / "tests" / "unit"
+        test_files = sorted(test_dir.glob("**/test_*.py"))
     
     total = 0
     passed = 0
     failed = 0
     errors = []
 
-    print(f"Discovered {len(test_files)} test files in {unit_dir}")
+    print(f"Discovered {len(test_files)} test files in {test_dir}")
     for file_path in test_files:
-        module_name = f"tests.unit.{file_path.stem}"
+        rel_path = file_path.relative_to(ROOT_DIR)
+        module_name = ".".join(rel_path.with_suffix("").parts)
         spec = importlib.util.spec_from_file_location(module_name, file_path)
         if spec is None or spec.loader is None:
             continue
@@ -76,7 +84,15 @@ def run_all_tests():
         for name, func in test_funcs:
             total += 1
             try:
+                if hasattr(func, "__self__"):
+                    inst = func.__self__
+                    if hasattr(inst, "setUp") and callable(inst.setUp):
+                        inst.setUp()
                 func()
+                if hasattr(func, "__self__"):
+                    inst = func.__self__
+                    if hasattr(inst, "tearDown") and callable(inst.tearDown):
+                        inst.tearDown()
                 passed += 1
             except Exception as e:
                 failed += 1
@@ -94,4 +110,9 @@ def run_all_tests():
         print("ALL TESTS PASSED SUCCESSFULLY!")
 
 if __name__ == "__main__":
-    run_all_tests()
+    scope = "unit"
+    if "--all" in sys.argv:
+        scope = "all"
+    elif "--integration" in sys.argv:
+        scope = "integration"
+    run_all_tests(scope=scope)

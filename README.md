@@ -233,53 +233,86 @@ PORTFOLIO RISK CONSTRAINTS:
 
 ## 10. Repository Structure & Key Modules
 
+The repository is strictly structured into modular, decoupled architectural domains:
+
 ```text
 crypto-platform/
-├── market_model/                  # FROZEN INVARIANT CORE
+├── market_model/                  # FROZEN INVARIANT MARKET CORE (HOW, WHERE, WHAT)
 │   ├── contracts.py               # MarketState, Structure, KeyZones, Phase contracts
 │   ├── state_generator.py         # Multi-timeframe causal state generator
 │   ├── market_structure_trend/    # Swings, CHOCH/MSS, BOS structural engines
 │   ├── key_zones_levels/          # Order Blocks, FVGs, Liquidity, Deep Discount
 │   └── phases/                    # Pullback and Continuation phase engines
-├── execution/                     # EXECUTION & SHADOW ENGINE
+├── strategy/                      # SYSTEMATIC STRATEGY HYPOTHESES & TAXONOMY
+│   ├── README.md                  # Comprehensive strategy taxonomy documentation
+│   ├── base.py                    # StrategyHypothesis and CandidateSignal ABCs
+│   ├── baseline_v1.py             # Canonical Multi-Timeframe Baseline Hypothesis
+│   ├── trend_breakout.py          # Dealing range breakout hypothesis
+│   ├── mean_reversion.py          # Equilibrium mean reversion hypothesis
+│   ├── momentum_ignition.py       # Squeeze expansion hypothesis
+│   ├── adaptive/                  # Causal adaptive market-state engines
+│   └── families/                  # 10 systematic quantitative rule families
+├── execution/                     # AUTONOMOUS EXECUTION & RISK ENGINE
 │   ├── backtest/engine.py         # CausalBacktestEngine (next-bar open, adverse-first)
-│   ├── portfolio/risk_governor.py # PortfolioRiskGovernor (1% trade, 1% asset, 3% heat)
+│   ├── portfolio/factor_engine.py # PortfolioFactorEngine (factor exposure & heat limits)
+│   ├── risk/                      # PortfolioRiskGovernor & DrawdownGovernors
+│   ├── decision/                  # AutonomousDecisionEngine (No-Trade taxonomy)
 │   ├── decision_ledger.py         # Immutable DecisionLedger & audit cards
 │   ├── simulator/                 # ExecutionSimulator (microstructure fees & slippage)
 │   └── shadow/
 │       ├── shadow_trader.py       # 24/7 real-time shadow trading orchestrator
 │       └── paper_champion_runner.py# Production paper champion runner & auto-demotion
-├── research/                      # QUANTITATIVE RESEARCH & DISCOVERY
-│   ├── discovery/
-│   │   ├── benchmark_lab.py       # Standard baselines (BM 0, 4, 6, 8)
-│   │   ├── null_hypothesis_lab.py # Monte Carlo random-direction falsification
-│   │   ├── edge_quality_scorer.py # 10-dimensional Edge Quality Score (EQS)
-│   │   ├── independent_validator.py# Stationary block bootstrap & FDR adjustments
-│   │   └── run_independent_audit.py# Master independent audit runner
-│   ├── experiments/
-│   │   ├── mtf_strategy_coordinator.py # Causal HTF -> MTF -> LTF coordinator
-│   │   └── run_phase_p_fractal_discovery.py # 40-stream empirical runner
-│   ├── leaderboard/               # Dynamic research leaderboards
-│   └── results/discovery_engine/  # Champion registries & audit JSON artifacts
-├── tests/                         # REGRESSION & ADVERSARIAL TEST SUITE
-│   ├── run_tests.py               # Lightweight master test runner (119 passing)
-│   └── unit/
-│       ├── validation/
-│       │   └── test_adversarial_target_geometry.py # Directional geometry tests
-│       └── test_paper_champion_runner.py          # Paper runner & demotion tests
-└── MASTER_ALPHA_VALIDATION_AND_PRODUCTION_HARDENING_REPORT.md # Master 35-section report
+├── examples/                      # EXECUTABLE PROOF OF WORK SAMPLES
+│   ├── README.md                  # Quickstart guide for all proof-of-work samples
+│   ├── run_alpha_proof_sample.py  # Standalone Multi-Timeframe Alpha Proof sample
+│   └── run_paper_execution_sample.py# Standalone 24/7 Paper Trading & Risk sample
+├── validation/                    # STATISTICAL VALIDATION HARNESSES
+│   ├── walk_forward/              # Rolling walk-forward split validation engines
+│   ├── robustness/                # Monte Carlo, cost stress, parameter perturbation
+│   └── oos/                       # Chronological out-of-sample holdout suites
+├── research/                      # QUANTITATIVE RESEARCH ARTIFACTS & ENGINES
+│   ├── datasets/                  # Dataset inventory & causal history warehouse
+│   ├── discovery/                 # Independent auditor, FDR corrections, EQS scoring
+│   ├── experiments/               # Phase experiment runners (Phase A through P)
+│   ├── leaderboard/               # Dynamic research leaderboards & registries
+│   ├── reports/                   # Comprehensive reports (Phase B to P + Master)
+│   └── results/                   # Machine-readable experiment result JSONs
+├── tests/                         # REGRESSION & INTEGRATION TEST SUITES
+│   ├── run_tests.py               # Lightweight master test runner (122 passing)
+│   ├── integration/               # End-to-end pipeline integration tests
+│   └── unit/                      # Modular domain unit test suites
+│       ├── execution/             # Shadow trader, paper runner, decision ledger
+│       ├── risk/                  # Capital survival, defensive efficiency, drawdown
+│       ├── strategy/              # Hypotheses, adaptive engines, rule families
+│       ├── market_data/           # Data fabric, Binance fetcher, certifiers
+│       ├── market_model/          # Market state primitives, regimes, observation
+│       ├── research/              # Walk-forward folds, discovery engines
+│       └── validation/            # Adversarial target geometry, robustness
+└── docs/                          # Institutional architecture & security manuals
 ```
 
 ---
 
-## 11. Testing & Local Operations
+## 11. Testing & Verification Runbook
 
-### Run Regression & Adversarial Test Suite
+### Run Full Regression Test Suite
 ```bash
-py -3.14 tests/run_tests.py
+py -3.14 tests/run_tests.py --all
 ```
-*Discovers and executes 32 test suites across unit, integration, and adversarial tests.*  
-**Result:** `TEST RESULTS: 119 PASSED, 0 FAILED, TOTAL: 119` (100% Green).
+*Discovers and executes 33 test suites across all unit and integration domains.*  
+**Result:** `TEST RESULTS: 122 PASSED, 0 FAILED, TOTAL: 122` (100% Green).
+
+### Run Institutional Proof of Work Samples
+```bash
+# 1. Multi-Timeframe Alpha Proof (Ethereum Champion: +320.61R, 63.4% Win Rate, PF 4.35)
+py -3.14 examples/run_alpha_proof_sample.py
+
+# 2. Multi-Timeframe Alpha Proof (Bitcoin Champion: +411.50R, 60.8% Win Rate, PF 5.78)
+py -3.14 examples/run_alpha_proof_sample.py --btc
+
+# 3. Autonomous 24/7 Paper Execution & Risk Firewall Proof
+py -3.14 examples/run_paper_execution_sample.py
+```
 
 ### Run Independent Adversarial Audit
 ```bash
