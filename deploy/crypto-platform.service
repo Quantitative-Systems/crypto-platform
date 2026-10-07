@@ -1,5 +1,5 @@
 [Unit]
-Description=Institutional Crypto Trading Platform — Production Execution Engine
+Description=STRATA Digital Trading Platform — Production Execution Engine
 After=network.target network-online.target
 Wants=network-online.target
 
@@ -12,7 +12,7 @@ Environment=PLATFORM_ENV=PAPER
 Environment=PLATFORM_LIVE_CAPITAL_USD=0.0
 Environment=PLATFORM_LOG_LEVEL=INFO
 EnvironmentFile=-/home/mrcn2/crypto-platform/.env
-ExecStart=/usr/bin/python3 -m crypto_platform.cli service --host 0.0.0.0 --port 8080
+ExecStart=/usr/bin/python3 main.py --mode PAPER --host 0.0.0.0 --port 8080
 Restart=always
 RestartSec=5s
 KillMode=mixed

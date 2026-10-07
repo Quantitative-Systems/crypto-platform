@@ -1,0 +1,131 @@
+{
+  "contract_name": "PHASE_R_FROZEN_Q2_RESEARCH_CONTRACT",
+  "version": "1.0.0",
+  "frozen_at_utc": "2026-10-07T17:00:00Z",
+  "hash_sha256": "8fbc923a104e7688c3a9f0e4b8592c30dfb0b9a67a84511d5e49f8721c432098",
+  "capital_boundary": {
+    "real_capital_authorized": 0.0,
+    "live_trading_enabled": false,
+    "live_adapter_status": "HARD_DISABLED_FAIL_CLOSED",
+    "simulated_equity_baseline_usd": 100000.0,
+    "execution_mode": "SHADOW_PAPER"
+  },
+  "market_model": {
+    "version": "1.0.0-canonical",
+    "top_level_domains": [
+      "STRUCTURE_TREND",
+      "KEY_ZONES_LEVELS",
+      "PHASE"
+    ],
+    "phases": [
+      "PULLBACK",
+      "CONTINUATION"
+    ],
+    "dealing_range": {
+      "equilibrium_ratio": 0.50,
+      "discount_threshold": 0.50,
+      "premium_threshold": 0.50
+    }
+  },
+  "timeframe_ladder": [
+    "1M",
+    "1w",
+    "1d",
+    "4h",
+    "1h",
+    "15m",
+    "3m"
+  ],
+  "timeframe_sets": {
+    "SET_1": {
+      "htf": "1M",
+      "mtf": "1w",
+      "ltf": "1d",
+      "operational_role": "MACRO_CONTEXT_ANCHOR_DESTINATION",
+      "capital_allocation_pct": 0.0,
+      "execution_status": "ZERO_CAPITAL_ANCHOR_ONLY"
+    },
+    "SET_2": {
+      "htf": "1w",
+      "mtf": "1d",
+      "ltf": "4h",
+      "operational_role": "MACRO_SWING_EXECUTION_WINDOW",
+      "capital_allocation_pct": 1.0,
+      "execution_status": "SHADOW_PAPER_ELIGIBLE",
+      "preferred_phase": "CONTINUATION"
+    },
+    "SET_3": {
+      "htf": "1d",
+      "mtf": "4h",
+      "ltf": "1h",
+      "operational_role": "INTERMEDIATE_INTRADAY_EXECUTION_WINDOW",
+      "capital_allocation_pct": 1.0,
+      "execution_status": "SHADOW_PAPER_ELIGIBLE",
+      "preferred_phase": "PULLBACK"
+    },
+    "SET_4": {
+      "htf": "4h",
+      "mtf": "1h",
+      "ltf": "15m",
+      "operational_role": "LOWER_SCALE_INTRADAY_EXECUTION_WINDOW",
+      "capital_allocation_pct": 1.0,
+      "execution_status": "SHADOW_PAPER_ELIGIBLE",
+      "preferred_phase": "BALANCED"
+    },
+    "SET_5": {
+      "htf": "1h",
+      "mtf": "15m",
+      "ltf": "3m",
+      "operational_role": "MICRO_OBSERVATION_CONFIRMATION",
+      "capital_allocation_pct": 0.0,
+      "execution_status": "ZERO_CAPITAL_CONFIRMATION_ONLY"
+    }
+  },
+  "confidence_system": {
+    "formula": "confidence_score = base + set_alignment + dealing_range_location + macro_htf_alignment + cross_set_support",
+    "weights": {
+      "base": 0.35,
+      "set_alignment": 0.25,
+      "dealing_range_location": 0.20,
+      "macro_htf_alignment": 0.15,
+      "cross_set_support": 0.05
+    },
+    "thresholds": {
+      "low": 0.50,
+      "standard": 0.60,
+      "strict": 0.75,
+      "production_gate": 0.50
+    }
+  },
+  "target_geometry": {
+    "minimum_destination_r": 4.0,
+    "long_geometry_invariant": "Target > Entry > Stop",
+    "short_geometry_invariant": "Target < Entry < Stop",
+    "artificial_target_extension_allowed": false
+  },
+  "risk_governance": {
+    "max_risk_per_trade_pct": 1.0,
+    "max_base_asset_exposure_pct": 1.0,
+    "max_total_portfolio_heat_pct": 3.0,
+    "drawdown_governor": {
+      "tier_1_threshold_pct": 5.0,
+      "tier_1_size_haircut": 0.50,
+      "tier_2_threshold_pct": 10.0,
+      "tier_2_size_haircut": 0.25,
+      "circuit_breaker_threshold_pct": 15.0
+    },
+    "correlation_governor": {
+      "max_correlated_positions": 2,
+      "haircut_multiplier": 0.75
+    },
+    "unknown_state_policy": "NO_TRADE",
+    "stale_data_policy": "NO_TRADE"
+  },
+  "execution_modeling": {
+    "fill_timing": "NEXT_BAR_OPEN",
+    "taker_fee_bps": 10.0,
+    "slippage_bps": 4.0,
+    "spread_bps": 1.5,
+    "intrabar_collision_policy": "ADVERSE_FIRST"
+  }
+}

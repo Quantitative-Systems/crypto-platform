@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "total_candidates": 9608,
+  "production_candidates": 3306,
+  "conf_060_candidates": 2942,
+  "conf_075_candidates": 1547,
+  "oos_candidates": 1665,
+  "is_regression_free": true
+}

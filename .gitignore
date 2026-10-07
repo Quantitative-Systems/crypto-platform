@@ -72,6 +72,9 @@ scratch/temp_*
 scratch/dataset_manifests.json
 production/*state*.json
 research/results/*state*.json
+research/results/state/
+research/results/*.jsonl
+research/candidates/CAND_*.json
 research/results/telemetry/*.jsonl
 nohup.out
 

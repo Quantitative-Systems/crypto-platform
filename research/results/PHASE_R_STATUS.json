@@ -1,0 +1,48 @@
+{
+  "phase": "PHASE_R_AUTONOMOUS_PRODUCTION_APPLICATION",
+  "build_version": "1.0.0-phase-r",
+  "model_version": "1.0.0-canonical-fractal-q2",
+  "contract_hash": "8fbc923a104e7688c3a9f0e4b8592c30dfb0b9a67a84511d5e49f8721c432098",
+  "execution_mode": "SHADOW_PAPER",
+  "real_capital_authorized": 0.0,
+  "live_trading_status": "HARD_DISABLED_FAIL_CLOSED",
+  "live_authorization": false,
+  "system_health": "HEALTHY",
+  "data_health": "DATA_HEALTHY",
+  "reconciliation_status": "RECONCILED",
+  "test_status": "158_OF_158_PASSED",
+  "historical_reference_status": "REPLAY_REGRESSION_PASSED",
+  "forward_validation_status": "READY_FOR_FORWARD_VALIDATION",
+  "drift_status": "STABLE",
+  "capital_gate_status": "STRICT_HARD_LOCK_ACTIVE",
+  "supported_assets": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "BNBUSDT"
+  ],
+  "timeframe_ladder": [
+    "1M",
+    "1w",
+    "1d",
+    "4h",
+    "1h",
+    "15m",
+    "3m"
+  ],
+  "operational_sets": {
+    "SET_1": "MACRO_CONTEXT_ANCHOR_ZERO_CAPITAL",
+    "SET_2": "MACRO_SWING_SHADOW_PAPER_ELIGIBLE_1PCT",
+    "SET_3": "INTERMEDIATE_INTRADAY_SHADOW_PAPER_ELIGIBLE_1PCT",
+    "SET_4": "LOWER_SCALE_INTRADAY_SHADOW_PAPER_ELIGIBLE_1PCT",
+    "SET_5": "MICRO_CONFIRMATION_ZERO_CAPITAL"
+  },
+  "endpoints": {
+    "dashboard_ui": "http://127.0.0.1:8080/dashboard",
+    "health_api": "http://127.0.0.1:8080/api/health",
+    "telemetry_api": "http://127.0.0.1:8080/api/telemetry",
+    "decisions_api": "http://127.0.0.1:8080/api/decisions",
+    "reconciliation_api": "http://127.0.0.1:8080/api/reconciliation",
+    "drift_api": "http://127.0.0.1:8080/api/drift"
+  }
+}

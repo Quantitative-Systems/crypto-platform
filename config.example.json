@@ -1,0 +1,28 @@
+{
+  "platform_name": "STRATA Digital Trading Platform",
+  "version": "1.0.0",
+  "default_environment": "PAPER",
+  "real_capital_authorized_usd": 0.0,
+  "live_adapter_enabled": false,
+  "supported_symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "BNBUSDT"
+  ],
+  "risk_governance": {
+    "max_risk_per_trade_pct": 1.0,
+    "max_base_asset_exposure_pct": 1.0,
+    "max_portfolio_heat_pct": 3.0,
+    "target_destination_floor_r": 4.0
+  },
+  "circuit_breakers": {
+    "max_drawdown_pct": 4.0,
+    "max_consecutive_losses": 3,
+    "stale_data_timeout_seconds": 30.0
+  },
+  "web_server": {
+    "host": "127.0.0.1",
+    "port": 8080
+  }
+}
