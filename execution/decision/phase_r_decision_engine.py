@@ -142,6 +142,21 @@ class PhaseRDecisionEngine:
         self.active_positions_heat: float = 0.0
         self.active_asset_heat: float = 0.0
 
+    def validate_target_geometry(
+        self, direction: int, entry: float, stop: float, target: float
+    ) -> Tuple[bool, float, List[str]]:
+        """Validates target geometry invariants: T > E > S (Long) or T < E < S (Short) and >= 4R floor."""
+        reasons = []
+        is_geom_valid = (target > entry > stop) if direction == 1 else (target < entry < stop)
+        if not is_geom_valid:
+            reasons.append(PhaseRNoTradeReason.INVALID_TARGET_GEOMETRY.value)
+        risk_dist = abs(entry - stop)
+        reward_dist = abs(target - entry)
+        planned_r = reward_dist / max(risk_dist, 1e-6)
+        if planned_r < self.min_target_r:
+            reasons.append(PhaseRNoTradeReason.TARGET_BELOW_4R.value)
+        return (len(reasons) == 0, planned_r, reasons)
+
     def evaluate_opportunity(
         self,
         set_name: str,

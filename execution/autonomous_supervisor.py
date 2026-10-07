@@ -55,6 +55,13 @@ from execution.reconciliation_engine import (
     AutonomousReconciliationEngine,
     ReconciliationReport,
 )
+from execution.precision_engine import (
+    DuplicateOrderIntentError,
+    IdempotencyExecutionGuard,
+    generate_deterministic_order_id,
+    round_to_step_size,
+    round_to_tick_size,
+)
 from execution.risk.circuit_breakers import CompositeCircuitBreakerManager
 from execution.safety.safety_gate import EnvironmentGateMode, SAFETY_GATE
 from execution.state.state_persistence import StatePersistenceManager
@@ -109,6 +116,7 @@ class AutonomousTradingSupervisor:
         self.execution_gateway = ExecutionGateway()
         self.circuit_breakers = CompositeCircuitBreakerManager()
         self.state_persistence = StatePersistenceManager()
+        self.idempotency_guard = IdempotencyExecutionGuard()
 
         # 3. Market Data & 7-Timeframe Candle Engine
         self.ws_client = BinanceRealtimeWSClient(symbols=self.symbols, base_timeframe="15m")
@@ -242,15 +250,31 @@ class AutonomousTradingSupervisor:
 
     def _execute_order(self, d: PhaseRDecisionRecord) -> None:
         """Executes an order through ExecutionGateway and initializes position."""
-        # Risk sizing: 1% risk of simulated equity (or micro risk if micro-live)
+        # 1. Assert idempotency to prevent duplicate entries
+        try:
+            self.idempotency_guard.assert_idempotent(d.asset, d.decision_id, d.timestamp_ms)
+        except DuplicateOrderIntentError:
+            logger.warning(f"Idempotency: Suppressed duplicate order execution for {d.asset} {d.decision_id}")
+            return
+
+        # 2. Risk sizing: 1% risk of simulated equity (or micro risk if micro-live)
         active_acc = self.account_manager.get_active_account()
         risk_pct = 0.001 if active_acc.environment == AccountEnvironment.MICRO_LIVE else 0.01
         risk_usd = self.simulated_equity * risk_pct
         risk_dist = abs(d.entry_price - d.initial_stop_price)
-        size_units = round(risk_usd / max(risk_dist, 1e-4), 4)
+        raw_size = risk_usd / max(risk_dist, 1e-4)
 
+        # 3. Precision rounding
+        spec = UNIVERSE_MANAGER.get_instrument(d.asset)
+        step_size = spec.lot_size if spec else 0.001
+        size_units = round_to_step_size(raw_size, step_size)
+        if size_units <= 0:
+            logger.warning(f"Precision: Sizing resulted in 0 units for {d.asset}. Order suppressed.")
+            return
+
+        intent_id = generate_deterministic_order_id(d.asset, d.decision_id, d.timestamp_ms)
         intent = OrderIntent(
-            intent_id=f"INT_{uuid.uuid4().hex[:8].upper()}",
+            intent_id=intent_id,
             decision_id=d.decision_id,
             symbol=d.asset,
             direction=d.direction,
