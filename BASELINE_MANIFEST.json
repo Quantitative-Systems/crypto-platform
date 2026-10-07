@@ -1,0 +1,35 @@
+{
+  "platform_name": "STRATA Digital Trading Platform",
+  "version": "1.0.0",
+  "git_commit_sha": "4f28276d314e8c6869ba30e411b1c8aed4fe486c",
+  "baseline_tag": "strata-v1.0.0-engineering-baseline",
+  "tag_meaning": "Certified engineering baseline before systematic production hardening.",
+  "timestamp_utc": "2026-10-07T18:01:00Z",
+  "test_count": 172,
+  "test_pass_rate": "100%",
+  "replay_regression_result": {
+    "total_candidate_count": 9608,
+    "matched_candidate_count": 9608,
+    "status": "PASS"
+  },
+  "research_contract": {
+    "version": "Q.2_FROZEN",
+    "hash_sha256": "8fbc923a104e7688c3a9f0e4b8592c30dfb0b9a67a84511d5e49f8721c432098",
+    "status": "CERTIFIED_IMMUTABLE"
+  },
+  "runtime_environment": {
+    "python_version": "3.12.10",
+    "dependencies": {
+      "aiohttp": "3.14.3",
+      "pytest": "9.1.1",
+      "pytest-asyncio": "1.4.0",
+      "numpy": "2.2.3"
+    }
+  },
+  "capital_boundary": {
+    "real_capital_authorized_usd": 0.0,
+    "live_adapter_enabled": false,
+    "live_authorization_status": "NOT_AUTHORIZED_FAIL_CLOSED",
+    "active_environment": "PAPER"
+  }
+}

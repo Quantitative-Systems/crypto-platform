@@ -1,0 +1,47 @@
+name: STRATA CI — Production Hardening & Baseline Verification
+
+on:
+  push:
+    branches: [ main, develop, "feature/**" ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  verify-platform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio numpy aiohttp
+
+      - name: Contract Integrity Verification
+        run: |
+          python cli.py verify-contract
+
+      - name: Platform Subsystem Health Check
+        run: |
+          python cli.py health
+
+      - name: State Reconciliation Audit
+        run: |
+          python cli.py reconcile
+
+      - name: Run Complete Test Suite
+        run: |
+          pytest -v
+
+      - name: Historical Replay Regression Test
+        run: |
+          python -m research.experiments.run_phase_r_replay_regression
