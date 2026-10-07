@@ -36,4 +36,15 @@ executed under the systematic STRATA Production Hardening Program.
 - **Replay Regression:** 9,608 / 9,608 opportunities 100% matched.
 - **Safety Status:** Real Capital: $0.00 | Live Adapter: HARD-DISABLED FAIL-CLOSED.
 
+---
+
+### `feature/data-resilience-and-recovery`
+- **Subsystems Hardened:** DATA INGESTION (3), MARKET STATE (4), 24/7 RECOVERY (12), OBSERVABILITY (13).
+- **Market Data Hardening:** Enhanced `market_data/realtime/binance_ws_client.py` with candle gap detection, automatic backfill callback notifications, and clock drift evaluation with strict synchronization tolerance.
+- **24/7 Recovery Watchdog:** Implemented `execution/safety/watchdog.py` with `RecoveryWatchdog` providing heartbeat supervision, atomic checkpoint checksum verification, and startup reconciliation to guarantee the system never boots into blind trading with orphan or ghost broker positions.
+- **Test Suite:** 192 / 192 PASS (7 new unit tests added).
+- **Replay Regression:** 9,608 / 9,608 opportunities 100% matched.
+- **Safety Status:** Real Capital: $0.00 | Live Adapter: HARD-DISABLED FAIL-CLOSED.
+
+
 

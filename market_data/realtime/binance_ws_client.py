@@ -30,6 +30,19 @@ class DataHealthStatus(str, Enum):
     DATA_INVALID = "DATA_INVALID"
 
 
+TIMEFRAME_MS = {
+    "1m": 60_000,
+    "3m": 180_000,
+    "5m": 300_000,
+    "15m": 900_000,
+    "1h": 3_600_000,
+    "4h": 14_400_000,
+    "1d": 86_400_000,
+    "1w": 604_800_000,
+    "1M": 2_592_000_000,
+}
+
+
 @dataclass
 class FeedMetrics:
     symbol: str
@@ -40,6 +53,9 @@ class FeedMetrics:
     closed_candles_processed: int = 0
     duplicates_dropped: int = 0
     inversions_detected: int = 0
+    gaps_detected: int = 0
+    last_closed_open_ts: int = 0
+    clock_drift_ms: int = 0
     reconnection_count: int = 0
     last_event_ts: int = 0
     last_heartbeat_time: float = 0.0
@@ -57,11 +73,13 @@ class BinanceRealtimeWSClient:
         base_timeframe: str = "15m",
         ws_url: Optional[str] = None,
         stale_threshold_seconds: float = 60.0,
+        max_clock_drift_ms: int = 1500,
     ):
         self.symbols = [s.upper() for s in symbols]
         self.base_timeframe = base_timeframe
         self.ws_url = ws_url or self.DEFAULT_WS_URL
         self.stale_threshold_seconds = stale_threshold_seconds
+        self.max_clock_drift_ms = max_clock_drift_ms
 
         self._running = False
         self._session: Optional[aiohttp.ClientSession] = None
@@ -70,10 +88,27 @@ class BinanceRealtimeWSClient:
             s: FeedMetrics(symbol=s) for s in self.symbols
         }
         self._subscribers: List[Callable[[Dict[str, Any]], None]] = []
+        self._gap_subscribers: List[Callable[[str, int, int], None]] = []
         self._seen_candle_ids: Set[str] = set()
 
     def add_candle_listener(self, listener: Callable[[Dict[str, Any]], None]) -> None:
         self._subscribers.append(listener)
+
+    def add_gap_listener(self, listener: Callable[[str, int, int], None]) -> None:
+        self._gap_subscribers.append(listener)
+
+    def evaluate_clock_drift(self, local_time_ms: int, server_time_ms: int) -> bool:
+        """Evaluates clock synchronization against exchange time."""
+        drift = abs(local_time_ms - server_time_ms)
+        for m in self._metrics.values():
+            m.clock_drift_ms = drift
+        if drift > self.max_clock_drift_ms:
+            logger.warning(f"Clock drift exceeded limit: {drift}ms > {self.max_clock_drift_ms}ms")
+            for m in self._metrics.values():
+                m.health_status = DataHealthStatus.DATA_DEGRADED
+                m.status_reason = f"CLOCK_DRIFT_EXCEEDED: {drift}ms"
+            return False
+        return True
 
     def get_feed_health(self, symbol: str) -> DataHealthStatus:
         sym = symbol.upper()
@@ -101,6 +136,8 @@ class BinanceRealtimeWSClient:
                 "messages_received": m.messages_received,
                 "closed_candles": m.closed_candles_processed,
                 "duplicates_dropped": m.duplicates_dropped,
+                "gaps_detected": m.gaps_detected,
+                "clock_drift_ms": m.clock_drift_ms,
                 "reconnections": m.reconnection_count,
                 "last_heartbeat_age_s": round(now - m.last_heartbeat_time, 1) if m.last_heartbeat_time else None,
                 "status_reason": m.status_reason,
@@ -212,6 +249,23 @@ class BinanceRealtimeWSClient:
 
             self._seen_candle_ids.add(candle_id)
             m.closed_candles_processed += 1
+
+            # Detect missing candle gaps
+            step_ms = TIMEFRAME_MS.get(self.base_timeframe, 900_000)
+            if m.last_closed_open_ts > 0 and open_ts > (m.last_closed_open_ts + int(step_ms * 1.5)):
+                m.gaps_detected += 1
+                missing_start = m.last_closed_open_ts + step_ms
+                missing_end = open_ts - step_ms
+                logger.warning(
+                    f"Candle gap detected for {sym}: missing [{missing_start} -> {missing_end}]. Triggering backfill."
+                )
+                for gap_cb in self._gap_subscribers:
+                    try:
+                        gap_cb(sym, missing_start, missing_end)
+                    except Exception as err:
+                        logger.error(f"Error in gap callback for {sym}: {err}")
+
+            m.last_closed_open_ts = open_ts
 
             candle_record = {
                 "symbol": sym,
