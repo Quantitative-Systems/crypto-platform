@@ -1016,7 +1016,11 @@ class PhaseRWebServer:
         self.supervisor = supervisor
         self.host = host
         self.port = port
-        self.app = web.Application()
+        from web.security_middleware import create_rate_limit_middleware, security_headers_middleware
+        self.app = web.Application(middlewares=[
+            security_headers_middleware,
+            create_rate_limit_middleware(max_requests=240, window_seconds=60.0),
+        ])
         self._setup_routes()
 
     def _setup_routes(self) -> None:
