@@ -1,0 +1,285 @@
+{
+  "episodes_audited": 10,
+  "records": [
+    {
+      "episode_id": "EP_01_BULL_EXPANSION_2021",
+      "name": "2021 Secular Bull Expansion & Froth",
+      "regime_climate": "RISK_ON / TRENDING / HIGH_VOL",
+      "primary_stress": "Overheated perpetual funding & leveraged speculative froth",
+      "description": "Bitcoin surges from $29k to $64k; retail euphoria with persistent positive funding.",
+      "is_stress_period": false,
+      "ungoverned": {
+        "trades": 4,
+        "net_r": -1.03,
+        "max_drawdown_pct": 2.97,
+        "win_rate": 25.0
+      },
+      "governed_strict": {
+        "trades": 3,
+        "net_r": -0.02,
+        "max_drawdown_pct": 1.98,
+        "win_rate": 33.3
+      },
+      "governed_calibrated": {
+        "trades": 3,
+        "net_r": -0.02,
+        "max_drawdown_pct": 1.98,
+        "win_rate": 33.3
+      },
+      "capital_preserved_r": 0.0,
+      "mdd_delta_calib_pct": 0.99
+    },
+    {
+      "episode_id": "EP_02_MAY_2021_CRASH",
+      "name": "May 2021 Liquidation Cascade & Flash Wick",
+      "regime_climate": "EXTREME_VOLATILITY / IMPAIRED_LIQUIDITY",
+      "primary_stress": "Cascading margin liquidations, 50% drawdown in 10 days",
+      "description": "China mining ban + overleveraged flush; BTC drops from $58k to $30k with orderbook vacuum.",
+      "is_stress_period": true,
+      "ungoverned": {
+        "trades": 0,
+        "net_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 0.0
+      },
+      "governed_strict": {
+        "trades": 0,
+        "net_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 0.0
+      },
+      "governed_calibrated": {
+        "trades": 0,
+        "net_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 0.0
+      },
+      "capital_preserved_r": 0.0,
+      "mdd_delta_calib_pct": 0.0
+    },
+    {
+      "episode_id": "EP_03_FED_HIKING_BEAR_2022",
+      "name": "2022 Fed Rate Hiking Cycle (Protracted Bear)",
+      "regime_climate": "RISK_OFF / TRENDING_DOWN / MACRO_LED",
+      "primary_stress": "Quantitative tightening, high inflation, persistent lower lows",
+      "description": "Fed delivers first 50/75 bps rate hikes; macro correlation spikes to 0.85.",
+      "is_stress_period": true,
+      "ungoverned": {
+        "trades": 3,
+        "net_r": 5.39,
+        "max_drawdown_pct": 1.04,
+        "win_rate": 66.7
+      },
+      "governed_strict": {
+        "trades": 2,
+        "net_r": 6.44,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 100.0
+      },
+      "governed_calibrated": {
+        "trades": 2,
+        "net_r": 6.44,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 100.0
+      },
+      "capital_preserved_r": 1.05,
+      "mdd_delta_calib_pct": 1.04
+    },
+    {
+      "episode_id": "EP_04_LUNA_3AC_CONTAGION_2022",
+      "name": "Terra/Luna Depeg & Three Arrows Contagion",
+      "regime_climate": "CRITICAL_SYSTEMIC_COLLAPSE",
+      "primary_stress": "Algorithmic stablecoin death spiral, institutional credit cascade",
+      "description": "UST depegs to zero; Celsius, Voyager, and 3AC insolvency contagion flushes markets.",
+      "is_stress_period": true,
+      "ungoverned": {
+        "trades": 2,
+        "net_r": 1.45,
+        "max_drawdown_pct": 0.98,
+        "win_rate": 50.0
+      },
+      "governed_strict": {
+        "trades": 1,
+        "net_r": 2.46,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 100.0
+      },
+      "governed_calibrated": {
+        "trades": 1,
+        "net_r": 2.46,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 100.0
+      },
+      "capital_preserved_r": 1.01,
+      "mdd_delta_calib_pct": 0.98
+    },
+    {
+      "episode_id": "EP_05_FTX_COLLAPSE_2022",
+      "name": "FTX Insolvency Shock & Liquidity Vacuum",
+      "regime_climate": "IMPAIRED_LIQUIDITY / SPREAD_DISLOCATION",
+      "primary_stress": "Exchange bank run, counterparty panic, bid-ask spread blowout",
+      "description": "Second-largest exchange halts withdrawals and files Chapter 11; BTC drops to $15.5k cycle low.",
+      "is_stress_period": true,
+      "ungoverned": {
+        "trades": 0,
+        "net_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 0.0
+      },
+      "governed_strict": {
+        "trades": 0,
+        "net_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 0.0
+      },
+      "governed_calibrated": {
+        "trades": 0,
+        "net_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 0.0
+      },
+      "capital_preserved_r": 0.0,
+      "mdd_delta_calib_pct": 0.0
+    },
+    {
+      "episode_id": "EP_06_SVB_BANKING_BTFP_2023",
+      "name": "US Banking Crisis / BTFP Liquidity Injection",
+      "regime_climate": "RAPID_REGIME_INFLECTION",
+      "primary_stress": "USDC depegs to $0.88 followed by emergency Fed facility launch",
+      "description": "Silicon Valley Bank failure triggers banking panic; Fed BTFP facility sparks sharp relief rally.",
+      "is_stress_period": false,
+      "ungoverned": {
+        "trades": 0,
+        "net_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 0.0
+      },
+      "governed_strict": {
+        "trades": 0,
+        "net_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 0.0
+      },
+      "governed_calibrated": {
+        "trades": 0,
+        "net_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 0.0
+      },
+      "capital_preserved_r": 0.0,
+      "mdd_delta_calib_pct": 0.0
+    },
+    {
+      "episode_id": "EP_07_SUMMER_2023_CHOP",
+      "name": "Summer 2023 Volatility Compression & Chop",
+      "regime_climate": "RANGING_CHOP / LOW_VOL / TIGHT_LIQUIDITY",
+      "primary_stress": "Multi-year volatility compression, low volume, false-breakout traps",
+      "description": "BTC consolidates in tight $29k-$31k range with historical low realized volatility.",
+      "is_stress_period": true,
+      "ungoverned": {
+        "trades": 1,
+        "net_r": -1.03,
+        "max_drawdown_pct": 1.03,
+        "win_rate": 0.0
+      },
+      "governed_strict": {
+        "trades": 1,
+        "net_r": -1.03,
+        "max_drawdown_pct": 1.03,
+        "win_rate": 0.0
+      },
+      "governed_calibrated": {
+        "trades": 1,
+        "net_r": -1.03,
+        "max_drawdown_pct": 1.03,
+        "win_rate": 0.0
+      },
+      "capital_preserved_r": 0.0,
+      "mdd_delta_calib_pct": 0.0
+    },
+    {
+      "episode_id": "EP_08_AUG_2023_FLASH_CRASH",
+      "name": "August 2023 Flash Liquidation Flush",
+      "regime_climate": "LIQUIDATION_SHOCK / HIGH_VOL",
+      "primary_stress": "Over $1B perpetual long liquidations in 4 hours",
+      "description": "Abrupt flush from $29k to $25k wipes out leveraged longs before stabilizing.",
+      "is_stress_period": true,
+      "ungoverned": {
+        "trades": 2,
+        "net_r": -0.31,
+        "max_drawdown_pct": 1.06,
+        "win_rate": 50.0
+      },
+      "governed_strict": {
+        "trades": 2,
+        "net_r": -0.31,
+        "max_drawdown_pct": 1.06,
+        "win_rate": 50.0
+      },
+      "governed_calibrated": {
+        "trades": 2,
+        "net_r": -0.31,
+        "max_drawdown_pct": 1.06,
+        "win_rate": 50.0
+      },
+      "capital_preserved_r": 0.0,
+      "mdd_delta_calib_pct": 0.0
+    },
+    {
+      "episode_id": "EP_09_ETF_EXPANSION_2024",
+      "name": "Spot Bitcoin ETF Inflow Expansion",
+      "regime_climate": "RISK_ON / TRENDING / INSTITUTIONAL_FLOWS",
+      "primary_stress": "Massive daily net inflows ($500M-$1B), new ATH breakout",
+      "description": "Spot ETFs launch in US; institutional accumulation pushes BTC past prior $69k ATH.",
+      "is_stress_period": false,
+      "ungoverned": {
+        "trades": 6,
+        "net_r": 7.95,
+        "max_drawdown_pct": 1.06,
+        "win_rate": 66.7
+      },
+      "governed_strict": {
+        "trades": 6,
+        "net_r": 7.95,
+        "max_drawdown_pct": 1.06,
+        "win_rate": 66.7
+      },
+      "governed_calibrated": {
+        "trades": 6,
+        "net_r": 7.95,
+        "max_drawdown_pct": 1.06,
+        "win_rate": 66.7
+      },
+      "capital_preserved_r": 0.0,
+      "mdd_delta_calib_pct": 0.0
+    },
+    {
+      "episode_id": "EP_10_YEN_UNWIND_AUG_2024",
+      "name": "Global Yen Carry Unwind Liquidity Shock",
+      "regime_climate": "EXTREME_VOLATILITY / VIX_65_SPIKE",
+      "primary_stress": "Cross-asset deleveraging shock; VIX surges to 65",
+      "description": "Bank of Japan rate hike sparks global carry unwind; Nikkei drops 12%, BTC flushes from $65k to $49k.",
+      "is_stress_period": true,
+      "ungoverned": {
+        "trades": 0,
+        "net_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 0.0
+      },
+      "governed_strict": {
+        "trades": 0,
+        "net_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 0.0
+      },
+      "governed_calibrated": {
+        "trades": 0,
+        "net_r": 0.0,
+        "max_drawdown_pct": 0.0,
+        "win_rate": 0.0
+      },
+      "capital_preserved_r": 0.0,
+      "mdd_delta_calib_pct": 0.0
+    }
+  ]
+}

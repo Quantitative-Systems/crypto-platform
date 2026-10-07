@@ -1,0 +1,2297 @@
+{
+  "metadata": {
+    "generated_at_utc": "2026-10-05T18:45:22.016921+00:00",
+    "target_engine": "ADAPTIVE_ENGINE_V1",
+    "methodology": "Chronological Walk-Forward (DEV 60% / VAL 20% / OOS 20%)"
+  },
+  "comparisons": {
+    "BTCUSDT": {
+      "SET_1": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 2,
+          "win_rate": 0.0,
+          "total_r": -2.03,
+          "expectancy_r": -1.0174,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 1.02,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0168,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.018,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -2.11,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 2,
+          "win_rate": 0.0,
+          "total_r": -2.03,
+          "expectancy_r": -1.0174,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 1.02,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0168,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.018,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -2.11,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 2,
+          "win_rate": 0.0,
+          "total_r": -2.03,
+          "expectancy_r": -1.0174,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 1.02,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0168,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.018,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -2.11,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 1,
+          "win_rate": 0.0,
+          "total_r": -1.02,
+          "expectancy_r": -1.018,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.018,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -1.06,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_2": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 20,
+          "win_rate": 0.6,
+          "total_r": 23.66,
+          "expectancy_r": 1.1832,
+          "profit_factor": 3.842,
+          "max_drawdown_r": 3.11,
+          "walk_forward": {
+            "dev_expectancy_r": 1.2578,
+            "val_expectancy_r": 2.0684,
+            "oos_expectancy_r": 0.1491,
+            "oos_trade_count": 5
+          },
+          "doubled_fee_total_r": 22.9,
+          "sample_classification": "MODERATE_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 16,
+          "win_rate": 0.5625,
+          "total_r": 20.1,
+          "expectancy_r": 1.256,
+          "profit_factor": 3.775,
+          "max_drawdown_r": 2.1,
+          "walk_forward": {
+            "dev_expectancy_r": 1.3166,
+            "val_expectancy_r": 2.0684,
+            "oos_expectancy_r": -1.0478,
+            "oos_trade_count": 2
+          },
+          "doubled_fee_total_r": 19.49,
+          "sample_classification": "MODERATE_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 19,
+          "win_rate": 0.5789,
+          "total_r": 23.59,
+          "expectancy_r": 1.2418,
+          "profit_factor": 3.833,
+          "max_drawdown_r": 3.18,
+          "walk_forward": {
+            "dev_expectancy_r": 1.2578,
+            "val_expectancy_r": 2.0684,
+            "oos_expectancy_r": 0.1686,
+            "oos_trade_count": 4
+          },
+          "doubled_fee_total_r": 22.87,
+          "sample_classification": "MODERATE_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 9,
+          "win_rate": 0.6667,
+          "total_r": 12.84,
+          "expectancy_r": 1.4268,
+          "profit_factor": 5.116,
+          "max_drawdown_r": 2.03,
+          "walk_forward": {
+            "dev_expectancy_r": 2.1935,
+            "val_expectancy_r": 1.4439,
+            "oos_expectancy_r": -0.5071,
+            "oos_trade_count": 2
+          },
+          "doubled_fee_total_r": 12.5,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 9,
+          "win_rate": 0.7778,
+          "total_r": 13.29,
+          "expectancy_r": 1.4767,
+          "profit_factor": 7.459,
+          "max_drawdown_r": 1.03,
+          "walk_forward": {
+            "dev_expectancy_r": 1.8515,
+            "val_expectancy_r": 1.6879,
+            "oos_expectancy_r": -1.0307,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": 12.95,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 6,
+          "win_rate": 0.6667,
+          "total_r": 9.82,
+          "expectancy_r": 1.6368,
+          "profit_factor": 5.686,
+          "max_drawdown_r": 2.1,
+          "walk_forward": {
+            "dev_expectancy_r": 2.6701,
+            "val_expectancy_r": 3.9062,
+            "oos_expectancy_r": -1.0478,
+            "oos_trade_count": 2
+          },
+          "doubled_fee_total_r": 9.59,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_3": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 103,
+          "win_rate": 0.3107,
+          "total_r": 21.22,
+          "expectancy_r": 0.206,
+          "profit_factor": 1.285,
+          "max_drawdown_r": 16.37,
+          "walk_forward": {
+            "dev_expectancy_r": 0.392,
+            "val_expectancy_r": 0.1797,
+            "oos_expectancy_r": -0.3325,
+            "oos_trade_count": 20
+          },
+          "doubled_fee_total_r": 17.3,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 86,
+          "win_rate": 0.3256,
+          "total_r": 20.74,
+          "expectancy_r": 0.2412,
+          "profit_factor": 1.346,
+          "max_drawdown_r": 14.12,
+          "walk_forward": {
+            "dev_expectancy_r": 0.4915,
+            "val_expectancy_r": -0.2885,
+            "oos_expectancy_r": -0.0594,
+            "oos_trade_count": 15
+          },
+          "doubled_fee_total_r": 17.48,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 86,
+          "win_rate": 0.3372,
+          "total_r": 25.05,
+          "expectancy_r": 0.2912,
+          "profit_factor": 1.421,
+          "max_drawdown_r": 13.97,
+          "walk_forward": {
+            "dev_expectancy_r": 0.5724,
+            "val_expectancy_r": -0.2416,
+            "oos_expectancy_r": -0.1248,
+            "oos_trade_count": 16
+          },
+          "doubled_fee_total_r": 21.78,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 119,
+          "win_rate": 0.2941,
+          "total_r": 14.06,
+          "expectancy_r": 0.1182,
+          "profit_factor": 1.158,
+          "max_drawdown_r": 14.12,
+          "walk_forward": {
+            "dev_expectancy_r": 0.1993,
+            "val_expectancy_r": 0.144,
+            "oos_expectancy_r": -0.1453,
+            "oos_trade_count": 24
+          },
+          "doubled_fee_total_r": 9.54,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 119,
+          "win_rate": 0.2941,
+          "total_r": 14.06,
+          "expectancy_r": 0.1182,
+          "profit_factor": 1.158,
+          "max_drawdown_r": 14.12,
+          "walk_forward": {
+            "dev_expectancy_r": 0.1993,
+            "val_expectancy_r": 0.144,
+            "oos_expectancy_r": -0.1453,
+            "oos_trade_count": 24
+          },
+          "doubled_fee_total_r": 9.54,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 54,
+          "win_rate": 0.2963,
+          "total_r": 13.6,
+          "expectancy_r": 0.2519,
+          "profit_factor": 1.349,
+          "max_drawdown_r": 16.95,
+          "walk_forward": {
+            "dev_expectancy_r": 0.6602,
+            "val_expectancy_r": -0.1567,
+            "oos_expectancy_r": -0.7685,
+            "oos_trade_count": 8
+          },
+          "doubled_fee_total_r": 11.55,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_4": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 9,
+          "win_rate": 0.3333,
+          "total_r": -0.65,
+          "expectancy_r": -0.0717,
+          "profit_factor": 0.897,
+          "max_drawdown_r": 6.09,
+          "walk_forward": {
+            "dev_expectancy_r": -0.7534,
+            "val_expectancy_r": 3.9455,
+            "oos_expectancy_r": -0.0351,
+            "oos_trade_count": 2
+          },
+          "doubled_fee_total_r": -0.99,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 8,
+          "win_rate": 0.375,
+          "total_r": 0.62,
+          "expectancy_r": 0.0773,
+          "profit_factor": 1.124,
+          "max_drawdown_r": 4.83,
+          "walk_forward": {
+            "dev_expectancy_r": -0.6514,
+            "val_expectancy_r": 3.9455,
+            "oos_expectancy_r": -0.0351,
+            "oos_trade_count": 2
+          },
+          "doubled_fee_total_r": 0.31,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 8,
+          "win_rate": 0.375,
+          "total_r": 0.56,
+          "expectancy_r": 0.0694,
+          "profit_factor": 1.11,
+          "max_drawdown_r": 4.89,
+          "walk_forward": {
+            "dev_expectancy_r": -0.664,
+            "val_expectancy_r": 3.9455,
+            "oos_expectancy_r": -0.0351,
+            "oos_trade_count": 2
+          },
+          "doubled_fee_total_r": 0.25,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 6,
+          "win_rate": 0.1667,
+          "total_r": -1.99,
+          "expectancy_r": -0.3309,
+          "profit_factor": 0.664,
+          "max_drawdown_r": 3.71,
+          "walk_forward": {
+            "dev_expectancy_r": -1.2067,
+            "val_expectancy_r": 3.9265,
+            "oos_expectancy_r": -1.085,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -2.21,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 7,
+          "win_rate": 0.2857,
+          "total_r": 0.76,
+          "expectancy_r": 0.1087,
+          "profit_factor": 1.16,
+          "max_drawdown_r": 3.53,
+          "walk_forward": {
+            "dev_expectancy_r": -0.4908,
+            "val_expectancy_r": 3.9455,
+            "oos_expectancy_r": -0.6108,
+            "oos_trade_count": 2
+          },
+          "doubled_fee_total_r": 0.49,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 4,
+          "win_rate": 0.5,
+          "total_r": -0.7,
+          "expectancy_r": -0.1753,
+          "profit_factor": 0.702,
+          "max_drawdown_r": 2.35,
+          "walk_forward": {
+            "dev_expectancy_r": -0.2605,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0804,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -0.85,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_5": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        }
+      }
+    },
+    "ETHUSDT": {
+      "SET_1": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 1,
+          "win_rate": 0.0,
+          "total_r": -1.01,
+          "expectancy_r": -1.0126,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0126,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": -1.05,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 1,
+          "win_rate": 0.0,
+          "total_r": -1.01,
+          "expectancy_r": -1.0126,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0126,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": -1.05,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 1,
+          "win_rate": 1.0,
+          "total_r": 0.08,
+          "expectancy_r": 0.0847,
+          "profit_factor": 99.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0847,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.05,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_2": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 30,
+          "win_rate": 0.4333,
+          "total_r": 25.74,
+          "expectancy_r": 0.8579,
+          "profit_factor": 2.467,
+          "max_drawdown_r": 3.2,
+          "walk_forward": {
+            "dev_expectancy_r": 1.1278,
+            "val_expectancy_r": -1.0666,
+            "oos_expectancy_r": 0.6229,
+            "oos_trade_count": 3
+          },
+          "doubled_fee_total_r": 24.6,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 26,
+          "win_rate": 0.4231,
+          "total_r": 19.92,
+          "expectancy_r": 0.7663,
+          "profit_factor": 2.288,
+          "max_drawdown_r": 5.24,
+          "walk_forward": {
+            "dev_expectancy_r": 1.0981,
+            "val_expectancy_r": -1.0666,
+            "oos_expectancy_r": -1.0353,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": 18.93,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 27,
+          "win_rate": 0.4444,
+          "total_r": 23.94,
+          "expectancy_r": 0.8866,
+          "profit_factor": 2.553,
+          "max_drawdown_r": 3.13,
+          "walk_forward": {
+            "dev_expectancy_r": 1.1278,
+            "val_expectancy_r": -1.0475,
+            "oos_expectancy_r": -1.0353,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": 22.91,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 11,
+          "win_rate": 0.4545,
+          "total_r": 5.86,
+          "expectancy_r": 0.5328,
+          "profit_factor": 1.956,
+          "max_drawdown_r": 3.04,
+          "walk_forward": {
+            "dev_expectancy_r": 0.5009,
+            "val_expectancy_r": -1.0508,
+            "oos_expectancy_r": 1.4521,
+            "oos_trade_count": 2
+          },
+          "doubled_fee_total_r": 5.44,
+          "sample_classification": "MODERATE_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 14,
+          "win_rate": 0.5,
+          "total_r": 20.71,
+          "expectancy_r": 1.4795,
+          "profit_factor": 3.907,
+          "max_drawdown_r": 2.06,
+          "walk_forward": {
+            "dev_expectancy_r": 1.4795,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 20.18,
+          "sample_classification": "MODERATE_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 17,
+          "win_rate": 0.4706,
+          "total_r": 19.7,
+          "expectancy_r": 1.1585,
+          "profit_factor": 3.113,
+          "max_drawdown_r": 3.19,
+          "walk_forward": {
+            "dev_expectancy_r": 1.6347,
+            "val_expectancy_r": -1.0778,
+            "oos_expectancy_r": -1.0353,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": 19.05,
+          "sample_classification": "MODERATE_SAMPLE",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_3": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 72,
+          "win_rate": 0.3889,
+          "total_r": 34.88,
+          "expectancy_r": 0.4844,
+          "profit_factor": 1.829,
+          "max_drawdown_r": 10.11,
+          "walk_forward": {
+            "dev_expectancy_r": 0.846,
+            "val_expectancy_r": -0.7341,
+            "oos_expectancy_r": -0.0626,
+            "oos_trade_count": 13
+          },
+          "doubled_fee_total_r": 32.14,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 67,
+          "win_rate": 0.3881,
+          "total_r": 35.67,
+          "expectancy_r": 0.5325,
+          "profit_factor": 1.917,
+          "max_drawdown_r": 9.08,
+          "walk_forward": {
+            "dev_expectancy_r": 0.9144,
+            "val_expectancy_r": -0.6969,
+            "oos_expectancy_r": -0.0626,
+            "oos_trade_count": 13
+          },
+          "doubled_fee_total_r": 33.13,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 67,
+          "win_rate": 0.403,
+          "total_r": 39.08,
+          "expectancy_r": 0.5833,
+          "profit_factor": 2.033,
+          "max_drawdown_r": 9.08,
+          "walk_forward": {
+            "dev_expectancy_r": 0.9885,
+            "val_expectancy_r": -0.6969,
+            "oos_expectancy_r": -0.0626,
+            "oos_trade_count": 13
+          },
+          "doubled_fee_total_r": 36.54,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 20,
+          "win_rate": 0.4,
+          "total_r": 14.72,
+          "expectancy_r": 0.7361,
+          "profit_factor": 2.147,
+          "max_drawdown_r": 5.47,
+          "walk_forward": {
+            "dev_expectancy_r": 1.1642,
+            "val_expectancy_r": -1.0989,
+            "oos_expectancy_r": 0.5733,
+            "oos_trade_count": 3
+          },
+          "doubled_fee_total_r": 13.96,
+          "sample_classification": "MODERATE_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 51,
+          "win_rate": 0.3922,
+          "total_r": 21.03,
+          "expectancy_r": 0.4124,
+          "profit_factor": 1.696,
+          "max_drawdown_r": 6.04,
+          "walk_forward": {
+            "dev_expectancy_r": 0.6047,
+            "val_expectancy_r": -0.1999,
+            "oos_expectancy_r": -0.2217,
+            "oos_trade_count": 7
+          },
+          "doubled_fee_total_r": 19.09,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 49,
+          "win_rate": 0.2653,
+          "total_r": 4.98,
+          "expectancy_r": 0.1016,
+          "profit_factor": 1.137,
+          "max_drawdown_r": 9.7,
+          "walk_forward": {
+            "dev_expectancy_r": 0.3409,
+            "val_expectancy_r": -1.068,
+            "oos_expectancy_r": -0.0848,
+            "oos_trade_count": 11
+          },
+          "doubled_fee_total_r": 3.11,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_4": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 33,
+          "win_rate": 0.4242,
+          "total_r": 14.53,
+          "expectancy_r": 0.4402,
+          "profit_factor": 1.713,
+          "max_drawdown_r": 7.25,
+          "walk_forward": {
+            "dev_expectancy_r": 0.4986,
+            "val_expectancy_r": -0.6314,
+            "oos_expectancy_r": 1.0378,
+            "oos_trade_count": 9
+          },
+          "doubled_fee_total_r": 13.27,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 32,
+          "win_rate": 0.4375,
+          "total_r": 15.78,
+          "expectancy_r": 0.4932,
+          "profit_factor": 1.826,
+          "max_drawdown_r": 5.99,
+          "walk_forward": {
+            "dev_expectancy_r": 0.4986,
+            "val_expectancy_r": -0.5065,
+            "oos_expectancy_r": 1.0378,
+            "oos_trade_count": 9
+          },
+          "doubled_fee_total_r": 14.57,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 32,
+          "win_rate": 0.4375,
+          "total_r": 15.78,
+          "expectancy_r": 0.4932,
+          "profit_factor": 1.826,
+          "max_drawdown_r": 5.99,
+          "walk_forward": {
+            "dev_expectancy_r": 0.4986,
+            "val_expectancy_r": -0.5065,
+            "oos_expectancy_r": 1.0378,
+            "oos_trade_count": 9
+          },
+          "doubled_fee_total_r": 14.57,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 35,
+          "win_rate": 0.4286,
+          "total_r": 15.82,
+          "expectancy_r": 0.4521,
+          "profit_factor": 1.732,
+          "max_drawdown_r": 4.69,
+          "walk_forward": {
+            "dev_expectancy_r": 0.5136,
+            "val_expectancy_r": -0.6314,
+            "oos_expectancy_r": 1.0378,
+            "oos_trade_count": 9
+          },
+          "doubled_fee_total_r": 14.49,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 35,
+          "win_rate": 0.4286,
+          "total_r": 15.82,
+          "expectancy_r": 0.4521,
+          "profit_factor": 1.732,
+          "max_drawdown_r": 4.69,
+          "walk_forward": {
+            "dev_expectancy_r": 0.5136,
+            "val_expectancy_r": -0.6314,
+            "oos_expectancy_r": 1.0378,
+            "oos_trade_count": 9
+          },
+          "doubled_fee_total_r": 14.49,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 25,
+          "win_rate": 0.44,
+          "total_r": 15.87,
+          "expectancy_r": 0.6347,
+          "profit_factor": 2.084,
+          "max_drawdown_r": 2.76,
+          "walk_forward": {
+            "dev_expectancy_r": 0.9024,
+            "val_expectancy_r": -0.3563,
+            "oos_expectancy_r": 0.6954,
+            "oos_trade_count": 8
+          },
+          "doubled_fee_total_r": 14.92,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_5": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        }
+      }
+    },
+    "SOLUSDT": {
+      "SET_1": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 2,
+          "win_rate": 0.0,
+          "total_r": -1.46,
+          "expectancy_r": -0.7308,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.46,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0056,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -0.4559,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -1.54,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 2,
+          "win_rate": 0.0,
+          "total_r": -1.46,
+          "expectancy_r": -0.7308,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.46,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0056,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -0.4559,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -1.54,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 2,
+          "win_rate": 0.0,
+          "total_r": -1.46,
+          "expectancy_r": -0.7308,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.46,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0056,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -0.4559,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -1.54,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 2,
+          "win_rate": 0.0,
+          "total_r": -1.46,
+          "expectancy_r": -0.7308,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.46,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0056,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -0.4559,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -1.54,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 2,
+          "win_rate": 0.0,
+          "total_r": -2.02,
+          "expectancy_r": -1.0112,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 1.02,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0056,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.0168,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -2.1,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_2": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 13,
+          "win_rate": 0.5385,
+          "total_r": 15.34,
+          "expectancy_r": 1.1798,
+          "profit_factor": 3.502,
+          "max_drawdown_r": 4.1,
+          "walk_forward": {
+            "dev_expectancy_r": 1.8423,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.0283,
+            "oos_trade_count": 3
+          },
+          "doubled_fee_total_r": 14.84,
+          "sample_classification": "MODERATE_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 12,
+          "win_rate": 0.5833,
+          "total_r": 16.37,
+          "expectancy_r": 1.364,
+          "profit_factor": 4.209,
+          "max_drawdown_r": 3.07,
+          "walk_forward": {
+            "dev_expectancy_r": 1.8423,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.0275,
+            "oos_trade_count": 2
+          },
+          "doubled_fee_total_r": 15.91,
+          "sample_classification": "MODERATE_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 12,
+          "win_rate": 0.5833,
+          "total_r": 13.29,
+          "expectancy_r": 1.1075,
+          "profit_factor": 3.607,
+          "max_drawdown_r": 3.18,
+          "walk_forward": {
+            "dev_expectancy_r": 1.5345,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.0275,
+            "oos_trade_count": 2
+          },
+          "doubled_fee_total_r": 12.83,
+          "sample_classification": "MODERATE_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 7,
+          "win_rate": 0.5714,
+          "total_r": 12.88,
+          "expectancy_r": 1.8396,
+          "profit_factor": 5.191,
+          "max_drawdown_r": 2.04,
+          "walk_forward": {
+            "dev_expectancy_r": 2.3178,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.0298,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": 12.61,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 9,
+          "win_rate": 0.5556,
+          "total_r": 13.88,
+          "expectancy_r": 1.5418,
+          "profit_factor": 5.416,
+          "max_drawdown_r": 2.06,
+          "walk_forward": {
+            "dev_expectancy_r": 1.8651,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.0449,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": 13.53,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 6,
+          "win_rate": 0.6667,
+          "total_r": 10.58,
+          "expectancy_r": 1.7641,
+          "profit_factor": 6.186,
+          "max_drawdown_r": 1.03,
+          "walk_forward": {
+            "dev_expectancy_r": 2.3223,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.0269,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": 10.36,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_3": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 66,
+          "win_rate": 0.3788,
+          "total_r": 21.65,
+          "expectancy_r": 0.328,
+          "profit_factor": 1.518,
+          "max_drawdown_r": 11.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.5981,
+            "val_expectancy_r": -0.7275,
+            "oos_expectancy_r": -0.499,
+            "oos_trade_count": 9
+          },
+          "doubled_fee_total_r": 19.14,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 61,
+          "win_rate": 0.3607,
+          "total_r": 16.49,
+          "expectancy_r": 0.2704,
+          "profit_factor": 1.416,
+          "max_drawdown_r": 9.72,
+          "walk_forward": {
+            "dev_expectancy_r": 0.4911,
+            "val_expectancy_r": -1.0456,
+            "oos_expectancy_r": -0.4239,
+            "oos_trade_count": 8
+          },
+          "doubled_fee_total_r": 14.17,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 61,
+          "win_rate": 0.377,
+          "total_r": 19.84,
+          "expectancy_r": 0.3253,
+          "profit_factor": 1.513,
+          "max_drawdown_r": 9.83,
+          "walk_forward": {
+            "dev_expectancy_r": 0.5619,
+            "val_expectancy_r": -1.0552,
+            "oos_expectancy_r": -0.4339,
+            "oos_trade_count": 8
+          },
+          "doubled_fee_total_r": 17.52,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 23,
+          "win_rate": 0.3043,
+          "total_r": 4.83,
+          "expectancy_r": 0.2102,
+          "profit_factor": 1.289,
+          "max_drawdown_r": 7.79,
+          "walk_forward": {
+            "dev_expectancy_r": 0.4573,
+            "val_expectancy_r": -0.0785,
+            "oos_expectancy_r": -1.0799,
+            "oos_trade_count": 3
+          },
+          "doubled_fee_total_r": 3.96,
+          "sample_classification": "MODERATE_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 43,
+          "win_rate": 0.3953,
+          "total_r": 5.74,
+          "expectancy_r": 0.1336,
+          "profit_factor": 1.242,
+          "max_drawdown_r": 8.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.2788,
+            "val_expectancy_r": -0.2588,
+            "oos_expectancy_r": -0.3061,
+            "oos_trade_count": 7
+          },
+          "doubled_fee_total_r": 4.11,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 51,
+          "win_rate": 0.3529,
+          "total_r": 17.3,
+          "expectancy_r": 0.3392,
+          "profit_factor": 1.517,
+          "max_drawdown_r": 9.68,
+          "walk_forward": {
+            "dev_expectancy_r": 0.6368,
+            "val_expectancy_r": -1.0363,
+            "oos_expectancy_r": -0.4239,
+            "oos_trade_count": 8
+          },
+          "doubled_fee_total_r": 15.36,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_4": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 33,
+          "win_rate": 0.3636,
+          "total_r": 5.81,
+          "expectancy_r": 0.176,
+          "profit_factor": 1.276,
+          "max_drawdown_r": 6.4,
+          "walk_forward": {
+            "dev_expectancy_r": 0.2762,
+            "val_expectancy_r": 0.9405,
+            "oos_expectancy_r": -0.8286,
+            "oos_trade_count": 6
+          },
+          "doubled_fee_total_r": 4.55,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 27,
+          "win_rate": 0.3704,
+          "total_r": 6.5,
+          "expectancy_r": 0.2409,
+          "profit_factor": 1.397,
+          "max_drawdown_r": 6.1,
+          "walk_forward": {
+            "dev_expectancy_r": 0.5978,
+            "val_expectancy_r": 0.2382,
+            "oos_expectancy_r": -0.8286,
+            "oos_trade_count": 6
+          },
+          "doubled_fee_total_r": 5.48,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 27,
+          "win_rate": 0.3704,
+          "total_r": 6.5,
+          "expectancy_r": 0.2409,
+          "profit_factor": 1.397,
+          "max_drawdown_r": 6.1,
+          "walk_forward": {
+            "dev_expectancy_r": 0.5978,
+            "val_expectancy_r": 0.2382,
+            "oos_expectancy_r": -0.8286,
+            "oos_trade_count": 6
+          },
+          "doubled_fee_total_r": 5.48,
+          "sample_classification": "SUBSTANTIAL_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 14,
+          "win_rate": 0.3571,
+          "total_r": -0.91,
+          "expectancy_r": -0.0649,
+          "profit_factor": 0.914,
+          "max_drawdown_r": 3.65,
+          "walk_forward": {
+            "dev_expectancy_r": -0.4453,
+            "val_expectancy_r": 1.8551,
+            "oos_expectancy_r": -1.2337,
+            "oos_trade_count": 2
+          },
+          "doubled_fee_total_r": -1.44,
+          "sample_classification": "MODERATE_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 24,
+          "win_rate": 0.375,
+          "total_r": 2.6,
+          "expectancy_r": 0.1084,
+          "profit_factor": 1.185,
+          "max_drawdown_r": 4.61,
+          "walk_forward": {
+            "dev_expectancy_r": 0.3578,
+            "val_expectancy_r": 0.2868,
+            "oos_expectancy_r": -0.7827,
+            "oos_trade_count": 5
+          },
+          "doubled_fee_total_r": 1.69,
+          "sample_classification": "MODERATE_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 19,
+          "win_rate": 0.2105,
+          "total_r": -3.56,
+          "expectancy_r": -0.1871,
+          "profit_factor": 0.753,
+          "max_drawdown_r": 8.87,
+          "walk_forward": {
+            "dev_expectancy_r": 0.2291,
+            "val_expectancy_r": -1.2187,
+            "oos_expectancy_r": -0.7734,
+            "oos_trade_count": 5
+          },
+          "doubled_fee_total_r": -4.28,
+          "sample_classification": "MODERATE_SAMPLE",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_5": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "REJECTED_NO_OVERLAP"
+        }
+      }
+    },
+    "BNBUSDT": {
+      "SET_1": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 1,
+          "win_rate": 0.0,
+          "total_r": -1.01,
+          "expectancy_r": -1.011,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": -1.011,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": -1.05,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 1,
+          "win_rate": 0.0,
+          "total_r": -1.01,
+          "expectancy_r": -1.011,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": -1.011,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": -1.05,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 1,
+          "win_rate": 0.0,
+          "total_r": -1.01,
+          "expectancy_r": -1.011,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": -1.011,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": -1.05,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 1,
+          "win_rate": 0.0,
+          "total_r": -1.01,
+          "expectancy_r": -1.011,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": -1.011,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": -1.05,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.0,
+          "sample_classification": "ZERO_TRADES",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 1,
+          "win_rate": 0.0,
+          "total_r": -1.01,
+          "expectancy_r": -1.011,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": -1.011,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": -1.05,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_2": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 2,
+          "win_rate": 0.5,
+          "total_r": 2.93,
+          "expectancy_r": 1.4634,
+          "profit_factor": 3.9,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0091,
+            "val_expectancy_r": 3.9359,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 2.85,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 1,
+          "win_rate": 0.0,
+          "total_r": -1.01,
+          "expectancy_r": -1.0091,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0091,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": -1.05,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 1,
+          "win_rate": 0.0,
+          "total_r": -1.01,
+          "expectancy_r": -1.0091,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0091,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": -1.05,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 1,
+          "win_rate": 1.0,
+          "total_r": 3.94,
+          "expectancy_r": 3.9359,
+          "profit_factor": 99.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": 3.9359,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 3.9,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 1,
+          "win_rate": 0.0,
+          "total_r": -1.01,
+          "expectancy_r": -1.0091,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0091,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": -1.05,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 1,
+          "win_rate": 0.0,
+          "total_r": -1.01,
+          "expectancy_r": -1.0091,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": -1.0091,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": -1.05,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_3": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 3,
+          "win_rate": 0.6667,
+          "total_r": 0.87,
+          "expectancy_r": 0.2913,
+          "profit_factor": 1.799,
+          "max_drawdown_r": 1.09,
+          "walk_forward": {
+            "dev_expectancy_r": 0.9834,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.093,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": 0.76,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 3,
+          "win_rate": 0.6667,
+          "total_r": 0.87,
+          "expectancy_r": 0.2913,
+          "profit_factor": 1.799,
+          "max_drawdown_r": 1.09,
+          "walk_forward": {
+            "dev_expectancy_r": 0.9834,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.093,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": 0.76,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 3,
+          "win_rate": 0.6667,
+          "total_r": 0.87,
+          "expectancy_r": 0.2913,
+          "profit_factor": 1.799,
+          "max_drawdown_r": 1.09,
+          "walk_forward": {
+            "dev_expectancy_r": 0.9834,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.093,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": 0.76,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 2,
+          "win_rate": 0.5,
+          "total_r": -1.06,
+          "expectancy_r": -0.5286,
+          "profit_factor": 0.017,
+          "max_drawdown_r": 1.08,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0181,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.0753,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -1.13,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 2,
+          "win_rate": 0.5,
+          "total_r": 0.88,
+          "expectancy_r": 0.4402,
+          "profit_factor": 1.824,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.4402,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": 0.8,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 3,
+          "win_rate": 0.3333,
+          "total_r": -2.15,
+          "expectancy_r": -0.7169,
+          "profit_factor": 0.008,
+          "max_drawdown_r": 2.17,
+          "walk_forward": {
+            "dev_expectancy_r": -0.5289,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.093,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -2.26,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_4": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 5,
+          "win_rate": 0.0,
+          "total_r": -6.24,
+          "expectancy_r": -1.2487,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 4.64,
+          "walk_forward": {
+            "dev_expectancy_r": -1.3344,
+            "val_expectancy_r": -1.1216,
+            "oos_expectancy_r": -1.119,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -6.43,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 4,
+          "win_rate": 0.0,
+          "total_r": -5.08,
+          "expectancy_r": -1.2705,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 3.48,
+          "walk_forward": {
+            "dev_expectancy_r": -1.4207,
+            "val_expectancy_r": -1.1216,
+            "oos_expectancy_r": -1.119,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -5.23,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 5,
+          "win_rate": 0.0,
+          "total_r": -6.24,
+          "expectancy_r": -1.2487,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 4.64,
+          "walk_forward": {
+            "dev_expectancy_r": -1.3344,
+            "val_expectancy_r": -1.1216,
+            "oos_expectancy_r": -1.119,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -6.43,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 1,
+          "win_rate": 0.0,
+          "total_r": -1.12,
+          "expectancy_r": -1.1216,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "walk_forward": {
+            "dev_expectancy_r": 0.0,
+            "val_expectancy_r": -1.1216,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": -1.16,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 2,
+          "win_rate": 0.0,
+          "total_r": -2.46,
+          "expectancy_r": -1.2285,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 1.1,
+          "walk_forward": {
+            "dev_expectancy_r": -1.3546,
+            "val_expectancy_r": -1.1023,
+            "oos_expectancy_r": 0.0,
+            "oos_trade_count": 0
+          },
+          "doubled_fee_total_r": -2.53,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 2,
+          "win_rate": 0.0,
+          "total_r": -2.47,
+          "expectancy_r": -1.2368,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 1.12,
+          "walk_forward": {
+            "dev_expectancy_r": -1.3546,
+            "val_expectancy_r": 0.0,
+            "oos_expectancy_r": -1.119,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -2.55,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        }
+      },
+      "SET_5": {
+        "NO_TRADE": {
+          "trade_count": 0,
+          "win_rate": 0.0,
+          "total_r": 0.0,
+          "expectancy_r": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_r": 0.0,
+          "status": "COMPLETED",
+          "sample_classification": "BENCHMARK_CONTROL"
+        },
+        "ADAPTIVE_ENGINE_V1": {
+          "trade_count": 5,
+          "win_rate": 0.4,
+          "total_r": 1.19,
+          "expectancy_r": 0.2374,
+          "profit_factor": 1.275,
+          "max_drawdown_r": 1.46,
+          "walk_forward": {
+            "dev_expectancy_r": 0.1225,
+            "val_expectancy_r": 2.2684,
+            "oos_expectancy_r": -1.4491,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": 1.0,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F01_STRUCTURE_PHASE": {
+          "trade_count": 4,
+          "win_rate": 0.25,
+          "total_r": -2.05,
+          "expectancy_r": -0.5117,
+          "profit_factor": 0.526,
+          "max_drawdown_r": 1.46,
+          "walk_forward": {
+            "dev_expectancy_r": -1.433,
+            "val_expectancy_r": 2.2684,
+            "oos_expectancy_r": -1.4491,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -2.2,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F08_STRUCTURE_TRENDLINE_PHASE": {
+          "trade_count": 4,
+          "win_rate": 0.25,
+          "total_r": -2.05,
+          "expectancy_r": -0.5117,
+          "profit_factor": 0.526,
+          "max_drawdown_r": 1.46,
+          "walk_forward": {
+            "dev_expectancy_r": -1.433,
+            "val_expectancy_r": 2.2684,
+            "oos_expectancy_r": -1.4491,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -2.2,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F05_STRUCTURE_OB_PHASE": {
+          "trade_count": 5,
+          "win_rate": 0.4,
+          "total_r": 1.19,
+          "expectancy_r": 0.2374,
+          "profit_factor": 1.275,
+          "max_drawdown_r": 1.46,
+          "walk_forward": {
+            "dev_expectancy_r": 0.1225,
+            "val_expectancy_r": 2.2684,
+            "oos_expectancy_r": -1.4491,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": 1.0,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F06_STRUCTURE_FVG_PHASE": {
+          "trade_count": 3,
+          "win_rate": 0.3333,
+          "total_r": -1.45,
+          "expectancy_r": -0.4849,
+          "profit_factor": 0.444,
+          "max_drawdown_r": 1.16,
+          "walk_forward": {
+            "dev_expectancy_r": -1.4603,
+            "val_expectancy_r": 1.1621,
+            "oos_expectancy_r": -1.1565,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -1.57,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        },
+        "F10_STRUCTURE_MOMENTUM_PHASE": {
+          "trade_count": 4,
+          "win_rate": 0.25,
+          "total_r": -2.05,
+          "expectancy_r": -0.5117,
+          "profit_factor": 0.526,
+          "max_drawdown_r": 1.46,
+          "walk_forward": {
+            "dev_expectancy_r": -1.433,
+            "val_expectancy_r": 2.2684,
+            "oos_expectancy_r": -1.4491,
+            "oos_trade_count": 1
+          },
+          "doubled_fee_total_r": -2.2,
+          "sample_classification": "INSUFFICIENT_SAMPLE",
+          "status": "COMPLETED"
+        }
+      }
+    }
+  }
+}

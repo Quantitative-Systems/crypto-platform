@@ -1,0 +1,20 @@
+{
+  "strict_vs_calibrated_delta": {
+    "strict_net_r": 47.46,
+    "calibrated_net_r": 47.46,
+    "net_r_restored": 0.0,
+    "strict_max_dd": 8.47,
+    "calibrated_max_dd": 8.47,
+    "rejection_ratio_strict_pct": 16.0,
+    "rejection_ratio_calibrated_pct": 16.0,
+    "calibrated_der": -0.2637
+  },
+  "calibrated_rules": [
+    "Targeted Asymmetric Gating: Grant 0.85x to >= 4.5R targets in KNOWN_FAVORABLE trends with high funding",
+    "Strict Zero Tolerance: Maintain 0.0x NO_TRADE_FLAT on extreme funding in TRANSITION and CHOP",
+    "Short Squeeze Edge: Maintain 1.25x sizing on SHORT_SQUEEZE_PRIME setups",
+    "Crowded Short Defense: 100% halt on short setups with extreme negative funding",
+    "Dynamic Volatility Haircuts: 0.75x in clean continuation vs 0.50x in pullbacks/retests",
+    "Drawdown Governor Pacing: Elevated tier allows 0.75x for high asymmetry >= 5.0R setups"
+  ]
+}

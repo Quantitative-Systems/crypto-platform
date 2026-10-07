@@ -1,0 +1,86 @@
+{
+  "experiment_id": "EXP_BNBUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_PULLBACK_V1",
+  "status": "COMPLETED",
+  "symbol": "BNBUSDT",
+  "set_id": "SET_2",
+  "family_id": "F03_STRUCTURE_EMA_PHASE",
+  "phase_mode": "PULLBACK",
+  "timeframe_hierarchy": {
+    "htf": "1w",
+    "mtf": "1d",
+    "ltf": "4h"
+  },
+  "testable_period": {
+    "start_iso": "2024-06-24T08:00:00+00:00",
+    "end_iso": "2026-10-05T00:00:00+00:00",
+    "total_ltf_bars": 4997
+  },
+  "overall_metrics": {
+    "trade_count": 16,
+    "win_count": 4,
+    "loss_count": 12,
+    "win_rate": 0.25,
+    "loss_rate": 0.75,
+    "total_r": -6.4177,
+    "expectancy_r": -0.40110625,
+    "profit_factor": 0.49124420309960765,
+    "max_drawdown_r": 7.1533,
+    "target_4r_hit_rate": 0.0625,
+    "avg_bars_held": 67.4375,
+    "fees_bps_roundtrip": 15.0,
+    "slippage_bps_roundtrip": 4.0
+  },
+  "partitioned_walk_forward": {
+    "dev": {
+      "trade_count": 11,
+      "win_count": 2,
+      "loss_count": 9,
+      "win_rate": 0.1818,
+      "loss_rate": 0.8182,
+      "total_r": -5.54,
+      "expectancy_r": -0.5034,
+      "profit_factor": 0.418,
+      "max_drawdown_r": 6.38,
+      "average_win_r": 1.99,
+      "average_loss_r": -1.06
+    },
+    "val": {
+      "trade_count": 3,
+      "win_count": 1,
+      "loss_count": 2,
+      "win_rate": 0.3333,
+      "loss_rate": 0.6667,
+      "total_r": -1.57,
+      "expectancy_r": -0.523,
+      "profit_factor": 0.235,
+      "max_drawdown_r": 1.02,
+      "average_win_r": 0.48,
+      "average_loss_r": -1.03
+    },
+    "oos": {
+      "trade_count": 2,
+      "win_count": 1,
+      "loss_count": 1,
+      "win_rate": 0.5,
+      "loss_rate": 0.5,
+      "total_r": 0.69,
+      "expectancy_r": 0.3445,
+      "profit_factor": 1.652,
+      "max_drawdown_r": 0.0,
+      "average_win_r": 1.75,
+      "average_loss_r": -1.06
+    }
+  },
+  "direction_performance": {
+    "long_trades": 9,
+    "long_total_r": -5.62,
+    "short_trades": 7,
+    "short_total_r": -0.8
+  },
+  "edge_qualification": {
+    "has_positive_expectancy": false,
+    "has_positive_oos": true,
+    "has_sufficient_trades": true,
+    "survives_costs": false
+  }
+}

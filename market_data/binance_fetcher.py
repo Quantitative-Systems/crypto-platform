@@ -70,6 +70,9 @@ class BinanceFetcher:
             "15m": "15m",
             "5M": "5m",
             "5m": "5m",
+            "3M": "3m",
+            "3m": "3m",
+            "3min": "3m",
             "1m": "1m",
             "1min": "1m",
             "1MIN": "1m",
@@ -94,7 +97,7 @@ class BinanceFetcher:
                         
                     selected = filtered[-limit:] if len(filtered) >= limit else filtered
                     if len(selected) >= 10:
-                        print(f"✅ Loaded {len(selected)} {timeframe} candles for {symbol} from cache.")
+                        print(f"[CACHE] Loaded {len(selected)} {timeframe} candles for {symbol} from cache.")
                         return [
                             Candle(
                                 timestamp=int(bar[0] // 1000),
@@ -109,7 +112,7 @@ class BinanceFetcher:
             except Exception:
                 pass  # Fallback to API if cache reading fails
 
-        print(f"📥 Fetching {timeframe} candles for {symbol} from Binance API...")
+        print(f"[FETCH] Fetching {timeframe} candles for {symbol} from Binance API...")
         
         all_bars = []
         current_end_time = end_time_ms if end_time_ms is not None else int(time.time() * 1000)
@@ -142,7 +145,7 @@ class BinanceFetcher:
                     # Respect rate limit
                     time.sleep(0.2)
             except Exception as e:
-                print(f"⚠️ Binance API Ingestion Alert: {e}. Stopping fetch.")
+                print(f"[ALERT] Binance API Ingestion Alert: {e}. Stopping fetch.")
                 break
 
         if all_bars:
@@ -151,7 +154,7 @@ class BinanceFetcher:
                 with open(cache_filepath, "w") as f:
                     json.dump(all_bars, f)
             except Exception as e:
-                print(f"⚠️ Failed to write cache: {e}")
+                print(f"[WARN] Failed to write cache: {e}")
                 
         filtered = all_bars
         if start_time_ms is not None:

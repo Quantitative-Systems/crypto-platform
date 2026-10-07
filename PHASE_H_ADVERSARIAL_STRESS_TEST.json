@@ -1,0 +1,77 @@
+{
+  "scenarios": [
+    {
+      "scenario_id": "SCENARIO_1_SECULAR_BULL",
+      "name": "Secular Bull Expansion (2021, late 2023-2024)",
+      "regime_climate": "RISK_ON / TRENDING / ABUNDANT_LIQUIDITY",
+      "stress_factor": "Overheated perpetual funding & leveraged speculative froth",
+      "risk_profile": "High continuation follow-through; high trailing survival"
+    },
+    {
+      "scenario_id": "SCENARIO_2_PROTRACTED_BEAR",
+      "name": "Protracted Bear Market (2022 Fed rate hiking cycle, Luna, FTX)",
+      "regime_climate": "RISK_OFF / TRENDING_DOWN / TIGHT_LIQUIDITY",
+      "stress_factor": "Persistent lower lows, failed breakout traps, credit contagion",
+      "risk_profile": "Extreme hazard for unhedged long strategies; short execution edge"
+    },
+    {
+      "scenario_id": "SCENARIO_3_PROLONGED_CHOP",
+      "name": "Prolonged Mean-Reverting Chop (Summer 2023, Summer 2024)",
+      "regime_climate": "NEUTRAL / RANGING / TIGHT_LIQUIDITY",
+      "stress_factor": "High false-breakout rate, volume compression, trend exhaustion",
+      "risk_profile": "Severe whipsaw hazard; primary source of multi-trade drawdown"
+    },
+    {
+      "scenario_id": "SCENARIO_4_BLACK_SWAN_SHOCK",
+      "name": "Black Swan & Liquidity Shocks (Covid, May 2021 Wick, Yen Unwind)",
+      "regime_climate": "EXTREME_VOLATILITY / IMPAIRED_LIQUIDITY",
+      "stress_factor": "Cascading margin liquidations, order book vacuum, 65+ VIX spikes",
+      "risk_profile": "Severe gap and slippage hazard; stops blown out on market orders"
+    },
+    {
+      "scenario_id": "SCENARIO_5_SYNTHETIC_ANOMALIES",
+      "name": "Synthetic Adversarial Injections (Corrupted feeds, 30 bps spreads)",
+      "regime_climate": "UNKNOWN_UNSTABLE / DATA_ANOMALY",
+      "stress_factor": "Inverted OHLC, stale quotes, sudden 4-sigma volatility dislocations",
+      "risk_profile": "Model and operational failure hazard; strict FLAT mandatory"
+    }
+  ],
+  "adversarial_injections": [
+    {
+      "test_id": "ADV_1_INVERTED_OHLC",
+      "injection": "Feed corruption: High < Low by 1500 USD",
+      "expected_behavior": "UnknownStateEngine flags DATA_RISK; strict NO_TRADE_FLAT",
+      "system_result": "PASS",
+      "passed_invariants": true
+    },
+    {
+      "test_id": "ADV_2_SPREAD_BLOWOUT",
+      "injection": "Microstructure shock: Spread expands to 38 bps (> 25 bps limit)",
+      "expected_behavior": "UnknownStateEngine flags EXECUTION_RISK; strict NO_TRADE_FLAT",
+      "system_result": "PASS",
+      "passed_invariants": true
+    },
+    {
+      "test_id": "ADV_3_EXTREME_VOLATILITY",
+      "injection": "4-sigma volatility explosion (Realized vol > 120% annualized)",
+      "expected_behavior": "Regime Engine & Layer 4 flag EXTREME_VOLATILITY; entry blocked",
+      "system_result": "PASS",
+      "passed_invariants": true
+    },
+    {
+      "test_id": "ADV_4_CIRCUIT_BREAKER_HALT",
+      "injection": "Simulated consecutive stop-outs pushing peak drawdown to 16.5%",
+      "expected_behavior": "DrawdownGovernor enters CRITICAL_HALT; 100% of trading frozen",
+      "system_result": "PASS",
+      "passed_invariants": true
+    },
+    {
+      "test_id": "ADV_5_CORRELATION_COLLAPSE",
+      "injection": "Abrupt pairwise correlation flip (BTC-ETH correlation drops from +0.9 to -0.8)",
+      "expected_behavior": "UnknownStateEngine flags structural dissonance; exposure haircut",
+      "system_result": "PASS",
+      "passed_invariants": true
+    }
+  ],
+  "all_tests_passed": true
+}

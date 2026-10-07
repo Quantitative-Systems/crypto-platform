@@ -1,0 +1,106 @@
+[
+  {
+    "decision_id": "DEC-138915CF90",
+    "timestamp": 1791304672.5447018,
+    "instrument": "BTC/USD",
+    "decision": "TRADE",
+    "reason": "HTF BULLISH CONTINUATION, MTF setup valid, LTF confirmed, Destination 4.6R >= 4.0R, Capital approved",
+    "system_version": "CandidateV1",
+    "feature_version": "v1.2.0",
+    "execution_version": "v1.0.0",
+    "direction": "LONG",
+    "market_model": {
+      "structure": "BULLISH_TREND",
+      "zone": "DEMAND_ZONE",
+      "phase": "CONTINUATION"
+    },
+    "htf": "BULLISH",
+    "mtf": "CONFIRMED_STRUCTURAL_SETUP",
+    "ltf": "CONFIRMED_BREAKOUT_AND_RETEST",
+    "regime": "EXPANSION_STABLE",
+    "causal_context": "BENIGN",
+    "strategy": "ADAPTIVE_ENGINE_V1",
+    "destination_r": 4.6,
+    "risk_approved": 0.01,
+    "position_size": 1.0,
+    "entry_price": 62000.0,
+    "stop_price": 61000.0,
+    "target_price": 66600.0,
+    "data_snapshot": {
+      "spread_bps": 2.5,
+      "latency_ms": 45.0
+    }
+  },
+  {
+    "decision_id": "DEC-9F6585B7B8",
+    "timestamp": 1791304672.5449471,
+    "instrument": "BTC/USD",
+    "decision": "NO_TRADE",
+    "reason": "LTF entry trigger not confirmed: NO_TRIGGER",
+    "system_version": "CandidateV1",
+    "feature_version": "v1.2.0",
+    "execution_version": "v1.0.0",
+    "no_trade_code": "NO_TRADE_LTF_NOT_CONFIRMED",
+    "primary_reason": "NO_TRADE_LTF_NOT_CONFIRMED"
+  },
+  {
+    "decision_id": "DEC-95596DEA1C",
+    "timestamp": 1791304672.5450594,
+    "instrument": "BTC/USD",
+    "decision": "NO_TRADE",
+    "reason": "LTF entry trigger not confirmed: NO_TRIGGER",
+    "system_version": "CandidateV1",
+    "feature_version": "v1.2.0",
+    "execution_version": "v1.0.0",
+    "no_trade_code": "NO_TRADE_LTF_NOT_CONFIRMED",
+    "primary_reason": "NO_TRADE_LTF_NOT_CONFIRMED"
+  },
+  {
+    "decision_id": "DEC-8904F239A2",
+    "timestamp": 1791304672.545144,
+    "instrument": "BTC/USD",
+    "decision": "NO_TRADE",
+    "reason": "LTF entry trigger not confirmed: NO_TRIGGER",
+    "system_version": "CandidateV1",
+    "feature_version": "v1.2.0",
+    "execution_version": "v1.0.0",
+    "no_trade_code": "NO_TRADE_LTF_NOT_CONFIRMED",
+    "primary_reason": "NO_TRADE_LTF_NOT_CONFIRMED"
+  },
+  {
+    "decision_id": "DEC-2696DDB88F",
+    "timestamp": 1791304672.5452,
+    "instrument": "BTC/USD",
+    "decision": "NO_TRADE",
+    "reason": "LTF entry trigger not confirmed: NO_TRIGGER",
+    "system_version": "CandidateV1",
+    "feature_version": "v1.2.0",
+    "execution_version": "v1.0.0",
+    "no_trade_code": "NO_TRADE_LTF_NOT_CONFIRMED",
+    "primary_reason": "NO_TRADE_LTF_NOT_CONFIRMED"
+  },
+  {
+    "decision_id": "DEC-4891F70C30",
+    "timestamp": 1791304672.5452437,
+    "instrument": "BTC/USD",
+    "decision": "NO_TRADE",
+    "reason": "LTF entry trigger not confirmed: NO_TRIGGER",
+    "system_version": "CandidateV1",
+    "feature_version": "v1.2.0",
+    "execution_version": "v1.0.0",
+    "no_trade_code": "NO_TRADE_LTF_NOT_CONFIRMED",
+    "primary_reason": "NO_TRADE_LTF_NOT_CONFIRMED"
+  },
+  {
+    "decision_id": "DEC-C060E71A81",
+    "timestamp": 1791304672.5452905,
+    "instrument": "BTC/USD",
+    "decision": "NO_TRADE",
+    "reason": "LTF entry trigger not confirmed: NO_TRIGGER",
+    "system_version": "CandidateV1",
+    "feature_version": "v1.2.0",
+    "execution_version": "v1.0.0",
+    "no_trade_code": "NO_TRADE_LTF_NOT_CONFIRMED",
+    "primary_reason": "NO_TRADE_LTF_NOT_CONFIRMED"
+  }
+]

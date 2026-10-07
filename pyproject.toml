@@ -34,11 +34,13 @@ gateways = [
 [tool.setuptools.packages.find]
 where = ["."]
 include = [
-    "config*",
-    "crypto_platform*",
     "market_data*",
-    "qcp_platform*",
+    "market_model*",
+    "market_tools*",
     "research*",
+    "execution*",
+    "strategy*",
+    "config*",
 ]
 
 [tool.pytest.ini_options]

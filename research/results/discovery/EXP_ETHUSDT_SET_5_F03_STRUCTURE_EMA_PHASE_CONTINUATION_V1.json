@@ -1,0 +1,8 @@
+{
+  "experiment_id": "EXP_ETHUSDT_SET_5_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+  "status": "REJECTED_NO_OVERLAP",
+  "symbol": "ETHUSDT",
+  "set_id": "SET_5",
+  "family_id": "F03_STRUCTURE_EMA_PHASE",
+  "phase_mode": "CONTINUATION"
+}

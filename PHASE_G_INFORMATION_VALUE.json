@@ -1,0 +1,93 @@
+[
+  {
+    "feature": "EVENT_CLOCK_FREEZE_15M",
+    "category": "EVENT_TIMING",
+    "description": "Gating entries within +/- 15m of CRITICAL releases",
+    "baseline_expectancy_r": 1.01,
+    "conditional_expectancy_r": 1.15,
+    "delta_expectancy_r": 0.14,
+    "win_rate_delta_pct": 2.8,
+    "pf_delta": 0.35,
+    "mae_delta_reduction_bps": -18.5,
+    "false_positive_avoidance_rate": 78.5,
+    "classification": "ACTIVE"
+  },
+  {
+    "feature": "POSITIONING_NEGATIVE_FUNDING_SQUEEZE",
+    "category": "POSITIONING",
+    "description": "Funding < -10 bps during Bull Continuation",
+    "baseline_expectancy_r": 1.01,
+    "conditional_expectancy_r": 1.58,
+    "delta_expectancy_r": 0.57,
+    "win_rate_delta_pct": 8.4,
+    "pf_delta": 0.82,
+    "mae_delta_reduction_bps": -24.0,
+    "false_positive_avoidance_rate": 65.0,
+    "classification": "ACTIVE"
+  },
+  {
+    "feature": "POSITIONING_OVERHEATED_FUNDING_FLUSH",
+    "category": "POSITIONING",
+    "description": "Haircut/Gating when funding > 28 bps",
+    "baseline_expectancy_r": 1.01,
+    "conditional_expectancy_r": 1.12,
+    "delta_expectancy_r": 0.11,
+    "win_rate_delta_pct": 3.1,
+    "pf_delta": 0.28,
+    "mae_delta_reduction_bps": -32.0,
+    "false_positive_avoidance_rate": 84.0,
+    "classification": "ACTIVE"
+  },
+  {
+    "feature": "CROSS_MARKET_DXY_SURGE_GATE",
+    "category": "CROSS_MARKET",
+    "description": "Prohibit longs when DXY 24h change > +0.6%",
+    "baseline_expectancy_r": 1.01,
+    "conditional_expectancy_r": 1.19,
+    "delta_expectancy_r": 0.18,
+    "win_rate_delta_pct": 3.6,
+    "pf_delta": 0.41,
+    "mae_delta_reduction_bps": -14.0,
+    "false_positive_avoidance_rate": 72.0,
+    "classification": "ACTIVE"
+  },
+  {
+    "feature": "CROSS_MARKET_VIX_SPIKE_GATE",
+    "category": "CROSS_MARKET",
+    "description": "Prohibit trading when VIX > 28.0",
+    "baseline_expectancy_r": 1.01,
+    "conditional_expectancy_r": 1.14,
+    "delta_expectancy_r": 0.13,
+    "win_rate_delta_pct": 2.4,
+    "pf_delta": 0.32,
+    "mae_delta_reduction_bps": -28.0,
+    "false_positive_avoidance_rate": 81.0,
+    "classification": "ACTIVE"
+  },
+  {
+    "feature": "ETF_NET_INFLOW_MOMENTUM",
+    "category": "CRYPTO_FLOWS",
+    "description": "Spot ETF inflows > $300M / day",
+    "baseline_expectancy_r": 1.01,
+    "conditional_expectancy_r": 1.38,
+    "delta_expectancy_r": 0.37,
+    "win_rate_delta_pct": 5.2,
+    "pf_delta": 0.64,
+    "mae_delta_reduction_bps": -12.0,
+    "false_positive_avoidance_rate": 58.0,
+    "classification": "ACTIVE"
+  },
+  {
+    "feature": "YIELD_CURVE_INVERSION_EXTREME",
+    "category": "MACRO_STRUCTURE",
+    "description": "10Y-2Y inversion < -80 bps",
+    "baseline_expectancy_r": 1.01,
+    "conditional_expectancy_r": 0.98,
+    "delta_expectancy_r": -0.03,
+    "win_rate_delta_pct": -0.8,
+    "pf_delta": -0.05,
+    "mae_delta_reduction_bps": 2.0,
+    "false_positive_avoidance_rate": 42.0,
+    "classification": "OBSERVATIONAL"
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "timestamp_utc": "2026-10-06T09:39:28.316354+00:00",
+  "phase": "PHASE_K",
+  "systems_tested": [
+    {
+      "system_id": "SYS_1_UNGOVERNED",
+      "name": "Ungoverned Baseline (Market Model Only)"
+    },
+    {
+      "system_id": "SYS_2_GOVERNED_STATIC",
+      "name": "Governed Static (7-Layer Risk Shield)"
+    },
+    {
+      "system_id": "SYS_3_INTEGRATED",
+      "name": "Integrated Pipeline (Governed + Staged Reactivation)"
+    }
+  ],
+  "full_history_aggregates": {
+    "SYS_1_UNGOVERNED": {
+      "total_trades": 49,
+      "cumulative_net_r": 26.92,
+      "average_win_rate": 43.4,
+      "average_profit_factor": 2.85,
+      "peak_drawdown_pct": 12.02
+    },
+    "SYS_2_GOVERNED_STATIC": {
+      "total_trades": 43,
+      "cumulative_net_r": 20.1,
+      "average_win_rate": 58.0,
+      "average_profit_factor": 805002.21,
+      "peak_drawdown_pct": 5.83
+    },
+    "SYS_3_INTEGRATED": {
+      "total_trades": 43,
+      "cumulative_net_r": 20.1,
+      "average_win_rate": 58.0,
+      "average_profit_factor": 805002.21,
+      "peak_drawdown_pct": 5.83
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "experiment_id": "EXP_SOLUSDT_SET_1_ADAPTIVE_ENGINE_V1_CONTINUATION_V1",
+  "status": "COMPLETED",
+  "symbol": "SOLUSDT",
+  "set_id": "SET_1",
+  "family_id": "ADAPTIVE_ENGINE_V1",
+  "phase_mode": "CONTINUATION",
+  "timeframe_hierarchy": {
+    "htf": "1M",
+    "mtf": "1w",
+    "ltf": "1d"
+  },
+  "testable_period": {
+    "start_iso": "2020-08-15T00:00:00+00:00",
+    "end_iso": "2026-09-01T00:00:00+00:00",
+    "total_ltf_bars": 2209
+  },
+  "overall_metrics": {
+    "trade_count": 2,
+    "win_count": 0,
+    "loss_count": 2,
+    "win_rate": 0.0,
+    "loss_rate": 1.0,
+    "total_r": -1.4615,
+    "expectancy_r": -0.73075,
+    "profit_factor": 0.0,
+    "max_drawdown_r": 0.45589999999999997,
+    "target_4r_hit_rate": 0.0,
+    "avg_bars_held": 106.0,
+    "fees_bps_roundtrip": 15.0,
+    "slippage_bps_roundtrip": 4.0
+  },
+  "partitioned_walk_forward": {
+    "dev": {
+      "trade_count": 1,
+      "win_count": 0,
+      "loss_count": 1,
+      "win_rate": 0.0,
+      "loss_rate": 1.0,
+      "total_r": -1.01,
+      "expectancy_r": -1.0056,
+      "profit_factor": 0.0,
+      "max_drawdown_r": 0.0,
+      "average_win_r": 0.0,
+      "average_loss_r": -1.01
+    },
+    "val": {
+      "trade_count": 0,
+      "win_rate": 0.0,
+      "total_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor": 0.0,
+      "max_drawdown_r": 0.0
+    },
+    "oos": {
+      "trade_count": 1,
+      "win_count": 0,
+      "loss_count": 1,
+      "win_rate": 0.0,
+      "loss_rate": 1.0,
+      "total_r": -0.46,
+      "expectancy_r": -0.4559,
+      "profit_factor": 0.0,
+      "max_drawdown_r": 0.0,
+      "average_win_r": 0.0,
+      "average_loss_r": -0.46
+    }
+  },
+  "direction_performance": {
+    "long_trades": 0,
+    "long_total_r": 0,
+    "short_trades": 2,
+    "short_total_r": -1.46
+  },
+  "edge_qualification": {
+    "has_positive_expectancy": false,
+    "has_positive_oos": false,
+    "has_sufficient_trades": false,
+    "survives_costs": false
+  },
+  "trade_records": [
+    {
+      "direction": -1,
+      "entry_price": 11.1,
+      "exit_price": 14.98,
+      "stop_price": 14.97,
+      "target_price": -4.45,
+      "realized_r": -1.0056,
+      "entry_ts": 1672185600000,
+      "exit_ts": 1673222400000,
+      "exit_reason": "LTF_SL",
+      "bars_held": 12,
+      "mfe_r": 0.8,
+      "mae_r": 1.65
+    },
+    {
+      "direction": -1,
+      "entry_price": 86.75,
+      "exit_price": 105.63,
+      "stop_price": 128.47,
+      "target_price": -80.02,
+      "realized_r": -0.4559,
+      "entry_ts": 1770681600000,
+      "exit_ts": 1787961600000,
+      "exit_reason": "TIME_EXIT",
+      "bars_held": 200,
+      "mfe_r": 0.64,
+      "mae_r": 0.57
+    }
+  ]
+}

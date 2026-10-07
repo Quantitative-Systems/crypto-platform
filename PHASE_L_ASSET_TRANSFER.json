@@ -1,0 +1,40 @@
+{
+  "timestamp_utc": "2026-10-06T15:24:35.712243+00:00",
+  "phase": "PHASE_L",
+  "leave_one_asset_out_results": [
+    {
+      "trained_on": "EXCLUDE_BTCUSDT (ETHUSDT+SOLUSDT)",
+      "tested_on": "BTCUSDT",
+      "trade_count": 15,
+      "net_r": 6.75,
+      "expectancy_r": 0.45,
+      "win_rate": 40.0,
+      "profit_factor": 1.77,
+      "max_drawdown_pct": 4.09,
+      "is_profitable": true
+    },
+    {
+      "trained_on": "EXCLUDE_ETHUSDT (BTCUSDT+SOLUSDT)",
+      "tested_on": "ETHUSDT",
+      "trade_count": 13,
+      "net_r": 4.31,
+      "expectancy_r": 0.332,
+      "win_rate": 38.5,
+      "profit_factor": 2.11,
+      "max_drawdown_pct": 3.39,
+      "is_profitable": true
+    },
+    {
+      "trained_on": "EXCLUDE_SOLUSDT (BTCUSDT+ETHUSDT)",
+      "tested_on": "SOLUSDT",
+      "trade_count": 15,
+      "net_r": 9.04,
+      "expectancy_r": 0.603,
+      "win_rate": 53.3,
+      "profit_factor": 3.55,
+      "max_drawdown_pct": 1.25,
+      "is_profitable": true
+    }
+  ],
+  "pass_rate_pct": 100.0
+}

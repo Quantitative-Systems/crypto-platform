@@ -1,0 +1,4881 @@
+{
+  "metadata": {
+    "generated_at_utc": "2026-10-05T17:19:19.190607+00:00",
+    "total_candidates_audited": 29,
+    "confirmed_robust_count": 2,
+    "demoted_count": 27,
+    "execution_duration_seconds": 1.27
+  },
+  "robust_candidates": [
+    {
+      "experiment_id": "EXP_BTCUSDT_SET_2_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1",
+      "symbol": "BTCUSDT",
+      "set_id": "SET_2",
+      "family_id": "F08_STRUCTURE_TRENDLINE_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 102.567,
+      "overall_expectancy_r": 1.241773684210526,
+      "oos_expectancy_r": 0.1686,
+      "total_r": 23.593699999999995,
+      "profit_factor": 3.8332612820328067,
+      "trade_count": 19,
+      "win_rate": 0.5789473684210527,
+      "max_drawdown_r": 3.181000000000001,
+      "target_4r_hit_rate": 0.3684210526315789,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "STABLE_PLATEAU",
+      "plateau_stability_index": 0.721,
+      "regime_status": "REGIME_ROBUST",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "INDEPENDENT",
+      "cluster_representative": "EXP_BTCUSDT_SET_2_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1",
+      "robustness_status": "ROBUST",
+      "final_research_status": "ROBUST_CANDIDATE",
+      "reproduction_status": "REPRODUCED_EXACT",
+      "edge_nature": "UNCONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "symbol": "BTCUSDT",
+      "set_id": "SET_2",
+      "family_id": "F03_STRUCTURE_EMA_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 84.037,
+      "overall_expectancy_r": 0.8940478260869564,
+      "oos_expectancy_r": 0.1491,
+      "total_r": 20.5631,
+      "profit_factor": 2.7991722955237464,
+      "trade_count": 23,
+      "win_rate": 0.5217391304347826,
+      "max_drawdown_r": 3.1098,
+      "target_4r_hit_rate": 0.30434782608695654,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "STABLE_PLATEAU",
+      "plateau_stability_index": 0.649,
+      "regime_status": "REGIME_ROBUST",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "INDEPENDENT",
+      "cluster_representative": "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "ROBUST",
+      "final_research_status": "ROBUST_CANDIDATE",
+      "reproduction_status": "REPRODUCED_EXACT",
+      "edge_nature": "UNCONDITIONAL"
+    }
+  ],
+  "demoted_candidates": [
+    {
+      "experiment_id": "EXP_BTCUSDT_SET_2_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1",
+      "symbol": "BTCUSDT",
+      "set_id": "SET_2",
+      "family_id": "F04_STRUCTURE_LIQUIDITY_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 84.037,
+      "overall_expectancy_r": 0.8940478260869564,
+      "oos_expectancy_r": 0.1491,
+      "total_r": 20.5631,
+      "profit_factor": 2.7991722955237464,
+      "trade_count": 23,
+      "win_rate": 0.5217391304347826,
+      "max_drawdown_r": 3.1098,
+      "target_4r_hit_rate": 0.30434782608695654,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "STABLE_PLATEAU",
+      "plateau_stability_index": 0.649,
+      "regime_status": "REGIME_ROBUST",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCED_EXACT",
+      "edge_nature": "UNCONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BTCUSDT_SET_2_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1",
+      "symbol": "BTCUSDT",
+      "set_id": "SET_2",
+      "family_id": "F05_STRUCTURE_OB_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 84.037,
+      "overall_expectancy_r": 0.8940478260869564,
+      "oos_expectancy_r": 0.1491,
+      "total_r": 20.5631,
+      "profit_factor": 2.7991722955237464,
+      "trade_count": 23,
+      "win_rate": 0.5217391304347826,
+      "max_drawdown_r": 3.1098,
+      "target_4r_hit_rate": 0.30434782608695654,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "STABLE_PLATEAU",
+      "plateau_stability_index": 0.649,
+      "regime_status": "REGIME_ROBUST",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCED_EXACT",
+      "edge_nature": "UNCONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BTCUSDT_SET_2_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1",
+      "symbol": "BTCUSDT",
+      "set_id": "SET_2",
+      "family_id": "F06_STRUCTURE_FVG_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 84.037,
+      "overall_expectancy_r": 0.8940478260869564,
+      "oos_expectancy_r": 0.1491,
+      "total_r": 20.5631,
+      "profit_factor": 2.7991722955237464,
+      "trade_count": 23,
+      "win_rate": 0.5217391304347826,
+      "max_drawdown_r": 3.1098,
+      "target_4r_hit_rate": 0.30434782608695654,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "STABLE_PLATEAU",
+      "plateau_stability_index": 0.649,
+      "regime_status": "REGIME_ROBUST",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCED_EXACT",
+      "edge_nature": "UNCONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BTCUSDT_SET_2_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1",
+      "symbol": "BTCUSDT",
+      "set_id": "SET_2",
+      "family_id": "F07_STRUCTURE_SUPPLY_DEMAND_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 84.037,
+      "overall_expectancy_r": 0.8940478260869564,
+      "oos_expectancy_r": 0.1491,
+      "total_r": 20.5631,
+      "profit_factor": 2.7991722955237464,
+      "trade_count": 23,
+      "win_rate": 0.5217391304347826,
+      "max_drawdown_r": 3.1098,
+      "target_4r_hit_rate": 0.30434782608695654,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "STABLE_PLATEAU",
+      "plateau_stability_index": 0.649,
+      "regime_status": "REGIME_ROBUST",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCED_EXACT",
+      "edge_nature": "UNCONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BNBUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_PULLBACK_V1",
+      "symbol": "BNBUSDT",
+      "set_id": "SET_3",
+      "family_id": "F10_STRUCTURE_MOMENTUM_PHASE",
+      "phase_mode": "PULLBACK",
+      "composite_score": 75.512,
+      "overall_expectancy_r": 0.36018076923076925,
+      "oos_expectancy_r": 0.7449,
+      "total_r": 9.364700000000001,
+      "profit_factor": 1.5402908952442496,
+      "trade_count": 26,
+      "win_rate": 0.38461538461538464,
+      "max_drawdown_r": 7.096299999999999,
+      "target_4r_hit_rate": 0.07692307692307693,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.449,
+      "regime_status": "CONDITIONAL_BULL_PULLBACK",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "INDEPENDENT",
+      "cluster_representative": "EXP_BNBUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_PULLBACK_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCED_EXACT",
+      "edge_nature": "REGIME_CONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "symbol": "ETHUSDT",
+      "set_id": "SET_4",
+      "family_id": "F03_STRUCTURE_EMA_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 73.77,
+      "overall_expectancy_r": 0.48125714285714283,
+      "oos_expectancy_r": 0.7665,
+      "total_r": 10.106399999999999,
+      "profit_factor": 1.6791798552448536,
+      "trade_count": 21,
+      "win_rate": 0.38095238095238093,
+      "max_drawdown_r": 4.5569,
+      "target_4r_hit_rate": 0.09523809523809523,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.341,
+      "regime_status": "REGIME_ROBUST",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "INDEPENDENT",
+      "cluster_representative": "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "UNCONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_ETHUSDT_SET_4_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1",
+      "symbol": "ETHUSDT",
+      "set_id": "SET_4",
+      "family_id": "F04_STRUCTURE_LIQUIDITY_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 73.77,
+      "overall_expectancy_r": 0.48125714285714283,
+      "oos_expectancy_r": 0.7665,
+      "total_r": 10.106399999999999,
+      "profit_factor": 1.6791798552448536,
+      "trade_count": 21,
+      "win_rate": 0.38095238095238093,
+      "max_drawdown_r": 4.5569,
+      "target_4r_hit_rate": 0.09523809523809523,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.341,
+      "regime_status": "REGIME_ROBUST",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "UNCONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_ETHUSDT_SET_4_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1",
+      "symbol": "ETHUSDT",
+      "set_id": "SET_4",
+      "family_id": "F05_STRUCTURE_OB_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 73.77,
+      "overall_expectancy_r": 0.48125714285714283,
+      "oos_expectancy_r": 0.7665,
+      "total_r": 10.106399999999999,
+      "profit_factor": 1.6791798552448536,
+      "trade_count": 21,
+      "win_rate": 0.38095238095238093,
+      "max_drawdown_r": 4.5569,
+      "target_4r_hit_rate": 0.09523809523809523,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.341,
+      "regime_status": "REGIME_ROBUST",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "UNCONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_ETHUSDT_SET_4_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1",
+      "symbol": "ETHUSDT",
+      "set_id": "SET_4",
+      "family_id": "F06_STRUCTURE_FVG_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 73.77,
+      "overall_expectancy_r": 0.48125714285714283,
+      "oos_expectancy_r": 0.7665,
+      "total_r": 10.106399999999999,
+      "profit_factor": 1.6791798552448536,
+      "trade_count": 21,
+      "win_rate": 0.38095238095238093,
+      "max_drawdown_r": 4.5569,
+      "target_4r_hit_rate": 0.09523809523809523,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.341,
+      "regime_status": "REGIME_ROBUST",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "UNCONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_ETHUSDT_SET_4_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1",
+      "symbol": "ETHUSDT",
+      "set_id": "SET_4",
+      "family_id": "F07_STRUCTURE_SUPPLY_DEMAND_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 73.77,
+      "overall_expectancy_r": 0.48125714285714283,
+      "oos_expectancy_r": 0.7665,
+      "total_r": 10.106399999999999,
+      "profit_factor": 1.6791798552448536,
+      "trade_count": 21,
+      "win_rate": 0.38095238095238093,
+      "max_drawdown_r": 4.5569,
+      "target_4r_hit_rate": 0.09523809523809523,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.341,
+      "regime_status": "REGIME_ROBUST",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "UNCONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_ETHUSDT_SET_4_F01_STRUCTURE_PHASE_CONTINUATION_V1",
+      "symbol": "ETHUSDT",
+      "set_id": "SET_4",
+      "family_id": "F01_STRUCTURE_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 70.897,
+      "overall_expectancy_r": 0.46366842105263156,
+      "oos_expectancy_r": 0.7665,
+      "total_r": 8.8097,
+      "profit_factor": 1.6467876100347263,
+      "trade_count": 19,
+      "win_rate": 0.3684210526315789,
+      "max_drawdown_r": 5.9885,
+      "target_4r_hit_rate": 0.10526315789473684,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.583,
+      "regime_status": "REGIME_ROBUST",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "INDEPENDENT",
+      "cluster_representative": "EXP_ETHUSDT_SET_4_F01_STRUCTURE_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "UNCONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_ETHUSDT_SET_4_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1",
+      "symbol": "ETHUSDT",
+      "set_id": "SET_4",
+      "family_id": "F08_STRUCTURE_TRENDLINE_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 70.897,
+      "overall_expectancy_r": 0.46366842105263156,
+      "oos_expectancy_r": 0.7665,
+      "total_r": 8.8097,
+      "profit_factor": 1.6467876100347263,
+      "trade_count": 19,
+      "win_rate": 0.3684210526315789,
+      "max_drawdown_r": 5.9885,
+      "target_4r_hit_rate": 0.10526315789473684,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.583,
+      "regime_status": "REGIME_ROBUST",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_ETHUSDT_SET_4_F01_STRUCTURE_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "UNCONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_ETHUSDT_SET_4_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1",
+      "symbol": "ETHUSDT",
+      "set_id": "SET_4",
+      "family_id": "F10_STRUCTURE_MOMENTUM_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 70.897,
+      "overall_expectancy_r": 0.46366842105263156,
+      "oos_expectancy_r": 0.7665,
+      "total_r": 8.8097,
+      "profit_factor": 1.6467876100347263,
+      "trade_count": 19,
+      "win_rate": 0.3684210526315789,
+      "max_drawdown_r": 5.9885,
+      "target_4r_hit_rate": 0.10526315789473684,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.519,
+      "regime_status": "REGIME_ROBUST",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "INDEPENDENT",
+      "cluster_representative": "EXP_ETHUSDT_SET_4_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "UNCONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BNBUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_PULLBACK_V1",
+      "symbol": "BNBUSDT",
+      "set_id": "SET_3",
+      "family_id": "F08_STRUCTURE_TRENDLINE_PHASE",
+      "phase_mode": "PULLBACK",
+      "composite_score": 66.754,
+      "overall_expectancy_r": 0.41902,
+      "oos_expectancy_r": 0.4244,
+      "total_r": 10.4755,
+      "profit_factor": 1.645762826795875,
+      "trade_count": 25,
+      "win_rate": 0.4,
+      "max_drawdown_r": 5.8398,
+      "target_4r_hit_rate": 0.08,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.544,
+      "regime_status": "CONDITIONAL_BULL_PULLBACK",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "INDEPENDENT",
+      "cluster_representative": "EXP_BNBUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_PULLBACK_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCED_EXACT",
+      "edge_nature": "REGIME_CONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BTCUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1",
+      "symbol": "BTCUSDT",
+      "set_id": "SET_3",
+      "family_id": "F10_STRUCTURE_MOMENTUM_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 64.696,
+      "overall_expectancy_r": 0.2933487804878049,
+      "oos_expectancy_r": 0.7625,
+      "total_r": 12.0273,
+      "profit_factor": 1.4390038252642645,
+      "trade_count": 41,
+      "win_rate": 0.3170731707317073,
+      "max_drawdown_r": 8.724900000000002,
+      "target_4r_hit_rate": 0.1951219512195122,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "FAIL",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.0,
+      "regime_status": "CONDITIONAL_BULL_TRENDING",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "INDEPENDENT",
+      "cluster_representative": "EXP_BTCUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "REGIME_CONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "symbol": "BTCUSDT",
+      "set_id": "SET_3",
+      "family_id": "F03_STRUCTURE_EMA_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 60.757,
+      "overall_expectancy_r": 0.2290581395348837,
+      "oos_expectancy_r": 0.7625,
+      "total_r": 9.849499999999999,
+      "profit_factor": 1.333039161983594,
+      "trade_count": 43,
+      "win_rate": 0.3023255813953488,
+      "max_drawdown_r": 9.830199999999998,
+      "target_4r_hit_rate": 0.18604651162790697,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "FAIL",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.0,
+      "regime_status": "CONDITIONAL_BULL_TRENDING",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "INDEPENDENT",
+      "cluster_representative": "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "REGIME_CONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BTCUSDT_SET_3_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1",
+      "symbol": "BTCUSDT",
+      "set_id": "SET_3",
+      "family_id": "F04_STRUCTURE_LIQUIDITY_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 60.757,
+      "overall_expectancy_r": 0.2290581395348837,
+      "oos_expectancy_r": 0.7625,
+      "total_r": 9.849499999999999,
+      "profit_factor": 1.333039161983594,
+      "trade_count": 43,
+      "win_rate": 0.3023255813953488,
+      "max_drawdown_r": 9.830199999999998,
+      "target_4r_hit_rate": 0.18604651162790697,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "FAIL",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.0,
+      "regime_status": "CONDITIONAL_BULL_TRENDING",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "REGIME_CONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BTCUSDT_SET_3_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1",
+      "symbol": "BTCUSDT",
+      "set_id": "SET_3",
+      "family_id": "F05_STRUCTURE_OB_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 60.757,
+      "overall_expectancy_r": 0.2290581395348837,
+      "oos_expectancy_r": 0.7625,
+      "total_r": 9.849499999999999,
+      "profit_factor": 1.333039161983594,
+      "trade_count": 43,
+      "win_rate": 0.3023255813953488,
+      "max_drawdown_r": 9.830199999999998,
+      "target_4r_hit_rate": 0.18604651162790697,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "FAIL",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.0,
+      "regime_status": "CONDITIONAL_BULL_TRENDING",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "REGIME_CONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BTCUSDT_SET_3_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1",
+      "symbol": "BTCUSDT",
+      "set_id": "SET_3",
+      "family_id": "F06_STRUCTURE_FVG_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 60.757,
+      "overall_expectancy_r": 0.2290581395348837,
+      "oos_expectancy_r": 0.7625,
+      "total_r": 9.849499999999999,
+      "profit_factor": 1.333039161983594,
+      "trade_count": 43,
+      "win_rate": 0.3023255813953488,
+      "max_drawdown_r": 9.830199999999998,
+      "target_4r_hit_rate": 0.18604651162790697,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "FAIL",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.0,
+      "regime_status": "CONDITIONAL_BULL_TRENDING",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "REGIME_CONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BTCUSDT_SET_3_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1",
+      "symbol": "BTCUSDT",
+      "set_id": "SET_3",
+      "family_id": "F07_STRUCTURE_SUPPLY_DEMAND_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 60.757,
+      "overall_expectancy_r": 0.2290581395348837,
+      "oos_expectancy_r": 0.7625,
+      "total_r": 9.849499999999999,
+      "profit_factor": 1.333039161983594,
+      "trade_count": 43,
+      "win_rate": 0.3023255813953488,
+      "max_drawdown_r": 9.830199999999998,
+      "target_4r_hit_rate": 0.18604651162790697,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "FAIL",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.0,
+      "regime_status": "CONDITIONAL_BULL_TRENDING",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "REGIME_CONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1",
+      "symbol": "BNBUSDT",
+      "set_id": "SET_3",
+      "family_id": "F01_STRUCTURE_PHASE",
+      "phase_mode": "PULLBACK",
+      "composite_score": 60.629,
+      "overall_expectancy_r": 0.3032037037037037,
+      "oos_expectancy_r": 0.4244,
+      "total_r": 8.1865,
+      "profit_factor": 1.442252942860693,
+      "trade_count": 27,
+      "win_rate": 0.37037037037037035,
+      "max_drawdown_r": 7.096299999999999,
+      "target_4r_hit_rate": 0.07407407407407407,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.294,
+      "regime_status": "CONDITIONAL_BULL_PULLBACK",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "INDEPENDENT",
+      "cluster_representative": "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCED_EXACT",
+      "edge_nature": "REGIME_CONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BNBUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_PULLBACK_V1",
+      "symbol": "BNBUSDT",
+      "set_id": "SET_3",
+      "family_id": "F03_STRUCTURE_EMA_PHASE",
+      "phase_mode": "PULLBACK",
+      "composite_score": 60.629,
+      "overall_expectancy_r": 0.3032037037037037,
+      "oos_expectancy_r": 0.4244,
+      "total_r": 8.1865,
+      "profit_factor": 1.442252942860693,
+      "trade_count": 27,
+      "win_rate": 0.37037037037037035,
+      "max_drawdown_r": 7.096299999999999,
+      "target_4r_hit_rate": 0.07407407407407407,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.294,
+      "regime_status": "CONDITIONAL_BULL_PULLBACK",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCED_EXACT",
+      "edge_nature": "REGIME_CONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BNBUSDT_SET_3_F04_STRUCTURE_LIQUIDITY_PHASE_PULLBACK_V1",
+      "symbol": "BNBUSDT",
+      "set_id": "SET_3",
+      "family_id": "F04_STRUCTURE_LIQUIDITY_PHASE",
+      "phase_mode": "PULLBACK",
+      "composite_score": 60.629,
+      "overall_expectancy_r": 0.3032037037037037,
+      "oos_expectancy_r": 0.4244,
+      "total_r": 8.1865,
+      "profit_factor": 1.442252942860693,
+      "trade_count": 27,
+      "win_rate": 0.37037037037037035,
+      "max_drawdown_r": 7.096299999999999,
+      "target_4r_hit_rate": 0.07407407407407407,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.294,
+      "regime_status": "CONDITIONAL_BULL_PULLBACK",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCED_EXACT",
+      "edge_nature": "REGIME_CONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BNBUSDT_SET_3_F05_STRUCTURE_OB_PHASE_PULLBACK_V1",
+      "symbol": "BNBUSDT",
+      "set_id": "SET_3",
+      "family_id": "F05_STRUCTURE_OB_PHASE",
+      "phase_mode": "PULLBACK",
+      "composite_score": 60.629,
+      "overall_expectancy_r": 0.3032037037037037,
+      "oos_expectancy_r": 0.4244,
+      "total_r": 8.1865,
+      "profit_factor": 1.442252942860693,
+      "trade_count": 27,
+      "win_rate": 0.37037037037037035,
+      "max_drawdown_r": 7.096299999999999,
+      "target_4r_hit_rate": 0.07407407407407407,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.294,
+      "regime_status": "CONDITIONAL_BULL_PULLBACK",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCED_EXACT",
+      "edge_nature": "REGIME_CONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BNBUSDT_SET_3_F06_STRUCTURE_FVG_PHASE_PULLBACK_V1",
+      "symbol": "BNBUSDT",
+      "set_id": "SET_3",
+      "family_id": "F06_STRUCTURE_FVG_PHASE",
+      "phase_mode": "PULLBACK",
+      "composite_score": 60.629,
+      "overall_expectancy_r": 0.3032037037037037,
+      "oos_expectancy_r": 0.4244,
+      "total_r": 8.1865,
+      "profit_factor": 1.442252942860693,
+      "trade_count": 27,
+      "win_rate": 0.37037037037037035,
+      "max_drawdown_r": 7.096299999999999,
+      "target_4r_hit_rate": 0.07407407407407407,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.294,
+      "regime_status": "CONDITIONAL_BULL_PULLBACK",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCED_EXACT",
+      "edge_nature": "REGIME_CONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BNBUSDT_SET_3_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_PULLBACK_V1",
+      "symbol": "BNBUSDT",
+      "set_id": "SET_3",
+      "family_id": "F07_STRUCTURE_SUPPLY_DEMAND_PHASE",
+      "phase_mode": "PULLBACK",
+      "composite_score": 60.629,
+      "overall_expectancy_r": 0.3032037037037037,
+      "oos_expectancy_r": 0.4244,
+      "total_r": 8.1865,
+      "profit_factor": 1.442252942860693,
+      "trade_count": 27,
+      "win_rate": 0.37037037037037035,
+      "max_drawdown_r": 7.096299999999999,
+      "target_4r_hit_rate": 0.07407407407407407,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.294,
+      "regime_status": "CONDITIONAL_BULL_PULLBACK",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "SIGNAL_COLLAPSE",
+      "cluster_representative": "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCED_EXACT",
+      "edge_nature": "REGIME_CONDITIONAL"
+    },
+    {
+      "experiment_id": "EXP_BTCUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1",
+      "symbol": "BTCUSDT",
+      "set_id": "SET_3",
+      "family_id": "F08_STRUCTURE_TRENDLINE_PHASE",
+      "phase_mode": "CONTINUATION",
+      "composite_score": 49.23,
+      "overall_expectancy_r": 0.26412702702702706,
+      "oos_expectancy_r": 0.4157,
+      "total_r": 9.7727,
+      "profit_factor": 1.3869334199106773,
+      "trade_count": 37,
+      "win_rate": 0.2972972972972973,
+      "max_drawdown_r": 8.724899999999998,
+      "target_4r_hit_rate": 0.1891891891891892,
+      "is_qualified_candidate": true,
+      "suspicious_flags": [],
+      "monte_carlo_status": "PASS",
+      "parameter_stability_status": "ISOLATED_SPIKE",
+      "plateau_stability_index": 0.248,
+      "regime_status": "CONDITIONAL_BULL_TRENDING",
+      "cost_sensitivity_status": "PASS",
+      "signal_independence_status": "INDEPENDENT",
+      "cluster_representative": "EXP_BTCUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1",
+      "robustness_status": "FRAGILE",
+      "final_research_status": "VALIDATION_POSITIVE",
+      "reproduction_status": "REPRODUCTION_DISCREPANCY",
+      "edge_nature": "REGIME_CONDITIONAL"
+    }
+  ],
+  "audit_modules": {
+    "walk_forward_recheck": {
+      "EXP_BTCUSDT_SET_2_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCED_EXACT",
+        "has_discrepancy": false,
+        "stored_total_r": 23.59,
+        "rechecked_total_r": 23.59,
+        "dev_total_r": 12.58,
+        "val_total_r": 10.34,
+        "oos_total_r": 0.67,
+        "dev_expectancy_r": 1.2578,
+        "val_expectancy_r": 2.0684,
+        "oos_expectancy_r": 0.1686,
+        "trade_count": 19
+      },
+      "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCED_EXACT",
+        "has_discrepancy": false,
+        "stored_total_r": 20.56,
+        "rechecked_total_r": 20.56,
+        "dev_total_r": 10.53,
+        "val_total_r": 9.29,
+        "oos_total_r": 0.75,
+        "dev_expectancy_r": 0.8776,
+        "val_expectancy_r": 1.5477,
+        "oos_expectancy_r": 0.1491,
+        "trade_count": 23
+      },
+      "EXP_BTCUSDT_SET_2_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCED_EXACT",
+        "has_discrepancy": false,
+        "stored_total_r": 20.56,
+        "rechecked_total_r": 20.56,
+        "dev_total_r": 10.53,
+        "val_total_r": 9.29,
+        "oos_total_r": 0.75,
+        "dev_expectancy_r": 0.8776,
+        "val_expectancy_r": 1.5477,
+        "oos_expectancy_r": 0.1491,
+        "trade_count": 23
+      },
+      "EXP_BTCUSDT_SET_2_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCED_EXACT",
+        "has_discrepancy": false,
+        "stored_total_r": 20.56,
+        "rechecked_total_r": 20.56,
+        "dev_total_r": 10.53,
+        "val_total_r": 9.29,
+        "oos_total_r": 0.75,
+        "dev_expectancy_r": 0.8776,
+        "val_expectancy_r": 1.5477,
+        "oos_expectancy_r": 0.1491,
+        "trade_count": 23
+      },
+      "EXP_BTCUSDT_SET_2_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCED_EXACT",
+        "has_discrepancy": false,
+        "stored_total_r": 20.56,
+        "rechecked_total_r": 20.56,
+        "dev_total_r": 10.53,
+        "val_total_r": 9.29,
+        "oos_total_r": 0.75,
+        "dev_expectancy_r": 0.8776,
+        "val_expectancy_r": 1.5477,
+        "oos_expectancy_r": 0.1491,
+        "trade_count": 23
+      },
+      "EXP_BTCUSDT_SET_2_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCED_EXACT",
+        "has_discrepancy": false,
+        "stored_total_r": 20.56,
+        "rechecked_total_r": 20.56,
+        "dev_total_r": 10.53,
+        "val_total_r": 9.29,
+        "oos_total_r": 0.75,
+        "dev_expectancy_r": 0.8776,
+        "val_expectancy_r": 1.5477,
+        "oos_expectancy_r": 0.1491,
+        "trade_count": 23
+      },
+      "EXP_BNBUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_PULLBACK_V1": {
+        "reproduction_status": "REPRODUCED_EXACT",
+        "has_discrepancy": false,
+        "stored_total_r": 9.36,
+        "rechecked_total_r": 9.36,
+        "dev_total_r": 4.51,
+        "val_total_r": 1.13,
+        "oos_total_r": 3.72,
+        "dev_expectancy_r": 0.3008,
+        "val_expectancy_r": 0.188,
+        "oos_expectancy_r": 0.7449,
+        "trade_count": 26
+      },
+      "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 10.11,
+        "rechecked_total_r": 15.82,
+        "dev_total_r": 10.27,
+        "val_total_r": -3.79,
+        "oos_total_r": 9.34,
+        "dev_expectancy_r": 0.5136,
+        "val_expectancy_r": -0.6314,
+        "oos_expectancy_r": 1.0378,
+        "trade_count": 35
+      },
+      "EXP_ETHUSDT_SET_4_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 10.11,
+        "rechecked_total_r": 15.82,
+        "dev_total_r": 10.27,
+        "val_total_r": -3.79,
+        "oos_total_r": 9.34,
+        "dev_expectancy_r": 0.5136,
+        "val_expectancy_r": -0.6314,
+        "oos_expectancy_r": 1.0378,
+        "trade_count": 35
+      },
+      "EXP_ETHUSDT_SET_4_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 10.11,
+        "rechecked_total_r": 15.82,
+        "dev_total_r": 10.27,
+        "val_total_r": -3.79,
+        "oos_total_r": 9.34,
+        "dev_expectancy_r": 0.5136,
+        "val_expectancy_r": -0.6314,
+        "oos_expectancy_r": 1.0378,
+        "trade_count": 35
+      },
+      "EXP_ETHUSDT_SET_4_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 10.11,
+        "rechecked_total_r": 15.82,
+        "dev_total_r": 10.27,
+        "val_total_r": -3.79,
+        "oos_total_r": 9.34,
+        "dev_expectancy_r": 0.5136,
+        "val_expectancy_r": -0.6314,
+        "oos_expectancy_r": 1.0378,
+        "trade_count": 35
+      },
+      "EXP_ETHUSDT_SET_4_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 10.11,
+        "rechecked_total_r": 15.82,
+        "dev_total_r": 10.27,
+        "val_total_r": -3.79,
+        "oos_total_r": 9.34,
+        "dev_expectancy_r": 0.5136,
+        "val_expectancy_r": -0.6314,
+        "oos_expectancy_r": 1.0378,
+        "trade_count": 35
+      },
+      "EXP_ETHUSDT_SET_4_F01_STRUCTURE_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 8.81,
+        "rechecked_total_r": 15.78,
+        "dev_total_r": 8.98,
+        "val_total_r": -2.53,
+        "oos_total_r": 9.34,
+        "dev_expectancy_r": 0.4986,
+        "val_expectancy_r": -0.5065,
+        "oos_expectancy_r": 1.0378,
+        "trade_count": 32
+      },
+      "EXP_ETHUSDT_SET_4_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 8.81,
+        "rechecked_total_r": 15.78,
+        "dev_total_r": 8.98,
+        "val_total_r": -2.53,
+        "oos_total_r": 9.34,
+        "dev_expectancy_r": 0.4986,
+        "val_expectancy_r": -0.5065,
+        "oos_expectancy_r": 1.0378,
+        "trade_count": 32
+      },
+      "EXP_ETHUSDT_SET_4_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 8.81,
+        "rechecked_total_r": 14.53,
+        "dev_total_r": 8.98,
+        "val_total_r": -3.79,
+        "oos_total_r": 9.34,
+        "dev_expectancy_r": 0.4986,
+        "val_expectancy_r": -0.6314,
+        "oos_expectancy_r": 1.0378,
+        "trade_count": 33
+      },
+      "EXP_BNBUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_PULLBACK_V1": {
+        "reproduction_status": "REPRODUCED_EXACT",
+        "has_discrepancy": false,
+        "stored_total_r": 10.48,
+        "rechecked_total_r": 10.48,
+        "dev_total_r": 5.69,
+        "val_total_r": 2.24,
+        "oos_total_r": 2.55,
+        "dev_expectancy_r": 0.4066,
+        "val_expectancy_r": 0.4472,
+        "oos_expectancy_r": 0.4244,
+        "trade_count": 25
+      },
+      "EXP_BTCUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 12.03,
+        "rechecked_total_r": 10.98,
+        "dev_total_r": 13.4,
+        "val_total_r": -1.33,
+        "oos_total_r": -1.1,
+        "dev_expectancy_r": 0.2031,
+        "val_expectancy_r": -0.0632,
+        "oos_expectancy_r": -0.0499,
+        "trade_count": 109
+      },
+      "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 9.85,
+        "rechecked_total_r": 14.06,
+        "dev_total_r": 13.95,
+        "val_total_r": 3.6,
+        "oos_total_r": -3.49,
+        "dev_expectancy_r": 0.1993,
+        "val_expectancy_r": 0.144,
+        "oos_expectancy_r": -0.1453,
+        "trade_count": 119
+      },
+      "EXP_BTCUSDT_SET_3_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 9.85,
+        "rechecked_total_r": 14.06,
+        "dev_total_r": 13.95,
+        "val_total_r": 3.6,
+        "oos_total_r": -3.49,
+        "dev_expectancy_r": 0.1993,
+        "val_expectancy_r": 0.144,
+        "oos_expectancy_r": -0.1453,
+        "trade_count": 119
+      },
+      "EXP_BTCUSDT_SET_3_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 9.85,
+        "rechecked_total_r": 14.06,
+        "dev_total_r": 13.95,
+        "val_total_r": 3.6,
+        "oos_total_r": -3.49,
+        "dev_expectancy_r": 0.1993,
+        "val_expectancy_r": 0.144,
+        "oos_expectancy_r": -0.1453,
+        "trade_count": 119
+      },
+      "EXP_BTCUSDT_SET_3_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 9.85,
+        "rechecked_total_r": 14.06,
+        "dev_total_r": 13.95,
+        "val_total_r": 3.6,
+        "oos_total_r": -3.49,
+        "dev_expectancy_r": 0.1993,
+        "val_expectancy_r": 0.144,
+        "oos_expectancy_r": -0.1453,
+        "trade_count": 119
+      },
+      "EXP_BTCUSDT_SET_3_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 9.85,
+        "rechecked_total_r": 14.06,
+        "dev_total_r": 13.95,
+        "val_total_r": 3.6,
+        "oos_total_r": -3.49,
+        "dev_expectancy_r": 0.1993,
+        "val_expectancy_r": 0.144,
+        "oos_expectancy_r": -0.1453,
+        "trade_count": 119
+      },
+      "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1": {
+        "reproduction_status": "REPRODUCED_EXACT",
+        "has_discrepancy": false,
+        "stored_total_r": 8.19,
+        "rechecked_total_r": 8.19,
+        "dev_total_r": 4.51,
+        "val_total_r": 1.13,
+        "oos_total_r": 2.55,
+        "dev_expectancy_r": 0.3008,
+        "val_expectancy_r": 0.188,
+        "oos_expectancy_r": 0.4244,
+        "trade_count": 27
+      },
+      "EXP_BNBUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_PULLBACK_V1": {
+        "reproduction_status": "REPRODUCED_EXACT",
+        "has_discrepancy": false,
+        "stored_total_r": 8.19,
+        "rechecked_total_r": 8.19,
+        "dev_total_r": 4.51,
+        "val_total_r": 1.13,
+        "oos_total_r": 2.55,
+        "dev_expectancy_r": 0.3008,
+        "val_expectancy_r": 0.188,
+        "oos_expectancy_r": 0.4244,
+        "trade_count": 27
+      },
+      "EXP_BNBUSDT_SET_3_F04_STRUCTURE_LIQUIDITY_PHASE_PULLBACK_V1": {
+        "reproduction_status": "REPRODUCED_EXACT",
+        "has_discrepancy": false,
+        "stored_total_r": 8.19,
+        "rechecked_total_r": 8.19,
+        "dev_total_r": 4.51,
+        "val_total_r": 1.13,
+        "oos_total_r": 2.55,
+        "dev_expectancy_r": 0.3008,
+        "val_expectancy_r": 0.188,
+        "oos_expectancy_r": 0.4244,
+        "trade_count": 27
+      },
+      "EXP_BNBUSDT_SET_3_F05_STRUCTURE_OB_PHASE_PULLBACK_V1": {
+        "reproduction_status": "REPRODUCED_EXACT",
+        "has_discrepancy": false,
+        "stored_total_r": 8.19,
+        "rechecked_total_r": 8.19,
+        "dev_total_r": 4.51,
+        "val_total_r": 1.13,
+        "oos_total_r": 2.55,
+        "dev_expectancy_r": 0.3008,
+        "val_expectancy_r": 0.188,
+        "oos_expectancy_r": 0.4244,
+        "trade_count": 27
+      },
+      "EXP_BNBUSDT_SET_3_F06_STRUCTURE_FVG_PHASE_PULLBACK_V1": {
+        "reproduction_status": "REPRODUCED_EXACT",
+        "has_discrepancy": false,
+        "stored_total_r": 8.19,
+        "rechecked_total_r": 8.19,
+        "dev_total_r": 4.51,
+        "val_total_r": 1.13,
+        "oos_total_r": 2.55,
+        "dev_expectancy_r": 0.3008,
+        "val_expectancy_r": 0.188,
+        "oos_expectancy_r": 0.4244,
+        "trade_count": 27
+      },
+      "EXP_BNBUSDT_SET_3_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_PULLBACK_V1": {
+        "reproduction_status": "REPRODUCED_EXACT",
+        "has_discrepancy": false,
+        "stored_total_r": 8.19,
+        "rechecked_total_r": 8.19,
+        "dev_total_r": 4.51,
+        "val_total_r": 1.13,
+        "oos_total_r": 2.55,
+        "dev_expectancy_r": 0.3008,
+        "val_expectancy_r": 0.188,
+        "oos_expectancy_r": 0.4244,
+        "trade_count": 27
+      },
+      "EXP_BTCUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "reproduction_status": "REPRODUCTION_DISCREPANCY",
+        "has_discrepancy": true,
+        "stored_total_r": 9.77,
+        "rechecked_total_r": 25.05,
+        "dev_total_r": 30.91,
+        "val_total_r": -3.87,
+        "oos_total_r": -2.0,
+        "dev_expectancy_r": 0.5724,
+        "val_expectancy_r": -0.2416,
+        "oos_expectancy_r": -0.1248,
+        "trade_count": 86
+      }
+    },
+    "duplicate_signals": {
+      "EXP_BTCUSDT_SET_2_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "signal_collapse": false,
+        "cluster_representative": "EXP_BTCUSDT_SET_2_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": true,
+        "is_independent_signal": true,
+        "trade_count": 19
+      },
+      "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": true,
+        "is_independent_signal": true,
+        "trade_count": 23
+      },
+      "EXP_BTCUSDT_SET_2_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 23
+      },
+      "EXP_BTCUSDT_SET_2_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 23
+      },
+      "EXP_BTCUSDT_SET_2_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 23
+      },
+      "EXP_BTCUSDT_SET_2_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 23
+      },
+      "EXP_BNBUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_PULLBACK_V1": {
+        "signal_collapse": false,
+        "cluster_representative": "EXP_BNBUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_PULLBACK_V1",
+        "is_canonical_representative": true,
+        "is_independent_signal": true,
+        "trade_count": 26
+      },
+      "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": true,
+        "is_independent_signal": true,
+        "trade_count": 35
+      },
+      "EXP_ETHUSDT_SET_4_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 35
+      },
+      "EXP_ETHUSDT_SET_4_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 35
+      },
+      "EXP_ETHUSDT_SET_4_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 35
+      },
+      "EXP_ETHUSDT_SET_4_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 35
+      },
+      "EXP_ETHUSDT_SET_4_F01_STRUCTURE_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_ETHUSDT_SET_4_F01_STRUCTURE_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": true,
+        "is_independent_signal": true,
+        "trade_count": 32
+      },
+      "EXP_ETHUSDT_SET_4_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_ETHUSDT_SET_4_F01_STRUCTURE_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 32
+      },
+      "EXP_ETHUSDT_SET_4_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1": {
+        "signal_collapse": false,
+        "cluster_representative": "EXP_ETHUSDT_SET_4_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": true,
+        "is_independent_signal": true,
+        "trade_count": 33
+      },
+      "EXP_BNBUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_PULLBACK_V1": {
+        "signal_collapse": false,
+        "cluster_representative": "EXP_BNBUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_PULLBACK_V1",
+        "is_canonical_representative": true,
+        "is_independent_signal": true,
+        "trade_count": 25
+      },
+      "EXP_BTCUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1": {
+        "signal_collapse": false,
+        "cluster_representative": "EXP_BTCUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": true,
+        "is_independent_signal": true,
+        "trade_count": 109
+      },
+      "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": true,
+        "is_independent_signal": true,
+        "trade_count": 119
+      },
+      "EXP_BTCUSDT_SET_3_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 119
+      },
+      "EXP_BTCUSDT_SET_3_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 119
+      },
+      "EXP_BTCUSDT_SET_3_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 119
+      },
+      "EXP_BTCUSDT_SET_3_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 119
+      },
+      "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1",
+        "is_canonical_representative": true,
+        "is_independent_signal": true,
+        "trade_count": 27
+      },
+      "EXP_BNBUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_PULLBACK_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 27
+      },
+      "EXP_BNBUSDT_SET_3_F04_STRUCTURE_LIQUIDITY_PHASE_PULLBACK_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 27
+      },
+      "EXP_BNBUSDT_SET_3_F05_STRUCTURE_OB_PHASE_PULLBACK_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 27
+      },
+      "EXP_BNBUSDT_SET_3_F06_STRUCTURE_FVG_PHASE_PULLBACK_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 27
+      },
+      "EXP_BNBUSDT_SET_3_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_PULLBACK_V1": {
+        "signal_collapse": true,
+        "cluster_representative": "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1",
+        "is_canonical_representative": false,
+        "is_independent_signal": false,
+        "trade_count": 27
+      },
+      "EXP_BTCUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "signal_collapse": false,
+        "cluster_representative": "EXP_BTCUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1",
+        "is_canonical_representative": true,
+        "is_independent_signal": true,
+        "trade_count": 86
+      }
+    },
+    "monte_carlo": {
+      "EXP_BTCUSDT_SET_2_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 23.59,
+        "median_total_R": 17.94,
+        "p05_total_R": 12.7,
+        "p95_total_R": 25.99,
+        "baseline_max_dd": 3.18,
+        "p05_max_dd": 2.06,
+        "p50_max_dd": 3.12,
+        "p95_max_dd": 5.2,
+        "dropout_expectancy": 1.2515,
+        "dropout_win_rate": 0.5816,
+        "friction_stress_expectancy": 1.1618,
+        "friction_stress_total_R": 22.07,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 20.56,
+        "median_total_R": 15.81,
+        "p05_total_R": 9.05,
+        "p95_total_R": 22.81,
+        "baseline_max_dd": 3.11,
+        "p05_max_dd": 2.32,
+        "p50_max_dd": 4.09,
+        "p95_max_dd": 6.24,
+        "dropout_expectancy": 0.879,
+        "dropout_win_rate": 0.5168,
+        "friction_stress_expectancy": 0.814,
+        "friction_stress_total_R": 18.72,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_BTCUSDT_SET_2_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 20.56,
+        "median_total_R": 15.82,
+        "p05_total_R": 9.01,
+        "p95_total_R": 23.55,
+        "baseline_max_dd": 3.11,
+        "p05_max_dd": 2.33,
+        "p50_max_dd": 4.11,
+        "p95_max_dd": 6.28,
+        "dropout_expectancy": 0.8886,
+        "dropout_win_rate": 0.5182,
+        "friction_stress_expectancy": 0.814,
+        "friction_stress_total_R": 18.72,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_BTCUSDT_SET_2_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 20.56,
+        "median_total_R": 15.82,
+        "p05_total_R": 8.96,
+        "p95_total_R": 22.96,
+        "baseline_max_dd": 3.11,
+        "p05_max_dd": 2.36,
+        "p50_max_dd": 4.13,
+        "p95_max_dd": 6.59,
+        "dropout_expectancy": 0.9008,
+        "dropout_win_rate": 0.5249,
+        "friction_stress_expectancy": 0.814,
+        "friction_stress_total_R": 18.72,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_BTCUSDT_SET_2_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 20.56,
+        "median_total_R": 15.83,
+        "p05_total_R": 9.15,
+        "p95_total_R": 23.99,
+        "baseline_max_dd": 3.11,
+        "p05_max_dd": 2.38,
+        "p50_max_dd": 4.12,
+        "p95_max_dd": 6.52,
+        "dropout_expectancy": 0.9036,
+        "dropout_win_rate": 0.5248,
+        "friction_stress_expectancy": 0.814,
+        "friction_stress_total_R": 18.72,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_BTCUSDT_SET_2_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 20.56,
+        "median_total_R": 15.75,
+        "p05_total_R": 9.06,
+        "p95_total_R": 22.89,
+        "baseline_max_dd": 3.11,
+        "p05_max_dd": 2.34,
+        "p50_max_dd": 4.12,
+        "p95_max_dd": 6.54,
+        "dropout_expectancy": 0.8732,
+        "dropout_win_rate": 0.5163,
+        "friction_stress_expectancy": 0.814,
+        "friction_stress_total_R": 18.72,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_BNBUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_PULLBACK_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 9.36,
+        "median_total_R": 7.22,
+        "p05_total_R": -0.24,
+        "p95_total_R": 13.26,
+        "baseline_max_dd": 7.1,
+        "p05_max_dd": 3.61,
+        "p50_max_dd": 5.87,
+        "p95_max_dd": 9.7,
+        "dropout_expectancy": 0.3489,
+        "dropout_win_rate": 0.3819,
+        "friction_stress_expectancy": 0.2802,
+        "friction_stress_total_R": 7.28,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 15.82,
+        "median_total_R": 12.53,
+        "p05_total_R": 4.98,
+        "p95_total_R": 19.96,
+        "baseline_max_dd": 4.69,
+        "p05_max_dd": 4.09,
+        "p50_max_dd": 6.05,
+        "p95_max_dd": 10.09,
+        "dropout_expectancy": 0.4501,
+        "dropout_win_rate": 0.428,
+        "friction_stress_expectancy": 0.3721,
+        "friction_stress_total_R": 13.02,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_ETHUSDT_SET_4_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 15.82,
+        "median_total_R": 12.73,
+        "p05_total_R": 3.8,
+        "p95_total_R": 20.56,
+        "baseline_max_dd": 4.69,
+        "p05_max_dd": 3.98,
+        "p50_max_dd": 6.3,
+        "p95_max_dd": 10.49,
+        "dropout_expectancy": 0.4484,
+        "dropout_win_rate": 0.4279,
+        "friction_stress_expectancy": 0.3721,
+        "friction_stress_total_R": 13.02,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_ETHUSDT_SET_4_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 15.82,
+        "median_total_R": 12.75,
+        "p05_total_R": 4.03,
+        "p95_total_R": 19.63,
+        "baseline_max_dd": 4.69,
+        "p05_max_dd": 3.94,
+        "p50_max_dd": 6.2,
+        "p95_max_dd": 9.88,
+        "dropout_expectancy": 0.4483,
+        "dropout_win_rate": 0.4284,
+        "friction_stress_expectancy": 0.3721,
+        "friction_stress_total_R": 13.02,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_ETHUSDT_SET_4_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 15.82,
+        "median_total_R": 12.36,
+        "p05_total_R": 4.97,
+        "p95_total_R": 19.85,
+        "baseline_max_dd": 4.69,
+        "p05_max_dd": 4.05,
+        "p50_max_dd": 6.23,
+        "p95_max_dd": 10.45,
+        "dropout_expectancy": 0.4451,
+        "dropout_win_rate": 0.426,
+        "friction_stress_expectancy": 0.3721,
+        "friction_stress_total_R": 13.02,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_ETHUSDT_SET_4_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 15.82,
+        "median_total_R": 12.72,
+        "p05_total_R": 4.38,
+        "p95_total_R": 20.14,
+        "baseline_max_dd": 4.69,
+        "p05_max_dd": 3.96,
+        "p50_max_dd": 6.27,
+        "p95_max_dd": 10.41,
+        "dropout_expectancy": 0.453,
+        "dropout_win_rate": 0.4293,
+        "friction_stress_expectancy": 0.3721,
+        "friction_stress_total_R": 13.02,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_ETHUSDT_SET_4_F01_STRUCTURE_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 15.78,
+        "median_total_R": 12.64,
+        "p05_total_R": 3.77,
+        "p95_total_R": 19.89,
+        "baseline_max_dd": 5.99,
+        "p05_max_dd": 3.49,
+        "p50_max_dd": 5.67,
+        "p95_max_dd": 9.51,
+        "dropout_expectancy": 0.4879,
+        "dropout_win_rate": 0.4366,
+        "friction_stress_expectancy": 0.4132,
+        "friction_stress_total_R": 13.22,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_ETHUSDT_SET_4_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 15.78,
+        "median_total_R": 12.58,
+        "p05_total_R": 3.99,
+        "p95_total_R": 20.09,
+        "baseline_max_dd": 5.99,
+        "p05_max_dd": 3.56,
+        "p50_max_dd": 5.72,
+        "p95_max_dd": 9.33,
+        "dropout_expectancy": 0.4922,
+        "dropout_win_rate": 0.4358,
+        "friction_stress_expectancy": 0.4132,
+        "friction_stress_total_R": 13.22,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_ETHUSDT_SET_4_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 14.53,
+        "median_total_R": 11.56,
+        "p05_total_R": 3.46,
+        "p95_total_R": 18.8,
+        "baseline_max_dd": 7.25,
+        "p05_max_dd": 4.02,
+        "p50_max_dd": 6.36,
+        "p95_max_dd": 10.28,
+        "dropout_expectancy": 0.4451,
+        "dropout_win_rate": 0.4246,
+        "friction_stress_expectancy": 0.3602,
+        "friction_stress_total_R": 11.89,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_BNBUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_PULLBACK_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 10.48,
+        "median_total_R": 8.14,
+        "p05_total_R": 1.43,
+        "p95_total_R": 14.47,
+        "baseline_max_dd": 5.84,
+        "p05_max_dd": 3.52,
+        "p50_max_dd": 5.65,
+        "p95_max_dd": 9.17,
+        "dropout_expectancy": 0.4117,
+        "dropout_win_rate": 0.4,
+        "friction_stress_expectancy": 0.339,
+        "friction_stress_total_R": 8.48,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_BTCUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 10.98,
+        "median_total_R": 9.55,
+        "p05_total_R": -5.99,
+        "p95_total_R": 21.34,
+        "baseline_max_dd": 12.79,
+        "p05_max_dd": 10.87,
+        "p50_max_dd": 16.17,
+        "p95_max_dd": 25.22,
+        "dropout_expectancy": 0.1012,
+        "dropout_win_rate": 0.2937,
+        "friction_stress_expectancy": 0.0207,
+        "friction_stress_total_R": 2.26,
+        "survival_status": "FAIL",
+        "ruin_probability": 0.054
+      },
+      "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 14.06,
+        "median_total_R": 11.57,
+        "p05_total_R": -4.19,
+        "p95_total_R": 25.04,
+        "baseline_max_dd": 14.12,
+        "p05_max_dd": 11.35,
+        "p50_max_dd": 16.95,
+        "p95_max_dd": 26.49,
+        "dropout_expectancy": 0.1158,
+        "dropout_win_rate": 0.2932,
+        "friction_stress_expectancy": 0.0382,
+        "friction_stress_total_R": 4.54,
+        "survival_status": "FAIL",
+        "ruin_probability": 0.081
+      },
+      "EXP_BTCUSDT_SET_3_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 14.06,
+        "median_total_R": 12.24,
+        "p05_total_R": -3.18,
+        "p95_total_R": 25.07,
+        "baseline_max_dd": 14.12,
+        "p05_max_dd": 11.18,
+        "p50_max_dd": 16.82,
+        "p95_max_dd": 26.93,
+        "dropout_expectancy": 0.1198,
+        "dropout_win_rate": 0.2946,
+        "friction_stress_expectancy": 0.0382,
+        "friction_stress_total_R": 4.54,
+        "survival_status": "FAIL",
+        "ruin_probability": 0.082
+      },
+      "EXP_BTCUSDT_SET_3_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 14.06,
+        "median_total_R": 11.58,
+        "p05_total_R": -5.2,
+        "p95_total_R": 23.67,
+        "baseline_max_dd": 14.12,
+        "p05_max_dd": 11.02,
+        "p50_max_dd": 16.8,
+        "p95_max_dd": 26.69,
+        "dropout_expectancy": 0.115,
+        "dropout_win_rate": 0.2933,
+        "friction_stress_expectancy": 0.0382,
+        "friction_stress_total_R": 4.54,
+        "survival_status": "FAIL",
+        "ruin_probability": 0.078
+      },
+      "EXP_BTCUSDT_SET_3_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 14.06,
+        "median_total_R": 11.74,
+        "p05_total_R": -3.09,
+        "p95_total_R": 26.07,
+        "baseline_max_dd": 14.12,
+        "p05_max_dd": 11.1,
+        "p50_max_dd": 16.99,
+        "p95_max_dd": 27.34,
+        "dropout_expectancy": 0.1219,
+        "dropout_win_rate": 0.2948,
+        "friction_stress_expectancy": 0.0382,
+        "friction_stress_total_R": 4.54,
+        "survival_status": "FAIL",
+        "ruin_probability": 0.095
+      },
+      "EXP_BTCUSDT_SET_3_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 14.06,
+        "median_total_R": 10.99,
+        "p05_total_R": -5.1,
+        "p95_total_R": 24.45,
+        "baseline_max_dd": 14.12,
+        "p05_max_dd": 11.19,
+        "p50_max_dd": 17.02,
+        "p95_max_dd": 26.53,
+        "dropout_expectancy": 0.1145,
+        "dropout_win_rate": 0.2928,
+        "friction_stress_expectancy": 0.0382,
+        "friction_stress_total_R": 4.54,
+        "survival_status": "FAIL",
+        "ruin_probability": 0.075
+      },
+      "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 8.19,
+        "median_total_R": 6.56,
+        "p05_total_R": 0.17,
+        "p95_total_R": 13.35,
+        "baseline_max_dd": 7.1,
+        "p05_max_dd": 3.87,
+        "p50_max_dd": 6.57,
+        "p95_max_dd": 10.99,
+        "dropout_expectancy": 0.3125,
+        "dropout_win_rate": 0.371,
+        "friction_stress_expectancy": 0.2232,
+        "friction_stress_total_R": 6.03,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_BNBUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_PULLBACK_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 8.19,
+        "median_total_R": 6.76,
+        "p05_total_R": -0.97,
+        "p95_total_R": 12.49,
+        "baseline_max_dd": 7.1,
+        "p05_max_dd": 4.02,
+        "p50_max_dd": 6.38,
+        "p95_max_dd": 10.39,
+        "dropout_expectancy": 0.2994,
+        "dropout_win_rate": 0.3702,
+        "friction_stress_expectancy": 0.2232,
+        "friction_stress_total_R": 6.03,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_BNBUSDT_SET_3_F04_STRUCTURE_LIQUIDITY_PHASE_PULLBACK_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 8.19,
+        "median_total_R": 6.25,
+        "p05_total_R": -1.46,
+        "p95_total_R": 13.24,
+        "baseline_max_dd": 7.1,
+        "p05_max_dd": 4.26,
+        "p50_max_dd": 6.46,
+        "p95_max_dd": 10.48,
+        "dropout_expectancy": 0.2871,
+        "dropout_win_rate": 0.3673,
+        "friction_stress_expectancy": 0.2232,
+        "friction_stress_total_R": 6.03,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_BNBUSDT_SET_3_F05_STRUCTURE_OB_PHASE_PULLBACK_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 8.19,
+        "median_total_R": 6.77,
+        "p05_total_R": -1.53,
+        "p95_total_R": 13.32,
+        "baseline_max_dd": 7.1,
+        "p05_max_dd": 4.03,
+        "p50_max_dd": 6.5,
+        "p95_max_dd": 10.28,
+        "dropout_expectancy": 0.3059,
+        "dropout_win_rate": 0.3723,
+        "friction_stress_expectancy": 0.2232,
+        "friction_stress_total_R": 6.03,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_BNBUSDT_SET_3_F06_STRUCTURE_FVG_PHASE_PULLBACK_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 8.19,
+        "median_total_R": 6.4,
+        "p05_total_R": -1.01,
+        "p95_total_R": 12.48,
+        "baseline_max_dd": 7.1,
+        "p05_max_dd": 4.32,
+        "p50_max_dd": 6.39,
+        "p95_max_dd": 10.54,
+        "dropout_expectancy": 0.2851,
+        "dropout_win_rate": 0.3666,
+        "friction_stress_expectancy": 0.2232,
+        "friction_stress_total_R": 6.03,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_BNBUSDT_SET_3_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_PULLBACK_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 8.19,
+        "median_total_R": 6.44,
+        "p05_total_R": -0.88,
+        "p95_total_R": 12.58,
+        "baseline_max_dd": 7.1,
+        "p05_max_dd": 4.01,
+        "p50_max_dd": 6.38,
+        "p95_max_dd": 10.48,
+        "dropout_expectancy": 0.2874,
+        "dropout_win_rate": 0.3664,
+        "friction_stress_expectancy": 0.2232,
+        "friction_stress_total_R": 6.03,
+        "survival_status": "PASS",
+        "ruin_probability": 0.0
+      },
+      "EXP_BTCUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "mc_runs": 1000,
+        "baseline_total_R": 25.05,
+        "median_total_R": 20.25,
+        "p05_total_R": 7.33,
+        "p95_total_R": 31.71,
+        "baseline_max_dd": 13.97,
+        "p05_max_dd": 7.59,
+        "p50_max_dd": 11.71,
+        "p95_max_dd": 19.65,
+        "dropout_expectancy": 0.2941,
+        "dropout_win_rate": 0.3381,
+        "friction_stress_expectancy": 0.2112,
+        "friction_stress_total_R": 18.17,
+        "survival_status": "PASS",
+        "ruin_probability": 0.006
+      }
+    },
+    "parameter_stability": {
+      "EXP_BTCUSDT_SET_2_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "baseline": 1.2418,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.8038,
+          0.988,
+          0.7877,
+          0.6646,
+          0.6646
+        ],
+        "PSI": 0.721,
+        "performance_range": 0.3235,
+        "worst_neighbor": 0.6646,
+        "best_neighbor": 0.988,
+        "plateau_detected": true,
+        "stability_status": "STABLE_PLATEAU"
+      },
+      "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "baseline": 0.894,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.4857,
+          0.6379,
+          0.4724,
+          0.3706,
+          0.3706
+        ],
+        "PSI": 0.649,
+        "performance_range": 0.2672,
+        "worst_neighbor": 0.3706,
+        "best_neighbor": 0.6379,
+        "plateau_detected": true,
+        "stability_status": "STABLE_PLATEAU"
+      },
+      "EXP_BTCUSDT_SET_2_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "baseline": 0.894,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.4857,
+          0.6379,
+          0.4724,
+          0.3706,
+          0.3706
+        ],
+        "PSI": 0.649,
+        "performance_range": 0.2672,
+        "worst_neighbor": 0.3706,
+        "best_neighbor": 0.6379,
+        "plateau_detected": true,
+        "stability_status": "STABLE_PLATEAU"
+      },
+      "EXP_BTCUSDT_SET_2_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "baseline": 0.894,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.4857,
+          0.6379,
+          0.4724,
+          0.3706,
+          0.3706
+        ],
+        "PSI": 0.649,
+        "performance_range": 0.2672,
+        "worst_neighbor": 0.3706,
+        "best_neighbor": 0.6379,
+        "plateau_detected": true,
+        "stability_status": "STABLE_PLATEAU"
+      },
+      "EXP_BTCUSDT_SET_2_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "baseline": 0.894,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.4857,
+          0.6379,
+          0.4724,
+          0.3706,
+          0.3706
+        ],
+        "PSI": 0.649,
+        "performance_range": 0.2672,
+        "worst_neighbor": 0.3706,
+        "best_neighbor": 0.6379,
+        "plateau_detected": true,
+        "stability_status": "STABLE_PLATEAU"
+      },
+      "EXP_BTCUSDT_SET_2_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "baseline": 0.894,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.4857,
+          0.6379,
+          0.4724,
+          0.3706,
+          0.3706
+        ],
+        "PSI": 0.649,
+        "performance_range": 0.2672,
+        "worst_neighbor": 0.3706,
+        "best_neighbor": 0.6379,
+        "plateau_detected": true,
+        "stability_status": "STABLE_PLATEAU"
+      },
+      "EXP_BNBUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_PULLBACK_V1": {
+        "baseline": 0.3602,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.1495,
+          0.1742,
+          0.0963,
+          -0.0007,
+          -0.0007
+        ],
+        "PSI": 0.449,
+        "performance_range": 0.1749,
+        "worst_neighbor": -0.0007,
+        "best_neighbor": 0.1742,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "baseline": 0.4813,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.0671,
+          0.1424,
+          0.0677,
+          -0.0338,
+          -0.0338
+        ],
+        "PSI": 0.341,
+        "performance_range": 0.1762,
+        "worst_neighbor": -0.0338,
+        "best_neighbor": 0.1424,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_ETHUSDT_SET_4_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "baseline": 0.4813,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.0671,
+          0.1424,
+          0.0677,
+          -0.0338,
+          -0.0338
+        ],
+        "PSI": 0.341,
+        "performance_range": 0.1762,
+        "worst_neighbor": -0.0338,
+        "best_neighbor": 0.1424,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_ETHUSDT_SET_4_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "baseline": 0.4813,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.0671,
+          0.1424,
+          0.0677,
+          -0.0338,
+          -0.0338
+        ],
+        "PSI": 0.341,
+        "performance_range": 0.1762,
+        "worst_neighbor": -0.0338,
+        "best_neighbor": 0.1424,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_ETHUSDT_SET_4_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "baseline": 0.4813,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.0671,
+          0.1424,
+          0.0677,
+          -0.0338,
+          -0.0338
+        ],
+        "PSI": 0.341,
+        "performance_range": 0.1762,
+        "worst_neighbor": -0.0338,
+        "best_neighbor": 0.1424,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_ETHUSDT_SET_4_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "baseline": 0.4813,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.0671,
+          0.1424,
+          0.0677,
+          -0.0338,
+          -0.0338
+        ],
+        "PSI": 0.341,
+        "performance_range": 0.1762,
+        "worst_neighbor": -0.0338,
+        "best_neighbor": 0.1424,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_ETHUSDT_SET_4_F01_STRUCTURE_PHASE_CONTINUATION_V1": {
+        "baseline": 0.4637,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.1832,
+          0.2656,
+          0.1839,
+          0.0729,
+          0.0729
+        ],
+        "PSI": 0.583,
+        "performance_range": 0.1927,
+        "worst_neighbor": 0.0729,
+        "best_neighbor": 0.2656,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_ETHUSDT_SET_4_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "baseline": 0.4637,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.1832,
+          0.2656,
+          0.1839,
+          0.0729,
+          0.0729
+        ],
+        "PSI": 0.583,
+        "performance_range": 0.1927,
+        "worst_neighbor": 0.0729,
+        "best_neighbor": 0.2656,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_ETHUSDT_SET_4_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1": {
+        "baseline": 0.4637,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.1396,
+          0.2195,
+          0.1403,
+          0.0326,
+          0.0326
+        ],
+        "PSI": 0.519,
+        "performance_range": 0.1869,
+        "worst_neighbor": 0.0326,
+        "best_neighbor": 0.2195,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_BNBUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_PULLBACK_V1": {
+        "baseline": 0.419,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.1999,
+          0.2256,
+          0.1446,
+          0.0437,
+          0.0437
+        ],
+        "PSI": 0.544,
+        "performance_range": 0.1819,
+        "worst_neighbor": 0.0437,
+        "best_neighbor": 0.2256,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_BTCUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1": {
+        "baseline": 0.2933,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          -0.1062,
+          -0.0306,
+          -0.1224,
+          -0.1767,
+          -0.19
+        ],
+        "PSI": 0.0,
+        "performance_range": 0.1593,
+        "worst_neighbor": -0.19,
+        "best_neighbor": -0.0306,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "baseline": 0.2291,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          -0.085,
+          -0.0074,
+          -0.0946,
+          -0.1401,
+          -0.1439
+        ],
+        "PSI": 0.0,
+        "performance_range": 0.1365,
+        "worst_neighbor": -0.1439,
+        "best_neighbor": -0.0074,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_BTCUSDT_SET_3_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "baseline": 0.2291,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          -0.085,
+          -0.0074,
+          -0.0946,
+          -0.1401,
+          -0.1439
+        ],
+        "PSI": 0.0,
+        "performance_range": 0.1365,
+        "worst_neighbor": -0.1439,
+        "best_neighbor": -0.0074,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_BTCUSDT_SET_3_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "baseline": 0.2291,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          -0.085,
+          -0.0074,
+          -0.0946,
+          -0.1401,
+          -0.1439
+        ],
+        "PSI": 0.0,
+        "performance_range": 0.1365,
+        "worst_neighbor": -0.1439,
+        "best_neighbor": -0.0074,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_BTCUSDT_SET_3_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "baseline": 0.2291,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          -0.085,
+          -0.0074,
+          -0.0946,
+          -0.1401,
+          -0.1439
+        ],
+        "PSI": 0.0,
+        "performance_range": 0.1365,
+        "worst_neighbor": -0.1439,
+        "best_neighbor": -0.0074,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_BTCUSDT_SET_3_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "baseline": 0.2291,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          -0.085,
+          -0.0074,
+          -0.0946,
+          -0.1401,
+          -0.1439
+        ],
+        "PSI": 0.0,
+        "performance_range": 0.1365,
+        "worst_neighbor": -0.1439,
+        "best_neighbor": -0.0074,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1": {
+        "baseline": 0.3032,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.1003,
+          0.1241,
+          0.0491,
+          -0.0443,
+          -0.0443
+        ],
+        "PSI": 0.294,
+        "performance_range": 0.1684,
+        "worst_neighbor": -0.0443,
+        "best_neighbor": 0.1241,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_BNBUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_PULLBACK_V1": {
+        "baseline": 0.3032,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.1003,
+          0.1241,
+          0.0491,
+          -0.0443,
+          -0.0443
+        ],
+        "PSI": 0.294,
+        "performance_range": 0.1684,
+        "worst_neighbor": -0.0443,
+        "best_neighbor": 0.1241,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_BNBUSDT_SET_3_F04_STRUCTURE_LIQUIDITY_PHASE_PULLBACK_V1": {
+        "baseline": 0.3032,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.1003,
+          0.1241,
+          0.0491,
+          -0.0443,
+          -0.0443
+        ],
+        "PSI": 0.294,
+        "performance_range": 0.1684,
+        "worst_neighbor": -0.0443,
+        "best_neighbor": 0.1241,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_BNBUSDT_SET_3_F05_STRUCTURE_OB_PHASE_PULLBACK_V1": {
+        "baseline": 0.3032,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.1003,
+          0.1241,
+          0.0491,
+          -0.0443,
+          -0.0443
+        ],
+        "PSI": 0.294,
+        "performance_range": 0.1684,
+        "worst_neighbor": -0.0443,
+        "best_neighbor": 0.1241,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_BNBUSDT_SET_3_F06_STRUCTURE_FVG_PHASE_PULLBACK_V1": {
+        "baseline": 0.3032,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.1003,
+          0.1241,
+          0.0491,
+          -0.0443,
+          -0.0443
+        ],
+        "PSI": 0.294,
+        "performance_range": 0.1684,
+        "worst_neighbor": -0.0443,
+        "best_neighbor": 0.1241,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_BNBUSDT_SET_3_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_PULLBACK_V1": {
+        "baseline": 0.3032,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.1003,
+          0.1241,
+          0.0491,
+          -0.0443,
+          -0.0443
+        ],
+        "PSI": 0.294,
+        "performance_range": 0.1684,
+        "worst_neighbor": -0.0443,
+        "best_neighbor": 0.1241,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      },
+      "EXP_BTCUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "baseline": 0.2641,
+        "parameter_grid": [
+          3.5,
+          4.0,
+          4.5,
+          5.0,
+          6.0
+        ],
+        "neighbor_results": [
+          0.0985,
+          0.1884,
+          0.0671,
+          -0.0075,
+          -0.0075
+        ],
+        "PSI": 0.248,
+        "performance_range": 0.1959,
+        "worst_neighbor": -0.0075,
+        "best_neighbor": 0.1884,
+        "plateau_detected": false,
+        "stability_status": "ISOLATED_SPIKE"
+      }
+    },
+    "cost_sensitivity": {
+      "EXP_BTCUSDT_SET_2_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 1.2418,
+        "friction_plus_25_pct": 1.2218,
+        "friction_plus_50_pct": 1.1918,
+        "friction_plus_100_pct": 1.1418,
+        "friction_plus_100_total_r": 21.69,
+        "delayed_entry_worse_fill": 1.0918,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.894,
+        "friction_plus_25_pct": 0.874,
+        "friction_plus_50_pct": 0.844,
+        "friction_plus_100_pct": 0.794,
+        "friction_plus_100_total_r": 18.26,
+        "delayed_entry_worse_fill": 0.744,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BTCUSDT_SET_2_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.894,
+        "friction_plus_25_pct": 0.874,
+        "friction_plus_50_pct": 0.844,
+        "friction_plus_100_pct": 0.794,
+        "friction_plus_100_total_r": 18.26,
+        "delayed_entry_worse_fill": 0.744,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BTCUSDT_SET_2_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.894,
+        "friction_plus_25_pct": 0.874,
+        "friction_plus_50_pct": 0.844,
+        "friction_plus_100_pct": 0.794,
+        "friction_plus_100_total_r": 18.26,
+        "delayed_entry_worse_fill": 0.744,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BTCUSDT_SET_2_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.894,
+        "friction_plus_25_pct": 0.874,
+        "friction_plus_50_pct": 0.844,
+        "friction_plus_100_pct": 0.794,
+        "friction_plus_100_total_r": 18.26,
+        "delayed_entry_worse_fill": 0.744,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BTCUSDT_SET_2_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.894,
+        "friction_plus_25_pct": 0.874,
+        "friction_plus_50_pct": 0.844,
+        "friction_plus_100_pct": 0.794,
+        "friction_plus_100_total_r": 18.26,
+        "delayed_entry_worse_fill": 0.744,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BNBUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_PULLBACK_V1": {
+        "baseline_expectancy_r": 0.3602,
+        "friction_plus_25_pct": 0.3402,
+        "friction_plus_50_pct": 0.3102,
+        "friction_plus_100_pct": 0.2602,
+        "friction_plus_100_total_r": 6.76,
+        "delayed_entry_worse_fill": 0.2102,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.4521,
+        "friction_plus_25_pct": 0.4321,
+        "friction_plus_50_pct": 0.4021,
+        "friction_plus_100_pct": 0.3521,
+        "friction_plus_100_total_r": 12.32,
+        "delayed_entry_worse_fill": 0.3021,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_ETHUSDT_SET_4_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.4521,
+        "friction_plus_25_pct": 0.4321,
+        "friction_plus_50_pct": 0.4021,
+        "friction_plus_100_pct": 0.3521,
+        "friction_plus_100_total_r": 12.32,
+        "delayed_entry_worse_fill": 0.3021,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_ETHUSDT_SET_4_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.4521,
+        "friction_plus_25_pct": 0.4321,
+        "friction_plus_50_pct": 0.4021,
+        "friction_plus_100_pct": 0.3521,
+        "friction_plus_100_total_r": 12.32,
+        "delayed_entry_worse_fill": 0.3021,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_ETHUSDT_SET_4_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.4521,
+        "friction_plus_25_pct": 0.4321,
+        "friction_plus_50_pct": 0.4021,
+        "friction_plus_100_pct": 0.3521,
+        "friction_plus_100_total_r": 12.32,
+        "delayed_entry_worse_fill": 0.3021,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_ETHUSDT_SET_4_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.4521,
+        "friction_plus_25_pct": 0.4321,
+        "friction_plus_50_pct": 0.4021,
+        "friction_plus_100_pct": 0.3521,
+        "friction_plus_100_total_r": 12.32,
+        "delayed_entry_worse_fill": 0.3021,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_ETHUSDT_SET_4_F01_STRUCTURE_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.4932,
+        "friction_plus_25_pct": 0.4732,
+        "friction_plus_50_pct": 0.4432,
+        "friction_plus_100_pct": 0.3932,
+        "friction_plus_100_total_r": 12.58,
+        "delayed_entry_worse_fill": 0.3432,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_ETHUSDT_SET_4_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.4932,
+        "friction_plus_25_pct": 0.4732,
+        "friction_plus_50_pct": 0.4432,
+        "friction_plus_100_pct": 0.3932,
+        "friction_plus_100_total_r": 12.58,
+        "delayed_entry_worse_fill": 0.3432,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_ETHUSDT_SET_4_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.4402,
+        "friction_plus_25_pct": 0.4202,
+        "friction_plus_50_pct": 0.3902,
+        "friction_plus_100_pct": 0.3402,
+        "friction_plus_100_total_r": 11.23,
+        "delayed_entry_worse_fill": 0.2902,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BNBUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_PULLBACK_V1": {
+        "baseline_expectancy_r": 0.419,
+        "friction_plus_25_pct": 0.399,
+        "friction_plus_50_pct": 0.369,
+        "friction_plus_100_pct": 0.319,
+        "friction_plus_100_total_r": 7.98,
+        "delayed_entry_worse_fill": 0.269,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BTCUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.1007,
+        "friction_plus_25_pct": 0.0807,
+        "friction_plus_50_pct": 0.0507,
+        "friction_plus_100_pct": 0.0007,
+        "friction_plus_100_total_r": 0.08,
+        "delayed_entry_worse_fill": -0.0493,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.1182,
+        "friction_plus_25_pct": 0.0982,
+        "friction_plus_50_pct": 0.0682,
+        "friction_plus_100_pct": 0.0182,
+        "friction_plus_100_total_r": 2.16,
+        "delayed_entry_worse_fill": -0.0318,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BTCUSDT_SET_3_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.1182,
+        "friction_plus_25_pct": 0.0982,
+        "friction_plus_50_pct": 0.0682,
+        "friction_plus_100_pct": 0.0182,
+        "friction_plus_100_total_r": 2.16,
+        "delayed_entry_worse_fill": -0.0318,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BTCUSDT_SET_3_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.1182,
+        "friction_plus_25_pct": 0.0982,
+        "friction_plus_50_pct": 0.0682,
+        "friction_plus_100_pct": 0.0182,
+        "friction_plus_100_total_r": 2.16,
+        "delayed_entry_worse_fill": -0.0318,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BTCUSDT_SET_3_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.1182,
+        "friction_plus_25_pct": 0.0982,
+        "friction_plus_50_pct": 0.0682,
+        "friction_plus_100_pct": 0.0182,
+        "friction_plus_100_total_r": 2.16,
+        "delayed_entry_worse_fill": -0.0318,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BTCUSDT_SET_3_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.1182,
+        "friction_plus_25_pct": 0.0982,
+        "friction_plus_50_pct": 0.0682,
+        "friction_plus_100_pct": 0.0182,
+        "friction_plus_100_total_r": 2.16,
+        "delayed_entry_worse_fill": -0.0318,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1": {
+        "baseline_expectancy_r": 0.3032,
+        "friction_plus_25_pct": 0.2832,
+        "friction_plus_50_pct": 0.2532,
+        "friction_plus_100_pct": 0.2032,
+        "friction_plus_100_total_r": 5.49,
+        "delayed_entry_worse_fill": 0.1532,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BNBUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_PULLBACK_V1": {
+        "baseline_expectancy_r": 0.3032,
+        "friction_plus_25_pct": 0.2832,
+        "friction_plus_50_pct": 0.2532,
+        "friction_plus_100_pct": 0.2032,
+        "friction_plus_100_total_r": 5.49,
+        "delayed_entry_worse_fill": 0.1532,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BNBUSDT_SET_3_F04_STRUCTURE_LIQUIDITY_PHASE_PULLBACK_V1": {
+        "baseline_expectancy_r": 0.3032,
+        "friction_plus_25_pct": 0.2832,
+        "friction_plus_50_pct": 0.2532,
+        "friction_plus_100_pct": 0.2032,
+        "friction_plus_100_total_r": 5.49,
+        "delayed_entry_worse_fill": 0.1532,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BNBUSDT_SET_3_F05_STRUCTURE_OB_PHASE_PULLBACK_V1": {
+        "baseline_expectancy_r": 0.3032,
+        "friction_plus_25_pct": 0.2832,
+        "friction_plus_50_pct": 0.2532,
+        "friction_plus_100_pct": 0.2032,
+        "friction_plus_100_total_r": 5.49,
+        "delayed_entry_worse_fill": 0.1532,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BNBUSDT_SET_3_F06_STRUCTURE_FVG_PHASE_PULLBACK_V1": {
+        "baseline_expectancy_r": 0.3032,
+        "friction_plus_25_pct": 0.2832,
+        "friction_plus_50_pct": 0.2532,
+        "friction_plus_100_pct": 0.2032,
+        "friction_plus_100_total_r": 5.49,
+        "delayed_entry_worse_fill": 0.1532,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BNBUSDT_SET_3_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_PULLBACK_V1": {
+        "baseline_expectancy_r": 0.3032,
+        "friction_plus_25_pct": 0.2832,
+        "friction_plus_50_pct": 0.2532,
+        "friction_plus_100_pct": 0.2032,
+        "friction_plus_100_total_r": 5.49,
+        "delayed_entry_worse_fill": 0.1532,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      },
+      "EXP_BTCUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "baseline_expectancy_r": 0.2912,
+        "friction_plus_25_pct": 0.2712,
+        "friction_plus_50_pct": 0.2412,
+        "friction_plus_100_pct": 0.1912,
+        "friction_plus_100_total_r": 16.45,
+        "delayed_entry_worse_fill": 0.1412,
+        "edge_survives": true,
+        "cost_sensitivity_status": "PASS"
+      }
+    },
+    "regime_decomposition": {
+      "EXP_BTCUSDT_SET_2_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "edge_nature": "UNCONDITIONAL",
+        "regime_status": "REGIME_ROBUST",
+        "profitable_regimes": [
+          "BULL_TRENDING",
+          "BEAR_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 15,
+            "expectancy": 1.4494,
+            "PF": 4.507,
+            "total_R": 21.74,
+            "drawdown": 2.1,
+            "win_rate": 0.6
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 4,
+            "expectancy": 0.463,
+            "PF": 1.871,
+            "total_R": 1.85,
+            "drawdown": 1.09,
+            "win_rate": 0.5
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "edge_nature": "UNCONDITIONAL",
+        "regime_status": "REGIME_ROBUST",
+        "profitable_regimes": [
+          "BULL_TRENDING",
+          "BEAR_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 18,
+            "expectancy": 1.0981,
+            "PF": 3.397,
+            "total_R": 19.77,
+            "drawdown": 3.06,
+            "win_rate": 0.5556
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 5,
+            "expectancy": 0.1593,
+            "PF": 1.25,
+            "total_R": 0.8,
+            "drawdown": 2.1,
+            "win_rate": 0.4
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BTCUSDT_SET_2_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "edge_nature": "UNCONDITIONAL",
+        "regime_status": "REGIME_ROBUST",
+        "profitable_regimes": [
+          "BULL_TRENDING",
+          "BEAR_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 18,
+            "expectancy": 1.0981,
+            "PF": 3.397,
+            "total_R": 19.77,
+            "drawdown": 3.06,
+            "win_rate": 0.5556
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 5,
+            "expectancy": 0.1593,
+            "PF": 1.25,
+            "total_R": 0.8,
+            "drawdown": 2.1,
+            "win_rate": 0.4
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BTCUSDT_SET_2_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "edge_nature": "UNCONDITIONAL",
+        "regime_status": "REGIME_ROBUST",
+        "profitable_regimes": [
+          "BULL_TRENDING",
+          "BEAR_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 18,
+            "expectancy": 1.0981,
+            "PF": 3.397,
+            "total_R": 19.77,
+            "drawdown": 3.06,
+            "win_rate": 0.5556
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 5,
+            "expectancy": 0.1593,
+            "PF": 1.25,
+            "total_R": 0.8,
+            "drawdown": 2.1,
+            "win_rate": 0.4
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BTCUSDT_SET_2_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "edge_nature": "UNCONDITIONAL",
+        "regime_status": "REGIME_ROBUST",
+        "profitable_regimes": [
+          "BULL_TRENDING",
+          "BEAR_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 18,
+            "expectancy": 1.0981,
+            "PF": 3.397,
+            "total_R": 19.77,
+            "drawdown": 3.06,
+            "win_rate": 0.5556
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 5,
+            "expectancy": 0.1593,
+            "PF": 1.25,
+            "total_R": 0.8,
+            "drawdown": 2.1,
+            "win_rate": 0.4
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BTCUSDT_SET_2_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "edge_nature": "UNCONDITIONAL",
+        "regime_status": "REGIME_ROBUST",
+        "profitable_regimes": [
+          "BULL_TRENDING",
+          "BEAR_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 18,
+            "expectancy": 1.0981,
+            "PF": 3.397,
+            "total_R": 19.77,
+            "drawdown": 3.06,
+            "win_rate": 0.5556
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 5,
+            "expectancy": 0.1593,
+            "PF": 1.25,
+            "total_R": 0.8,
+            "drawdown": 2.1,
+            "win_rate": 0.4
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BNBUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_PULLBACK_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_PULLBACK",
+        "profitable_regimes": [
+          "BULL_PULLBACK"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 18,
+            "expectancy": 0.6931,
+            "PF": 2.187,
+            "total_R": 12.48,
+            "drawdown": 4.64,
+            "win_rate": 0.4444
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 8,
+            "expectancy": -0.3888,
+            "PF": 0.544,
+            "total_R": -3.11,
+            "drawdown": 4.66,
+            "win_rate": 0.25
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_ETHUSDT_SET_4_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "edge_nature": "UNCONDITIONAL",
+        "regime_status": "REGIME_ROBUST",
+        "profitable_regimes": [
+          "BULL_TRENDING",
+          "BEAR_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 17,
+            "expectancy": 0.6956,
+            "PF": 2.143,
+            "total_R": 11.83,
+            "drawdown": 4.56,
+            "win_rate": 0.4118
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 18,
+            "expectancy": 0.2221,
+            "PF": 1.354,
+            "total_R": 4.0,
+            "drawdown": 3.29,
+            "win_rate": 0.4444
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_ETHUSDT_SET_4_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "edge_nature": "UNCONDITIONAL",
+        "regime_status": "REGIME_ROBUST",
+        "profitable_regimes": [
+          "BULL_TRENDING",
+          "BEAR_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 17,
+            "expectancy": 0.6956,
+            "PF": 2.143,
+            "total_R": 11.83,
+            "drawdown": 4.56,
+            "win_rate": 0.4118
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 18,
+            "expectancy": 0.2221,
+            "PF": 1.354,
+            "total_R": 4.0,
+            "drawdown": 3.29,
+            "win_rate": 0.4444
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_ETHUSDT_SET_4_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "edge_nature": "UNCONDITIONAL",
+        "regime_status": "REGIME_ROBUST",
+        "profitable_regimes": [
+          "BULL_TRENDING",
+          "BEAR_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 17,
+            "expectancy": 0.6956,
+            "PF": 2.143,
+            "total_R": 11.83,
+            "drawdown": 4.56,
+            "win_rate": 0.4118
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 18,
+            "expectancy": 0.2221,
+            "PF": 1.354,
+            "total_R": 4.0,
+            "drawdown": 3.29,
+            "win_rate": 0.4444
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_ETHUSDT_SET_4_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "edge_nature": "UNCONDITIONAL",
+        "regime_status": "REGIME_ROBUST",
+        "profitable_regimes": [
+          "BULL_TRENDING",
+          "BEAR_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 17,
+            "expectancy": 0.6956,
+            "PF": 2.143,
+            "total_R": 11.83,
+            "drawdown": 4.56,
+            "win_rate": 0.4118
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 18,
+            "expectancy": 0.2221,
+            "PF": 1.354,
+            "total_R": 4.0,
+            "drawdown": 3.29,
+            "win_rate": 0.4444
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_ETHUSDT_SET_4_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "edge_nature": "UNCONDITIONAL",
+        "regime_status": "REGIME_ROBUST",
+        "profitable_regimes": [
+          "BULL_TRENDING",
+          "BEAR_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 17,
+            "expectancy": 0.6956,
+            "PF": 2.143,
+            "total_R": 11.83,
+            "drawdown": 4.56,
+            "win_rate": 0.4118
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 18,
+            "expectancy": 0.2221,
+            "PF": 1.354,
+            "total_R": 4.0,
+            "drawdown": 3.29,
+            "win_rate": 0.4444
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_ETHUSDT_SET_4_F01_STRUCTURE_PHASE_CONTINUATION_V1": {
+        "edge_nature": "UNCONDITIONAL",
+        "regime_status": "REGIME_ROBUST",
+        "profitable_regimes": [
+          "BULL_TRENDING",
+          "BEAR_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 17,
+            "expectancy": 0.6956,
+            "PF": 2.143,
+            "total_R": 11.83,
+            "drawdown": 4.56,
+            "win_rate": 0.4118
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 15,
+            "expectancy": 0.2638,
+            "PF": 1.451,
+            "total_R": 3.96,
+            "drawdown": 3.29,
+            "win_rate": 0.4667
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_ETHUSDT_SET_4_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "edge_nature": "UNCONDITIONAL",
+        "regime_status": "REGIME_ROBUST",
+        "profitable_regimes": [
+          "BULL_TRENDING",
+          "BEAR_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 17,
+            "expectancy": 0.6956,
+            "PF": 2.143,
+            "total_R": 11.83,
+            "drawdown": 4.56,
+            "win_rate": 0.4118
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 15,
+            "expectancy": 0.2638,
+            "PF": 1.451,
+            "total_R": 3.96,
+            "drawdown": 3.29,
+            "win_rate": 0.4667
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_ETHUSDT_SET_4_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1": {
+        "edge_nature": "UNCONDITIONAL",
+        "regime_status": "REGIME_ROBUST",
+        "profitable_regimes": [
+          "BULL_TRENDING",
+          "BEAR_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 17,
+            "expectancy": 0.6956,
+            "PF": 2.143,
+            "total_R": 11.83,
+            "drawdown": 4.56,
+            "win_rate": 0.4118
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 16,
+            "expectancy": 0.1689,
+            "PF": 1.27,
+            "total_R": 2.7,
+            "drawdown": 4.27,
+            "win_rate": 0.4375
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BNBUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_PULLBACK_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_PULLBACK",
+        "profitable_regimes": [
+          "BULL_PULLBACK"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 19,
+            "expectancy": 0.5946,
+            "PF": 1.967,
+            "total_R": 11.3,
+            "drawdown": 4.64,
+            "win_rate": 0.4211
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 6,
+            "expectancy": -0.1369,
+            "PF": 0.819,
+            "total_R": -0.82,
+            "drawdown": 2.37,
+            "win_rate": 0.3333
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BTCUSDT_SET_3_F10_STRUCTURE_MOMENTUM_PHASE_CONTINUATION_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_TRENDING",
+        "profitable_regimes": [
+          "BULL_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 71,
+            "expectancy": 0.4041,
+            "PF": 1.584,
+            "total_R": 28.69,
+            "drawdown": 9.95,
+            "win_rate": 0.3521
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 38,
+            "expectancy": -0.4662,
+            "PF": 0.445,
+            "total_R": -17.71,
+            "drawdown": 17.24,
+            "win_rate": 0.1842
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BTCUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_TRENDING",
+        "profitable_regimes": [
+          "BULL_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 77,
+            "expectancy": 0.4077,
+            "PF": 1.587,
+            "total_R": 31.39,
+            "drawdown": 11.02,
+            "win_rate": 0.3506
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 42,
+            "expectancy": -0.4126,
+            "PF": 0.51,
+            "total_R": -17.33,
+            "drawdown": 16.86,
+            "win_rate": 0.1905
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BTCUSDT_SET_3_F04_STRUCTURE_LIQUIDITY_PHASE_CONTINUATION_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_TRENDING",
+        "profitable_regimes": [
+          "BULL_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 77,
+            "expectancy": 0.4077,
+            "PF": 1.587,
+            "total_R": 31.39,
+            "drawdown": 11.02,
+            "win_rate": 0.3506
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 42,
+            "expectancy": -0.4126,
+            "PF": 0.51,
+            "total_R": -17.33,
+            "drawdown": 16.86,
+            "win_rate": 0.1905
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BTCUSDT_SET_3_F05_STRUCTURE_OB_PHASE_CONTINUATION_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_TRENDING",
+        "profitable_regimes": [
+          "BULL_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 77,
+            "expectancy": 0.4077,
+            "PF": 1.587,
+            "total_R": 31.39,
+            "drawdown": 11.02,
+            "win_rate": 0.3506
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 42,
+            "expectancy": -0.4126,
+            "PF": 0.51,
+            "total_R": -17.33,
+            "drawdown": 16.86,
+            "win_rate": 0.1905
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BTCUSDT_SET_3_F06_STRUCTURE_FVG_PHASE_CONTINUATION_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_TRENDING",
+        "profitable_regimes": [
+          "BULL_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 77,
+            "expectancy": 0.4077,
+            "PF": 1.587,
+            "total_R": 31.39,
+            "drawdown": 11.02,
+            "win_rate": 0.3506
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 42,
+            "expectancy": -0.4126,
+            "PF": 0.51,
+            "total_R": -17.33,
+            "drawdown": 16.86,
+            "win_rate": 0.1905
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BTCUSDT_SET_3_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_TRENDING",
+        "profitable_regimes": [
+          "BULL_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 77,
+            "expectancy": 0.4077,
+            "PF": 1.587,
+            "total_R": 31.39,
+            "drawdown": 11.02,
+            "win_rate": 0.3506
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 42,
+            "expectancy": -0.4126,
+            "PF": 0.51,
+            "total_R": -17.33,
+            "drawdown": 16.86,
+            "win_rate": 0.1905
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BNBUSDT_SET_3_F01_STRUCTURE_PHASE_PULLBACK_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_PULLBACK",
+        "profitable_regimes": [
+          "BULL_PULLBACK"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 19,
+            "expectancy": 0.5946,
+            "PF": 1.967,
+            "total_R": 11.3,
+            "drawdown": 4.64,
+            "win_rate": 0.4211
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 8,
+            "expectancy": -0.3888,
+            "PF": 0.544,
+            "total_R": -3.11,
+            "drawdown": 4.66,
+            "win_rate": 0.25
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BNBUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_PULLBACK_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_PULLBACK",
+        "profitable_regimes": [
+          "BULL_PULLBACK"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 19,
+            "expectancy": 0.5946,
+            "PF": 1.967,
+            "total_R": 11.3,
+            "drawdown": 4.64,
+            "win_rate": 0.4211
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 8,
+            "expectancy": -0.3888,
+            "PF": 0.544,
+            "total_R": -3.11,
+            "drawdown": 4.66,
+            "win_rate": 0.25
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BNBUSDT_SET_3_F04_STRUCTURE_LIQUIDITY_PHASE_PULLBACK_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_PULLBACK",
+        "profitable_regimes": [
+          "BULL_PULLBACK"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 19,
+            "expectancy": 0.5946,
+            "PF": 1.967,
+            "total_R": 11.3,
+            "drawdown": 4.64,
+            "win_rate": 0.4211
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 8,
+            "expectancy": -0.3888,
+            "PF": 0.544,
+            "total_R": -3.11,
+            "drawdown": 4.66,
+            "win_rate": 0.25
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BNBUSDT_SET_3_F05_STRUCTURE_OB_PHASE_PULLBACK_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_PULLBACK",
+        "profitable_regimes": [
+          "BULL_PULLBACK"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 19,
+            "expectancy": 0.5946,
+            "PF": 1.967,
+            "total_R": 11.3,
+            "drawdown": 4.64,
+            "win_rate": 0.4211
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 8,
+            "expectancy": -0.3888,
+            "PF": 0.544,
+            "total_R": -3.11,
+            "drawdown": 4.66,
+            "win_rate": 0.25
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BNBUSDT_SET_3_F06_STRUCTURE_FVG_PHASE_PULLBACK_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_PULLBACK",
+        "profitable_regimes": [
+          "BULL_PULLBACK"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 19,
+            "expectancy": 0.5946,
+            "PF": 1.967,
+            "total_R": 11.3,
+            "drawdown": 4.64,
+            "win_rate": 0.4211
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 8,
+            "expectancy": -0.3888,
+            "PF": 0.544,
+            "total_R": -3.11,
+            "drawdown": 4.66,
+            "win_rate": 0.25
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BNBUSDT_SET_3_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_PULLBACK_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_PULLBACK",
+        "profitable_regimes": [
+          "BULL_PULLBACK"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 19,
+            "expectancy": 0.5946,
+            "PF": 1.967,
+            "total_R": 11.3,
+            "drawdown": 4.64,
+            "win_rate": 0.4211
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 8,
+            "expectancy": -0.3888,
+            "PF": 0.544,
+            "total_R": -3.11,
+            "drawdown": 4.66,
+            "win_rate": 0.25
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      },
+      "EXP_BTCUSDT_SET_3_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "edge_nature": "REGIME_CONDITIONAL",
+        "regime_status": "CONDITIONAL_BULL_TRENDING",
+        "profitable_regimes": [
+          "BULL_TRENDING"
+        ],
+        "breakdown": {
+          "BULL_TRENDING": {
+            "trade_count": 59,
+            "expectancy": 0.4898,
+            "PF": 1.736,
+            "total_R": 28.9,
+            "drawdown": 8.71,
+            "win_rate": 0.3729
+          },
+          "BEAR_TRENDING": {
+            "trade_count": 27,
+            "expectancy": -0.1427,
+            "PF": 0.81,
+            "total_R": -3.85,
+            "drawdown": 8.24,
+            "win_rate": 0.2593
+          },
+          "BULL_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "BEAR_PULLBACK": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          },
+          "RANGING_CHOP": {
+            "trade_count": 0,
+            "expectancy": 0.0,
+            "PF": 0.0,
+            "total_R": 0,
+            "drawdown": 0.0,
+            "win_rate": 0.0
+          }
+        }
+      }
+    },
+    "cross_asset_and_cross_timeframe": {
+      "F01_STRUCTURE_PHASE": {
+        "cross_asset": {
+          "BTC": -74.38,
+          "ETH": 24.13,
+          "SOL": 23.19,
+          "BNB": -39.13,
+          "combined_total_r": -66.18,
+          "combined_expectancy_r": -0.0477,
+          "is_cross_asset_viable": true
+        },
+        "cross_timeframe": {
+          "SET_1": {
+            "total_r": -23.82,
+            "trades": 60,
+            "expectancy_r": -0.397
+          },
+          "SET_2": {
+            "total_r": 35.28,
+            "trades": 252,
+            "expectancy_r": 0.14
+          },
+          "SET_3": {
+            "total_r": -62.8,
+            "trades": 825,
+            "expectancy_r": -0.0761
+          },
+          "SET_4": {
+            "total_r": -0.38,
+            "trades": 224,
+            "expectancy_r": -0.0017
+          },
+          "SET_5": {
+            "total_r": -14.47,
+            "trades": 27,
+            "expectancy_r": -0.5358
+          }
+        }
+      },
+      "F02_STRUCTURE_ZONE_PHASE": {
+        "cross_asset": {
+          "BTC": -112.5,
+          "ETH": 2.19,
+          "SOL": -29.71,
+          "BNB": -30.53,
+          "combined_total_r": -170.56,
+          "combined_expectancy_r": -0.269,
+          "is_cross_asset_viable": false
+        },
+        "cross_timeframe": {
+          "SET_1": {
+            "total_r": 1.01,
+            "trades": 40,
+            "expectancy_r": 0.0253
+          },
+          "SET_2": {
+            "total_r": -44.47,
+            "trades": 142,
+            "expectancy_r": -0.3132
+          },
+          "SET_3": {
+            "total_r": -102.02,
+            "trades": 358,
+            "expectancy_r": -0.285
+          },
+          "SET_4": {
+            "total_r": -16.91,
+            "trades": 76,
+            "expectancy_r": -0.2225
+          },
+          "SET_5": {
+            "total_r": -8.17,
+            "trades": 18,
+            "expectancy_r": -0.4539
+          }
+        }
+      },
+      "F03_STRUCTURE_EMA_PHASE": {
+        "cross_asset": {
+          "BTC": -19.23,
+          "ETH": 20.76,
+          "SOL": 20.67,
+          "BNB": -30.02,
+          "combined_total_r": -7.82,
+          "combined_expectancy_r": -0.0062,
+          "is_cross_asset_viable": true
+        },
+        "cross_timeframe": {
+          "SET_1": {
+            "total_r": -21.76,
+            "trades": 64,
+            "expectancy_r": -0.34
+          },
+          "SET_2": {
+            "total_r": 32.15,
+            "trades": 272,
+            "expectancy_r": 0.1182
+          },
+          "SET_3": {
+            "total_r": -5.51,
+            "trades": 658,
+            "expectancy_r": -0.0084
+          },
+          "SET_4": {
+            "total_r": -1.47,
+            "trades": 232,
+            "expectancy_r": -0.0063
+          },
+          "SET_5": {
+            "total_r": -11.23,
+            "trades": 28,
+            "expectancy_r": -0.4011
+          }
+        }
+      },
+      "F04_STRUCTURE_LIQUIDITY_PHASE": {
+        "cross_asset": {
+          "BTC": -19.23,
+          "ETH": 20.76,
+          "SOL": 20.67,
+          "BNB": -30.02,
+          "combined_total_r": -7.82,
+          "combined_expectancy_r": -0.0062,
+          "is_cross_asset_viable": true
+        },
+        "cross_timeframe": {
+          "SET_1": {
+            "total_r": -21.76,
+            "trades": 64,
+            "expectancy_r": -0.34
+          },
+          "SET_2": {
+            "total_r": 32.15,
+            "trades": 272,
+            "expectancy_r": 0.1182
+          },
+          "SET_3": {
+            "total_r": -5.51,
+            "trades": 658,
+            "expectancy_r": -0.0084
+          },
+          "SET_4": {
+            "total_r": -1.47,
+            "trades": 232,
+            "expectancy_r": -0.0063
+          },
+          "SET_5": {
+            "total_r": -11.23,
+            "trades": 28,
+            "expectancy_r": -0.4011
+          }
+        }
+      },
+      "F05_STRUCTURE_OB_PHASE": {
+        "cross_asset": {
+          "BTC": -19.23,
+          "ETH": 20.76,
+          "SOL": 20.67,
+          "BNB": -30.02,
+          "combined_total_r": -7.82,
+          "combined_expectancy_r": -0.0062,
+          "is_cross_asset_viable": true
+        },
+        "cross_timeframe": {
+          "SET_1": {
+            "total_r": -21.76,
+            "trades": 64,
+            "expectancy_r": -0.34
+          },
+          "SET_2": {
+            "total_r": 32.15,
+            "trades": 272,
+            "expectancy_r": 0.1182
+          },
+          "SET_3": {
+            "total_r": -5.51,
+            "trades": 658,
+            "expectancy_r": -0.0084
+          },
+          "SET_4": {
+            "total_r": -1.47,
+            "trades": 232,
+            "expectancy_r": -0.0063
+          },
+          "SET_5": {
+            "total_r": -11.23,
+            "trades": 28,
+            "expectancy_r": -0.4011
+          }
+        }
+      },
+      "F06_STRUCTURE_FVG_PHASE": {
+        "cross_asset": {
+          "BTC": -19.23,
+          "ETH": 20.76,
+          "SOL": 20.67,
+          "BNB": -30.02,
+          "combined_total_r": -7.82,
+          "combined_expectancy_r": -0.0062,
+          "is_cross_asset_viable": true
+        },
+        "cross_timeframe": {
+          "SET_1": {
+            "total_r": -21.76,
+            "trades": 64,
+            "expectancy_r": -0.34
+          },
+          "SET_2": {
+            "total_r": 32.15,
+            "trades": 272,
+            "expectancy_r": 0.1182
+          },
+          "SET_3": {
+            "total_r": -5.51,
+            "trades": 658,
+            "expectancy_r": -0.0084
+          },
+          "SET_4": {
+            "total_r": -1.47,
+            "trades": 232,
+            "expectancy_r": -0.0063
+          },
+          "SET_5": {
+            "total_r": -11.23,
+            "trades": 28,
+            "expectancy_r": -0.4011
+          }
+        }
+      },
+      "F07_STRUCTURE_SUPPLY_DEMAND_PHASE": {
+        "cross_asset": {
+          "BTC": -19.23,
+          "ETH": 20.76,
+          "SOL": 20.67,
+          "BNB": -30.02,
+          "combined_total_r": -7.82,
+          "combined_expectancy_r": -0.0062,
+          "is_cross_asset_viable": true
+        },
+        "cross_timeframe": {
+          "SET_1": {
+            "total_r": -21.76,
+            "trades": 64,
+            "expectancy_r": -0.34
+          },
+          "SET_2": {
+            "total_r": 32.15,
+            "trades": 272,
+            "expectancy_r": 0.1182
+          },
+          "SET_3": {
+            "total_r": -5.51,
+            "trades": 658,
+            "expectancy_r": -0.0084
+          },
+          "SET_4": {
+            "total_r": -1.47,
+            "trades": 232,
+            "expectancy_r": -0.0063
+          },
+          "SET_5": {
+            "total_r": -11.23,
+            "trades": 28,
+            "expectancy_r": -0.4011
+          }
+        }
+      },
+      "F08_STRUCTURE_TRENDLINE_PHASE": {
+        "cross_asset": {
+          "BTC": -3.42,
+          "ETH": 7.62,
+          "SOL": 16.63,
+          "BNB": -32.53,
+          "combined_total_r": -11.7,
+          "combined_expectancy_r": -0.0107,
+          "is_cross_asset_viable": true
+        },
+        "cross_timeframe": {
+          "SET_1": {
+            "total_r": -25.36,
+            "trades": 53,
+            "expectancy_r": -0.4785
+          },
+          "SET_2": {
+            "total_r": 49.43,
+            "trades": 240,
+            "expectancy_r": 0.2059
+          },
+          "SET_3": {
+            "total_r": -17.15,
+            "trades": 574,
+            "expectancy_r": -0.0299
+          },
+          "SET_4": {
+            "total_r": -9.05,
+            "trades": 210,
+            "expectancy_r": -0.0431
+          },
+          "SET_5": {
+            "total_r": -9.57,
+            "trades": 20,
+            "expectancy_r": -0.4785
+          }
+        }
+      },
+      "F09_STRUCTURE_FIBONACCI_PHASE": {
+        "cross_asset": {
+          "BTC": -57.37,
+          "ETH": -0.47,
+          "SOL": -33.33,
+          "BNB": -37.27,
+          "combined_total_r": -128.45,
+          "combined_expectancy_r": -0.2116,
+          "is_cross_asset_viable": false
+        },
+        "cross_timeframe": {
+          "SET_1": {
+            "total_r": 2.02,
+            "trades": 39,
+            "expectancy_r": 0.0517
+          },
+          "SET_2": {
+            "total_r": -51.63,
+            "trades": 143,
+            "expectancy_r": -0.3611
+          },
+          "SET_3": {
+            "total_r": -39.31,
+            "trades": 261,
+            "expectancy_r": -0.1506
+          },
+          "SET_4": {
+            "total_r": -28.28,
+            "trades": 136,
+            "expectancy_r": -0.208
+          },
+          "SET_5": {
+            "total_r": -11.23,
+            "trades": 28,
+            "expectancy_r": -0.4011
+          }
+        }
+      },
+      "F10_STRUCTURE_MOMENTUM_PHASE": {
+        "cross_asset": {
+          "BTC": -5.26,
+          "ETH": 29.15,
+          "SOL": 22.22,
+          "BNB": -23.21,
+          "combined_total_r": 22.91,
+          "combined_expectancy_r": 0.0194,
+          "is_cross_asset_viable": true
+        },
+        "cross_timeframe": {
+          "SET_1": {
+            "total_r": -14.14,
+            "trades": 56,
+            "expectancy_r": -0.2524
+          },
+          "SET_2": {
+            "total_r": 35.75,
+            "trades": 260,
+            "expectancy_r": 0.1375
+          },
+          "SET_3": {
+            "total_r": 2.27,
+            "trades": 623,
+            "expectancy_r": 0.0036
+          },
+          "SET_4": {
+            "total_r": 10.15,
+            "trades": 214,
+            "expectancy_r": 0.0474
+          },
+          "SET_5": {
+            "total_r": -11.12,
+            "trades": 27,
+            "expectancy_r": -0.4119
+          }
+        }
+      }
+    },
+    "controlled_phase_b_research": {
+      "EXP_BTCUSDT_SET_2_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1": {
+        "ltf_entry_variants": {
+          "BOS_BASELINE": {
+            "trade_count": 19,
+            "total_r": 23.59,
+            "expectancy_r": 1.2418,
+            "win_rate": 0.5789
+          },
+          "CHOCH_MSS": {
+            "trade_count": 16,
+            "total_r": 28.92,
+            "expectancy_r": 1.3908,
+            "win_rate": 0.6079
+          },
+          "SWEEP_DISPLACEMENT": {
+            "trade_count": 13,
+            "total_r": 22.3,
+            "expectancy_r": 1.5522,
+            "win_rate": 0.6368
+          },
+          "BREAK_AND_RETEST": {
+            "trade_count": 14,
+            "total_r": 19.06,
+            "expectancy_r": 1.3039,
+            "win_rate": 0.5905
+          }
+        },
+        "mtf_management_variants": {
+          "STRUCTURAL_TRAILING_BASELINE": {
+            "total_r": 23.59,
+            "expectancy_r": 1.2418,
+            "win_rate": 0.5789
+          },
+          "FIXED_BINARY": {
+            "total_r": 15.24,
+            "expectancy_r": 0.8021,
+            "win_rate": 0.3684
+          },
+          "BE_PLUS_2R": {
+            "total_r": 17.32,
+            "expectancy_r": 0.9116,
+            "win_rate": 0.3684
+          },
+          "STEP_LOCK": {
+            "total_r": 20.24,
+            "expectancy_r": 1.0653,
+            "win_rate": 0.4737
+          }
+        },
+        "target_model_variants": {
+          "TARGET_4R": {
+            "target_threshold_r": 4.0,
+            "total_r": 17.78,
+            "expectancy_r": 0.9358,
+            "win_rate": 0.4211
+          },
+          "TARGET_5R": {
+            "target_threshold_r": 5.0,
+            "total_r": 0.56,
+            "expectancy_r": 0.0295,
+            "win_rate": 0.4211
+          },
+          "TARGET_6R": {
+            "target_threshold_r": 6.0,
+            "total_r": 0.56,
+            "expectancy_r": 0.0295,
+            "win_rate": 0.4211
+          },
+          "TARGET_8R": {
+            "target_threshold_r": 8.0,
+            "total_r": 0.56,
+            "expectancy_r": 0.0295,
+            "win_rate": 0.4211
+          },
+          "TARGET_STRUCTURAL_KEY_ZONE": {
+            "target_threshold_r": "DYNAMIC",
+            "total_r": 23.59,
+            "expectancy_r": 1.2418,
+            "win_rate": 0.5789
+          }
+        }
+      },
+      "EXP_BTCUSDT_SET_2_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1": {
+        "ltf_entry_variants": {
+          "BOS_BASELINE": {
+            "trade_count": 23,
+            "total_r": 20.56,
+            "expectancy_r": 0.894,
+            "win_rate": 0.5217
+          },
+          "CHOCH_MSS": {
+            "trade_count": 19,
+            "total_r": 25.57,
+            "expectancy_r": 1.0013,
+            "win_rate": 0.5478
+          },
+          "SWEEP_DISPLACEMENT": {
+            "trade_count": 16,
+            "total_r": 20.72,
+            "expectancy_r": 1.1176,
+            "win_rate": 0.5739
+          },
+          "BREAK_AND_RETEST": {
+            "trade_count": 17,
+            "total_r": 19.83,
+            "expectancy_r": 0.9388,
+            "win_rate": 0.5322
+          }
+        },
+        "mtf_management_variants": {
+          "STRUCTURAL_TRAILING_BASELINE": {
+            "total_r": 20.56,
+            "expectancy_r": 0.894,
+            "win_rate": 0.5217
+          },
+          "FIXED_BINARY": {
+            "total_r": 11.08,
+            "expectancy_r": 0.4817,
+            "win_rate": 0.3043
+          },
+          "BE_PLUS_2R": {
+            "total_r": 14.2,
+            "expectancy_r": 0.6174,
+            "win_rate": 0.3043
+          },
+          "STEP_LOCK": {
+            "total_r": 18.08,
+            "expectancy_r": 0.7861,
+            "win_rate": 0.4348
+          }
+        },
+        "target_model_variants": {
+          "TARGET_4R": {
+            "target_threshold_r": 4.0,
+            "total_r": 13.62,
+            "expectancy_r": 0.5922,
+            "win_rate": 0.3478
+          },
+          "TARGET_5R": {
+            "target_threshold_r": 5.0,
+            "total_r": -3.6,
+            "expectancy_r": -0.1565,
+            "win_rate": 0.3478
+          },
+          "TARGET_6R": {
+            "target_threshold_r": 6.0,
+            "total_r": -3.6,
+            "expectancy_r": -0.1565,
+            "win_rate": 0.3478
+          },
+          "TARGET_8R": {
+            "target_threshold_r": 8.0,
+            "total_r": -3.6,
+            "expectancy_r": -0.1565,
+            "win_rate": 0.3478
+          },
+          "TARGET_STRUCTURAL_KEY_ZONE": {
+            "target_threshold_r": "DYNAMIC",
+            "total_r": 20.56,
+            "expectancy_r": 0.894,
+            "win_rate": 0.5217
+          }
+        }
+      }
+    }
+  }
+}

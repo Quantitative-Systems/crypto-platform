@@ -1,0 +1,86 @@
+{
+  "experiment_id": "EXP_BTCUSDT_SET_4_F10_STRUCTURE_MOMENTUM_PHASE_PULLBACK_V1",
+  "status": "COMPLETED",
+  "symbol": "BTCUSDT",
+  "set_id": "SET_4",
+  "family_id": "F10_STRUCTURE_MOMENTUM_PHASE",
+  "phase_mode": "PULLBACK",
+  "timeframe_hierarchy": {
+    "htf": "4h",
+    "mtf": "1h",
+    "ltf": "15m"
+  },
+  "testable_period": {
+    "start_iso": "2026-07-03T14:30:00+00:00",
+    "end_iso": "2026-09-01T16:00:00+00:00",
+    "total_ltf_bars": 5767
+  },
+  "overall_metrics": {
+    "trade_count": 23,
+    "win_count": 7,
+    "loss_count": 16,
+    "win_rate": 0.30434782608695654,
+    "loss_rate": 0.6956521739130435,
+    "total_r": -3.1259000000000006,
+    "expectancy_r": -0.13590869565217395,
+    "profit_factor": 0.8469444213227051,
+    "max_drawdown_r": 13.3811,
+    "target_4r_hit_rate": 0.043478260869565216,
+    "avg_bars_held": 76.30434782608695,
+    "fees_bps_roundtrip": 15.0,
+    "slippage_bps_roundtrip": 4.0
+  },
+  "partitioned_walk_forward": {
+    "dev": {
+      "trade_count": 11,
+      "win_count": 2,
+      "loss_count": 9,
+      "win_rate": 0.1818,
+      "loss_rate": 0.8182,
+      "total_r": -8.27,
+      "expectancy_r": -0.7516,
+      "profit_factor": 0.204,
+      "max_drawdown_r": 9.27,
+      "average_win_r": 1.06,
+      "average_loss_r": -1.15
+    },
+    "val": {
+      "trade_count": 6,
+      "win_count": 3,
+      "loss_count": 3,
+      "win_rate": 0.5,
+      "loss_rate": 0.5,
+      "total_r": 5.78,
+      "expectancy_r": 0.9634,
+      "profit_factor": 2.093,
+      "max_drawdown_r": 3.19,
+      "average_win_r": 3.69,
+      "average_loss_r": -1.76
+    },
+    "oos": {
+      "trade_count": 6,
+      "win_count": 2,
+      "loss_count": 4,
+      "win_rate": 0.3333,
+      "loss_rate": 0.6667,
+      "total_r": -0.64,
+      "expectancy_r": -0.1064,
+      "profit_factor": 0.866,
+      "max_drawdown_r": 2.97,
+      "average_win_r": 2.06,
+      "average_loss_r": -1.19
+    }
+  },
+  "direction_performance": {
+    "long_trades": 17,
+    "long_total_r": 5.02,
+    "short_trades": 6,
+    "short_total_r": -8.15
+  },
+  "edge_qualification": {
+    "has_positive_expectancy": false,
+    "has_positive_oos": false,
+    "has_sufficient_trades": true,
+    "survives_costs": false
+  }
+}

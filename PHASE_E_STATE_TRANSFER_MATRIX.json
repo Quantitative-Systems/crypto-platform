@@ -1,0 +1,165 @@
+{
+  "metadata": {
+    "generated_at_utc": "2026-10-06T04:51:33.467741+00:00",
+    "phase": "PHASE_E"
+  },
+  "state_universality_classification": {
+    "BULL_TRENDING_CONTINUATION": "UNIVERSAL_POSITIVE_EDGE",
+    "BEAR_TRENDING_CONTINUATION": "CONDITIONALLY_VALID",
+    "BULL_PULLBACK": "CONDITIONALLY_VALID",
+    "BEAR_PULLBACK": "UNIVERSALLY_NEGATIVE (NO_TRADE)",
+    "RANGING_CHOP": "UNIVERSALLY_NEGATIVE (NO_TRADE)"
+  },
+  "state_asset_transfer_matrix": {
+    "BULL_TRENDING_CONTINUATION": {
+      "BTCUSDT": {
+        "classification": "PROMISING",
+        "total_trades": 74,
+        "total_r": 43.91,
+        "expectancy_r": 0.5934,
+        "oos_expectancy_r": -1.0478
+      },
+      "ETHUSDT": {
+        "classification": "PROMISING",
+        "total_trades": 57,
+        "total_r": 20.91,
+        "expectancy_r": 0.3668,
+        "oos_expectancy_r": -1.0353
+      },
+      "SOLUSDT": {
+        "classification": "PROMISING",
+        "total_trades": 42,
+        "total_r": 29.35,
+        "expectancy_r": 0.6988,
+        "oos_expectancy_r": 0.0
+      },
+      "BNBUSDT": {
+        "classification": "INSUFFICIENT_DATA",
+        "total_trades": 4,
+        "total_r": -0.14,
+        "expectancy_r": -0.035,
+        "oos_expectancy_r": 0.0
+      }
+    },
+    "BEAR_TRENDING_CONTINUATION": {
+      "BTCUSDT": {
+        "classification": "FAILED",
+        "total_trades": 28,
+        "total_r": -8.15,
+        "expectancy_r": -0.2911,
+        "oos_expectancy_r": 0.0
+      },
+      "ETHUSDT": {
+        "classification": "PROMISING",
+        "total_trades": 34,
+        "total_r": 27.25,
+        "expectancy_r": 0.8015,
+        "oos_expectancy_r": 0.0
+      },
+      "SOLUSDT": {
+        "classification": "PROMISING",
+        "total_trades": 30,
+        "total_r": 4.54,
+        "expectancy_r": 0.1513,
+        "oos_expectancy_r": -1.0269
+      },
+      "BNBUSDT": {
+        "classification": "INSUFFICIENT_DATA",
+        "total_trades": 0,
+        "total_r": 0.0,
+        "expectancy_r": 0.0,
+        "oos_expectancy_r": 0.0
+      }
+    },
+    "BULL_PULLBACK": {
+      "BTCUSDT": {
+        "classification": "FAILED",
+        "total_trades": 130,
+        "total_r": -11.15,
+        "expectancy_r": -0.0858,
+        "oos_expectancy_r": -1.0898
+      },
+      "ETHUSDT": {
+        "classification": "PROMISING",
+        "total_trades": 117,
+        "total_r": 12.34,
+        "expectancy_r": 0.1055,
+        "oos_expectancy_r": -0.5289
+      },
+      "SOLUSDT": {
+        "classification": "PROMISING",
+        "total_trades": 63,
+        "total_r": 21.16,
+        "expectancy_r": 0.3359,
+        "oos_expectancy_r": -1.0376
+      },
+      "BNBUSDT": {
+        "classification": "FAILED",
+        "total_trades": 15,
+        "total_r": -0.59,
+        "expectancy_r": -0.0393,
+        "oos_expectancy_r": 0.0
+      }
+    },
+    "BEAR_PULLBACK": {
+      "BTCUSDT": {
+        "classification": "FAILED",
+        "total_trades": 81,
+        "total_r": -45.75,
+        "expectancy_r": -0.5648,
+        "oos_expectancy_r": -0.5486
+      },
+      "ETHUSDT": {
+        "classification": "FAILED",
+        "total_trades": 97,
+        "total_r": -42.05,
+        "expectancy_r": -0.4335,
+        "oos_expectancy_r": -0.0353
+      },
+      "SOLUSDT": {
+        "classification": "FAILED",
+        "total_trades": 69,
+        "total_r": -16.22,
+        "expectancy_r": -0.2351,
+        "oos_expectancy_r": -1.0333
+      },
+      "BNBUSDT": {
+        "classification": "FAILED",
+        "total_trades": 7,
+        "total_r": -2.19,
+        "expectancy_r": -0.3129,
+        "oos_expectancy_r": 0.0
+      }
+    },
+    "RANGING_CHOP": {
+      "BTCUSDT": {
+        "classification": "PROMISING",
+        "total_trades": 804,
+        "total_r": 79.53,
+        "expectancy_r": 0.0989,
+        "oos_expectancy_r": -0.0316
+      },
+      "ETHUSDT": {
+        "classification": "ROBUST_TRANSFER",
+        "total_trades": 775,
+        "total_r": 105.1,
+        "expectancy_r": 0.1356,
+        "oos_expectancy_r": 0.1014
+      },
+      "SOLUSDT": {
+        "classification": "PROMISING",
+        "total_trades": 525,
+        "total_r": 58.0,
+        "expectancy_r": 0.1105,
+        "oos_expectancy_r": -0.2816
+      },
+      "BNBUSDT": {
+        "classification": "ROBUST_TRANSFER",
+        "total_trades": 86,
+        "total_r": 26.56,
+        "expectancy_r": 0.3088,
+        "oos_expectancy_r": 0.9186
+      }
+    }
+  }
+}

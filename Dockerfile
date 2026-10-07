@@ -38,7 +38,8 @@ USER platform
 
 # Platform health check probe
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python3 -m crypto_platform.cli health || exit 1
+    CMD python3 cli.py health || exit 1
 
-ENTRYPOINT ["python3", "-m", "crypto_platform.cli"]
+ENTRYPOINT ["python3", "cli.py"]
 CMD ["status"]
+

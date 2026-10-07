@@ -1,0 +1,76 @@
+{
+  "experiment_id": "EXP_BNBUSDT_SET_5_F02_STRUCTURE_ZONE_PHASE_CONTINUATION_V1",
+  "status": "COMPLETED",
+  "symbol": "BNBUSDT",
+  "set_id": "SET_5",
+  "family_id": "F02_STRUCTURE_ZONE_PHASE",
+  "phase_mode": "CONTINUATION",
+  "timeframe_hierarchy": {
+    "htf": "1h",
+    "mtf": "15m",
+    "ltf": "3m"
+  },
+  "testable_period": {
+    "start_iso": "2026-09-25T05:33:00+00:00",
+    "end_iso": "2026-10-05T15:00:00+00:00",
+    "total_ltf_bars": 4990
+  },
+  "overall_metrics": {
+    "trade_count": 1,
+    "win_count": 1,
+    "loss_count": 0,
+    "win_rate": 1.0,
+    "loss_rate": 0.0,
+    "total_r": 3.2335,
+    "expectancy_r": 3.2335,
+    "profit_factor": 99.0,
+    "max_drawdown_r": 0.0,
+    "target_4r_hit_rate": 0.0,
+    "avg_bars_held": 164.0,
+    "fees_bps_roundtrip": 15.0,
+    "slippage_bps_roundtrip": 4.0
+  },
+  "partitioned_walk_forward": {
+    "dev": {
+      "trade_count": 1,
+      "win_count": 1,
+      "loss_count": 0,
+      "win_rate": 1.0,
+      "loss_rate": 0.0,
+      "total_r": 3.23,
+      "expectancy_r": 3.2335,
+      "profit_factor": 99.0,
+      "max_drawdown_r": 0.0,
+      "average_win_r": 3.23,
+      "average_loss_r": 0.0
+    },
+    "val": {
+      "trade_count": 0,
+      "win_rate": 0.0,
+      "total_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor": 0.0,
+      "max_drawdown_r": 0.0
+    },
+    "oos": {
+      "trade_count": 0,
+      "win_rate": 0.0,
+      "total_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor": 0.0,
+      "max_drawdown_r": 0.0
+    }
+  },
+  "direction_performance": {
+    "long_trades": 1,
+    "long_total_r": 3.23,
+    "short_trades": 0,
+    "short_total_r": 0
+  },
+  "edge_qualification": {
+    "has_positive_expectancy": true,
+    "has_positive_oos": false,
+    "has_sufficient_trades": false,
+    "survives_costs": true
+  }
+}

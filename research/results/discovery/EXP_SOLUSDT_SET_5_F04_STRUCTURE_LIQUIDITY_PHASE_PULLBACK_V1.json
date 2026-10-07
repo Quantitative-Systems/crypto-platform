@@ -1,0 +1,8 @@
+{
+  "experiment_id": "EXP_SOLUSDT_SET_5_F04_STRUCTURE_LIQUIDITY_PHASE_PULLBACK_V1",
+  "status": "REJECTED_NO_OVERLAP",
+  "symbol": "SOLUSDT",
+  "set_id": "SET_5",
+  "family_id": "F04_STRUCTURE_LIQUIDITY_PHASE",
+  "phase_mode": "PULLBACK"
+}

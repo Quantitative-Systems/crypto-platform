@@ -1,0 +1,108 @@
+{
+  "metadata": {
+    "generated_at_utc": "2026-10-05T18:24:44.146145+00:00",
+    "benchmark_market": "BTCUSDT_SET_2",
+    "adaptive_hypothesis": "H-FRACTAL-01"
+  },
+  "adaptive_rules": {
+    "rule_1_trendline_continuation": {
+      "condition": "HTF Bullish Continuation + MTF Higher Swing Low Trendline",
+      "selected_strategy": "F08_STRUCTURE_TRENDLINE_PHASE",
+      "entry_model": "CHOCH_MSS",
+      "management_model": "MTF_STRUCTURAL_TRAILING",
+      "min_target_r": 4.0
+    },
+    "rule_2_key_zone_continuation": {
+      "condition": "HTF Bullish Continuation + MTF Discount Key Zone (OB/FVG)",
+      "selected_strategy": "F05_STRUCTURE_OB_PHASE",
+      "entry_model": "SWEEP_DISPLACEMENT",
+      "management_model": "MTF_STRUCTURAL_TRAILING",
+      "min_target_r": 4.0
+    },
+    "rule_3_pullback_ote_filter": {
+      "condition": "HTF Pullback Phase + MTF 61.8%-78.6% OTE Retracement",
+      "selected_strategy": "F09_STRUCTURE_FIBONACCI_PHASE",
+      "entry_model": "BREAK_AND_RETEST",
+      "management_model": "STEP_LOCK",
+      "min_target_r": 4.0
+    },
+    "rule_4_chop_and_countertrend_filter": {
+      "condition": "HTF Range / Consolidation OR MTF Counter-Trend Displacement",
+      "action": "NO_TRADE",
+      "rationale": "Capital preservation in non-trending chop"
+    },
+    "rule_5_target_distance_floor": {
+      "condition": "HTF Structural Key Zone Distance < 4.0 * Risk Distance",
+      "action": "NO_TRADE",
+      "rationale": "Strict institutional >= 4.0R floor constraint"
+    }
+  },
+  "comparative_performance": {
+    "FIXED_F08_TRENDLINE": {
+      "trade_count": 19,
+      "total_r": 23.593699999999995,
+      "expectancy_r": 1.241773684210526,
+      "profit_factor": 3.8332612820328067,
+      "max_drawdown_r": 3.181000000000001
+    },
+    "FIXED_F01_STRUCTURE": {
+      "trade_count": 16,
+      "total_r": 20.095799999999997,
+      "expectancy_r": 1.2559874999999998,
+      "profit_factor": 3.774896437448219,
+      "max_drawdown_r": 2.095600000000001
+    },
+    "ADAPTIVE_MARKET_STATE_ENGINE": {
+      "trade_count": 23,
+      "win_rate": 0.6087,
+      "total_r": 30.54,
+      "expectancy_r": 1.328,
+      "profit_factor": 4.268,
+      "max_drawdown_r": 3.11,
+      "partitioned_walk_forward": {
+        "dev": {
+          "trade_count": 11,
+          "expectancy_r": 1.7952,
+          "total_r": 19.75
+        },
+        "val": {
+          "trade_count": 6,
+          "expectancy_r": 1.845,
+          "total_r": 11.07
+        },
+        "oos": {
+          "trade_count": 6,
+          "expectancy_r": -0.0455,
+          "total_r": -0.27
+        }
+      }
+    }
+  },
+  "market_state_expectancies": {
+    "BULL_TRENDING_CONTINUATION": {
+      "expectancy_r": 1.35,
+      "trade_viability": "HIGH",
+      "action": "TRADE"
+    },
+    "BULL_PULLBACK_OTE": {
+      "expectancy_r": 0.45,
+      "trade_viability": "MODERATE",
+      "action": "SELECTIVE_TRADE"
+    },
+    "BEAR_TRENDING_CONTINUATION": {
+      "expectancy_r": 0.85,
+      "trade_viability": "MODERATE",
+      "action": "TRADE"
+    },
+    "BEAR_PULLBACK": {
+      "expectancy_r": -0.15,
+      "trade_viability": "LOW",
+      "action": "NO_TRADE"
+    },
+    "RANGING_CHOP": {
+      "expectancy_r": -0.45,
+      "trade_viability": "NEGATIVE",
+      "action": "NO_TRADE"
+    }
+  }
+}

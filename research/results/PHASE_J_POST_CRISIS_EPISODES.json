@@ -1,0 +1,162 @@
+{
+  "timestamp_utc": "2026-10-06T09:15:24.842627+00:00",
+  "phase": "PHASE_J",
+  "total_episodes": 5,
+  "episodes": [
+    {
+      "episode_id": "PCE_01_POST_MAY_2021",
+      "name": "Post-May 2021 Flash Crash Recovery Cycle",
+      "macro_catalyst": "China mining ban flush absorption & Taproot upgrade anticipation",
+      "trough_price": 28800.0,
+      "peak_price": 69000.0,
+      "recovery_expansion_pct": 139.6,
+      "policies": {
+        "POLICY_A_NAIVE_PREMATURE": {
+          "trades": 6,
+          "net_r": 3.95,
+          "win_rate": 33.3,
+          "profit_factor": 1.98,
+          "max_drawdown_pct": 2.82
+        },
+        "POLICY_B_RIGID_ULTRA_CONSERVATIVE": {
+          "trades": 4,
+          "net_r": 5.97,
+          "win_rate": 50.0,
+          "profit_factor": 3.97,
+          "max_drawdown_pct": 1.86
+        },
+        "POLICY_C_STAGED_PACING": {
+          "trades": 5,
+          "net_r": 2.5,
+          "win_rate": 40.0,
+          "profit_factor": 2.67,
+          "max_drawdown_pct": 0.97
+        }
+      }
+    },
+    {
+      "episode_id": "PCE_02_POST_FTX_COLLAPSE",
+      "name": "Post-FTX Insolvency & Cycle Bottom Recovery Cycle",
+      "macro_catalyst": "Exhaustion of forced liquidator selling & global liquidity pivot",
+      "trough_price": 15476.0,
+      "peak_price": 31000.0,
+      "recovery_expansion_pct": 100.3,
+      "policies": {
+        "POLICY_A_NAIVE_PREMATURE": {
+          "trades": 0,
+          "net_r": 0.0,
+          "win_rate": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_pct": 0.0
+        },
+        "POLICY_B_RIGID_ULTRA_CONSERVATIVE": {
+          "trades": 0,
+          "net_r": 0.0,
+          "win_rate": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_pct": 0.0
+        },
+        "POLICY_C_STAGED_PACING": {
+          "trades": 0,
+          "net_r": 0.0,
+          "win_rate": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_pct": 0.0
+        }
+      }
+    },
+    {
+      "episode_id": "PCE_03_POST_SVB_PANIC",
+      "name": "Post-SVB / USDC Depeg Relief Rally Cycle",
+      "macro_catalyst": "Federal Reserve BTFP emergency facility & systemic banking bailouts",
+      "trough_price": 19549.0,
+      "peak_price": 31818.0,
+      "recovery_expansion_pct": 62.8,
+      "policies": {
+        "POLICY_A_NAIVE_PREMATURE": {
+          "trades": 2,
+          "net_r": -2.07,
+          "win_rate": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_pct": 2.07
+        },
+        "POLICY_B_RIGID_ULTRA_CONSERVATIVE": {
+          "trades": 2,
+          "net_r": -2.07,
+          "win_rate": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_pct": 2.07
+        },
+        "POLICY_C_STAGED_PACING": {
+          "trades": 2,
+          "net_r": -1.04,
+          "win_rate": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_pct": 1.04
+        }
+      }
+    },
+    {
+      "episode_id": "PCE_04_POST_AUG_2023_FLASH_CRASH",
+      "name": "Post-August 2023 Flush & Spot ETF Expansion Cycle",
+      "macro_catalyst": "Grayscale court victory & SEC approval of US Spot Bitcoin ETFs",
+      "trough_price": 24900.0,
+      "peak_price": 73750.0,
+      "recovery_expansion_pct": 196.2,
+      "policies": {
+        "POLICY_A_NAIVE_PREMATURE": {
+          "trades": 17,
+          "net_r": 28.17,
+          "win_rate": 70.6,
+          "profit_factor": 6.47,
+          "max_drawdown_pct": 2.52
+        },
+        "POLICY_B_RIGID_ULTRA_CONSERVATIVE": {
+          "trades": 14,
+          "net_r": 24.4,
+          "win_rate": 71.4,
+          "profit_factor": 6.97,
+          "max_drawdown_pct": 2.6
+        },
+        "POLICY_C_STAGED_PACING": {
+          "trades": 17,
+          "net_r": 20.67,
+          "win_rate": 70.6,
+          "profit_factor": 8.28,
+          "max_drawdown_pct": 1.8
+        }
+      }
+    },
+    {
+      "episode_id": "PCE_05_POST_YEN_UNWIND",
+      "name": "Post-August 2024 Yen Carry Unwind Recovery Cycle",
+      "macro_catalyst": "Bank of Japan rate hike pause & US election clarity expansion",
+      "trough_price": 49120.0,
+      "peak_price": 76000.0,
+      "recovery_expansion_pct": 54.7,
+      "policies": {
+        "POLICY_A_NAIVE_PREMATURE": {
+          "trades": 0,
+          "net_r": 0.0,
+          "win_rate": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_pct": 0.0
+        },
+        "POLICY_B_RIGID_ULTRA_CONSERVATIVE": {
+          "trades": 0,
+          "net_r": 0.0,
+          "win_rate": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_pct": 0.0
+        },
+        "POLICY_C_STAGED_PACING": {
+          "trades": 0,
+          "net_r": 0.0,
+          "win_rate": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_pct": 0.0
+        }
+      }
+    }
+  ]
+}

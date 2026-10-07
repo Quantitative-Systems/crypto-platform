@@ -1,0 +1,203 @@
+{
+  "benchmark": "BTCUSDT_SET_2",
+  "fixed_f08_baseline": {
+    "trade_count": 19,
+    "total_r": 23.59,
+    "expectancy_r": 1.2418
+  },
+  "adaptive_engine_v1": {
+    "trade_count": 20,
+    "total_r": 23.66,
+    "expectancy_r": 1.1832
+  },
+  "attribution_decomposition": {
+    "f08_trendline_contribution": {
+      "trade_count": 19,
+      "total_r": 23.59,
+      "trades": [
+        {
+          "entry_ts": 1521057600000,
+          "realized_r": 0.1247,
+          "mfe_r": 1.75,
+          "mae_r": 0.84,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1527393600000,
+          "realized_r": -1.0423,
+          "mfe_r": 0.8,
+          "mae_r": 1.22,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1603094400000,
+          "realized_r": 3.8996,
+          "mfe_r": 4.18,
+          "mae_r": 0.08,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1603324800000,
+          "realized_r": 3.9824,
+          "mfe_r": 4.11,
+          "mae_r": 0.08,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1605686400000,
+          "realized_r": -1.0221,
+          "mfe_r": 0.92,
+          "mae_r": 1.12,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1606608000000,
+          "realized_r": 3.9606,
+          "mfe_r": 4.4,
+          "mae_r": 0.24,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1608163200000,
+          "realized_r": 3.9816,
+          "mfe_r": 4.54,
+          "mae_r": 0.05,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1609603200000,
+          "realized_r": -1.0193,
+          "mfe_r": 1.0,
+          "mae_r": 1.15,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1609891200000,
+          "realized_r": -1.0156,
+          "mfe_r": 1.96,
+          "mae_r": 1.25,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1643068800000,
+          "realized_r": 0.7281,
+          "mfe_r": 2.42,
+          "mae_r": 0.62,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1698076800000,
+          "realized_r": 3.9502,
+          "mfe_r": 4.25,
+          "mae_r": 0.09,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1699516800000,
+          "realized_r": -1.0471,
+          "mfe_r": 0.98,
+          "mae_r": 1.19,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1701417600000,
+          "realized_r": 3.9062,
+          "mfe_r": 4.48,
+          "mae_r": 0.05,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1701705600000,
+          "realized_r": 0.6805,
+          "mfe_r": 1.21,
+          "mae_r": 0.28,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1709020800000,
+          "realized_r": 2.852,
+          "mfe_r": 3.4,
+          "mae_r": 0.01,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1732406400000,
+          "realized_r": 3.8552,
+          "mfe_r": 4.86,
+          "mae_r": 0.96,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1752681600000,
+          "realized_r": -1.0649,
+          "mfe_r": 0.54,
+          "mae_r": 1.09,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1759420800000,
+          "realized_r": -1.0307,
+          "mfe_r": 0.85,
+          "mae_r": 2.43,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        },
+        {
+          "entry_ts": 1778198400000,
+          "realized_r": -1.0854,
+          "mfe_r": 0.45,
+          "mae_r": 1.4,
+          "origin": "F08_TRENDLINE",
+          "selection_reason": "Clean MTF Higher Low trendline confluence during Bull Continuation"
+        }
+      ]
+    },
+    "f05_order_block_contribution": {
+      "trade_count": 1,
+      "total_r": 0.07,
+      "trades": [
+        {
+          "entry_ts": 1763913600000,
+          "realized_r": 0.0712,
+          "mfe_r": 2.04,
+          "mae_r": 0.89,
+          "origin": "F05_ORDER_BLOCK",
+          "selection_reason": "Retest of unmitigated MTF Order Block discount zone (missed by trendline)"
+        }
+      ]
+    },
+    "f10_momentum_contribution": {
+      "trade_count": 0,
+      "total_r": 0,
+      "trades": []
+    },
+    "adaptive_only_contribution": {
+      "trade_count": 0,
+      "total_r": 0,
+      "trades": []
+    },
+    "f08_trades_rejected_by_adaptive": {
+      "trade_count": 0,
+      "avoided_r": 0,
+      "trades": []
+    }
+  },
+  "net_adaptive_value_add_r": 0.07
+}

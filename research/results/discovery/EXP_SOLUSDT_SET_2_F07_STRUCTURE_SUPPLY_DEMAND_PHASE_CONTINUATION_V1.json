@@ -1,0 +1,81 @@
+{
+  "experiment_id": "EXP_SOLUSDT_SET_2_F07_STRUCTURE_SUPPLY_DEMAND_PHASE_CONTINUATION_V1",
+  "status": "COMPLETED",
+  "symbol": "SOLUSDT",
+  "set_id": "SET_2",
+  "family_id": "F07_STRUCTURE_SUPPLY_DEMAND_PHASE",
+  "phase_mode": "CONTINUATION",
+  "timeframe_hierarchy": {
+    "htf": "1w",
+    "mtf": "1d",
+    "ltf": "4h"
+  },
+  "testable_period": {
+    "start_iso": "2020-08-15T00:00:00+00:00",
+    "end_iso": "2026-09-01T00:00:00+00:00",
+    "total_ltf_bars": 13249
+  },
+  "overall_metrics": {
+    "trade_count": 16,
+    "win_count": 7,
+    "loss_count": 9,
+    "win_rate": 0.4375,
+    "loss_rate": 0.5625,
+    "total_r": 12.255800000000002,
+    "expectancy_r": 0.7659875000000002,
+    "profit_factor": 2.330431289961897,
+    "max_drawdown_r": 6.1628000000000025,
+    "target_4r_hit_rate": 0.3125,
+    "avg_bars_held": 75.4375,
+    "fees_bps_roundtrip": 15.0,
+    "slippage_bps_roundtrip": 4.0
+  },
+  "partitioned_walk_forward": {
+    "dev": {
+      "trade_count": 11,
+      "win_count": 7,
+      "loss_count": 4,
+      "win_rate": 0.6364,
+      "loss_rate": 0.3636,
+      "total_r": 17.41,
+      "expectancy_r": 1.5824,
+      "profit_factor": 5.286,
+      "max_drawdown_r": 1.02,
+      "average_win_r": 3.07,
+      "average_loss_r": -1.02
+    },
+    "val": {
+      "trade_count": 0,
+      "win_rate": 0.0,
+      "total_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor": 0.0,
+      "max_drawdown_r": 0.0
+    },
+    "oos": {
+      "trade_count": 5,
+      "win_count": 0,
+      "loss_count": 5,
+      "win_rate": 0.0,
+      "loss_rate": 1.0,
+      "total_r": -5.15,
+      "expectancy_r": -1.0302,
+      "profit_factor": 0.0,
+      "max_drawdown_r": 4.12,
+      "average_win_r": 0.0,
+      "average_loss_r": -1.03
+    }
+  },
+  "direction_performance": {
+    "long_trades": 13,
+    "long_total_r": 15.33,
+    "short_trades": 3,
+    "short_total_r": -3.07
+  },
+  "edge_qualification": {
+    "has_positive_expectancy": true,
+    "has_positive_oos": false,
+    "has_sufficient_trades": true,
+    "survives_costs": true
+  }
+}

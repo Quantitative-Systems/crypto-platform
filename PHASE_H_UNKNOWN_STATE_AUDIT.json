@@ -1,0 +1,514 @@
+{
+  "clarity_states": [
+    "KNOWN_FAVORABLE",
+    "KNOWN_UNFAVORABLE",
+    "TRANSITION",
+    "UNKNOWN_UNSTABLE"
+  ],
+  "sample_verdicts": [
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1517083200000,
+      "is_allowed": false,
+      "action": "NO_TRADE_FLAT",
+      "approved_risk_pct": 0.0,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "LAYER_4_REGIME: Unfavorable regime climate (Tight Liquidity / Chop)."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1521043200000,
+      "is_allowed": false,
+      "action": "NO_TRADE_FLAT",
+      "approved_risk_pct": 0.0,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "POSITIONING_DYNAMICS: Crowded shorts face violent squeeze hazard."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1521100800000,
+      "is_allowed": false,
+      "action": "NO_TRADE_FLAT",
+      "approved_risk_pct": 0.0,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "POSITIONING_DYNAMICS: Crowded shorts face violent squeeze hazard."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1521331200000,
+      "is_allowed": false,
+      "action": "NO_TRADE_FLAT",
+      "approved_risk_pct": 0.0,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "POSITIONING_DYNAMICS: Crowded shorts face violent squeeze hazard."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1521388800000,
+      "is_allowed": false,
+      "action": "NO_TRADE_FLAT",
+      "approved_risk_pct": 0.0,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "POSITIONING_DYNAMICS: Crowded shorts face violent squeeze hazard."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1522310400000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1522368000000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1522425600000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1527148800000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1551801600000,
+      "is_allowed": true,
+      "action": "TRADE_REDUCED",
+      "approved_risk_pct": 0.005,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1551859200000,
+      "is_allowed": true,
+      "action": "TRADE_REDUCED",
+      "approved_risk_pct": 0.005,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1566259200000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1569888000000,
+      "is_allowed": true,
+      "action": "TRADE_REDUCED",
+      "approved_risk_pct": 0.005,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1571616000000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1572883200000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1603080000000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1603137600000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1603195200000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1603252800000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1603310400000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1604404800000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1604520000000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1604577600000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1604635200000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1605153600000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1605211200000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1605499200000,
+      "is_allowed": true,
+      "action": "TRADE_REDUCED",
+      "approved_risk_pct": 0.005,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1605556800000,
+      "is_allowed": true,
+      "action": "TRADE_REDUCED",
+      "approved_risk_pct": 0.005,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1605614400000,
+      "is_allowed": true,
+      "action": "TRADE_REDUCED",
+      "approved_risk_pct": 0.005,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1605672000000,
+      "is_allowed": true,
+      "action": "TRADE_REDUCED",
+      "approved_risk_pct": 0.005,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1605844800000,
+      "is_allowed": true,
+      "action": "TRADE_REDUCED",
+      "approved_risk_pct": 0.005,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1605902400000,
+      "is_allowed": true,
+      "action": "TRADE_REDUCED",
+      "approved_risk_pct": 0.005,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1605960000000,
+      "is_allowed": true,
+      "action": "TRADE_REDUCED",
+      "approved_risk_pct": 0.005,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1606593600000,
+      "is_allowed": false,
+      "action": "NO_TRADE_FLAT",
+      "approved_risk_pct": 0.0,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "LAYER_4_REGIME: Unfavorable regime climate (Tight Liquidity / Chop)."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1606708800000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1606766400000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1608148800000,
+      "is_allowed": true,
+      "action": "TRADE_REDUCED",
+      "approved_risk_pct": 0.005,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1608206400000,
+      "is_allowed": true,
+      "action": "TRADE_REDUCED",
+      "approved_risk_pct": 0.005,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1608379200000,
+      "is_allowed": true,
+      "action": "TRADE_REDUCED",
+      "approved_risk_pct": 0.005,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1608667200000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1608897600000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1609012800000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1609358400000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1609531200000,
+      "is_allowed": false,
+      "action": "NO_TRADE_FLAT",
+      "approved_risk_pct": 0.0,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "LAYER_4_REGIME: Unfavorable regime climate (Tight Liquidity / Chop)."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1609588800000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1609646400000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1609876800000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1609992000000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1610049600000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    },
+    {
+      "symbol": "BTCUSDT",
+      "timestamp_ms": 1610107200000,
+      "is_allowed": true,
+      "action": "TRADE_FULL",
+      "approved_risk_pct": 0.01,
+      "clarity_state": "KNOWN_FAVORABLE",
+      "drawdown_tier": "NORMAL",
+      "reason": "Full 7-Layer Risk Defense clearance approved."
+    }
+  ],
+  "rejection_counts_by_reason": {
+    "LAYER_4_REGIME: Unfavorable regime climate (Tight Liquidity / Chop).": 14,
+    "POSITIONING_DYNAMICS: Crowded shorts face violent squeeze hazard.": 20
+  }
+}

@@ -149,3 +149,6 @@ class CertifiedSeriesLoader:
             certification_status=status, research_eligible=eligible,
             provenance=provenance)
         return df, descriptor
+
+
+CertifiedMarketDataLoader = CertifiedSeriesLoader

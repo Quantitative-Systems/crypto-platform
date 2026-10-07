@@ -1,0 +1,65 @@
+{
+  "timestamp_utc": "2026-10-06T15:24:35.712243+00:00",
+  "phase": "PHASE_L",
+  "perturbations": [
+    {
+      "parameter_name": "min_target_r_floor",
+      "baseline_value": 4.0,
+      "tested_values": [
+        3.5,
+        4.0,
+        4.5,
+        5.0
+      ],
+      "expectancies_r": [
+        0.467,
+        0.467,
+        -0.674,
+        -0.674
+      ],
+      "net_rs": [
+        20.1,
+        20.1,
+        -16.18,
+        -16.18
+      ],
+      "max_drawdowns_pct": [
+        6.18,
+        6.18,
+        15.17,
+        15.17
+      ],
+      "plateau_stability_index": 1.0,
+      "is_fragile": false,
+      "summary": "Parameter 'min_target_r_floor' exhibits robust plateau (PSI=1.00)"
+    },
+    {
+      "parameter_name": "max_trade_risk_cap",
+      "baseline_value": 0.01,
+      "tested_values": [
+        0.0075,
+        0.01,
+        0.0125
+      ],
+      "expectancies_r": [
+        0.351,
+        0.467,
+        0.584
+      ],
+      "net_rs": [
+        15.08,
+        20.1,
+        25.13
+      ],
+      "max_drawdowns_pct": [
+        4.64,
+        6.18,
+        7.72
+      ],
+      "plateau_stability_index": 0.72,
+      "is_fragile": false,
+      "summary": "Parameter 'max_trade_risk_cap' exhibits robust plateau (PSI=0.72)"
+    }
+  ],
+  "plateau_overall_pass": true
+}

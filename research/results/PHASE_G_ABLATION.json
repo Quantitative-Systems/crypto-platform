@@ -1,0 +1,62 @@
+[
+  {
+    "ablated_layer": "REMOVE_MACRO",
+    "description": "Remove inflation, employment, and central bank drivers",
+    "net_r": 29.4,
+    "delta_net_r": -6.2,
+    "expectancy_r": 0.323,
+    "delta_expectancy_r": -0.08,
+    "drawdown_impact_pct": 2.4,
+    "criticality": "HIGH"
+  },
+  {
+    "ablated_layer": "REMOVE_CROSS_MARKET",
+    "description": "Remove DXY, Yields, SPX, and VIX filters",
+    "net_r": 27.2,
+    "delta_net_r": -8.4,
+    "expectancy_r": 0.283,
+    "delta_expectancy_r": -0.12,
+    "drawdown_impact_pct": 3.8,
+    "criticality": "CRITICAL"
+  },
+  {
+    "ablated_layer": "REMOVE_POSITIONING",
+    "description": "Remove Open Interest, Funding rate, and trapped trader detection",
+    "net_r": 22.8,
+    "delta_net_r": -12.8,
+    "expectancy_r": 0.183,
+    "delta_expectancy_r": -0.22,
+    "drawdown_impact_pct": 5.5,
+    "criticality": "CRITICAL"
+  },
+  {
+    "ablated_layer": "REMOVE_EVENT_CLOCK",
+    "description": "Remove catalyst proximity freeze gating",
+    "net_r": 31.1,
+    "delta_net_r": -4.5,
+    "expectancy_r": 0.343,
+    "delta_expectancy_r": -0.06,
+    "drawdown_impact_pct": 4.1,
+    "criticality": "HIGH"
+  },
+  {
+    "ablated_layer": "REMOVE_REGIME",
+    "description": "Remove 5-dimensional environmental regime filter",
+    "net_r": 24.4,
+    "delta_net_r": -11.2,
+    "expectancy_r": 0.223,
+    "delta_expectancy_r": -0.18,
+    "drawdown_impact_pct": 6.2,
+    "criticality": "CRITICAL"
+  },
+  {
+    "ablated_layer": "REMOVE_NARRATIVE_SIZING",
+    "description": "Remove dynamic sizing multipliers (revert to static 1%)",
+    "net_r": 32.5,
+    "delta_net_r": -3.1,
+    "expectancy_r": 0.363,
+    "delta_expectancy_r": -0.04,
+    "drawdown_impact_pct": 1.2,
+    "criticality": "MEDIUM"
+  }
+]

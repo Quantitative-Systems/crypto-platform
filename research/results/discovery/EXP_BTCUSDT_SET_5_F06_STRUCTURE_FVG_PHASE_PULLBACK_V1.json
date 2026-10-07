@@ -1,0 +1,8 @@
+{
+  "experiment_id": "EXP_BTCUSDT_SET_5_F06_STRUCTURE_FVG_PHASE_PULLBACK_V1",
+  "status": "REJECTED_NO_OVERLAP",
+  "symbol": "BTCUSDT",
+  "set_id": "SET_5",
+  "family_id": "F06_STRUCTURE_FVG_PHASE",
+  "phase_mode": "PULLBACK"
+}

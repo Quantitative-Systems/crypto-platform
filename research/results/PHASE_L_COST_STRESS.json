@@ -1,0 +1,63 @@
+{
+  "timestamp_utc": "2026-10-06T15:24:35.712243+00:00",
+  "phase": "PHASE_L",
+  "base_friction_r": 0.06,
+  "breakeven_friction_multiplier": 8.79,
+  "results": [
+    {
+      "multiplier": 1.0,
+      "effective_friction_per_trade_r": 0.06,
+      "trade_count": 43,
+      "net_r": 20.1,
+      "expectancy_r": 0.467,
+      "win_rate": 44.2,
+      "profit_factor": 2.24,
+      "max_drawdown_pct": 6.18,
+      "is_positive_expectancy": true
+    },
+    {
+      "multiplier": 2.0,
+      "effective_friction_per_trade_r": 0.12,
+      "trade_count": 43,
+      "net_r": 17.52,
+      "expectancy_r": 0.407,
+      "win_rate": 44.2,
+      "profit_factor": 1.99,
+      "max_drawdown_pct": 6.9,
+      "is_positive_expectancy": true
+    },
+    {
+      "multiplier": 3.0,
+      "effective_friction_per_trade_r": 0.18,
+      "trade_count": 43,
+      "net_r": 14.94,
+      "expectancy_r": 0.347,
+      "win_rate": 44.2,
+      "profit_factor": 1.78,
+      "max_drawdown_pct": 7.62,
+      "is_positive_expectancy": true
+    },
+    {
+      "multiplier": 4.0,
+      "effective_friction_per_trade_r": 0.24,
+      "trade_count": 43,
+      "net_r": 12.36,
+      "expectancy_r": 0.287,
+      "win_rate": 44.2,
+      "profit_factor": 1.6,
+      "max_drawdown_pct": 8.34,
+      "is_positive_expectancy": true
+    },
+    {
+      "multiplier": 5.0,
+      "effective_friction_per_trade_r": 0.3,
+      "trade_count": 43,
+      "net_r": 9.78,
+      "expectancy_r": 0.227,
+      "win_rate": 44.2,
+      "profit_factor": 1.45,
+      "max_drawdown_pct": 9.06,
+      "is_positive_expectancy": true
+    }
+  ]
+}

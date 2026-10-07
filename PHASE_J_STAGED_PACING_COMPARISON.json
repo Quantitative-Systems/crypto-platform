@@ -1,0 +1,87 @@
+{
+  "timestamp_utc": "2026-10-06T09:15:24.842531+00:00",
+  "phase": "PHASE_J",
+  "policies": [
+    {
+      "policy_id": "POLICY_A_NAIVE_PREMATURE",
+      "name": "Policy A: Naive Premature (Immediate Re-entry 1.0x)",
+      "total_recovery_trades": 25,
+      "net_r": 30.05,
+      "expectancy_r": 1.202,
+      "win_rate": 56.0,
+      "profit_factor": 3.67,
+      "false_recovery_traps_hit": 2,
+      "false_recovery_loss_r": 2.07,
+      "post_crisis_trend_captured_pct": 100.0,
+      "max_drawdown_pct": 5.75,
+      "reactivation_efficiency_ratio": 9.788,
+      "meta": {
+        "stats": {
+          "total_trades": 25,
+          "net_r": 30.05,
+          "expectancy_r": 1.202,
+          "win_rate": 56.0,
+          "profit_factor": 3.67,
+          "max_drawdown_pct": 5.75,
+          "var_95_r": -1.06,
+          "cvar_95_tail_loss_r": -1.06,
+          "final_equity_usd": 130050.0
+        }
+      }
+    },
+    {
+      "policy_id": "POLICY_B_RIGID_ULTRA_CONSERVATIVE",
+      "name": "Policy B: Rigid Ultra-Conservative (Full HTF Serenity 1.0x)",
+      "total_recovery_trades": 20,
+      "net_r": 28.3,
+      "expectancy_r": 1.415,
+      "win_rate": 60.0,
+      "profit_factor": 4.46,
+      "false_recovery_traps_hit": 0,
+      "false_recovery_loss_r": 0.0,
+      "post_crisis_trend_captured_pct": 88.3,
+      "max_drawdown_pct": 3.78,
+      "reactivation_efficiency_ratio": 28.3,
+      "meta": {
+        "stats": {
+          "total_trades": 20,
+          "net_r": 28.3,
+          "expectancy_r": 1.415,
+          "win_rate": 60.0,
+          "profit_factor": 4.46,
+          "max_drawdown_pct": 3.78,
+          "var_95_r": -1.04,
+          "cvar_95_tail_loss_r": -1.06,
+          "final_equity_usd": 128300.0
+        }
+      }
+    },
+    {
+      "policy_id": "POLICY_C_STAGED_PACING",
+      "name": "Policy C: Autonomous Staged Pacing (0.25x -> 0.50x -> 1.0x)",
+      "total_recovery_trades": 24,
+      "net_r": 22.13,
+      "expectancy_r": 0.922,
+      "win_rate": 58.3,
+      "profit_factor": 5.11,
+      "false_recovery_traps_hit": 2,
+      "false_recovery_loss_r": 0.76,
+      "post_crisis_trend_captured_pct": 66.6,
+      "max_drawdown_pct": 2.22,
+      "reactivation_efficiency_ratio": 12.574,
+      "meta": {
+        "stats": {
+          "total_trades": 24,
+          "net_r": 22.13,
+          "expectancy_r": 0.922,
+          "win_rate": 58.3,
+          "profit_factor": 5.11,
+          "max_drawdown_pct": 2.22,
+          "var_95_r": -0.52,
+          "cvar_95_tail_loss_r": -0.7,
+          "final_equity_usd": 122130.0
+        }
+      }
+    }
+  ]
+}

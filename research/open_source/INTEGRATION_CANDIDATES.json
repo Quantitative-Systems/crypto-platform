@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "generated_at_utc": "2026-10-05T17:00:00+00:00",
+    "description": "High-priority institutional capability integration roadmap"
+  },
+  "integration_candidates": [
+    {
+      "candidate_id": "IC_001_OBSERVATION_REGISTRY",
+      "name": "Formal Observation Registry & Observation Contract",
+      "target_module": "market_model/observations/",
+      "source_inspiration": "QuantConnect Alpha Insights & Freqtrade Indicators Registry",
+      "classification": "B. MARKET MODEL OBSERVATION",
+      "implementation_approach": "CLEAN_ROOM_REIMPLEMENTATION",
+      "priority": "P0 (Immediate Core Dependency)",
+      "specification": "Defines typed Observation dataclass and singleton ObservationRegistry. Decouples MarketState observations (Structure, Zones, Phase, Technicals, Regimes) from individual StrategyHypothesis classes so thousands of strategy variants can be generated without altering the frozen Market Model."
+    },
+    {
+      "candidate_id": "IC_002_MONTE_CARLO_ROBUSTNESS",
+      "name": "Monte Carlo Trade Permutation & Dropout Engine",
+      "target_module": "validation/robustness/monte_carlo.py",
+      "source_inspiration": "VectorBT Monte Carlo resamplers & NautilusTrader risk stress testing",
+      "classification": "J. RESEARCH / VALIDATION TOOL",
+      "implementation_approach": "CLEAN_ROOM_REIMPLEMENTATION",
+      "priority": "P1 (High Institutional Priority)",
+      "specification": "Applies randomized order shuffle, random trade dropout (10% to 30%), and adverse slippage jitter across trade logs. Evaluates 5th percentile worst-case drawdown and probability of ruin."
+    },
+    {
+      "candidate_id": "IC_003_PARAMETER_STABILITY",
+      "name": "Parameter Stability & Performance Plateau Detector",
+      "target_module": "validation/robustness/parameter_stability.py",
+      "source_inspiration": "VectorBT 2D/3D heatmap sensitivity analysis",
+      "classification": "J. RESEARCH / VALIDATION TOOL",
+      "implementation_approach": "CLEAN_ROOM_REIMPLEMENTATION",
+      "priority": "P1 (High Institutional Priority)",
+      "specification": "Evaluates parameter neighborhood sensitivity (e.g. ±10% variation in threshold/lookback). Computes Plateau Stability Index (PSI). Rejects isolated single-point spikes that fail in nearby parameter space."
+    },
+    {
+      "candidate_id": "IC_004_NON_DIRECTIONAL_SCAFFOLDS",
+      "name": "Non-Directional Research Family Isolation",
+      "target_module": "research/arbitrage/, research/hedging/, research/market_neutral/, research/ml/",
+      "source_inspiration": "Hummingbot (Basis/Arbitrage Executors) & FreqAI (ML harness)",
+      "classification": "K. FUTURE EXPERIMENT",
+      "implementation_approach": "INDEPENDENT_RESEARCH_SCAFFOLDING",
+      "priority": "P2 (Architectural Guardrail)",
+      "specification": "Creates clean standalone research namespaces for cash-and-carry basis, funding rate arbitrage, cross-asset beta hedging, and leakage-safe ML feature ranking. Ensures zero contamination with directional Market Model research."
+    },
+    {
+      "candidate_id": "IC_005_FUNDING_OI_INGESTION",
+      "name": "Perpetual Funding Rate & Open Interest Historical Ingestion",
+      "target_module": "market_data/funding/, market_data/open_interest/",
+      "source_inspiration": "CCXT derivatives unified fetcher & Binance perpetuals API",
+      "classification": "I. DATA SOURCE",
+      "implementation_approach": "CLEAN_ROOM_REIMPLEMENTATION",
+      "priority": "P2 (Data Expansion)",
+      "specification": "Implements clean CCXT-compatible historical 8h funding rate and 1h open interest fetchers with strict timestamp monotonicity and missing period audits."
+    }
+  ]
+}

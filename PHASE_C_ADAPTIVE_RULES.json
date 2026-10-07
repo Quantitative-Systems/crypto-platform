@@ -1,0 +1,33 @@
+{
+  "rule_1_trendline_continuation": {
+    "condition": "HTF Bullish Continuation + MTF Higher Swing Low Trendline",
+    "selected_strategy": "F08_STRUCTURE_TRENDLINE_PHASE",
+    "entry_model": "CHOCH_MSS",
+    "management_model": "MTF_STRUCTURAL_TRAILING",
+    "min_target_r": 4.0
+  },
+  "rule_2_key_zone_continuation": {
+    "condition": "HTF Bullish Continuation + MTF Discount Key Zone (OB/FVG)",
+    "selected_strategy": "F05_STRUCTURE_OB_PHASE",
+    "entry_model": "SWEEP_DISPLACEMENT",
+    "management_model": "MTF_STRUCTURAL_TRAILING",
+    "min_target_r": 4.0
+  },
+  "rule_3_pullback_ote_filter": {
+    "condition": "HTF Pullback Phase + MTF 61.8%-78.6% OTE Retracement",
+    "selected_strategy": "F09_STRUCTURE_FIBONACCI_PHASE",
+    "entry_model": "BREAK_AND_RETEST",
+    "management_model": "STEP_LOCK",
+    "min_target_r": 4.0
+  },
+  "rule_4_chop_and_countertrend_filter": {
+    "condition": "HTF Range / Consolidation OR MTF Counter-Trend Displacement",
+    "action": "NO_TRADE",
+    "rationale": "Capital preservation in non-trending chop"
+  },
+  "rule_5_target_distance_floor": {
+    "condition": "HTF Structural Key Zone Distance < 4.0 * Risk Distance",
+    "action": "NO_TRADE",
+    "rationale": "Strict institutional >= 4.0R floor constraint"
+  }
+}

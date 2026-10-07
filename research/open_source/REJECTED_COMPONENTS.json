@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "generated_at_utc": "2026-10-05T17:05:00+00:00",
+    "description": "Architectural rejection catalog: external quant components rejected from core integration"
+  },
+  "rejected_components": [
+    {
+      "component_id": "REJ_001_INDICATOR_CORRUPTION_OF_MARKET_MODEL",
+      "source": "Generic retail indicators (RSI, MACD, Stochastics, Bollinger Bands)",
+      "rejection_reason": "VIOLATION OF FROZEN MARKET MODEL",
+      "rationale": "The permanent Market Model consists strictly of Structure/Trend, Key Zones/Levels, and Phase. Hardcoding technical indicators into the core market state definition corrupts market physics with ad-hoc heuristics. Technical indicators may only exist as optional observations in the Observation Registry."
+    },
+    {
+      "component_id": "REJ_002_GPL3_DIRECT_CODE_COPYING",
+      "source": "Freqtrade / FreqAI codebase",
+      "rejection_reason": "LICENSE CONTAMINATION (GPL-3.0)",
+      "rationale": "Direct copying or static linking of GPL-3.0 source code would legally obligate the entire crypto-platform repository to adopt GPL-3.0. Conceptual algorithmic inspiration is allowed; direct source copying is strictly prohibited."
+    },
+    {
+      "component_id": "REJ_003_VECTORIZED_UNSHIFTED_BACKTESTING",
+      "source": "Naive VectorBT / Pandas shiftless signal generation",
+      "rejection_reason": "SUBTLE LOOKAHEAD BIAS & EXECUTION INFEASIBILITY",
+      "rationale": "Vectorized signal generation frequently leaks future bar close data into entry price simulation. Our causal event-driven execution with adverse-first intrabar checking must remain the absolute standard."
+    },
+    {
+      "component_id": "REJ_004_PROPRIETARY_CLOSED_SOURCE",
+      "source": "VectorBT PRO commercial binary extensions",
+      "rejection_reason": "CLOSED SOURCE / PROPRIETARY RESTRICTIONS",
+      "rationale": "All core research and simulation infrastructure must remain open, auditable, and self-hosted without dependency on external commercial binaries."
+    },
+    {
+      "component_id": "REJ_005_BLACK_BOX_END_TO_END_ML_PRICE_PREDICTION",
+      "source": "Direct ML price forecasting / next-bar price regressors",
+      "rejection_reason": "LOW SIGNAL-TO-NOISE RATIO & REGIME OVERFITTING",
+      "rationale": "Financial time-series price levels are non-stationary. Training neural networks to directly forecast raw price levels fails out-of-sample. ML may only be used as a conditional ranker for discrete structural candidate signals."
+    }
+  ]
+}

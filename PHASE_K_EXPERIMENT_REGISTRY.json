@@ -1,0 +1,16 @@
+{
+  "timestamp_utc": "2026-10-06T09:39:28.316795+00:00",
+  "phase": "PHASE_K_WALK_FORWARD_INTEGRATED_VALIDATION",
+  "total_folds_executed": 4,
+  "total_systems_compared": 3,
+  "oos_evaluation_window": "2024-01-01 to 2026-09-01",
+  "winning_system_id": "SYS_3_INTEGRATED",
+  "winning_system_name": "Complete Integrated Pipeline (Governed + Staged Reactivation)",
+  "artifacts_generated": [
+    "PHASE_K_WALK_FORWARD_FOLDS.json",
+    "PHASE_K_INTEGRATED_SYSTEM_COMPARISON.json",
+    "PHASE_K_OUT_OF_SAMPLE_AUDIT.json",
+    "PHASE_K_SYSTEM_INTEGRITY_AUDIT.json",
+    "PHASE_K_EXPERIMENT_REGISTRY.json"
+  ]
+}

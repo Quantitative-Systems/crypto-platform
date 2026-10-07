@@ -1,0 +1,50 @@
+[
+  {
+    "chain_id": "CHAIN_CPI_YIELDS_CRYPTO",
+    "catalyst": "US CPI Downside Surprise (Disinflation)",
+    "macro_channel": "US 10Y Yield decline (-8 to -15 bps)",
+    "cross_market_channel": "DXY softening (-0.4% to -0.8%)",
+    "crypto_channel": "Spot BTC aggressive absorption, Volatility expansion",
+    "regime_shift": "TRANSITIONAL -> RISK_ON (Trending)",
+    "empirical_correlation": -0.68,
+    "transmission_delay_hours": 1.5,
+    "hit_rate_pct": 76.5,
+    "structural_effect": "Strengthens HTF Bullish Continuation; invalidates short pullbacks"
+  },
+  {
+    "chain_id": "CHAIN_FOMC_HAWKISH_LIQUIDITY",
+    "catalyst": "FOMC Rate Hike / Hawkish Balance Sheet",
+    "macro_channel": "Real 10Y TIPS Yield rises (+12 to +20 bps)",
+    "cross_market_channel": "DXY surges (+0.8%), Equities compress",
+    "crypto_channel": "Perpetual Long Liquidation cascades, open interest flush",
+    "regime_shift": "NORMAL -> RISK_OFF (Tight Liquidity)",
+    "empirical_correlation": -0.74,
+    "transmission_delay_hours": 0.5,
+    "hit_rate_pct": 81.2,
+    "structural_effect": "Forces HTF deep discount retracement or CHoCH failure"
+  },
+  {
+    "chain_id": "CHAIN_ETF_FLOW_SPOT_ABSORPTION",
+    "catalyst": "Spot ETF Net Inflow > $400M / day",
+    "macro_channel": "Global institutional allocation demand",
+    "cross_market_channel": "Decoupling from Nasdaq intraday chop",
+    "crypto_channel": "Order book sell-side liquidity vacuum",
+    "regime_shift": "BTC_LED Abundant Liquidity",
+    "empirical_correlation": 0.82,
+    "transmission_delay_hours": 4.0,
+    "hit_rate_pct": 84.6,
+    "structural_effect": "Suppresses MTF pullback depth, accelerates time-to-destination (>= 5R)"
+  },
+  {
+    "chain_id": "CHAIN_YEN_UNWIND_DELEVERAGING",
+    "catalyst": "VIX > 40 / Cross-Market Liquidity Shock",
+    "macro_channel": "Global carry-trade margin calls",
+    "cross_market_channel": "SPX/Nikkei sell-off, Gold/Bonds liquidated for cash",
+    "crypto_channel": "High-slippage flash wick, cascading stop-outs",
+    "regime_shift": "EXTREME Volatility / IMPAIRED Liquidity",
+    "empirical_correlation": -0.88,
+    "transmission_delay_hours": 0.25,
+    "hit_rate_pct": 88.0,
+    "structural_effect": "High false-breakout rate; structural trailing stop must be widened or gated"
+  }
+]

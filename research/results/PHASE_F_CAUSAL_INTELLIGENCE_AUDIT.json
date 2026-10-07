@@ -1,0 +1,173 @@
+{
+  "timestamp_utc": "2026-10-06T06:49:43.096563+00:00",
+  "audit_name": "PHASE_F_CAUSAL_INTELLIGENCE_AUDIT",
+  "comparison_results": {
+    "BTCUSDT": {
+      "baseline": {
+        "trades": 21,
+        "net_r": 24.78,
+        "expectancy_r": 1.18,
+        "win_rate": 52.4
+      },
+      "causal": {
+        "trades": 19,
+        "net_r": 21.9,
+        "expectancy_r": 1.153,
+        "win_rate": 52.6
+      },
+      "expectancy_enhancement": -0.027
+    },
+    "ETHUSDT": {
+      "baseline": {
+        "trades": 31,
+        "net_r": 14.57,
+        "expectancy_r": 0.47,
+        "win_rate": 35.5
+      },
+      "causal": {
+        "trades": 31,
+        "net_r": 14.58,
+        "expectancy_r": 0.47,
+        "win_rate": 35.5
+      },
+      "expectancy_enhancement": 0.001
+    },
+    "SOLUSDT": {
+      "baseline": {
+        "trades": 14,
+        "net_r": 19.31,
+        "expectancy_r": 1.379,
+        "win_rate": 57.1
+      },
+      "causal": {
+        "trades": 14,
+        "net_r": 19.31,
+        "expectancy_r": 1.379,
+        "win_rate": 57.1
+      },
+      "expectancy_enhancement": 0.0
+    }
+  },
+  "ledger_summary": {
+    "total_decisions": 12943,
+    "trade_decisions": 228,
+    "no_trade_decisions": 12715,
+    "trade_rate_pct": 1.76,
+    "top_blockers": [
+      [
+        "Technical: REASON_CHOP_FILTER: Market is sideways or HTF/MTF structure conflicts",
+        10785
+      ],
+      [
+        "Unfavorable Regime: Volatility=NORMAL, Liquidity=TIGHT, Trend=TRANSITIONAL",
+        2734
+      ],
+      [
+        "Unfavorable Regime: Volatility=NORMAL, Liquidity=NORMAL, Trend=RANGING",
+        1427
+      ],
+      [
+        "Unfavorable Regime: Volatility=NORMAL, Liquidity=TIGHT, Trend=RANGING",
+        800
+      ],
+      [
+        "Technical: REASON_LTF_UNCONFIRMED: LTF structural break or entry trigger missing",
+        754
+      ],
+      [
+        "Unfavorable Regime: Volatility=NORMAL, Liquidity=ABUNDANT, Trend=RANGING",
+        638
+      ],
+      [
+        "Technical: REASON_BEAR_PULLBACK_FILTER: Counter-trend rally into macro bear trend",
+        558
+      ],
+      [
+        "Technical: REASON_PULLBACK_NOT_IN_DISCOUNT: Retracement has not reached discount dealing range",
+        462
+      ],
+      [
+        "Unfavorable Regime: Volatility=NORMAL, Liquidity=IMPAIRED, Trend=TRANSITIONAL",
+        386
+      ],
+      [
+        "Technical: REASON_NO_FAMILY_CONFLUENCE: State active but no specific primitive alignment (F08/F05/F10)",
+        116
+      ],
+      [
+        "Unfavorable Regime: Volatility=NORMAL, Liquidity=IMPAIRED, Trend=RANGING",
+        115
+      ],
+      [
+        "Technical: REASON_TARGET_BELOW_4R: Structural destination (4.0R) < 4.0R floor",
+        26
+      ],
+      [
+        "Event Clock Gating: High-risk freeze window: 0m prior to Global Liquidity Shock / Yen Unwind.",
+        1
+      ]
+    ]
+  },
+  "portfolio_allocations": [
+    {
+      "symbol": "SOLUSDT",
+      "direction": 1,
+      "base_risk_pct": 0.01,
+      "approved_risk_pct": 0.01,
+      "action": "ALLOCATED",
+      "reason": "Primary allocation approved based on top risk-adjusted rank.",
+      "destination_r": 6.8,
+      "expected_edge_r": 1.75
+    },
+    {
+      "symbol": "BTCUSDT",
+      "direction": 1,
+      "base_risk_pct": 0.01,
+      "approved_risk_pct": 0.01,
+      "action": "ALLOCATED",
+      "reason": "Primary allocation approved based on top risk-adjusted rank.",
+      "destination_r": 5.5,
+      "expected_edge_r": 1.35
+    },
+    {
+      "symbol": "ETHUSDT",
+      "direction": 1,
+      "base_risk_pct": 0.01,
+      "approved_risk_pct": 0.005,
+      "action": "HAIRCUT",
+      "reason": "Correlation haircut (50%): highly correlated with existing position.",
+      "destination_r": 5.2,
+      "expected_edge_r": 1.2
+    }
+  ],
+  "drift_verification": {
+    "healthy_report": {
+      "hypothesis_id": "H-MACRO-CPI-001",
+      "sample_size": 10,
+      "expected_expectancy_r": 1.35,
+      "realized_expectancy_r": 1.06,
+      "expectancy_decay_pct": 21.48148148148148,
+      "expected_win_rate": 0.62,
+      "realized_win_rate": 0.7,
+      "win_rate_delta": 0.07999999999999996,
+      "severity": "NORMAL",
+      "action_taken": "MAINTAIN_ACTIVE",
+      "recommendation": "Performance matches empirical expectations within statistical bounds.",
+      "meta": {}
+    },
+    "decay_report": {
+      "hypothesis_id": "H-CROSS-YEN-001",
+      "sample_size": 10,
+      "expected_expectancy_r": 0.0,
+      "realized_expectancy_r": -0.74,
+      "expectancy_decay_pct": 100.0,
+      "expected_win_rate": 0.3,
+      "realized_win_rate": 0.2,
+      "win_rate_delta": -0.09999999999999998,
+      "severity": "DEGRADATION",
+      "action_taken": "SUSPEND_HYPOTHESIS",
+      "recommendation": "Significant edge erosion detected. Suspend from live execution and initiate re-research.",
+      "meta": {}
+    }
+  }
+}

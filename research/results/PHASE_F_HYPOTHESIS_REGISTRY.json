@@ -1,0 +1,116 @@
+{
+  "H-MACRO-CPI-001": {
+    "hypothesis_id": "H-MACRO-CPI-001",
+    "name": "CPI Downside Surprise Liquidity Impulse",
+    "observation": "CPI downside print accelerates risk-on expansion in crypto",
+    "mechanism": "Lower inflation print -> Yields down -> DXY down -> Global crypto liquidity expansion",
+    "affected_assets": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT"
+    ],
+    "regime_conditions": {
+      "volatility": "NORMAL",
+      "risk": "RISK_ON"
+    },
+    "expected_effect": "Increases bull continuation win rate to >= 60%",
+    "expected_expectancy_r": 1.35,
+    "expected_win_rate": 0.62,
+    "realized_expectancy_r": 1.06,
+    "realized_win_rate": 0.7,
+    "evidence_count": 10,
+    "dev_verdict": "PASS",
+    "val_verdict": "PASS",
+    "oos_verdict": "PASS",
+    "confidence_score": 0.82,
+    "status": "ACTIVE",
+    "created_at_utc": "2026-10-06T06:46:46.864329+00:00",
+    "last_updated_utc": "2026-10-06T06:46:46.864438+00:00",
+    "meta": {}
+  },
+  "H-FLOW-ETF-001": {
+    "hypothesis_id": "H-FLOW-ETF-001",
+    "name": "Institutional ETF Daily Inflow Momentum",
+    "observation": "Net daily ETF inflows > $400M sustain multi-day continuation drift",
+    "mechanism": "Physical spot purchasing absorbs exchange order book depth",
+    "affected_assets": [
+      "BTCUSDT",
+      "ETHUSDT"
+    ],
+    "regime_conditions": {
+      "liquidity": "ABUNDANT"
+    },
+    "expected_effect": "Reduces pullback depth, expands target R to >= 5.0R",
+    "expected_expectancy_r": 1.55,
+    "expected_win_rate": 0.68,
+    "realized_expectancy_r": 0.0,
+    "realized_win_rate": 0.0,
+    "evidence_count": 0,
+    "dev_verdict": "PASS",
+    "val_verdict": "PASS",
+    "oos_verdict": "PASS",
+    "confidence_score": 0.88,
+    "status": "ACTIVE",
+    "created_at_utc": "2026-10-06T06:46:46.864381+00:00",
+    "last_updated_utc": "2026-10-06T06:46:46.866678+00:00",
+    "meta": {}
+  },
+  "H-POS-SQUEEZE-001": {
+    "hypothesis_id": "H-POS-SQUEEZE-001",
+    "name": "Crowded Short Negative Funding Squeeze",
+    "observation": "Negative funding (< -10 bps) in bull continuation triggers violent upside flush",
+    "mechanism": "Shorts forced to cover into thin offer side",
+    "affected_assets": [
+      "BTCUSDT",
+      "SOLUSDT"
+    ],
+    "regime_conditions": {
+      "trend": "TRENDING"
+    },
+    "expected_effect": "Sharply lowers time-to-target and boosts win rate",
+    "expected_expectancy_r": 1.85,
+    "expected_win_rate": 0.72,
+    "realized_expectancy_r": 0.0,
+    "realized_win_rate": 0.0,
+    "evidence_count": 0,
+    "dev_verdict": "PASS",
+    "val_verdict": "PASS",
+    "oos_verdict": "PASS",
+    "confidence_score": 0.85,
+    "status": "ACTIVE",
+    "created_at_utc": "2026-10-06T06:46:46.864401+00:00",
+    "last_updated_utc": "2026-10-06T06:46:46.868643+00:00",
+    "meta": {}
+  },
+  "H-CROSS-YEN-001": {
+    "hypothesis_id": "H-CROSS-YEN-001",
+    "name": "Macro Cross-Asset Deleveraging Capitulation",
+    "observation": "VIX > 40 / Yen carry unwind triggers temporary panic wicks that clear leverage",
+    "mechanism": "Margin calls force liquidation of liquid risk assets regardless of fundamentals",
+    "affected_assets": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT"
+    ],
+    "regime_conditions": {
+      "volatility": "EXTREME",
+      "risk": "RISK_OFF"
+    },
+    "expected_effect": "High risk of slippage; trading must be gated until post-event stabilization",
+    "expected_expectancy_r": 0.0,
+    "expected_win_rate": 0.3,
+    "realized_expectancy_r": -0.74,
+    "realized_win_rate": 0.2,
+    "evidence_count": 10,
+    "dev_verdict": "PASS",
+    "val_verdict": "PASS",
+    "oos_verdict": "PASS",
+    "confidence_score": 0.9,
+    "status": "SUSPENDED",
+    "created_at_utc": "2026-10-06T06:46:46.864425+00:00",
+    "last_updated_utc": "2026-10-06T06:49:41.608396+00:00",
+    "meta": {
+      "suspension_reason": "Degradation: realized expectancy -0.74R vs expected +0.00R."
+    }
+  }
+}

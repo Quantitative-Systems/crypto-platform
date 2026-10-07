@@ -1,0 +1,81 @@
+{
+  "experiment_id": "EXP_BTCUSDT_SET_1_F06_STRUCTURE_FVG_PHASE_PULLBACK_V1",
+  "status": "COMPLETED",
+  "symbol": "BTCUSDT",
+  "set_id": "SET_1",
+  "family_id": "F06_STRUCTURE_FVG_PHASE",
+  "phase_mode": "PULLBACK",
+  "timeframe_hierarchy": {
+    "htf": "1M",
+    "mtf": "1w",
+    "ltf": "1d"
+  },
+  "testable_period": {
+    "start_iso": "2017-08-17T00:00:00+00:00",
+    "end_iso": "2026-09-01T00:00:00+00:00",
+    "total_ltf_bars": 3303
+  },
+  "overall_metrics": {
+    "trade_count": 19,
+    "win_count": 4,
+    "loss_count": 15,
+    "win_rate": 0.21052631578947367,
+    "loss_rate": 0.7894736842105263,
+    "total_r": -3.376599999999999,
+    "expectancy_r": -0.17771578947368416,
+    "profit_factor": 0.7791469628292423,
+    "max_drawdown_r": 9.3056,
+    "target_4r_hit_rate": 0.15789473684210525,
+    "avg_bars_held": 34.421052631578945,
+    "fees_bps_roundtrip": 15.0,
+    "slippage_bps_roundtrip": 4.0
+  },
+  "partitioned_walk_forward": {
+    "dev": {
+      "trade_count": 9,
+      "win_count": 1,
+      "loss_count": 8,
+      "win_rate": 0.1111,
+      "loss_rate": 0.8889,
+      "total_r": -4.13,
+      "expectancy_r": -0.459,
+      "profit_factor": 0.491,
+      "max_drawdown_r": 6.09,
+      "average_win_r": 3.98,
+      "average_loss_r": -1.01
+    },
+    "val": {
+      "trade_count": 0,
+      "win_rate": 0.0,
+      "total_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor": 0.0,
+      "max_drawdown_r": 0.0
+    },
+    "oos": {
+      "trade_count": 10,
+      "win_count": 3,
+      "loss_count": 7,
+      "win_rate": 0.3,
+      "loss_rate": 0.7,
+      "total_r": 0.75,
+      "expectancy_r": 0.0755,
+      "profit_factor": 1.105,
+      "max_drawdown_r": 5.13,
+      "average_win_r": 2.64,
+      "average_loss_r": -1.03
+    }
+  },
+  "direction_performance": {
+    "long_trades": 15,
+    "long_total_r": -4.32,
+    "short_trades": 4,
+    "short_total_r": 0.94
+  },
+  "edge_qualification": {
+    "has_positive_expectancy": false,
+    "has_positive_oos": true,
+    "has_sufficient_trades": true,
+    "survives_costs": false
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "generated_at_utc": "2026-10-05T16:55:00+00:00",
+    "description": "Institutional open-source intellectual property and license compatibility audit"
+  },
+  "license_evaluations": {
+    "MIT": {
+      "repositories": ["Jesse", "CCXT"],
+      "compatibility_status": "PERMISSIVE_FULLY_COMPATIBLE",
+      "terms": "Allows commercial use, modification, distribution, sublicensing, and private use. Requires preserving original copyright notice.",
+      "allowed_actions": ["DIRECT_CODE_ADAPTATION", "LIBRARY_DEPENDENCY", "CLEAN_ROOM_REIMPLEMENTATION"],
+      "governance_rule": "Retain attribution and copyright notices in third-party attribution documentation."
+    },
+    "Apache-2.0": {
+      "repositories": ["Hummingbot", "VectorBT (Core)", "QuantConnect Lean"],
+      "compatibility_status": "PERMISSIVE_FULLY_COMPATIBLE",
+      "terms": "Allows commercial use, modification, and distribution. Includes express patent rights grant. Requires attribution and notice of modifications.",
+      "allowed_actions": ["DIRECT_CODE_ADAPTATION", "LIBRARY_DEPENDENCY", "CLEAN_ROOM_REIMPLEMENTATION"],
+      "governance_rule": "State changes clearly in source headers and include original Apache-2.0 NOTICE file."
+    },
+    "LGPL-3.0": {
+      "repositories": ["NautilusTrader"],
+      "compatibility_status": "RESTRICTED_LINKING_PERMITTED",
+      "terms": "Weak copyleft. Modifications to LGPL library files must remain LGPL. Calling LGPL library via public API/wrapper does not infect host software.",
+      "allowed_actions": ["EXTERNAL_DEPENDENCY", "SUBPROCESS_EXECUTION", "CLEAN_ROOM_REIMPLEMENTATION"],
+      "prohibited_actions": ["DIRECT_SOURCE_COPYING_INTO_CORE"],
+      "governance_rule": "Do not copy NautilusTrader Rust/Cython source files directly into our platform. Reimplement mathematical mechanisms independently in clean-room Python/NumPy."
+    },
+    "GPL-3.0": {
+      "repositories": ["Freqtrade", "FreqAI"],
+      "compatibility_status": "STRICT_COPYLEFT_VIRAL",
+      "terms": "Strong copyleft. Incorporating GPL-3.0 source code into our codebase would legally force the entire crypto-platform repository to become GPL-3.0.",
+      "allowed_actions": ["CONCEPTUAL_STUDY", "INDEPENDENT_CLEAN_ROOM_REIMPLEMENTATION"],
+      "prohibited_actions": ["DIRECT_SOURCE_COPYING", "SNIPPET_COPYING", "DIRECT_STATIC_LINKING"],
+      "governance_rule": "STRICT ZERO-COPY POLICY. Extract mathematical definitions, architectural design patterns, and algorithmic logic only. Write 100% original, independent Python implementations."
+    },
+    "Commercial_Closed_Source": {
+      "repositories": ["VectorBT PRO"],
+      "compatibility_status": "REJECTED_COMMERCIAL",
+      "terms": "Closed source, proprietary subscription license.",
+      "allowed_actions": ["REJECT"],
+      "prohibited_actions": ["UNAUTHORIZED_REVERSE_ENGINEERING", "PROPRIETARY_CODE_USAGE"],
+      "governance_rule": "Strictly prohibit any use of unauthenticated proprietary code."
+    }
+  }
+}

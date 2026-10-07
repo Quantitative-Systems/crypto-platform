@@ -1,0 +1,2975 @@
+{
+  "BTCUSDT_SET_1": {
+    "symbol": "BTCUSDT",
+    "set_id": "SET_1",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 1523,
+      "trade_count": 37,
+      "win_rate": 0.3784,
+      "expectancy_r": 0.5191,
+      "total_r": 19.21
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 25,
+        "occurrence_pct": 1.64,
+        "trade_opportunity_count": 20,
+        "trade_count": 2,
+        "win_rate": 0.0,
+        "expectancy_r": -1.0174,
+        "median_r": -1.0174,
+        "total_r": -2.03,
+        "profit_factor": 0.0,
+        "mae_r": 1.1,
+        "mfe_r": 0.28,
+        "avg_duration_bars": 27.5,
+        "target_4r_availability_pct": 80.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 2,
+          "expectancy_r": -1.0,
+          "total_r": -2.0,
+          "friction_loss_r": 0.03
+        },
+        "walk_forward": {
+          "dev_trade_count": 1,
+          "dev_expectancy_r": -1.0168,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 1,
+          "oos_expectancy_r": -1.018
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.5365
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 0,
+        "occurrence_pct": 0.0,
+        "trade_opportunity_count": 0,
+        "trade_count": 0,
+        "win_rate": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "mae_r": 0.0,
+        "mfe_r": 0.0,
+        "avg_duration_bars": 0.0,
+        "target_4r_availability_pct": 0.0,
+        "avg_destination_distance_r": 0.0,
+        "friction_neutral": {
+          "trade_count": 0,
+          "expectancy_r": 0.0,
+          "total_r": 0.0,
+          "friction_loss_r": 0.0
+        },
+        "walk_forward": {
+          "dev_trade_count": 0,
+          "dev_expectancy_r": 0.0,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "ZERO_TRADES",
+        "state_information_value_r": -0.5191
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 140,
+        "occurrence_pct": 9.19,
+        "trade_opportunity_count": 63,
+        "trade_count": 8,
+        "win_rate": 0.125,
+        "expectancy_r": -0.3978,
+        "median_r": -1.0179,
+        "total_r": -3.18,
+        "profit_factor": 0.555,
+        "mae_r": 1.16,
+        "mfe_r": 1.01,
+        "avg_duration_bars": 23.4,
+        "target_4r_availability_pct": 76.2,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 8,
+          "expectancy_r": -0.375,
+          "total_r": -3.0,
+          "friction_loss_r": 0.18
+        },
+        "walk_forward": {
+          "dev_trade_count": 3,
+          "dev_expectancy_r": -1.014,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 5,
+          "oos_expectancy_r": -0.028
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": -0.9169
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 0,
+        "occurrence_pct": 0.0,
+        "trade_opportunity_count": 0,
+        "trade_count": 0,
+        "win_rate": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "mae_r": 0.0,
+        "mfe_r": 0.0,
+        "avg_duration_bars": 0.0,
+        "target_4r_availability_pct": 0.0,
+        "avg_destination_distance_r": 0.0,
+        "friction_neutral": {
+          "trade_count": 0,
+          "expectancy_r": 0.0,
+          "total_r": 0.0,
+          "friction_loss_r": 0.0
+        },
+        "walk_forward": {
+          "dev_trade_count": 0,
+          "dev_expectancy_r": 0.0,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "ZERO_TRADES",
+        "state_information_value_r": -0.5191
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 1358,
+        "occurrence_pct": 89.17,
+        "trade_opportunity_count": 933,
+        "trade_count": 36,
+        "win_rate": 0.3889,
+        "expectancy_r": 0.5612,
+        "median_r": -1.0118,
+        "total_r": 20.2,
+        "profit_factor": 1.901,
+        "mae_r": 0.94,
+        "mfe_r": 2.02,
+        "avg_duration_bars": 64.5,
+        "target_4r_availability_pct": 85.4,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 36,
+          "expectancy_r": 0.5795,
+          "total_r": 20.86,
+          "friction_loss_r": 0.66
+        },
+        "walk_forward": {
+          "dev_trade_count": 22,
+          "dev_expectancy_r": 0.528,
+          "val_trade_count": 6,
+          "val_expectancy_r": 1.4801,
+          "oos_trade_count": 8,
+          "oos_expectancy_r": -0.0368
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.0421
+      }
+    }
+  },
+  "BTCUSDT_SET_2": {
+    "symbol": "BTCUSDT",
+    "set_id": "SET_2",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 4859,
+      "trade_count": 187,
+      "win_rate": 0.3262,
+      "expectancy_r": 0.1769,
+      "total_r": 33.07
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 170,
+        "occurrence_pct": 3.5,
+        "trade_opportunity_count": 180,
+        "trade_count": 14,
+        "win_rate": 0.5714,
+        "expectancy_r": 1.501,
+        "median_r": 1.7662,
+        "total_r": 21.01,
+        "profit_factor": 4.389,
+        "mae_r": 0.65,
+        "mfe_r": 2.63,
+        "avg_duration_bars": 81.4,
+        "target_4r_availability_pct": 87.2,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 14,
+          "expectancy_r": 1.5411,
+          "total_r": 21.58,
+          "friction_loss_r": 0.56
+        },
+        "walk_forward": {
+          "dev_trade_count": 7,
+          "dev_expectancy_r": 1.8239,
+          "val_trade_count": 5,
+          "val_expectancy_r": 2.0684,
+          "oos_trade_count": 2,
+          "oos_expectancy_r": -1.0478
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": 1.3241
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 24,
+        "occurrence_pct": 0.49,
+        "trade_opportunity_count": 32,
+        "trade_count": 1,
+        "win_rate": 1.0,
+        "expectancy_r": 0.1247,
+        "median_r": 0.1247,
+        "total_r": 0.12,
+        "profit_factor": 99.0,
+        "mae_r": 0.84,
+        "mfe_r": 1.75,
+        "avg_duration_bars": 200.0,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 1,
+          "expectancy_r": 0.1395,
+          "total_r": 0.14,
+          "friction_loss_r": 0.01
+        },
+        "walk_forward": {
+          "dev_trade_count": 1,
+          "dev_expectancy_r": 0.1247,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -0.0522
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 447,
+        "occurrence_pct": 9.2,
+        "trade_opportunity_count": 163,
+        "trade_count": 27,
+        "win_rate": 0.2593,
+        "expectancy_r": 0.1829,
+        "median_r": -1.0337,
+        "total_r": 4.94,
+        "profit_factor": 1.245,
+        "mae_r": 0.93,
+        "mfe_r": 1.64,
+        "avg_duration_bars": 59.0,
+        "target_4r_availability_pct": 92.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 27,
+          "expectancy_r": 0.2357,
+          "total_r": 6.36,
+          "friction_loss_r": 1.43
+        },
+        "walk_forward": {
+          "dev_trade_count": 12,
+          "dev_expectancy_r": 0.4098,
+          "val_trade_count": 12,
+          "val_expectancy_r": 0.2743,
+          "oos_trade_count": 3,
+          "oos_expectancy_r": -1.0898
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.006
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 197,
+        "occurrence_pct": 4.05,
+        "trade_opportunity_count": 79,
+        "trade_count": 16,
+        "win_rate": 0.125,
+        "expectancy_r": -0.5993,
+        "median_r": -1.0366,
+        "total_r": -9.59,
+        "profit_factor": 0.303,
+        "mae_r": 1.04,
+        "mfe_r": 0.88,
+        "avg_duration_bars": 64.9,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 16,
+          "expectancy_r": -0.5579,
+          "total_r": -8.93,
+          "friction_loss_r": 0.66
+        },
+        "walk_forward": {
+          "dev_trade_count": 3,
+          "dev_expectancy_r": -0.3242,
+          "val_trade_count": 3,
+          "val_expectancy_r": -1.043,
+          "oos_trade_count": 10,
+          "oos_expectancy_r": -0.5486
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": -0.7762
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 4021,
+        "occurrence_pct": 82.75,
+        "trade_opportunity_count": 2279,
+        "trade_count": 166,
+        "win_rate": 0.3373,
+        "expectancy_r": 0.188,
+        "median_r": -1.0288,
+        "total_r": 31.2,
+        "profit_factor": 1.27,
+        "mae_r": 1.0,
+        "mfe_r": 1.64,
+        "avg_duration_bars": 70.4,
+        "target_4r_availability_pct": 94.4,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 166,
+          "expectancy_r": 0.2376,
+          "total_r": 39.45,
+          "friction_loss_r": 8.25
+        },
+        "walk_forward": {
+          "dev_trade_count": 99,
+          "dev_expectancy_r": 0.165,
+          "val_trade_count": 35,
+          "val_expectancy_r": 0.4538,
+          "oos_trade_count": 32,
+          "oos_expectancy_r": -0.0316
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.0111
+      }
+    }
+  },
+  "BTCUSDT_SET_3": {
+    "symbol": "BTCUSDT",
+    "set_id": "SET_3",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 19726,
+      "trade_count": 708,
+      "win_rate": 0.2952,
+      "expectancy_r": 0.0266,
+      "total_r": 18.84
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 414,
+        "occurrence_pct": 2.1,
+        "trade_opportunity_count": 549,
+        "trade_count": 60,
+        "win_rate": 0.35,
+        "expectancy_r": 0.3816,
+        "median_r": -1.0353,
+        "total_r": 22.9,
+        "profit_factor": 1.554,
+        "mae_r": 0.98,
+        "mfe_r": 1.85,
+        "avg_duration_bars": 62.1,
+        "target_4r_availability_pct": 97.4,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 60,
+          "expectancy_r": 0.4632,
+          "total_r": 27.79,
+          "friction_loss_r": 4.9
+        },
+        "walk_forward": {
+          "dev_trade_count": 37,
+          "dev_expectancy_r": 0.5814,
+          "val_trade_count": 12,
+          "val_expectancy_r": 0.0424,
+          "oos_trade_count": 11,
+          "oos_expectancy_r": 0.0797
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.355
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 155,
+        "occurrence_pct": 0.79,
+        "trade_opportunity_count": 214,
+        "trade_count": 27,
+        "win_rate": 0.2222,
+        "expectancy_r": -0.3062,
+        "median_r": -1.042,
+        "total_r": -8.27,
+        "profit_factor": 0.603,
+        "mae_r": 1.06,
+        "mfe_r": 1.45,
+        "avg_duration_bars": 77.9,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 27,
+          "expectancy_r": -0.2433,
+          "total_r": -6.57,
+          "friction_loss_r": 1.7
+        },
+        "walk_forward": {
+          "dev_trade_count": 18,
+          "dev_expectancy_r": -0.0563,
+          "val_trade_count": 5,
+          "val_expectancy_r": -1.0825,
+          "oos_trade_count": 4,
+          "oos_expectancy_r": -0.4603
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.3328
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 1590,
+        "occurrence_pct": 8.06,
+        "trade_opportunity_count": 660,
+        "trade_count": 103,
+        "win_rate": 0.2039,
+        "expectancy_r": -0.1562,
+        "median_r": -1.0725,
+        "total_r": -16.09,
+        "profit_factor": 0.821,
+        "mae_r": 1.24,
+        "mfe_r": 1.56,
+        "avg_duration_bars": 53.7,
+        "target_4r_availability_pct": 96.1,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 103,
+          "expectancy_r": -0.0439,
+          "total_r": -4.52,
+          "friction_loss_r": 11.56
+        },
+        "walk_forward": {
+          "dev_trade_count": 60,
+          "dev_expectancy_r": -0.0029,
+          "val_trade_count": 23,
+          "val_expectancy_r": -0.1449,
+          "oos_trade_count": 20,
+          "oos_expectancy_r": -0.6289
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.1828
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 864,
+        "occurrence_pct": 4.38,
+        "trade_opportunity_count": 385,
+        "trade_count": 65,
+        "win_rate": 0.1385,
+        "expectancy_r": -0.5562,
+        "median_r": -1.0885,
+        "total_r": -36.16,
+        "profit_factor": 0.409,
+        "mae_r": 1.22,
+        "mfe_r": 1.39,
+        "avg_duration_bars": 47.7,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 65,
+          "expectancy_r": -0.4376,
+          "total_r": -28.44,
+          "friction_loss_r": 7.71
+        },
+        "walk_forward": {
+          "dev_trade_count": 37,
+          "dev_expectancy_r": -0.7399,
+          "val_trade_count": 11,
+          "val_expectancy_r": -0.6255,
+          "oos_trade_count": 17,
+          "oos_expectancy_r": -0.1117
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.5828
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 16703,
+        "occurrence_pct": 84.68,
+        "trade_opportunity_count": 8359,
+        "trade_count": 638,
+        "win_rate": 0.3119,
+        "expectancy_r": 0.0758,
+        "median_r": -1.0534,
+        "total_r": 48.33,
+        "profit_factor": 1.102,
+        "mae_r": 1.07,
+        "mfe_r": 1.65,
+        "avg_duration_bars": 75.3,
+        "target_4r_availability_pct": 94.9,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 638,
+          "expectancy_r": 0.1768,
+          "total_r": 112.81,
+          "friction_loss_r": 64.47
+        },
+        "walk_forward": {
+          "dev_trade_count": 363,
+          "dev_expectancy_r": 0.1182,
+          "val_trade_count": 138,
+          "val_expectancy_r": 0.0812,
+          "oos_trade_count": 137,
+          "oos_expectancy_r": -0.0421
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.0492
+      }
+    }
+  },
+  "BTCUSDT_SET_4": {
+    "symbol": "BTCUSDT",
+    "set_id": "SET_4",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 1435,
+      "trade_count": 48,
+      "win_rate": 0.2292,
+      "expectancy_r": -0.3978,
+      "total_r": -19.1
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 65,
+        "occurrence_pct": 4.53,
+        "trade_opportunity_count": 113,
+        "trade_count": 7,
+        "win_rate": 0.4286,
+        "expectancy_r": 0.2472,
+        "median_r": -0.1506,
+        "total_r": 1.73,
+        "profit_factor": 1.448,
+        "mae_r": 0.69,
+        "mfe_r": 1.91,
+        "avg_duration_bars": 142.6,
+        "target_4r_availability_pct": 94.7,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 7,
+          "expectancy_r": 0.4103,
+          "total_r": 2.87,
+          "friction_loss_r": 1.14
+        },
+        "walk_forward": {
+          "dev_trade_count": 4,
+          "dev_expectancy_r": -0.5363,
+          "val_trade_count": 1,
+          "val_expectancy_r": 3.9455,
+          "oos_trade_count": 2,
+          "oos_expectancy_r": -0.0351
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": 0.645
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 10,
+        "occurrence_pct": 0.7,
+        "trade_opportunity_count": 17,
+        "trade_count": 1,
+        "win_rate": 0.0,
+        "expectancy_r": -1.112,
+        "median_r": -1.112,
+        "total_r": -1.11,
+        "profit_factor": 0.0,
+        "mae_r": 1.07,
+        "mfe_r": 1.46,
+        "avg_duration_bars": 148.0,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 1,
+          "expectancy_r": -1.0,
+          "total_r": -1.0,
+          "friction_loss_r": 0.11
+        },
+        "walk_forward": {
+          "dev_trade_count": 1,
+          "dev_expectancy_r": -1.112,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -0.7142
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 156,
+        "occurrence_pct": 10.87,
+        "trade_opportunity_count": 75,
+        "trade_count": 11,
+        "win_rate": 0.5455,
+        "expectancy_r": 0.7429,
+        "median_r": 0.6627,
+        "total_r": 8.17,
+        "profit_factor": 2.44,
+        "mae_r": 0.76,
+        "mfe_r": 2.34,
+        "avg_duration_bars": 98.6,
+        "target_4r_availability_pct": 96.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 11,
+          "expectancy_r": 1.0487,
+          "total_r": 11.54,
+          "friction_loss_r": 3.36
+        },
+        "walk_forward": {
+          "dev_trade_count": 3,
+          "dev_expectancy_r": 0.682,
+          "val_trade_count": 4,
+          "val_expectancy_r": 2.243,
+          "oos_trade_count": 4,
+          "oos_expectancy_r": -0.7115
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": 1.1407
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 35,
+        "occurrence_pct": 2.44,
+        "trade_opportunity_count": 26,
+        "trade_count": 4,
+        "win_rate": 0.0,
+        "expectancy_r": -1.35,
+        "median_r": -1.2963,
+        "total_r": -5.4,
+        "profit_factor": 0.0,
+        "mae_r": 1.47,
+        "mfe_r": 1.04,
+        "avg_duration_bars": 38.2,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 4,
+          "expectancy_r": -1.0,
+          "total_r": -4.0,
+          "friction_loss_r": 1.4
+        },
+        "walk_forward": {
+          "dev_trade_count": 4,
+          "dev_expectancy_r": -1.35,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -0.9522
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 1169,
+        "occurrence_pct": 81.46,
+        "trade_opportunity_count": 673,
+        "trade_count": 51,
+        "win_rate": 0.2745,
+        "expectancy_r": -0.2498,
+        "median_r": -1.2251,
+        "total_r": -12.74,
+        "profit_factor": 0.727,
+        "mae_r": 1.07,
+        "mfe_r": 1.69,
+        "avg_duration_bars": 77.9,
+        "target_4r_availability_pct": 91.1,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 51,
+          "expectancy_r": 0.0653,
+          "total_r": 3.33,
+          "friction_loss_r": 16.07
+        },
+        "walk_forward": {
+          "dev_trade_count": 32,
+          "dev_expectancy_r": -0.3909,
+          "val_trade_count": 8,
+          "val_expectancy_r": 0.4281,
+          "oos_trade_count": 11,
+          "oos_expectancy_r": -0.3321
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.148
+      }
+    }
+  },
+  "BTCUSDT_SET_5": {
+    "status": "REJECTED_NO_OVERLAP",
+    "symbol": "BTCUSDT",
+    "set_id": "SET_5"
+  },
+  "ETHUSDT_SET_1": {
+    "symbol": "ETHUSDT",
+    "set_id": "SET_1",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 1523,
+      "trade_count": 33,
+      "win_rate": 0.3939,
+      "expectancy_r": 0.8313,
+      "total_r": 27.43
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 0,
+        "occurrence_pct": 0.0,
+        "trade_opportunity_count": 0,
+        "trade_count": 0,
+        "win_rate": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "mae_r": 0.0,
+        "mfe_r": 0.0,
+        "avg_duration_bars": 0.0,
+        "target_4r_availability_pct": 0.0,
+        "avg_destination_distance_r": 0.0,
+        "friction_neutral": {
+          "trade_count": 0,
+          "expectancy_r": 0.0,
+          "total_r": 0.0,
+          "friction_loss_r": 0.0
+        },
+        "walk_forward": {
+          "dev_trade_count": 0,
+          "dev_expectancy_r": 0.0,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "ZERO_TRADES",
+        "state_information_value_r": -0.8313
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 0,
+        "occurrence_pct": 0.0,
+        "trade_opportunity_count": 0,
+        "trade_count": 0,
+        "win_rate": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "mae_r": 0.0,
+        "mfe_r": 0.0,
+        "avg_duration_bars": 0.0,
+        "target_4r_availability_pct": 0.0,
+        "avg_destination_distance_r": 0.0,
+        "friction_neutral": {
+          "trade_count": 0,
+          "expectancy_r": 0.0,
+          "total_r": 0.0,
+          "friction_loss_r": 0.0
+        },
+        "walk_forward": {
+          "dev_trade_count": 0,
+          "dev_expectancy_r": 0.0,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "ZERO_TRADES",
+        "state_information_value_r": -0.8313
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 83,
+        "occurrence_pct": 5.45,
+        "trade_opportunity_count": 46,
+        "trade_count": 5,
+        "win_rate": 0.0,
+        "expectancy_r": -1.014,
+        "median_r": -1.0111,
+        "total_r": -5.07,
+        "profit_factor": 0.0,
+        "mae_r": 1.38,
+        "mfe_r": 0.7,
+        "avg_duration_bars": 66.6,
+        "target_4r_availability_pct": 84.8,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 5,
+          "expectancy_r": -1.0,
+          "total_r": -5.0,
+          "friction_loss_r": 0.07
+        },
+        "walk_forward": {
+          "dev_trade_count": 2,
+          "dev_expectancy_r": -1.0109,
+          "val_trade_count": 2,
+          "val_expectancy_r": -1.0211,
+          "oos_trade_count": 1,
+          "oos_expectancy_r": -1.0062
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.8453
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 0,
+        "occurrence_pct": 0.0,
+        "trade_opportunity_count": 0,
+        "trade_count": 0,
+        "win_rate": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "mae_r": 0.0,
+        "mfe_r": 0.0,
+        "avg_duration_bars": 0.0,
+        "target_4r_availability_pct": 0.0,
+        "avg_destination_distance_r": 0.0,
+        "friction_neutral": {
+          "trade_count": 0,
+          "expectancy_r": 0.0,
+          "total_r": 0.0,
+          "friction_loss_r": 0.0
+        },
+        "walk_forward": {
+          "dev_trade_count": 0,
+          "dev_expectancy_r": 0.0,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "ZERO_TRADES",
+        "state_information_value_r": -0.8313
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 1440,
+        "occurrence_pct": 94.55,
+        "trade_opportunity_count": 905,
+        "trade_count": 34,
+        "win_rate": 0.3824,
+        "expectancy_r": 0.7768,
+        "median_r": -1.0068,
+        "total_r": 26.41,
+        "profit_factor": 2.281,
+        "mae_r": 0.91,
+        "mfe_r": 1.91,
+        "avg_duration_bars": 60.0,
+        "target_4r_availability_pct": 83.6,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 34,
+          "expectancy_r": 0.7899,
+          "total_r": 26.86,
+          "friction_loss_r": 0.45
+        },
+        "walk_forward": {
+          "dev_trade_count": 18,
+          "dev_expectancy_r": 1.0387,
+          "val_trade_count": 5,
+          "val_expectancy_r": 1.1178,
+          "oos_trade_count": 11,
+          "oos_expectancy_r": 0.1931
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.0545
+      }
+    }
+  },
+  "ETHUSDT_SET_2": {
+    "symbol": "ETHUSDT",
+    "set_id": "SET_2",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 4859,
+      "trade_count": 197,
+      "win_rate": 0.2944,
+      "expectancy_r": 0.2431,
+      "total_r": 47.9
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 166,
+        "occurrence_pct": 3.42,
+        "trade_opportunity_count": 205,
+        "trade_count": 17,
+        "win_rate": 0.3529,
+        "expectancy_r": 0.5802,
+        "median_r": -1.0142,
+        "total_r": 9.86,
+        "profit_factor": 1.869,
+        "mae_r": 0.97,
+        "mfe_r": 2.03,
+        "avg_duration_bars": 52.9,
+        "target_4r_availability_pct": 90.2,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 17,
+          "expectancy_r": 0.6105,
+          "total_r": 10.38,
+          "friction_loss_r": 0.51
+        },
+        "walk_forward": {
+          "dev_trade_count": 13,
+          "dev_expectancy_r": 1.0846,
+          "val_trade_count": 3,
+          "val_expectancy_r": -1.0666,
+          "oos_trade_count": 1,
+          "oos_expectancy_r": -1.0353
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": 0.3371
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 96,
+        "occurrence_pct": 1.98,
+        "trade_opportunity_count": 129,
+        "trade_count": 9,
+        "win_rate": 0.5556,
+        "expectancy_r": 1.1176,
+        "median_r": 1.0495,
+        "total_r": 10.06,
+        "profit_factor": 3.445,
+        "mae_r": 0.51,
+        "mfe_r": 2.31,
+        "avg_duration_bars": 76.0,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 9,
+          "expectancy_r": 1.1418,
+          "total_r": 10.28,
+          "friction_loss_r": 0.22
+        },
+        "walk_forward": {
+          "dev_trade_count": 9,
+          "dev_expectancy_r": 1.1176,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": 0.8745
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 374,
+        "occurrence_pct": 7.7,
+        "trade_opportunity_count": 175,
+        "trade_count": 21,
+        "win_rate": 0.2857,
+        "expectancy_r": 0.2704,
+        "median_r": -1.0257,
+        "total_r": 5.68,
+        "profit_factor": 1.36,
+        "mae_r": 1.14,
+        "mfe_r": 1.69,
+        "avg_duration_bars": 52.3,
+        "target_4r_availability_pct": 95.4,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 21,
+          "expectancy_r": 0.3167,
+          "total_r": 6.65,
+          "friction_loss_r": 0.97
+        },
+        "walk_forward": {
+          "dev_trade_count": 11,
+          "dev_expectancy_r": 1.2394,
+          "val_trade_count": 5,
+          "val_expectancy_r": -1.0622,
+          "oos_trade_count": 5,
+          "oos_expectancy_r": -0.5289
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.0273
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 279,
+        "occurrence_pct": 5.74,
+        "trade_opportunity_count": 119,
+        "trade_count": 21,
+        "win_rate": 0.2381,
+        "expectancy_r": 0.1535,
+        "median_r": -1.0261,
+        "total_r": 3.22,
+        "profit_factor": 1.194,
+        "mae_r": 1.15,
+        "mfe_r": 1.72,
+        "avg_duration_bars": 51.1,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 21,
+          "expectancy_r": 0.1905,
+          "total_r": 4.0,
+          "friction_loss_r": 0.78
+        },
+        "walk_forward": {
+          "dev_trade_count": 14,
+          "dev_expectancy_r": 0.3932,
+          "val_trade_count": 2,
+          "val_expectancy_r": -1.052,
+          "oos_trade_count": 5,
+          "oos_expectancy_r": -0.0353
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.0896
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 3944,
+        "occurrence_pct": 81.17,
+        "trade_opportunity_count": 2209,
+        "trade_count": 162,
+        "win_rate": 0.2778,
+        "expectancy_r": 0.1993,
+        "median_r": -1.0238,
+        "total_r": 32.29,
+        "profit_factor": 1.273,
+        "mae_r": 1.03,
+        "mfe_r": 1.74,
+        "avg_duration_bars": 63.1,
+        "target_4r_availability_pct": 92.2,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 162,
+          "expectancy_r": 0.2379,
+          "total_r": 38.53,
+          "friction_loss_r": 6.24
+        },
+        "walk_forward": {
+          "dev_trade_count": 90,
+          "dev_expectancy_r": 0.1945,
+          "val_trade_count": 38,
+          "val_expectancy_r": 0.2985,
+          "oos_trade_count": 34,
+          "oos_expectancy_r": 0.1014
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.0438
+      }
+    }
+  },
+  "ETHUSDT_SET_3": {
+    "symbol": "ETHUSDT",
+    "set_id": "SET_3",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 19726,
+      "trade_count": 692,
+      "win_rate": 0.302,
+      "expectancy_r": 0.1128,
+      "total_r": 78.04
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 402,
+        "occurrence_pct": 2.04,
+        "trade_opportunity_count": 548,
+        "trade_count": 40,
+        "win_rate": 0.35,
+        "expectancy_r": 0.2762,
+        "median_r": -1.031,
+        "total_r": 11.05,
+        "profit_factor": 1.409,
+        "mae_r": 0.99,
+        "mfe_r": 1.76,
+        "avg_duration_bars": 91.3,
+        "target_4r_availability_pct": 89.4,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 40,
+          "expectancy_r": 0.331,
+          "total_r": 13.24,
+          "friction_loss_r": 2.19
+        },
+        "walk_forward": {
+          "dev_trade_count": 28,
+          "dev_expectancy_r": 0.6321,
+          "val_trade_count": 4,
+          "val_expectancy_r": -1.1047,
+          "oos_trade_count": 8,
+          "oos_expectancy_r": -0.279
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.1634
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 240,
+        "occurrence_pct": 1.22,
+        "trade_opportunity_count": 294,
+        "trade_count": 25,
+        "win_rate": 0.4,
+        "expectancy_r": 0.6875,
+        "median_r": -0.3536,
+        "total_r": 17.19,
+        "profit_factor": 2.429,
+        "mae_r": 0.68,
+        "mfe_r": 1.88,
+        "avg_duration_bars": 107.4,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 25,
+          "expectancy_r": 0.735,
+          "total_r": 18.37,
+          "friction_loss_r": 1.19
+        },
+        "walk_forward": {
+          "dev_trade_count": 18,
+          "dev_expectancy_r": 0.8129,
+          "val_trade_count": 3,
+          "val_expectancy_r": 0.0381,
+          "oos_trade_count": 4,
+          "oos_expectancy_r": 0.6105
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.5747
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 1575,
+        "occurrence_pct": 7.98,
+        "trade_opportunity_count": 595,
+        "trade_count": 96,
+        "win_rate": 0.2604,
+        "expectancy_r": 0.0694,
+        "median_r": -1.0618,
+        "total_r": 6.66,
+        "profit_factor": 1.087,
+        "mae_r": 1.13,
+        "mfe_r": 1.85,
+        "avg_duration_bars": 54.1,
+        "target_4r_availability_pct": 96.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 96,
+          "expectancy_r": 0.1678,
+          "total_r": 16.11,
+          "friction_loss_r": 9.45
+        },
+        "walk_forward": {
+          "dev_trade_count": 56,
+          "dev_expectancy_r": 0.3887,
+          "val_trade_count": 20,
+          "val_expectancy_r": -0.644,
+          "oos_trade_count": 20,
+          "oos_expectancy_r": -0.1114
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.0434
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 1122,
+        "occurrence_pct": 5.69,
+        "trade_opportunity_count": 443,
+        "trade_count": 76,
+        "win_rate": 0.1447,
+        "expectancy_r": -0.5957,
+        "median_r": -1.0524,
+        "total_r": -45.27,
+        "profit_factor": 0.336,
+        "mae_r": 1.22,
+        "mfe_r": 1.16,
+        "avg_duration_bars": 46.5,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 76,
+          "expectancy_r": -0.5214,
+          "total_r": -39.63,
+          "friction_loss_r": 5.64
+        },
+        "walk_forward": {
+          "dev_trade_count": 57,
+          "dev_expectancy_r": -0.5589,
+          "val_trade_count": 6,
+          "val_expectancy_r": -1.1222,
+          "oos_trade_count": 13,
+          "oos_expectancy_r": -0.5139
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.7085
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 16387,
+        "occurrence_pct": 83.07,
+        "trade_opportunity_count": 8301,
+        "trade_count": 613,
+        "win_rate": 0.3018,
+        "expectancy_r": 0.1188,
+        "median_r": -1.0437,
+        "total_r": 72.81,
+        "profit_factor": 1.162,
+        "mae_r": 1.09,
+        "mfe_r": 1.61,
+        "avg_duration_bars": 73.9,
+        "target_4r_availability_pct": 95.8,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 613,
+          "expectancy_r": 0.1967,
+          "total_r": 120.6,
+          "friction_loss_r": 47.79
+        },
+        "walk_forward": {
+          "dev_trade_count": 345,
+          "dev_expectancy_r": 0.2131,
+          "val_trade_count": 139,
+          "val_expectancy_r": 0.0053,
+          "oos_trade_count": 129,
+          "oos_expectancy_r": -0.0111
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.006
+      }
+    }
+  },
+  "ETHUSDT_SET_4": {
+    "symbol": "ETHUSDT",
+    "set_id": "SET_4",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 7935,
+      "trade_count": 308,
+      "win_rate": 0.2597,
+      "expectancy_r": -0.1465,
+      "total_r": -45.13
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 121,
+        "occurrence_pct": 1.52,
+        "trade_opportunity_count": 135,
+        "trade_count": 15,
+        "win_rate": 0.4667,
+        "expectancy_r": 0.9383,
+        "median_r": -0.1291,
+        "total_r": 14.07,
+        "profit_factor": 2.738,
+        "mae_r": 0.76,
+        "mfe_r": 2.09,
+        "avg_duration_bars": 79.3,
+        "target_4r_availability_pct": 94.1,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 15,
+          "expectancy_r": 1.1001,
+          "total_r": 16.5,
+          "friction_loss_r": 2.43
+        },
+        "walk_forward": {
+          "dev_trade_count": 6,
+          "dev_expectancy_r": 0.7984,
+          "val_trade_count": 1,
+          "val_expectancy_r": -1.1783,
+          "oos_trade_count": 8,
+          "oos_expectancy_r": 1.3077
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": 1.0848
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 99,
+        "occurrence_pct": 1.25,
+        "trade_opportunity_count": 151,
+        "trade_count": 16,
+        "win_rate": 0.4375,
+        "expectancy_r": 0.3914,
+        "median_r": -1.0409,
+        "total_r": 6.26,
+        "profit_factor": 1.639,
+        "mae_r": 0.93,
+        "mfe_r": 2.04,
+        "avg_duration_bars": 102.7,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 16,
+          "expectancy_r": 0.4894,
+          "total_r": 7.83,
+          "friction_loss_r": 1.57
+        },
+        "walk_forward": {
+          "dev_trade_count": 12,
+          "dev_expectancy_r": 0.6359,
+          "val_trade_count": 3,
+          "val_expectancy_r": -0.0823,
+          "oos_trade_count": 1,
+          "oos_expectancy_r": -1.1213
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": 0.5379
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 565,
+        "occurrence_pct": 7.12,
+        "trade_opportunity_count": 228,
+        "trade_count": 32,
+        "win_rate": 0.1875,
+        "expectancy_r": -0.4998,
+        "median_r": -1.1625,
+        "total_r": -15.99,
+        "profit_factor": 0.495,
+        "mae_r": 1.17,
+        "mfe_r": 1.59,
+        "avg_duration_bars": 71.5,
+        "target_4r_availability_pct": 98.7,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 32,
+          "expectancy_r": -0.2537,
+          "total_r": -8.12,
+          "friction_loss_r": 7.87
+        },
+        "walk_forward": {
+          "dev_trade_count": 16,
+          "dev_expectancy_r": -0.6243,
+          "val_trade_count": 4,
+          "val_expectancy_r": -0.9999,
+          "oos_trade_count": 12,
+          "oos_expectancy_r": -0.1671
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.3533
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 528,
+        "occurrence_pct": 6.65,
+        "trade_opportunity_count": 247,
+        "trade_count": 30,
+        "win_rate": 0.3,
+        "expectancy_r": 0.3616,
+        "median_r": -1.097,
+        "total_r": 10.85,
+        "profit_factor": 1.458,
+        "mae_r": 1.14,
+        "mfe_r": 1.94,
+        "avg_duration_bars": 49.0,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 30,
+          "expectancy_r": 0.5279,
+          "total_r": 15.84,
+          "friction_loss_r": 4.99
+        },
+        "walk_forward": {
+          "dev_trade_count": 19,
+          "dev_expectancy_r": 0.7207,
+          "val_trade_count": 9,
+          "val_expectancy_r": -0.0467,
+          "oos_trade_count": 2,
+          "oos_expectancy_r": -1.2125
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.5081
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 6622,
+        "occurrence_pct": 83.45,
+        "trade_opportunity_count": 3315,
+        "trade_count": 278,
+        "win_rate": 0.2554,
+        "expectancy_r": -0.1723,
+        "median_r": -1.1168,
+        "total_r": -47.91,
+        "profit_factor": 0.799,
+        "mae_r": 1.05,
+        "mfe_r": 1.49,
+        "avg_duration_bars": 65.8,
+        "target_4r_availability_pct": 96.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 278,
+          "expectancy_r": 0.0195,
+          "total_r": 5.41,
+          "friction_loss_r": 53.32
+        },
+        "walk_forward": {
+          "dev_trade_count": 174,
+          "dev_expectancy_r": -0.1584,
+          "val_trade_count": 55,
+          "val_expectancy_r": -0.4077,
+          "oos_trade_count": 49,
+          "oos_expectancy_r": 0.0425
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.0258
+      }
+    }
+  },
+  "ETHUSDT_SET_5": {
+    "status": "REJECTED_NO_OVERLAP",
+    "symbol": "ETHUSDT",
+    "set_id": "SET_5"
+  },
+  "SOLUSDT_SET_1": {
+    "symbol": "SOLUSDT",
+    "set_id": "SET_1",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 975,
+      "trade_count": 27,
+      "win_rate": 0.2963,
+      "expectancy_r": 0.3669,
+      "total_r": 9.91
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 0,
+        "occurrence_pct": 0.0,
+        "trade_opportunity_count": 0,
+        "trade_count": 0,
+        "win_rate": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "mae_r": 0.0,
+        "mfe_r": 0.0,
+        "avg_duration_bars": 0.0,
+        "target_4r_availability_pct": 0.0,
+        "avg_destination_distance_r": 0.0,
+        "friction_neutral": {
+          "trade_count": 0,
+          "expectancy_r": 0.0,
+          "total_r": 0.0,
+          "friction_loss_r": 0.0
+        },
+        "walk_forward": {
+          "dev_trade_count": 0,
+          "dev_expectancy_r": 0.0,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "ZERO_TRADES",
+        "state_information_value_r": -0.3669
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 11,
+        "occurrence_pct": 1.13,
+        "trade_opportunity_count": 14,
+        "trade_count": 2,
+        "win_rate": 0.0,
+        "expectancy_r": -0.7308,
+        "median_r": -0.7308,
+        "total_r": -1.46,
+        "profit_factor": 0.0,
+        "mae_r": 1.11,
+        "mfe_r": 0.72,
+        "avg_duration_bars": 106.0,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 2,
+          "expectancy_r": -0.7259,
+          "total_r": -1.45,
+          "friction_loss_r": 0.01
+        },
+        "walk_forward": {
+          "dev_trade_count": 1,
+          "dev_expectancy_r": -1.0056,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 1,
+          "oos_expectancy_r": -0.4559
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.0977
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 20,
+        "occurrence_pct": 2.05,
+        "trade_opportunity_count": 25,
+        "trade_count": 1,
+        "win_rate": 0.0,
+        "expectancy_r": -1.0122,
+        "median_r": -1.0122,
+        "total_r": -1.01,
+        "profit_factor": 0.0,
+        "mae_r": 1.3,
+        "mfe_r": 2.63,
+        "avg_duration_bars": 36.0,
+        "target_4r_availability_pct": 68.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 1,
+          "expectancy_r": -1.0,
+          "total_r": -1.0,
+          "friction_loss_r": 0.01
+        },
+        "walk_forward": {
+          "dev_trade_count": 1,
+          "dev_expectancy_r": -1.0122,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.3791
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 104,
+        "occurrence_pct": 10.67,
+        "trade_opportunity_count": 36,
+        "trade_count": 4,
+        "win_rate": 0.0,
+        "expectancy_r": -1.0092,
+        "median_r": -1.0073,
+        "total_r": -4.04,
+        "profit_factor": 0.0,
+        "mae_r": 1.47,
+        "mfe_r": 0.84,
+        "avg_duration_bars": 50.5,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 4,
+          "expectancy_r": -1.0,
+          "total_r": -4.0,
+          "friction_loss_r": 0.04
+        },
+        "walk_forward": {
+          "dev_trade_count": 3,
+          "dev_expectancy_r": -1.0071,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 1,
+          "oos_expectancy_r": -1.0153
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.3761
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 840,
+        "occurrence_pct": 86.15,
+        "trade_opportunity_count": 461,
+        "trade_count": 27,
+        "win_rate": 0.3704,
+        "expectancy_r": 0.7154,
+        "median_r": -1.0069,
+        "total_r": 19.32,
+        "profit_factor": 2.124,
+        "mae_r": 0.97,
+        "mfe_r": 2.08,
+        "avg_duration_bars": 41.4,
+        "target_4r_availability_pct": 86.8,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 27,
+          "expectancy_r": 0.7268,
+          "total_r": 19.62,
+          "friction_loss_r": 0.31
+        },
+        "walk_forward": {
+          "dev_trade_count": 16,
+          "dev_expectancy_r": 0.9674,
+          "val_trade_count": 6,
+          "val_expectancy_r": 0.6543,
+          "oos_trade_count": 5,
+          "oos_expectancy_r": -0.0177
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.3485
+      }
+    }
+  },
+  "SOLUSDT_SET_2": {
+    "symbol": "SOLUSDT",
+    "set_id": "SET_2",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 3225,
+      "trade_count": 125,
+      "win_rate": 0.312,
+      "expectancy_r": 0.2177,
+      "total_r": 27.21
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 120,
+        "occurrence_pct": 3.72,
+        "trade_opportunity_count": 163,
+        "trade_count": 10,
+        "win_rate": 0.7,
+        "expectancy_r": 1.8423,
+        "median_r": 2.5321,
+        "total_r": 18.42,
+        "profit_factor": 7.05,
+        "mae_r": 0.62,
+        "mfe_r": 3.0,
+        "avg_duration_bars": 107.0,
+        "target_4r_availability_pct": 82.8,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 10,
+          "expectancy_r": 1.8579,
+          "total_r": 18.58,
+          "friction_loss_r": 0.16
+        },
+        "walk_forward": {
+          "dev_trade_count": 10,
+          "dev_expectancy_r": 1.8423,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": 1.6246
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 4,
+        "occurrence_pct": 0.12,
+        "trade_opportunity_count": 6,
+        "trade_count": 1,
+        "win_rate": 0.0,
+        "expectancy_r": -1.0269,
+        "median_r": -1.0269,
+        "total_r": -1.03,
+        "profit_factor": 0.0,
+        "mae_r": 1.44,
+        "mfe_r": 0.76,
+        "avg_duration_bars": 8.0,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 1,
+          "expectancy_r": -1.0,
+          "total_r": -1.0,
+          "friction_loss_r": 0.03
+        },
+        "walk_forward": {
+          "dev_trade_count": 0,
+          "dev_expectancy_r": 0.0,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 1,
+          "oos_expectancy_r": -1.0269
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.2446
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 199,
+        "occurrence_pct": 6.17,
+        "trade_opportunity_count": 80,
+        "trade_count": 13,
+        "win_rate": 0.3846,
+        "expectancy_r": 0.75,
+        "median_r": -1.0178,
+        "total_r": 9.75,
+        "profit_factor": 2.184,
+        "mae_r": 1.06,
+        "mfe_r": 2.13,
+        "avg_duration_bars": 62.6,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 13,
+          "expectancy_r": 0.7748,
+          "total_r": 10.07,
+          "friction_loss_r": 0.32
+        },
+        "walk_forward": {
+          "dev_trade_count": 10,
+          "dev_expectancy_r": 1.2866,
+          "val_trade_count": 2,
+          "val_expectancy_r": -1.0395,
+          "oos_trade_count": 1,
+          "oos_expectancy_r": -1.0376
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": 0.5323
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 82,
+        "occurrence_pct": 2.54,
+        "trade_opportunity_count": 30,
+        "trade_count": 8,
+        "win_rate": 0.0,
+        "expectancy_r": -1.031,
+        "median_r": -1.0275,
+        "total_r": -8.25,
+        "profit_factor": 0.0,
+        "mae_r": 1.18,
+        "mfe_r": 0.31,
+        "avg_duration_bars": 24.0,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 8,
+          "expectancy_r": -1.0,
+          "total_r": -8.0,
+          "friction_loss_r": 0.25
+        },
+        "walk_forward": {
+          "dev_trade_count": 2,
+          "dev_expectancy_r": -1.024,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 6,
+          "oos_expectancy_r": -1.0333
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": -1.2487
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 2820,
+        "occurrence_pct": 87.44,
+        "trade_opportunity_count": 1471,
+        "trade_count": 109,
+        "win_rate": 0.2936,
+        "expectancy_r": 0.1592,
+        "median_r": -1.0186,
+        "total_r": 17.35,
+        "profit_factor": 1.223,
+        "mae_r": 0.99,
+        "mfe_r": 1.6,
+        "avg_duration_bars": 64.6,
+        "target_4r_availability_pct": 89.9,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 109,
+          "expectancy_r": 0.1858,
+          "total_r": 20.25,
+          "friction_loss_r": 2.9
+        },
+        "walk_forward": {
+          "dev_trade_count": 57,
+          "dev_expectancy_r": 0.4224,
+          "val_trade_count": 26,
+          "val_expectancy_r": 0.023,
+          "oos_trade_count": 26,
+          "oos_expectancy_r": -0.2816
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.0585
+      }
+    }
+  },
+  "SOLUSDT_SET_3": {
+    "symbol": "SOLUSDT",
+    "set_id": "SET_3",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 13189,
+      "trade_count": 471,
+      "win_rate": 0.2972,
+      "expectancy_r": 0.1198,
+      "total_r": 56.42
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 246,
+        "occurrence_pct": 1.87,
+        "trade_opportunity_count": 366,
+        "trade_count": 32,
+        "win_rate": 0.375,
+        "expectancy_r": 0.3414,
+        "median_r": -1.0149,
+        "total_r": 10.93,
+        "profit_factor": 1.528,
+        "mae_r": 0.9,
+        "mfe_r": 1.84,
+        "avg_duration_bars": 82.2,
+        "target_4r_availability_pct": 92.9,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 32,
+          "expectancy_r": 0.3744,
+          "total_r": 11.98,
+          "friction_loss_r": 1.05
+        },
+        "walk_forward": {
+          "dev_trade_count": 28,
+          "dev_expectancy_r": 0.5406,
+          "val_trade_count": 2,
+          "val_expectancy_r": -1.0677,
+          "oos_trade_count": 2,
+          "oos_expectancy_r": -1.038
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.2216
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 164,
+        "occurrence_pct": 1.24,
+        "trade_opportunity_count": 258,
+        "trade_count": 29,
+        "win_rate": 0.3448,
+        "expectancy_r": 0.192,
+        "median_r": -1.0198,
+        "total_r": 5.57,
+        "profit_factor": 1.294,
+        "mae_r": 0.86,
+        "mfe_r": 1.58,
+        "avg_duration_bars": 91.3,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 29,
+          "expectancy_r": 0.2265,
+          "total_r": 6.57,
+          "friction_loss_r": 1.0
+        },
+        "walk_forward": {
+          "dev_trade_count": 21,
+          "dev_expectancy_r": 0.4252,
+          "val_trade_count": 2,
+          "val_expectancy_r": -1.0235,
+          "oos_trade_count": 6,
+          "oos_expectancy_r": -0.2192
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.0722
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 752,
+        "occurrence_pct": 5.7,
+        "trade_opportunity_count": 271,
+        "trade_count": 50,
+        "win_rate": 0.3,
+        "expectancy_r": 0.2283,
+        "median_r": -1.0364,
+        "total_r": 11.41,
+        "profit_factor": 1.325,
+        "mae_r": 1.08,
+        "mfe_r": 1.62,
+        "avg_duration_bars": 56.2,
+        "target_4r_availability_pct": 91.1,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 50,
+          "expectancy_r": 0.2805,
+          "total_r": 14.03,
+          "friction_loss_r": 2.61
+        },
+        "walk_forward": {
+          "dev_trade_count": 34,
+          "dev_expectancy_r": 0.5881,
+          "val_trade_count": 7,
+          "val_expectancy_r": -1.0639,
+          "oos_trade_count": 9,
+          "oos_expectancy_r": -0.1261
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.1085
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 886,
+        "occurrence_pct": 6.72,
+        "trade_opportunity_count": 373,
+        "trade_count": 61,
+        "win_rate": 0.2131,
+        "expectancy_r": -0.1306,
+        "median_r": -1.045,
+        "total_r": -7.97,
+        "profit_factor": 0.844,
+        "mae_r": 1.12,
+        "mfe_r": 1.57,
+        "avg_duration_bars": 51.6,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 61,
+          "expectancy_r": -0.0666,
+          "total_r": -4.06,
+          "friction_loss_r": 3.91
+        },
+        "walk_forward": {
+          "dev_trade_count": 35,
+          "dev_expectancy_r": -0.135,
+          "val_trade_count": 15,
+          "val_expectancy_r": 0.0476,
+          "oos_trade_count": 11,
+          "oos_expectancy_r": -0.3595
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.2504
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 11141,
+        "occurrence_pct": 84.47,
+        "trade_opportunity_count": 5857,
+        "trade_count": 416,
+        "win_rate": 0.2885,
+        "expectancy_r": 0.0977,
+        "median_r": -1.0349,
+        "total_r": 40.65,
+        "profit_factor": 1.134,
+        "mae_r": 1.05,
+        "mfe_r": 1.67,
+        "avg_duration_bars": 72.4,
+        "target_4r_availability_pct": 94.4,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 416,
+          "expectancy_r": 0.1569,
+          "total_r": 65.25,
+          "friction_loss_r": 24.61
+        },
+        "walk_forward": {
+          "dev_trade_count": 238,
+          "dev_expectancy_r": 0.1729,
+          "val_trade_count": 87,
+          "val_expectancy_r": 0.101,
+          "oos_trade_count": 91,
+          "oos_expectancy_r": -0.102
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.0221
+      }
+    }
+  },
+  "SOLUSDT_SET_4": {
+    "symbol": "SOLUSDT",
+    "set_id": "SET_4",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 7935,
+      "trade_count": 305,
+      "win_rate": 0.2295,
+      "expectancy_r": -0.2548,
+      "total_r": -77.72
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 88,
+        "occurrence_pct": 1.11,
+        "trade_opportunity_count": 97,
+        "trade_count": 10,
+        "win_rate": 0.3,
+        "expectancy_r": -0.1925,
+        "median_r": -1.0813,
+        "total_r": -1.92,
+        "profit_factor": 0.729,
+        "mae_r": 0.95,
+        "mfe_r": 1.48,
+        "avg_duration_bars": 122.5,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 10,
+          "expectancy_r": -0.0893,
+          "total_r": -0.89,
+          "friction_loss_r": 1.03
+        },
+        "walk_forward": {
+          "dev_trade_count": 5,
+          "dev_expectancy_r": 0.3942,
+          "val_trade_count": 2,
+          "val_expectancy_r": -0.2865,
+          "oos_trade_count": 3,
+          "oos_expectancy_r": -1.1075
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": 0.0623
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 83,
+        "occurrence_pct": 1.05,
+        "trade_opportunity_count": 145,
+        "trade_count": 16,
+        "win_rate": 0.4375,
+        "expectancy_r": 0.5278,
+        "median_r": -0.7496,
+        "total_r": 8.44,
+        "profit_factor": 1.912,
+        "mae_r": 0.77,
+        "mfe_r": 1.88,
+        "avg_duration_bars": 92.9,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 16,
+          "expectancy_r": 0.6255,
+          "total_r": 10.01,
+          "friction_loss_r": 1.56
+        },
+        "walk_forward": {
+          "dev_trade_count": 12,
+          "dev_expectancy_r": 0.8258,
+          "val_trade_count": 1,
+          "val_expectancy_r": 1.2876,
+          "oos_trade_count": 3,
+          "oos_expectancy_r": -0.9175
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": 0.7826
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 474,
+        "occurrence_pct": 5.97,
+        "trade_opportunity_count": 181,
+        "trade_count": 31,
+        "win_rate": 0.0968,
+        "expectancy_r": -0.7655,
+        "median_r": -1.1903,
+        "total_r": -23.73,
+        "profit_factor": 0.296,
+        "mae_r": 1.29,
+        "mfe_r": 1.52,
+        "avg_duration_bars": 46.7,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 31,
+          "expectancy_r": -0.5302,
+          "total_r": -16.43,
+          "friction_loss_r": 7.3
+        },
+        "walk_forward": {
+          "dev_trade_count": 16,
+          "dev_expectancy_r": -0.5974,
+          "val_trade_count": 7,
+          "val_expectancy_r": -1.1264,
+          "oos_trade_count": 8,
+          "oos_expectancy_r": -0.7859
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.5107
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 595,
+        "occurrence_pct": 7.5,
+        "trade_opportunity_count": 210,
+        "trade_count": 44,
+        "win_rate": 0.1364,
+        "expectancy_r": -0.5957,
+        "median_r": -1.1424,
+        "total_r": -26.21,
+        "profit_factor": 0.422,
+        "mae_r": 1.18,
+        "mfe_r": 1.14,
+        "avg_duration_bars": 33.5,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 44,
+          "expectancy_r": -0.3955,
+          "total_r": -17.4,
+          "friction_loss_r": 8.81
+        },
+        "walk_forward": {
+          "dev_trade_count": 32,
+          "dev_expectancy_r": -0.4985,
+          "val_trade_count": 6,
+          "val_expectancy_r": -0.4074,
+          "oos_trade_count": 6,
+          "oos_expectancy_r": -1.3024
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.3409
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 6695,
+        "occurrence_pct": 84.37,
+        "trade_opportunity_count": 3381,
+        "trade_count": 279,
+        "win_rate": 0.2294,
+        "expectancy_r": -0.2546,
+        "median_r": -1.1046,
+        "total_r": -71.04,
+        "profit_factor": 0.709,
+        "mae_r": 1.09,
+        "mfe_r": 1.39,
+        "avg_duration_bars": 69.2,
+        "target_4r_availability_pct": 98.6,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 279,
+          "expectancy_r": -0.0852,
+          "total_r": -23.77,
+          "friction_loss_r": 47.27
+        },
+        "walk_forward": {
+          "dev_trade_count": 167,
+          "dev_expectancy_r": -0.2238,
+          "val_trade_count": 58,
+          "val_expectancy_r": -0.4821,
+          "oos_trade_count": 54,
+          "oos_expectancy_r": -0.1057
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.0002
+      }
+    }
+  },
+  "SOLUSDT_SET_5": {
+    "status": "REJECTED_NO_OVERLAP",
+    "symbol": "SOLUSDT",
+    "set_id": "SET_5"
+  },
+  "BNBUSDT_SET_1": {
+    "symbol": "BNBUSDT",
+    "set_id": "SET_1",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 1492,
+      "trade_count": 34,
+      "win_rate": 0.3824,
+      "expectancy_r": 0.79,
+      "total_r": 26.86
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 14,
+        "occurrence_pct": 0.94,
+        "trade_opportunity_count": 12,
+        "trade_count": 1,
+        "win_rate": 0.0,
+        "expectancy_r": -1.011,
+        "median_r": -1.011,
+        "total_r": -1.01,
+        "profit_factor": 0.0,
+        "mae_r": 1.03,
+        "mfe_r": 0.06,
+        "avg_duration_bars": 12.0,
+        "target_4r_availability_pct": 33.3,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 1,
+          "expectancy_r": -1.0,
+          "total_r": -1.0,
+          "friction_loss_r": 0.01
+        },
+        "walk_forward": {
+          "dev_trade_count": 0,
+          "dev_expectancy_r": 0.0,
+          "val_trade_count": 1,
+          "val_expectancy_r": -1.011,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.801
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 0,
+        "occurrence_pct": 0.0,
+        "trade_opportunity_count": 0,
+        "trade_count": 0,
+        "win_rate": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "mae_r": 0.0,
+        "mfe_r": 0.0,
+        "avg_duration_bars": 0.0,
+        "target_4r_availability_pct": 0.0,
+        "avg_destination_distance_r": 0.0,
+        "friction_neutral": {
+          "trade_count": 0,
+          "expectancy_r": 0.0,
+          "total_r": 0.0,
+          "friction_loss_r": 0.0
+        },
+        "walk_forward": {
+          "dev_trade_count": 0,
+          "dev_expectancy_r": 0.0,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "ZERO_TRADES",
+        "state_information_value_r": -0.79
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 98,
+        "occurrence_pct": 6.57,
+        "trade_opportunity_count": 13,
+        "trade_count": 3,
+        "win_rate": 0.0,
+        "expectancy_r": -1.0135,
+        "median_r": -1.0115,
+        "total_r": -3.04,
+        "profit_factor": 0.0,
+        "mae_r": 1.1,
+        "mfe_r": 0.53,
+        "avg_duration_bars": 21.0,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 3,
+          "expectancy_r": -1.0,
+          "total_r": -3.0,
+          "friction_loss_r": 0.04
+        },
+        "walk_forward": {
+          "dev_trade_count": 3,
+          "dev_expectancy_r": -1.0135,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.8035
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 67,
+        "occurrence_pct": 4.49,
+        "trade_opportunity_count": 14,
+        "trade_count": 4,
+        "win_rate": 0.25,
+        "expectancy_r": -0.0738,
+        "median_r": -1.0094,
+        "total_r": -0.3,
+        "profit_factor": 0.903,
+        "mae_r": 0.99,
+        "mfe_r": 1.22,
+        "avg_duration_bars": 65.0,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 4,
+          "expectancy_r": -0.0612,
+          "total_r": -0.24,
+          "friction_loss_r": 0.05
+        },
+        "walk_forward": {
+          "dev_trade_count": 2,
+          "dev_expectancy_r": 0.8681,
+          "val_trade_count": 2,
+          "val_expectancy_r": -1.0157,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -0.8638
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 1313,
+        "occurrence_pct": 88.0,
+        "trade_opportunity_count": 845,
+        "trade_count": 34,
+        "win_rate": 0.3824,
+        "expectancy_r": 0.8269,
+        "median_r": -1.0064,
+        "total_r": 28.12,
+        "profit_factor": 2.366,
+        "mae_r": 0.96,
+        "mfe_r": 2.1,
+        "avg_duration_bars": 59.1,
+        "target_4r_availability_pct": 87.7,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 34,
+          "expectancy_r": 0.8425,
+          "total_r": 28.65,
+          "friction_loss_r": 0.53
+        },
+        "walk_forward": {
+          "dev_trade_count": 22,
+          "dev_expectancy_r": 0.8894,
+          "val_trade_count": 5,
+          "val_expectancy_r": 1.1403,
+          "oos_trade_count": 7,
+          "oos_expectancy_r": 0.4067
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.0369
+      }
+    }
+  },
+  "BNBUSDT_SET_2": {
+    "symbol": "BNBUSDT",
+    "set_id": "SET_2",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 1242,
+      "trade_count": 46,
+      "win_rate": 0.3696,
+      "expectancy_r": 0.403,
+      "total_r": 18.54
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 6,
+        "occurrence_pct": 0.48,
+        "trade_opportunity_count": 8,
+        "trade_count": 1,
+        "win_rate": 0.0,
+        "expectancy_r": -1.0091,
+        "median_r": -1.0091,
+        "total_r": -1.01,
+        "profit_factor": 0.0,
+        "mae_r": 1.01,
+        "mfe_r": 0.03,
+        "avg_duration_bars": 95.0,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 1,
+          "expectancy_r": -1.0,
+          "total_r": -1.0,
+          "friction_loss_r": 0.01
+        },
+        "walk_forward": {
+          "dev_trade_count": 1,
+          "dev_expectancy_r": -1.0091,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.4121
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 1,
+        "occurrence_pct": 0.08,
+        "trade_opportunity_count": 0,
+        "trade_count": 0,
+        "win_rate": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "mae_r": 0.0,
+        "mfe_r": 0.0,
+        "avg_duration_bars": 0.0,
+        "target_4r_availability_pct": 0.0,
+        "avg_destination_distance_r": 0.0,
+        "friction_neutral": {
+          "trade_count": 0,
+          "expectancy_r": 0.0,
+          "total_r": 0.0,
+          "friction_loss_r": 0.0
+        },
+        "walk_forward": {
+          "dev_trade_count": 0,
+          "dev_expectancy_r": 0.0,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "ZERO_TRADES",
+        "state_information_value_r": -0.403
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 39,
+        "occurrence_pct": 3.14,
+        "trade_opportunity_count": 13,
+        "trade_count": 3,
+        "win_rate": 0.0,
+        "expectancy_r": -1.0467,
+        "median_r": -1.054,
+        "total_r": -3.14,
+        "profit_factor": 0.0,
+        "mae_r": 1.36,
+        "mfe_r": 0.51,
+        "avg_duration_bars": 24.3,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 3,
+          "expectancy_r": -1.0,
+          "total_r": -3.0,
+          "friction_loss_r": 0.14
+        },
+        "walk_forward": {
+          "dev_trade_count": 3,
+          "dev_expectancy_r": -1.0467,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.4497
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 42,
+        "occurrence_pct": 3.38,
+        "trade_opportunity_count": 11,
+        "trade_count": 4,
+        "win_rate": 0.25,
+        "expectancy_r": 0.2081,
+        "median_r": -1.0235,
+        "total_r": 0.83,
+        "profit_factor": 1.269,
+        "mae_r": 0.8,
+        "mfe_r": 1.31,
+        "avg_duration_bars": 41.8,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 4,
+          "expectancy_r": 0.25,
+          "total_r": 1.0,
+          "friction_loss_r": 0.17
+        },
+        "walk_forward": {
+          "dev_trade_count": 3,
+          "dev_expectancy_r": 0.6181,
+          "val_trade_count": 1,
+          "val_expectancy_r": -1.0219,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -0.1949
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 1154,
+        "occurrence_pct": 92.91,
+        "trade_opportunity_count": 627,
+        "trade_count": 44,
+        "win_rate": 0.3636,
+        "expectancy_r": 0.3541,
+        "median_r": -1.0254,
+        "total_r": 15.58,
+        "profit_factor": 1.546,
+        "mae_r": 1.03,
+        "mfe_r": 1.79,
+        "avg_duration_bars": 72.8,
+        "target_4r_availability_pct": 96.2,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 44,
+          "expectancy_r": 0.4088,
+          "total_r": 17.99,
+          "friction_loss_r": 2.41
+        },
+        "walk_forward": {
+          "dev_trade_count": 30,
+          "dev_expectancy_r": 0.5627,
+          "val_trade_count": 8,
+          "val_expectancy_r": -0.8518,
+          "oos_trade_count": 6,
+          "oos_expectancy_r": 0.9186
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.0489
+      }
+    }
+  },
+  "BNBUSDT_SET_3": {
+    "symbol": "BNBUSDT",
+    "set_id": "SET_3",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 1239,
+      "trade_count": 44,
+      "win_rate": 0.3409,
+      "expectancy_r": 0.2803,
+      "total_r": 12.33
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 31,
+        "occurrence_pct": 2.5,
+        "trade_opportunity_count": 44,
+        "trade_count": 3,
+        "win_rate": 0.6667,
+        "expectancy_r": 0.2913,
+        "median_r": 0.0181,
+        "total_r": 0.87,
+        "profit_factor": 1.799,
+        "mae_r": 0.96,
+        "mfe_r": 1.72,
+        "avg_duration_bars": 153.0,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 3,
+          "expectancy_r": 0.3649,
+          "total_r": 1.09,
+          "friction_loss_r": 0.22
+        },
+        "walk_forward": {
+          "dev_trade_count": 2,
+          "dev_expectancy_r": 0.9834,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 1,
+          "oos_expectancy_r": -1.093
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": 0.011
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 6,
+        "occurrence_pct": 0.48,
+        "trade_opportunity_count": 0,
+        "trade_count": 0,
+        "win_rate": 0.0,
+        "expectancy_r": 0.0,
+        "median_r": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "mae_r": 0.0,
+        "mfe_r": 0.0,
+        "avg_duration_bars": 0.0,
+        "target_4r_availability_pct": 0.0,
+        "avg_destination_distance_r": 0.0,
+        "friction_neutral": {
+          "trade_count": 0,
+          "expectancy_r": 0.0,
+          "total_r": 0.0,
+          "friction_loss_r": 0.0
+        },
+        "walk_forward": {
+          "dev_trade_count": 0,
+          "dev_expectancy_r": 0.0,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "ZERO_TRADES",
+        "state_information_value_r": -0.2803
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 174,
+        "occurrence_pct": 14.04,
+        "trade_opportunity_count": 96,
+        "trade_count": 12,
+        "win_rate": 0.25,
+        "expectancy_r": 0.2127,
+        "median_r": -1.0774,
+        "total_r": 2.55,
+        "profit_factor": 1.293,
+        "mae_r": 0.87,
+        "mfe_r": 1.97,
+        "avg_duration_bars": 63.1,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 12,
+          "expectancy_r": 0.3719,
+          "total_r": 4.46,
+          "friction_loss_r": 1.91
+        },
+        "walk_forward": {
+          "dev_trade_count": 8,
+          "dev_expectancy_r": 0.8194,
+          "val_trade_count": 3,
+          "val_expectancy_r": -1.1779,
+          "oos_trade_count": 1,
+          "oos_expectancy_r": -0.4683
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": -0.0676
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 67,
+        "occurrence_pct": 5.41,
+        "trade_opportunity_count": 29,
+        "trade_count": 3,
+        "win_rate": 0.0,
+        "expectancy_r": -1.0083,
+        "median_r": -1.1082,
+        "total_r": -3.02,
+        "profit_factor": 0.0,
+        "mae_r": 1.0,
+        "mfe_r": 1.11,
+        "avg_duration_bars": 89.0,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 3,
+          "expectancy_r": -0.8747,
+          "total_r": -2.62,
+          "friction_loss_r": 0.4
+        },
+        "walk_forward": {
+          "dev_trade_count": 2,
+          "dev_expectancy_r": -0.9584,
+          "val_trade_count": 1,
+          "val_expectancy_r": -1.1082,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.2886
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 961,
+        "occurrence_pct": 77.56,
+        "trade_opportunity_count": 542,
+        "trade_count": 42,
+        "win_rate": 0.3571,
+        "expectancy_r": 0.2614,
+        "median_r": -1.0613,
+        "total_r": 10.98,
+        "profit_factor": 1.355,
+        "mae_r": 1.03,
+        "mfe_r": 2.0,
+        "avg_duration_bars": 70.7,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 42,
+          "expectancy_r": 0.4118,
+          "total_r": 17.3,
+          "friction_loss_r": 6.32
+        },
+        "walk_forward": {
+          "dev_trade_count": 22,
+          "dev_expectancy_r": -0.0226,
+          "val_trade_count": 9,
+          "val_expectancy_r": 0.5345,
+          "oos_trade_count": 11,
+          "oos_expectancy_r": 0.6059
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": -0.0189
+      }
+    }
+  },
+  "BNBUSDT_SET_4": {
+    "symbol": "BNBUSDT",
+    "set_id": "SET_4",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 1239,
+      "trade_count": 46,
+      "win_rate": 0.3043,
+      "expectancy_r": 0.059,
+      "total_r": 2.71
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 7,
+        "occurrence_pct": 0.56,
+        "trade_opportunity_count": 9,
+        "trade_count": 1,
+        "win_rate": 0.0,
+        "expectancy_r": -1.1216,
+        "median_r": -1.1216,
+        "total_r": -1.12,
+        "profit_factor": 0.0,
+        "mae_r": 1.21,
+        "mfe_r": 0.78,
+        "avg_duration_bars": 44.0,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 1,
+          "expectancy_r": -1.0,
+          "total_r": -1.0,
+          "friction_loss_r": 0.12
+        },
+        "walk_forward": {
+          "dev_trade_count": 0,
+          "dev_expectancy_r": 0.0,
+          "val_trade_count": 1,
+          "val_expectancy_r": -1.1216,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.1806
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 12,
+        "occurrence_pct": 0.97,
+        "trade_opportunity_count": 13,
+        "trade_count": 3,
+        "win_rate": 0.0,
+        "expectancy_r": -1.3202,
+        "median_r": -1.2415,
+        "total_r": -3.96,
+        "profit_factor": 0.0,
+        "mae_r": 1.23,
+        "mfe_r": 0.91,
+        "avg_duration_bars": 39.7,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 3,
+          "expectancy_r": -1.0,
+          "total_r": -3.0,
+          "friction_loss_r": 0.96
+        },
+        "walk_forward": {
+          "dev_trade_count": 2,
+          "dev_expectancy_r": -1.4207,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 1,
+          "oos_expectancy_r": -1.119
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.3792
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 38,
+        "occurrence_pct": 3.07,
+        "trade_opportunity_count": 1,
+        "trade_count": 1,
+        "win_rate": 0.0,
+        "expectancy_r": -1.151,
+        "median_r": -1.151,
+        "total_r": -1.15,
+        "profit_factor": 0.0,
+        "mae_r": 1.22,
+        "mfe_r": 0.31,
+        "avg_duration_bars": 22.0,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 1,
+          "expectancy_r": -1.0,
+          "total_r": -1.0,
+          "friction_loss_r": 0.15
+        },
+        "walk_forward": {
+          "dev_trade_count": 1,
+          "dev_expectancy_r": -1.151,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.21
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 91,
+        "occurrence_pct": 7.34,
+        "trade_opportunity_count": 37,
+        "trade_count": 5,
+        "win_rate": 0.4,
+        "expectancy_r": 0.1555,
+        "median_r": -1.2142,
+        "total_r": 0.78,
+        "profit_factor": 1.208,
+        "mae_r": 1.03,
+        "mfe_r": 1.84,
+        "avg_duration_bars": 88.2,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 5,
+          "expectancy_r": 0.4234,
+          "total_r": 2.12,
+          "friction_loss_r": 1.34
+        },
+        "walk_forward": {
+          "dev_trade_count": 3,
+          "dev_expectancy_r": 1.0943,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 2,
+          "oos_expectancy_r": -1.2528
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": 0.0965
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 1091,
+        "occurrence_pct": 88.05,
+        "trade_opportunity_count": 733,
+        "trade_count": 42,
+        "win_rate": 0.3095,
+        "expectancy_r": 0.0749,
+        "median_r": -1.1851,
+        "total_r": 3.15,
+        "profit_factor": 1.092,
+        "mae_r": 0.98,
+        "mfe_r": 1.76,
+        "avg_duration_bars": 81.3,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 42,
+          "expectancy_r": 0.3094,
+          "total_r": 12.99,
+          "friction_loss_r": 9.85
+        },
+        "walk_forward": {
+          "dev_trade_count": 28,
+          "dev_expectancy_r": -0.1004,
+          "val_trade_count": 7,
+          "val_expectancy_r": 0.9364,
+          "oos_trade_count": 7,
+          "oos_expectancy_r": -0.0853
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.0159
+      }
+    }
+  },
+  "BNBUSDT_SET_5": {
+    "symbol": "BNBUSDT",
+    "set_id": "SET_5",
+    "status": "COMPLETED",
+    "unconditional_baseline": {
+      "total_bars": 1240,
+      "trade_count": 35,
+      "win_rate": 0.3714,
+      "expectancy_r": 0.0032,
+      "total_r": 0.11
+    },
+    "state_conditional_metrics": {
+      "BULL_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 29,
+        "occurrence_pct": 2.34,
+        "trade_opportunity_count": 44,
+        "trade_count": 2,
+        "win_rate": 0.5,
+        "expectancy_r": 0.4097,
+        "median_r": 0.4097,
+        "total_r": 0.82,
+        "profit_factor": 1.565,
+        "mae_r": 0.59,
+        "mfe_r": 3.62,
+        "avg_duration_bars": 120.5,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 2,
+          "expectancy_r": 0.9095,
+          "total_r": 1.82,
+          "friction_loss_r": 1.0
+        },
+        "walk_forward": {
+          "dev_trade_count": 0,
+          "dev_expectancy_r": 0.0,
+          "val_trade_count": 1,
+          "val_expectancy_r": 2.2684,
+          "oos_trade_count": 1,
+          "oos_expectancy_r": -1.4491
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": 0.4065
+      },
+      "BEAR_TRENDING_CONTINUATION": {
+        "occurrence_count_bars": 4,
+        "occurrence_pct": 0.32,
+        "trade_opportunity_count": 14,
+        "trade_count": 2,
+        "win_rate": 0.0,
+        "expectancy_r": -1.433,
+        "median_r": -1.433,
+        "total_r": -2.87,
+        "profit_factor": 0.0,
+        "mae_r": 1.16,
+        "mfe_r": 0.17,
+        "avg_duration_bars": 22.5,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 2,
+          "expectancy_r": -1.0,
+          "total_r": -2.0,
+          "friction_loss_r": 0.87
+        },
+        "walk_forward": {
+          "dev_trade_count": 2,
+          "dev_expectancy_r": -1.433,
+          "val_trade_count": 0,
+          "val_expectancy_r": 0.0,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": -1.4362
+      },
+      "BULL_PULLBACK": {
+        "occurrence_count_bars": 99,
+        "occurrence_pct": 7.98,
+        "trade_opportunity_count": 59,
+        "trade_count": 6,
+        "win_rate": 0.3333,
+        "expectancy_r": -0.1887,
+        "median_r": -1.3501,
+        "total_r": -1.13,
+        "profit_factor": 0.802,
+        "mae_r": 1.15,
+        "mfe_r": 1.98,
+        "avg_duration_bars": 100.5,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 6,
+          "expectancy_r": 0.252,
+          "total_r": 1.51,
+          "friction_loss_r": 2.64
+        },
+        "walk_forward": {
+          "dev_trade_count": 2,
+          "dev_expectancy_r": -1.5095,
+          "val_trade_count": 2,
+          "val_expectancy_r": -0.0892,
+          "oos_trade_count": 2,
+          "oos_expectancy_r": 1.0326
+        },
+        "sample_classification": "MODERATE_SAMPLE",
+        "state_information_value_r": -0.1919
+      },
+      "BEAR_PULLBACK": {
+        "occurrence_count_bars": 96,
+        "occurrence_pct": 7.74,
+        "trade_opportunity_count": 27,
+        "trade_count": 5,
+        "win_rate": 0.4,
+        "expectancy_r": 0.3903,
+        "median_r": -1.452,
+        "total_r": 1.95,
+        "profit_factor": 1.406,
+        "mae_r": 1.05,
+        "mfe_r": 1.86,
+        "avg_duration_bars": 72.6,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 5,
+          "expectancy_r": 1.0059,
+          "total_r": 5.03,
+          "friction_loss_r": 3.08
+        },
+        "walk_forward": {
+          "dev_trade_count": 4,
+          "dev_expectancy_r": 0.9139,
+          "val_trade_count": 1,
+          "val_expectancy_r": -1.7041,
+          "oos_trade_count": 0,
+          "oos_expectancy_r": 0.0
+        },
+        "sample_classification": "INSUFFICIENT_SAMPLE",
+        "state_information_value_r": 0.3871
+      },
+      "RANGING_CHOP": {
+        "occurrence_count_bars": 1012,
+        "occurrence_pct": 81.61,
+        "trade_opportunity_count": 767,
+        "trade_count": 32,
+        "win_rate": 0.4062,
+        "expectancy_r": 0.0896,
+        "median_r": -1.0615,
+        "total_r": 2.87,
+        "profit_factor": 1.112,
+        "mae_r": 0.91,
+        "mfe_r": 2.12,
+        "avg_duration_bars": 110.9,
+        "target_4r_availability_pct": 100.0,
+        "avg_destination_distance_r": 4.0,
+        "friction_neutral": {
+          "trade_count": 32,
+          "expectancy_r": 0.5946,
+          "total_r": 19.03,
+          "friction_loss_r": 16.16
+        },
+        "walk_forward": {
+          "dev_trade_count": 19,
+          "dev_expectancy_r": -0.0763,
+          "val_trade_count": 7,
+          "val_expectancy_r": 0.0411,
+          "oos_trade_count": 6,
+          "oos_expectancy_r": 0.6718
+        },
+        "sample_classification": "SUBSTANTIAL_SAMPLE",
+        "state_information_value_r": 0.0864
+      }
+    }
+  }
+}

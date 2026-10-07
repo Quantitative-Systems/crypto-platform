@@ -1,0 +1,594 @@
+{
+  "ETH_SET_2_HYP_A_PULLBACK": {
+    "challenger_id": "ETH_SET_2_HYP_A_PULLBACK",
+    "slot_key": "ETHUSDT_SET_2_PULLBACK",
+    "promotion_verdict": "PROMOTED_INITIAL_CHAMPION",
+    "promotion_reason": "First qualified champion for slot ETHUSDT_SET_2_PULLBACK (EQS: 83.4)",
+    "eqs": {
+      "candidate_id": "ETH_SET_2_HYP_A_PULLBACK",
+      "total_score": 83.4,
+      "classification": "STRONG_EDGE",
+      "component_scores": {
+        "expectancy": 15.0,
+        "sample_adequacy": 10.0,
+        "oos_consistency": 15.0,
+        "asset_transfer": 5.0,
+        "scale_transfer": 5.0,
+        "cost_resilience": 5.0,
+        "concentration": 10.0,
+        "tail_risk": 8.4,
+        "null_superiority": 10.0
+      },
+      "details": {
+        "exp_full": 1.2943,
+        "n_trades": 272,
+        "exp_oos": 1.5245,
+        "exp_ex_top2": 1.1932,
+        "top2_concentration_pct": 8.5,
+        "max_drawdown_r": 6.61,
+        "cvar_95_r": -1.0524,
+        "null_p_value": 0.0
+      }
+    },
+    "null_test": {
+      "test_type": "RANDOM_DIRECTION",
+      "n_iterations": 30,
+      "candidate_expectancy_r": 1.2943,
+      "candidate_total_r": 352.05,
+      "null_mean_expectancy_r": 0.0205,
+      "null_std_expectancy_r": 0.1611,
+      "null_max_expectancy_r": 0.3463,
+      "empirical_p_value": 0.0,
+      "is_falsified": false,
+      "verdict": "PASS_EDGE_CONFIRMED"
+    },
+    "benchmarks": {
+      "BM_4_trend_following": {
+        "benchmark_id": "BM_4",
+        "name": "Simple Trend Following",
+        "symbol": "ETHUSDT",
+        "timeframe": "SET_2",
+        "total_trades": 0,
+        "win_rate": 0,
+        "total_r": 0,
+        "expectancy_r": 0,
+        "profit_factor": 0,
+        "max_drawdown_r": 0,
+        "sharpe_proxy": 0,
+        "description": "No trades generated"
+      },
+      "BM_6_mean_reversion": {
+        "benchmark_id": "BM_6",
+        "name": "Simple Mean Reversion",
+        "symbol": "ETHUSDT",
+        "timeframe": "SET_2",
+        "total_trades": 1239,
+        "win_rate": 0.3511,
+        "total_r": -185.8,
+        "expectancy_r": -0.15,
+        "profit_factor": 0.779,
+        "max_drawdown_r": 191.96,
+        "sharpe_proxy": -0.121,
+        "description": "Bollinger Bands (20, 2.0) reversion to the 20-SMA mean"
+      }
+    }
+  },
+  "BTC_SET_2_HYP_B_CONTINUATION": {
+    "challenger_id": "BTC_SET_2_HYP_B_CONTINUATION",
+    "slot_key": "BTCUSDT_SET_2_CONTINUATION",
+    "promotion_verdict": "PROMOTED_INITIAL_CHAMPION",
+    "promotion_reason": "First qualified champion for slot BTCUSDT_SET_2_CONTINUATION (EQS: 75.8)",
+    "eqs": {
+      "candidate_id": "BTC_SET_2_HYP_B_CONTINUATION",
+      "total_score": 75.8,
+      "classification": "PROMISING",
+      "component_scores": {
+        "expectancy": 15.0,
+        "sample_adequacy": 10.0,
+        "oos_consistency": 8.0,
+        "asset_transfer": 5.0,
+        "scale_transfer": 5.0,
+        "cost_resilience": 5.0,
+        "concentration": 10.0,
+        "tail_risk": 7.7,
+        "null_superiority": 10.0
+      },
+      "details": {
+        "exp_full": 1.3671,
+        "n_trades": 301,
+        "exp_oos": 1.0266,
+        "exp_ex_top2": 1.2535,
+        "top2_concentration_pct": 8.9,
+        "max_drawdown_r": 8.6,
+        "cvar_95_r": -1.1135,
+        "null_p_value": 0.0
+      }
+    },
+    "null_test": {
+      "test_type": "RANDOM_DIRECTION",
+      "n_iterations": 30,
+      "candidate_expectancy_r": 1.3671,
+      "candidate_total_r": 411.5,
+      "null_mean_expectancy_r": 0.0475,
+      "null_std_expectancy_r": 0.1405,
+      "null_max_expectancy_r": 0.3331,
+      "empirical_p_value": 0.0,
+      "is_falsified": false,
+      "verdict": "PASS_EDGE_CONFIRMED"
+    },
+    "benchmarks": {
+      "BM_4_trend_following": {
+        "benchmark_id": "BM_4",
+        "name": "Simple Trend Following",
+        "symbol": "BTCUSDT",
+        "timeframe": "SET_2",
+        "total_trades": 0,
+        "win_rate": 0,
+        "total_r": 0,
+        "expectancy_r": 0,
+        "profit_factor": 0,
+        "max_drawdown_r": 0,
+        "sharpe_proxy": 0,
+        "description": "No trades generated"
+      },
+      "BM_6_mean_reversion": {
+        "benchmark_id": "BM_6",
+        "name": "Simple Mean Reversion",
+        "symbol": "BTCUSDT",
+        "timeframe": "SET_2",
+        "total_trades": 1248,
+        "win_rate": 0.3462,
+        "total_r": -193.48,
+        "expectancy_r": -0.155,
+        "profit_factor": 0.776,
+        "max_drawdown_r": 194.88,
+        "sharpe_proxy": -0.123,
+        "description": "Bollinger Bands (20, 2.0) reversion to the 20-SMA mean"
+      }
+    }
+  },
+  "BTC_SET_3_HYP_A_PULLBACK": {
+    "challenger_id": "BTC_SET_3_HYP_A_PULLBACK",
+    "slot_key": "BTCUSDT_SET_3_PULLBACK",
+    "promotion_verdict": "PROMOTED_INITIAL_CHAMPION",
+    "promotion_reason": "First qualified champion for slot BTCUSDT_SET_3_PULLBACK (EQS: 80.1)",
+    "eqs": {
+      "candidate_id": "BTC_SET_3_HYP_A_PULLBACK",
+      "total_score": 80.1,
+      "classification": "STRONG_EDGE",
+      "component_scores": {
+        "expectancy": 15.0,
+        "sample_adequacy": 10.0,
+        "oos_consistency": 15.0,
+        "asset_transfer": 5.0,
+        "scale_transfer": 5.0,
+        "cost_resilience": 5.0,
+        "concentration": 10.0,
+        "tail_risk": 5.1,
+        "null_superiority": 10.0
+      },
+      "details": {
+        "exp_full": 0.6251,
+        "n_trades": 989,
+        "exp_oos": 1.1327,
+        "exp_ex_top2": 0.6007,
+        "top2_concentration_pct": 4.1,
+        "max_drawdown_r": 17.83,
+        "cvar_95_r": -1.2728,
+        "null_p_value": 0.0
+      }
+    },
+    "null_test": {
+      "test_type": "RANDOM_DIRECTION",
+      "n_iterations": 30,
+      "candidate_expectancy_r": 0.6251,
+      "candidate_total_r": 618.19,
+      "null_mean_expectancy_r": -0.0568,
+      "null_std_expectancy_r": 0.0602,
+      "null_max_expectancy_r": 0.0519,
+      "empirical_p_value": 0.0,
+      "is_falsified": false,
+      "verdict": "PASS_EDGE_CONFIRMED"
+    },
+    "benchmarks": {
+      "BM_4_trend_following": {
+        "benchmark_id": "BM_4",
+        "name": "Simple Trend Following",
+        "symbol": "BTCUSDT",
+        "timeframe": "SET_3",
+        "total_trades": 0,
+        "win_rate": 0,
+        "total_r": 0,
+        "expectancy_r": 0,
+        "profit_factor": 0,
+        "max_drawdown_r": 0,
+        "sharpe_proxy": 0,
+        "description": "No trades generated"
+      },
+      "BM_6_mean_reversion": {
+        "benchmark_id": "BM_6",
+        "name": "Simple Mean Reversion",
+        "symbol": "BTCUSDT",
+        "timeframe": "SET_3",
+        "total_trades": 4823,
+        "win_rate": 0.3595,
+        "total_r": -1030.17,
+        "expectancy_r": -0.2136,
+        "profit_factor": 0.707,
+        "max_drawdown_r": 1029.08,
+        "sharpe_proxy": -0.169,
+        "description": "Bollinger Bands (20, 2.0) reversion to the 20-SMA mean"
+      }
+    }
+  },
+  "ETH_SET_3_HYP_A_PULLBACK": {
+    "challenger_id": "ETH_SET_3_HYP_A_PULLBACK",
+    "slot_key": "ETHUSDT_SET_3_PULLBACK",
+    "promotion_verdict": "PROMOTED_INITIAL_CHAMPION",
+    "promotion_reason": "First qualified champion for slot ETHUSDT_SET_3_PULLBACK (EQS: 79.5)",
+    "eqs": {
+      "candidate_id": "ETH_SET_3_HYP_A_PULLBACK",
+      "total_score": 79.5,
+      "classification": "PROMISING",
+      "component_scores": {
+        "expectancy": 15.0,
+        "sample_adequacy": 10.0,
+        "oos_consistency": 15.0,
+        "asset_transfer": 5.0,
+        "scale_transfer": 5.0,
+        "cost_resilience": 5.0,
+        "concentration": 10.0,
+        "tail_risk": 4.5,
+        "null_superiority": 10.0
+      },
+      "details": {
+        "exp_full": 0.6834,
+        "n_trades": 1006,
+        "exp_oos": 0.8539,
+        "exp_ex_top2": 0.6436,
+        "top2_concentration_pct": 6.0,
+        "max_drawdown_r": 21.95,
+        "cvar_95_r": -1.2175,
+        "null_p_value": 0.0
+      }
+    },
+    "null_test": {
+      "test_type": "RANDOM_DIRECTION",
+      "n_iterations": 30,
+      "candidate_expectancy_r": 0.6834,
+      "candidate_total_r": 687.54,
+      "null_mean_expectancy_r": 0.0437,
+      "null_std_expectancy_r": 0.0836,
+      "null_max_expectancy_r": 0.2426,
+      "empirical_p_value": 0.0,
+      "is_falsified": false,
+      "verdict": "PASS_EDGE_CONFIRMED"
+    },
+    "benchmarks": {
+      "BM_4_trend_following": {
+        "benchmark_id": "BM_4",
+        "name": "Simple Trend Following",
+        "symbol": "ETHUSDT",
+        "timeframe": "SET_3",
+        "total_trades": 0,
+        "win_rate": 0,
+        "total_r": 0,
+        "expectancy_r": 0,
+        "profit_factor": 0,
+        "max_drawdown_r": 0,
+        "sharpe_proxy": 0,
+        "description": "No trades generated"
+      },
+      "BM_6_mean_reversion": {
+        "benchmark_id": "BM_6",
+        "name": "Simple Mean Reversion",
+        "symbol": "ETHUSDT",
+        "timeframe": "SET_3",
+        "total_trades": 4813,
+        "win_rate": 0.3717,
+        "total_r": -694.13,
+        "expectancy_r": -0.1442,
+        "profit_factor": 0.791,
+        "max_drawdown_r": 718.72,
+        "sharpe_proxy": -0.113,
+        "description": "Bollinger Bands (20, 2.0) reversion to the 20-SMA mean"
+      }
+    }
+  },
+  "SOL_SET_3_HYP_A_PULLBACK": {
+    "challenger_id": "SOL_SET_3_HYP_A_PULLBACK",
+    "slot_key": "SOLUSDT_SET_3_PULLBACK",
+    "promotion_verdict": "PROMOTED_INITIAL_CHAMPION",
+    "promotion_reason": "First qualified champion for slot SOLUSDT_SET_3_PULLBACK (EQS: 82.4)",
+    "eqs": {
+      "candidate_id": "SOL_SET_3_HYP_A_PULLBACK",
+      "total_score": 82.4,
+      "classification": "STRONG_EDGE",
+      "component_scores": {
+        "expectancy": 15.0,
+        "sample_adequacy": 10.0,
+        "oos_consistency": 15.0,
+        "asset_transfer": 5.0,
+        "scale_transfer": 5.0,
+        "cost_resilience": 5.0,
+        "concentration": 10.0,
+        "tail_risk": 7.4,
+        "null_superiority": 10.0
+      },
+      "details": {
+        "exp_full": 0.8807,
+        "n_trades": 707,
+        "exp_oos": 1.4194,
+        "exp_ex_top2": 0.846,
+        "top2_concentration_pct": 4.2,
+        "max_drawdown_r": 9.7,
+        "cvar_95_r": -1.1392,
+        "null_p_value": 0.0
+      }
+    },
+    "null_test": {
+      "test_type": "RANDOM_DIRECTION",
+      "n_iterations": 30,
+      "candidate_expectancy_r": 0.8807,
+      "candidate_total_r": 622.68,
+      "null_mean_expectancy_r": 0.1026,
+      "null_std_expectancy_r": 0.0895,
+      "null_max_expectancy_r": 0.2981,
+      "empirical_p_value": 0.0,
+      "is_falsified": false,
+      "verdict": "PASS_EDGE_CONFIRMED"
+    },
+    "benchmarks": {
+      "BM_4_trend_following": {
+        "benchmark_id": "BM_4",
+        "name": "Simple Trend Following",
+        "symbol": "SOLUSDT",
+        "timeframe": "SET_3",
+        "total_trades": 0,
+        "win_rate": 0,
+        "total_r": 0,
+        "expectancy_r": 0,
+        "profit_factor": 0,
+        "max_drawdown_r": 0,
+        "sharpe_proxy": 0,
+        "description": "No trades generated"
+      },
+      "BM_6_mean_reversion": {
+        "benchmark_id": "BM_6",
+        "name": "Simple Mean Reversion",
+        "symbol": "SOLUSDT",
+        "timeframe": "SET_3",
+        "total_trades": 3244,
+        "win_rate": 0.3752,
+        "total_r": -352.85,
+        "expectancy_r": -0.1088,
+        "profit_factor": 0.837,
+        "max_drawdown_r": 374.78,
+        "sharpe_proxy": -0.086,
+        "description": "Bollinger Bands (20, 2.0) reversion to the 20-SMA mean"
+      }
+    }
+  },
+  "SOL_SET_4_HYP_B_CONTINUATION": {
+    "challenger_id": "SOL_SET_4_HYP_B_CONTINUATION",
+    "slot_key": "SOLUSDT_SET_4_CONTINUATION",
+    "promotion_verdict": "PROMOTED_INITIAL_CHAMPION",
+    "promotion_reason": "First qualified champion for slot SOLUSDT_SET_4_CONTINUATION (EQS: 75.0)",
+    "eqs": {
+      "candidate_id": "SOL_SET_4_HYP_B_CONTINUATION",
+      "total_score": 75.0,
+      "classification": "PROMISING",
+      "component_scores": {
+        "expectancy": 15.0,
+        "sample_adequacy": 10.0,
+        "oos_consistency": 10.0,
+        "asset_transfer": 5.0,
+        "scale_transfer": 5.0,
+        "cost_resilience": 5.0,
+        "concentration": 10.0,
+        "tail_risk": 5.0,
+        "null_superiority": 10.0
+      },
+      "details": {
+        "exp_full": 0.4494,
+        "n_trades": 493,
+        "exp_oos": 0.4494,
+        "exp_ex_top2": 0.4028,
+        "top2_concentration_pct": 10.7,
+        "max_drawdown_r": 16.74,
+        "cvar_95_r": -1.3245,
+        "null_p_value": 0.0
+      }
+    },
+    "null_test": {
+      "test_type": "RANDOM_DIRECTION",
+      "n_iterations": 30,
+      "candidate_expectancy_r": 0.4494,
+      "candidate_total_r": 221.55,
+      "null_mean_expectancy_r": -0.1304,
+      "null_std_expectancy_r": 0.102,
+      "null_max_expectancy_r": 0.0821,
+      "empirical_p_value": 0.0,
+      "is_falsified": false,
+      "verdict": "PASS_EDGE_CONFIRMED"
+    },
+    "benchmarks": {
+      "BM_4_trend_following": {
+        "benchmark_id": "BM_4",
+        "name": "Simple Trend Following",
+        "symbol": "SOLUSDT",
+        "timeframe": "SET_4",
+        "total_trades": 0,
+        "win_rate": 0,
+        "total_r": 0,
+        "expectancy_r": 0,
+        "profit_factor": 0,
+        "max_drawdown_r": 0,
+        "sharpe_proxy": 0,
+        "description": "No trades generated"
+      },
+      "BM_6_mean_reversion": {
+        "benchmark_id": "BM_6",
+        "name": "Simple Mean Reversion",
+        "symbol": "SOLUSDT",
+        "timeframe": "SET_4",
+        "total_trades": 2055,
+        "win_rate": 0.3888,
+        "total_r": -516.78,
+        "expectancy_r": -0.2515,
+        "profit_factor": 0.665,
+        "max_drawdown_r": 518.32,
+        "sharpe_proxy": -0.2,
+        "description": "Bollinger Bands (20, 2.0) reversion to the 20-SMA mean"
+      }
+    }
+  },
+  "BNB_SET_2_HYP_B_CONTINUATION": {
+    "challenger_id": "BNB_SET_2_HYP_B_CONTINUATION",
+    "slot_key": "BNBUSDT_SET_2_CONTINUATION",
+    "promotion_verdict": "PROMOTED_INITIAL_CHAMPION",
+    "promotion_reason": "First qualified champion for slot BNBUSDT_SET_2_CONTINUATION (EQS: 69.5)",
+    "eqs": {
+      "candidate_id": "BNB_SET_2_HYP_B_CONTINUATION",
+      "total_score": 69.5,
+      "classification": "PROMISING",
+      "component_scores": {
+        "expectancy": 15.0,
+        "sample_adequacy": 8.0,
+        "oos_consistency": 10.0,
+        "asset_transfer": 5.0,
+        "scale_transfer": 5.0,
+        "cost_resilience": 5.0,
+        "concentration": 7.0,
+        "tail_risk": 7.5,
+        "null_superiority": 7.0
+      },
+      "details": {
+        "exp_full": 0.3417,
+        "n_trades": 50,
+        "exp_oos": 0.3417,
+        "exp_ex_top2": 0.0305,
+        "top2_concentration_pct": 91.4,
+        "max_drawdown_r": 10.77,
+        "cvar_95_r": -1.0788,
+        "null_p_value": 0.03333333333333333
+      }
+    },
+    "null_test": {
+      "test_type": "RANDOM_DIRECTION",
+      "n_iterations": 30,
+      "candidate_expectancy_r": 0.3417,
+      "candidate_total_r": 17.08,
+      "null_mean_expectancy_r": -0.285,
+      "null_std_expectancy_r": 0.2855,
+      "null_max_expectancy_r": 0.342,
+      "empirical_p_value": 0.0333,
+      "is_falsified": false,
+      "verdict": "PASS_EDGE_CONFIRMED"
+    },
+    "benchmarks": {
+      "BM_4_trend_following": {
+        "benchmark_id": "BM_4",
+        "name": "Simple Trend Following",
+        "symbol": "BNBUSDT",
+        "timeframe": "SET_2",
+        "total_trades": 0,
+        "win_rate": 0,
+        "total_r": 0,
+        "expectancy_r": 0,
+        "profit_factor": 0,
+        "max_drawdown_r": 0,
+        "sharpe_proxy": 0,
+        "description": "No trades generated"
+      },
+      "BM_6_mean_reversion": {
+        "benchmark_id": "BM_6",
+        "name": "Simple Mean Reversion",
+        "symbol": "BNBUSDT",
+        "timeframe": "SET_2",
+        "total_trades": 316,
+        "win_rate": 0.3861,
+        "total_r": -22.18,
+        "expectancy_r": -0.0702,
+        "profit_factor": 0.893,
+        "max_drawdown_r": 36.39,
+        "sharpe_proxy": -0.055,
+        "description": "Bollinger Bands (20, 2.0) reversion to the 20-SMA mean"
+      }
+    }
+  },
+  "BTC_SET_5_HYP_B_CONTINUATION": {
+    "challenger_id": "BTC_SET_5_HYP_B_CONTINUATION",
+    "slot_key": "BTCUSDT_SET_5_CONTINUATION",
+    "promotion_verdict": "REJECTED_SUBPAR_SCORE",
+    "promotion_reason": "EQS 43.7 below qualifying threshold (Classification: UNSTABLE)",
+    "eqs": {
+      "candidate_id": "BTC_SET_5_HYP_B_CONTINUATION",
+      "total_score": 43.7,
+      "classification": "UNSTABLE",
+      "component_scores": {
+        "expectancy": 1.6,
+        "sample_adequacy": 5.0,
+        "oos_consistency": 10.0,
+        "asset_transfer": 5.0,
+        "scale_transfer": 5.0,
+        "cost_resilience": 5.0,
+        "concentration": 0.0,
+        "tail_risk": 2.1,
+        "null_superiority": 10.0
+      },
+      "details": {
+        "exp_full": 0.0273,
+        "n_trades": 48,
+        "exp_oos": 0.0273,
+        "exp_ex_top2": -0.1482,
+        "top2_concentration_pct": 620.3,
+        "max_drawdown_r": 20.79,
+        "cvar_95_r": -1.7563,
+        "null_p_value": 0.0
+      }
+    },
+    "null_test": {
+      "test_type": "RANDOM_DIRECTION",
+      "n_iterations": 30,
+      "candidate_expectancy_r": 0.0273,
+      "candidate_total_r": 1.31,
+      "null_mean_expectancy_r": -0.7399,
+      "null_std_expectancy_r": 0.2585,
+      "null_max_expectancy_r": -0.329,
+      "empirical_p_value": 0.0,
+      "is_falsified": false,
+      "verdict": "PASS_EDGE_CONFIRMED"
+    },
+    "benchmarks": {
+      "BM_4_trend_following": {
+        "benchmark_id": "BM_4",
+        "name": "Simple Trend Following",
+        "symbol": "BTCUSDT",
+        "timeframe": "SET_5",
+        "total_trades": 0,
+        "win_rate": 0,
+        "total_r": 0,
+        "expectancy_r": 0,
+        "profit_factor": 0,
+        "max_drawdown_r": 0,
+        "sharpe_proxy": 0,
+        "description": "No trades generated"
+      },
+      "BM_6_mean_reversion": {
+        "benchmark_id": "BM_6",
+        "name": "Simple Mean Reversion",
+        "symbol": "BTCUSDT",
+        "timeframe": "SET_5",
+        "total_trades": 277,
+        "win_rate": 0.2383,
+        "total_r": -412.19,
+        "expectancy_r": -1.4881,
+        "profit_factor": 0.106,
+        "max_drawdown_r": 412.76,
+        "sharpe_proxy": -0.818,
+        "description": "Bollinger Bands (20, 2.0) reversion to the 20-SMA mean"
+      }
+    }
+  }
+}

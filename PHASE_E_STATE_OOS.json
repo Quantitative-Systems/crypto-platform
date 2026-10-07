@@ -1,0 +1,27 @@
+{
+  "BULL_TRENDING_CONTINUATION": {
+    "dev_expectancy_r": 1.4543,
+    "oos_expectancy_r": -1.0415,
+    "oos_persistence": "DEGRADED_IN_OOS"
+  },
+  "BEAR_TRENDING_CONTINUATION": {
+    "dev_expectancy_r": 0.6211,
+    "oos_expectancy_r": 0.0,
+    "oos_persistence": "DEGRADED_IN_OOS"
+  },
+  "BULL_PULLBACK": {
+    "dev_expectancy_r": 0.8246,
+    "oos_expectancy_r": -0.8094,
+    "oos_persistence": "DEGRADED_IN_OOS"
+  },
+  "BEAR_PULLBACK": {
+    "dev_expectancy_r": 0.0345,
+    "oos_expectancy_r": -0.2919,
+    "oos_persistence": "DEGRADED_IN_OOS"
+  },
+  "RANGING_CHOP": {
+    "dev_expectancy_r": 0.1798,
+    "oos_expectancy_r": 0.0349,
+    "oos_persistence": "PERSISTENT_EDGE"
+  }
+}

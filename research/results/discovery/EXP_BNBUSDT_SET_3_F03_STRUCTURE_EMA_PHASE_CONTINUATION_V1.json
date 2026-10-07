@@ -1,0 +1,81 @@
+{
+  "experiment_id": "EXP_BNBUSDT_SET_3_F03_STRUCTURE_EMA_PHASE_CONTINUATION_V1",
+  "status": "COMPLETED",
+  "symbol": "BNBUSDT",
+  "set_id": "SET_3",
+  "family_id": "F03_STRUCTURE_EMA_PHASE",
+  "phase_mode": "CONTINUATION",
+  "timeframe_hierarchy": {
+    "htf": "1d",
+    "mtf": "4h",
+    "ltf": "1h"
+  },
+  "testable_period": {
+    "start_iso": "2026-03-11T08:00:00+00:00",
+    "end_iso": "2026-10-05T00:00:00+00:00",
+    "total_ltf_bars": 4985
+  },
+  "overall_metrics": {
+    "trade_count": 6,
+    "win_count": 3,
+    "loss_count": 3,
+    "win_rate": 0.5,
+    "loss_rate": 0.5,
+    "total_r": 2.1498,
+    "expectancy_r": 0.3583,
+    "profit_factor": 1.9292815768998017,
+    "max_drawdown_r": 2.3133999999999997,
+    "target_4r_hit_rate": 0.0,
+    "avg_bars_held": 130.66666666666666,
+    "fees_bps_roundtrip": 15.0,
+    "slippage_bps_roundtrip": 4.0
+  },
+  "partitioned_walk_forward": {
+    "dev": {
+      "trade_count": 3,
+      "win_count": 2,
+      "loss_count": 1,
+      "win_rate": 0.6667,
+      "loss_rate": 0.3333,
+      "total_r": 1.85,
+      "expectancy_r": 0.6183,
+      "profit_factor": 17.576,
+      "max_drawdown_r": 0.11,
+      "average_win_r": 0.98,
+      "average_loss_r": -0.11
+    },
+    "val": {
+      "trade_count": 0,
+      "win_rate": 0.0,
+      "total_r": 0.0,
+      "expectancy_r": 0.0,
+      "profit_factor": 0.0,
+      "max_drawdown_r": 0.0
+    },
+    "oos": {
+      "trade_count": 3,
+      "win_count": 1,
+      "loss_count": 2,
+      "win_rate": 0.3333,
+      "loss_rate": 0.6667,
+      "total_r": 0.29,
+      "expectancy_r": 0.0983,
+      "profit_factor": 1.134,
+      "max_drawdown_r": 1.11,
+      "average_win_r": 2.5,
+      "average_loss_r": -1.1
+    }
+  },
+  "direction_performance": {
+    "long_trades": 5,
+    "long_total_r": 2.26,
+    "short_trades": 1,
+    "short_total_r": -0.11
+  },
+  "edge_qualification": {
+    "has_positive_expectancy": true,
+    "has_positive_oos": true,
+    "has_sufficient_trades": false,
+    "survives_costs": true
+  }
+}

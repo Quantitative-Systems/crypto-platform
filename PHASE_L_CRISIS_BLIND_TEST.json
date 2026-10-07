@@ -1,0 +1,91 @@
+{
+  "timestamp_utc": "2026-10-06T15:24:35.712243+00:00",
+  "phase": "PHASE_L",
+  "crisis_episodes": [
+    {
+      "episode_id": "CRISIS_1_MAY_2021",
+      "episode_name": "May 2021 Liquidation Cascade (-50% flash flush)",
+      "date_range": "2021-05-10 to 2021-06-15",
+      "crisis_type": "LIQUIDITY_SHOCK",
+      "baseline_trades": 0,
+      "baseline_net_r": 0.0,
+      "baseline_max_dd_pct": 0.0,
+      "governed_trades": 0,
+      "governed_net_r": 0.0,
+      "governed_max_dd_pct": 0.0,
+      "drawdown_reduction_pct": 0.0,
+      "defense_verdict": "FLAT_PRESERVATION"
+    },
+    {
+      "episode_id": "CRISIS_2_LUNA_3AC_2022",
+      "episode_name": "Terra/Luna Collapse & 3AC Credit Contagion",
+      "date_range": "2022-05-01 to 2022-06-30",
+      "crisis_type": "CREDIT_CONTAGION",
+      "baseline_trades": 2,
+      "baseline_net_r": 1.45,
+      "baseline_max_dd_pct": 1.01,
+      "governed_trades": 1,
+      "governed_net_r": 1.23,
+      "governed_max_dd_pct": 0.0,
+      "drawdown_reduction_pct": 100.0,
+      "defense_verdict": "PROTECTED"
+    },
+    {
+      "episode_id": "CRISIS_3_FTX_2022",
+      "episode_name": "FTX Fraudulent Insolvency & Alameda Liquidation",
+      "date_range": "2022-11-01 to 2022-12-15",
+      "crisis_type": "EXCHANGE_INSOLVENCY",
+      "baseline_trades": 0,
+      "baseline_net_r": 0.0,
+      "baseline_max_dd_pct": 0.0,
+      "governed_trades": 0,
+      "governed_net_r": 0.0,
+      "governed_max_dd_pct": 0.0,
+      "drawdown_reduction_pct": 0.0,
+      "defense_verdict": "FLAT_PRESERVATION"
+    },
+    {
+      "episode_id": "CRISIS_4_SVB_2023",
+      "episode_name": "SVB Banking Run & USDC Depeg Shock",
+      "date_range": "2023-03-08 to 2023-03-25",
+      "crisis_type": "STABLECOIN_DEPEG",
+      "baseline_trades": 0,
+      "baseline_net_r": 0.0,
+      "baseline_max_dd_pct": 0.0,
+      "governed_trades": 0,
+      "governed_net_r": 0.0,
+      "governed_max_dd_pct": 0.0,
+      "drawdown_reduction_pct": 0.0,
+      "defense_verdict": "FLAT_PRESERVATION"
+    },
+    {
+      "episode_id": "CRISIS_5_SUMMER_CHOP_2024",
+      "episode_name": "2024 Summer Compression / Low-Volatility Churn",
+      "date_range": "2024-06-01 to 2024-07-25",
+      "crisis_type": "CHOP_ATTRITION",
+      "baseline_trades": 0,
+      "baseline_net_r": 0.0,
+      "baseline_max_dd_pct": 0.0,
+      "governed_trades": 0,
+      "governed_net_r": 0.0,
+      "governed_max_dd_pct": 0.0,
+      "drawdown_reduction_pct": 0.0,
+      "defense_verdict": "FLAT_PRESERVATION"
+    },
+    {
+      "episode_id": "CRISIS_6_YEN_UNWIND_2024",
+      "episode_name": "August 2024 Global Yen Carry Trade Flash Crash",
+      "date_range": "2024-08-01 to 2024-08-15",
+      "crisis_type": "MACRO_VOLATILITY_FLASH",
+      "baseline_trades": 0,
+      "baseline_net_r": 0.0,
+      "baseline_max_dd_pct": 0.0,
+      "governed_trades": 0,
+      "governed_net_r": 0.0,
+      "governed_max_dd_pct": 0.0,
+      "drawdown_reduction_pct": 0.0,
+      "defense_verdict": "FLAT_PRESERVATION"
+    }
+  ],
+  "protected_rate_pct": 16.7
+}

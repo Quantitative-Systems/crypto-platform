@@ -1,0 +1,8 @@
+{
+  "experiment_id": "EXP_BTCUSDT_SET_5_F09_STRUCTURE_FIBONACCI_PHASE_CONTINUATION_V1",
+  "status": "REJECTED_NO_OVERLAP",
+  "symbol": "BTCUSDT",
+  "set_id": "SET_5",
+  "family_id": "F09_STRUCTURE_FIBONACCI_PHASE",
+  "phase_mode": "CONTINUATION"
+}

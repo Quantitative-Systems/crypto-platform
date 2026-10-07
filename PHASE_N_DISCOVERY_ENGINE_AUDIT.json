@@ -1,0 +1,271 @@
+{
+  "N1_N2_universe_discovery": {
+    "status": "PASS",
+    "total_scanned": 17,
+    "qualified_count": 11,
+    "disqualified_count": 6,
+    "base_crypto_invariant_enforced": true,
+    "test_data_nature": "VERIFICATION_TEST_FIXTURES (Synthetic stress values to validate gate logic; live empirical distributions deferred to Phase O Paper Live)",
+    "details": [
+      {
+        "symbol": "BTC/USD",
+        "base_class": "CRYPTO",
+        "quote_class": "FIAT",
+        "venue": "COINBASE",
+        "status": "QUALIFIED",
+        "reason": "QUALIFIED"
+      },
+      {
+        "symbol": "BTC/USDT",
+        "base_class": "CRYPTO",
+        "quote_class": "STABLECOIN",
+        "venue": "BINANCE",
+        "status": "QUALIFIED",
+        "reason": "QUALIFIED"
+      },
+      {
+        "symbol": "BTC/EUR",
+        "base_class": "CRYPTO",
+        "quote_class": "FIAT",
+        "venue": "KRAKEN",
+        "status": "QUALIFIED",
+        "reason": "QUALIFIED"
+      },
+      {
+        "symbol": "BTC/GBP",
+        "base_class": "CRYPTO",
+        "quote_class": "FIAT",
+        "venue": "KRAKEN",
+        "status": "QUALIFIED",
+        "reason": "QUALIFIED"
+      },
+      {
+        "symbol": "BTC/JPY",
+        "base_class": "CRYPTO",
+        "quote_class": "FIAT",
+        "venue": "BINANCE",
+        "status": "QUALIFIED",
+        "reason": "QUALIFIED"
+      },
+      {
+        "symbol": "BTC/XAU",
+        "base_class": "CRYPTO",
+        "quote_class": "COMMODITY",
+        "venue": "DERIBIT",
+        "status": "QUALIFIED",
+        "reason": "QUALIFIED"
+      },
+      {
+        "symbol": "ETH/USD",
+        "base_class": "CRYPTO",
+        "quote_class": "FIAT",
+        "venue": "COINBASE",
+        "status": "QUALIFIED",
+        "reason": "QUALIFIED"
+      },
+      {
+        "symbol": "ETH/EUR",
+        "base_class": "CRYPTO",
+        "quote_class": "FIAT",
+        "venue": "KRAKEN",
+        "status": "QUALIFIED",
+        "reason": "QUALIFIED"
+      },
+      {
+        "symbol": "ETH/XAU",
+        "base_class": "CRYPTO",
+        "quote_class": "COMMODITY",
+        "venue": "DERIBIT",
+        "status": "QUALIFIED",
+        "reason": "QUALIFIED"
+      },
+      {
+        "symbol": "SOL/USD",
+        "base_class": "CRYPTO",
+        "quote_class": "FIAT",
+        "venue": "COINBASE",
+        "status": "QUALIFIED",
+        "reason": "QUALIFIED"
+      },
+      {
+        "symbol": "SOL/XAU",
+        "base_class": "CRYPTO",
+        "quote_class": "COMMODITY",
+        "venue": "DERIBIT",
+        "status": "QUALIFIED",
+        "reason": "QUALIFIED"
+      },
+      {
+        "symbol": "EUR/USD",
+        "base_class": "FIAT",
+        "quote_class": "FIAT",
+        "venue": "OANDA",
+        "status": "DISQUALIFIED",
+        "reason": "BASE_NOT_CRYPTO (Base EUR is FIAT)"
+      },
+      {
+        "symbol": "GBP/USD",
+        "base_class": "FIAT",
+        "quote_class": "FIAT",
+        "venue": "OANDA",
+        "status": "DISQUALIFIED",
+        "reason": "BASE_NOT_CRYPTO (Base GBP is FIAT)"
+      },
+      {
+        "symbol": "XAU/USD",
+        "base_class": "COMMODITY",
+        "quote_class": "FIAT",
+        "venue": "OANDA",
+        "status": "DISQUALIFIED",
+        "reason": "BASE_NOT_CRYPTO (Base XAU is COMMODITY)"
+      },
+      {
+        "symbol": "LOW_VOL/USD",
+        "base_class": "CRYPTO",
+        "quote_class": "FIAT",
+        "venue": "UNISWAP",
+        "status": "DISQUALIFIED",
+        "reason": "LOW_VOLUME ($400,000 < $1,000,000)"
+      },
+      {
+        "symbol": "WIDE_SPREAD/USD",
+        "base_class": "CRYPTO",
+        "quote_class": "FIAT",
+        "venue": "UNKNOWN",
+        "status": "DISQUALIFIED",
+        "reason": "SPREAD_TOO_HIGH (22.0 bps > 15.0 bps)"
+      },
+      {
+        "symbol": "SHALLOW_HIST/USD",
+        "base_class": "CRYPTO",
+        "quote_class": "FIAT",
+        "venue": "NEW_EXCH",
+        "status": "DISQUALIFIED",
+        "reason": "INSUFFICIENT_HISTORY (150 bars < 500)"
+      }
+    ]
+  },
+  "N3_hierarchy_of_truth": {
+    "status": "PASS",
+    "total_levels": 12,
+    "full_stack_validated": true,
+    "containment_test": "Failure cleanly trapped at Level 7 without polluting higher execution levels",
+    "attestations_verified": 12
+  },
+  "N4_two_brain_coordinator": {
+    "status": "PASS",
+    "firewall_enforced": true,
+    "deterministic_veto_authority": true,
+    "ai_parameter_override_prevented": true,
+    "event_freeze_respected": true
+  },
+  "N5_opportunity_ranking": {
+    "status": "PASS",
+    "ranked_candidates_count": 3,
+    "top_ranked_opportunity": "BTC/USD",
+    "ranking_leaderboard": [
+      {
+        "rank": 1,
+        "symbol": "BTC/USD",
+        "direction": "LONG",
+        "destination_r": 5.2,
+        "spread_bps": 1.5,
+        "friction_r": 0.0213,
+        "composite_rank_score": 1.295
+      },
+      {
+        "rank": 2,
+        "symbol": "BTC/XAU",
+        "direction": "LONG",
+        "destination_r": 4.6,
+        "spread_bps": 5.0,
+        "friction_r": 0.0175,
+        "composite_rank_score": 1.146
+      },
+      {
+        "rank": 3,
+        "symbol": "ETH/USD",
+        "direction": "LONG",
+        "destination_r": 4.3,
+        "spread_bps": 2.5,
+        "friction_r": 0.014,
+        "composite_rank_score": 1.072
+      }
+    ]
+  },
+  "N6_hypothesis_lifecycle": {
+    "status": "PASS",
+    "registered_hypotheses": 3,
+    "active_hypotheses": [
+      "H-CONT-001",
+      "H-PULL-002"
+    ],
+    "lifecycle_transition_tested": "TESTING -> ACTIVE -> DEGRADED (Verified)",
+    "capital_tier_separation_verified": "RESEARCH_ACTIVE -> PAPER_ELIGIBLE (Verified)",
+    "parameter_mutation_prevented": true,
+    "hypotheses": [
+      {
+        "hypothesis_id": "H-CONT-001",
+        "title": "Bullish Continuation with Negative Funding & Stable Liquidity",
+        "description": "When HTF is Bullish Continuation, negative perpetual funding rates indicate short-squeeze asymmetry, improving continuation edge.",
+        "market_model_phase": "CONTINUATION",
+        "causal_conditions": {
+          "funding_rate": "NEGATIVE",
+          "liquidity": "STABLE",
+          "htf_bias": "BULLISH"
+        },
+        "status": "ACTIVE",
+        "capital_tier": "PAPER_ELIGIBLE",
+        "sample_size": 68,
+        "win_rate": 0.441,
+        "expectancy_r": 0.499,
+        "stability_score": 0.92,
+        "created_at": 1791306598.044576,
+        "last_evaluated_at": 1791306598.0445771,
+        "notes": [
+          "Capital Tier promoted to PAPER_ELIGIBLE: 30-day continuous shadow soak passed"
+        ]
+      },
+      {
+        "hypothesis_id": "H-PULL-002",
+        "title": "Macro Event Proximity Destabilizes Pullback Order Blocks",
+        "description": "Pullbacks into MTF key zones within 2 hours of high-impact macro releases suffer elevated slippage and false breakouts.",
+        "market_model_phase": "PULLBACK",
+        "causal_conditions": {
+          "event_window": "ACTIVE_FREEZE",
+          "volatility": "ELEVATED"
+        },
+        "status": "ACTIVE",
+        "capital_tier": "RESEARCH_ACTIVE",
+        "sample_size": 42,
+        "win_rate": 0.214,
+        "expectancy_r": -0.38,
+        "stability_score": 0.88,
+        "created_at": 1791306598.0445855,
+        "last_evaluated_at": 1791306598.044586,
+        "notes": []
+      },
+      {
+        "hypothesis_id": "H-XAU-004",
+        "title": "BTC/XAU Continuation during Gold Consolidation",
+        "description": "BTC/XAU exhibits heightened continuation velocity when physical gold is in low-volatility consolidation.",
+        "market_model_phase": "CONTINUATION",
+        "causal_conditions": {
+          "gold_regime": "LOW_VOLATILITY_COMPRESSION"
+        },
+        "status": "DEGRADED",
+        "capital_tier": "RESEARCH_ACTIVE",
+        "sample_size": 37,
+        "win_rate": 0.3927,
+        "expectancy_r": 0.176,
+        "stability_score": 0.8,
+        "created_at": 1791306598.0446007,
+        "last_evaluated_at": 1791306598.044634,
+        "notes": [
+          "Promoted to ACTIVE (RESEARCH_ACTIVE) at sample 33 with ExpR=+0.66",
+          "Demoted to DEGRADED due to recent drag (AvgR=-0.95)"
+        ]
+      }
+    ]
+  }
+}

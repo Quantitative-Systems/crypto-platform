@@ -286,3 +286,6 @@ class UniversalMarketDataFabric:
             while chunk := f.read(65536):
                 h.update(chunk)
         return h.hexdigest()
+
+
+UniversalDataFabric = UniversalMarketDataFabric

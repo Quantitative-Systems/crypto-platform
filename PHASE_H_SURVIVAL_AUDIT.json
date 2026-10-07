@@ -1,0 +1,42 @@
+{
+  "timestamp_utc": "2026-10-06T07:42:25.542432+00:00",
+  "ungoverned_baseline": {
+    "total_trades": 66,
+    "net_r": 58.66,
+    "expectancy_r": 0.889,
+    "win_rate": 45.5,
+    "profit_factor": 2.57,
+    "max_drawdown_pct": 6.17,
+    "max_consecutive_losses": 10,
+    "var_95_r": -1.08,
+    "cvar_95_tail_loss_r": -1.1,
+    "risk_of_ruin_pct": 0.01,
+    "final_equity_usd": 158663.9
+  },
+  "governed_capital_defense": {
+    "total_trades": 61,
+    "net_r": 45.51,
+    "expectancy_r": 0.746,
+    "win_rate": 41.0,
+    "profit_factor": 2.22,
+    "max_drawdown_pct": 6.03,
+    "max_consecutive_losses": 9,
+    "var_95_r": -1.09,
+    "cvar_95_tail_loss_r": -1.1,
+    "risk_of_ruin_pct": 0.01,
+    "final_equity_usd": 145513.9
+  },
+  "drawdown_reduction_pct": 0.14,
+  "capital_preserved_r": 0.0,
+  "opportunity_rejection_ratio_pct": 14.0,
+  "top_rejection_reasons": [
+    [
+      "POSITIONING_DYNAMICS: Crowded shorts face violent squeeze hazard.",
+      20
+    ],
+    [
+      "LAYER_4_REGIME: Unfavorable regime climate (Tight Liquidity / Chop).",
+      14
+    ]
+  ]
+}

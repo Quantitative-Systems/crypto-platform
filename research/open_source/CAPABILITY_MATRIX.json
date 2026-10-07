@@ -1,0 +1,187 @@
+{
+  "metadata": {
+    "generated_at_utc": "2026-10-05T16:50:00+00:00",
+    "description": "Exhaustive institutional capability comparison matrix: current crypto-platform vs open-source state of the art",
+    "classification_categories": {
+      "A": "CORE_INFRASTRUCTURE",
+      "B": "MARKET_MODEL_OBSERVATION",
+      "C": "STRATEGY_HYPOTHESIS",
+      "D": "ENTRY_MODEL",
+      "E": "TRADE_MANAGEMENT",
+      "F": "RISK_MANAGEMENT",
+      "G": "PORTFOLIO_MANAGEMENT",
+      "H": "EXECUTION_MODEL",
+      "I": "DATA_SOURCE",
+      "J": "RESEARCH_VALIDATION_TOOL",
+      "K": "FUTURE_EXPERIMENT",
+      "L": "REJECTED"
+    }
+  },
+  "capabilities": [
+    {
+      "domain": "DATA_ENGINEERING",
+      "capability": "Historical OHLCV Acquisition & Ingestion",
+      "current_platform_status": "EXISTS",
+      "current_implementation": "market_data/binance_fetcher.py and market_data/cache JSON storage across 28 series",
+      "best_open_source_benchmark": "Freqtrade (incremental downloader) & CCXT unified REST",
+      "gap_analysis": "Current fetcher is functional but Binance-specific; lacks automatic incremental updates for missing intervals",
+      "classification": "A. CORE INFRASTRUCTURE",
+      "action": "ADAPT",
+      "rationale": "Generalize fetcher with CCXT-compatible schema and automatic missing candle gap-fill while maintaining local cache integrity."
+    },
+    {
+      "domain": "DATA_ENGINEERING",
+      "capability": "Data Validation & Invariant Auditing",
+      "current_platform_status": "EXISTS",
+      "current_implementation": "research/datasets/build_data_inventory.py (100% OHLCV invariants, strict monotonicity, zero duplicates)",
+      "best_open_source_benchmark": "QuantConnect Lean Data Validator / Freqtrade validation",
+      "gap_analysis": "Platform already enforces strict mathematical invariants ($H \\ge L$, $H \\ge O/C$, $L \\le O/C$, $V \\ge 0$)",
+      "classification": "A. CORE INFRASTRUCTURE",
+      "action": "REUSE",
+      "rationale": "Our current invariant audit is mathematically complete and produces machine-readable DATA_INVENTORY.json."
+    },
+    {
+      "domain": "DATA_ENGINEERING",
+      "capability": "Funding Rate & Open Interest Telemetry",
+      "current_platform_status": "PARTIAL",
+      "current_implementation": "Data fields defined in DataInventory; storage schema present but no historical perps pipeline",
+      "best_open_source_benchmark": "CCXT (fetch_funding_rate_history) & NautilusTrader derivatives feed",
+      "gap_analysis": "Historical 8-hour funding rates and hourly open interest need automated download and caching for perpetual pairs",
+      "classification": "I. DATA SOURCE",
+      "action": "ADAPT",
+      "rationale": "Add funding rate and OI historical download helpers to market_data without changing the core Market Model."
+    },
+    {
+      "domain": "DATA_ENGINEERING",
+      "capability": "Causal Multi-Timeframe Consolidation & Overlap",
+      "current_platform_status": "EXISTS",
+      "current_implementation": "Strict timestamp intersection across HTF/MTF/LTF in discovery_runner.py and DATA_INVENTORY.json",
+      "best_open_source_benchmark": "Jesse multi-timeframe candle engine & QuantConnect QuoteBarConsolidator",
+      "gap_analysis": "Current caching by closed timestamp prevents lookahead. Can be accelerated by compiling resamplers.",
+      "classification": "A. CORE INFRASTRUCTURE",
+      "action": "REUSE",
+      "rationale": "Current implementation guarantees zero lookahead across all 5 canonical timeframe sets."
+    },
+    {
+      "domain": "BACKTESTING",
+      "capability": "Zero-Lookahead Causal Simulation Engine",
+      "current_platform_status": "EXISTS",
+      "current_implementation": "execution/backtest/engine.py (CausalBacktestEngine, next-bar open fill, adverse intrabar collision)",
+      "best_open_source_benchmark": "NautilusTrader (microsecond clock) & Jesse (1m simulation)",
+      "gap_analysis": "Current engine matches Jesse's causal discipline while supporting high-throughput bar stepping",
+      "classification": "A. CORE INFRASTRUCTURE",
+      "action": "REUSE",
+      "rationale": "Engine is causal, deterministic, and enforces next-bar execution with adverse-first intrabar stop checks."
+    },
+    {
+      "domain": "BACKTESTING",
+      "capability": "Realistic Transaction Costs & Slippage Modeling",
+      "current_platform_status": "EXISTS",
+      "current_implementation": "execution/costs/cost_model.py (15 bps roundtrip taker fee + 4 bps slippage)",
+      "best_open_source_benchmark": "QuantConnect Lean Fee Models & NautilusTrader fee schedules",
+      "gap_analysis": "Matches or exceeds institutional conservative standards for crypto spot/futures friction",
+      "classification": "A. CORE INFRASTRUCTURE",
+      "action": "REUSE",
+      "rationale": "Prevents unrealistically profitable micro-edges from passing validation."
+    },
+    {
+      "domain": "MARKET_MODEL",
+      "capability": "Formal Observation Registry",
+      "current_platform_status": "MISSING",
+      "current_implementation": "Observations extracted ad-hoc inside strategy families (f01 through f10)",
+      "best_open_source_benchmark": "QuantConnect Alpha Insights & Freqtrade Indicators Registry",
+      "gap_analysis": "Need a centralized, decoupled observation registry (Structure, Zones, Phase, Technicals, Regimes) that sits between MarketState and Strategy Hypotheses",
+      "classification": "B. MARKET MODEL OBSERVATION",
+      "action": "REIMPLEMENT",
+      "rationale": "Mandatory architectural requirement: formalize market_model/observations/ to allow infinite strategy hypotheses without touching the frozen Market Model."
+    },
+    {
+      "domain": "RESEARCH_VALIDATION",
+      "capability": "Chronological Walk-Forward Optimization (DEV / VAL / OOS)",
+      "current_platform_status": "EXISTS",
+      "current_implementation": "Partitioned 60% DEV / 20% VAL / 20% OOS in discovery_runner.py",
+      "best_open_source_benchmark": "VectorBT rolling walk-forward & FreqAI adaptive time-series splits",
+      "gap_analysis": "Currently single-split walk-forward; can expand to rolling multi-window anchored walk-forward",
+      "classification": "J. RESEARCH / VALIDATION TOOL",
+      "action": "ADAPT",
+      "rationale": "Current 3-way chronological split is valid; expand with rolling multi-fold walk-forward validation utility."
+    },
+    {
+      "domain": "RESEARCH_VALIDATION",
+      "capability": "Monte Carlo Robustness & Permutation Testing",
+      "current_platform_status": "MISSING",
+      "current_implementation": "None in active architecture (present in archived legacy code)",
+      "best_open_source_benchmark": "VectorBT Monte Carlo resampler & NautilusTrader stress testing",
+      "gap_analysis": "Need trade-order shuffling, trade-dropout testing, and slippage jitter simulations to test whether edge survives bad sequencing",
+      "classification": "J. RESEARCH / VALIDATION TOOL",
+      "action": "REIMPLEMENT",
+      "rationale": "High-priority upgrade to filter out curve-fit single path edges."
+    },
+    {
+      "domain": "RESEARCH_VALIDATION",
+      "capability": "Parameter Neighborhood Stability & Plateau Detection",
+      "current_platform_status": "MISSING",
+      "current_implementation": "Single-parameter backtests recorded in registry",
+      "best_open_source_benchmark": "VectorBT 2D/3D parameter heatmap sensitivity analysis",
+      "gap_analysis": "Need automated parameter stability scoring to reject isolated parameter spikes in favor of broad performance plateaus",
+      "classification": "J. RESEARCH / VALIDATION TOOL",
+      "action": "REIMPLEMENT",
+      "rationale": "Prevents selecting an optimal parameter that collapses under 5% parameter perturbation."
+    },
+    {
+      "domain": "RISK_MANAGEMENT",
+      "capability": "Account Risk & Invalidation Stop Sizing",
+      "current_platform_status": "EXISTS",
+      "current_implementation": "Strict 1% max account risk sizing: risk_amount / stop_distance",
+      "best_open_source_benchmark": "Jesse position sizing & QuantConnect risk models",
+      "gap_analysis": "Fully implemented and verified; never violates 1% risk constraint",
+      "classification": "F. RISK MANAGEMENT",
+      "action": "REUSE",
+      "rationale": "Mathematically sound and institutional grade."
+    },
+    {
+      "domain": "RISK_MANAGEMENT",
+      "capability": "Portfolio-Level Drawdown Governor & Exposure Firewalls",
+      "current_platform_status": "PARTIAL",
+      "current_implementation": "Per-trade max DD recorded in metrics; portfolio level governor defined in legacy code",
+      "best_open_source_benchmark": "NautilusTrader risk engine & Freqtrade MaxDrawdownProtection",
+      "gap_analysis": "Need active portfolio governor to halt new entries if cumulative portfolio drawdown exceeds threshold (e.g. 5R / 5%)",
+      "classification": "F. RISK MANAGEMENT",
+      "action": "ADAPT",
+      "rationale": "Add portfolio governor as an external risk guard outside individual strategy logic."
+    },
+    {
+      "domain": "INTELLIGENCE",
+      "capability": "Market Regime Classification & Volatility Regimes",
+      "current_platform_status": "PARTIAL",
+      "current_implementation": "Phase engine identifies PULLBACK / CONTINUATION; external technical indicators present",
+      "best_open_source_benchmark": "FreqAI PCA/Mahalanobis distance & FinRL turbulence index",
+      "gap_analysis": "Need modular regime observations (Bull/Bear, High/Low Volatility, BTC Risk-On/Off) registered as strategy filters",
+      "classification": "B. MARKET MODEL OBSERVATION",
+      "action": "REIMPLEMENT",
+      "rationale": "Classify regimes as observations in the observation registry to evaluate strategy performance conditionally."
+    },
+    {
+      "domain": "MACHINE_LEARNING",
+      "capability": "Leakage-Safe ML Feature Pipelines & Trade Ranking",
+      "current_platform_status": "MISSING",
+      "current_implementation": "None in active architecture",
+      "best_open_source_benchmark": "FreqAI (IFreqaiModel, FreqaiDataKitchen)",
+      "gap_analysis": "ML must NOT predict price or replace the Market Model; ML can rank entry candidate quality or classify regimes",
+      "classification": "K. FUTURE EXPERIMENT",
+      "action": "WRAP",
+      "rationale": "Establish research/ml/ scaffold for future supervised learning on entry quality without contaminating core architecture."
+    },
+    {
+      "domain": "ARBITRAGE_HEDGING",
+      "capability": "Spot/Perpetual Basis & Funding Rate Arbitrage",
+      "current_platform_status": "MISSING",
+      "current_implementation": "None in active architecture",
+      "best_open_source_benchmark": "Hummingbot (ArbitrageExecutor, Pure Market Making)",
+      "gap_analysis": "Non-directional cash-and-carry and funding arbitrage require independent simulation assumptions",
+      "classification": "K. FUTURE EXPERIMENT",
+      "action": "WRAP",
+      "rationale": "Establish research/arbitrage/ and research/hedging/ as isolated research families separate from directional strategies."
+    }
+  ]
+}

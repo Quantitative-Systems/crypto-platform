@@ -1,0 +1,200 @@
+{
+  "experiment_id": "EXP_BTCUSDT_SET_4_F08_STRUCTURE_TRENDLINE_PHASE_CONTINUATION_V1",
+  "status": "COMPLETED",
+  "symbol": "BTCUSDT",
+  "set_id": "SET_4",
+  "family_id": "F08_STRUCTURE_TRENDLINE_PHASE",
+  "phase_mode": "CONTINUATION",
+  "timeframe_hierarchy": {
+    "htf": "4h",
+    "mtf": "1h",
+    "ltf": "15m"
+  },
+  "testable_period": {
+    "start_iso": "2026-07-03T14:30:00+00:00",
+    "end_iso": "2026-09-01T16:00:00+00:00",
+    "total_ltf_bars": 5767
+  },
+  "overall_metrics": {
+    "trade_count": 8,
+    "win_count": 3,
+    "loss_count": 5,
+    "win_rate": 0.375,
+    "loss_rate": 0.625,
+    "total_r": 0.5554000000000001,
+    "expectancy_r": 0.06942500000000001,
+    "profit_factor": 1.1102202818019447,
+    "max_drawdown_r": 4.8884,
+    "target_4r_hit_rate": 0.125,
+    "avg_bars_held": 136.375,
+    "fees_bps_roundtrip": 15.0,
+    "slippage_bps_roundtrip": 4.0
+  },
+  "partitioned_walk_forward": {
+    "dev": {
+      "trade_count": 5,
+      "win_count": 1,
+      "loss_count": 4,
+      "win_rate": 0.2,
+      "loss_rate": 0.8,
+      "total_r": -3.32,
+      "expectancy_r": -0.664,
+      "profit_factor": 0.321,
+      "max_drawdown_r": 4.89,
+      "average_win_r": 1.57,
+      "average_loss_r": -1.22
+    },
+    "val": {
+      "trade_count": 1,
+      "win_count": 1,
+      "loss_count": 0,
+      "win_rate": 1.0,
+      "loss_rate": 0.0,
+      "total_r": 3.95,
+      "expectancy_r": 3.9455,
+      "profit_factor": 99.0,
+      "max_drawdown_r": 0.0,
+      "average_win_r": 3.95,
+      "average_loss_r": 0.0
+    },
+    "oos": {
+      "trade_count": 2,
+      "win_count": 1,
+      "loss_count": 1,
+      "win_rate": 0.5,
+      "loss_rate": 0.5,
+      "total_r": -0.07,
+      "expectancy_r": -0.0351,
+      "profit_factor": 0.534,
+      "max_drawdown_r": 0.0,
+      "average_win_r": 0.08,
+      "average_loss_r": -0.15
+    }
+  },
+  "direction_performance": {
+    "long_trades": 7,
+    "long_total_r": 1.73,
+    "short_trades": 1,
+    "short_total_r": -1.17
+  },
+  "edge_qualification": {
+    "has_positive_expectancy": true,
+    "has_positive_oos": false,
+    "has_sufficient_trades": false,
+    "survives_costs": false
+  },
+  "trade_records": [
+    {
+      "direction": 1,
+      "entry_price": 62955.88,
+      "exit_price": 64257.34,
+      "stop_price": 62173.76,
+      "target_price": 66021.34,
+      "realized_r": 1.5685,
+      "entry_ts": 1783581300000,
+      "exit_ts": 1783761300000,
+      "exit_reason": "TIME_EXIT",
+      "bars_held": 200,
+      "mfe_r": 2.26,
+      "mae_r": 0.64
+    },
+    {
+      "direction": -1,
+      "entry_price": 62505.5,
+      "exit_price": 63211.33,
+      "stop_price": 63198.69,
+      "target_price": 59795.31,
+      "realized_r": -1.1747,
+      "entry_ts": 1783948500000,
+      "exit_ts": 1784032200000,
+      "exit_reason": "LTF_SL",
+      "bars_held": 93,
+      "mfe_r": 1.0,
+      "mae_r": 1.71
+    },
+    {
+      "direction": 1,
+      "entry_price": 65766.19,
+      "exit_price": 65264.12,
+      "stop_price": 65277.18,
+      "target_price": 67656.54,
+      "realized_r": -1.2624,
+      "entry_ts": 1784571300000,
+      "exit_ts": 1784573100000,
+      "exit_reason": "LTF_SL",
+      "bars_held": 2,
+      "mfe_r": 0.01,
+      "mae_r": 1.18
+    },
+    {
+      "direction": 1,
+      "entry_price": 65945.11,
+      "exit_price": 65393.14,
+      "stop_price": 65406.22,
+      "target_price": 68034.73,
+      "realized_r": -1.2381,
+      "entry_ts": 1784618100000,
+      "exit_ts": 1784790000000,
+      "exit_reason": "LTF_SL",
+      "bars_held": 191,
+      "mfe_r": 1.92,
+      "mae_r": 1.13
+    },
+    {
+      "direction": 1,
+      "entry_price": 64473.03,
+      "exit_price": 63873.27,
+      "stop_price": 63886.05,
+      "target_price": 66756.45,
+      "realized_r": -1.2132,
+      "entry_ts": 1785896100000,
+      "exit_ts": 1785936600000,
+      "exit_reason": "LTF_SL",
+      "bars_held": 45,
+      "mfe_r": 0.19,
+      "mae_r": 1.03
+    },
+    {
+      "direction": 1,
+      "entry_price": 66667.33,
+      "exit_price": 76069.43,
+      "stop_price": 64296.34,
+      "target_price": 76084.64,
+      "realized_r": 3.9455,
+      "entry_ts": 1787152500000,
+      "exit_ts": 1787296500000,
+      "exit_reason": "HTF_TP",
+      "bars_held": 160,
+      "mfe_r": 4.35,
+      "mae_r": 0.04
+    },
+    {
+      "direction": 1,
+      "entry_price": 76907.39,
+      "exit_price": 76742.18,
+      "stop_price": 75028.9,
+      "target_price": 84344.47,
+      "realized_r": -0.1506,
+      "entry_ts": 1787300100000,
+      "exit_ts": 1787480100000,
+      "exit_reason": "TIME_EXIT",
+      "bars_held": 200,
+      "mfe_r": 1.39,
+      "mae_r": 0.73
+    },
+    {
+      "direction": 1,
+      "entry_price": 77834.61,
+      "exit_price": 78036.4,
+      "stop_price": 76761.16,
+      "target_price": 82050.6,
+      "realized_r": 0.0804,
+      "entry_ts": 1787570100000,
+      "exit_ts": 1787750100000,
+      "exit_reason": "TIME_EXIT",
+      "bars_held": 200,
+      "mfe_r": 3.25,
+      "mae_r": 0.11
+    }
+  ]
+}

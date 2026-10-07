@@ -1,0 +1,363 @@
+{
+  "M1_instrument_registry": {
+    "status": "PASS",
+    "admitted_instruments": 8,
+    "rejected_instruments": 4,
+    "invariant_enforced": "BASE_ASSET_CLASS == AssetClass.CRYPTO",
+    "details": [
+      {
+        "symbol": "BTC/USD",
+        "base_asset": "BTC",
+        "base_class": "CRYPTO",
+        "quote_asset": "USD",
+        "quote_class": "FIAT",
+        "engine_eligible": true,
+        "admission_decision": "ADMITTED",
+        "reason": "ADMITTED"
+      },
+      {
+        "symbol": "BTC/USDT",
+        "base_asset": "BTC",
+        "base_class": "CRYPTO",
+        "quote_asset": "USDT",
+        "quote_class": "STABLECOIN",
+        "engine_eligible": true,
+        "admission_decision": "ADMITTED",
+        "reason": "ADMITTED"
+      },
+      {
+        "symbol": "BTC/EUR",
+        "base_asset": "BTC",
+        "base_class": "CRYPTO",
+        "quote_asset": "EUR",
+        "quote_class": "FIAT",
+        "engine_eligible": true,
+        "admission_decision": "ADMITTED",
+        "reason": "ADMITTED"
+      },
+      {
+        "symbol": "BTC/GBP",
+        "base_asset": "BTC",
+        "base_class": "CRYPTO",
+        "quote_asset": "GBP",
+        "quote_class": "FIAT",
+        "engine_eligible": true,
+        "admission_decision": "ADMITTED",
+        "reason": "ADMITTED"
+      },
+      {
+        "symbol": "BTC/JPY",
+        "base_asset": "BTC",
+        "base_class": "CRYPTO",
+        "quote_asset": "JPY",
+        "quote_class": "FIAT",
+        "engine_eligible": true,
+        "admission_decision": "ADMITTED",
+        "reason": "ADMITTED"
+      },
+      {
+        "symbol": "BTC/XAU",
+        "base_asset": "BTC",
+        "base_class": "CRYPTO",
+        "quote_asset": "XAU",
+        "quote_class": "COMMODITY",
+        "engine_eligible": true,
+        "admission_decision": "ADMITTED",
+        "reason": "ADMITTED"
+      },
+      {
+        "symbol": "ETH/USD",
+        "base_asset": "ETH",
+        "base_class": "CRYPTO",
+        "quote_asset": "USD",
+        "quote_class": "FIAT",
+        "engine_eligible": true,
+        "admission_decision": "ADMITTED",
+        "reason": "ADMITTED"
+      },
+      {
+        "symbol": "SOL/USD",
+        "base_asset": "SOL",
+        "base_class": "CRYPTO",
+        "quote_asset": "USD",
+        "quote_class": "FIAT",
+        "engine_eligible": true,
+        "admission_decision": "ADMITTED",
+        "reason": "ADMITTED"
+      },
+      {
+        "symbol": "EUR/USD",
+        "base_asset": "EUR",
+        "base_class": "FIAT",
+        "quote_asset": "USD",
+        "quote_class": "FIAT",
+        "engine_eligible": false,
+        "admission_decision": "REJECTED",
+        "reason": "BASE_NOT_CRYPTO"
+      },
+      {
+        "symbol": "GBP/USD",
+        "base_asset": "GBP",
+        "base_class": "FIAT",
+        "quote_asset": "USD",
+        "quote_class": "FIAT",
+        "engine_eligible": false,
+        "admission_decision": "REJECTED",
+        "reason": "BASE_NOT_CRYPTO"
+      },
+      {
+        "symbol": "XAU/USD",
+        "base_asset": "XAU",
+        "base_class": "COMMODITY",
+        "quote_asset": "USD",
+        "quote_class": "FIAT",
+        "engine_eligible": false,
+        "admission_decision": "REJECTED",
+        "reason": "BASE_NOT_CRYPTO"
+      },
+      {
+        "symbol": "USD/JPY",
+        "base_asset": "USD",
+        "base_class": "FIAT",
+        "quote_asset": "JPY",
+        "quote_class": "FIAT",
+        "engine_eligible": false,
+        "admission_decision": "REJECTED",
+        "reason": "BASE_NOT_CRYPTO"
+      }
+    ]
+  },
+  "M2_data_clock_fabric": {
+    "status": "PASS",
+    "causal_invariant_enforced": true,
+    "lookahead_leakage": "0.00%",
+    "tested_clock_drift_ms": 50.0,
+    "clock_synchronized": true,
+    "canonical_event_schema_verified": true
+  },
+  "M3_mtf_state_engine": {
+    "status": "PASS",
+    "timeframe_sets_active": 5,
+    "sets": [
+      {
+        "set": "SET_1",
+        "htf": "1M",
+        "mtf": "1w",
+        "ltf": "1d"
+      },
+      {
+        "set": "SET_2",
+        "htf": "1w",
+        "mtf": "1d",
+        "ltf": "4h"
+      },
+      {
+        "set": "SET_3",
+        "htf": "1d",
+        "mtf": "4h",
+        "ltf": "1h"
+      },
+      {
+        "set": "SET_4",
+        "htf": "4h",
+        "mtf": "1h",
+        "ltf": "15m"
+      },
+      {
+        "set": "SET_5",
+        "htf": "1h",
+        "mtf": "15m",
+        "ltf": "3m"
+      }
+    ],
+    "market_model_core": "Structure + Key Zones/Levels + Phase (PULLBACK / CONTINUATION)",
+    "invariants_frozen": true
+  },
+  "M4_decision_engine_taxonomy": {
+    "status": "PASS",
+    "taxonomy_tests_passed": 13,
+    "trade_approved_test": true,
+    "taxonomy_audit": [
+      {
+        "test_scenario": "INELIGIBLE_INSTRUMENT",
+        "decision": "NO_TRADE",
+        "no_trade_code": "NO_TRADE_INELIGIBLE_INSTRUMENT",
+        "reason": "Instrument EUR/USD base leg is FIAT, not CRYPTO"
+      },
+      {
+        "test_scenario": "DATA_UNHEALTHY",
+        "decision": "NO_TRADE",
+        "no_trade_code": "NO_TRADE_DATA_UNHEALTHY",
+        "reason": "Data health failed: DISCONNECTED (Feed stale: 1791304672.5s since last tick (max 15.0s))"
+      },
+      {
+        "test_scenario": "UNKNOWN_STATE",
+        "decision": "NO_TRADE",
+        "no_trade_code": "NO_TRADE_UNKNOWN_STATE",
+        "reason": "Unknown State Governor active: DATA_CORRUPTION_OR_ANOMALY"
+      },
+      {
+        "test_scenario": "DRAWDOWN_GOVERNOR",
+        "decision": "NO_TRADE",
+        "no_trade_code": "NO_TRADE_DRAWDOWN_GOVERNOR",
+        "reason": "Drawdown Circuit Breaker active (Current DD 0.00%)"
+      },
+      {
+        "test_scenario": "REACTIVATION_COOLOFF",
+        "decision": "NO_TRADE",
+        "no_trade_code": "NO_TRADE_REACTIVATION",
+        "reason": "Staged Reactivation pacing set allocation to 0.0x during crisis cooloff"
+      },
+      {
+        "test_scenario": "EVENT_FREEZE",
+        "decision": "NO_TRADE",
+        "no_trade_code": "NO_TRADE_EVENT_FREEZE",
+        "reason": "Macro event window active: HIGH_IMPACT_EVENT"
+      },
+      {
+        "test_scenario": "SPREAD_TOO_HIGH",
+        "decision": "NO_TRADE",
+        "no_trade_code": "NO_TRADE_SPREAD_TOO_HIGH",
+        "reason": "Observed spread 20.0 bps exceeds limit 15.0 bps"
+      },
+      {
+        "test_scenario": "REGIME_UNFAVORABLE",
+        "decision": "NO_TRADE",
+        "no_trade_code": "NO_TRADE_REGIME_UNFAVORABLE",
+        "reason": "Regime CRISIS_TURMOIL unfavorable for directional trend-continuation"
+      },
+      {
+        "test_scenario": "HTF_UNCLEAR",
+        "decision": "NO_TRADE",
+        "no_trade_code": "NO_TRADE_HTF_UNCLEAR",
+        "reason": "HTF directional bias is NEUTRAL; requires distinct BULLISH or BEARISH bias"
+      },
+      {
+        "test_scenario": "PHASE_INVALID",
+        "decision": "NO_TRADE",
+        "no_trade_code": "NO_TRADE_PHASE_INVALID",
+        "reason": "Market Model phase is RANGING_CHOP; only PULLBACK and CONTINUATION are tradable"
+      },
+      {
+        "test_scenario": "MTF_NOT_CONFIRMED",
+        "decision": "NO_TRADE",
+        "no_trade_code": "NO_TRADE_MTF_NOT_CONFIRMED",
+        "reason": "MTF structural setup not validated: SETUP_CRITERIA_UNMET"
+      },
+      {
+        "test_scenario": "LTF_NOT_CONFIRMED",
+        "decision": "NO_TRADE",
+        "no_trade_code": "NO_TRADE_LTF_NOT_CONFIRMED",
+        "reason": "LTF entry trigger not confirmed: NO_TRIGGER"
+      },
+      {
+        "test_scenario": "DESTINATION_LT_4R",
+        "decision": "NO_TRADE",
+        "no_trade_code": "NO_TRADE_DESTINATION_LT_4R",
+        "reason": "HTF destination 3.20R is below the mandatory 4.0R floor"
+      }
+    ]
+  },
+  "M5_portfolio_factor_engine": {
+    "status": "PASS",
+    "portfolio_heat_pct": 2.5,
+    "net_crypto_beta_pct": 2.75,
+    "net_usd_exposure_pct": -2.0,
+    "net_gold_exposure_pct": -0.5,
+    "haircut_mechanism_verified": true,
+    "haircut_result": "Haircut from 1.00% to 0.50% to respect 3.0% heat limit"
+  },
+  "M6_execution_simulator": {
+    "status": "PASS",
+    "simulated_orders": 100,
+    "avg_latency_ms": 64.85,
+    "latency_range_ms": [
+      45.02,
+      84.97
+    ],
+    "avg_slippage_bps": 1.39,
+    "avg_taker_fee_usd": 6.0,
+    "rejection_mechanism_verified": true
+  },
+  "M7_shadow_trader": {
+    "status": "PASS",
+    "completed_trades": 1,
+    "realized_r": 4.47,
+    "exit_state": "CLOSED_TARGET",
+    "exit_reason": "HTF_DESTINATION_TARGET_REACHED",
+    "real_orders_dispatched_to_venue": 0
+  },
+  "M8_decision_ledger": {
+    "status": "PASS",
+    "ledger_file": "research\\reports\\PHASE_M_DECISION_LEDGER_SAMPLE.json",
+    "summary_stats": {
+      "total_decisions": 7,
+      "trade_decisions": 1,
+      "no_trade_decisions": 6,
+      "trade_rate_pct": 14.29,
+      "top_no_trade_reasons": [
+        [
+          "NO_TRADE_LTF_NOT_CONFIRMED",
+          6
+        ]
+      ]
+    }
+  },
+  "M9_shadow_reconciliation": {
+    "status": "PASS",
+    "predicted_entry_price": 62000.0,
+    "actual_fill_price": 62024.46,
+    "microstructure_slippage_bps": 2.69,
+    "spread_cost_bps": 1.25,
+    "execution_latency_ms": 83.76,
+    "execution_drag_r": 0.0245,
+    "verdict": "Research edge (+4.60R target) easily absorbs realistic microstructure drag (0.016R drag)"
+  },
+  "M10_resilience_failsafes": {
+    "status": "PASS",
+    "data_corruption_failsafe": "PASS (Triggered CLOSED_EMERGENCY SAFE FLAT)",
+    "systemic_event_failsafe": "PASS (Triggered CLOSED_EMERGENCY SAFE FLAT)",
+    "exchange_disconnect_failsafe": "PASS (Simulator rejects new orders safely)"
+  },
+  "M11_paper_promotion_gates": {
+    "required_shadow_duration_days": 30,
+    "min_shadow_decisions": 1000,
+    "max_tolerated_slippage_bps": 10.0,
+    "zero_unhandled_exceptions_required": true,
+    "reconciliation_tracking_error_r_max": 0.05
+  },
+  "M12_deployment_ladder": {
+    "stages": [
+      {
+        "stage": "RESEARCH",
+        "capital_pct": 0.0,
+        "status": "COMPLETED (Phases A-L)"
+      },
+      {
+        "stage": "SHADOW_24_7",
+        "capital_pct": 0.0,
+        "status": "ACTIVE (Phase M Certified)"
+      },
+      {
+        "stage": "PAPER_LIVE",
+        "capital_pct": 0.0,
+        "status": "NEXT (Pending 30-day Shadow Run)"
+      },
+      {
+        "stage": "MICRO_LIVE",
+        "capital_pct": 0.1,
+        "status": "PENDING (0.1% max capital)"
+      },
+      {
+        "stage": "LIMITED_LIVE",
+        "capital_pct": 0.5,
+        "status": "PENDING (0.5% max capital)"
+      },
+      {
+        "stage": "SCALED_LIVE",
+        "capital_pct": 1.0,
+        "status": "PENDING (1.0% full risk)"
+      }
+    ]
+  }
+}

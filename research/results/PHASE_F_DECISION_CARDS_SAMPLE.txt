@@ -1,0 +1,77 @@
+=== DECISION DEC-01223 | BTCUSDT (SET_2) ===
+DECISION: TRADE (SHORT)
+PRIMARY REASON: Full Causal & Technical Alignment
+HTF: BEARISH (PULLBACK)
+MTF: CONTINUATION in DISCOUNT
+LTF: Entry confirmation at 8285.97
+Macro: NEUTRAL
+Liquidity: ABUNDANT
+Positioning: NEUTRAL
+Event Risk: Normal market regime; no immediate catalyst proximity.
+HTF Destination: 4.00R
+Expected Edge: +1.35R
+Risk: 0.01%
+Entry: 8285.97 | SL: 9343.11378 | TP: 4057.394879999998
+=======================================================
+
+=== DECISION DEC-01224 | BTCUSDT (SET_2) ===
+DECISION: TRADE (SHORT)
+PRIMARY REASON: Full Causal & Technical Alignment
+HTF: BEARISH (PULLBACK)
+MTF: CONTINUATION in DISCOUNT
+LTF: Entry confirmation at 8235.0
+Macro: NEUTRAL
+Liquidity: ABUNDANT
+Positioning: NEUTRAL
+Event Risk: Normal market regime; no immediate catalyst proximity.
+HTF Destination: 4.00R
+Expected Edge: +1.35R
+Risk: 0.01%
+Entry: 8235.0 | SL: 9343.11378 | TP: 3802.5448800000013
+=======================================================
+
+=== DECISION DEC-01228 | BTCUSDT (SET_2) ===
+DECISION: TRADE (SHORT)
+PRIMARY REASON: Full Causal & Technical Alignment
+HTF: BEARISH (PULLBACK)
+MTF: CONTINUATION in DISCOUNT
+LTF: Entry confirmation at 7666.35
+Macro: NEUTRAL
+Liquidity: ABUNDANT
+Positioning: NEUTRAL
+Event Risk: Normal market regime; no immediate catalyst proximity.
+HTF Destination: 4.00R
+Expected Edge: +1.35R
+Risk: 0.01%
+Entry: 7666.35 | SL: 8356.96862 | TP: 4903.875520000003
+=======================================================
+
+=== DECISION DEC-01001 | BTCUSDT (SET_2) ===
+DECISION: NO_TRADE (FLAT)
+PRIMARY REASON: Technical: REASON_CHOP_FILTER: Market is sideways or HTF/MTF structure conflicts
+BLOCKERS:
+  - Technical: REASON_CHOP_FILTER: Market is sideways or HTF/MTF structure conflicts
+HTF State: NEUTRAL (UNCERTAIN)
+MTF State: CONTINUATION (PREMIUM)
+Event Context: Normal market regime; no immediate catalyst proximity.
+=======================================================
+
+=== DECISION DEC-01002 | BTCUSDT (SET_2) ===
+DECISION: NO_TRADE (FLAT)
+PRIMARY REASON: Technical: REASON_CHOP_FILTER: Market is sideways or HTF/MTF structure conflicts
+BLOCKERS:
+  - Technical: REASON_CHOP_FILTER: Market is sideways or HTF/MTF structure conflicts
+HTF State: NEUTRAL (UNCERTAIN)
+MTF State: CONTINUATION (PREMIUM)
+Event Context: Normal market regime; no immediate catalyst proximity.
+=======================================================
+
+=== DECISION DEC-01003 | BTCUSDT (SET_2) ===
+DECISION: NO_TRADE (FLAT)
+PRIMARY REASON: Technical: REASON_CHOP_FILTER: Market is sideways or HTF/MTF structure conflicts
+BLOCKERS:
+  - Technical: REASON_CHOP_FILTER: Market is sideways or HTF/MTF structure conflicts
+HTF State: NEUTRAL (UNCERTAIN)
+MTF State: CONTINUATION (PREMIUM)
+Event Context: Normal market regime; no immediate catalyst proximity.
+=======================================================

@@ -1,0 +1,380 @@
+{
+  "ETHUSDT_SET_2_PULLBACK": {
+    "candidate_id": "ETH_SET_2_HYP_A_PULLBACK",
+    "symbol": "ETHUSDT",
+    "timeframe_set": "SET_2",
+    "phase_mode": "PULLBACK",
+    "expectancy_r": 1.2943,
+    "total_r": 352.05,
+    "profit_factor": 5.808,
+    "win_rate": 0.5919,
+    "eqs_score": 83.4,
+    "classification": "STRONG_EDGE",
+    "promoted_at_utc": "2026-10-07T02:04:14.700004+00:00",
+    "lineage_version": 1,
+    "evidence": {
+      "eqs": {
+        "candidate_id": "ETH_SET_2_HYP_A_PULLBACK",
+        "total_score": 83.4,
+        "classification": "STRONG_EDGE",
+        "component_scores": {
+          "expectancy": 15.0,
+          "sample_adequacy": 10.0,
+          "oos_consistency": 15.0,
+          "asset_transfer": 5.0,
+          "scale_transfer": 5.0,
+          "cost_resilience": 5.0,
+          "concentration": 10.0,
+          "tail_risk": 8.4,
+          "null_superiority": 10.0
+        },
+        "details": {
+          "exp_full": 1.2943,
+          "n_trades": 272,
+          "exp_oos": 1.5245,
+          "exp_ex_top2": 1.1932,
+          "top2_concentration_pct": 8.5,
+          "max_drawdown_r": 6.61,
+          "cvar_95_r": -1.0524,
+          "null_p_value": 0.0
+        }
+      },
+      "null_test": {
+        "test_type": "RANDOM_DIRECTION",
+        "n_iterations": 30,
+        "candidate_expectancy_r": 1.2943,
+        "candidate_total_r": 352.05,
+        "null_mean_expectancy_r": 0.0205,
+        "null_std_expectancy_r": 0.1611,
+        "null_max_expectancy_r": 0.3463,
+        "empirical_p_value": 0.0,
+        "is_falsified": false,
+        "verdict": "PASS_EDGE_CONFIRMED"
+      }
+    }
+  },
+  "BTCUSDT_SET_2_CONTINUATION": {
+    "candidate_id": "BTC_SET_2_HYP_B_CONTINUATION",
+    "symbol": "BTCUSDT",
+    "timeframe_set": "SET_2",
+    "phase_mode": "CONTINUATION",
+    "expectancy_r": 1.3671,
+    "total_r": 411.5,
+    "profit_factor": 5.781,
+    "win_rate": 0.608,
+    "eqs_score": 75.8,
+    "classification": "PROMISING",
+    "promoted_at_utc": "2026-10-07T02:04:15.791956+00:00",
+    "lineage_version": 1,
+    "evidence": {
+      "eqs": {
+        "candidate_id": "BTC_SET_2_HYP_B_CONTINUATION",
+        "total_score": 75.8,
+        "classification": "PROMISING",
+        "component_scores": {
+          "expectancy": 15.0,
+          "sample_adequacy": 10.0,
+          "oos_consistency": 8.0,
+          "asset_transfer": 5.0,
+          "scale_transfer": 5.0,
+          "cost_resilience": 5.0,
+          "concentration": 10.0,
+          "tail_risk": 7.7,
+          "null_superiority": 10.0
+        },
+        "details": {
+          "exp_full": 1.3671,
+          "n_trades": 301,
+          "exp_oos": 1.0266,
+          "exp_ex_top2": 1.2535,
+          "top2_concentration_pct": 8.9,
+          "max_drawdown_r": 8.6,
+          "cvar_95_r": -1.1135,
+          "null_p_value": 0.0
+        }
+      },
+      "null_test": {
+        "test_type": "RANDOM_DIRECTION",
+        "n_iterations": 30,
+        "candidate_expectancy_r": 1.3671,
+        "candidate_total_r": 411.5,
+        "null_mean_expectancy_r": 0.0475,
+        "null_std_expectancy_r": 0.1405,
+        "null_max_expectancy_r": 0.3331,
+        "empirical_p_value": 0.0,
+        "is_falsified": false,
+        "verdict": "PASS_EDGE_CONFIRMED"
+      }
+    }
+  },
+  "BTCUSDT_SET_3_PULLBACK": {
+    "candidate_id": "BTC_SET_3_HYP_A_PULLBACK",
+    "symbol": "BTCUSDT",
+    "timeframe_set": "SET_3",
+    "phase_mode": "PULLBACK",
+    "expectancy_r": 0.6251,
+    "total_r": 618.19,
+    "profit_factor": 2.462,
+    "win_rate": 0.4954,
+    "eqs_score": 80.1,
+    "classification": "STRONG_EDGE",
+    "promoted_at_utc": "2026-10-07T02:04:21.297226+00:00",
+    "lineage_version": 1,
+    "evidence": {
+      "eqs": {
+        "candidate_id": "BTC_SET_3_HYP_A_PULLBACK",
+        "total_score": 80.1,
+        "classification": "STRONG_EDGE",
+        "component_scores": {
+          "expectancy": 15.0,
+          "sample_adequacy": 10.0,
+          "oos_consistency": 15.0,
+          "asset_transfer": 5.0,
+          "scale_transfer": 5.0,
+          "cost_resilience": 5.0,
+          "concentration": 10.0,
+          "tail_risk": 5.1,
+          "null_superiority": 10.0
+        },
+        "details": {
+          "exp_full": 0.6251,
+          "n_trades": 989,
+          "exp_oos": 1.1327,
+          "exp_ex_top2": 0.6007,
+          "top2_concentration_pct": 4.1,
+          "max_drawdown_r": 17.83,
+          "cvar_95_r": -1.2728,
+          "null_p_value": 0.0
+        }
+      },
+      "null_test": {
+        "test_type": "RANDOM_DIRECTION",
+        "n_iterations": 30,
+        "candidate_expectancy_r": 0.6251,
+        "candidate_total_r": 618.19,
+        "null_mean_expectancy_r": -0.0568,
+        "null_std_expectancy_r": 0.0602,
+        "null_max_expectancy_r": 0.0519,
+        "empirical_p_value": 0.0,
+        "is_falsified": false,
+        "verdict": "PASS_EDGE_CONFIRMED"
+      }
+    }
+  },
+  "ETHUSDT_SET_3_PULLBACK": {
+    "candidate_id": "ETH_SET_3_HYP_A_PULLBACK",
+    "symbol": "ETHUSDT",
+    "timeframe_set": "SET_3",
+    "phase_mode": "PULLBACK",
+    "expectancy_r": 0.6834,
+    "total_r": 687.54,
+    "profit_factor": 2.685,
+    "win_rate": 0.492,
+    "eqs_score": 79.5,
+    "classification": "PROMISING",
+    "promoted_at_utc": "2026-10-07T02:04:26.597180+00:00",
+    "lineage_version": 1,
+    "evidence": {
+      "eqs": {
+        "candidate_id": "ETH_SET_3_HYP_A_PULLBACK",
+        "total_score": 79.5,
+        "classification": "PROMISING",
+        "component_scores": {
+          "expectancy": 15.0,
+          "sample_adequacy": 10.0,
+          "oos_consistency": 15.0,
+          "asset_transfer": 5.0,
+          "scale_transfer": 5.0,
+          "cost_resilience": 5.0,
+          "concentration": 10.0,
+          "tail_risk": 4.5,
+          "null_superiority": 10.0
+        },
+        "details": {
+          "exp_full": 0.6834,
+          "n_trades": 1006,
+          "exp_oos": 0.8539,
+          "exp_ex_top2": 0.6436,
+          "top2_concentration_pct": 6.0,
+          "max_drawdown_r": 21.95,
+          "cvar_95_r": -1.2175,
+          "null_p_value": 0.0
+        }
+      },
+      "null_test": {
+        "test_type": "RANDOM_DIRECTION",
+        "n_iterations": 30,
+        "candidate_expectancy_r": 0.6834,
+        "candidate_total_r": 687.54,
+        "null_mean_expectancy_r": 0.0437,
+        "null_std_expectancy_r": 0.0836,
+        "null_max_expectancy_r": 0.2426,
+        "empirical_p_value": 0.0,
+        "is_falsified": false,
+        "verdict": "PASS_EDGE_CONFIRMED"
+      }
+    }
+  },
+  "SOLUSDT_SET_3_PULLBACK": {
+    "candidate_id": "SOL_SET_3_HYP_A_PULLBACK",
+    "symbol": "SOLUSDT",
+    "timeframe_set": "SET_3",
+    "phase_mode": "PULLBACK",
+    "expectancy_r": 0.8807,
+    "total_r": 622.68,
+    "profit_factor": 3.67,
+    "win_rate": 0.5658,
+    "eqs_score": 82.4,
+    "classification": "STRONG_EDGE",
+    "promoted_at_utc": "2026-10-07T02:04:30.507211+00:00",
+    "lineage_version": 1,
+    "evidence": {
+      "eqs": {
+        "candidate_id": "SOL_SET_3_HYP_A_PULLBACK",
+        "total_score": 82.4,
+        "classification": "STRONG_EDGE",
+        "component_scores": {
+          "expectancy": 15.0,
+          "sample_adequacy": 10.0,
+          "oos_consistency": 15.0,
+          "asset_transfer": 5.0,
+          "scale_transfer": 5.0,
+          "cost_resilience": 5.0,
+          "concentration": 10.0,
+          "tail_risk": 7.4,
+          "null_superiority": 10.0
+        },
+        "details": {
+          "exp_full": 0.8807,
+          "n_trades": 707,
+          "exp_oos": 1.4194,
+          "exp_ex_top2": 0.846,
+          "top2_concentration_pct": 4.2,
+          "max_drawdown_r": 9.7,
+          "cvar_95_r": -1.1392,
+          "null_p_value": 0.0
+        }
+      },
+      "null_test": {
+        "test_type": "RANDOM_DIRECTION",
+        "n_iterations": 30,
+        "candidate_expectancy_r": 0.8807,
+        "candidate_total_r": 622.68,
+        "null_mean_expectancy_r": 0.1026,
+        "null_std_expectancy_r": 0.0895,
+        "null_max_expectancy_r": 0.2981,
+        "empirical_p_value": 0.0,
+        "is_falsified": false,
+        "verdict": "PASS_EDGE_CONFIRMED"
+      }
+    }
+  },
+  "SOLUSDT_SET_4_CONTINUATION": {
+    "candidate_id": "SOL_SET_4_HYP_B_CONTINUATION",
+    "symbol": "SOLUSDT",
+    "timeframe_set": "SET_4",
+    "phase_mode": "CONTINUATION",
+    "expectancy_r": 0.4494,
+    "total_r": 221.55,
+    "profit_factor": 1.98,
+    "win_rate": 0.4686,
+    "eqs_score": 75.0,
+    "classification": "PROMISING",
+    "promoted_at_utc": "2026-10-07T02:04:33.222446+00:00",
+    "lineage_version": 1,
+    "evidence": {
+      "eqs": {
+        "candidate_id": "SOL_SET_4_HYP_B_CONTINUATION",
+        "total_score": 75.0,
+        "classification": "PROMISING",
+        "component_scores": {
+          "expectancy": 15.0,
+          "sample_adequacy": 10.0,
+          "oos_consistency": 10.0,
+          "asset_transfer": 5.0,
+          "scale_transfer": 5.0,
+          "cost_resilience": 5.0,
+          "concentration": 10.0,
+          "tail_risk": 5.0,
+          "null_superiority": 10.0
+        },
+        "details": {
+          "exp_full": 0.4494,
+          "n_trades": 493,
+          "exp_oos": 0.4494,
+          "exp_ex_top2": 0.4028,
+          "top2_concentration_pct": 10.7,
+          "max_drawdown_r": 16.74,
+          "cvar_95_r": -1.3245,
+          "null_p_value": 0.0
+        }
+      },
+      "null_test": {
+        "test_type": "RANDOM_DIRECTION",
+        "n_iterations": 30,
+        "candidate_expectancy_r": 0.4494,
+        "candidate_total_r": 221.55,
+        "null_mean_expectancy_r": -0.1304,
+        "null_std_expectancy_r": 0.102,
+        "null_max_expectancy_r": 0.0821,
+        "empirical_p_value": 0.0,
+        "is_falsified": false,
+        "verdict": "PASS_EDGE_CONFIRMED"
+      }
+    }
+  },
+  "BNBUSDT_SET_2_CONTINUATION": {
+    "candidate_id": "BNB_SET_2_HYP_B_CONTINUATION",
+    "symbol": "BNBUSDT",
+    "timeframe_set": "SET_2",
+    "phase_mode": "CONTINUATION",
+    "expectancy_r": 0.3417,
+    "total_r": 17.08,
+    "profit_factor": 1.968,
+    "win_rate": 0.56,
+    "eqs_score": 69.5,
+    "classification": "PROMISING",
+    "promoted_at_utc": "2026-10-07T02:04:33.624264+00:00",
+    "lineage_version": 1,
+    "evidence": {
+      "eqs": {
+        "candidate_id": "BNB_SET_2_HYP_B_CONTINUATION",
+        "total_score": 69.5,
+        "classification": "PROMISING",
+        "component_scores": {
+          "expectancy": 15.0,
+          "sample_adequacy": 8.0,
+          "oos_consistency": 10.0,
+          "asset_transfer": 5.0,
+          "scale_transfer": 5.0,
+          "cost_resilience": 5.0,
+          "concentration": 7.0,
+          "tail_risk": 7.5,
+          "null_superiority": 7.0
+        },
+        "details": {
+          "exp_full": 0.3417,
+          "n_trades": 50,
+          "exp_oos": 0.3417,
+          "exp_ex_top2": 0.0305,
+          "top2_concentration_pct": 91.4,
+          "max_drawdown_r": 10.77,
+          "cvar_95_r": -1.0788,
+          "null_p_value": 0.03333333333333333
+        }
+      },
+      "null_test": {
+        "test_type": "RANDOM_DIRECTION",
+        "n_iterations": 30,
+        "candidate_expectancy_r": 0.3417,
+        "candidate_total_r": 17.08,
+        "null_mean_expectancy_r": -0.285,
+        "null_std_expectancy_r": 0.2855,
+        "null_max_expectancy_r": 0.342,
+        "empirical_p_value": 0.0333,
+        "is_falsified": false,
+        "verdict": "PASS_EDGE_CONFIRMED"
+      }
+    }
+  }
+}
