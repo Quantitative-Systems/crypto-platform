@@ -61,7 +61,7 @@ node_modules/
 
 # Ephemeral Large Raw Data (Preserves manifests and small samples)
 market_data/cache/*.json
-data/
+/data/
 datasets/
 research/results/BASELINE_002_*/
 research/results/EXP_H1_1_*/

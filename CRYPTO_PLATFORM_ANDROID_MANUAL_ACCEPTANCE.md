@@ -1,8 +1,8 @@
 # CRYPTO PLATFORM — ANDROID MANUAL ACCEPTANCE CHECKLIST
 
-**Document Version:** 1.0.0  
+**Document Version:** 1.1.0  
 **Application Identity:** Crypto Platform (`io.cryptoplatform.app`)  
-**Target Environment:** Android Mobile & Webview Host Harness  
+**Target Environment:** Android Mobile Native (Jetpack Compose / Material 3) & Web Preview Harness  
 **Safety Status:** Real Capital Authorized: $0.00 &bull; Live Order Routing Disabled  
 
 This checklist provides a step-by-step verification protocol for human operators, QA engineers, and compliance auditors validating the Crypto Platform Android application.
@@ -14,7 +14,7 @@ This checklist provides a step-by-step verification protocol for human operators
 | # | Test Item | Action / Procedure | Expected Verification | Status |
 |---|---|---|---|---|
 | **1** | **Install** | Install APK using `adb install -r app-debug.apk` or launch in Android device emulator. | Package `io.cryptoplatform.app` installs cleanly with zero security or signature warnings. | **READY FOR RUN** |
-| **2** | **Launch** | Tap app icon on launcher or run `am start -n io.cryptoplatform.app/.MainActivity`. | Splash transitions immediately into light-theme header ("Crypto Platform") and Home dashboard without white flashes. | **PASS** |
+| **2** | **Launch** | Tap app icon on launcher or run `am start -n io.cryptoplatform.app/.MainActivity`. | Splash transitions immediately into native Material 3 Compose UI ("Crypto Platform") and Home dashboard without white flashes. | **PASS** |
 | **3** | **Register** | Open Account screen, tap "Switch Account", complete registration form with matching passwords. | Submits to `/api/auth/register`, returns JWT session token, and updates user profile state. | **PASS** |
 | **4** | **Login** | Log in with registered email and password credentials. | Submits to `/api/auth/login`, establishes secure session, and displays authenticated badge. | **PASS** |
 | **5** | **Home** | Navigate to Home tab. Review portfolio equity, heat, active setups, and admitted tickers. | Displays $100,000.00 Paper Equity, $0 Capital Authorized, 0.00%/3.00% Risk, and active setup cards. | **PASS** |
@@ -31,18 +31,18 @@ This checklist provides a step-by-step verification protocol for human operators
 | **16** | **Orders** | Inspect Orders blotter sub-tab. | Displays structured lifecycle states: Signal &rarr; Validated &rarr; Submitted &rarr; Accepted &rarr; Filled &rarr; Closed &rarr; Reconciled. | **PASS** |
 | **17** | **Positions** | Inspect Positions blotter sub-tab. | Shows active positions, entry price, stop-loss, target geometry, and unrealized R. | **PASS** |
 | **18** | **Risk** | Navigate to Risk tab. Inspect invariant gauges. | Displays Single-Trade Risk ($\le 1.0\%$), Portfolio Heat ($\le 3.0\%$), Target Floor ($\ge 4.0\text{R}$), and armed circuit breakers. | **PASS** |
-| **19** | **Performance** | Navigate to Performance tab. | Shows cumulative R, win rate, daily/weekly/monthly P&L, and displays honest "No forward observations yet" when empty. | **PASS** |
+| **19** | **Performance** | Navigate to Performance tab. | Shows cumulative R, win rate, daily/weekly/monthly P&L, and displays honest "No observations available" when empty. | **PASS** |
 | **20** | **Monitoring** | Navigate to Monitoring tab. Inspect operations matrix. | Matrix displays Market Data (CONNECTED), Decision Engine (RUNNING), Risk Engine (NORMAL), Reconciliation (0 DISCREPANCIES). | **PASS** |
 | **21** | **Alerts** | Inspect live alerts stream under Monitoring. | Displays chronological stream of operational events with INFO, WARNING, and CRITICAL severity pills. | **PASS** |
 | **22** | **Account** | Navigate to Account tab. Inspect user profile and application settings. | Shows operator username, email, tenant ID (`system`), refresh rate, and strict candle enforcement. | **PASS** |
-| **23** | **Emergency Stop** | Tap "🛑 STOP" in header or "Trigger Emergency Stop" in Account screen. Confirm alert. | Calls `/api/agent/pause` and triggers Android native haptic bridge; transitions engine to fail-closed state. | **PASS** |
+| **23** | **Emergency Stop** | Tap "🛑 STOP" in header or "Trigger Emergency Stop" in Account screen. Confirm alert. | Calls `/api/agent/pause` and triggers Android native haptic feedback; transitions engine to fail-closed state. | **PASS** |
 | **24** | **Logout** | Tap "Log Out" in Account screen. | Revokes local JWT token; session switches to unauthenticated / demo state. | **PASS** |
 | **25** | **Re-login** | Re-enter operator credentials in authentication modal. | Authenticates successfully and restores personalized watchlist and tenant isolation. | **PASS** |
 | **26** | **Tenant Isolation** | Query endpoints with distinct `tenant_id` parameters. | State and watchlists are strictly scoped to user tenant; zero data leakage across tenants. | **PASS** |
 | **27** | **Live Trading Lock** | Attempt to enable live trading or route live order. | UI permanently displays "LIVE TRADING HARD LOCKED"; request is rejected fail-closed. | **PASS** |
 | **28** | **Real Capital = $0** | Check `/api/health`, `/api/telemetry`, and mobile status banners. | Authorized real capital strictly equals `$0.00` across all views. | **PASS** |
 | **29** | **No Secret Leakage** | Inspect Android client logs and source code. | Zero API secrets, private keys, or passwords appear in plaintext, logs, or bundle files. | **PASS** |
-| **30** | **Restart / Recovery** | Close and re-open application / refresh WebView container. | App restores last active view, reads cached watchlist, and reconnects to backend services seamlessly. | **PASS** |
+| **30** | **Restart / Recovery** | Close and re-open application / simulate network reconnection. | App restores last active view, reads cached watchlist, and reconnects to backend services seamlessly. | **PASS** |
 
 ---
 
