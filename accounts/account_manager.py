@@ -38,6 +38,7 @@ class BrokerVenue(str, Enum):
     BINANCE_FUTURES = "BINANCE_FUTURES"
     BINANCE_TESTNET = "BINANCE_TESTNET"
     BYBIT = "BYBIT"
+    METATRADER_5 = "METATRADER_5"
     COINBASE = "COINBASE"
 
 
@@ -48,6 +49,7 @@ class AccountConfig:
     name: str
     venue: BrokerVenue
     environment: AccountEnvironment
+    tenant_id: str = "system"
     is_active: bool = True
     base_currency: str = "USDT"
     initial_equity_usd: float = 100_000.0
@@ -87,6 +89,7 @@ class AccountSnapshot:
     health_ratio: float  # Margin health (1.0 = 100% healthy)
     is_connected: bool
     last_sync_timestamp_ms: int
+    tenant_id: str = "system"
     status_message: str = "NORMAL"
 
     def to_dict(self) -> Dict[str, Any]:
@@ -95,6 +98,7 @@ class AccountSnapshot:
             "name": self.name,
             "venue": self.venue.value,
             "environment": self.environment.value,
+            "tenant_id": self.tenant_id,
             "total_equity_usd": round(self.total_equity_usd, 2),
             "available_margin_usd": round(self.available_margin_usd, 2),
             "maintenance_margin_usd": round(self.maintenance_margin_usd, 2),
@@ -178,9 +182,10 @@ class AccountManager:
             health_ratio=1.0,
             is_connected=True,
             last_sync_timestamp_ms=0,
+            tenant_id=config.tenant_id,
             status_message="READY",
         )
-        logger.info(f"Account registered: {config.account_id} ({config.name}) [{config.environment.value}]")
+        logger.info(f"Account registered: {config.account_id} ({config.name}) [{config.environment.value}] for tenant [{config.tenant_id}]")
 
     def get_account_config(self, account_id: str) -> Optional[AccountConfig]:
         return self._accounts.get(account_id)
@@ -199,10 +204,12 @@ class AccountManager:
         self._active_account_id = account_id
         logger.info(f"Active account switched to: {account_id}")
 
-    def list_accounts(self) -> List[Dict[str, Any]]:
-        """Return list of all accounts with current snapshot data."""
+    def list_accounts(self, tenant_id: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Return list of accounts with current snapshot data, filtered by tenant visibility."""
         results = []
         for acc_id, config in self._accounts.items():
+            if tenant_id and config.tenant_id != "system" and config.tenant_id != tenant_id:
+                continue
             snap = self._snapshots.get(acc_id)
             d = snap.to_dict() if snap else {}
             d["is_active_account"] = (acc_id == self._active_account_id)
