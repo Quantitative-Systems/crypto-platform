@@ -83,3 +83,10 @@ nohup.out
 scratch/
 *.db
 .archive/
+
+# Android / Gradle Build Artefacts
+.gradle/
+**/build/
+local.properties
+*.apk
+*.aab
