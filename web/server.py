@@ -1083,6 +1083,8 @@ class PhaseRWebServer:
 
         # REST API: Core Health & Telemetry
         self.app.router.add_get("/api/health", self.handle_health)
+        self.app.router.add_get("/api/ready", self.handle_ready)
+        self.app.router.add_get("/api/version", self.handle_version)
         self.app.router.add_get("/api/telemetry", self.handle_telemetry)
 
         # REST API: King Engine Core
@@ -1169,6 +1171,43 @@ class PhaseRWebServer:
             "execution_mode": SAFETY_GATE.current_mode.value,
             "agent_state": self.agent.control_state.value,
             "trading_style": self.agent.current_style.value,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        })
+
+    async def handle_ready(self, request: web.Request) -> web.Response:
+        recon = getattr(self.supervisor, "reconciliation_engine", None)
+        recon_report = getattr(recon, "last_report", None) if recon else None
+        is_recon_ok = not recon_report or getattr(recon_report, "is_reconciled", True)
+        watchdog_ok = True
+        wd = getattr(self.supervisor, "watchdog", None)
+        if wd is not None:
+            wd_status = getattr(wd, "status", None)
+            if wd_status is not None:
+                is_healthy = bool(getattr(wd_status, "healthy", True))
+                is_safe = bool(getattr(wd_status, "safe_mode_active", False))
+                watchdog_ok = is_healthy and not is_safe
+        ready = is_recon_ok and watchdog_ok and getattr(self.supervisor, "running", True)
+        status_code = 200 if ready else 503
+        return web.json_response({
+            "status": "READY" if ready else "NOT_READY",
+            "supervisor_running": getattr(self.supervisor, "running", True),
+            "reconciliation_intact": is_recon_ok,
+            "watchdog_healthy": watchdog_ok,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        }, status=status_code)
+
+    async def handle_version(self, request: web.Request) -> web.Response:
+        import os
+        from execution.king.king_engine_contract import EXPECTED_KING_CONTRACT_HASH
+        return web.json_response({
+            "platform": "STRATA Digital Trading Platform",
+            "version": "1.0.0-forward-validation",
+            "environment": os.environ.get("STRATA_ENV", "paper").lower(),
+            "king_contract_hash": EXPECTED_KING_CONTRACT_HASH,
+            "contract_status": "VERIFIED_IMMUTABLE",
+            "engine": "KING_Q2_PHASE_R",
+            "execution_mode": SAFETY_GATE.current_mode.value,
+            "real_capital_authorized_usd": SAFETY_GATE.real_capital_authorized_usd,
             "timestamp": datetime.now(timezone.utc).isoformat(),
         })
 
@@ -1294,3 +1333,7 @@ class PhaseRWebServer:
         site = web.TCPSite(runner, self.host, self.port)
         await site.start()
         return runner
+
+
+StrataInstitutionalWebServer = PhaseRWebServer
+

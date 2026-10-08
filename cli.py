@@ -83,6 +83,19 @@ def cmd_health() -> int:
         print(f" [FAIL] Safety Gate: {e}")
         checks_passed = False
 
+    # 7. Production Startup Validator Pre-Flight Check
+    try:
+        from core.config.startup_validator import StartupValidator
+        val_rep = StartupValidator.validate_preflight(strict_fail_closed=False)
+        if val_rep.is_valid:
+            print(f" [PASS] Pre-flight Startup Validator ({len(val_rep.checked_invariants)} gates verified)")
+        else:
+            print(f" [FAIL] Pre-flight Startup Validator: {val_rep.rejection_reasons}")
+            checks_passed = False
+    except Exception as e:
+        print(f" [FAIL] Pre-flight Startup Validator: {e}")
+        checks_passed = False
+
     if checks_passed:
         print("\nALL PLATFORM HEALTH CHECKS PASSED.")
         return 0
@@ -227,6 +240,7 @@ def main():
     subparsers.add_parser("reconcile", help="Run state reconciliation audit")
     subparsers.add_parser("alerts", help="View recent alerts")
     subparsers.add_parser("verify-contract", help="Verify frozen research contract")
+    subparsers.add_parser("validate-preflight", help="Run production pre-flight startup validation gates")
     subparsers.add_parser("shadow", help="Alias to start in shadow/paper mode")
 
     start_p = subparsers.add_parser("start", help="Start the trading platform")
@@ -256,6 +270,11 @@ def main():
         sys.exit(cmd_alerts())
     elif args.command == "verify-contract":
         sys.exit(cmd_verify_contract())
+    elif args.command == "validate-preflight":
+        from core.config.startup_validator import StartupValidator
+        rep = StartupValidator.validate_preflight(strict_fail_closed=False)
+        print(json.dumps(rep.to_dict(), indent=2))
+        sys.exit(0 if rep.is_valid else 1)
     elif args.command in ("start", "shadow"):
         from main import main as run_main
         run_main()

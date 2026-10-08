@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  # STRATA Core Application — Autonomous Engine, Terminal & REST API
+  strata-platform:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: strata-platform
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - STRATA_ENV=paper
+      - REAL_CAPITAL_AUTHORIZED_USD=0.00
+      - LIVE_TRADING_ENABLED=false
+      - LOG_LEVEL=INFO
+      - BIND_HOST=0.0.0.0
+      - BIND_PORT=8080
+    volumes:
+      - strata_data:/app/data
+      - strata_research:/app/research/results
+      - ./config:/app/config:ro
+    healthcheck:
+      test: ["CMD-SHELL", "python3 cli.py health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # Optional Production Reverse Proxy (Caddy with automatic TLS)
+  strata-gateway:
+    image: caddy:2.8-alpine
+    container_name: strata-gateway
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      strata-platform:
+        condition: service_healthy
+
+volumes:
+  strata_data:
+    driver: local
+  strata_research:
+    driver: local
+  caddy_data:
+    driver: local
+  caddy_config:
+    driver: local

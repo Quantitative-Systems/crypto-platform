@@ -50,6 +50,11 @@ class AccountConfig:
     venue: BrokerVenue
     environment: AccountEnvironment
     tenant_id: str = "system"
+    user_id: str = "system"
+    broker_id: str = "BINANCE"
+    display_name: str = ""
+    permissions: List[str] = field(default_factory=lambda: ["READ", "TRADE"])
+    created_at: str = ""
     is_active: bool = True
     base_currency: str = "USDT"
     initial_equity_usd: float = 100_000.0
@@ -58,6 +63,13 @@ class AccountConfig:
     api_secret_env_var: Optional[str] = None
     passphrase_env_var: Optional[str] = None
     meta: Dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self):
+        if not self.display_name:
+            self.display_name = self.name
+        if not self.created_at:
+            import datetime
+            self.created_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
     @property
     def is_live(self) -> bool:
@@ -90,14 +102,37 @@ class AccountSnapshot:
     is_connected: bool
     last_sync_timestamp_ms: int
     tenant_id: str = "system"
+    user_id: str = "system"
+    broker_id: str = "BINANCE"
+    display_name: str = ""
+    status: str = "ACTIVE"
+    capabilities: Dict[str, Any] = field(default_factory=dict)
+    permissions: List[str] = field(default_factory=lambda: ["READ", "TRADE"])
+    created_at: str = ""
+    last_health_check: str = ""
     status_message: str = "NORMAL"
+
+    def __post_init__(self):
+        if not self.display_name:
+            self.display_name = self.name
+        if not self.last_health_check:
+            import datetime
+            self.last_health_check = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
     def to_dict(self) -> Dict[str, Any]:
         return {
             "account_id": self.account_id,
+            "user_id": self.user_id,
+            "broker_id": self.broker_id,
+            "display_name": self.display_name,
             "name": self.name,
             "venue": self.venue.value,
             "environment": self.environment.value,
+            "status": self.status,
+            "capabilities": self.capabilities,
+            "permissions": self.permissions,
+            "created_at": self.created_at,
+            "last_health_check": self.last_health_check,
             "tenant_id": self.tenant_id,
             "total_equity_usd": round(self.total_equity_usd, 2),
             "available_margin_usd": round(self.available_margin_usd, 2),
@@ -224,3 +259,43 @@ class AccountManager:
             for k, v in kwargs.items():
                 if hasattr(snap, k):
                     setattr(snap, k, v)
+
+    def create_demo_account(
+        self,
+        user_id: str,
+        broker_id: str,
+        display_name: str,
+        environment: str = "DEMO",
+        initial_equity_usd: float = 100_000.0,
+        tenant_id: str = "system",
+        capabilities: Optional[Dict[str, Any]] = None,
+        permissions: Optional[List[str]] = None,
+    ) -> AccountSnapshot:
+        """Add a demo/testnet account with full tenant and capabilities metadata."""
+        venue_map = {
+            "BINANCE": BrokerVenue.BINANCE_TESTNET,
+            "BYBIT": BrokerVenue.BYBIT,
+            "METATRADER_5": BrokerVenue.METATRADER_5,
+            "SIMULATED": BrokerVenue.SIMULATED,
+        }
+        venue = venue_map.get(broker_id.upper(), BrokerVenue.SIMULATED)
+        env = AccountEnvironment.BROKER_DEMO if environment.upper() in ("DEMO", "TESTNET") else AccountEnvironment.PAPER
+
+        acc_id = f"ACC_{broker_id.upper()}_{uuid.uuid4().hex[:6].upper()}"
+        config = AccountConfig(
+            account_id=acc_id,
+            name=display_name,
+            venue=venue,
+            environment=env,
+            tenant_id=tenant_id,
+            user_id=user_id,
+            broker_id=broker_id.upper(),
+            display_name=display_name,
+            initial_equity_usd=initial_equity_usd,
+            permissions=permissions or ["READ", "TRADE"],
+        )
+        self.register_account(config)
+        snapshot = self._snapshots[acc_id]
+        if capabilities:
+            snapshot.capabilities = capabilities
+        return snapshot

@@ -54,7 +54,11 @@ async def async_main(args: argparse.Namespace) -> None:
     logger.info(f"LIVE ADAPTER STATUS: {'ENABLED' if SAFETY_GATE.is_live_execution else 'HARD-DISABLED (FAIL-CLOSED)'}")
     logger.info("=" * 80)
 
-    # 2. Assert research contract invariants
+    # 2. Run Pre-flight Startup Validation Gates
+    from core.config.startup_validator import StartupValidator
+    StartupValidator.validate_preflight(strict_fail_closed=True)
+
+    # 3. Assert research contract invariants
     FROZEN_GUARD.assert_capital_safety(
         real_capital_authorized=SAFETY_GATE.real_capital_authorized_usd,
         live_trading_enabled=SAFETY_GATE.is_live_execution,
