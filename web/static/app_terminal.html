@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRATA — Institutional Trading Terminal</title>
+    <style>
+        :root {
+            --bg-base: #060913;
+            --bg-sidebar: #090e1c;
+            --bg-panel: #0d1527;
+            --bg-card: rgba(16, 25, 45, 0.7);
+            --border: #1a2742;
+            --border-highlight: #0ea5e9;
+            --text: #f8fafc;
+            --text-muted: #8492a6;
+            --cyan: #0ea5e9;
+            --emerald: #10b981;
+            --rose: #f43f5e;
+            --amber: #f59e0b;
+            --purple: #8b5cf6;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', Consolas, monospace;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-base);
+            color: var(--text);
+            font-family: var(--font-sans);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        /* Sidebar */
+        aside {
+            width: 250px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+        .brand {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+        .brand-text { font-size: 1.15rem; font-weight: 800; letter-spacing: 0.05em; }
+        .nav-menu {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem 0.75rem;
+            list-style: none;
+        }
+        .nav-category {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #475569;
+            margin: 1rem 0.75rem 0.35rem;
+            font-weight: 700;
+        }
+        .nav-item {
+            padding: 0.6rem 0.85rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-muted);
+            transition: all 0.15s;
+            margin-bottom: 0.15rem;
+        }
+        .nav-item:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+        .nav-item.active { color: #fff; background: rgba(14, 165, 233, 0.15); border-left: 3px solid var(--cyan); }
+
+        /* Main Workspace */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: var(--bg-base);
+        }
+        header.topbar {
+            height: 60px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-sidebar);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+        }
+        .topbar-left { display: flex; align-items: center; gap: 1rem; }
+        .env-badge {
+            padding: 0.25rem 0.65rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--emerald);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .capital-lock {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+        .topbar-controls { display: flex; align-items: center; gap: 0.75rem; }
+        .btn-ctl {
+            padding: 0.45rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-green { background: var(--emerald); color: #000; }
+        .btn-amber { background: var(--amber); color: #000; }
+        .btn-rose { background: var(--rose); color: #fff; }
+        .style-select {
+            background: var(--bg-panel);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.45rem 0.75rem;
+            font-size: 0.8rem;
+            font-family: inherit;
+        }
+
+        .workspace-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        /* Metric Widgets */
+        .metric-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .widget {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+        }
+        .widget-title { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem; }
+        .widget-value { font-size: 1.45rem; font-weight: 700; font-family: var(--font-mono); }
+
+        /* Tables & Blotters */
+        .blotter-container {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        .blotter-header {
+            padding: 0.85rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        table.dense-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.825rem;
+            text-align: left;
+        }
+        table.dense-table th {
+            background: rgba(0,0,0,0.25);
+            padding: 0.65rem 1rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+        }
+        table.dense-table td {
+            padding: 0.65rem 1rem;
+            border-bottom: 1px solid rgba(26, 39, 66, 0.4);
+            font-family: var(--font-mono);
+        }
+        table.dense-table tr:hover { background: rgba(255,255,255,0.02); }
+
+        /* Pages */
+        .tab-page { display: none; }
+        .tab-page.active { display: block; }
+
+        /* Strategy Lab NLP Card */
+        .lab-input-box {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .lab-input-box textarea {
+            width: 100%;
+            height: 90px;
+            background: #080d1a;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.75rem;
+            color: #fff;
+            font-family: inherit;
+            resize: vertical;
+            margin: 0.75rem 0;
+        }
+        .lab-input-box textarea:focus { outline: none; border-color: var(--cyan); }
+    </style>
+</head>
+<body>
+    <aside>
+        <div class="brand">
+            <div class="brand-icon">S</div>
+            <span class="brand-text">STRATA</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-category">Core Operations</li>
+            <li class="nav-item active" onclick="switchTab('overview')">📊 Overview</li>
+            <li class="nav-item" onclick="switchTab('markets')">📈 Markets</li>
+            <li class="nav-item" onclick="switchTab('opportunities')">⚡ Opportunities</li>
+            <li class="nav-item" onclick="switchTab('king')">👑 KING Core</li>
+
+            <li class="nav-category">Strategy Intelligence</li>
+            <li class="nav-item" onclick="switchTab('strategies')">📚 Strategies</li>
+            <li class="nav-item" onclick="switchTab('strategy-lab')">🧪 Strategy Lab</li>
+            <li class="nav-item" onclick="switchTab('backtesting')">🔬 Backtesting</li>
+            <li class="nav-item" onclick="switchTab('forward')">🔭 Forward Validation</li>
+
+            <li class="nav-category">Execution & Accounts</li>
+            <li class="nav-item" onclick="switchTab('accounts')">🏦 Accounts</li>
+            <li class="nav-item" onclick="switchTab('brokers')">🔌 Brokers</li>
+            <li class="nav-item" onclick="switchTab('positions')">📦 Positions</li>
+            <li class="nav-item" onclick="switchTab('orders')">📋 Orders</li>
+
+            <li class="nav-category">Risk & Governance</li>
+            <li class="nav-item" onclick="switchTab('risk')">🛡️ Risk Center</li>
+            <li class="nav-item" onclick="switchTab('performance')">📈 Performance</li>
+            <li class="nav-item" onclick="switchTab('drift')">📉 Statistical Drift</li>
+            <li class="nav-item" onclick="switchTab('alerts')">🔔 Alert Center</li>
+            <li class="nav-item" onclick="switchTab('ledger')">📜 Immutable Ledger</li>
+            <li class="nav-item" onclick="switchTab('settings')">⚙️ Settings</li>
+        </ul>
+    </aside>
+
+    <main>
+        <header class="topbar">
+            <div class="topbar-left">
+                <span class="env-badge" id="env-badge">PAPER (SIMULATED)</span>
+                <span class="capital-lock">Real Capital: <strong>$0.00 (LOCKED)</strong></span>
+            </div>
+            <div class="topbar-controls">
+                <label style="font-size: 0.8rem; color: var(--text-muted);">Style:</label>
+                <select class="style-select" id="style-select" onchange="handleStyleChange(this.value)">
+                    <option value="AUTONOMOUS">AUTONOMOUS</option>
+                    <option value="SWING">SWING</option>
+                    <option value="INTRADAY">INTRADAY</option>
+                    <option value="SCALPING">SCALPING</option>
+                    <option value="POSITION">POSITION</option>
+                </select>
+                <button class="btn-ctl btn-green" onclick="handlePlatformAction('start')">Start Platform</button>
+                <button class="btn-ctl btn-amber" onclick="handlePlatformAction('pause')">Pause Trading</button>
+                <button class="btn-ctl btn-rose" onclick="handlePlatformAction('emergency')">Emergency Stop</button>
+            </div>
+        </header>
+
+        <div class="workspace-content">
+            <!-- TAB: OVERVIEW -->
+            <div class="tab-page active" id="page-overview">
+                <div class="metric-row">
+                    <div class="widget">
+                        <div class="widget-title">Simulated Equity</div>
+                        <div class="widget-value" id="val-equity">$100,000.00</div>
+                    </div>
+                    <div class="widget">
+                        <div class="widget-title">Available Margin</div>
+                        <div class="widget-value" id="val-margin">$100,000.00</div>
+                    </div>
+                    <div class="widget">
+                        <div class="widget-title">Portfolio Heat</div>
+                        <div class="widget-value" style="color: var(--emerald);" id="val-heat">0.00% / 3.00%</div>
+                    </div>
+                    <div class="widget">
+                        <div class="widget-title">Active Positions</div>
+                        <div class="widget-value" id="val-pos-count">0</div>
+                    </div>
+                    <div class="widget">
+                        <div class="widget-title">KING Engine Status</div>
+                        <div class="widget-value" style="color: var(--cyan);">PROTECTED CORE</div>
+                    </div>
+                </div>
+
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Active Positions Blotter</span>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Zero-Capital Simulated Ledger</span>
+                    </div>
+                    <table class="dense-table" id="table-positions">
+                        <thead>
+                            <tr>
+                                <th>ASSET</th>
+                                <th>SIDE</th>
+                                <th>ENTRY</th>
+                                <th>CURRENT</th>
+                                <th>STOP</th>
+                                <th>TARGET</th>
+                                <th>R:R</th>
+                                <th>UNREALIZED P&L</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="8" style="text-align: center; color: var(--text-muted);">No active positions</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Real-Time Market Opportunity Pipeline</span>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Closed-Candle Causal Signals</span>
+                    </div>
+                    <table class="dense-table" id="table-opportunities">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ASSET</th>
+                                <th>SET</th>
+                                <th>DECISION</th>
+                                <th>CONFIDENCE</th>
+                                <th>TARGET R</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Continuous engine scanning...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB: KING CORE -->
+            <div class="tab-page" id="page-king">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>👑 STRATA KING Engine — Flagship Protected Core</span>
+                        <span class="env-badge">CANONICAL CONTRACT FROZEN</span>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <p style="margin-bottom: 1rem; color: var(--text-muted);">
+                            The KING Engine operates on the unified 7-timeframe ladder across 5 overlapping triad sets.
+                            All decisions strictly require confirmed closed candles and a minimum <strong>≥ 4.0R</strong> target floor.
+                        </p>
+                        <div class="metric-row">
+                            <div class="widget">
+                                <div class="widget-title">Target Floor</div>
+                                <div class="widget-value" style="color: var(--cyan);">≥ 4.0R</div>
+                            </div>
+                            <div class="widget">
+                                <div class="widget-title">Replay Baseline Match</div>
+                                <div class="widget-value" style="color: var(--emerald);">9,608 / 9,608</div>
+                            </div>
+                            <div class="widget">
+                                <div class="widget-title">Max Single Risk</div>
+                                <div class="widget-value">≤ 1.0%</div>
+                            </div>
+                            <div class="widget">
+                                <div class="widget-title">Max Portfolio Heat</div>
+                                <div class="widget-value">≤ 3.0%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: STRATEGY LAB -->
+            <div class="tab-page" id="page-strategy-lab">
+                <div class="lab-input-box">
+                    <h3>🧪 STRATA Strategy Lab — Natural Language Compiler</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
+                        Describe your strategy in plain English. The compiler extracts rules, enforces crypto-only universe constraints, and executes empirical multi-asset research.
+                    </p>
+                    <textarea id="lab-prompt" placeholder="e.g. Buy BTC and ETH pullbacks when daily and 4h structure is bullish, enter after 15m lower-timeframe confirmation and require at least 5R."></textarea>
+                    <button class="btn-ctl btn-green" onclick="compileUserStrategy()">Compile & Evaluate Strategy</button>
+                </div>
+
+                <div class="blotter-container" id="lab-results" style="display: none;">
+                    <div class="blotter-header">
+                        <span>Strategy Specification & Evidence Verdict</span>
+                        <span id="lab-verdict-badge" class="env-badge">EVALUATING</span>
+                    </div>
+                    <div style="padding: 1.25rem;" id="lab-output-details">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: BROKERS & ACCOUNTS -->
+            <div class="tab-page" id="page-brokers">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Supported Broker Venues & Adapters</span>
+                    </div>
+                    <table class="dense-table" id="table-brokers">
+                        <thead>
+                            <tr>
+                                <th>VENUE</th>
+                                <th>STATUS</th>
+                                <th>LIMIT ORDERS</th>
+                                <th>TESTNET SUPPORT</th>
+                                <th>HEDGE MODE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>BINANCE</td><td><span style="color: var(--emerald);">ONLINE_TESTNET_READY</span></td><td>YES</td><td>YES</td><td>NO</td></tr>
+                            <tr><td>BYBIT</td><td><span style="color: var(--emerald);">ONLINE_TESTNET_READY</span></td><td>YES</td><td>YES</td><td>YES</td></tr>
+                            <tr><td>METATRADER_5</td><td><span style="color: var(--emerald);">ONLINE_TESTNET_READY</span></td><td>YES</td><td>YES</td><td>YES</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB: RISK CENTER -->
+            <div class="tab-page" id="page-risk">
+                <div class="metric-row">
+                    <div class="widget">
+                        <div class="widget-title">Trade Risk Cap</div>
+                        <div class="widget-value">1.0%</div>
+                    </div>
+                    <div class="widget">
+                        <div class="widget-title">Max Asset Heat</div>
+                        <div class="widget-value">1.0%</div>
+                    </div>
+                    <div class="widget">
+                        <div class="widget-title">Max Portfolio Heat</div>
+                        <div class="widget-value">3.0%</div>
+                    </div>
+                    <div class="widget">
+                        <div class="widget-title">Target Geometry Floor</div>
+                        <div class="widget-value">4.0R</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-page').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            const target = document.getElementById('page-' + tabId);
+            if (target) target.classList.add('active');
+        }
+
+        async function handlePlatformAction(action) {
+            if (action === 'emergency') {
+                if (confirm('Trigger EMERGENCY STOP? Halts all new orders immediately.')) {
+                    await fetch('/api/agent/pause', { method: 'POST' });
+                    alert('Emergency Stop activated. System in SAFE_MODE.');
+                }
+            } else if (action === 'pause') {
+                await fetch('/api/agent/pause', { method: 'POST' });
+                alert('Agent paused.');
+            } else if (action === 'start') {
+                await fetch('/api/agent/resume', { method: 'POST' });
+                alert('Platform trading loop active.');
+            }
+        }
+
+        async function handleStyleChange(style) {
+            await fetch('/api/agent/style', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ style })
+            });
+        }
+
+        async function compileUserStrategy() {
+            const prompt = document.getElementById('lab-prompt').value;
+            if (!prompt) return alert('Please enter a strategy description.');
+
+            const res = await fetch('/api/strategy-lab/parse', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt })
+            });
+            const data = await res.json();
+            if (data.specification) {
+                const evalRes = await fetch('/api/strategy-lab/evaluate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ specification: data.specification })
+                });
+                const evalData = await evalRes.json();
+                document.getElementById('lab-results').style.display = 'block';
+                document.getElementById('lab-verdict-badge').innerText = evalData.verdict;
+                document.getElementById('lab-output-details').innerHTML = `
+                    <p><strong>Strategy:</strong> ${data.specification.name}</p>
+                    <p><strong>Assets:</strong> ${data.specification.assets.join(', ')}</p>
+                    <p><strong>Timeframes:</strong> ${data.specification.timeframes.join(', ')}</p>
+                    <p><strong>Target Floor:</strong> ${data.specification.target_rule}</p>
+                    <p><strong>Evaluation Verdict:</strong> <span style="color: var(--cyan); font-weight: bold;">${evalData.verdict}</span></p>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">${evalData.disclaimer}</p>
+                `;
+            } else {
+                alert(data.error || 'Parsing failed');
+            }
+        }
+
+        // Live telemetry polling
+        async function fetchTelemetry() {
+            try {
+                const res = await fetch('/api/health');
+                const data = await res.json();
+                if (data.execution_mode) {
+                    document.getElementById('env-badge').innerText = data.execution_mode + ' (SIMULATED)';
+                }
+            } catch (e) {}
+        }
+        setInterval(fetchTelemetry, 5000);
+        fetchTelemetry();
+    </script>
+</body>
+</html>
