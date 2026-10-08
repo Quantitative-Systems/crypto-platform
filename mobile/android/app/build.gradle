@@ -25,10 +25,21 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
+            buildConfigField "String", "BASE_URL", "\"https://api.cryptoplatform.io\""
+            buildConfigField "String", "ENVIRONMENT_NAME", "\"PRODUCTION\""
+        }
+        staging {
+            initWith debug
+            applicationIdSuffix '.staging'
+            matchingFallbacks = ['debug']
+            buildConfigField "String", "BASE_URL", "\"https://crypto-platform-staging.onrender.com\""
+            buildConfigField "String", "ENVIRONMENT_NAME", "\"STAGING\""
         }
         debug {
             applicationIdSuffix '.debug'
             debuggable true
+            buildConfigField "String", "BASE_URL", "\"http://10.0.2.2:8080\""
+            buildConfigField "String", "ENVIRONMENT_NAME", "\"DEBUG\""
         }
     }
 
@@ -43,6 +54,7 @@ android {
 
     buildFeatures {
         compose true
+        buildConfig true
     }
 
     composeOptions {

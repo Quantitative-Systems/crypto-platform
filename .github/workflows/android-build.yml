@@ -1,0 +1,83 @@
+name: Crypto Platform — Dedicated Android Release & Staging Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: "Build Type to assemble"
+        required: true
+        default: "all"
+        type: choice
+        options:
+          - all
+          - debug
+          - staging
+          - releaseUnsigned
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x mobile/android/gradlew
+
+      - name: Run Android Unit Tests
+        run: |
+          cd mobile/android
+          ./gradlew test
+
+      - name: Assemble Debug APK
+        if: ${{ inputs.build_type == 'all' || inputs.build_type == 'debug' || startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          cd mobile/android
+          ./gradlew assembleDebug
+
+      - name: Assemble Staging APK (Cloud Staging Connected)
+        if: ${{ inputs.build_type == 'all' || inputs.build_type == 'staging' || startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          cd mobile/android
+          ./gradlew assembleStaging
+
+      - name: Assemble Release Unsigned APK
+        if: ${{ inputs.build_type == 'all' || inputs.build_type == 'releaseUnsigned' || startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          cd mobile/android
+          ./gradlew assembleRelease
+
+      - name: Upload Debug APK
+        if: ${{ inputs.build_type == 'all' || inputs.build_type == 'debug' || startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: crypto-platform-debug
+          path: mobile/android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload Staging APK
+        if: ${{ inputs.build_type == 'all' || inputs.build_type == 'staging' || startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: crypto-platform-staging
+          path: mobile/android/app/build/outputs/apk/staging/app-staging.apk
+
+      - name: Upload Unsigned Release APK
+        if: ${{ inputs.build_type == 'all' || inputs.build_type == 'releaseUnsigned' || startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: crypto-platform-release-unsigned
+          path: mobile/android/app/build/outputs/apk/release/app-release-unsigned.apk

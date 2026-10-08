@@ -1,0 +1,54 @@
+{
+  "version": 2,
+  "name": "crypto-platform",
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/web/static/app_terminal.html"
+    },
+    {
+      "source": "/terminal",
+      "destination": "/web/static/app_terminal.html"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/web/static/app_terminal.html"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://crypto-platform-staging.onrender.com/api/:path*"
+    },
+    {
+      "source": "/health",
+      "destination": "https://crypto-platform-staging.onrender.com/health"
+    },
+    {
+      "source": "/ready",
+      "destination": "https://crypto-platform-staging.onrender.com/ready"
+    },
+    {
+      "source": "/version",
+      "destination": "https://crypto-platform-staging.onrender.com/version"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: crypto-platform-staging
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: oregon
+    branch: feature/crypto-platform-cloud-deployment
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: HOST
+        value: 0.0.0.0
+      - key: ENVIRONMENT
+        value: STAGING
+      - key: PLATFORM_ENV
+        value: staging
+      - key: REAL_CAPITAL_AUTHORIZED_USD
+        value: "0.00"
+      - key: LIVE_TRADING_ENABLED
+        value: "false"
+      - key: STRATA_LIVE_KEY_HASH
+        value: "fail_closed_testnet_mode_active"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "*"

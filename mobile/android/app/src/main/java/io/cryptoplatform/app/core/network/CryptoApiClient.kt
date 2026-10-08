@@ -1,6 +1,7 @@
 package io.cryptoplatform.app.core.network
 
 import android.util.Log
+import io.cryptoplatform.app.BuildConfig
 import io.cryptoplatform.app.CryptoPlatformApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -22,10 +23,17 @@ enum class NetworkStatus {
 /**
  * High-performance OkHttp API client for Crypto Platform backend.
  * Handles authentication headers, timeouts, multi-tenancy, and fail-safe serialization.
+ * Dynamically resolves environment endpoint (BuildConfig.BASE_URL or custom developer override).
  */
 class CryptoApiClient(
-    private var baseUrl: String = "http://10.0.2.2:8080" // Standard Android emulator loopback to host
+    initialBaseUrl: String = BuildConfig.BASE_URL
 ) {
+    private var baseUrl: String = try {
+        CryptoPlatformApp.instance.secureStorage.customApiUrl ?: initialBaseUrl
+    } catch (e: Exception) {
+        initialBaseUrl
+    }
+
     private val client = OkHttpClient.Builder()
         .connectTimeout(5, TimeUnit.SECONDS)
         .readTimeout(10, TimeUnit.SECONDS)
@@ -36,7 +44,14 @@ class CryptoApiClient(
 
     fun updateBaseUrl(newUrl: String) {
         baseUrl = newUrl.trimEnd('/')
+        try {
+            CryptoPlatformApp.instance.secureStorage.customApiUrl = baseUrl
+        } catch (e: Exception) {
+            Log.w("CryptoApiClient", "Failed to persist custom API URL: ${e.message}")
+        }
     }
+
+    fun getActiveBaseUrl(): String = baseUrl
 
     suspend fun get(path: String): Result<String> = withContext(Dispatchers.IO) {
         try {

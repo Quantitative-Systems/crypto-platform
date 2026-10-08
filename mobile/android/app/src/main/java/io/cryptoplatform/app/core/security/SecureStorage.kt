@@ -34,6 +34,7 @@ class SecureStorage(context: Context) {
         private const val KEY_TENANT_ID = "active_tenant_id"
         private const val KEY_USER_EMAIL = "user_email"
         private const val KEY_WATCHLIST = "user_watchlist_symbols"
+        private const val KEY_CUSTOM_API_URL = "custom_api_url"
     }
 
     var authToken: String?
@@ -52,6 +53,12 @@ class SecureStorage(context: Context) {
         get() = prefs.getString(KEY_USER_EMAIL, "operator@cryptoplatform.io") ?: "operator@cryptoplatform.io"
         set(value) {
             prefs.edit().putString(KEY_USER_EMAIL, value).apply()
+        }
+
+    var customApiUrl: String?
+        get() = prefs.getString(KEY_CUSTOM_API_URL, null)
+        set(value) {
+            prefs.edit().putString(KEY_CUSTOM_API_URL, value).apply()
         }
 
     fun getWatchlist(): Set<String> {

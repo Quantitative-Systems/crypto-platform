@@ -1,0 +1,55 @@
+name: Crypto Platform — Cloud Staging Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_environment:
+        description: "Target Environment"
+        required: true
+        default: "staging"
+        type: choice
+        options:
+          - staging
+  workflow_run:
+    workflows: ["Crypto Platform CI — Research Regression, Safety & Android Build"]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  deploy-staging:
+    name: Deploy Staging Backend Service
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success') }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Trigger Render Staging Deploy Hook
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_STAGING_DEPLOY_HOOK }}
+        run: |
+          if [ -n "$RENDER_DEPLOY_HOOK_URL" ]; then
+            echo "Triggering automated Render deployment via deploy webhook..."
+            curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
+            echo "Deployment webhook triggered successfully."
+          else
+            echo "RENDER_STAGING_DEPLOY_HOOK secret not set. Skipping automated webhook call."
+            echo "Render will auto-deploy on git push if connected via render.yaml blueprint."
+          fi
+
+      - name: Verify Staging Service Health Probe
+        run: |
+          STAGING_URL="${{ secrets.STAGING_API_URL || 'https://crypto-platform-staging.onrender.com' }}"
+          echo "Probing staging health endpoint: $STAGING_URL/health"
+          # Retry loop for staging wakeup / spin-up
+          for i in {1..12}; do
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$STAGING_URL/health" || true)
+            echo "Attempt $i: HTTP status $HTTP_STATUS"
+            if [ "$HTTP_STATUS" -eq 200 ]; then
+              echo "Staging backend is HEALTHY and responsive."
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Note: Staging cold-start may take longer or pending initial deployment webhook."

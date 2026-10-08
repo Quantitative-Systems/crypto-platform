@@ -1089,7 +1089,10 @@ class PhaseRWebServer:
         self.app.router.add_post("/api/auth/logout", self.handle_auth_logout)
         self.app.router.add_get("/api/auth/me", self.handle_auth_me)
 
-        # REST API: Core Health & Telemetry
+        # REST API: Core Health & Telemetry (Both /api/* and root aliases for cloud load balancers)
+        self.app.router.add_get("/health", self.handle_health)
+        self.app.router.add_get("/ready", self.handle_ready)
+        self.app.router.add_get("/version", self.handle_version)
         self.app.router.add_get("/api/health", self.handle_health)
         self.app.router.add_get("/api/ready", self.handle_ready)
         self.app.router.add_get("/api/version", self.handle_version)
@@ -1246,7 +1249,7 @@ class PhaseRWebServer:
         import os
         from execution.king.king_engine_contract import EXPECTED_KING_CONTRACT_HASH
         return web.json_response({
-            "platform": "STRATA Digital Trading Platform",
+            "platform": "Crypto Platform",
             "version": "1.0.0-forward-validation",
             "environment": os.environ.get("STRATA_ENV", "paper").lower(),
             "king_contract_hash": EXPECTED_KING_CONTRACT_HASH,

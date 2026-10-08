@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import logging
+import os
 import signal
 import sys
 from pathlib import Path
@@ -48,7 +49,7 @@ async def async_main(args: argparse.Namespace) -> None:
         )
 
     logger.info("=" * 80)
-    logger.info("STARTING STRATA DIGITAL TRADING PLATFORM")
+    logger.info("STARTING CRYPTO PLATFORM DIGITAL TRADING ENGINE")
     logger.info(f"ENVIRONMENT: {SAFETY_GATE.current_mode.value}")
     logger.info(f"REAL CAPITAL AUTHORIZED: ${SAFETY_GATE.real_capital_authorized_usd:.2f}")
     logger.info(f"LIVE ADAPTER STATUS: {'ENABLED' if SAFETY_GATE.is_live_execution else 'HARD-DISABLED (FAIL-CLOSED)'}")
@@ -81,7 +82,7 @@ async def async_main(args: argparse.Namespace) -> None:
     # 5. Start web application dashboard
     web_server = PhaseRWebServer(supervisor=supervisor, host=args.host, port=args.port)
     runner = await web_server.start()
-    logger.info(f"STRATA Institutional Terminal live at: http://{args.host}:{args.port}/dashboard")
+    logger.info(f"Crypto Platform Terminal live at: http://{args.host}:{args.port}/dashboard")
 
     # 6. Keep running until shutdown signal
     stop_event = asyncio.Event()
@@ -110,17 +111,17 @@ async def async_main(args: argparse.Namespace) -> None:
         logger.info("Shutting down web server and streaming clients...")
         await supervisor.stop()
         await runner.cleanup()
-        logger.info("STRATA Platform terminated cleanly. State checkpointed.")
+        logger.info("Crypto Platform engine terminated cleanly. State checkpointed.")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="STRATA Digital Trading Platform")
+    parser = argparse.ArgumentParser(description="Crypto Platform Digital Trading Engine")
     parser.add_argument("--mode", type=str, default="PAPER", choices=["PAPER", "SHADOW", "BROKER_DEMO", "MICRO_LIVE"], help="Execution mode")
     parser.add_argument("--symbols", type=str, default="BTCUSDT,ETHUSDT,SOLUSDT,BNBUSDT", help="Comma-separated assets")
     parser.add_argument("--equity", type=float, default=100_000.0, help="Initial simulated equity USD")
     parser.add_argument("--min-confidence", type=float, default=0.50, help="Minimum fractal confidence threshold")
-    parser.add_argument("--host", type=str, default="127.0.0.1", help="Web dashboard host")
-    parser.add_argument("--port", type=int, default=8080, help="Web dashboard port")
+    parser.add_argument("--host", type=str, default=os.getenv("HOST", "0.0.0.0"), help="Web dashboard host")
+    parser.add_argument("--port", type=int, default=int(os.getenv("PORT", "8080")), help="Web dashboard port")
     parser.add_argument("--dry-run-seconds", type=int, default=0, help="Optional duration in seconds for automated test runs")
     parser.add_argument("--auth-passkey", type=str, default=None, help="Cryptographic passkey for live modes")
 
