@@ -3,23 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STRATA — Autonomous Crypto Trading Platform</title>
+    <title>STRATA — Autonomous Digital Asset Trading Platform</title>
     <style>
         :root {
             --bg-deep: #050811;
+            --bg-surface: #0a0f1d;
             --bg-card: rgba(13, 20, 36, 0.75);
             --bg-glass: rgba(18, 28, 50, 0.65);
             --border: rgba(30, 48, 80, 0.6);
             --border-hover: #0ea5e9;
             --text-main: #f1f5f9;
             --text-dim: #94a3b8;
+            --text-muted: #64748b;
             --cyan: #0ea5e9;
             --emerald: #10b981;
             --purple: #8b5cf6;
             --amber: #f59e0b;
             --rose: #f43f5e;
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
+            --font-mono: 'JetBrains Mono', Consolas, monospace;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -36,17 +38,18 @@
             width: 100vw;
             height: 100vh;
             z-index: -1;
-            opacity: 0.45;
+            opacity: 0.35;
+            pointer-events: none;
         }
         /* Top Navigation */
         header {
             position: sticky;
             top: 0;
             backdrop-filter: blur(16px);
-            background: rgba(5, 8, 17, 0.85);
+            background: rgba(5, 8, 17, 0.9);
             border-bottom: 1px solid var(--border);
             z-index: 100;
-            padding: 1rem 2rem;
+            padding: 0.85rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -70,33 +73,48 @@
             font-size: 1.1rem;
         }
         .logo-text { font-size: 1.25rem; font-weight: 800; letter-spacing: 0.08em; }
-        .nav-links { display: flex; gap: 1.5rem; list-style: none; font-size: 0.9rem; font-weight: 500; }
+        .nav-links { display: flex; gap: 1.35rem; list-style: none; font-size: 0.875rem; font-weight: 500; }
         .nav-links a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--text-main); }
-        .nav-actions { display: flex; gap: 1rem; align-items: center; }
+        .nav-links a:hover { color: var(--cyan); }
+        .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
         .btn {
-            padding: 0.6rem 1.25rem;
+            padding: 0.55rem 1.2rem;
             border-radius: 6px;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.2s;
             border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
         .btn-outline:hover { border-color: var(--cyan); background: rgba(14, 165, 233, 0.1); }
         .btn-primary { background: linear-gradient(135deg, var(--cyan), #2563eb); color: #fff; }
         .btn-primary:hover { opacity: 0.95; transform: translateY(-1px); }
 
+        /* Banner */
+        .safety-ribbon {
+            background: #111827;
+            border-bottom: 1px solid #1f2937;
+            padding: 0.35rem 1rem;
+            font-size: 0.75rem;
+            text-align: center;
+            color: #9ca3af;
+            font-family: var(--font-mono);
+        }
+        .safety-ribbon strong { color: var(--emerald); }
+
         /* Container */
-        .container { max-width: 1240px; margin: 0 auto; padding: 4rem 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
 
         /* Hero */
         .hero {
             text-align: center;
-            padding: 6rem 2rem 4rem;
-            max-width: 900px;
+            padding: 5rem 1.5rem 3.5rem;
+            max-width: 950px;
             margin: 0 auto;
         }
         .hero-badge {
@@ -108,123 +126,110 @@
             background: rgba(14, 165, 233, 0.1);
             border: 1px solid rgba(14, 165, 233, 0.3);
             color: var(--cyan);
-            font-size: 0.8rem;
+            font-size: 0.775rem;
             font-weight: 600;
-            margin-bottom: 1.5rem;
+            font-family: var(--font-mono);
+            margin-bottom: 1.25rem;
         }
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 3.25rem;
             font-weight: 900;
             letter-spacing: -0.03em;
             line-height: 1.15;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, #ffffff, #94a3b8);
+            margin-bottom: 1.25rem;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, #fff, var(--cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .hero p.tagline {
-            font-size: 1.25rem;
-            color: var(--cyan);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            letter-spacing: 0.05em;
-        }
         .hero p.desc {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: var(--text-dim);
-            margin-bottom: 2.5rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 720px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
         }
-        .hero-cta { display: flex; justify-content: center; gap: 1rem; }
+        .hero-cta { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
 
-        /* Safety Banner */
-        .safety-banner {
-            background: rgba(14, 20, 36, 0.8);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem 1.5rem;
-            margin: 2rem auto;
-            max-width: 900px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.85rem;
-        }
-        .safety-banner span.val { color: var(--emerald); font-family: var(--font-mono); font-weight: 700; }
-
-        /* Grid Cards */
-        .features-grid {
+        /* Metrics Strip */
+        .metric-strip {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin: 2.5rem 0 4rem;
         }
-        .card {
+        .metric-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            backdrop-filter: blur(12px);
-            transition: all 0.2s;
-        }
-        .card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
-        .card-icon {
-            width: 44px;
-            height: 44px;
             border-radius: 8px;
-            background: rgba(14, 165, 233, 0.15);
-            color: var(--cyan);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            margin-bottom: 1.25rem;
+            padding: 1.25rem;
+            text-align: left;
         }
-        .card h3 { font-size: 1.25rem; margin-bottom: 0.75rem; font-weight: 700; }
-        .card p { color: var(--text-dim); font-size: 0.95rem; }
+        .metric-lbl { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-family: var(--font-mono); }
+        .metric-val { font-size: 1.6rem; font-weight: 800; color: #fff; font-family: var(--font-mono); margin: 0.25rem 0; }
+        .metric-sub { font-size: 0.775rem; color: var(--emerald); }
 
-        /* Sections */
+        /* Section Headings */
         .section-header { text-align: center; max-width: 700px; margin: 0 auto 3rem; }
         .section-header h2 { font-size: 2.25rem; font-weight: 800; margin-bottom: 0.75rem; }
         .section-header p { color: var(--text-dim); font-size: 1rem; }
 
-        /* Pricing */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+        /* Feature Grid */
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.75rem;
+            transition: all 0.2s;
         }
+        .feature-card:hover { border-color: var(--cyan); transform: translateY(-2px); }
+        .feature-icon {
+            width: 44px; height: 44px; border-radius: 8px;
+            background: rgba(14, 165, 233, 0.1);
+            color: var(--cyan);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.35rem; margin-bottom: 1rem;
+        }
+        .feature-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .feature-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.55; }
+
+        /* Pricing Section */
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
         .price-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 2.5rem 2rem;
-            text-align: center;
+            padding: 2rem 1.5rem;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
         .price-card.featured {
             border-color: var(--cyan);
             background: rgba(14, 28, 56, 0.85);
-            box-shadow: 0 0 30px rgba(14, 165, 233, 0.15);
+            box-shadow: 0 0 25px rgba(14, 165, 233, 0.15);
         }
-        .price-badge {
+        .launch-badge {
             position: absolute;
             top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--cyan);
+            background: var(--emerald);
             color: #000;
-            padding: 0.2rem 0.75rem;
-            font-size: 0.75rem;
-            font-weight: 700;
+            padding: 0.2rem 0.85rem;
+            font-size: 0.7rem;
+            font-weight: 800;
             border-radius: 999px;
+            font-family: var(--font-mono);
+            letter-spacing: 0.05em;
         }
-        .price-amount { font-size: 2.5rem; font-weight: 800; margin: 1rem 0; font-family: var(--font-mono); }
-        .price-features { list-style: none; margin: 1.5rem 0; text-align: left; font-size: 0.9rem; color: var(--text-dim); }
-        .price-features li { margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .price-tier-name { font-size: 1.15rem; font-weight: 700; }
+        .price-val { font-size: 2.25rem; font-weight: 800; margin: 0.75rem 0 0.25rem; font-family: var(--font-mono); }
+        .price-note { font-size: 0.8rem; color: var(--emerald); font-weight: 600; margin-bottom: 1.25rem; }
+        .price-features { list-style: none; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-dim); flex: 1; }
+        .price-features li { margin-bottom: 0.65rem; display: flex; align-items: flex-start; gap: 0.5rem; }
         .price-features li::before { content: "✓"; color: var(--cyan); font-weight: bold; }
 
         /* FAQ */
@@ -237,60 +242,86 @@
             cursor: pointer;
         }
         .faq-question { font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
-        .faq-answer { color: var(--text-dim); font-size: 0.925rem; margin-top: 0.75rem; }
+        .faq-answer { color: var(--text-dim); font-size: 0.9rem; margin-top: 0.75rem; display: none; line-height: 1.6; }
 
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 3rem 2rem;
-            background: rgba(5, 8, 17, 0.9);
-            font-size: 0.85rem;
-            color: var(--text-dim);
-            text-align: center;
-        }
-        .footer-disclaimer {
-            max-width: 800px;
-            margin: 1.5rem auto 0;
-            font-size: 0.775rem;
-            line-height: 1.5;
-            color: #64748b;
-        }
-
-        /* Modal */
+        /* Modals */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(6px);
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
         .modal-card {
-            background: #0d1424;
+            background: #0d1527;
             border: 1px solid var(--border);
             border-radius: 12px;
             width: 90%;
-            max-width: 400px;
-            padding: 2rem;
+            max-width: 440px;
+            padding: 2.25rem;
+            position: relative;
         }
-        .modal-card h2 { margin-bottom: 1rem; font-size: 1.5rem; }
-        .form-group { margin-bottom: 1rem; text-align: left; }
-        .form-group label { display: block; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 0.35rem; }
+        .modal-card h2 { margin-bottom: 0.5rem; font-size: 1.4rem; font-weight: 800; }
+        .modal-subtitle { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 1.25rem; }
+        .modal-alert {
+            padding: 0.65rem 0.85rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .alert-error { background: rgba(244, 63, 94, 0.15); border: 1px solid rgba(244, 63, 94, 0.4); color: #fecaca; }
+        .alert-success { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #a7f3d0; }
+        .form-group { margin-bottom: 0.85rem; text-align: left; }
+        .form-group label { display: block; font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.35rem; font-weight: 500; }
         .form-group input {
             width: 100%;
             padding: 0.65rem 0.85rem;
-            background: #080c16;
+            background: #060a14;
             border: 1px solid var(--border);
             border-radius: 6px;
             color: #fff;
             font-family: inherit;
+            font-size: 0.9rem;
         }
         .form-group input:focus { outline: none; border-color: var(--cyan); }
+        .modal-close {
+            position: absolute;
+            top: 1.25rem; right: 1.25rem;
+            background: transparent; border: none;
+            color: var(--text-muted); font-size: 1.25rem;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem 2rem;
+            background: rgba(5, 8, 17, 0.95);
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            text-align: center;
+        }
+        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-dim); text-decoration: none; }
+        .footer-links a:hover { color: var(--cyan); }
+        .footer-disclaimer {
+            max-width: 820px;
+            margin: 1.5rem auto 0;
+            font-size: 0.75rem;
+            color: #475569;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
+    <div class="safety-ribbon">
+        STRATA ENGINE CORE: <strong>7-TIMEFRAME FRACTAL LADDER VERIFIED</strong> | REAL CAPITAL: <strong>$0.00 FAIL-CLOSED</strong> | LAUNCH PERIOD: <strong>FREE ACCESS (ALL USERS $0)</strong>
+    </div>
+
     <canvas id="bg-canvas"></canvas>
 
     <header>
@@ -300,182 +331,303 @@
         </a>
         <ul class="nav-links">
             <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#technology">Technology</a></li>
+            <li><a href="#markets">Markets</a></li>
             <li><a href="#king">KING Core</a></li>
+            <li><a href="#strategies">Strategies</a></li>
             <li><a href="#strategy-lab">Strategy Lab</a></li>
+            <li><a href="#forward-validation">Forward Validation</a></li>
             <li><a href="#security">Security</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#faq">FAQ</a></li>
         </ul>
         <div class="nav-actions">
             <button class="btn btn-outline" onclick="openAuthModal('login')">Sign In</button>
-            <a href="/app" class="btn btn-primary">Launch Terminal</a>
+            <button class="btn btn-primary" onclick="openAuthModal('register')">Create Account</button>
+            <a href="/app" class="btn btn-outline" style="border-color: var(--cyan);">Terminal</a>
         </div>
     </header>
 
+    <!-- Hero Section -->
     <div class="hero">
-        <div class="hero-badge">● STRATA ENGINE v1.1.0 HARDENED</div>
-        <h1>Autonomous Crypto Trading Platform</h1>
-        <p class="tagline">Research. Validate. Execute. Monitor.</p>
+        <div class="hero-badge">● STRATA ENGINE v1.2.0 — FORWARD VALIDATION READY</div>
+        <h1>STRATA — Autonomous Crypto Trading Platform</h1>
         <p class="desc">
-            A state-of-the-art multi-timeframe quantitative platform combining the protected
-            Phase Q.2/Phase R fractal market model, natural-language Strategy Lab, and deterministic risk governors.
+            Empirical multi-timeframe market structure intelligence, 24/7 automated risk governors, 
+            and zero-capital forward shadow execution across Binance, Bybit, and MetaTrader 5.
         </p>
         <div class="hero-cta">
-            <a href="/app" class="btn btn-primary" style="padding: 0.85rem 2rem; font-size: 1rem;">Open Institutional Terminal</a>
-            <button class="btn btn-outline" style="padding: 0.85rem 1.75rem; font-size: 1rem;" onclick="openAuthModal('register')">Create Account</button>
+            <button class="btn btn-primary" style="padding: 0.8rem 1.75rem; font-size: 0.95rem;" onclick="openAuthModal('register')">Get Started Free</button>
+            <a href="/app" class="btn btn-outline" style="padding: 0.8rem 1.75rem; font-size: 0.95rem;">Launch Web Terminal</a>
+            <a href="#how-it-works" class="btn btn-outline" style="padding: 0.8rem 1.75rem; font-size: 0.95rem;">Explore Architecture</a>
         </div>
     </div>
 
-    <div class="safety-banner">
-        <div><strong>Capital Boundary:</strong> Real Capital Authorized: <span class="val">$0.00</span></div>
-        <div><strong>Target Geometry:</strong> Floor: <span class="val">≥ 4.0R</span></div>
-        <div><strong>Max Single Risk:</strong> Limit: <span class="val">≤ 1.0%</span></div>
-        <div><strong>Replay Match:</strong> Baseline: <span class="val">9,608 / 9,608 (100%)</span></div>
-    </div>
+    <div class="container">
+        <!-- Live Research Metric Strip -->
+        <div class="metric-strip">
+            <div class="metric-card">
+                <div class="metric-lbl">Protected KING Baseline</div>
+                <div class="metric-val">9,608 / 9,608</div>
+                <div class="metric-sub">100% Deterministic Replay Match</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-lbl">Target Geometry Floor</div>
+                <div class="metric-val">≥ 4.0R</div>
+                <div class="metric-sub">Asymmetric R:R Requirement</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-lbl">Max Single Trade Risk</div>
+                <div class="metric-val">≤ 1.0%</div>
+                <div class="metric-sub">Hard Governor Safety Bound</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-lbl">Live Capital Authorized</div>
+                <div class="metric-val" style="color: var(--rose);">$0.00</div>
+                <div class="metric-sub" style="color: var(--rose);">Strict Fail-Closed Hardware Lock</div>
+            </div>
+        </div>
 
-    <div class="container" id="how-it-works">
-        <div class="section-header">
-            <h2>Architectural Foundations</h2>
-            <p>From causal market state generation to autonomous risk gating, STRATA operates deterministically.</p>
-        </div>
-        <div class="features-grid">
-            <div class="card">
-                <div class="card-icon">👑</div>
-                <h3>Protected KING Engine</h3>
-                <p>The flagship Phase Q.2 / Phase R market model evaluating 7 continuous timeframes (1M to 3M) across 5 overlapping triad sets with a mandatory ≥4R target floor.</p>
+        <!-- Section: How It Works -->
+        <section id="how-it-works" style="padding: 3rem 0;">
+            <div class="section-header">
+                <h2>Autonomous Trading Architecture</h2>
+                <p>STRATA replaces emotional decision-making with mathematical closed-candle causal logic.</p>
             </div>
-            <div class="card">
-                <div class="card-icon">🧪</div>
-                <h3>Strategy Lab (NLP)</h3>
-                <p>Describe your strategy in natural language. Our compiler generates formal machine specifications and validates them against the crypto universe without fabricating profitability.</p>
+            <div class="grid-3">
+                <div class="feature-card">
+                    <div class="feature-icon">👑</div>
+                    <h3>KING Core Engine</h3>
+                    <p>7-Timeframe continuous ladder (1M → 1W → 1D → 4H → 1H → 15M → 3M) across 5 overlapping triad sets. Captures macro regime bias while executing at micro discount equilibria.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Automated Risk Governors</h3>
+                    <p>Mathematical portfolio heat caps (≤3.0%), single-trade limits (≤1.0%), daily drawdown circuit breakers, and real-time state reconciliation against connected exchanges.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧪</div>
+                    <h3>Natural Language Strategy Lab</h3>
+                    <p>Formulate custom crypto trading models in plain English. The compiler extracts rules, validates universe admissibility, and executes multi-asset walk-forward backtests.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔌</div>
+                    <h3>Multi-Broker Onboarding</h3>
+                    <p>Seamlessly bind Binance Testnet, Bybit Testnet, and MetaTrader 5 Demo accounts. Capability discovery dynamically adapts to lot sizes, tick steps, and rate limits.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔭</div>
+                    <h3>Forward Shadow Validation</h3>
+                    <p>Before any strategy ever touches live capital, it must prove forward expectancy, parameter stability, and friction survivability in zero-capital shadow/paper mode.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📜</div>
+                    <h3>22-Field Cryptographic Ledger</h3>
+                    <p>Every trade intent, submission, fill, and reconciliation audit is timestamped and hashed into an append-only immutable audit trail with complete lineage.</p>
+                </div>
             </div>
-            <div class="card">
-                <div class="card-icon">🤖</div>
-                <h3>Autonomous Orchestrator</h3>
-                <p>An intelligent orchestration layer that observes market states, verifies account suitability, manages active trades, and quarantines degraded strategies.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🛡️</div>
-                <h3>Capital Survival Governor</h3>
-                <p>Hard limits: ≤1% trade risk, ≤1% asset risk, and ≤3% portfolio heat. Zero-capital fail-closed execution boundary ensures real funds are never risked blindly.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">⚡</div>
-                <h3>Multi-Broker Gateway</h3>
-                <p>Standardized adapters for Binance, Bybit, and MetaTrader 5 (MT5) with lot precision rounding, tick step scaling, and deterministic order idempotency.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🔄</div>
-                <h3>24/7/365 Recovery Watchdog</h3>
-                <p>Heartbeat supervision, atomic checkpoint checksum verification, and startup reconciliation to guarantee zero orphan broker positions across machine restarts.</p>
-            </div>
-        </div>
-    </div>
+        </section>
 
-    <div class="container" id="pricing">
-        <div class="section-header">
-            <h2>Platform Subscriptions</h2>
-            <p>Honest infrastructure pricing for researchers, quants, and crypto trading firms.</p>
-        </div>
-        <div class="pricing-grid">
-            <div class="price-card">
-                <h3>Researcher</h3>
-                <div class="price-amount">$0 <span style="font-size: 1rem; color: var(--text-dim);">/ mo</span></div>
-                <p style="color: var(--text-dim); font-size: 0.85rem;">For quantitative strategy testing and analysis</p>
-                <ul class="price-features">
-                    <li>Full Strategy Lab NLP compiler</li>
-                    <li>Historical backtest engine</li>
-                    <li>Crypto Universe (BTC, ETH, SOL, BNB)</li>
-                    <li>Zero-capital Paper Trading</li>
-                </ul>
-                <button class="btn btn-outline" style="width: 100%;" onclick="openAuthModal('register')">Get Started</button>
+        <!-- Section: Markets -->
+        <section id="markets" style="padding: 3rem 0;">
+            <div class="section-header">
+                <h2>Admitted Crypto Universe</h2>
+                <p>STRATA operates exclusively on liquid, high-volume perpetual and spot digital asset pairs.</p>
             </div>
-            <div class="price-card featured">
-                <div class="price-badge">POPULAR</div>
-                <h3>Autonomous Trader</h3>
-                <div class="price-amount">$149 <span style="font-size: 1rem; color: var(--text-dim);">/ mo</span></div>
-                <p style="color: var(--text-dim); font-size: 0.85rem;">Continuous 24/7/365 autonomous agent execution</p>
-                <ul class="price-features">
-                    <li>Protected KING Engine access</li>
-                    <li>Autonomous Agent Orchestrator</li>
-                    <li>Multi-Broker Testnets (Binance, Bybit)</li>
-                    <li>24/7 Recovery Watchdog & Alerts</li>
-                    <li>Forward Validation tracking</li>
-                </ul>
-                <a href="/app" class="btn btn-primary" style="width: 100%;">Launch Terminal</a>
+            <div class="grid-3">
+                <div class="feature-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <h3 style="margin: 0;">BTCUSDT</h3>
+                        <span style="font-family: var(--font-mono); color: var(--emerald); font-weight: 700;">+2.45%</span>
+                    </div>
+                    <p>Primary Market Benchmark. HTF Bullish Expansion with 7-timeframe ladder alignment. Full Phase Q.2 / Phase R coverage.</p>
+                </div>
+                <div class="feature-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <h3 style="margin: 0;">ETHUSDT</h3>
+                        <span style="font-family: var(--font-mono); color: var(--emerald); font-weight: 700;">+3.12%</span>
+                    </div>
+                    <p>High Liquidity Tier 1 Asset. Phase C Markup Confirmation with multi-timeframe discount pullback validation.</p>
+                </div>
+                <div class="feature-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <h3 style="margin: 0;">SOLUSDT</h3>
+                        <span style="font-family: var(--font-mono); color: var(--emerald); font-weight: 700;">+4.80%</span>
+                    </div>
+                    <p>High-Beta Volatility Expansion. Evaluated across 4H/1H/15M intraday and swing liquidity sweeps.</p>
+                </div>
             </div>
-            <div class="price-card">
-                <h3>Institutional</h3>
-                <div class="price-amount">$499 <span style="font-size: 1rem; color: var(--text-dim);">/ mo</span></div>
-                <p style="color: var(--text-dim); font-size: 0.85rem;">Dedicated low-latency broker infrastructure</p>
-                <ul class="price-features">
-                    <li>Multi-account isolation (unlimited)</li>
-                    <li>MetaTrader 5 & custom IPC gateways</li>
-                    <li>Dedicated Docker & VPS orchestration</li>
-                    <li>Audit ledger export & SOC-2 compliance</li>
-                </ul>
-                <button class="btn btn-outline" style="width: 100%;" onclick="alert('Contact institutional@strata.io')">Contact Desk</button>
-            </div>
-        </div>
-    </div>
+        </section>
 
-    <div class="container" id="faq">
-        <div class="section-header">
-            <h2>Frequently Asked Questions</h2>
-        </div>
-        <div style="max-width: 800px; margin: 0 auto;">
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">Does STRATA guarantee trading profits? <span>+</span></div>
-                <div class="faq-answer">No. STRATA is an institutional engineering and research platform. All strategies (including KING) are subject to market regime shifts, execution friction, and drawdown. Real capital remains strictly $0.00 until human authorization.</div>
+        <!-- Section: Strategies & Library -->
+        <section id="strategies" style="padding: 3rem 0;">
+            <div class="section-header">
+                <h2>Canonical Strategy Library</h2>
+                <p>Cataloged across 8 distinct trading categories with transparent lifecycle stage tracking.</p>
             </div>
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">What is the KING Engine? <span>+</span></div>
-                <div class="faq-answer">KING is the flagship Phase Q.2 / Phase R market model that formalizes 7 timeframe states across 5 overlapping sets, evaluating only closed candles with a mandatory ≥4.0R reward-to-risk floor.</div>
+            <div class="grid-3">
+                <div class="feature-card">
+                    <span style="font-size: 0.75rem; color: var(--cyan); font-family: var(--font-mono); font-weight: 700;">POSITION / CORE</span>
+                    <h3 style="margin-top: 0.35rem;">STRATA King Engine</h3>
+                    <p>Flagship 7-timeframe fractal model. Verified +0.888R expectancy and 4.918 profit factor across 9,608 closed candle opportunities.</p>
+                </div>
+                <div class="feature-card">
+                    <span style="font-size: 0.75rem; color: var(--emerald); font-family: var(--font-mono); font-weight: 700;">SWING / PAPER</span>
+                    <h3 style="margin-top: 0.35rem;">Multi-TF Trend Pullback</h3>
+                    <p>Captures discount/premium equilibrium pullbacks in aligned market trends with strict ≥4.0R destination floor.</p>
+                </div>
+                <div class="feature-card">
+                    <span style="font-size: 0.75rem; color: var(--amber); font-family: var(--font-mono); font-weight: 700;">INTRADAY / PAPER</span>
+                    <h3 style="margin-top: 0.35rem;">Liquidity Sweep Breakout</h3>
+                    <p>Trades volatility expansion following liquidity pool sweeps and lower-timeframe Market Structure Shift (MSS) confirmation.</p>
+                </div>
             </div>
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">Can I test my own trading rules in Strategy Lab? <span>+</span></div>
-                <div class="faq-answer">Yes. Strategy Lab allows you to describe custom entry, stop, target, and structure rules in plain English. The compiler verifies crypto-only compliance and outputs an empirical evaluation verdict.</div>
-            </div>
-        </div>
-    </div>
+        </section>
 
-    <footer>
-        <div class="logo-box" style="justify-content: center; margin-bottom: 1rem;">
-            <div class="logo-symbol">S</div>
-            <span class="logo-text">STRATA</span>
-        </div>
-        <p>© 2026 STRATA Digital Trading Platform. All rights reserved.</p>
-        <div class="footer-disclaimer">
-            DISCLAIMER: Cryptocurrency trading involves substantial risk of loss and is not suitable for all investors.
-            STRATA provides algorithmic software tools for research, simulation, and execution. We do not provide financial advice,
-            and historical replay or backtest metrics do not constitute a guarantee of future live performance.
-        </div>
-    </footer>
+        <!-- Section: Pricing -->
+        <section id="pricing" style="padding: 3rem 0;">
+            <div class="section-header">
+                <h2>Transparent Launch Pricing</h2>
+                <p>STRATA operates with a <strong>First-Year Free Launch Period ($0.00)</strong> for all users. No payment required.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <div class="launch-badge">LAUNCH: $0.00</div>
+                    <div class="price-tier-name">Researcher</div>
+                    <div class="price-val">$0<span style="font-size: 1rem; color: var(--text-muted);">/mo</span></div>
+                    <div class="price-note">Free 1-Year Access</div>
+                    <ul class="price-features">
+                        <li>Access to KING Core 7-timeframe ladder</li>
+                        <li>Natural language Strategy Lab (3 models)</li>
+                        <li>Zero-capital paper simulation engine</li>
+                        <li>Community research discussions</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="openAuthModal('register')">Select Researcher</button>
+                </div>
+                <div class="price-card">
+                    <div class="launch-badge">LAUNCH: $0.00</div>
+                    <div class="price-tier-name">Trader</div>
+                    <div class="price-val">$0<span style="font-size: 1rem; color: var(--text-muted);">/mo</span></div>
+                    <div class="price-note">Free 1-Year Access (Standard $149)</div>
+                    <ul class="price-features">
+                        <li>Multi-broker connectivity (Binance, Bybit, MT5)</li>
+                        <li>Automated order lifecycle audit trail (22 fields)</li>
+                        <li>Real-time statistical drift monitor</li>
+                        <li>Standard webhook & email alerts</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="openAuthModal('register')">Select Trader</button>
+                </div>
+                <div class="price-card featured">
+                    <div class="launch-badge">MOST POPULAR • $0.00</div>
+                    <div class="price-tier-name">Autonomous Pro</div>
+                    <div class="price-val">$0<span style="font-size: 1rem; color: var(--text-muted);">/mo</span></div>
+                    <div class="price-note">Free 1-Year Access (Standard $499)</div>
+                    <ul class="price-features">
+                        <li>Full Autonomous Trading Agent with style switching</li>
+                        <li>24/7 Process Watchdog & state reconciliation</li>
+                        <li>Cross-set coherence validation across all 5 sets</li>
+                        <li>AI Strategy Research Copilot (unlimited)</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="openAuthModal('register')">Select Autonomous Pro</button>
+                </div>
+                <div class="price-card">
+                    <div class="launch-badge">LAUNCH: $0.00</div>
+                    <div class="price-tier-name">Institutional</div>
+                    <div class="price-val">$0<span style="font-size: 1rem; color: var(--text-muted);">/mo</span></div>
+                    <div class="price-note">Free 1-Year Access (Standard $1,499)</div>
+                    <ul class="price-features">
+                        <li>Dedicated cloud deployment with custom proxy</li>
+                        <li>Multi-tenant sub-account provisioning</li>
+                        <li>Custom risk governor policy overrides</li>
+                        <li>Direct engineering SLA support</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="openAuthModal('register')">Select Institutional</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: FAQ -->
+        <section id="faq" style="padding: 3rem 0;">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Institutional transparency regarding safety, edge preservation, and broker connectivity.</p>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">Does STRATA execute live real-money trades today? <span>+</span></div>
+                    <div class="faq-answer">No. STRATA operates under strict fail-closed capital safety governance. Real capital authorization is hardcoded to $0.00. The platform is currently configured for Paper Simulation and Broker Demo/Testnet validation only.</div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">What is the KING Engine and why is it frozen? <span>+</span></div>
+                    <div class="faq-answer">The KING Engine is the flagship Phase Q.2 / Phase R trading intelligence that demonstrated +0.888R expectancy across 9,608 historical crypto trades. It is cryptographically frozen via SHA-256 contract hash to prevent accidental tuning or curve-fitting.</div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">How does the 1-year free launch period work? <span>+</span></div>
+                    <div class="faq-answer">All platform subscriptions, features, and Strategy Lab entitlements are completely free ($0.00) during our inaugural launch period. No credit card is required, and future fee schedules will remain completely transparent.</div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">Which broker venues are supported for demo/testnet validation? <span>+</span></div>
+                    <div class="faq-answer">STRATA natively connects to Binance Futures Testnet, Bybit V5 Testnet, and MetaTrader 5 Demo via automated capability discovery.</div>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <!-- Auth Modal -->
     <div class="modal-overlay" id="auth-modal" onclick="closeAuthModal(event)">
         <div class="modal-card" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeAuthModal(event)">×</button>
             <h2 id="modal-title">Sign In to STRATA</h2>
+            <p class="modal-subtitle" id="modal-sub">Access your institutional trading terminal and accounts.</p>
+            
+            <div class="modal-alert alert-error" id="modal-error"></div>
+            <div class="modal-alert alert-success" id="modal-success"></div>
+
             <form onsubmit="handleAuthSubmit(event)">
+                <div class="form-group" id="group-name" style="display: none;">
+                    <label>Full Name / Trader Handle</label>
+                    <input type="text" id="auth-name" placeholder="Alex Vance">
+                </div>
                 <div class="form-group">
                     <label>Email Address</label>
                     <input type="email" id="auth-email" required placeholder="trader@firm.com">
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" id="auth-password" required placeholder="••••••••••••">
+                    <input type="password" id="auth-password" required placeholder="Minimum 8 characters">
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" id="modal-submit-btn">Sign In</button>
+                <div class="form-group" id="group-confirm" style="display: none;">
+                    <label>Confirm Password</label>
+                    <input type="password" id="auth-confirm" placeholder="Re-enter password">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.75rem;" id="modal-submit-btn">Sign In</button>
             </form>
             <div style="text-align: center; margin-top: 1rem; font-size: 0.85rem;">
-                <span id="modal-switch-text">Don't have an account? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--cyan);">Sign Up</a></span>
+                <span id="modal-switch-text">Don't have an account? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--cyan); font-weight: 600;">Create Account</a></span>
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="#how-it-works">How It Works</a>
+            <a href="#markets">Markets</a>
+            <a href="#king">KING Core</a>
+            <a href="#strategies">Strategies</a>
+            <a href="#strategy-lab">Strategy Lab</a>
+            <a href="#pricing">Pricing</a>
+            <a href="/app">Terminal</a>
+        </div>
+        <div>© 2026 STRATA Digital Trading Platform. All rights reserved. Zero-Capital Validation Architecture.</div>
+        <div class="footer-disclaimer">
+            DISCLAIMER: Cryptocurrency trading involves substantial risk of loss and is not suitable for all investors. 
+            STRATA provides quantitative algorithmic software tools for research, simulation, and broker demo execution. 
+            We do not provide investment advice or claim guaranteed future profitability. Real capital trading remains permanently fail-closed at $0.00.
+        </div>
+    </footer>
+
     <script>
-        // Canvas Fractal Particles Visualizer
+        // Canvas Background Animation
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let w, h, particles = [];
@@ -484,12 +636,12 @@
             w = canvas.width = window.innerWidth;
             h = canvas.height = window.innerHeight;
             particles = [];
-            for (let i = 0; i < 45; i++) {
+            for (let i = 0; i < 40; i++) {
                 particles.push({
                     x: Math.random() * w,
                     y: Math.random() * h,
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: (Math.random() - 0.5) * 0.4,
+                    vx: (Math.random() - 0.5) * 0.35,
+                    vy: (Math.random() - 0.5) * 0.35,
                     r: Math.random() * 2 + 1,
                 });
             }
@@ -500,7 +652,7 @@
         function draw() {
             ctx.clearRect(0, 0, w, h);
             ctx.strokeStyle = 'rgba(14, 165, 233, 0.12)';
-            ctx.fillStyle = 'rgba(14, 165, 233, 0.4)';
+            ctx.fillStyle = 'rgba(14, 165, 233, 0.35)';
             for (let i = 0; i < particles.length; i++) {
                 let p = particles[i];
                 p.x += p.vx; p.y += p.vy;
@@ -512,7 +664,7 @@
                 for (let j = i + 1; j < particles.length; j++) {
                     let p2 = particles[j];
                     let d = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (d < 160) {
+                    if (d < 150) {
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
@@ -527,50 +679,117 @@
         // FAQ Toggle
         function toggleFaq(el) {
             const ans = el.querySelector('.faq-answer');
-            ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
+            const span = el.querySelector('.faq-question span');
+            const isOpen = ans.style.display === 'block';
+            ans.style.display = isOpen ? 'none' : 'block';
+            span.innerText = isOpen ? '+' : '−';
         }
 
-        // Auth Modal Handling
-        let isRegister = false;
+        // Authentication Modal Logic
+        let isRegisterMode = false;
+
         function openAuthModal(mode) {
-            isRegister = (mode === 'register');
+            isRegisterMode = (mode === 'register');
             updateModalUI();
+            document.getElementById('modal-error').style.display = 'none';
+            document.getElementById('modal-success').style.display = 'none';
             document.getElementById('auth-modal').style.display = 'flex';
         }
+
         function closeAuthModal(e) {
             document.getElementById('auth-modal').style.display = 'none';
         }
+
         function toggleAuthMode() {
-            isRegister = !isRegister;
+            isRegisterMode = !isRegisterMode;
             updateModalUI();
         }
+
         function updateModalUI() {
-            document.getElementById('modal-title').innerText = isRegister ? 'Create STRATA Account' : 'Sign In to STRATA';
-            document.getElementById('modal-submit-btn').innerText = isRegister ? 'Register' : 'Sign In';
-            document.getElementById('modal-switch-text').innerHTML = isRegister
-                ? 'Already have an account? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--cyan);">Sign In</a>'
-                : "Don't have an account? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--cyan);">Sign Up</a>";
+            const title = document.getElementById('modal-title');
+            const sub = document.getElementById('modal-sub');
+            const btn = document.getElementById('modal-submit-btn');
+            const swText = document.getElementById('modal-switch-text');
+            const nameGrp = document.getElementById('group-name');
+            const confirmGrp = document.getElementById('group-confirm');
+
+            if (isRegisterMode) {
+                title.innerText = 'Create STRATA Account';
+                sub.innerText = 'Join the 1-year free launch period. No payment required.';
+                btn.innerText = 'Create Free Account';
+                nameGrp.style.display = 'block';
+                confirmGrp.style.display = 'block';
+                swText.innerHTML = 'Already registered? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--cyan); font-weight: 600;">Sign In</a>';
+            } else {
+                title.innerText = 'Sign In to STRATA';
+                sub.innerText = 'Access your institutional trading terminal and accounts.';
+                btn.innerText = 'Sign In';
+                nameGrp.style.display = 'none';
+                confirmGrp.style.display = 'none';
+                swText.innerHTML = "Don't have an account? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--cyan); font-weight: 600;">Create Account</a>";
+            }
+            document.getElementById('modal-error').style.display = 'none';
+            document.getElementById('modal-success').style.display = 'none';
         }
+
         async function handleAuthSubmit(e) {
             e.preventDefault();
-            const email = document.getElementById('auth-email').value;
+            const errBox = document.getElementById('modal-error');
+            const succBox = document.getElementById('modal-success');
+            errBox.style.display = 'none';
+            succBox.style.display = 'none';
+
+            const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-password').value;
-            const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
+            const name = document.getElementById('auth-name').value.trim();
+            const confirm = document.getElementById('auth-confirm').value;
+
+            if (isRegisterMode) {
+                if (password.length < 8) {
+                    errBox.innerText = 'Password must be at least 8 characters long.';
+                    errBox.style.display = 'block';
+                    return;
+                }
+                if (password !== confirm) {
+                    errBox.innerText = 'Passwords do not match.';
+                    errBox.style.display = 'block';
+                    return;
+                }
+            }
+
+            const endpoint = isRegisterMode ? '/api/auth/register' : '/api/auth/login';
+            const payload = isRegisterMode 
+                ? { email, password, name, password_confirmation: confirm }
+                : { email, password };
+
             try {
                 const res = await fetch(endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify(payload)
                 });
                 const data = await res.json();
-                if (data.token || data.user_id) {
-                    if (data.token) localStorage.setItem('strata_token', data.token);
-                    window.location.href = '/app';
-                } else {
-                    alert(data.error || 'Authentication failed');
+
+                if (!res.ok || data.error) {
+                    errBox.innerText = data.error || 'Authentication error. Please check your inputs.';
+                    errBox.style.display = 'block';
+                    return;
+                }
+
+                if (data.token) {
+                    localStorage.setItem('strata_token', data.token);
+                    if (data.user) {
+                        localStorage.setItem('strata_user', JSON.stringify(data.user));
+                    }
+                    succBox.innerText = isRegisterMode ? 'Account registered! Redirecting to Terminal...' : 'Signed in! Redirecting to Terminal...';
+                    succBox.style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = '/app';
+                    }, 600);
                 }
             } catch (err) {
-                alert('Connection error: ' + err);
+                errBox.innerText = 'Network connection failed: ' + err.message;
+                errBox.style.display = 'block';
             }
         }
     </script>

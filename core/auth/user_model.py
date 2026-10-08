@@ -23,6 +23,7 @@ class User:
     password_hash: str
     salt: str
     tenant_id: str
+    name: str = ""
     role: UserRole = UserRole.TRADER
     is_active: bool = True
     created_at_ts: float = field(default_factory=time.time)
@@ -31,6 +32,7 @@ class User:
         """Returns safe user representation excluding password hash and salt."""
         return {
             "user_id": self.user_id,
+            "name": self.name or self.email.split("@")[0].title(),
             "email": self.email,
             "tenant_id": self.tenant_id,
             "role": self.role.value,

@@ -27,17 +27,19 @@
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
+            font-size: 13px;
         }
         header.mobile-header {
-            padding: 0.85rem 1rem;
+            padding: 0.75rem 1rem;
             background: #090e1c;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
         .header-brand { display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.1rem; }
-        .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--emerald); }
+        .brand-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--emerald); }
         .btn-halt {
             background: var(--rose);
             color: #fff;
@@ -46,11 +48,12 @@
             padding: 0.4rem 0.75rem;
             font-size: 0.75rem;
             font-weight: 700;
+            cursor: pointer;
         }
         .content {
             flex: 1;
             overflow-y: auto;
-            padding: 1rem;
+            padding: 0.85rem;
         }
         .tab-panel { display: none; }
         .tab-panel.active { display: block; }
@@ -59,43 +62,56 @@
         .m-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 0.85rem;
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+            margin-bottom: 0.75rem;
         }
-        .m-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem; }
+        .m-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem; font-family: var(--font-mono); }
         .m-value { font-size: 1.35rem; font-weight: 700; font-family: var(--font-mono); }
         .badge {
             display: inline-block;
-            padding: 0.2rem 0.5rem;
+            padding: 0.15rem 0.45rem;
             border-radius: 4px;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 700;
             background: rgba(14, 165, 233, 0.15);
             color: var(--cyan);
+            font-family: var(--font-mono);
         }
 
         /* Bottom Nav */
         nav.bottom-nav {
-            height: 56px;
+            height: 54px;
             background: #090e1c;
             border-top: 1px solid var(--border);
             display: flex;
             justify-content: space-around;
             align-items: center;
+            flex-shrink: 0;
         }
         .nav-btn {
             background: transparent;
             border: none;
             color: var(--text-muted);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.2rem;
             cursor: pointer;
         }
         .nav-btn.active { color: var(--cyan); font-weight: 700; }
+
+        /* Tables & Lists */
+        .m-list-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(26, 39, 66, 0.5);
+            font-size: 0.82rem;
+        }
+        .m-list-row:last-child { border-bottom: none; }
     </style>
 </head>
 <body>
@@ -105,95 +121,134 @@
             <span>STRATA</span>
             <span class="badge" id="m-env">PAPER</span>
         </div>
-        <button class="btn-halt" onclick="triggerHalt()">HALT</button>
+        <button class="btn-halt" onclick="triggerHalt()">🛑 HALT</button>
     </header>
 
     <div class="content">
-        <!-- Panel: Overview -->
+        <!-- 1. HOME / OVERVIEW -->
         <div class="tab-panel active" id="tab-overview">
             <div class="m-card">
                 <div class="m-label">Simulated Equity</div>
                 <div class="m-value" id="m-equity">$100,000.00</div>
-                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.35rem;">
-                    Real Capital Authorized: <strong style="color: var(--emerald);">$0.00 (LOCKED)</strong>
+                <div style="font-size: 0.75rem; color: var(--rose); margin-top: 0.35rem; font-family: var(--font-mono);">
+                    Real Capital Authorized: <strong>$0.00 (LOCKED)</strong>
                 </div>
             </div>
             <div class="m-card">
-                <div class="m-label">Active Risk Heat</div>
+                <div class="m-label">Portfolio Heat</div>
                 <div class="m-value" style="color: var(--emerald);" id="m-heat">0.00% / 3.00%</div>
             </div>
             <div class="m-card">
-                <div class="m-label">KING Core Status</div>
+                <div class="m-label">KING Engine Status</div>
                 <div style="font-size: 1rem; font-weight: 700; color: var(--cyan);">PROTECTED CORE</div>
                 <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">
-                    7-TF Hierarchy (1M → 3M) | Floor: ≥ 4.0R
+                    7-TF Ladder (1M → 3M) | Floor: ≥ 4.0R | Replay: 9,608 / 9,608
                 </div>
             </div>
         </div>
 
-        <!-- Panel: Positions -->
-        <div class="tab-panel" id="tab-positions">
-            <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">Active Positions Blotter</div>
-            <div id="m-positions-list">
-                <div class="m-card" style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">
-                    No open positions
-                </div>
-            </div>
-        </div>
-
-        <!-- Panel: KING -->
+        <!-- KING CORE TAB -->
         <div class="tab-panel" id="tab-king">
+            <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">STRATA KING Engine (PROTECTED CORE)</div>
             <div class="m-card">
-                <div class="m-label">Flagship Intelligence</div>
-                <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">KING Engine</div>
-                <p style="font-size: 0.8rem; color: var(--text-muted);">
-                    Evaluates closed-candle data across 5 overlapping triad sets with strict causal execution.
-                </p>
-                <div style="margin-top: 0.75rem; display: flex; gap: 0.5rem;">
-                    <span class="badge">9,608 / 9,608 REPLAY MATCH</span>
-                    <span class="badge">RISK: ≤ 1.0%</span>
+                <div class="m-label">Mathematical Invariants</div>
+                <div style="font-size: 0.8rem; line-height: 1.5; color: var(--text-muted);">
+                    • Minimum Target Floor: ≥ 4.0R<br>
+                    • Max Trade Risk: ≤ 1.00%<br>
+                    • Total Portfolio Heat: ≤ 3.00%<br>
+                    • Verified Replay Baseline: 9,608 / 9,608
                 </div>
             </div>
         </div>
 
-        <!-- Panel: Accounts -->
+        <!-- ACCOUNTS & BROKERS TAB -->
         <div class="tab-panel" id="tab-accounts">
-            <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">Connected Accounts</div>
+            <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">Connected Accounts & Brokers</div>
             <div class="m-card">
-                <div class="m-label">Primary Paper</div>
-                <div style="font-size: 1rem; font-weight: 700;">ACC_PAPER_PRIMARY</div>
-                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">Simulated USDT Account ($100k)</div>
-            </div>
-            <div class="m-card">
-                <div class="m-label">Binance Testnet</div>
-                <div style="font-size: 1rem; font-weight: 700;">ACC_BINANCE_DEMO</div>
-                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">USDT-M Futures Testnet</div>
+                <div class="m-list-row"><div><strong>Paper Sandbox</strong></div><span class="badge">ACTIVE</span></div>
+                <div class="m-list-row"><div><strong>Binance Testnet</strong></div><span class="badge">STANDBY</span></div>
+                <div class="m-list-row"><div><strong>Live Exchanges</strong></div><span class="badge" style="color: var(--rose);">LOCKED</span></div>
             </div>
         </div>
 
-        <!-- Panel: Alerts -->
+        <!-- 2. MARKETS & WATCHLIST -->
+        <div class="tab-panel" id="tab-markets">
+            <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">Admitted Crypto Markets</div>
+            <div class="m-card" id="m-markets-list">
+                <div class="m-list-row"><div><strong>BTCUSDT</strong> <span style="color: var(--text-muted); font-size: 0.75rem;">Bitcoin</span></div><div style="color: var(--emerald); font-family: var(--font-mono);">$64,120.50 (+2.45%)</div></div>
+                <div class="m-list-row"><div><strong>ETHUSDT</strong> <span style="color: var(--text-muted); font-size: 0.75rem;">Ethereum</span></div><div style="color: var(--emerald); font-family: var(--font-mono);">$3,442.20 (+3.12%)</div></div>
+                <div class="m-list-row"><div><strong>SOLUSDT</strong> <span style="color: var(--text-muted); font-size: 0.75rem;">Solana</span></div><div style="color: var(--emerald); font-family: var(--font-mono);">$158.85 (+4.80%)</div></div>
+                <div class="m-list-row"><div><strong>BNBUSDT</strong> <span style="color: var(--text-muted); font-size: 0.75rem;">BNB</span></div><div style="color: var(--emerald); font-family: var(--font-mono);">$581.40 (+1.15%)</div></div>
+            </div>
+        </div>
+
+        <!-- 3. STRATEGIES & LAB -->
+        <div class="tab-panel" id="tab-strategies">
+            <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">Strategy Intelligence</div>
+            <div class="m-card">
+                <div class="m-label">Featured Model</div>
+                <div style="font-weight: 700;">STRATA King Engine</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">+0.888R Expectancy | PF 4.92 | Win Rate 67.2%</div>
+            </div>
+            <div class="m-card">
+                <div class="m-label">Multi-TF Trend Pullback</div>
+                <div style="font-weight: 700;">STRATA_TREND_PULLBACK</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">Stage: PAPER | Expectancy: +0.443R | PF: 2.45</div>
+            </div>
+        </div>
+
+        <!-- 4. POSITIONS & ORDERS -->
+        <div class="tab-panel" id="tab-positions">
+            <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">Active Positions & Orders</div>
+            <div class="m-card" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">
+                No active positions open in paper sandbox
+            </div>
+        </div>
+
+        <!-- 5. RISK & GOVERNANCE -->
+        <div class="tab-panel" id="tab-risk">
+            <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">Risk Governors & Gates</div>
+            <div class="m-card">
+                <div class="m-label">Single Trade Risk</div>
+                <div class="m-value" style="font-size: 1.15rem;">≤ 1.00%</div>
+            </div>
+            <div class="m-card">
+                <div class="m-label">Total Portfolio Heat</div>
+                <div class="m-value" style="font-size: 1.15rem;">≤ 3.00%</div>
+            </div>
+            <div class="m-card">
+                <div class="m-label">Capital Safety Gate</div>
+                <div class="m-value" style="color: var(--rose); font-size: 1.15rem;">$0.00 LOCKED</div>
+            </div>
+        </div>
+
+        <!-- 6. ALERTS -->
         <div class="tab-panel" id="tab-alerts">
-            <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">System Alerts</div>
-            <div id="m-alerts-list">
-                <div class="m-card" style="font-size: 0.8rem;">
-                    <strong style="color: var(--cyan);">[INFO]</strong> System booted with zero-capital paper gate active.
+            <div style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.5rem;">Operational Alerts</div>
+            <div class="m-card">
+                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+                    <span class="badge">INFO</span> <span>Just Now</span>
                 </div>
+                <div style="margin-top: 0.35rem; font-size: 0.82rem;">System online in zero-capital paper mode. All circuit breakers armed.</div>
             </div>
         </div>
     </div>
 
     <nav class="bottom-nav">
-        <button class="nav-btn active" onclick="switchMobileTab('overview', this)">
-            <span>📊</span><span>Overview</span>
+        <button class="nav-btn active" onclick="switchMobileTab('home', this)">
+            <span>📊</span><span>Home</span>
+        </button>
+        <button class="nav-btn" onclick="switchMobileTab('markets', this)">
+            <span>📈</span><span>Markets</span>
+        </button>
+        <button class="nav-btn" onclick="switchMobileTab('strategies', this)">
+            <span>📚</span><span>Strategies</span>
         </button>
         <button class="nav-btn" onclick="switchMobileTab('positions', this)">
             <span>📦</span><span>Positions</span>
         </button>
-        <button class="nav-btn" onclick="switchMobileTab('king', this)">
-            <span>👑</span><span>KING</span>
-        </button>
-        <button class="nav-btn" onclick="switchMobileTab('accounts', this)">
-            <span>🏦</span><span>Accounts</span>
+        <button class="nav-btn" onclick="switchMobileTab('risk', this)">
+            <span>🛡️</span><span>Risk</span>
         </button>
         <button class="nav-btn" onclick="switchMobileTab('alerts', this)">
             <span>🔔</span><span>Alerts</span>
@@ -201,39 +256,35 @@
     </nav>
 
     <script>
-        let sessionToken = localStorage.getItem('strata_mobile_token') || '';
+        let sessionToken = localStorage.getItem('strata_token') || null;
 
         function switchMobileTab(tabId, btn) {
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('tab-' + tabId).classList.add('active');
+            const el = document.getElementById('tab-' + tabId);
+            if (el) el.classList.add('active');
             btn.classList.add('active');
         }
 
         async function triggerHalt() {
-            if (confirm("EMERGENCY STOP: Immediately pause the autonomous trading engine?")) {
+            if (confirm("EMERGENCY STOP: Immediately pause the autonomous trading engine and cancel all pending order intents?")) {
                 try {
-                    await fetch('/api/agent/pause', {
-                        method: 'POST',
-                        headers: { 'Authorization': 'Bearer ' + sessionToken }
-                    });
-                    alert("Emergency Halt triggered. System is now PAUSED.");
-                } catch (e) {
-                    alert("Error communicating with server: " + e);
+                    await fetch('/api/agent/pause', { method: 'POST' });
+                    alert("Emergency Halt triggered. System is in fail-closed safe mode.");
+                } catch(e) {
+                    alert("Communication error: " + e.message);
                 }
             }
         }
 
         async function pollTelemetry() {
             try {
-                const res = await fetch('/api/health', {
-                    headers: sessionToken ? { 'Authorization': 'Bearer ' + sessionToken } : {}
-                });
+                const res = await fetch('/api/health');
                 const data = await res.json();
                 if (data.execution_mode) {
                     document.getElementById('m-env').innerText = data.execution_mode;
                 }
-            } catch (e) {}
+            } catch(e) {}
         }
         setInterval(pollTelemetry, 5000);
         pollTelemetry();
