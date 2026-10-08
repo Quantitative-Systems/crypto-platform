@@ -23,19 +23,19 @@ def test_server(supervisor):
 @pytest.mark.asyncio
 async def test_full_programmatic_product_journey(test_server):
     async with TestClient(TestServer(test_server.app)) as client:
-        # 1. Public marketing website
+        # 1. Engineering & admin interface
         resp = await client.get("/")
         assert resp.status == 200
         html = await resp.text()
-        assert "STRATA" in html
-        assert "Autonomous Crypto Trading Platform" in html
+        assert "Crypto Platform" in html
+        assert "Android" in html
         assert "$0.00" in html
 
-        # 2. Institutional Terminal page
+        # 2. Terminal app page
         resp_app = await client.get("/app")
         assert resp_app.status == 200
         app_html = await resp_app.text()
-        assert "Institutional Trading Terminal" in app_html
+        assert "Crypto Platform" in app_html
 
         # 3. Dashboard redirect/view
         resp_dash = await client.get("/dashboard")

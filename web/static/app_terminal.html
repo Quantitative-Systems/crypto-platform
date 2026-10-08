@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STRATA — Institutional Trading Terminal</title>
+    <title>Crypto Platform — Development Workstation</title>
     <style>
         :root {
             --bg-base: #060913;
@@ -354,18 +354,18 @@
     <aside>
         <div class="brand">
             <div class="brand-icon">S</div>
-            <span class="brand-text">STRATA</span>
+            <span class="brand-text">Crypto Platform</span>
         </div>
         <ul class="nav-menu">
             <li class="nav-category">Core Operations</li>
             <li class="nav-item active" onclick="switchTab('overview')">📊 Overview</li>
             <li class="nav-item" onclick="switchTab('markets')">📈 Markets & Tickers</li>
             <li class="nav-item" onclick="switchTab('opportunities')">⚡ Opportunity Pipeline</li>
-            <li class="nav-item" onclick="switchTab('king')">👑 KING Engine Core</li>
+            <li class="nav-item" onclick="switchTab('king')">👑 Market Intelligence Engine Core</li>
 
             <li class="nav-category">Strategy Intelligence</li>
             <li class="nav-item" onclick="switchTab('strategies')">📚 Strategy Library</li>
-            <li class="nav-item" onclick="switchTab('strategy-lab')">🧪 Strategy Lab & AI</li>
+            <li class="nav-item" onclick="switchTab('strategy-lab')">🧪 Strategy Research & AI</li>
             <li class="nav-item" onclick="switchTab('backtesting')">🔬 Backtest Repository</li>
             <li class="nav-item" onclick="switchTab('forward')">🔭 Forward Shadow Validation</li>
 
@@ -378,8 +378,8 @@
             <li class="nav-category">Risk & Governance</li>
             <li class="nav-item" onclick="switchTab('risk')">🛡️ Risk Center & Heat</li>
             <li class="nav-item" onclick="switchTab('performance')">📈 Performance Analytics</li>
-            <li class="nav-item" onclick="switchTab('drift')">📉 Statistical Drift Monitor</li>
-            <li class="nav-item" onclick="switchTab('alerts')">🔔 Operational Alert Center</li>
+            <li class="nav-item" onclick="switchTab('drift')">📉 Strategy Monitoring Monitor</li>
+            <li class="nav-item" onclick="switchTab('alerts')">🔔 Operational Alerts</li>
             <li class="nav-item" onclick="switchTab('ledger')">📜 Append-Only Ledger</li>
             <li class="nav-item" onclick="switchTab('settings')">⚙️ Settings & Entitlements</li>
         </ul>
@@ -436,7 +436,7 @@
                         <div class="widget-sub">Across Admitted Universe</div>
                     </div>
                     <div class="widget">
-                        <div class="widget-title">KING Engine Edge</div>
+                        <div class="widget-title">Market Intelligence Engine Edge</div>
                         <div class="widget-value" style="color: var(--cyan);">+0.888R</div>
                         <div class="widget-sub">Contract Hash Verified</div>
                     </div>
@@ -533,12 +533,12 @@
             <div class="tab-page" id="page-king">
                 <div class="blotter-container">
                     <div class="blotter-header">
-                        <span>👑 Flagship STRATA KING Engine — Immutable Architecture</span>
+                        <span>👑 Flagship Crypto Platform Market Intelligence Engine — Immutable Architecture</span>
                         <span class="pill pill-green">CONTRACT HASH: 8fbc923a... [VERIFIED]</span>
                     </div>
                     <div style="padding: 1.5rem;">
                         <p style="color: var(--text-muted); margin-bottom: 1.25rem;">
-                            The KING Engine executes the <strong>Phase Q.2 / Phase R Unified Fractal Model</strong>. 
+                            The Market Intelligence Engine executes the <strong>Phase Q.2 / Phase R Unified Fractal Model</strong>. 
                             It operates across a continuous 7-timeframe hierarchy partitioned into 5 overlapping triad sets.
                             All trading parameters, thresholds, and target geometry invariants are locked.
                         </p>
@@ -599,7 +599,7 @@
             <div class="tab-page" id="page-strategy-lab">
                 <div class="blotter-container">
                     <div class="blotter-header">
-                        <span>🧪 STRATA Strategy Lab & Natural Language Compiler</span>
+                        <span>🧪 Crypto Platform Strategy Research & Natural Language Compiler</span>
                         <span class="pill pill-cyan">EMPIRICAL RESEARCH SANDBOX</span>
                     </div>
                     <div style="padding: 1.25rem;">
@@ -615,7 +615,7 @@
                         <h4 style="margin: 1.5rem 0 0.5rem; font-size: 0.85rem; color: var(--text-muted);">Strategy Research Copilot (AI Pair-Researcher)</h4>
                         <div class="copilot-container">
                             <div class="copilot-messages" id="copilot-msg-area">
-                                <div class="chat-bubble chat-ai">Welcome to STRATA Research Copilot. Ask me to formulate strategies, explain multi-timeframe rules, compare candidates against the KING Core benchmark, or evaluate custom ideas.</div>
+                                <div class="chat-bubble chat-ai">Welcome to Crypto Platform Research Copilot. Ask me to formulate strategies, explain multi-timeframe rules, compare candidates against the Market Intelligence benchmark, or evaluate custom ideas.</div>
                             </div>
                             <div class="copilot-input-bar">
                                 <input type="text" id="copilot-input" placeholder="Ask copilot: 'Compare trend pullback vs king' or 'Create a 15m liquidity sweep strategy'..." onkeydown="if(event.key==='Enter') sendCopilotMsg()">
@@ -779,7 +779,7 @@
             <div class="tab-page" id="page-drift">
                 <div class="blotter-container">
                     <div class="blotter-header">
-                        <span>Statistical Drift & Regime Monitor</span>
+                        <span>Strategy Monitoring & Regime Monitor</span>
                         <span class="pill pill-green">DISTRIBUTION INTACT</span>
                     </div>
                     <div style="padding: 1.25rem;">
@@ -800,7 +800,7 @@
             <div class="tab-page" id="page-alerts">
                 <div class="blotter-container">
                     <div class="blotter-header">
-                        <span>Operational Alert Center</span>
+                        <span>Operational Alerts</span>
                         <span class="pill pill-cyan">SECRET REDACTION ACTIVE</span>
                     </div>
                     <table class="dense-table" id="table-alerts-full">
@@ -1160,7 +1160,7 @@
             } catch(e) {}
         }
 
-        // Strategy Lab Compiler & Copilot
+        // Strategy Research Compiler & Copilot
         async function handleCompileStrategy() {
             const prompt = document.getElementById('lab-quick-prompt').value.trim();
             if (!prompt) return alert('Please enter a strategy description.');

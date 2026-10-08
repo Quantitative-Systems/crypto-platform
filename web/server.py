@@ -1057,13 +1057,17 @@ class PhaseRWebServer:
         static_dir = Path(__file__).resolve().parent / "static"
         pub_file = static_dir / "public_website.html"
         app_file = static_dir / "app_terminal.html"
+        mobile_file = Path(__file__).resolve().parent.parent / "mobile" / "android" / "assets" / "www" / "index.html"
 
         self.public_html = pub_file.read_text(encoding="utf-8") if pub_file.exists() else HTML_TERMINAL_PAGE
         self.app_html = app_file.read_text(encoding="utf-8") if app_file.exists() else HTML_TERMINAL_PAGE
+        self.mobile_html = mobile_file.read_text(encoding="utf-8") if mobile_file.exists() else ""
 
     def _setup_routes(self) -> None:
-        # Public website routes
+        # Public website & Mobile development routes
         self.app.router.add_get("/", self.handle_public_website)
+        self.app.router.add_get("/mobile", self.handle_mobile_app)
+        self.app.router.add_get("/android", self.handle_mobile_app)
         self.app.router.add_get("/how-it-works", self.handle_public_website)
         self.app.router.add_get("/technology", self.handle_public_website)
         self.app.router.add_get("/pricing", self.handle_public_website)
@@ -1119,11 +1123,12 @@ class PhaseRWebServer:
         # REST API: Risk & Governance
         self.app.router.add_get("/api/risk", self.handle_risk)
 
-        # REST API: Autonomous Trading Agent
+        # REST API: Autonomous Trading Agent & Emergency Stop
         self.app.router.add_post("/api/agent/cycle", self.handle_agent_cycle)
         self.app.router.add_post("/api/agent/style", self.handle_agent_style)
         self.app.router.add_post("/api/agent/pause", self.handle_agent_pause)
         self.app.router.add_post("/api/agent/resume", self.handle_agent_resume)
+        self.app.router.add_post("/api/system/halt", self.handle_agent_pause)
 
         # REST API: Trading Blotters & Analytics
         self.app.router.add_get("/api/decisions", self.handle_decisions)
@@ -1134,9 +1139,21 @@ class PhaseRWebServer:
         self.app.router.add_get("/api/alerts", self.handle_alerts)
 
     async def handle_public_website(self, request: web.Request) -> web.Response:
+        pub_file = Path(__file__).resolve().parent / "static" / "public_website.html"
+        if pub_file.exists():
+            return web.Response(text=pub_file.read_text(encoding="utf-8"), content_type="text/html")
         return web.Response(text=self.public_html, content_type="text/html")
 
+    async def handle_mobile_app(self, request: web.Request) -> web.Response:
+        mobile_file = Path(__file__).resolve().parent.parent / "mobile" / "android" / "assets" / "www" / "index.html"
+        if mobile_file.exists():
+            return web.Response(text=mobile_file.read_text(encoding="utf-8"), content_type="text/html")
+        return web.Response(text=self.mobile_html, content_type="text/html")
+
     async def handle_app_terminal(self, request: web.Request) -> web.Response:
+        app_file = Path(__file__).resolve().parent / "static" / "app_terminal.html"
+        if app_file.exists():
+            return web.Response(text=app_file.read_text(encoding="utf-8"), content_type="text/html")
         return web.Response(text=self.app_html, content_type="text/html")
 
     # --- Authentication Handlers ---

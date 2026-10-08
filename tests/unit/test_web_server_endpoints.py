@@ -19,18 +19,25 @@ def test_server(test_supervisor):
 @pytest.mark.asyncio
 async def test_public_website_and_terminal_html_routes(test_server):
     async with TestClient(TestServer(test_server.app)) as client:
-        # 1. Public marketing page
+        # 1. Root engineering & admin page
         resp = await client.get("/")
         assert resp.status == 200
         html = await resp.text()
-        assert "STRATA" in html
-        assert "Autonomous Crypto Trading Platform" in html
+        assert "Crypto Platform" in html
+        assert "Android" in html
 
-        # 2. Institutional Terminal app page
+        # 2. Terminal app page
         resp_app = await client.get("/app")
         assert resp_app.status == 200
         app_html = await resp_app.text()
-        assert "Institutional Trading Terminal" in app_html
+        assert "Crypto Platform" in app_html
+
+        # 3. Mobile application route
+        resp_mobile = await client.get("/mobile")
+        assert resp_mobile.status == 200
+        mobile_html = await resp_mobile.text()
+        assert "Crypto Platform" in mobile_html
+
 
 
 @pytest.mark.asyncio
