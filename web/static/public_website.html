@@ -3,701 +3,1616 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STRATA — Autonomous Digital Asset Trading Platform</title>
+    <title>STRATA — Digital Asset Automation Platform</title>
     <style>
         :root {
-            --bg-deep: #050811;
-            --bg-surface: #0a0f1d;
-            --bg-card: rgba(13, 20, 36, 0.75);
-            --bg-glass: rgba(18, 28, 50, 0.65);
-            --border: rgba(30, 48, 80, 0.6);
-            --border-hover: #0ea5e9;
-            --text-main: #f1f5f9;
-            --text-dim: #94a3b8;
+            --bg-page: #ffffff;
+            --bg-subtle: #f8fafc;
+            --bg-alt: #f1f5f9;
+            --bg-dark: #090e17;
+            --border-light: #e2e8f0;
+            --border-subtle: #f1f5f9;
+            --text-heading: #09090b;
+            --text-body: #475569;
             --text-muted: #64748b;
-            --cyan: #0ea5e9;
-            --emerald: #10b981;
-            --purple: #8b5cf6;
-            --amber: #f59e0b;
-            --rose: #f43f5e;
+            --blue-primary: #2563eb;
+            --blue-hover: #1d4ed8;
+            --blue-light: #eff6ff;
+            --blue-sky: #0284c7;
+            --sky-light: #f0f9ff;
+            --red-accent: #dc2626;
+            --red-light: #fef2f2;
+            --emerald: #059669;
+            --emerald-light: #ecfdf5;
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             --font-mono: 'JetBrains Mono', Consolas, monospace;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.07), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+            --shadow-perspective: 0 30px 60px -12px rgba(15, 23, 42, 0.15), 0 0 0 1px rgba(15, 23, 42, 0.06);
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            background-color: var(--bg-deep);
-            color: var(--text-main);
+            background-color: var(--bg-page);
+            color: var(--text-body);
             font-family: var(--font-sans);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
-        canvas#bg-canvas {
+
+        /* --- Header --- */
+        header.site-header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-heading);
+        }
+
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, var(--blue-primary), var(--blue-hover));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1.15rem;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+        }
+
+        .brand-text {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text-heading);
+        }
+
+        nav.nav-center {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        nav.nav-center a {
+            color: var(--text-body);
+            text-decoration: none;
+            font-size: 0.925rem;
+            font-weight: 500;
+            transition: color 0.15s ease;
+        }
+
+        nav.nav-center a:hover {
+            color: var(--blue-primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.625rem 1.35rem;
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            line-height: 1.25;
+        }
+
+        .btn-link {
+            color: var(--text-heading);
+            background: transparent;
+            padding: 0.625rem 0.75rem;
+        }
+
+        .btn-link:hover { color: var(--blue-primary); }
+
+        .btn-primary {
+            background: var(--blue-primary);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: var(--blue-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-page);
+            border-color: var(--border-light);
+            color: var(--text-heading);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-secondary:hover {
+            border-color: #cbd5e1;
+            background: var(--bg-subtle);
+            transform: translateY(-1px);
+        }
+
+        .btn-lg {
+            padding: 0.85rem 1.85rem;
+            font-size: 1rem;
+            border-radius: 9px;
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-heading);
+            cursor: pointer;
+        }
+
+        /* --- Hero Section --- */
+        section.hero-section {
+            padding: 5rem 2rem 5.5rem;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .hero-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .hero-left {
+            text-align: left;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            background: var(--blue-light);
+            border: 1px solid #dbeafe;
+            color: var(--blue-primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-headline-sub {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--blue-primary);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-headline {
+            font-size: 3.65rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.035em;
+            color: var(--text-heading);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-headline span.accent {
+            color: var(--blue-primary);
+            display: block;
+        }
+
+        .hero-subheading {
+            font-size: 1.15rem;
+            color: var(--text-body);
+            line-height: 1.6;
+            margin-bottom: 2.25rem;
+            max-width: 540px;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-note {
+            font-size: 0.825rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* --- Right Column: Crisp Product Preview --- */
+        .hero-right {
+            position: relative;
+            perspective: 1200px;
+        }
+
+        .product-preview-card {
+            transform: rotateY(-9deg) rotateX(5deg);
+            transform-style: preserve-3d;
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            box-shadow: var(--shadow-perspective);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .product-preview-card:hover {
+            transform: rotateY(-3deg) rotateX(2deg);
+        }
+
+        .preview-topbar {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-light);
+            padding: 0.85rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .preview-brand-tag {
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .preview-env-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: var(--blue-light);
+            color: var(--blue-primary);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+        }
+
+        .preview-content {
+            padding: 1.5rem;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+        }
+
+        .preview-equity-block {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 1.25rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .preview-equity-lbl {
+            font-size: 0.725rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .preview-equity-val {
+            font-size: 2rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--text-heading);
+            margin: 0.25rem 0;
+        }
+
+        .preview-equity-sub {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--emerald);
+            font-weight: 600;
+        }
+
+        .preview-tickers-block {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .preview-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.55rem 0;
+            border-bottom: 1px solid #f4f4f5;
+            font-size: 0.8rem;
+        }
+
+        .preview-row:last-child { border-bottom: none; }
+
+        .preview-sym {
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: var(--text-heading);
+        }
+
+        .preview-price {
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: var(--text-heading);
+        }
+
+        .preview-gain {
+            color: var(--emerald);
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .preview-status-pill {
+            background: var(--sky-light);
+            color: var(--blue-sky);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* --- Three Concepts Section: Think. Build. Automate. --- */
+        section.concept-section {
+            padding: 5rem 2rem;
+            background: var(--bg-subtle);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .section-container {
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .section-header-clean {
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 3.5rem;
+        }
+
+        .section-tag {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--blue-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+            display: inline-block;
+        }
+
+        .section-title {
+            font-size: 2.35rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 0.85rem;
+        }
+
+        .section-desc {
+            font-size: 1.05rem;
+            color: var(--text-body);
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .concept-card {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 2.25rem 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-2px);
+            border-color: #cbd5e1;
+            box-shadow: var(--shadow-md);
+        }
+
+        .concept-step {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--blue-primary);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .concept-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 0.65rem;
+        }
+
+        .concept-text {
+            font-size: 0.95rem;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+
+        /* --- Horizontal Flow Section --- */
+        section.flow-section {
+            padding: 5rem 2rem;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.25rem;
+        }
+
+        .flow-card {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 1.5rem 1.25rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s ease;
+        }
+
+        .flow-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--blue-primary);
+        }
+
+        .flow-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--blue-light);
+            color: var(--blue-primary);
+            font-weight: 800;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.85rem;
+        }
+
+        .flow-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 0.4rem;
+        }
+
+        .flow-desc {
+            font-size: 0.825rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* --- Visual Trading Section (Emotional Storytelling) --- */
+        section.editorial-visual-section {
+            padding: 5.5rem 2rem;
+            background: var(--bg-dark);
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .editorial-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .editorial-title {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            color: #ffffff;
+            margin-bottom: 1.25rem;
+        }
+
+        .editorial-desc {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            line-height: 1.65;
+            margin-bottom: 2rem;
+        }
+
+        /* Trading Workspace Graphic */
+        .workspace-graphic {
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .graphic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #1e293b;
+            margin-bottom: 1.25rem;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-family: var(--font-mono);
+        }
+
+        .graphic-candles {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 180px;
+            padding: 1rem 0;
+            position: relative;
+        }
+
+        .candle-bar {
+            width: 14px;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .candle-up { background: var(--blue-primary); }
+        .candle-down { background: var(--red-accent); }
+
+        .graphic-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid #1e293b;
+            font-size: 0.8rem;
+        }
+
+        .graphic-metric-lbl { color: #64748b; font-size: 0.7rem; text-transform: uppercase; }
+        .graphic-metric-val { color: #ffffff; font-weight: 700; font-family: var(--font-mono); font-size: 1rem; margin-top: 0.2rem; }
+
+        /* --- Feature Grid: Everything You Need --- */
+        section.features-section {
+            padding: 5rem 2rem;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .feature-grid-6 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.75rem;
+        }
+
+        .feature-item {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 1.75rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-2px);
+            border-color: #cbd5e1;
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: var(--text-body);
+            line-height: 1.55;
+        }
+
+        /* --- Strategy Categories Banner --- */
+        section.styles-section {
+            padding: 5rem 2rem;
+            background: var(--bg-subtle);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .styles-pills-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .style-pill {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            padding: 0.55rem 1.15rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .style-pill.active {
+            background: var(--blue-primary);
+            color: #ffffff;
+            border-color: var(--blue-primary);
+        }
+
+        /* --- Strategy Lab Teaser --- */
+        section.lab-teaser-section {
+            padding: 5rem 2rem;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .lab-box {
+            background: var(--blue-light);
+            border: 1px solid #bfdbfe;
+            border-radius: 16px;
+            padding: 3.5rem 3rem;
+            text-align: center;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .lab-box h3 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 1rem;
+        }
+
+        .lab-box p {
+            font-size: 1.05rem;
+            color: var(--text-body);
+            max-width: 640px;
+            margin: 0 auto 1.75rem;
+            line-height: 1.6;
+        }
+
+        /* --- Proof Strip --- */
+        section.proof-section {
+            padding: 3.5rem 2rem;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .proof-grid {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .proof-val {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            font-family: var(--font-mono);
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+
+        .proof-lbl {
+            font-size: 0.825rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* --- Safety Disclaimer Section --- */
+        section.safety-notice-section {
+            padding: 3.5rem 2rem;
+            background: var(--bg-subtle);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .safety-box {
+            max-width: 820px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .safety-box h4 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 0.5rem;
+        }
+
+        .safety-box p {
+            font-size: 0.9rem;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+
+        /* --- Simple Pricing Section --- */
+        section.pricing-section {
+            padding: 5.5rem 2rem;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .pricing-hero-card {
+            background: linear-gradient(135deg, #ffffff 0%, var(--blue-light) 100%);
+            border: 2px solid var(--blue-primary);
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 720px;
+            margin: 0 auto 3rem;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pricing-badge {
+            display: inline-block;
+            background: var(--blue-primary);
+            color: #ffffff;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-amount {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            font-family: var(--font-mono);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-note {
+            font-size: 1.05rem;
+            color: var(--text-body);
+            margin-bottom: 1.75rem;
+        }
+
+        /* --- Small FAQ --- */
+        section.faq-section {
+            padding: 5rem 2rem;
+            background: var(--bg-subtle);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .faq-list {
+            max-width: 760px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq-item {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .faq-q {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 0.4rem;
+        }
+
+        .faq-a {
+            font-size: 0.9rem;
+            color: var(--text-body);
+            line-height: 1.55;
+        }
+
+        /* --- Footer --- */
+        footer.site-footer {
+            background: #ffffff;
+            color: var(--text-body);
+            padding: 4rem 2rem 2.5rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .footer-container {
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .footer-col h5 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            font-size: 0.875rem;
+        }
+
+        .footer-col a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .footer-col a:hover {
+            color: var(--blue-primary);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* --- Auth Modal --- */
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -1;
-            opacity: 0.35;
-            pointer-events: none;
-        }
-        /* Top Navigation */
-        header {
-            position: sticky;
-            top: 0;
-            backdrop-filter: blur(16px);
-            background: rgba(5, 8, 17, 0.9);
-            border-bottom: 1px solid var(--border);
-            z-index: 100;
-            padding: 0.85rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo-box {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            color: var(--text-main);
-        }
-        .logo-symbol {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--cyan), var(--purple));
-            border-radius: 6px;
-            display: flex;
+            background: rgba(9, 14, 23, 0.6);
+            backdrop-filter: blur(6px);
+            display: none;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 1.1rem;
+            z-index: 2000;
         }
-        .logo-text { font-size: 1.25rem; font-weight: 800; letter-spacing: 0.08em; }
-        .nav-links { display: flex; gap: 1.35rem; list-style: none; font-size: 0.875rem; font-weight: 500; }
-        .nav-links a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--cyan); }
-        .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
-        .btn {
-            padding: 0.55rem 1.2rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.2s;
+
+        .modal-box {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            border-radius: 14px;
+            width: 100%;
+            max-width: 420px;
+            padding: 2.25rem;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: transparent;
             border: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 1.35rem;
+            color: var(--text-muted);
+            cursor: pointer;
         }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
-        .btn-outline:hover { border-color: var(--cyan); background: rgba(14, 165, 233, 0.1); }
-        .btn-primary { background: linear-gradient(135deg, var(--cyan), #2563eb); color: #fff; }
-        .btn-primary:hover { opacity: 0.95; transform: translateY(-1px); }
 
-        /* Banner */
-        .safety-ribbon {
-            background: #111827;
-            border-bottom: 1px solid #1f2937;
-            padding: 0.35rem 1rem;
-            font-size: 0.75rem;
-            text-align: center;
-            color: #9ca3af;
-            font-family: var(--font-mono);
+        .modal-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 0.35rem;
         }
-        .safety-ribbon strong { color: var(--emerald); }
 
-        /* Container */
-        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        .modal-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
 
-        /* Hero */
-        .hero {
-            text-align: center;
-            padding: 5rem 1.5rem 3.5rem;
-            max-width: 950px;
-            margin: 0 auto;
-        }
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.35rem 1rem;
-            border-radius: 999px;
-            background: rgba(14, 165, 233, 0.1);
-            border: 1px solid rgba(14, 165, 233, 0.3);
-            color: var(--cyan);
-            font-size: 0.775rem;
-            font-weight: 600;
-            font-family: var(--font-mono);
-            margin-bottom: 1.25rem;
-        }
-        .hero h1 {
-            font-size: 3.25rem;
-            font-weight: 900;
-            letter-spacing: -0.03em;
-            line-height: 1.15;
-            margin-bottom: 1.25rem;
-        }
-        .hero h1 span {
-            background: linear-gradient(135deg, #fff, var(--cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero p.desc {
-            font-size: 1.15rem;
-            color: var(--text-dim);
-            max-width: 720px;
-            margin: 0 auto 2rem;
-            line-height: 1.6;
-        }
-        .hero-cta { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-
-        /* Metrics Strip */
-        .metric-strip {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.25rem;
-            margin: 2.5rem 0 4rem;
-        }
-        .metric-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.25rem;
+        .form-group {
+            margin-bottom: 1rem;
             text-align: left;
         }
-        .metric-lbl { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-family: var(--font-mono); }
-        .metric-val { font-size: 1.6rem; font-weight: 800; color: #fff; font-family: var(--font-mono); margin: 0.25rem 0; }
-        .metric-sub { font-size: 0.775rem; color: var(--emerald); }
 
-        /* Section Headings */
-        .section-header { text-align: center; max-width: 700px; margin: 0 auto 3rem; }
-        .section-header h2 { font-size: 2.25rem; font-weight: 800; margin-bottom: 0.75rem; }
-        .section-header p { color: var(--text-dim); font-size: 1rem; }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-bottom: 0.35rem;
+        }
 
-        /* Feature Grid */
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
-        .feature-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.75rem;
-            transition: all 0.2s;
-        }
-        .feature-card:hover { border-color: var(--cyan); transform: translateY(-2px); }
-        .feature-icon {
-            width: 44px; height: 44px; border-radius: 8px;
-            background: rgba(14, 165, 233, 0.1);
-            color: var(--cyan);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.35rem; margin-bottom: 1rem;
-        }
-        .feature-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .feature-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.55; }
-
-        /* Pricing Section */
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
-        .price-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem 1.5rem;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-        .price-card.featured {
-            border-color: var(--cyan);
-            background: rgba(14, 28, 56, 0.85);
-            box-shadow: 0 0 25px rgba(14, 165, 233, 0.15);
-        }
-        .launch-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--emerald);
-            color: #000;
-            padding: 0.2rem 0.85rem;
-            font-size: 0.7rem;
-            font-weight: 800;
-            border-radius: 999px;
-            font-family: var(--font-mono);
-            letter-spacing: 0.05em;
-        }
-        .price-tier-name { font-size: 1.15rem; font-weight: 700; }
-        .price-val { font-size: 2.25rem; font-weight: 800; margin: 0.75rem 0 0.25rem; font-family: var(--font-mono); }
-        .price-note { font-size: 0.8rem; color: var(--emerald); font-weight: 600; margin-bottom: 1.25rem; }
-        .price-features { list-style: none; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-dim); flex: 1; }
-        .price-features li { margin-bottom: 0.65rem; display: flex; align-items: flex-start; gap: 0.5rem; }
-        .price-features li::before { content: "✓"; color: var(--cyan); font-weight: bold; }
-
-        /* FAQ */
-        .faq-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
+        .form-group input {
+            width: 100%;
+            padding: 0.65rem 0.85rem;
+            border: 1px solid var(--border-light);
             border-radius: 8px;
-            padding: 1.25rem 1.5rem;
-            margin-bottom: 1rem;
-            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: var(--text-heading);
+            background: #ffffff;
         }
-        .faq-question { font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
-        .faq-answer { color: var(--text-dim); font-size: 0.9rem; margin-top: 0.75rem; display: none; line-height: 1.6; }
 
-        /* Modals */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(8px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--blue-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
-        .modal-card {
-            background: #0d1527;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            width: 90%;
-            max-width: 440px;
-            padding: 2.25rem;
-            position: relative;
-        }
-        .modal-card h2 { margin-bottom: 0.5rem; font-size: 1.4rem; font-weight: 800; }
-        .modal-subtitle { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 1.25rem; }
-        .modal-alert {
+
+        .modal-msg {
             padding: 0.65rem 0.85rem;
             border-radius: 6px;
             font-size: 0.8rem;
             margin-bottom: 1rem;
             display: none;
         }
-        .alert-error { background: rgba(244, 63, 94, 0.15); border: 1px solid rgba(244, 63, 94, 0.4); color: #fecaca; }
-        .alert-success { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #a7f3d0; }
-        .form-group { margin-bottom: 0.85rem; text-align: left; }
-        .form-group label { display: block; font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.35rem; font-weight: 500; }
-        .form-group input {
-            width: 100%;
-            padding: 0.65rem 0.85rem;
-            background: #060a14;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: #fff;
-            font-family: inherit;
-            font-size: 0.9rem;
-        }
-        .form-group input:focus { outline: none; border-color: var(--cyan); }
-        .modal-close {
-            position: absolute;
-            top: 1.25rem; right: 1.25rem;
-            background: transparent; border: none;
-            color: var(--text-muted); font-size: 1.25rem;
-            cursor: pointer;
-        }
 
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 3rem 2rem 2rem;
-            background: rgba(5, 8, 17, 0.95);
-            font-size: 0.85rem;
-            color: var(--text-dim);
-            text-align: center;
-        }
-        .footer-links { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-        .footer-links a { color: var(--text-dim); text-decoration: none; }
-        .footer-links a:hover { color: var(--cyan); }
-        .footer-disclaimer {
-            max-width: 820px;
-            margin: 1.5rem auto 0;
-            font-size: 0.75rem;
-            color: #475569;
-            line-height: 1.6;
+        .modal-error { background: var(--red-light); color: var(--red-accent); border: 1px solid #fecaca; }
+        .modal-success { background: var(--emerald-light); color: var(--emerald); border: 1px solid #a7f3d0; }
+
+        /* Responsive */
+        @media (max-width: 960px) {
+            .hero-container { grid-template-columns: 1fr; gap: 3rem; }
+            .hero-left { text-align: center; }
+            .hero-subheading { margin-left: auto; margin-right: auto; }
+            .hero-cta-group { justify-content: center; }
+            .product-preview-card { transform: none; max-width: 580px; margin: 0 auto; }
+            .concept-grid { grid-template-columns: 1fr; }
+            .flow-steps { grid-template-columns: 1fr; }
+            .editorial-container { grid-template-columns: 1fr; }
+            .feature-grid-6 { grid-template-columns: 1fr; }
+            .proof-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+            nav.nav-center { display: none; }
+            .mobile-toggle { display: block; }
         }
     </style>
 </head>
 <body>
-    <div class="safety-ribbon">
-        STRATA ENGINE CORE: <strong>7-TIMEFRAME FRACTAL LADDER VERIFIED</strong> | REAL CAPITAL: <strong>$0.00 FAIL-CLOSED</strong> | LAUNCH PERIOD: <strong>FREE ACCESS (ALL USERS $0)</strong>
-    </div>
 
-    <canvas id="bg-canvas"></canvas>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="/" class="brand-logo">
+                <div class="brand-mark">S</div>
+                <div class="brand-text">STRATA</div>
+            </a>
 
-    <header>
-        <a href="/" class="logo-box">
-            <div class="logo-symbol">S</div>
-            <span class="logo-text">STRATA</span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#markets">Markets</a></li>
-            <li><a href="#king">KING Core</a></li>
-            <li><a href="#strategies">Strategies</a></li>
-            <li><a href="#strategy-lab">Strategy Lab</a></li>
-            <li><a href="#forward-validation">Forward Validation</a></li>
-            <li><a href="#security">Security</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#faq">FAQ</a></li>
-        </ul>
-        <div class="nav-actions">
-            <button class="btn btn-outline" onclick="openAuthModal('login')">Sign In</button>
-            <button class="btn btn-primary" onclick="openAuthModal('register')">Create Account</button>
-            <a href="/app" class="btn btn-outline" style="border-color: var(--cyan);">Terminal</a>
+            <nav class="nav-center">
+                <a href="/">Home</a>
+                <a href="#about">About</a>
+                <a href="#whats-new">What's New</a>
+                <a href="#strategies">Strategies</a>
+                <a href="#pricing">Pricing</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="#contact" class="btn btn-link">Contact</a>
+                <button class="btn btn-link" onclick="openAuthModal('login')">Sign In</button>
+                <button class="btn btn-primary" onclick="openAuthModal('register')">Get Started</button>
+                <button class="mobile-toggle" onclick="toggleMobileNav()">☰</button>
+            </div>
         </div>
     </header>
 
+    <!-- Mobile Drawer Nav -->
+    <div id="mobile-nav-drawer" style="display: none; background: #ffffff; border-bottom: 1px solid var(--border-light); padding: 1.25rem 2rem;">
+        <div style="display: flex; flex-direction: column; gap: 1rem; font-weight: 600;">
+            <a href="/" style="color: var(--text-heading); text-decoration: none;" onclick="toggleMobileNav()">Home</a>
+            <a href="#about" style="color: var(--text-heading); text-decoration: none;" onclick="toggleMobileNav()">About</a>
+            <a href="#whats-new" style="color: var(--text-heading); text-decoration: none;" onclick="toggleMobileNav()">What's New</a>
+            <a href="#strategies" style="color: var(--text-heading); text-decoration: none;" onclick="toggleMobileNav()">Strategies</a>
+            <a href="#pricing" style="color: var(--text-heading); text-decoration: none;" onclick="toggleMobileNav()">Pricing</a>
+            <a href="#contact" style="color: var(--text-heading); text-decoration: none;" onclick="toggleMobileNav()">Contact</a>
+        </div>
+    </div>
+
     <!-- Hero Section -->
-    <div class="hero">
-        <div class="hero-badge">● STRATA ENGINE v1.2.0 — FORWARD VALIDATION READY</div>
-        <h1>STRATA — Autonomous Crypto Trading Platform</h1>
-        <p class="desc">
-            Empirical multi-timeframe market structure intelligence, 24/7 automated risk governors, 
-            and zero-capital forward shadow execution across Binance, Bybit, and MetaTrader 5.
-        </p>
-        <div class="hero-cta">
-            <button class="btn btn-primary" style="padding: 0.8rem 1.75rem; font-size: 0.95rem;" onclick="openAuthModal('register')">Get Started Free</button>
-            <a href="/app" class="btn btn-outline" style="padding: 0.8rem 1.75rem; font-size: 0.95rem;">Launch Web Terminal</a>
-            <a href="#how-it-works" class="btn btn-outline" style="padding: 0.8rem 1.75rem; font-size: 0.95rem;">Explore Architecture</a>
-        </div>
-    </div>
+    <section class="hero-section">
+        <div class="hero-container">
+            <!-- Hero Left -->
+            <div class="hero-left">
+                <div class="hero-eyebrow">
+                    Digital Asset Automation Platform
+                </div>
 
-    <div class="container">
-        <!-- Live Research Metric Strip -->
-        <div class="metric-strip">
-            <div class="metric-card">
-                <div class="metric-lbl">Protected KING Baseline</div>
-                <div class="metric-val">9,608 / 9,608</div>
-                <div class="metric-sub">100% Deterministic Replay Match</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-lbl">Target Geometry Floor</div>
-                <div class="metric-val">≥ 4.0R</div>
-                <div class="metric-sub">Asymmetric R:R Requirement</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-lbl">Max Single Trade Risk</div>
-                <div class="metric-val">≤ 1.0%</div>
-                <div class="metric-sub">Hard Governor Safety Bound</div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-lbl">Live Capital Authorized</div>
-                <div class="metric-val" style="color: var(--rose);">$0.00</div>
-                <div class="metric-sub" style="color: var(--rose);">Strict Fail-Closed Hardware Lock</div>
-            </div>
-        </div>
+                <div class="hero-headline-sub">THINK. BUILD. AUTOMATE.</div>
 
-        <!-- Section: How It Works -->
-        <section id="how-it-works" style="padding: 3rem 0;">
-            <div class="section-header">
-                <h2>Autonomous Trading Architecture</h2>
-                <p>STRATA replaces emotional decision-making with mathematical closed-candle causal logic.</p>
-            </div>
-            <div class="grid-3">
-                <div class="feature-card">
-                    <div class="feature-icon">👑</div>
-                    <h3>KING Core Engine</h3>
-                    <p>7-Timeframe continuous ladder (1M → 1W → 1D → 4H → 1H → 15M → 3M) across 5 overlapping triad sets. Captures macro regime bias while executing at micro discount equilibria.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <h3>Automated Risk Governors</h3>
-                    <p>Mathematical portfolio heat caps (≤3.0%), single-trade limits (≤1.0%), daily drawdown circuit breakers, and real-time state reconciliation against connected exchanges.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🧪</div>
-                    <h3>Natural Language Strategy Lab</h3>
-                    <p>Formulate custom crypto trading models in plain English. The compiler extracts rules, validates universe admissibility, and executes multi-asset walk-forward backtests.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔌</div>
-                    <h3>Multi-Broker Onboarding</h3>
-                    <p>Seamlessly bind Binance Testnet, Bybit Testnet, and MetaTrader 5 Demo accounts. Capability discovery dynamically adapts to lot sizes, tick steps, and rate limits.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔭</div>
-                    <h3>Forward Shadow Validation</h3>
-                    <p>Before any strategy ever touches live capital, it must prove forward expectancy, parameter stability, and friction survivability in zero-capital shadow/paper mode.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📜</div>
-                    <h3>22-Field Cryptographic Ledger</h3>
-                    <p>Every trade intent, submission, fill, and reconciliation audit is timestamped and hashed into an append-only immutable audit trail with complete lineage.</p>
-                </div>
-            </div>
-        </section>
+                <h1 class="hero-headline">
+                    Turn Your Trading Ideas into
+                    <span class="accent">Automated Crypto Strategies</span>
+                </h1>
 
-        <!-- Section: Markets -->
-        <section id="markets" style="padding: 3rem 0;">
-            <div class="section-header">
-                <h2>Admitted Crypto Universe</h2>
-                <p>STRATA operates exclusively on liquid, high-volume perpetual and spot digital asset pairs.</p>
+                <p class="hero-subheading">
+                    STRATA gives traders one place to turn an idea into a systematic strategy — research it, 
+                    test it, validate it, and automate it. Autonomous Crypto Trading Platform engineered for zero-capital forward safety.
+                </p>
+
+                <div class="hero-cta-group">
+                    <button class="btn btn-primary btn-lg" onclick="openAuthModal('register')">
+                        Get Started Free &rarr;
+                    </button>
+                    <a href="#about" class="btn btn-secondary btn-lg">
+                        Learn More &rarr;
+                    </a>
+                </div>
+
+                <div class="hero-note">
+                    Free during the launch period • Real capital remains $0.00 locked
+                </div>
             </div>
-            <div class="grid-3">
-                <div class="feature-card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                        <h3 style="margin: 0;">BTCUSDT</h3>
-                        <span style="font-family: var(--font-mono); color: var(--emerald); font-weight: 700;">+2.45%</span>
+
+            <!-- Hero Right: Crisp Product Preview -->
+            <div class="hero-right">
+                <div class="product-preview-card">
+                    <div class="preview-topbar">
+                        <div class="preview-brand-tag">
+                            <span style="color: var(--blue-primary);">&bull;</span> STRATA PLATFORM
+                        </div>
+                        <div class="preview-env-badge">PAPER (SIMULATED)</div>
                     </div>
-                    <p>Primary Market Benchmark. HTF Bullish Expansion with 7-timeframe ladder alignment. Full Phase Q.2 / Phase R coverage.</p>
-                </div>
-                <div class="feature-card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                        <h3 style="margin: 0;">ETHUSDT</h3>
-                        <span style="font-family: var(--font-mono); color: var(--emerald); font-weight: 700;">+3.12%</span>
+
+                    <div class="preview-content">
+                        <!-- Simulated Equity Block -->
+                        <div class="preview-equity-block">
+                            <div class="preview-equity-lbl">Simulated Portfolio Equity</div>
+                            <div class="preview-equity-val">$100,000.00</div>
+                            <div class="preview-equity-sub">
+                                <span>Zero-Risk Simulation Mode</span>
+                                <span style="color: var(--red-accent);">Real Capital: $0.00 (LOCKED)</span>
+                            </div>
+                        </div>
+
+                        <!-- Active Crypto Watchlist -->
+                        <div class="preview-tickers-block">
+                            <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-heading); margin-bottom: 0.5rem; display: flex; justify-content: space-between;">
+                                <span>ACTIVE MARKETS</span>
+                                <span class="preview-status-pill">CONNECTED</span>
+                            </div>
+                            <div class="preview-row">
+                                <span class="preview-sym">BTCUSDT</span>
+                                <span class="preview-price">$64,120.50</span>
+                                <span class="preview-gain">+2.45%</span>
+                            </div>
+                            <div class="preview-row">
+                                <span class="preview-sym">ETHUSDT</span>
+                                <span class="preview-price">$3,442.20</span>
+                                <span class="preview-gain">+3.12%</span>
+                            </div>
+                            <div class="preview-row">
+                                <span class="preview-sym">SOLUSDT</span>
+                                <span class="preview-price">$158.85</span>
+                                <span class="preview-gain">+4.80%</span>
+                            </div>
+                            <div class="preview-row">
+                                <span class="preview-sym">BNBUSDT</span>
+                                <span class="preview-price">$581.40</span>
+                                <span class="preview-gain">+1.15%</span>
+                            </div>
+                        </div>
+
+                        <!-- Active Strategy Card -->
+                        <div style="background: #ffffff; border: 1px solid var(--border-light); border-radius: 10px; padding: 1rem 1.25rem;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 0.35rem;">
+                                <strong style="color: var(--text-heading);">Multi-Timeframe Trend Model</strong>
+                                <span style="color: var(--emerald); font-weight: 700;">ACTIVE</span>
+                            </div>
+                            <div style="font-size: 0.775rem; color: var(--text-muted);">
+                                Rule: Equilibrium Pullback &bull; Floor: &ge; 4.0R &bull; Max Risk: 1.0%
+                            </div>
+                        </div>
                     </div>
-                    <p>High Liquidity Tier 1 Asset. Phase C Markup Confirmation with multi-timeframe discount pullback validation.</p>
                 </div>
-                <div class="feature-card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                        <h3 style="margin: 0;">SOLUSDT</h3>
-                        <span style="font-family: var(--font-mono); color: var(--emerald); font-weight: 700;">+4.80%</span>
-                    </div>
-                    <p>High-Beta Volatility Expansion. Evaluated across 4H/1H/15M intraday and swing liquidity sweeps.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section: Strategies & Library -->
-        <section id="strategies" style="padding: 3rem 0;">
-            <div class="section-header">
-                <h2>Canonical Strategy Library</h2>
-                <p>Cataloged across 8 distinct trading categories with transparent lifecycle stage tracking.</p>
-            </div>
-            <div class="grid-3">
-                <div class="feature-card">
-                    <span style="font-size: 0.75rem; color: var(--cyan); font-family: var(--font-mono); font-weight: 700;">POSITION / CORE</span>
-                    <h3 style="margin-top: 0.35rem;">STRATA King Engine</h3>
-                    <p>Flagship 7-timeframe fractal model. Verified +0.888R expectancy and 4.918 profit factor across 9,608 closed candle opportunities.</p>
-                </div>
-                <div class="feature-card">
-                    <span style="font-size: 0.75rem; color: var(--emerald); font-family: var(--font-mono); font-weight: 700;">SWING / PAPER</span>
-                    <h3 style="margin-top: 0.35rem;">Multi-TF Trend Pullback</h3>
-                    <p>Captures discount/premium equilibrium pullbacks in aligned market trends with strict ≥4.0R destination floor.</p>
-                </div>
-                <div class="feature-card">
-                    <span style="font-size: 0.75rem; color: var(--amber); font-family: var(--font-mono); font-weight: 700;">INTRADAY / PAPER</span>
-                    <h3 style="margin-top: 0.35rem;">Liquidity Sweep Breakout</h3>
-                    <p>Trades volatility expansion following liquidity pool sweeps and lower-timeframe Market Structure Shift (MSS) confirmation.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section: Pricing -->
-        <section id="pricing" style="padding: 3rem 0;">
-            <div class="section-header">
-                <h2>Transparent Launch Pricing</h2>
-                <p>STRATA operates with a <strong>First-Year Free Launch Period ($0.00)</strong> for all users. No payment required.</p>
-            </div>
-            <div class="pricing-grid">
-                <div class="price-card">
-                    <div class="launch-badge">LAUNCH: $0.00</div>
-                    <div class="price-tier-name">Researcher</div>
-                    <div class="price-val">$0<span style="font-size: 1rem; color: var(--text-muted);">/mo</span></div>
-                    <div class="price-note">Free 1-Year Access</div>
-                    <ul class="price-features">
-                        <li>Access to KING Core 7-timeframe ladder</li>
-                        <li>Natural language Strategy Lab (3 models)</li>
-                        <li>Zero-capital paper simulation engine</li>
-                        <li>Community research discussions</li>
-                    </ul>
-                    <button class="btn btn-outline" onclick="openAuthModal('register')">Select Researcher</button>
-                </div>
-                <div class="price-card">
-                    <div class="launch-badge">LAUNCH: $0.00</div>
-                    <div class="price-tier-name">Trader</div>
-                    <div class="price-val">$0<span style="font-size: 1rem; color: var(--text-muted);">/mo</span></div>
-                    <div class="price-note">Free 1-Year Access (Standard $149)</div>
-                    <ul class="price-features">
-                        <li>Multi-broker connectivity (Binance, Bybit, MT5)</li>
-                        <li>Automated order lifecycle audit trail (22 fields)</li>
-                        <li>Real-time statistical drift monitor</li>
-                        <li>Standard webhook & email alerts</li>
-                    </ul>
-                    <button class="btn btn-outline" onclick="openAuthModal('register')">Select Trader</button>
-                </div>
-                <div class="price-card featured">
-                    <div class="launch-badge">MOST POPULAR • $0.00</div>
-                    <div class="price-tier-name">Autonomous Pro</div>
-                    <div class="price-val">$0<span style="font-size: 1rem; color: var(--text-muted);">/mo</span></div>
-                    <div class="price-note">Free 1-Year Access (Standard $499)</div>
-                    <ul class="price-features">
-                        <li>Full Autonomous Trading Agent with style switching</li>
-                        <li>24/7 Process Watchdog & state reconciliation</li>
-                        <li>Cross-set coherence validation across all 5 sets</li>
-                        <li>AI Strategy Research Copilot (unlimited)</li>
-                    </ul>
-                    <button class="btn btn-primary" onclick="openAuthModal('register')">Select Autonomous Pro</button>
-                </div>
-                <div class="price-card">
-                    <div class="launch-badge">LAUNCH: $0.00</div>
-                    <div class="price-tier-name">Institutional</div>
-                    <div class="price-val">$0<span style="font-size: 1rem; color: var(--text-muted);">/mo</span></div>
-                    <div class="price-note">Free 1-Year Access (Standard $1,499)</div>
-                    <ul class="price-features">
-                        <li>Dedicated cloud deployment with custom proxy</li>
-                        <li>Multi-tenant sub-account provisioning</li>
-                        <li>Custom risk governor policy overrides</li>
-                        <li>Direct engineering SLA support</li>
-                    </ul>
-                    <button class="btn btn-outline" onclick="openAuthModal('register')">Select Institutional</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section: FAQ -->
-        <section id="faq" style="padding: 3rem 0;">
-            <div class="section-header">
-                <h2>Frequently Asked Questions</h2>
-                <p>Institutional transparency regarding safety, edge preservation, and broker connectivity.</p>
-            </div>
-            <div style="max-width: 800px; margin: 0 auto;">
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">Does STRATA execute live real-money trades today? <span>+</span></div>
-                    <div class="faq-answer">No. STRATA operates under strict fail-closed capital safety governance. Real capital authorization is hardcoded to $0.00. The platform is currently configured for Paper Simulation and Broker Demo/Testnet validation only.</div>
-                </div>
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">What is the KING Engine and why is it frozen? <span>+</span></div>
-                    <div class="faq-answer">The KING Engine is the flagship Phase Q.2 / Phase R trading intelligence that demonstrated +0.888R expectancy across 9,608 historical crypto trades. It is cryptographically frozen via SHA-256 contract hash to prevent accidental tuning or curve-fitting.</div>
-                </div>
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">How does the 1-year free launch period work? <span>+</span></div>
-                    <div class="faq-answer">All platform subscriptions, features, and Strategy Lab entitlements are completely free ($0.00) during our inaugural launch period. No credit card is required, and future fee schedules will remain completely transparent.</div>
-                </div>
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-question">Which broker venues are supported for demo/testnet validation? <span>+</span></div>
-                    <div class="faq-answer">STRATA natively connects to Binance Futures Testnet, Bybit V5 Testnet, and MetaTrader 5 Demo via automated capability discovery.</div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Auth Modal -->
-    <div class="modal-overlay" id="auth-modal" onclick="closeAuthModal(event)">
-        <div class="modal-card" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeAuthModal(event)">×</button>
-            <h2 id="modal-title">Sign In to STRATA</h2>
-            <p class="modal-subtitle" id="modal-sub">Access your institutional trading terminal and accounts.</p>
-            
-            <div class="modal-alert alert-error" id="modal-error"></div>
-            <div class="modal-alert alert-success" id="modal-success"></div>
-
-            <form onsubmit="handleAuthSubmit(event)">
-                <div class="form-group" id="group-name" style="display: none;">
-                    <label>Full Name / Trader Handle</label>
-                    <input type="text" id="auth-name" placeholder="Alex Vance">
-                </div>
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="auth-email" required placeholder="trader@firm.com">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="auth-password" required placeholder="Minimum 8 characters">
-                </div>
-                <div class="form-group" id="group-confirm" style="display: none;">
-                    <label>Confirm Password</label>
-                    <input type="password" id="auth-confirm" placeholder="Re-enter password">
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.75rem;" id="modal-submit-btn">Sign In</button>
-            </form>
-            <div style="text-align: center; margin-top: 1rem; font-size: 0.85rem;">
-                <span id="modal-switch-text">Don't have an account? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--cyan); font-weight: 600;">Create Account</a></span>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Concept Section: Think. Build. Automate. -->
+    <section id="about" class="concept-section">
+        <div class="section-container">
+            <div class="section-header-clean">
+                <span class="section-tag">Core Philosophy</span>
+                <h2 class="section-title">Think. Build. Automate.</h2>
+                <p class="section-desc">
+                    Three simple concepts designed to remove emotional decision-making from your crypto trading.
+                </p>
+            </div>
+
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <div class="concept-step">Step 01</div>
+                    <div class="concept-name">Think</div>
+                    <p class="concept-text">
+                        Formulate your market ideas into explicit, testable rules. Clarify your entries, invalidations, and target objectives before risking capital.
+                    </p>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-step">Step 02</div>
+                    <div class="concept-name">Build</div>
+                    <p class="concept-text">
+                        Turn trading rules into structured, repeatable strategies without unnecessary complexity. Test your thesis across historical digital asset data.
+                    </p>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-step">Step 03</div>
+                    <div class="concept-name">Automate</div>
+                    <p class="concept-text">
+                        Validate strategy behavior on forward market data and transition into automated paper simulation or demo broker execution.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flow Section: From Idea to Automation -->
+    <section class="flow-section">
+        <div class="section-container">
+            <div class="section-header-clean">
+                <span class="section-tag">Systematic Journey</span>
+                <h2 class="section-title">From an Idea to an Automated Strategy</h2>
+                <p class="section-desc">A clean, transparent pathway from concept to live simulation.</p>
+            </div>
+
+            <div class="flow-steps">
+                <div class="flow-card">
+                    <div class="flow-num">1</div>
+                    <div class="flow-title">Idea</div>
+                    <p class="flow-desc">Define what market conditions and triggers you want to trade.</p>
+                </div>
+                <div class="flow-card">
+                    <div class="flow-num">2</div>
+                    <div class="flow-title">Build</div>
+                    <p class="flow-desc">Structure the rules into a verifiable model specification.</p>
+                </div>
+                <div class="flow-card">
+                    <div class="flow-num">3</div>
+                    <div class="flow-title">Backtest</div>
+                    <p class="flow-desc">Test the thesis against historical closed-candle crypto price data.</p>
+                </div>
+                <div class="flow-card">
+                    <div class="flow-num">4</div>
+                    <div class="flow-title">Validate</div>
+                    <p class="flow-desc">Challenge the model against untouched holdout periods.</p>
+                </div>
+                <div class="flow-card" style="border-color: var(--blue-primary); background: var(--blue-light);">
+                    <div class="flow-num" style="background: var(--blue-primary); color: #fff;">5</div>
+                    <div class="flow-title" style="color: var(--blue-primary);">Automate</div>
+                    <p class="flow-desc">Deploy in continuous zero-capital paper simulation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Lifestyle Section -->
+    <section class="editorial-visual-section">
+        <div class="editorial-container">
+            <div>
+                <h2 class="editorial-title">
+                    Don't Spend Your Life Watching Charts.
+                </h2>
+                <p class="editorial-desc">
+                    Staring at candlestick screens all day leads to emotional mistakes and trading fatigue. 
+                    STRATA helps you build systematic rules that do the analytical work for you, 24 hours a day, 7 days a week.
+                </p>
+                <button class="btn btn-primary btn-lg" onclick="openAuthModal('register')">
+                    Automate Your Strategy &rarr;
+                </button>
+            </div>
+
+            <!-- Workspace Graphic -->
+            <div class="workspace-graphic">
+                <div class="graphic-header">
+                    <span>DISCIPLINE &bull; SYSTEMS &bull; AUTOMATION</span>
+                    <span style="color: #38bdf8;">ACTIVE MONITOR</span>
+                </div>
+
+                <div class="graphic-candles">
+                    <div class="candle-bar candle-up" style="height: 60px;"></div>
+                    <div class="candle-bar candle-up" style="height: 95px;"></div>
+                    <div class="candle-bar candle-down" style="height: 40px;"></div>
+                    <div class="candle-bar candle-up" style="height: 120px;"></div>
+                    <div class="candle-bar candle-up" style="height: 145px;"></div>
+                    <div class="candle-bar candle-down" style="height: 70px;"></div>
+                    <div class="candle-bar candle-up" style="height: 160px;"></div>
+                </div>
+
+                <div class="graphic-metrics">
+                    <div>
+                        <div class="graphic-metric-lbl">Target Floor</div>
+                        <div class="graphic-metric-val">&ge; 4.0R</div>
+                    </div>
+                    <div>
+                        <div class="graphic-metric-lbl">Risk Cap</div>
+                        <div class="graphic-metric-val">&le; 1.0%</div>
+                    </div>
+                    <div>
+                        <div class="graphic-metric-lbl">Execution Mode</div>
+                        <div class="graphic-metric-val" style="color: #38bdf8;">Paper Sandbox</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section: Everything You Need -->
+    <section id="whats-new" class="features-section">
+        <div class="section-container">
+            <div class="section-header-clean">
+                <span class="section-tag">Platform Capabilities</span>
+                <h2 class="section-title">Everything You Need to Build a Trading System</h2>
+                <p class="section-desc">Six core capabilities engineered for modern digital asset quantitative traders.</p>
+            </div>
+
+            <div class="feature-grid-6">
+                <div class="feature-item">
+                    <h3 class="feature-title">Research</h3>
+                    <p class="feature-desc">Study market behavior and define your strategy idea with clarity.</p>
+                </div>
+                <div class="feature-item">
+                    <h3 class="feature-title">Build</h3>
+                    <p class="feature-desc">Turn your rules into a structured strategy without complex coding.</p>
+                </div>
+                <div class="feature-item">
+                    <h3 class="feature-title">Backtest</h3>
+                    <p class="feature-desc">Test your hypotheses against rigorous historical closed-candle market data.</p>
+                </div>
+                <div class="feature-item">
+                    <h3 class="feature-title">Validate</h3>
+                    <p class="feature-desc">Separate historical backtest research from untouched out-of-sample evidence.</p>
+                </div>
+                <div class="feature-item">
+                    <h3 class="feature-title">Automate</h3>
+                    <p class="feature-desc">Run systematic execution through supported paper and demo environments.</p>
+                </div>
+                <div class="feature-item">
+                    <h3 class="feature-title">Monitor</h3>
+                    <p class="feature-desc">Track risk, execution metrics, and statistical drift in real time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trading Styles Section -->
+    <section id="strategies" class="styles-section">
+        <div class="section-container">
+            <div class="section-header-clean">
+                <span class="section-tag">Trading Taxonomy</span>
+                <h2 class="section-title">Explore Trading Styles</h2>
+                <p class="section-desc">Support for diverse systematic approaches across the digital asset universe.</p>
+            </div>
+
+            <div class="styles-pills-row">
+                <div class="style-pill active">Swing Trading</div>
+                <div class="style-pill">Intraday Momentum</div>
+                <div class="style-pill">Position Trading</div>
+                <div class="style-pill">Micro Scalping</div>
+                <div class="style-pill">Systematic Investing</div>
+                <div class="style-pill">Dynamic Hedging</div>
+                <div class="style-pill">Basis Arbitrage</div>
+                <div class="style-pill">Autonomous Systems</div>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="/app" class="btn btn-secondary btn-lg">Explore Strategy Library &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategy Lab Teaser -->
+    <section class="lab-teaser-section">
+        <div class="section-container">
+            <div class="lab-box">
+                <h3>Have an Idea? Build It With STRATA.</h3>
+                <p>
+                    Describe what you want to trade in plain English. STRATA can help turn the idea into a structured strategy, 
+                    then backtest and validate it before automation.
+                </p>
+                <a href="/app" class="btn btn-primary btn-lg">Open Strategy Lab &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof Strip -->
+    <section class="proof-section">
+        <div class="section-container">
+            <div class="section-header-clean" style="margin-bottom: 2.5rem;">
+                <span class="section-tag">Quantitative Discipline</span>
+                <h2 class="section-title" style="font-size: 2rem;">Built on Research. Designed for Discipline.</h2>
+            </div>
+
+            <div class="proof-grid">
+                <div>
+                    <div class="proof-val">9,608</div>
+                    <div class="proof-lbl">Replay Opportunities</div>
+                </div>
+                <div>
+                    <div class="proof-val">&ge; 4.0R</div>
+                    <div class="proof-lbl">Minimum Target Floor</div>
+                </div>
+                <div>
+                    <div class="proof-val">&le; 1.0%</div>
+                    <div class="proof-lbl">Maximum Trade Risk</div>
+                </div>
+                <div>
+                    <div class="proof-val" style="color: var(--blue-primary);">$0.00</div>
+                    <div class="proof-lbl">Real Capital Authorized (Locked)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety Disclaimer Section -->
+    <section class="safety-notice-section">
+        <div class="safety-box">
+            <h4>Automation Does Not Remove Risk</h4>
+            <p>
+                STRATA separates research, validation, paper execution, and live authorization. 
+                Real capital remains locked at $0.00 until the appropriate operational and risk requirements are satisfied.
+            </p>
+        </div>
+    </section>
+
+    <!-- Simple Pricing Section -->
+    <section id="pricing" class="pricing-section">
+        <div class="section-container">
+            <div class="section-header-clean">
+                <span class="section-tag">Transparent Access</span>
+                <h2 class="section-title">Start Free</h2>
+                <p class="section-desc">STRATA is free during the initial first-year launch period.</p>
+            </div>
+
+            <div class="pricing-hero-card">
+                <div class="pricing-badge">FIRST-YEAR LAUNCH PERIOD</div>
+                <div class="pricing-amount">$0.00</div>
+                <div class="pricing-note">Full Platform Access for All Users</div>
+                <button class="btn btn-primary btn-lg" onclick="openAuthModal('register')">
+                    Get Free Launch Access &rarr;
+                </button>
+            </div>
+
+            <div style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+                Planned post-launch tiers (Researcher, Trader, Autonomous, Institutional) will be introduced in the future.
+            </div>
+        </div>
+    </section>
+
+    <!-- Small FAQ -->
+    <section class="faq-section">
+        <div class="section-container">
+            <div class="section-header-clean">
+                <span class="section-tag">Common Questions</span>
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-q">What is STRATA?</div>
+                    <div class="faq-a">STRATA is a quantitative trading software platform that enables traders to research, test, validate, and automate systematic digital asset trading strategies.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Can I build my own strategy?</div>
+                    <div class="faq-a">Yes. You can formulate trading rules manually or use the AI-assisted Strategy Lab to formalize your concepts into testable specifications.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Does STRATA guarantee profits?</div>
+                    <div class="faq-a">No. Markets change and no strategy guarantees future returns. STRATA provides disciplined testing, risk governors, and validation tools.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">Is live trading available right now?</div>
+                    <div class="faq-a">No. Real capital remains locked at $0.00. The platform operates exclusively in zero-capital paper simulation and exchange demo/testnet modes during the launch period.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">How much does STRATA cost?</div>
+                    <div class="faq-a">STRATA is free during the entire first-year launch period with no platform subscription charges.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Anchor -->
+    <div id="contact" style="padding-top: 1rem;"></div>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-links">
-            <a href="#how-it-works">How It Works</a>
-            <a href="#markets">Markets</a>
-            <a href="#king">KING Core</a>
-            <a href="#strategies">Strategies</a>
-            <a href="#strategy-lab">Strategy Lab</a>
-            <a href="#pricing">Pricing</a>
-            <a href="/app">Terminal</a>
-        </div>
-        <div>© 2026 STRATA Digital Trading Platform. All rights reserved. Zero-Capital Validation Architecture.</div>
-        <div class="footer-disclaimer">
-            DISCLAIMER: Cryptocurrency trading involves substantial risk of loss and is not suitable for all investors. 
-            STRATA provides quantitative algorithmic software tools for research, simulation, and broker demo execution. 
-            We do not provide investment advice or claim guaranteed future profitability. Real capital trading remains permanently fail-closed at $0.00.
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div style="max-width: 320px;">
+                    <a href="/" class="brand-logo" style="margin-bottom: 0.75rem;">
+                        <div class="brand-mark">S</div>
+                        <div class="brand-text">STRATA</div>
+                    </a>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+                        Think. Build. Automate.<br>
+                        Digital Asset Automation Platform.
+                    </p>
+                    <div style="margin-top: 1rem;">
+                        <a href="/app" style="color: var(--blue-primary); font-size: 0.85rem; font-weight: 600; text-decoration: none;">Open STRATA Terminal &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Product</h5>
+                    <ul>
+                        <li><a href="#strategies">Strategies</a></li>
+                        <li><a href="/app">Strategy Lab</a></li>
+                        <li><a href="#about">Market Research</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Company</h5>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#whats-new">What's New</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Resources</h5>
+                    <ul>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#pricing">Launch Access</a></li>
+                        <li><a href="/app">Terminal Documentation</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h5>Legal</h5>
+                    <ul>
+                        <li><a href="javascript:void(0)" onclick="alert('STRATA Terms of Service: Research and simulation software only.')">Terms</a></li>
+                        <li><a href="javascript:void(0)" onclick="alert('STRATA Privacy: Zero exchange secrets exposed; encrypted storage.')">Privacy</a></li>
+                        <li><a href="javascript:void(0)" onclick="alert('Risk Disclosure: Digital assets involve volatility. Real capital is locked at $0.00.')">Risk Disclosure</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div>&copy; 2026 STRATA Quantitative Systems. All rights reserved.</div>
+                <div>Think. Build. Automate.</div>
+            </div>
         </div>
     </footer>
 
+    <!-- Auth Modal (Registration & Login) -->
+    <div class="modal-overlay" id="auth-modal" onclick="closeAuthModalOnBg(event)">
+        <div class="modal-box">
+            <button class="modal-close-btn" onclick="closeAuthModal()">&times;</button>
+            <h3 class="modal-title" id="modal-title">Create STRATA Account</h3>
+            <p class="modal-sub" id="modal-sub">Join the free launch period. No payment required.</p>
+
+            <div class="modal-msg modal-error" id="modal-error"></div>
+            <div class="modal-msg modal-success" id="modal-success"></div>
+
+            <form id="auth-form" onsubmit="handleAuthSubmit(event)">
+                <div class="form-group" id="group-name">
+                    <label>Full Name</label>
+                    <input type="text" id="auth-name" placeholder="Alex Morgan" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="auth-email" placeholder="alex@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="auth-password" placeholder="At least 8 characters" required>
+                </div>
+
+                <div class="form-group" id="group-confirm">
+                    <label>Confirm Password</label>
+                    <input type="password" id="auth-confirm" placeholder="Re-enter password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="modal-submit-btn" style="width: 100%; padding: 0.8rem; font-size: 0.95rem; margin-top: 0.5rem;">
+                    Create Free Account
+                </button>
+            </form>
+
+            <div style="margin-top: 1.25rem; text-align: center; font-size: 0.85rem; color: var(--text-muted);" id="modal-switch-text">
+                Already registered? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--blue-primary); font-weight: 600;">Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script>
-        // Canvas Background Animation
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let w, h, particles = [];
+        let isRegisterMode = true;
 
-        function resize() {
-            w = canvas.width = window.innerWidth;
-            h = canvas.height = window.innerHeight;
-            particles = [];
-            for (let i = 0; i < 40; i++) {
-                particles.push({
-                    x: Math.random() * w,
-                    y: Math.random() * h,
-                    vx: (Math.random() - 0.5) * 0.35,
-                    vy: (Math.random() - 0.5) * 0.35,
-                    r: Math.random() * 2 + 1,
-                });
+        function toggleMobileNav() {
+            const drawer = document.getElementById('mobile-nav-drawer');
+            if (drawer) {
+                drawer.style.display = drawer.style.display === 'none' ? 'block' : 'none';
             }
         }
-        window.addEventListener('resize', resize);
-        resize();
-
-        function draw() {
-            ctx.clearRect(0, 0, w, h);
-            ctx.strokeStyle = 'rgba(14, 165, 233, 0.12)';
-            ctx.fillStyle = 'rgba(14, 165, 233, 0.35)';
-            for (let i = 0; i < particles.length; i++) {
-                let p = particles[i];
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0 || p.x > w) p.vx *= -1;
-                if (p.y < 0 || p.y > h) p.vy *= -1;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fill();
-                for (let j = i + 1; j < particles.length; j++) {
-                    let p2 = particles[j];
-                    let d = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (d < 150) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-            }
-            requestAnimationFrame(draw);
-        }
-        draw();
-
-        // FAQ Toggle
-        function toggleFaq(el) {
-            const ans = el.querySelector('.faq-answer');
-            const span = el.querySelector('.faq-question span');
-            const isOpen = ans.style.display === 'block';
-            ans.style.display = isOpen ? 'none' : 'block';
-            span.innerText = isOpen ? '+' : '−';
-        }
-
-        // Authentication Modal Logic
-        let isRegisterMode = false;
 
         function openAuthModal(mode) {
             isRegisterMode = (mode === 'register');
             updateModalUI();
-            document.getElementById('modal-error').style.display = 'none';
-            document.getElementById('modal-success').style.display = 'none';
             document.getElementById('auth-modal').style.display = 'flex';
         }
 
-        function closeAuthModal(e) {
+        function closeAuthModal() {
             document.getElementById('auth-modal').style.display = 'none';
+        }
+
+        function closeAuthModalOnBg(e) {
+            if (e.target.id === 'auth-modal') {
+                closeAuthModal();
+            }
         }
 
         function toggleAuthMode() {
@@ -712,21 +1627,27 @@
             const swText = document.getElementById('modal-switch-text');
             const nameGrp = document.getElementById('group-name');
             const confirmGrp = document.getElementById('group-confirm');
+            const nameInput = document.getElementById('auth-name');
+            const confirmInput = document.getElementById('auth-confirm');
 
             if (isRegisterMode) {
                 title.innerText = 'Create STRATA Account';
-                sub.innerText = 'Join the 1-year free launch period. No payment required.';
+                sub.innerText = 'Join the free launch period. No payment required.';
                 btn.innerText = 'Create Free Account';
                 nameGrp.style.display = 'block';
                 confirmGrp.style.display = 'block';
-                swText.innerHTML = 'Already registered? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--cyan); font-weight: 600;">Sign In</a>';
+                nameInput.required = true;
+                confirmInput.required = true;
+                swText.innerHTML = 'Already registered? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--blue-primary); font-weight: 600;">Sign In</a>';
             } else {
                 title.innerText = 'Sign In to STRATA';
-                sub.innerText = 'Access your institutional trading terminal and accounts.';
+                sub.innerText = 'Access your automated trading dashboard.';
                 btn.innerText = 'Sign In';
                 nameGrp.style.display = 'none';
                 confirmGrp.style.display = 'none';
-                swText.innerHTML = "Don't have an account? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--cyan); font-weight: 600;">Create Account</a>";
+                nameInput.required = false;
+                confirmInput.required = false;
+                swText.innerHTML = "Don't have an account? <a href=\"javascript:void(0)\" onclick=\"toggleAuthMode()\" style=\"color: var(--blue-primary); font-weight: 600;\">Create Account</a>";
             }
             document.getElementById('modal-error').style.display = 'none';
             document.getElementById('modal-success').style.display = 'none';
@@ -771,7 +1692,7 @@
                 const data = await res.json();
 
                 if (!res.ok || data.error) {
-                    errBox.innerText = data.error || 'Authentication error. Please check your inputs.';
+                    errBox.innerText = data.error || 'Authentication error. Please check your credentials.';
                     errBox.style.display = 'block';
                     return;
                 }
@@ -781,14 +1702,14 @@
                     if (data.user) {
                         localStorage.setItem('strata_user', JSON.stringify(data.user));
                     }
-                    succBox.innerText = isRegisterMode ? 'Account registered! Redirecting to Terminal...' : 'Signed in! Redirecting to Terminal...';
+                    succBox.innerText = isRegisterMode ? 'Account created! Redirecting to Terminal...' : 'Signed in! Redirecting to Terminal...';
                     succBox.style.display = 'block';
                     setTimeout(() => {
                         window.location.href = '/app';
-                    }, 600);
+                    }, 500);
                 }
             } catch (err) {
-                errBox.innerText = 'Network connection failed: ' + err.message;
+                errBox.innerText = 'Connection error: ' + err.message;
                 errBox.style.display = 'block';
             }
         }
