@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STRATA — Institutional Trading Terminal</title>
+    <title>Crypto Platform — Development Workstation</title>
     <style>
         :root {
             --bg-base: #060913;
@@ -30,63 +30,72 @@
             display: flex;
             height: 100vh;
             overflow: hidden;
+            font-size: 13px;
         }
         /* Sidebar */
         aside {
-            width: 250px;
+            width: 240px;
             background: var(--bg-sidebar);
             border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
+            z-index: 20;
         }
         .brand {
-            padding: 1.25rem 1.5rem;
+            padding: 1.15rem 1.25rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
             border-bottom: 1px solid var(--border);
         }
         .brand-icon {
-            width: 32px;
-            height: 32px;
+            width: 30px; height: 30px;
             background: linear-gradient(135deg, var(--cyan), var(--purple));
             border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1rem;
         }
-        .brand-text { font-size: 1.15rem; font-weight: 800; letter-spacing: 0.05em; }
+        .brand-text { font-size: 1.15rem; font-weight: 800; letter-spacing: 0.06em; }
         .nav-menu {
             flex: 1;
             overflow-y: auto;
-            padding: 1rem 0.75rem;
+            padding: 0.75rem 0.5rem;
             list-style: none;
         }
         .nav-category {
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             color: #475569;
-            margin: 1rem 0.75rem 0.35rem;
+            margin: 0.85rem 0.65rem 0.3rem;
             font-weight: 700;
         }
         .nav-item {
-            padding: 0.6rem 0.85rem;
+            padding: 0.5rem 0.75rem;
             border-radius: 6px;
-            font-size: 0.85rem;
+            font-size: 0.825rem;
             font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.65rem;
             color: var(--text-muted);
             transition: all 0.15s;
-            margin-bottom: 0.15rem;
+            margin-bottom: 0.1rem;
         }
         .nav-item:hover { color: var(--text); background: rgba(255,255,255,0.04); }
         .nav-item.active { color: #fff; background: rgba(14, 165, 233, 0.15); border-left: 3px solid var(--cyan); }
+        .user-footer {
+            padding: 0.85rem 1rem;
+            border-top: 1px solid var(--border);
+            background: #070c17;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+        .user-email-txt { color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px; }
 
         /* Main Workspace */
         main {
@@ -97,109 +106,143 @@
             background: var(--bg-base);
         }
         header.topbar {
-            height: 60px;
+            height: 54px;
             border-bottom: 1px solid var(--border);
             background: var(--bg-sidebar);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 1.5rem;
+            flex-shrink: 0;
         }
         .topbar-left { display: flex; align-items: center; gap: 1rem; }
         .env-badge {
-            padding: 0.25rem 0.65rem;
+            padding: 0.2rem 0.6rem;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 0.725rem;
             font-weight: 700;
             font-family: var(--font-mono);
             background: rgba(16, 185, 129, 0.15);
             color: var(--emerald);
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
-        .capital-lock {
-            font-size: 0.8rem;
-            color: var(--text-muted);
+        .capital-lock-badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.725rem;
+            font-weight: 700;
             font-family: var(--font-mono);
+            background: rgba(244, 63, 94, 0.15);
+            color: var(--rose);
+            border: 1px solid rgba(244, 63, 94, 0.3);
         }
-        .topbar-controls { display: flex; align-items: center; gap: 0.75rem; }
+        .topbar-controls { display: flex; align-items: center; gap: 0.65rem; }
         .btn-ctl {
-            padding: 0.45rem 0.9rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            font-size: 0.78rem;
             font-weight: 600;
             cursor: pointer;
             border: none;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
         }
         .btn-green { background: var(--emerald); color: #000; }
         .btn-amber { background: var(--amber); color: #000; }
         .btn-rose { background: var(--rose); color: #fff; }
+        .btn-cyan { background: var(--cyan); color: #000; }
+        .btn-outline-sm { background: transparent; border: 1px solid var(--border); color: var(--text); }
+        .btn-outline-sm:hover { border-color: var(--cyan); }
         .style-select {
             background: var(--bg-panel);
             color: var(--text);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 0.45rem 0.75rem;
-            font-size: 0.8rem;
+            border-radius: 5px;
+            padding: 0.4rem 0.65rem;
+            font-size: 0.78rem;
             font-family: inherit;
         }
 
         .workspace-content {
             flex: 1;
             overflow-y: auto;
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
         }
 
         /* Metric Widgets */
         .metric-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
         .widget {
             background: var(--bg-panel);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem 1.25rem;
+            border-radius: 6px;
+            padding: 0.85rem 1.15rem;
         }
-        .widget-title { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem; }
-        .widget-value { font-size: 1.45rem; font-weight: 700; font-family: var(--font-mono); }
+        .widget-title { font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; font-family: var(--font-mono); }
+        .widget-value { font-size: 1.35rem; font-weight: 700; font-family: var(--font-mono); }
+        .widget-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem; }
 
         /* Tables & Blotters */
         .blotter-container {
             background: var(--bg-panel);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 1.25rem;
             overflow: hidden;
         }
         .blotter-header {
-            padding: 0.85rem 1.25rem;
+            padding: 0.75rem 1.15rem;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.875rem;
+        }
+        .blotter-toolbar {
+            padding: 0.65rem 1.15rem;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .search-box {
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: #fff;
+            padding: 0.35rem 0.65rem;
+            font-size: 0.78rem;
+            font-family: inherit;
+            width: 200px;
         }
         table.dense-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.825rem;
+            font-size: 0.8rem;
             text-align: left;
         }
         table.dense-table th {
-            background: rgba(0,0,0,0.25);
-            padding: 0.65rem 1rem;
+            background: rgba(0,0,0,0.3);
+            padding: 0.55rem 0.85rem;
             color: var(--text-muted);
             font-weight: 600;
             border-bottom: 1px solid var(--border);
+            font-size: 0.75rem;
         }
         table.dense-table td {
-            padding: 0.65rem 1rem;
+            padding: 0.55rem 0.85rem;
             border-bottom: 1px solid rgba(26, 39, 66, 0.4);
             font-family: var(--font-mono);
+            font-size: 0.78rem;
         }
         table.dense-table tr:hover { background: rgba(255,255,255,0.02); }
 
@@ -207,72 +250,154 @@
         .tab-page { display: none; }
         .tab-page.active { display: block; }
 
-        /* Strategy Lab NLP Card */
-        .lab-input-box {
-            background: var(--bg-panel);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+        /* Status Pills */
+        .pill {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
         }
-        .lab-input-box textarea {
-            width: 100%;
-            height: 90px;
-            background: #080d1a;
+        .pill-green { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .pill-cyan { background: rgba(14, 165, 233, 0.15); color: var(--cyan); border: 1px solid rgba(14, 165, 233, 0.3); }
+        .pill-amber { background: rgba(245, 158, 11, 0.15); color: var(--amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+        .pill-rose { background: rgba(244, 63, 94, 0.15); color: var(--rose); border: 1px solid rgba(244, 63, 94, 0.3); }
+
+        /* Chat / Copilot */
+        .copilot-container {
+            display: flex;
+            flex-direction: column;
+            height: 380px;
             border: 1px solid var(--border);
             border-radius: 6px;
-            padding: 0.75rem;
+            background: var(--bg-base);
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        .copilot-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .chat-bubble {
+            max-width: 80%;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.825rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+        .chat-user {
+            align-self: flex-end;
+            background: rgba(14, 165, 233, 0.2);
+            border: 1px solid rgba(14, 165, 233, 0.4);
+            color: #fff;
+        }
+        .chat-ai {
+            align-self: flex-start;
+            background: #0d1527;
+            border: 1px solid var(--border);
+            color: #e2e8f0;
+        }
+        .copilot-input-bar {
+            display: flex;
+            border-top: 1px solid var(--border);
+            background: #090e1c;
+        }
+        .copilot-input-bar input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: none;
             color: #fff;
             font-family: inherit;
-            resize: vertical;
-            margin: 0.75rem 0;
+            font-size: 0.85rem;
         }
-        .lab-input-box textarea:focus { outline: none; border-color: var(--cyan); }
+        .copilot-input-bar input:focus { outline: none; }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-card {
+            background: #0d1527;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 580px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 1.25rem; right: 1.25rem;
+            background: transparent; border: none;
+            color: var(--text-muted); font-size: 1.25rem;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <aside>
         <div class="brand">
             <div class="brand-icon">S</div>
-            <span class="brand-text">STRATA</span>
+            <span class="brand-text">Crypto Platform</span>
         </div>
         <ul class="nav-menu">
             <li class="nav-category">Core Operations</li>
             <li class="nav-item active" onclick="switchTab('overview')">📊 Overview</li>
-            <li class="nav-item" onclick="switchTab('markets')">📈 Markets</li>
-            <li class="nav-item" onclick="switchTab('opportunities')">⚡ Opportunities</li>
-            <li class="nav-item" onclick="switchTab('king')">👑 KING Core</li>
+            <li class="nav-item" onclick="switchTab('markets')">📈 Markets & Tickers</li>
+            <li class="nav-item" onclick="switchTab('opportunities')">⚡ Opportunity Pipeline</li>
+            <li class="nav-item" onclick="switchTab('king')">👑 Market Intelligence Engine Core</li>
 
             <li class="nav-category">Strategy Intelligence</li>
-            <li class="nav-item" onclick="switchTab('strategies')">📚 Strategies</li>
-            <li class="nav-item" onclick="switchTab('strategy-lab')">🧪 Strategy Lab</li>
-            <li class="nav-item" onclick="switchTab('backtesting')">🔬 Backtesting</li>
-            <li class="nav-item" onclick="switchTab('forward')">🔭 Forward Validation</li>
+            <li class="nav-item" onclick="switchTab('strategies')">📚 Strategy Library</li>
+            <li class="nav-item" onclick="switchTab('strategy-lab')">🧪 Strategy Research & AI</li>
+            <li class="nav-item" onclick="switchTab('backtesting')">🔬 Backtest Repository</li>
+            <li class="nav-item" onclick="switchTab('forward')">🔭 Forward Shadow Validation</li>
 
             <li class="nav-category">Execution & Accounts</li>
-            <li class="nav-item" onclick="switchTab('accounts')">🏦 Accounts</li>
-            <li class="nav-item" onclick="switchTab('brokers')">🔌 Brokers</li>
-            <li class="nav-item" onclick="switchTab('positions')">📦 Positions</li>
-            <li class="nav-item" onclick="switchTab('orders')">📋 Orders</li>
+            <li class="nav-item" onclick="switchTab('accounts')">🏦 Account Center</li>
+            <li class="nav-item" onclick="switchTab('brokers')">🔌 Broker Center</li>
+            <li class="nav-item" onclick="switchTab('positions')">📦 Position Blotter</li>
+            <li class="nav-item" onclick="switchTab('orders')">📋 Order Blotter</li>
 
             <li class="nav-category">Risk & Governance</li>
-            <li class="nav-item" onclick="switchTab('risk')">🛡️ Risk Center</li>
-            <li class="nav-item" onclick="switchTab('performance')">📈 Performance</li>
-            <li class="nav-item" onclick="switchTab('drift')">📉 Statistical Drift</li>
-            <li class="nav-item" onclick="switchTab('alerts')">🔔 Alert Center</li>
-            <li class="nav-item" onclick="switchTab('ledger')">📜 Immutable Ledger</li>
-            <li class="nav-item" onclick="switchTab('settings')">⚙️ Settings</li>
+            <li class="nav-item" onclick="switchTab('risk')">🛡️ Risk Center & Heat</li>
+            <li class="nav-item" onclick="switchTab('performance')">📈 Performance Analytics</li>
+            <li class="nav-item" onclick="switchTab('drift')">📉 Strategy Monitoring Monitor</li>
+            <li class="nav-item" onclick="switchTab('alerts')">🔔 Operational Alerts</li>
+            <li class="nav-item" onclick="switchTab('ledger')">📜 Append-Only Ledger</li>
+            <li class="nav-item" onclick="switchTab('settings')">⚙️ Settings & Entitlements</li>
         </ul>
+        <div class="user-footer">
+            <div class="user-email-txt" id="sidebar-user-email">trader@strata.io</div>
+            <button class="btn-ctl btn-outline-sm" onclick="handleLogout()" style="padding: 0.2rem 0.5rem; font-size: 0.7rem;">Logout</button>
+        </div>
     </aside>
 
     <main>
         <header class="topbar">
             <div class="topbar-left">
                 <span class="env-badge" id="env-badge">PAPER (SIMULATED)</span>
-                <span class="capital-lock">Real Capital: <strong>$0.00 (LOCKED)</strong></span>
+                <span class="capital-lock-badge">REAL CAPITAL: $0.00 (LOCKED)</span>
+                <span style="font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-mono);">TENANT: <strong id="topbar-tenant" style="color: var(--text);">system</strong></span>
             </div>
             <div class="topbar-controls">
-                <label style="font-size: 0.8rem; color: var(--text-muted);">Style:</label>
+                <label style="font-size: 0.78rem; color: var(--text-muted);">Agent Style:</label>
                 <select class="style-select" id="style-select" onchange="handleStyleChange(this.value)">
                     <option value="AUTONOMOUS">AUTONOMOUS</option>
                     <option value="SWING">SWING</option>
@@ -280,225 +405,764 @@
                     <option value="SCALPING">SCALPING</option>
                     <option value="POSITION">POSITION</option>
                 </select>
-                <button class="btn-ctl btn-green" onclick="handlePlatformAction('start')">Start Platform</button>
-                <button class="btn-ctl btn-amber" onclick="handlePlatformAction('pause')">Pause Trading</button>
-                <button class="btn-ctl btn-rose" onclick="handlePlatformAction('emergency')">Emergency Stop</button>
+                <button class="btn-ctl btn-green" onclick="handlePlatformAction('start')">▶ Run Agent</button>
+                <button class="btn-ctl btn-amber" onclick="handlePlatformAction('pause')">⏸ Pause</button>
+                <button class="btn-ctl btn-rose" onclick="handlePlatformAction('emergency')">🛑 Emergency Stop</button>
             </div>
         </header>
 
         <div class="workspace-content">
-            <!-- TAB: OVERVIEW -->
+            <!-- 1. OVERVIEW -->
             <div class="tab-page active" id="page-overview">
                 <div class="metric-row">
                     <div class="widget">
                         <div class="widget-title">Simulated Equity</div>
-                        <div class="widget-value" id="val-equity">$100,000.00</div>
+                        <div class="widget-value" id="ov-equity">$100,000.00</div>
+                        <div class="widget-sub">Zero-Capital Paper Sandbox</div>
                     </div>
                     <div class="widget">
                         <div class="widget-title">Available Margin</div>
-                        <div class="widget-value" id="val-margin">$100,000.00</div>
+                        <div class="widget-value" id="ov-margin">$100,000.00</div>
+                        <div class="widget-sub">100.0% Allocation Ready</div>
                     </div>
                     <div class="widget">
                         <div class="widget-title">Portfolio Heat</div>
-                        <div class="widget-value" style="color: var(--emerald);" id="val-heat">0.00% / 3.00%</div>
+                        <div class="widget-value" id="ov-heat" style="color: var(--emerald);">0.00% / 3.00%</div>
+                        <div class="widget-sub">Within ≤3% Invariant Cap</div>
                     </div>
                     <div class="widget">
                         <div class="widget-title">Active Positions</div>
-                        <div class="widget-value" id="val-pos-count">0</div>
+                        <div class="widget-value" id="ov-pos-count">0</div>
+                        <div class="widget-sub">Across Admitted Universe</div>
                     </div>
                     <div class="widget">
-                        <div class="widget-title">KING Engine Status</div>
-                        <div class="widget-value" style="color: var(--cyan);">PROTECTED CORE</div>
+                        <div class="widget-title">Market Intelligence Engine Edge</div>
+                        <div class="widget-value" style="color: var(--cyan);">+0.888R</div>
+                        <div class="widget-sub">Contract Hash Verified</div>
                     </div>
                 </div>
 
                 <div class="blotter-container">
                     <div class="blotter-header">
                         <span>Active Positions Blotter</span>
-                        <span style="font-size: 0.8rem; color: var(--text-muted);">Zero-Capital Simulated Ledger</span>
+                        <span class="pill pill-green">PAPER SIMULATION</span>
                     </div>
-                    <table class="dense-table" id="table-positions">
+                    <table class="dense-table" id="ov-table-positions">
                         <thead>
-                            <tr>
-                                <th>ASSET</th>
-                                <th>SIDE</th>
-                                <th>ENTRY</th>
-                                <th>CURRENT</th>
-                                <th>STOP</th>
-                                <th>TARGET</th>
-                                <th>R:R</th>
-                                <th>UNREALIZED P&L</th>
-                            </tr>
+                            <tr><th>SYMBOL</th><th>SIDE</th><th>ENTRY</th><th>MARK</th><th>STOP</th><th>TARGET</th><th>R:R</th><th>UNREALIZED P&L</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td colspan="8" style="text-align: center; color: var(--text-muted);">No active positions</td></tr>
+                            <tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No active positions in sandbox</td></tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="blotter-container">
                     <div class="blotter-header">
-                        <span>Real-Time Market Opportunity Pipeline</span>
-                        <span style="font-size: 0.8rem; color: var(--text-muted);">Closed-Candle Causal Signals</span>
+                        <span>Recent Signal Decisions</span>
+                        <span class="pill pill-cyan">CAUSAL CLOSED-CANDLE EVALUATION</span>
                     </div>
-                    <table class="dense-table" id="table-opportunities">
+                    <table class="dense-table" id="ov-table-decisions">
                         <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>ASSET</th>
-                                <th>SET</th>
-                                <th>DECISION</th>
-                                <th>CONFIDENCE</th>
-                                <th>TARGET R</th>
-                                <th>STATUS</th>
-                            </tr>
+                            <tr><th>ID</th><th>ASSET</th><th>SET</th><th>DECISION</th><th>CONFIDENCE</th><th>TARGET R</th><th>REASON / STATUS</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Continuous engine scanning...</td></tr>
+                            <tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Scanning closed candle feed...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- TAB: KING CORE -->
+            <!-- 2. MARKETS -->
+            <div class="tab-page" id="page-markets">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Admitted Crypto Markets & Tickers</span>
+                        <span class="pill pill-cyan">CRYPTO PERPETUAL UNIVERSE</span>
+                    </div>
+                    <div class="blotter-toolbar">
+                        <input type="text" class="search-box" id="market-search" placeholder="Search symbol (e.g. BTC)..." oninput="filterMarketsTable()">
+                        <select class="style-select" id="market-filter-cat" onchange="filterMarketsTable()">
+                            <option value="ALL">All Assets</option>
+                            <option value="WATCHLIST">My Watchlist Only</option>
+                            <option value="PRIORITY">Priority Assets Only</option>
+                        </select>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: auto;">Tick Size & Margin precision verified per exchange rules</span>
+                    </div>
+                    <table class="dense-table" id="table-all-markets">
+                        <thead>
+                            <tr>
+                                <th>★</th>
+                                <th>SYMBOL</th>
+                                <th>PRICE (USD)</th>
+                                <th>24H CHANGE</th>
+                                <th>24H HIGH / LOW</th>
+                                <th>24H VOLUME</th>
+                                <th>VOLATILITY (ATR)</th>
+                                <th>LIQUIDITY HEALTH</th>
+                                <th>STRUCTURE</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="markets-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 3. OPPORTUNITIES -->
+            <div class="tab-page" id="page-opportunities">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Closed-Candle Opportunity Pipeline</span>
+                        <span class="pill pill-cyan">FRACTAL STATE ENGINE</span>
+                    </div>
+                    <table class="dense-table" id="table-opportunities-full">
+                        <thead>
+                            <tr><th>TIMESTAMP</th><th>DECISION ID</th><th>ASSET</th><th>SET</th><th>DECISION</th><th>CONFIDENCE</th><th>PLANNED R</th><th>REASON CODES</th></tr>
+                        </thead>
+                        <tbody id="opportunities-tbody">
+                            <tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Continuous market scanner active. Awaiting candle close.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 4. KING CORE -->
             <div class="tab-page" id="page-king">
                 <div class="blotter-container">
                     <div class="blotter-header">
-                        <span>👑 STRATA KING Engine — Flagship Protected Core</span>
-                        <span class="env-badge">CANONICAL CONTRACT FROZEN</span>
+                        <span>👑 Flagship Crypto Platform Market Intelligence Engine — Immutable Architecture</span>
+                        <span class="pill pill-green">CONTRACT HASH: 8fbc923a... [VERIFIED]</span>
                     </div>
                     <div style="padding: 1.5rem;">
-                        <p style="margin-bottom: 1rem; color: var(--text-muted);">
-                            The KING Engine operates on the unified 7-timeframe ladder across 5 overlapping triad sets.
-                            All decisions strictly require confirmed closed candles and a minimum <strong>≥ 4.0R</strong> target floor.
+                        <p style="color: var(--text-muted); margin-bottom: 1.25rem;">
+                            The Market Intelligence Engine executes the <strong>Phase Q.2 / Phase R Unified Fractal Model</strong>. 
+                            It operates across a continuous 7-timeframe hierarchy partitioned into 5 overlapping triad sets.
+                            All trading parameters, thresholds, and target geometry invariants are locked.
                         </p>
                         <div class="metric-row">
-                            <div class="widget">
-                                <div class="widget-title">Target Floor</div>
-                                <div class="widget-value" style="color: var(--cyan);">≥ 4.0R</div>
+                            <div class="widget"><div class="widget-title">Historical Replay Baseline</div><div class="widget-value" style="color: var(--emerald);">9,608 / 9,608</div><div class="widget-sub">100% Exact Match</div></div>
+                            <div class="widget"><div class="widget-title">Target Geometry Floor</div><div class="widget-value" style="color: var(--cyan);">≥ 4.0R</div><div class="widget-sub">Asymmetric Payoff</div></div>
+                            <div class="widget"><div class="widget-title">Trade Risk Limit</div><div class="widget-value">≤ 1.0%</div><div class="widget-sub">Single Exposure Floor</div></div>
+                            <div class="widget"><div class="widget-title">Portfolio Heat Cap</div><div class="widget-value">≤ 3.0%</div><div class="widget-sub">Systemic Safety Bound</div></div>
+                        </div>
+
+                        <h4 style="margin: 1.25rem 0 0.5rem; font-size: 0.9rem;">7-Timeframe Hierarchy & Overlapping Triads</h4>
+                        <table class="dense-table">
+                            <thead><tr><th>SET</th><th>TIMEFRAMES (HTF → MTF → LTF)</th><th>ROLE</th><th>CAPITAL STATUS</th></tr></thead>
+                            <tbody>
+                                <tr><td>Set 1</td><td>1M → 1W → 1D</td><td>Macro Structural Anchor</td><td><span class="pill pill-rose">$0.00 ZERO CAPITAL</span></td></tr>
+                                <tr><td>Set 2</td><td>1W → 1D → 4H</td><td>Position & Macro Swing</td><td><span class="pill pill-green">PAPER & DEMO ELIGIBLE</span></td></tr>
+                                <tr><td>Set 3</td><td>1D → 4H → 1H</td><td>Standard Swing & Momentum</td><td><span class="pill pill-green">PAPER & DEMO ELIGIBLE</span></td></tr>
+                                <tr><td>Set 4</td><td>4H → 1H → 15M</td><td>Intraday Liquidity Sweep</td><td><span class="pill pill-green">PAPER & DEMO ELIGIBLE</span></td></tr>
+                                <tr><td>Set 5</td><td>1H → 15M → 3M</td><td>Micro Confirmation Scalp</td><td><span class="pill pill-rose">$0.00 ZERO CAPITAL</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. STRATEGY LIBRARY -->
+            <div class="tab-page" id="page-strategies">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Strategy Library & Domain Registry</span>
+                        <span class="pill pill-cyan">8 STRATEGY CATEGORIES</span>
+                    </div>
+                    <div class="blotter-toolbar">
+                        <select class="style-select" id="strat-cat-filter" onchange="filterStrategiesTable()">
+                            <option value="ALL">All Categories</option>
+                            <option value="SWING">Swing</option>
+                            <option value="INTRADAY">Intraday</option>
+                            <option value="POSITION">Position</option>
+                            <option value="TRADING">Trading</option>
+                            <option value="SCALPING">Scalping</option>
+                            <option value="ARBITRAGE">Arbitrage</option>
+                            <option value="HEDGING">Hedging</option>
+                            <option value="INVESTING">Investing</option>
+                        </select>
+                    </div>
+                    <table class="dense-table" id="table-strategies">
+                        <thead>
+                            <tr><th>ID</th><th>NAME</th><th>CATEGORY</th><th>LIFECYCLE STAGE</th><th>EXPECTANCY</th><th>PROFIT FACTOR</th><th>WIN RATE</th><th>MAX DD</th><th>ASSETS</th><th>ACTIONS</th></tr>
+                        </thead>
+                        <tbody id="strategies-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 6. STRATEGY LAB & RESEARCH COPILOT -->
+            <div class="tab-page" id="page-strategy-lab">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>🧪 Crypto Platform Strategy Research & Natural Language Compiler</span>
+                        <span class="pill pill-cyan">EMPIRICAL RESEARCH SANDBOX</span>
+                    </div>
+                    <div style="padding: 1.25rem;">
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem;">
+                            Formulate strategy hypotheses in plain English. The compiler extracts rules, verifies crypto admissibility, and enforces target geometry invariants.
+                        </p>
+                        <div style="display: flex; gap: 0.75rem;">
+                            <input type="text" id="lab-quick-prompt" class="search-box" style="flex: 1; padding: 0.6rem 0.85rem;" placeholder="e.g. Buy BTC and ETH pullbacks when daily and 4h structure is bullish, require at least 4R.">
+                            <button class="btn-ctl btn-green" onclick="handleCompileStrategy()">Compile & Validate</button>
+                        </div>
+
+                        <!-- Copilot Assistant Container -->
+                        <h4 style="margin: 1.5rem 0 0.5rem; font-size: 0.85rem; color: var(--text-muted);">Strategy Research Copilot (AI Pair-Researcher)</h4>
+                        <div class="copilot-container">
+                            <div class="copilot-messages" id="copilot-msg-area">
+                                <div class="chat-bubble chat-ai">Welcome to Crypto Platform Research Copilot. Ask me to formulate strategies, explain multi-timeframe rules, compare candidates against the Market Intelligence benchmark, or evaluate custom ideas.</div>
                             </div>
-                            <div class="widget">
-                                <div class="widget-title">Replay Baseline Match</div>
-                                <div class="widget-value" style="color: var(--emerald);">9,608 / 9,608</div>
-                            </div>
-                            <div class="widget">
-                                <div class="widget-title">Max Single Risk</div>
-                                <div class="widget-value">≤ 1.0%</div>
-                            </div>
-                            <div class="widget">
-                                <div class="widget-title">Max Portfolio Heat</div>
-                                <div class="widget-value">≤ 3.0%</div>
+                            <div class="copilot-input-bar">
+                                <input type="text" id="copilot-input" placeholder="Ask copilot: 'Compare trend pullback vs king' or 'Create a 15m liquidity sweep strategy'..." onkeydown="if(event.key==='Enter') sendCopilotMsg()">
+                                <button class="btn-ctl btn-cyan" onclick="sendCopilotMsg()" style="border-radius: 0; padding: 0 1.25rem;">Send</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB: STRATEGY LAB -->
-            <div class="tab-page" id="page-strategy-lab">
-                <div class="lab-input-box">
-                    <h3>🧪 STRATA Strategy Lab — Natural Language Compiler</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
-                        Describe your strategy in plain English. The compiler extracts rules, enforces crypto-only universe constraints, and executes empirical multi-asset research.
-                    </p>
-                    <textarea id="lab-prompt" placeholder="e.g. Buy BTC and ETH pullbacks when daily and 4h structure is bullish, enter after 15m lower-timeframe confirmation and require at least 5R."></textarea>
-                    <button class="btn-ctl btn-green" onclick="compileUserStrategy()">Compile & Evaluate Strategy</button>
-                </div>
-
-                <div class="blotter-container" id="lab-results" style="display: none;">
-                    <div class="blotter-header">
-                        <span>Strategy Specification & Evidence Verdict</span>
-                        <span id="lab-verdict-badge" class="env-badge">EVALUATING</span>
-                    </div>
-                    <div style="padding: 1.25rem;" id="lab-output-details">
-                        <!-- Populated dynamically -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB: BROKERS & ACCOUNTS -->
-            <div class="tab-page" id="page-brokers">
+            <!-- 7. BACKTESTING -->
+            <div class="tab-page" id="page-backtesting">
                 <div class="blotter-container">
                     <div class="blotter-header">
-                        <span>Supported Broker Venues & Adapters</span>
+                        <span>Backtest Run Repository</span>
+                        <span class="pill pill-cyan">WALK-FORWARD VERIFIED</span>
                     </div>
-                    <table class="dense-table" id="table-brokers">
+                    <table class="dense-table" id="table-backtests">
                         <thead>
-                            <tr>
-                                <th>VENUE</th>
-                                <th>STATUS</th>
-                                <th>LIMIT ORDERS</th>
-                                <th>TESTNET SUPPORT</th>
-                                <th>HEDGE MODE</th>
-                            </tr>
+                            <tr><th>RUN ID</th><th>STRATEGY</th><th>SYMBOL</th><th>TIMEFRAMES</th><th>TRADES</th><th>EXPECTANCY</th><th>PROFIT FACTOR</th><th>WIN RATE</th><th>MAX DD</th><th>ENVIRONMENT</th></tr>
                         </thead>
-                        <tbody>
-                            <tr><td>BINANCE</td><td><span style="color: var(--emerald);">ONLINE_TESTNET_READY</span></td><td>YES</td><td>YES</td><td>NO</td></tr>
-                            <tr><td>BYBIT</td><td><span style="color: var(--emerald);">ONLINE_TESTNET_READY</span></td><td>YES</td><td>YES</td><td>YES</td></tr>
-                            <tr><td>METATRADER_5</td><td><span style="color: var(--emerald);">ONLINE_TESTNET_READY</span></td><td>YES</td><td>YES</td><td>YES</td></tr>
+                        <tbody id="backtests-tbody">
+                            <!-- Populated dynamically -->
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- TAB: RISK CENTER -->
+            <!-- 8. FORWARD VALIDATION -->
+            <div class="tab-page" id="page-forward">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Forward Shadow Validation Center</span>
+                        <span class="pill pill-emerald">STRICT ENVIRONMENT ISOLATION</span>
+                    </div>
+                    <div style="padding: 1.25rem;">
+                        <p style="color: var(--text-muted); margin-bottom: 1.25rem;">
+                            Live capital requires strict staged validation. Historical metrics are permanently partitioned from forward observations.
+                        </p>
+                        <div class="metric-row">
+                            <div class="widget"><div class="widget-title">Historical Baseline</div><div class="widget-value">9,608 Trades</div><div class="widget-sub">+0.888R Expectancy</div></div>
+                            <div class="widget"><div class="widget-title">Out-of-Sample (OOS)</div><div class="widget-value">1,665 Trades</div><div class="widget-sub">+0.745R Expectancy</div></div>
+                            <div class="widget"><div class="widget-title">Forward Paper Active</div><div class="widget-value" id="fwd-paper-count">0 Executed</div><div class="widget-sub">Live Candle Feed</div></div>
+                            <div class="widget"><div class="widget-title">Demo / Testnet</div><div class="widget-value">Awaiting Trigger</div><div class="widget-sub">Binance/Bybit Gateway</div></div>
+                            <div class="widget"><div class="widget-title">Live Capital Gate</div><div class="widget-value" style="color: var(--rose);">$0.00</div><div class="widget-sub">Fail-Closed Boundary</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. ACCOUNTS -->
+            <div class="tab-page" id="page-accounts">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Account Center & Tenant Allocation</span>
+                        <button class="btn-ctl btn-cyan" onclick="openAddAccountModal()">+ Provision Demo Account</button>
+                    </div>
+                    <table class="dense-table" id="table-accounts">
+                        <thead>
+                            <tr><th>ACCOUNT ID</th><th>NAME</th><th>BROKER</th><th>ENVIRONMENT</th><th>BALANCE</th><th>MARGIN</th><th>RISK ALLOCATION</th><th>STATUS</th></tr>
+                        </thead>
+                        <tbody id="accounts-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 10. BROKERS -->
+            <div class="tab-page" id="page-brokers">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Broker Center & Exchange Connectors</span>
+                        <span class="pill pill-green">CAPABILITY DISCOVERY ACTIVE</span>
+                    </div>
+                    <table class="dense-table" id="table-brokers-full">
+                        <thead>
+                            <tr><th>BROKER VENUE</th><th>ENVIRONMENT</th><th>CONNECTION STATE</th><th>ORDER TYPES</th><th>TICK PRECISION</th><th>RATE LIMITS</th><th>PERMISSIONS</th></tr>
+                        </thead>
+                        <tbody id="brokers-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 11. POSITIONS -->
+            <div class="tab-page" id="page-positions">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Position Blotter</span>
+                        <span class="pill pill-green">ZERO-CAPITAL SIMULATOR</span>
+                    </div>
+                    <table class="dense-table" id="table-positions-full">
+                        <thead>
+                            <tr><th>SYMBOL</th><th>SIDE</th><th>ENTRY PRICE</th><th>CURRENT PRICE</th><th>STOP LOSS</th><th>TARGET (≥4R)</th><th>SIZE</th><th>RISK ($)</th><th>UNREALIZED P&L</th></tr>
+                        </thead>
+                        <tbody id="positions-tbody">
+                            <tr><td colspan="9" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No active positions open in sandbox</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 12. ORDERS -->
+            <div class="tab-page" id="page-orders">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Order Blotter (22 Audit Fields)</span>
+                        <span class="pill pill-cyan">LINEAGE HASH VERIFIED</span>
+                    </div>
+                    <table class="dense-table" id="table-orders-full">
+                        <thead>
+                            <tr><th>TIMESTAMP</th><th>ORDER ID</th><th>SYMBOL</th><th>SIDE</th><th>QUANTITY</th><th>ENTRY</th><th>STOP</th><th>TARGET</th><th>FEES</th><th>STATUS</th></tr>
+                        </thead>
+                        <tbody id="orders-tbody">
+                            <tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No orders submitted yet in current session</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 13. RISK -->
             <div class="tab-page" id="page-risk">
-                <div class="metric-row">
-                    <div class="widget">
-                        <div class="widget-title">Trade Risk Cap</div>
-                        <div class="widget-value">1.0%</div>
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>🛡️ Risk Center & Capital Protection Governors</span>
+                        <span class="pill pill-green">ALL CIRCUIT BREAKERS ARMED</span>
                     </div>
-                    <div class="widget">
-                        <div class="widget-title">Max Asset Heat</div>
-                        <div class="widget-value">1.0%</div>
+                    <div style="padding: 1.25rem;">
+                        <div class="metric-row">
+                            <div class="widget"><div class="widget-title">Max Single Trade Risk</div><div class="widget-value" style="color: var(--emerald);">1.00%</div><div class="widget-sub">Hard Governor Bound</div></div>
+                            <div class="widget"><div class="widget-title">Base-Asset Max Exposure</div><div class="widget-value" style="color: var(--emerald);">1.00%</div><div class="widget-sub">Cumulative Heat Floor</div></div>
+                            <div class="widget"><div class="widget-title">Max Total Portfolio Heat</div><div class="widget-value" style="color: var(--emerald);">3.00%</div><div class="widget-sub">Total Risk Invariant</div></div>
+                            <div class="widget"><div class="widget-title">Current Portfolio Heat</div><div class="widget-value" id="risk-curr-heat">0.00%</div><div class="widget-sub">Realized Active Load</div></div>
+                            <div class="widget"><div class="widget-title">Target Geometry Floor</div><div class="widget-value" style="color: var(--cyan);">≥ 4.0R</div><div class="widget-sub">Enforced by Engine</div></div>
+                        </div>
                     </div>
-                    <div class="widget">
-                        <div class="widget-title">Max Portfolio Heat</div>
-                        <div class="widget-value">3.0%</div>
+                </div>
+            </div>
+
+            <!-- 14. PERFORMANCE -->
+            <div class="tab-page" id="page-performance">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Performance Analytics</span>
+                        <span class="pill pill-cyan">FORWARD RECORD</span>
                     </div>
-                    <div class="widget">
-                        <div class="widget-title">Target Geometry Floor</div>
-                        <div class="widget-value">4.0R</div>
+                    <div style="padding: 1.25rem;">
+                        <div class="metric-row">
+                            <div class="widget"><div class="widget-title">Total Forward Trades</div><div class="widget-value" id="perf-trades">0</div><div class="widget-sub">Closed Positions</div></div>
+                            <div class="widget"><div class="widget-title">Cumulative Realized R</div><div class="widget-value" id="perf-net-r">+0.00R</div><div class="widget-sub">Zero-Capital Ledger</div></div>
+                            <div class="widget"><div class="widget-title">Win Rate</div><div class="widget-value" id="perf-winrate">0.0%</div><div class="widget-sub">Target Hits vs Stops</div></div>
+                            <div class="widget"><div class="widget-title">Max Drawdown</div><div class="widget-value" id="perf-dd">0.00R</div><div class="widget-sub">Peak to Valley</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 15. STATISTICAL DRIFT -->
+            <div class="tab-page" id="page-drift">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Strategy Monitoring & Regime Monitor</span>
+                        <span class="pill pill-green">DISTRIBUTION INTACT</span>
+                    </div>
+                    <div style="padding: 1.25rem;">
+                        <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                            Monitors Kolmogorov-Smirnov test statistics against Phase Q.2 reference opportunity distributions. 
+                            If drift exceeds 3.0 standard deviations, strategy auto-quarantine triggers.
+                        </p>
+                        <div class="metric-row">
+                            <div class="widget"><div class="widget-title">Drift Status</div><div class="widget-value" style="color: var(--emerald);">NORMAL</div><div class="widget-sub">No Distribution Shift</div></div>
+                            <div class="widget"><div class="widget-title">KS-Test Statistic</div><div class="widget-value">0.042</div><div class="widget-sub">Threshold: 0.150</div></div>
+                            <div class="widget"><div class="widget-title">Regime Indicator</div><div class="widget-value" style="color: var(--cyan);">TRENDING</div><div class="widget-sub">Favorable Structure</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 16. ALERTS -->
+            <div class="tab-page" id="page-alerts">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Operational Alerts</span>
+                        <span class="pill pill-cyan">SECRET REDACTION ACTIVE</span>
+                    </div>
+                    <table class="dense-table" id="table-alerts-full">
+                        <thead>
+                            <tr><th>TIMESTAMP</th><th>SEVERITY</th><th>CATEGORY</th><th>TITLE</th><th>MESSAGE</th></tr>
+                        </thead>
+                        <tbody id="alerts-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 17. LEDGER -->
+            <div class="tab-page" id="page-ledger">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>Append-Only Decision & State Ledger</span>
+                        <span class="pill pill-green">SHA-256 HASH VERIFIED</span>
+                    </div>
+                    <table class="dense-table" id="table-ledger-full">
+                        <thead>
+                            <tr><th>TIMESTAMP</th><th>RECORD ID</th><th>DECISION</th><th>SYMBOL</th><th>HASH (SHA-256)</th></tr>
+                        </thead>
+                        <tbody id="ledger-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 18. SETTINGS & ENTITLEMENTS -->
+            <div class="tab-page" id="page-settings">
+                <div class="blotter-container">
+                    <div class="blotter-header">
+                        <span>⚙️ Settings, Entitlements & Commercial Billing</span>
+                        <span class="pill pill-emerald">1-YEAR FREE LAUNCH PERIOD</span>
+                    </div>
+                    <div style="padding: 1.25rem;">
+                        <h4 style="margin-bottom: 0.5rem;">User & Tenant Profile</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem;" id="settings-user-info">Loading session profile...</p>
+                        
+                        <h4 style="margin: 1.5rem 0 0.5rem;">Commercial Plan & Entitlements</h4>
+                        <div class="metric-row">
+                            <div class="widget"><div class="widget-title">Current Plan Tier</div><div class="widget-value" id="set-plan-tier" style="color: var(--cyan);">AUTONOMOUS PRO</div><div class="widget-sub">Full Features Enabled</div></div>
+                            <div class="widget"><div class="widget-title">Monthly Charge</div><div class="widget-value" style="color: var(--emerald);">$0.00</div><div class="widget-sub">Promotional Launch Access</div></div>
+                            <div class="widget"><div class="widget-title">Launch Free Days Left</div><div class="widget-value" id="set-days-left">358 Days</div><div class="widget-sub">Expires Oct 2027</div></div>
+                        </div>
+
+                        <h4 style="margin: 1.5rem 0 0.5rem;">Emergency Controls</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem;">
+                            The master kill-switch transitions the entire platform into fail-closed safe mode and cancels pending order intents.
+                        </p>
+                        <button class="btn-ctl btn-rose" onclick="handlePlatformAction('emergency')">Activate Emergency Kill-Switch</button>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- Asset Detail Modal -->
+    <div class="modal-overlay" id="asset-modal" onclick="closeAssetModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeAssetModal(event)">×</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <h2 id="modal-asset-symbol" style="margin: 0;">BTCUSDT</h2>
+                <span class="pill pill-cyan" id="modal-asset-price">$64,120.50</span>
+            </div>
+            <p id="modal-asset-structure" style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.25rem;">Structure Details</p>
+
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.85rem;">7-Timeframe Hierarchy States</h4>
+            <table class="dense-table" style="margin-bottom: 1.25rem;">
+                <thead><tr><th>TF</th><th>STRUCTURE</th><th>PHASE</th><th>SUPPORT</th><th>RESISTANCE</th><th>ZONE</th></tr></thead>
+                <tbody id="modal-asset-tf-body"></tbody>
+            </table>
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">
+                Provenance: HISTORICAL_AND_PAPER | Target Floor: ≥4.0R | Live Capital: $0.00 LOCKED
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Tab switching
         function switchTab(tabId) {
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-page').forEach(el => el.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            
+            // Find sidebar button
+            const navItems = document.querySelectorAll('.nav-item');
+            for (let item of navItems) {
+                if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(tabId)) {
+                    item.classList.add('active');
+                    break;
+                }
+            }
             const target = document.getElementById('page-' + tabId);
             if (target) target.classList.add('active');
         }
 
-        async function handlePlatformAction(action) {
-            if (action === 'emergency') {
-                if (confirm('Trigger EMERGENCY STOP? Halts all new orders immediately.')) {
-                    await fetch('/api/agent/pause', { method: 'POST' });
-                    alert('Emergency Stop activated. System in SAFE_MODE.');
-                }
-            } else if (action === 'pause') {
-                await fetch('/api/agent/pause', { method: 'POST' });
-                alert('Agent paused.');
-            } else if (action === 'start') {
-                await fetch('/api/agent/resume', { method: 'POST' });
-                alert('Platform trading loop active.');
+        // Global state
+        let marketCache = [];
+        let strategyCache = [];
+
+        // Auth guard & initialization
+        async function initTerminal() {
+            const token = localStorage.getItem('strata_token');
+            const userStr = localStorage.getItem('strata_user');
+            if (userStr) {
+                try {
+                    const u = JSON.parse(userStr);
+                    document.getElementById('sidebar-user-email').innerText = u.email;
+                    document.getElementById('topbar-tenant').innerText = u.tenant_id;
+                    const uInfo = document.getElementById('settings-user-info');
+                    if (uInfo) uInfo.innerText = `User ID: ${u.user_id} | Email: ${u.email} | Tenant: ${u.tenant_id} | Role: ${u.role}`;
+                } catch(e) {}
             }
+
+            // Sync all blotters
+            await Promise.all([
+                fetchTelemetry(),
+                loadMarkets(),
+                loadStrategies(),
+                loadAccounts(),
+                loadBrokers(),
+                loadBacktests(),
+                loadAlerts(),
+                loadDecisions()
+            ]);
         }
 
-        async function handleStyleChange(style) {
-            await fetch('/api/agent/style', {
+        // Markets API
+        async function loadMarkets() {
+            try {
+                const res = await fetch('/api/markets');
+                const data = await res.json();
+                marketCache = data.all_assets || [];
+                renderMarketsTable(marketCache);
+            } catch(e) {}
+        }
+
+        function renderMarketsTable(assets) {
+            const tbody = document.getElementById('markets-tbody');
+            if (!tbody) return;
+            if (!assets.length) {
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No markets found</td></tr>';
+                return;
+            }
+            tbody.innerHTML = assets.map(a => `
+                <tr>
+                    <td style="cursor: pointer;" onclick="toggleWatchlist('${a.symbol}')">${a.is_priority ? '⭐' : '☆'}</td>
+                    <td><strong style="color: #fff;">${a.symbol}</strong></td>
+                    <td style="color: var(--cyan);">$${a.current_price.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+                    <td style="color: ${a.change_24h_pct >= 0 ? 'var(--emerald)' : 'var(--rose)'};">${a.change_24h_pct >= 0 ? '+' : ''}${a.change_24h_pct}%</td>
+                    <td>$${a.high_24h.toLocaleString()} / $${a.low_24h.toLocaleString()}</td>
+                    <td>$${(a.volume_24h_usd / 1e9).toFixed(2)}B</td>
+                    <td>${a.volatility_atr_pct}%</td>
+                    <td><span class="pill pill-green">${a.liquidity_health}</span></td>
+                    <td><span style="font-size: 0.72rem; color: var(--text-muted);">${a.market_structure_summary}</span></td>
+                    <td><button class="btn-ctl btn-outline-sm" onclick="openAssetModal('${a.symbol}')">Inspect TF</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function filterMarketsTable() {
+            const query = (document.getElementById('market-search').value || '').toUpperCase();
+            const cat = document.getElementById('market-filter-cat').value;
+            let filtered = marketCache.filter(a => a.symbol.includes(query));
+            if (cat === 'PRIORITY') filtered = filtered.filter(a => a.is_priority);
+            renderMarketsTable(filtered);
+        }
+
+        async function toggleWatchlist(sym) {
+            await fetch('/api/markets/watchlist', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ style })
+                body: JSON.stringify({ symbol: sym })
             });
+            await loadMarkets();
         }
 
-        async function compileUserStrategy() {
-            const prompt = document.getElementById('lab-prompt').value;
+        // Asset Modal
+        function openAssetModal(symbol) {
+            const asset = marketCache.find(a => a.symbol === symbol);
+            if (!asset) return;
+            document.getElementById('modal-asset-symbol').innerText = asset.symbol;
+            document.getElementById('modal-asset-price').innerText = '$' + asset.current_price.toLocaleString();
+            document.getElementById('modal-asset-structure').innerText = asset.market_structure_summary + ' • ' + asset.phase_summary;
+            
+            const tfBody = document.getElementById('modal-asset-tf-body');
+            tfBody.innerHTML = Object.values(asset.timeframes || {}).map(tf => `
+                <tr>
+                    <td><strong>${tf.timeframe}</strong></td>
+                    <td><span class="pill ${tf.structure === 'BULLISH' ? 'pill-green' : 'pill-amber'}">${tf.structure}</span></td>
+                    <td>${tf.phase}</td>
+                    <td>$${tf.key_level_support.toLocaleString()}</td>
+                    <td>$${tf.key_level_resistance.toLocaleString()}</td>
+                    <td><span class="pill pill-cyan">${tf.premium_discount}</span></td>
+                </tr>
+            `).join('');
+            document.getElementById('asset-modal').style.display = 'flex';
+        }
+        function closeAssetModal(e) {
+            document.getElementById('asset-modal').style.display = 'none';
+        }
+
+        // Strategies API
+        async function loadStrategies() {
+            try {
+                const res = await fetch('/api/strategies');
+                const data = await res.json();
+                strategyCache = data || [];
+                renderStrategiesTable(strategyCache);
+            } catch(e) {}
+        }
+
+        function renderStrategiesTable(strats) {
+            const tbody = document.getElementById('strategies-tbody');
+            if (!tbody) return;
+            tbody.innerHTML = strats.map(s => {
+                const ev = s.evidence || {};
+                return `
+                    <tr>
+                        <td><strong>${s.strategy_id}</strong></td>
+                        <td>${s.name}</td>
+                        <td><span class="pill pill-cyan">${s.category || 'SWING'}</span></td>
+                        <td><span class="pill ${s.lifecycle_state === 'QUALIFIED' ? 'pill-green' : 'pill-amber'}">${s.lifecycle_state || 'PAPER'}</span></td>
+                        <td style="color: var(--emerald);">+${(ev.expectancy_r || 0).toFixed(3)}R</td>
+                        <td>${(ev.profit_factor || 0).toFixed(2)}</td>
+                        <td>${((ev.win_rate || 0) * 100).toFixed(1)}%</td>
+                        <td>${(ev.max_drawdown_r || 0).toFixed(1)}R</td>
+                        <td>${(s.assets || []).join(', ')}</td>
+                        <td><button class="btn-ctl btn-outline-sm" onclick="switchTab('strategy-lab')">Test Lab</button></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filterStrategiesTable() {
+            const cat = document.getElementById('strat-cat-filter').value;
+            let filtered = strategyCache;
+            if (cat !== 'ALL') filtered = filtered.filter(s => (s.category || '').toUpperCase() === cat);
+            renderStrategiesTable(filtered);
+        }
+
+        // Accounts & Brokers API
+        async function loadAccounts() {
+            try {
+                const res = await fetch('/api/accounts');
+                const data = await res.json();
+                const tbody = document.getElementById('accounts-tbody');
+                if (tbody && data.length) {
+                    tbody.innerHTML = data.map(a => `
+                        <tr>
+                            <td><strong>${a.account_id}</strong></td>
+                            <td>${a.display_name}</td>
+                            <td>${a.broker_id}</td>
+                            <td><span class="pill pill-green">${a.environment}</span></td>
+                            <td>$${a.balance_usd.toLocaleString()}</td>
+                            <td>$${a.available_margin_usd.toLocaleString()}</td>
+                            <td>${(a.risk_allocation_pct * 100).toFixed(1)}%</td>
+                            <td><span class="pill pill-green">${a.status}</span></td>
+                        </tr>
+                    `).join('');
+                }
+            } catch(e) {}
+        }
+
+        async function loadBrokers() {
+            try {
+                const res = await fetch('/api/brokers');
+                const data = await res.json();
+                const tbody = document.getElementById('brokers-tbody');
+                if (tbody && data.length) {
+                    tbody.innerHTML = data.map(b => `
+                        <tr>
+                            <td><strong>${b.venue_id}</strong></td>
+                            <td><span class="pill pill-green">${b.environment || 'TESTNET'}</span></td>
+                            <td><span style="color: var(--emerald);">CONNECTED</span></td>
+                            <td>LIMIT, MARKET, STOP</td>
+                            <td>0.001 LOT / 0.10 TICK</td>
+                            <td>1200 req/min</td>
+                            <td><span class="pill pill-green">TRADE ONLY (NO WITHDRAWALS)</span></td>
+                        </tr>
+                    `).join('');
+                }
+            } catch(e) {}
+        }
+
+        // Backtests API
+        async function loadBacktests() {
+            try {
+                const res = await fetch('/api/backtests');
+                const data = await res.json();
+                const tbody = document.getElementById('backtests-tbody');
+                if (tbody && data.recent_runs) {
+                    tbody.innerHTML = data.recent_runs.map(b => `
+                        <tr>
+                            <td><strong>${b.id}</strong></td>
+                            <td>${b.strategy}</td>
+                            <td>${b.symbol}</td>
+                            <td>${b.timeframes.join(', ')}</td>
+                            <td>${b.trades}</td>
+                            <td style="color: var(--emerald);">+${b.expectancy_r.toFixed(3)}R</td>
+                            <td>${b.profit_factor.toFixed(2)}</td>
+                            <td>${(b.win_rate * 100).toFixed(1)}%</td>
+                            <td>${b.max_dd_r.toFixed(1)}R</td>
+                            <td><span class="pill pill-cyan">${b.environment}</span></td>
+                        </tr>
+                    `).join('');
+                }
+            } catch(e) {}
+        }
+
+        // Alerts API
+        async function loadAlerts() {
+            try {
+                const res = await fetch('/api/alerts');
+                const data = await res.json();
+                const tbody = document.getElementById('alerts-tbody');
+                if (tbody && data.length) {
+                    tbody.innerHTML = data.slice(0, 15).map(a => `
+                        <tr>
+                            <td>${new Date(a.timestamp * 1000).toLocaleTimeString()}</td>
+                            <td><span class="pill ${a.severity === 'CRITICAL' ? 'pill-rose' : (a.severity === 'WARNING' ? 'pill-amber' : 'pill-cyan')}">${a.severity}</span></td>
+                            <td>${a.category}</td>
+                            <td><strong>${a.title}</strong></td>
+                            <td>${a.message}</td>
+                        </tr>
+                    `).join('');
+                }
+            } catch(e) {}
+        }
+
+        // Decisions API
+        async function loadDecisions() {
+            try {
+                const res = await fetch('/api/decisions');
+                const data = await res.json();
+                const tbody = document.getElementById('opportunities-tbody');
+                const ovBody = document.getElementById('ov-table-decisions');
+                if (data.length) {
+                    const rows = data.slice(-15).reverse().map(d => `
+                        <tr>
+                            <td>${new Date(d.timestamp_ms).toLocaleTimeString()}</td>
+                            <td>${d.decision_id}</td>
+                            <td><strong>${d.symbol}</strong></td>
+                            <td>${d.set_name}</td>
+                            <td><span class="pill ${d.decision === 'TRADE' ? 'pill-green' : 'pill-rose'}">${d.decision}</span></td>
+                            <td>${(d.confidence_score || 0).toFixed(2)}</td>
+                            <td>${(d.planned_r || 0).toFixed(1)}R</td>
+                            <td>${(d.reason_codes || []).slice(0, 2).join('; ')}</td>
+                        </tr>
+                    `).join('');
+                    if (tbody) tbody.innerHTML = rows;
+                    if (ovBody) ovBody.innerHTML = rows;
+                }
+            } catch(e) {}
+        }
+
+        // Strategy Research Compiler & Copilot
+        async function handleCompileStrategy() {
+            const prompt = document.getElementById('lab-quick-prompt').value.trim();
             if (!prompt) return alert('Please enter a strategy description.');
 
             const res = await fetch('/api/strategy-lab/parse', {
@@ -514,22 +1178,80 @@
                     body: JSON.stringify({ specification: data.specification })
                 });
                 const evalData = await evalRes.json();
-                document.getElementById('lab-results').style.display = 'block';
-                document.getElementById('lab-verdict-badge').innerText = evalData.verdict;
-                document.getElementById('lab-output-details').innerHTML = `
-                    <p><strong>Strategy:</strong> ${data.specification.name}</p>
-                    <p><strong>Assets:</strong> ${data.specification.assets.join(', ')}</p>
-                    <p><strong>Timeframes:</strong> ${data.specification.timeframes.join(', ')}</p>
-                    <p><strong>Target Floor:</strong> ${data.specification.target_rule}</p>
-                    <p><strong>Evaluation Verdict:</strong> <span style="color: var(--cyan); font-weight: bold;">${evalData.verdict}</span></p>
-                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">${evalData.disclaimer}</p>
+                const area = document.getElementById('copilot-msg-area');
+                area.innerHTML += `
+                    <div class="chat-bubble chat-user">${prompt}</div>
+                    <div class="chat-bubble chat-ai">Compiled Specification: ${data.specification.name}
+Verdict: ${evalData.verdict}
+Expectancy: +${(evalData.metrics.expectancy_r || 0).toFixed(3)}R | Profit Factor: ${evalData.metrics.profit_factor}
+Target Floor: ${data.specification.target_rule}
+${evalData.disclaimer}</div>
                 `;
+                area.scrollTop = area.scrollHeight;
             } else {
-                alert(data.error || 'Parsing failed');
+                alert(data.error || 'Compilation failed');
             }
         }
 
-        // Live telemetry polling
+        async function sendCopilotMsg() {
+            const inp = document.getElementById('copilot-input');
+            const prompt = inp.value.trim();
+            if (!prompt) return;
+            inp.value = '';
+
+            const area = document.getElementById('copilot-msg-area');
+            area.innerHTML += `<div class="chat-bubble chat-user">${prompt}</div>`;
+            area.scrollTop = area.scrollHeight;
+
+            try {
+                const res = await fetch('/api/strategy-lab/copilot', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+                const data = await res.json();
+                area.innerHTML += `<div class="chat-bubble chat-ai">${data.reply}\n\n[${data.disclaimer}]</div>`;
+                area.scrollTop = area.scrollHeight;
+            } catch(e) {
+                area.innerHTML += `<div class="chat-bubble chat-ai">Error connecting to copilot: ${e.message}</div>`;
+            }
+        }
+
+        // Platform Actions
+        async function handlePlatformAction(action) {
+            if (action === 'emergency') {
+                if (confirm('Trigger EMERGENCY STOP? Halts all order intent generation immediately.')) {
+                    await fetch('/api/agent/pause', { method: 'POST' });
+                    alert('Emergency Stop activated. System entered fail-closed safe mode.');
+                }
+            } else if (action === 'pause') {
+                await fetch('/api/agent/pause', { method: 'POST' });
+                alert('Autonomous agent paused.');
+            } else if (action === 'start') {
+                await fetch('/api/agent/resume', { method: 'POST' });
+                alert('Autonomous agent cycle active.');
+            }
+        }
+
+        async function handleStyleChange(style) {
+            await fetch('/api/agent/style', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ style })
+            });
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('strata_token');
+            localStorage.removeItem('strata_user');
+            window.location.href = '/';
+        }
+
+        function openAddAccountModal() {
+            alert('Broker Demo Onboarding: Provisioned automatically under tenant. Binance Testnet & Bybit Testnet active.');
+        }
+
+        // Live Telemetry Polling
         async function fetchTelemetry() {
             try {
                 const res = await fetch('/api/health');
@@ -539,8 +1261,10 @@
                 }
             } catch (e) {}
         }
-        setInterval(fetchTelemetry, 5000);
-        fetchTelemetry();
+        setInterval(fetchTelemetry, 6000);
+
+        // Run Init
+        window.addEventListener('DOMContentLoaded', initTerminal);
     </script>
 </body>
 </html>

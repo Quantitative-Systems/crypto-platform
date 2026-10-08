@@ -3,576 +3,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STRATA — Autonomous Crypto Trading Platform</title>
+    <title>Crypto Platform — Engineering & Admin Interface</title>
     <style>
         :root {
-            --bg-deep: #050811;
-            --bg-card: rgba(13, 20, 36, 0.75);
-            --bg-glass: rgba(18, 28, 50, 0.65);
-            --border: rgba(30, 48, 80, 0.6);
-            --border-hover: #0ea5e9;
-            --text-main: #f1f5f9;
-            --text-dim: #94a3b8;
-            --cyan: #0ea5e9;
-            --emerald: #10b981;
-            --purple: #8b5cf6;
-            --amber: #f59e0b;
-            --rose: #f43f5e;
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+            --text-heading: #0f172a;
+            --text-body: #334155;
+            --text-muted: #64748b;
+            --blue-primary: #2563eb;
+            --blue-hover: #1d4ed8;
+            --sky-blue: #0284c7;
+            --emerald: #059669;
+            --red-alert: #dc2626;
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
+            --font-mono: 'JetBrains Mono', Consolas, monospace;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background-color: var(--bg-deep);
-            color: var(--text-main);
+            background-color: var(--bg-page);
+            color: var(--text-body);
             font-family: var(--font-sans);
-            line-height: 1.6;
-            overflow-x: hidden;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        canvas#bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            opacity: 0.45;
-        }
-        /* Top Navigation */
-        header {
-            position: sticky;
-            top: 0;
-            backdrop-filter: blur(16px);
-            background: rgba(5, 8, 17, 0.85);
+        header.top-bar {
+            background: #ffffff;
             border-bottom: 1px solid var(--border);
-            z-index: 100;
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .logo-box {
+        .brand {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            text-decoration: none;
-            color: var(--text-main);
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--text-heading);
         }
-        .logo-symbol {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--cyan), var(--purple));
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.1rem;
-        }
-        .logo-text { font-size: 1.25rem; font-weight: 800; letter-spacing: 0.08em; }
-        .nav-links { display: flex; gap: 1.5rem; list-style: none; font-size: 0.9rem; font-weight: 500; }
-        .nav-links a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--text-main); }
-        .nav-actions { display: flex; gap: 1rem; align-items: center; }
-        .btn {
-            padding: 0.6rem 1.25rem;
-            border-radius: 6px;
-            font-size: 0.875rem;
+        .brand-badge {
+            font-size: 0.7rem;
             font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.2s;
-            border: none;
+            padding: 0.2rem 0.5rem;
+            background: #eff6ff;
+            color: var(--blue-primary);
+            border: 1px solid #bfdbfe;
+            border-radius: 4px;
+            font-family: var(--font-mono);
         }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
-        .btn-outline:hover { border-color: var(--cyan); background: rgba(14, 165, 233, 0.1); }
-        .btn-primary { background: linear-gradient(135deg, var(--cyan), #2563eb); color: #fff; }
-        .btn-primary:hover { opacity: 0.95; transform: translateY(-1px); }
-
-        /* Container */
-        .container { max-width: 1240px; margin: 0 auto; padding: 4rem 2rem; }
-
-        /* Hero */
-        .hero {
-            text-align: center;
-            padding: 6rem 2rem 4rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .hero-badge {
+        .status-pill {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.35rem 1rem;
-            border-radius: 999px;
-            background: rgba(14, 165, 233, 0.1);
-            border: 1px solid rgba(14, 165, 233, 0.3);
-            color: var(--cyan);
             font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
+            font-family: var(--font-mono);
+            background: #ecfdf5;
+            color: var(--emerald);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid #a7f3d0;
         }
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            letter-spacing: -0.03em;
-            line-height: 1.15;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, #ffffff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--emerald);
         }
-        .hero p.tagline {
-            font-size: 1.25rem;
-            color: var(--cyan);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            letter-spacing: 0.05em;
+        main.container {
+            max-width: 960px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            width: 100%;
         }
-        .hero p.desc {
-            font-size: 1.1rem;
-            color: var(--text-dim);
-            margin-bottom: 2.5rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .hero-cta { display: flex; justify-content: center; gap: 1rem; }
-
-        /* Safety Banner */
-        .safety-banner {
-            background: rgba(14, 20, 36, 0.8);
+        .hero-box {
+            background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 1rem 1.5rem;
-            margin: 2rem auto;
-            max-width: 900px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+        }
+        h1 {
+            font-size: 1.6rem;
+            color: var(--text-heading);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+        .notice-banner {
+            background: #eff6ff;
+            border-left: 4px solid var(--blue-primary);
+            padding: 0.85rem 1rem;
+            font-size: 0.875rem;
+            color: #1e3a8a;
+            border-radius: 0 4px 4px 0;
+            margin-bottom: 1.5rem;
+        }
+        .safety-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .safety-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.85rem 1rem;
+        }
+        .safety-label {
+            font-size: 0.75rem;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+        .safety-val {
+            font-size: 1.05rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: var(--text-heading);
+        }
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .action-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.15s ease;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .action-card:hover {
+            border-color: var(--blue-primary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        .action-card.primary {
+            border-color: #bfdbfe;
+            background: #fbfdff;
+        }
+        .action-title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-heading);
+            margin-bottom: 0.4rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 0.85rem;
         }
-        .safety-banner span.val { color: var(--emerald); font-family: var(--font-mono); font-weight: 700; }
-
-        /* Grid Cards */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            backdrop-filter: blur(12px);
-            transition: all 0.2s;
-        }
-        .card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
-        .card-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 8px;
-            background: rgba(14, 165, 233, 0.15);
-            color: var(--cyan);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            margin-bottom: 1.25rem;
-        }
-        .card h3 { font-size: 1.25rem; margin-bottom: 0.75rem; font-weight: 700; }
-        .card p { color: var(--text-dim); font-size: 0.95rem; }
-
-        /* Sections */
-        .section-header { text-align: center; max-width: 700px; margin: 0 auto 3rem; }
-        .section-header h2 { font-size: 2.25rem; font-weight: 800; margin-bottom: 0.75rem; }
-        .section-header p { color: var(--text-dim); font-size: 1rem; }
-
-        /* Pricing */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        .price-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            position: relative;
-        }
-        .price-card.featured {
-            border-color: var(--cyan);
-            background: rgba(14, 28, 56, 0.85);
-            box-shadow: 0 0 30px rgba(14, 165, 233, 0.15);
-        }
-        .price-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--cyan);
-            color: #000;
-            padding: 0.2rem 0.75rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            border-radius: 999px;
-        }
-        .price-amount { font-size: 2.5rem; font-weight: 800; margin: 1rem 0; font-family: var(--font-mono); }
-        .price-features { list-style: none; margin: 1.5rem 0; text-align: left; font-size: 0.9rem; color: var(--text-dim); }
-        .price-features li { margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
-        .price-features li::before { content: "✓"; color: var(--cyan); font-weight: bold; }
-
-        /* FAQ */
-        .faq-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.25rem 1.5rem;
+        .action-desc {
+            font-size: 0.825rem;
+            color: var(--text-muted);
             margin-bottom: 1rem;
-            cursor: pointer;
         }
-        .faq-question { font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
-        .faq-answer { color: var(--text-dim); font-size: 0.925rem; margin-top: 0.75rem; }
-
-        /* Footer */
+        .btn-link {
+            font-size: 0.825rem;
+            font-weight: 600;
+            color: var(--blue-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
         footer {
             border-top: 1px solid var(--border);
-            padding: 3rem 2rem;
-            background: rgba(5, 8, 17, 0.9);
-            font-size: 0.85rem;
-            color: var(--text-dim);
-            text-align: center;
-        }
-        .footer-disclaimer {
-            max-width: 800px;
-            margin: 1.5rem auto 0;
-            font-size: 0.775rem;
-            line-height: 1.5;
-            color: #64748b;
-        }
-
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(6px);
-            display: none;
-            justify-content: center;
+            padding: 1.25rem 2rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background: #ffffff;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            z-index: 1000;
         }
-        .modal-card {
-            background: #0d1424;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            width: 90%;
-            max-width: 400px;
-            padding: 2rem;
-        }
-        .modal-card h2 { margin-bottom: 1rem; font-size: 1.5rem; }
-        .form-group { margin-bottom: 1rem; text-align: left; }
-        .form-group label { display: block; font-size: 0.85rem; color: var(--text-dim); margin-bottom: 0.35rem; }
-        .form-group input {
-            width: 100%;
-            padding: 0.65rem 0.85rem;
-            background: #080c16;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: #fff;
-            font-family: inherit;
-        }
-        .form-group input:focus { outline: none; border-color: var(--cyan); }
     </style>
 </head>
 <body>
-    <canvas id="bg-canvas"></canvas>
-
-    <header>
-        <a href="/" class="logo-box">
-            <div class="logo-symbol">S</div>
-            <span class="logo-text">STRATA</span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="#how-it-works">How It Works</a></li>
-            <li><a href="#technology">Technology</a></li>
-            <li><a href="#king">KING Core</a></li>
-            <li><a href="#strategy-lab">Strategy Lab</a></li>
-            <li><a href="#security">Security</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#faq">FAQ</a></li>
-        </ul>
-        <div class="nav-actions">
-            <button class="btn btn-outline" onclick="openAuthModal('login')">Sign In</button>
-            <a href="/app" class="btn btn-primary">Launch Terminal</a>
+    <header class="top-bar">
+        <div class="brand">
+            <span>Crypto Platform</span>
+            <span class="brand-badge">Android-First Platform</span>
+        </div>
+        <div class="status-pill">
+            <div class="status-dot"></div>
+            <span>Backend Services Operational</span>
         </div>
     </header>
 
-    <div class="hero">
-        <div class="hero-badge">● STRATA ENGINE v1.1.0 HARDENED</div>
-        <h1>Autonomous Crypto Trading Platform</h1>
-        <p class="tagline">Research. Validate. Execute. Monitor.</p>
-        <p class="desc">
-            A state-of-the-art multi-timeframe quantitative platform combining the protected
-            Phase Q.2/Phase R fractal market model, natural-language Strategy Lab, and deterministic risk governors.
-        </p>
-        <div class="hero-cta">
-            <a href="/app" class="btn btn-primary" style="padding: 0.85rem 2rem; font-size: 1rem;">Open Institutional Terminal</a>
-            <button class="btn btn-outline" style="padding: 0.85rem 1.75rem; font-size: 1rem;" onclick="openAuthModal('register')">Create Account</button>
-        </div>
-    </div>
+    <main class="container">
+        <div class="hero-box">
+            <h1>Crypto Platform</h1>
+            <p class="subtitle">Android application required / Development & administrative interface</p>
 
-    <div class="safety-banner">
-        <div><strong>Capital Boundary:</strong> Real Capital Authorized: <span class="val">$0.00</span></div>
-        <div><strong>Target Geometry:</strong> Floor: <span class="val">≥ 4.0R</span></div>
-        <div><strong>Max Single Risk:</strong> Limit: <span class="val">≤ 1.0%</span></div>
-        <div><strong>Replay Match:</strong> Baseline: <span class="val">9,608 / 9,608 (100%)</span></div>
-    </div>
+            <div class="notice-banner">
+                <strong>Android-First System Notice:</strong> The primary interface for Crypto Platform is the native Android application. This web interface serves as an engineering, administrative, and API harness for development and system operations.
+            </div>
 
-    <div class="container" id="how-it-works">
-        <div class="section-header">
-            <h2>Architectural Foundations</h2>
-            <p>From causal market state generation to autonomous risk gating, STRATA operates deterministically.</p>
-        </div>
-        <div class="features-grid">
-            <div class="card">
-                <div class="card-icon">👑</div>
-                <h3>Protected KING Engine</h3>
-                <p>The flagship Phase Q.2 / Phase R market model evaluating 7 continuous timeframes (1M to 3M) across 5 overlapping triad sets with a mandatory ≥4R target floor.</p>
+            <div class="safety-strip">
+                <div class="safety-card">
+                    <div class="safety-label">Execution Environment</div>
+                    <div class="safety-val">Paper / Demo</div>
+                </div>
+                <div class="safety-card">
+                    <div class="safety-label">Authorized Real Capital</div>
+                    <div class="safety-val" style="color: var(--red-alert);">$0.00 (Locked)</div>
+                </div>
+                <div class="safety-card">
+                    <div class="safety-label">Single-Trade Risk Ceiling</div>
+                    <div class="safety-val">&le; 1.00%</div>
+                </div>
+                <div class="safety-card">
+                    <div class="safety-label">Portfolio Heat Ceiling</div>
+                    <div class="safety-val">&le; 3.00%</div>
+                </div>
             </div>
-            <div class="card">
-                <div class="card-icon">🧪</div>
-                <h3>Strategy Lab (NLP)</h3>
-                <p>Describe your strategy in natural language. Our compiler generates formal machine specifications and validates them against the crypto universe without fabricating profitability.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🤖</div>
-                <h3>Autonomous Orchestrator</h3>
-                <p>An intelligent orchestration layer that observes market states, verifies account suitability, manages active trades, and quarantines degraded strategies.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🛡️</div>
-                <h3>Capital Survival Governor</h3>
-                <p>Hard limits: ≤1% trade risk, ≤1% asset risk, and ≤3% portfolio heat. Zero-capital fail-closed execution boundary ensures real funds are never risked blindly.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">⚡</div>
-                <h3>Multi-Broker Gateway</h3>
-                <p>Standardized adapters for Binance, Bybit, and MetaTrader 5 (MT5) with lot precision rounding, tick step scaling, and deterministic order idempotency.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🔄</div>
-                <h3>24/7/365 Recovery Watchdog</h3>
-                <p>Heartbeat supervision, atomic checkpoint checksum verification, and startup reconciliation to guarantee zero orphan broker positions across machine restarts.</p>
-            </div>
-        </div>
-    </div>
 
-    <div class="container" id="pricing">
-        <div class="section-header">
-            <h2>Platform Subscriptions</h2>
-            <p>Honest infrastructure pricing for researchers, quants, and crypto trading firms.</p>
-        </div>
-        <div class="pricing-grid">
-            <div class="price-card">
-                <h3>Researcher</h3>
-                <div class="price-amount">$0 <span style="font-size: 1rem; color: var(--text-dim);">/ mo</span></div>
-                <p style="color: var(--text-dim); font-size: 0.85rem;">For quantitative strategy testing and analysis</p>
-                <ul class="price-features">
-                    <li>Full Strategy Lab NLP compiler</li>
-                    <li>Historical backtest engine</li>
-                    <li>Crypto Universe (BTC, ETH, SOL, BNB)</li>
-                    <li>Zero-capital Paper Trading</li>
-                </ul>
-                <button class="btn btn-outline" style="width: 100%;" onclick="openAuthModal('register')">Get Started</button>
-            </div>
-            <div class="price-card featured">
-                <div class="price-badge">POPULAR</div>
-                <h3>Autonomous Trader</h3>
-                <div class="price-amount">$149 <span style="font-size: 1rem; color: var(--text-dim);">/ mo</span></div>
-                <p style="color: var(--text-dim); font-size: 0.85rem;">Continuous 24/7/365 autonomous agent execution</p>
-                <ul class="price-features">
-                    <li>Protected KING Engine access</li>
-                    <li>Autonomous Agent Orchestrator</li>
-                    <li>Multi-Broker Testnets (Binance, Bybit)</li>
-                    <li>24/7 Recovery Watchdog & Alerts</li>
-                    <li>Forward Validation tracking</li>
-                </ul>
-                <a href="/app" class="btn btn-primary" style="width: 100%;">Launch Terminal</a>
-            </div>
-            <div class="price-card">
-                <h3>Institutional</h3>
-                <div class="price-amount">$499 <span style="font-size: 1rem; color: var(--text-dim);">/ mo</span></div>
-                <p style="color: var(--text-dim); font-size: 0.85rem;">Dedicated low-latency broker infrastructure</p>
-                <ul class="price-features">
-                    <li>Multi-account isolation (unlimited)</li>
-                    <li>MetaTrader 5 & custom IPC gateways</li>
-                    <li>Dedicated Docker & VPS orchestration</li>
-                    <li>Audit ledger export & SOC-2 compliance</li>
-                </ul>
-                <button class="btn btn-outline" style="width: 100%;" onclick="alert('Contact institutional@strata.io')">Contact Desk</button>
-            </div>
-        </div>
-    </div>
+            <div class="actions-grid">
+                <a href="/mobile" class="action-card primary" id="btn-mobile-preview">
+                    <div>
+                        <div class="action-title">
+                            <span>Android Web Experience</span>
+                            <span>&rarr;</span>
+                        </div>
+                        <div class="action-desc">Run the full Android-first mobile interface in an optimized mobile preview mode.</div>
+                    </div>
+                    <span class="btn-link">Launch Mobile Application &rarr;</span>
+                </a>
 
-    <div class="container" id="faq">
-        <div class="section-header">
-            <h2>Frequently Asked Questions</h2>
+                <a href="/app" class="action-card" id="btn-dev-terminal">
+                    <div>
+                        <div class="action-title">
+                            <span>Development Terminal</span>
+                            <span>&rarr;</span>
+                        </div>
+                        <div class="action-desc">Access the desktop development workstation, order blotters, and reconciliation audits.</div>
+                    </div>
+                    <span class="btn-link">Open Terminal Workstation &rarr;</span>
+                </a>
+
+                <a href="/api/health" class="action-card" id="btn-api-health">
+                    <div>
+                        <div class="action-title">
+                            <span>REST API Health</span>
+                            <span>&rarr;</span>
+                        </div>
+                        <div class="action-desc">Inspect real-time service health, execution mode, and tenant isolation telemetry.</div>
+                    </div>
+                    <span class="btn-link">View Health Endpoint &rarr;</span>
+                </a>
+
+                <a href="/api/markets" class="action-card" id="btn-api-markets">
+                    <div>
+                        <div class="action-title">
+                            <span>Admitted Markets API</span>
+                            <span>&rarr;</span>
+                        </div>
+                        <div class="action-desc">Direct query for BTCUSDT, ETHUSDT, SOLUSDT, and BNBUSDT multi-timeframe states.</div>
+                    </div>
+                    <span class="btn-link">View Markets Data &rarr;</span>
+                </a>
+            </div>
         </div>
-        <div style="max-width: 800px; margin: 0 auto;">
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">Does STRATA guarantee trading profits? <span>+</span></div>
-                <div class="faq-answer">No. STRATA is an institutional engineering and research platform. All strategies (including KING) are subject to market regime shifts, execution friction, and drawdown. Real capital remains strictly $0.00 until human authorization.</div>
-            </div>
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">What is the KING Engine? <span>+</span></div>
-                <div class="faq-answer">KING is the flagship Phase Q.2 / Phase R market model that formalizes 7 timeframe states across 5 overlapping sets, evaluating only closed candles with a mandatory ≥4.0R reward-to-risk floor.</div>
-            </div>
-            <div class="faq-item" onclick="toggleFaq(this)">
-                <div class="faq-question">Can I test my own trading rules in Strategy Lab? <span>+</span></div>
-                <div class="faq-answer">Yes. Strategy Lab allows you to describe custom entry, stop, target, and structure rules in plain English. The compiler verifies crypto-only compliance and outputs an empirical evaluation verdict.</div>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <footer>
-        <div class="logo-box" style="justify-content: center; margin-bottom: 1rem;">
-            <div class="logo-symbol">S</div>
-            <span class="logo-text">STRATA</span>
-        </div>
-        <p>© 2026 STRATA Digital Trading Platform. All rights reserved.</p>
-        <div class="footer-disclaimer">
-            DISCLAIMER: Cryptocurrency trading involves substantial risk of loss and is not suitable for all investors.
-            STRATA provides algorithmic software tools for research, simulation, and execution. We do not provide financial advice,
-            and historical replay or backtest metrics do not constitute a guarantee of future live performance.
-        </div>
+        <div>Crypto Platform &bull; Professional Trading &amp; Quantitative Research</div>
+        <div>Fail-Closed Safety Active &bull; Real Capital: $0.00</div>
     </footer>
-
-    <!-- Auth Modal -->
-    <div class="modal-overlay" id="auth-modal" onclick="closeAuthModal(event)">
-        <div class="modal-card" onclick="event.stopPropagation()">
-            <h2 id="modal-title">Sign In to STRATA</h2>
-            <form onsubmit="handleAuthSubmit(event)">
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="auth-email" required placeholder="trader@firm.com">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="auth-password" required placeholder="••••••••••••">
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" id="modal-submit-btn">Sign In</button>
-            </form>
-            <div style="text-align: center; margin-top: 1rem; font-size: 0.85rem;">
-                <span id="modal-switch-text">Don't have an account? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--cyan);">Sign Up</a></span>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Canvas Fractal Particles Visualizer
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let w, h, particles = [];
-
-        function resize() {
-            w = canvas.width = window.innerWidth;
-            h = canvas.height = window.innerHeight;
-            particles = [];
-            for (let i = 0; i < 45; i++) {
-                particles.push({
-                    x: Math.random() * w,
-                    y: Math.random() * h,
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: (Math.random() - 0.5) * 0.4,
-                    r: Math.random() * 2 + 1,
-                });
-            }
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        function draw() {
-            ctx.clearRect(0, 0, w, h);
-            ctx.strokeStyle = 'rgba(14, 165, 233, 0.12)';
-            ctx.fillStyle = 'rgba(14, 165, 233, 0.4)';
-            for (let i = 0; i < particles.length; i++) {
-                let p = particles[i];
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0 || p.x > w) p.vx *= -1;
-                if (p.y < 0 || p.y > h) p.vy *= -1;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fill();
-                for (let j = i + 1; j < particles.length; j++) {
-                    let p2 = particles[j];
-                    let d = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (d < 160) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-            }
-            requestAnimationFrame(draw);
-        }
-        draw();
-
-        // FAQ Toggle
-        function toggleFaq(el) {
-            const ans = el.querySelector('.faq-answer');
-            ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
-        }
-
-        // Auth Modal Handling
-        let isRegister = false;
-        function openAuthModal(mode) {
-            isRegister = (mode === 'register');
-            updateModalUI();
-            document.getElementById('auth-modal').style.display = 'flex';
-        }
-        function closeAuthModal(e) {
-            document.getElementById('auth-modal').style.display = 'none';
-        }
-        function toggleAuthMode() {
-            isRegister = !isRegister;
-            updateModalUI();
-        }
-        function updateModalUI() {
-            document.getElementById('modal-title').innerText = isRegister ? 'Create STRATA Account' : 'Sign In to STRATA';
-            document.getElementById('modal-submit-btn').innerText = isRegister ? 'Register' : 'Sign In';
-            document.getElementById('modal-switch-text').innerHTML = isRegister
-                ? 'Already have an account? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--cyan);">Sign In</a>'
-                : "Don't have an account? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--cyan);">Sign Up</a>";
-        }
-        async function handleAuthSubmit(e) {
-            e.preventDefault();
-            const email = document.getElementById('auth-email').value;
-            const password = document.getElementById('auth-password').value;
-            const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
-            try {
-                const res = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
-                });
-                const data = await res.json();
-                if (data.token || data.user_id) {
-                    if (data.token) localStorage.setItem('strata_token', data.token);
-                    window.location.href = '/app';
-                } else {
-                    alert(data.error || 'Authentication failed');
-                }
-            } catch (err) {
-                alert('Connection error: ' + err);
-            }
-        }
-    </script>
 </body>
 </html>

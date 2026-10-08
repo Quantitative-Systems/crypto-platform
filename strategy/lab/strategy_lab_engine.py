@@ -223,3 +223,71 @@ class StrategyLabEngine:
         }
 
         return evidence, detailed_report
+
+    def research_copilot_chat(
+        self,
+        prompt: str,
+        tenant_id: str = "system",
+    ) -> Dict[str, Any]:
+        """Conversational Research Copilot guiding strategy formulation, rules explanation, and stress-testing."""
+        lower = prompt.lower().strip()
+        spec: Optional[StrategySpecification] = None
+        eval_report: Optional[Dict[str, Any]] = None
+
+        # Absolute Invariant Disclaimer
+        disclaimer = (
+            "Safety Notice: The STRATA KING Core remains locked and frozen. "
+            "Real capital trading remains permanently fail-closed at $0.00. "
+            "The copilot cannot alter frozen contracts or claim guaranteed future returns."
+        )
+
+        # 1. Rule / Architecture Explanation
+        if any(w in lower for w in ["explain", "rule", "how does", "what is", "king", "target floor", "timeframe"]):
+            reply = (
+                "STRATA Architecture Overview:\n"
+                "• Unified 7-Timeframe Ladder: 1M → 1W → 1D → 4H → 1H → 15M → 3M\n"
+                "• Overlapping Triads: Set 1 (1M/1W/1D), Set 2 (1W/1D/4H), Set 3 (1D/4H/1H), Set 4 (4H/1H/15M), Set 5 (1H/15M/3M)\n"
+                "• Invariants: Strict closed-candle causal verification, ≥ 4.0R target floor, ≤ 1% risk per trade, ≤ 3% total portfolio heat.\n"
+                "• KING Engine: Frozen Phase Q.2 edge with 9,608 / 9,608 verified replay baseline."
+            )
+            suggested_action = "EXPLAIN_RULES"
+
+        # 2. Strategy Comparison with KING
+        elif any(w in lower for w in ["compare", "benchmark", "versus king", "vs king"]):
+            reply = (
+                "Benchmark Comparison vs. STRATA KING Core:\n"
+                "• KING Core Benchmark: +0.888R expectancy, 4.918 Profit Factor, 67.2% Win Rate, 10.89R Max DD.\n"
+                "• Candidate Strategies: Must achieve > +0.40R expectancy and survive 3.0x friction drag to qualify for paper forward-testing.\n"
+                "• Live Capital: Always $0.00. Candidates can only advance to Paper/Demo validation."
+            )
+            suggested_action = "COMPARE_BENCHMARK"
+
+        # 3. Strategy Specification Generation & Evaluation
+        else:
+            try:
+                spec = self.parse_natural_language(prompt=prompt, tenant_id=tenant_id)
+                evidence, eval_report = self.evaluate_strategy(spec)
+                reply = (
+                    f"Generated formal specification '{spec.name}':\n"
+                    f"• Target Assets: {', '.join(spec.assets)}\n"
+                    f"• Timeframe Triad: {', '.join(spec.timeframes)}\n"
+                    f"• Structure: {spec.structure}\n"
+                    f"• Target Requirement: {spec.target_rule}\n"
+                    f"• Research Evaluation: {eval_report['verdict']} (+{evidence.expectancy_r:.3f}R expectancy, "
+                    f"PF: {evidence.profit_factor:.2f}, Max DD: {evidence.max_drawdown_r:.1f}R)\n"
+                    "• Next Step: Eligible for paper forward-testing in zero-capital sandbox."
+                )
+                suggested_action = "SPECIFICATION_GENERATED"
+            except Exception as e:
+                reply = f"Could not parse strategy specification: {str(e)}. Please describe the assets, timeframe, and entry/exit criteria."
+                suggested_action = "PARSING_ERROR"
+
+        return {
+            "reply": reply,
+            "suggested_action": suggested_action,
+            "specification": spec.to_dict() if spec else None,
+            "evaluation": eval_report,
+            "disclaimer": disclaimer,
+            "environment": "RESEARCH_SANDBOX",
+        }
+

@@ -1,15 +1,32 @@
 {
-  "platform_name": "STRATA Digital Trading Platform",
-  "version": "1.0.0",
-  "default_environment": "PAPER",
-  "real_capital_authorized_usd": 0.0,
-  "live_adapter_enabled": false,
-  "supported_symbols": [
-    "BTCUSDT",
-    "ETHUSDT",
-    "SOLUSDT",
-    "BNBUSDT"
+  "platform_name": "STRATA Autonomous Crypto Trading Platform",
+  "version": "2.0.0",
+  "environment": "PAPER",
+  "available_environments": [
+    "DEVELOPMENT",
+    "TEST",
+    "PAPER",
+    "DEMO",
+    "TESTNET",
+    "LIVE"
   ],
+  "real_capital_authorized_usd": 0.0,
+  "live_adapter_status": "HARD_DISABLED_FAIL_CLOSED",
+  "crypto_universe": {
+    "admitted_symbols": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "BNBUSDT"
+    ],
+    "strictly_forbidden": [
+      "STOCKS",
+      "COMMODITIES",
+      "FOREX",
+      "EQUITIES",
+      "NIFTY"
+    ]
+  },
   "risk_governance": {
     "max_risk_per_trade_pct": 1.0,
     "max_base_asset_exposure_pct": 1.0,
@@ -19,10 +36,32 @@
   "circuit_breakers": {
     "max_drawdown_pct": 4.0,
     "max_consecutive_losses": 3,
-    "stale_data_timeout_seconds": 30.0
+    "stale_data_timeout_seconds": 30.0,
+    "max_clock_drift_ms": 1500
+  },
+  "venues": {
+    "binance": {
+      "testnet_base_url": "https://testnet.binancefuture.com",
+      "live_base_url": "https://fapi.binance.com",
+      "default_leverage": 1,
+      "max_leverage_paper": 5
+    },
+    "bybit": {
+      "testnet_base_url": "https://api-testnet.bybit.com",
+      "live_base_url": "https://api.bybit.com",
+      "default_leverage": 1
+    },
+    "metatrader5": {
+      "server": "MetaQuotes-Demo",
+      "demo_mode_only": true
+    }
   },
   "web_server": {
-    "host": "127.0.0.1",
-    "port": 8080
+    "host": "0.0.0.0",
+    "port": 8080,
+    "cors_allowed_origins": [
+      "http://localhost:8080",
+      "http://127.0.0.1:8080"
+    ]
   }
 }

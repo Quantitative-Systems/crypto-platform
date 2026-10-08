@@ -45,17 +45,21 @@ class AuthService:
         self,
         email: str,
         password: str,
+        name: str = "",
+        password_confirmation: Optional[str] = None,
         role: UserRole = UserRole.TRADER,
     ) -> User:
-        """Registers a new user with dedicated tenant ID."""
+        """Registers a new user with dedicated tenant ID and credential validation."""
         clean_email = email.strip().lower()
-        if not clean_email or "@" not in clean_email:
-            raise ValueError("Invalid email format")
+        if not clean_email or "@" not in clean_email or "." not in clean_email.split("@")[-1]:
+            raise ValueError("Invalid email address format.")
         if len(password) < 8:
-            raise ValueError("Password must be at least 8 characters")
+            raise ValueError("Password must be at least 8 characters long.")
+        if password_confirmation is not None and password != password_confirmation:
+            raise ValueError("Password and password confirmation do not match.")
 
         if clean_email in self._users_by_email:
-            raise ValueError(f"User with email '{clean_email}' already exists")
+            raise ValueError(f"An account with email '{clean_email}' already exists.")
 
         pwd_hash, salt = self.hash_password(password)
         user_id = f"usr_{uuid.uuid4().hex[:12]}"
@@ -63,6 +67,7 @@ class AuthService:
 
         user = User(
             user_id=user_id,
+            name=name.strip(),
             email=clean_email,
             password_hash=pwd_hash,
             salt=salt,
@@ -73,7 +78,7 @@ class AuthService:
 
         self._users_by_email[clean_email] = user
         self._users_by_id[user_id] = user
-        logger.info(f"Registered user {user.user_id} with tenant {user.tenant_id}")
+        logger.info(f"Registered user {user.user_id} ({user.name}) with tenant {user.tenant_id}")
         return user
 
     def authenticate(self, email: str, password: str) -> Optional[SessionToken]:

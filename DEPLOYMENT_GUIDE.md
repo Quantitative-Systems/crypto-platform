@@ -87,3 +87,88 @@ Before leaving the platform running in production:
 4. [ ] Run CLI health check: `python cli.py health`
 5. [ ] Verify live capital status: Confirm `PLATFORM_LIVE_CAPITAL_USD == 0.0`
 6. [ ] Confirm broker keys have ZERO withdrawal privileges enabled.
+
+---
+
+## 6. 24/7 Production Operational Runbook
+
+### 6.1 START (Clean Cold Boot)
+```bash
+# 1. Run pre-flight configuration and security validation
+python cli.py validate-preflight
+
+# 2. Verify immutable KING engine contract hash
+python cli.py verify-contract
+
+# 3. Start supervisor daemon in background or via docker-compose
+docker compose up -d strata-platform
+
+# 4. Probe readiness
+curl -f http://127.0.0.1:8080/api/ready
+```
+
+### 6.2 STOP (Graceful Drain & Halt)
+```bash
+# 1. Issue operator pause to halt new order intent creation
+curl -X POST http://127.0.0.1:8080/api/agent/pause
+
+# 2. Send SIGTERM to process (allows current candle evaluation and checkpoint flush to finish)
+docker compose stop -t 30 strata-platform
+
+# 3. Verify zero orphan processes remain
+ps aux | grep strata
+```
+
+### 6.3 RESTART (State Preserving Cycling)
+```bash
+# Graceful cycling with automated checkpoint restoration
+docker compose restart -t 30 strata-platform
+
+# Verify post-restart state reconciliation
+python cli.py reconcile
+```
+
+### 6.4 RECOVER (Crash & Outage Recovery)
+When an unexpected crash, kernel panic, or cloud VM restart occurs:
+```bash
+# 1. Inspect watchdog and checkpoint integrity
+python -c "from execution.safety.watchdog import RecoveryWatchdog; wd = RecoveryWatchdog(); print(wd.load_and_verify_checkpoint())"
+
+# 2. Execute reconciliation audit against connected broker exchanges
+python cli.py reconcile
+
+# 3. If zero orphan positions are confirmed, clear safe mode and restart
+docker compose up -d strata-platform
+```
+
+### 6.5 ROLLBACK (Software Version Reversion)
+If a software defect is detected post-deployment:
+```bash
+# 1. Stop current container
+docker compose down
+
+# 2. Revert code to certified release tag
+git checkout v1.0.0-phase-r-baseline
+
+# 3. Verify contract and regression tests
+python cli.py verify-contract
+python -m research.experiments.run_phase_r_replay_regression
+
+# 4. Restart stable baseline
+docker compose up -d --build strata-platform
+```
+
+### 6.6 DISASTER RECOVERY (Host Catastrophe / Complete Failover)
+In the event of total server hardware loss:
+```bash
+# 1. Provision new server instance from standard image
+# 2. Clone repository and restore encrypted database & checkpoints volume from off-site backup
+rsync -avz backup-server:/backups/strata/data/ ./data/
+
+# 3. Validate checkpoint checksums
+python cli.py reconcile
+
+# 4. Spin up containerized cluster
+docker compose up -d strata-platform strata-gateway
+```
+

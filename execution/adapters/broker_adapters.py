@@ -34,7 +34,7 @@ class BrokerVenueType(str, Enum):
 
 @dataclass
 class BrokerCapabilities:
-    """Venue technical feature matrix."""
+    """Venue technical feature matrix and capability discovery."""
     venue_type: BrokerVenueType
     supports_market_orders: bool = True
     supports_limit_orders: bool = True
@@ -44,6 +44,43 @@ class BrokerCapabilities:
     max_leverage: float = 20.0
     rate_limit_req_per_min: int = 1200
     supports_testnet: bool = True
+    supported_symbols: List[str] = field(default_factory=lambda: ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT"])
+    symbol_precision: Dict[str, int] = field(default_factory=lambda: {"BTCUSDT": 3, "ETHUSDT": 2, "SOLUSDT": 2, "BNBUSDT": 2})
+    min_quantity: Dict[str, float] = field(default_factory=lambda: {"BTCUSDT": 0.001, "ETHUSDT": 0.01, "SOLUSDT": 0.1, "BNBUSDT": 0.01})
+    lot_step: Dict[str, float] = field(default_factory=lambda: {"BTCUSDT": 0.001, "ETHUSDT": 0.01, "SOLUSDT": 0.1, "BNBUSDT": 0.01})
+    tick_size: Dict[str, float] = field(default_factory=lambda: {"BTCUSDT": 0.10, "ETHUSDT": 0.01, "SOLUSDT": 0.01, "BNBUSDT": 0.01})
+    order_types: List[str] = field(default_factory=lambda: ["MARKET", "LIMIT", "STOP_MARKET", "TAKE_PROFIT_MARKET"])
+    position_mode: str = "ONE_WAY"
+    reduce_only_support: bool = True
+    stop_support: bool = True
+    take_profit_support: bool = True
+    connectivity_state: str = "DISCONNECTED"
+    environment: str = "PAPER"
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "venue_type": self.venue_type.value,
+            "supports_market_orders": self.supports_market_orders,
+            "supports_limit_orders": self.supports_limit_orders,
+            "supports_stop_market": self.supports_stop_market,
+            "supports_trailing_stop": self.supports_trailing_stop,
+            "supports_hedge_mode": self.supports_hedge_mode,
+            "max_leverage": self.max_leverage,
+            "rate_limit_req_per_min": self.rate_limit_req_per_min,
+            "supports_testnet": self.supports_testnet,
+            "supported_symbols": self.supported_symbols,
+            "symbol_precision": self.symbol_precision,
+            "min_quantity": self.min_quantity,
+            "lot_step": self.lot_step,
+            "tick_size": self.tick_size,
+            "order_types": self.order_types,
+            "position_mode": self.position_mode,
+            "reduce_only_support": self.reduce_only_support,
+            "stop_support": self.stop_support,
+            "take_profit_support": self.take_profit_support,
+            "connectivity_state": self.connectivity_state,
+            "environment": self.environment,
+        }
 
 
 @dataclass

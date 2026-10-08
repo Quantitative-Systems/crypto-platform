@@ -36,13 +36,7 @@ class BrokerStatusRecord:
             "venue": self.venue,
             "is_connected": self.is_connected,
             "status_message": self.status_message,
-            "capabilities": {
-                "supports_limit_orders": self.capabilities.supports_limit_orders,
-                "supports_stop_market": self.capabilities.supports_stop_market,
-                "supports_hedge_mode": self.capabilities.supports_hedge_mode,
-                "max_leverage": self.capabilities.max_leverage,
-                "supports_testnet": self.capabilities.supports_testnet,
-            },
+            "capabilities": self.capabilities.to_dict(),
         }
 
 

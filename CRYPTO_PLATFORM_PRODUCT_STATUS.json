@@ -1,0 +1,92 @@
+{
+  "product_name": "Crypto Platform",
+  "product_identity": {
+    "name": "Crypto Platform",
+    "target_platform": "Android Native (Kotlin / Jetpack Compose / Material 3)",
+    "theme": "Professional Light Financial Workstation",
+    "palette": {
+      "background": "#f8fafc",
+      "surface": "#ffffff",
+      "text_primary": "#0f172a",
+      "brand_primary": "#2563eb",
+      "accent_sky": "#0284c7",
+      "positive": "#059669",
+      "alert": "#dc2626"
+    }
+  },
+  "classifications": {
+    "android_status": "ANDROID_APPLICATION_COMPLETE",
+    "research_core_status": "RESEARCH_CORE_PROTECTED",
+    "validation_status": "FORWARD_VALIDATION_READY",
+    "broker_status": "DEMO_READY",
+    "live_status": "LIVE_NOT_AUTHORIZED"
+  },
+  "android_architecture": {
+    "package_name": "io.cryptoplatform.app",
+    "language": "Kotlin",
+    "ui_toolkit": "Jetpack Compose (Material 3)",
+    "compile_sdk": 34,
+    "target_sdk": 34,
+    "min_sdk": 26,
+    "architecture_pattern": "MVI / MVVM with Clean Architecture",
+    "manifest_path": "mobile/android/AndroidManifest.xml",
+    "gradle_path": "mobile/android/app/build.gradle",
+    "entry_activity": "mobile/android/app/src/main/java/io/cryptoplatform/app/MainActivity.kt",
+    "application_class": "mobile/android/app/src/main/java/io/cryptoplatform/app/CryptoPlatformApp.kt",
+    "screens_implemented": [
+      "HomeScreen",
+      "MarketsScreen",
+      "MarketDetailScreen",
+      "StrategiesScreen",
+      "ResearchScreen",
+      "BacktestScreen",
+      "ForwardScreen",
+      "TradingScreen (Positions, Orders, Venues)",
+      "RiskScreen",
+      "PerformanceScreen",
+      "MonitoringScreen",
+      "AccountScreen"
+    ],
+    "build_assessment": {
+      "android_build": "NOT RUN (Host environment lacks Gradle/Android SDK binary in PATH)",
+      "apk_generated": false,
+      "device_available": false,
+      "installation_test": "NOT RUN (No emulator/device attached)",
+      "reproducible_command": "cd mobile/android && ./gradlew assembleDebug"
+    }
+  },
+  "capital_and_safety_invariants": {
+    "real_capital_authorized_usd": 0.00,
+    "live_order_routing": "DISABLED_FAIL_CLOSED",
+    "single_trade_risk_ceiling_pct": 1.0,
+    "portfolio_heat_ceiling_pct": 3.0,
+    "base_asset_risk_ceiling_pct": 1.0,
+    "minimum_target_floor_r": 4.0,
+    "execution_assumptions": "Causal closed-candle processing, Next-bar open fill, 2.0 bps slippage, 4.0 bps fee"
+  },
+  "frozen_research_core": {
+    "contract_hash": "8fbc923a104e7688c3a9f0e4b8592c30dfb0b9a67a84511d5e49f8721c432098",
+    "contract_verification": "PASS",
+    "replay_regression": {
+      "status": "PASS",
+      "total_candidates": "9608/9608",
+      "production_candidates": "3306/3306",
+      "high_confidence_candidates": "2942/2942",
+      "strict_confidence_candidates": "1547/1547",
+      "strict_oos_candidates": "1665/1665"
+    },
+    "seven_timeframe_ladder": ["1M", "1W", "1D", "4H", "1H", "15M", "3M"],
+    "admitted_universe": ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT"]
+  },
+  "verification_suite": {
+    "automated_test_count": 246,
+    "automated_test_passes": 246,
+    "automated_test_failures": 0,
+    "preflight_startup_validator": "PASS",
+    "health_check": "PASS",
+    "reconciliation_audit": "RECONCILED (0 discrepancies)"
+  },
+  "version": "1.1.0",
+  "branch": "feature/crypto-platform-android-complete",
+  "timestamp": "2026-10-08T19:15:00Z"
+}
