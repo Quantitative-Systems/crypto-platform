@@ -1005,7 +1005,7 @@ HTML_TERMINAL_PAGE = """<!DOCTYPE html>
 
 
 class PhaseRWebServer:
-    """Async web server providing REST endpoints and the real-time terminal UI."""
+    """Async web server providing public website, institutional terminal UI, and authenticated REST APIs."""
 
     def __init__(
         self,
@@ -1016,6 +1016,32 @@ class PhaseRWebServer:
         self.supervisor = supervisor
         self.host = host
         self.port = port
+
+        # Instantiate subsystem components
+        from core.auth.auth_service import AuthService
+        from strategy.library.strategy_library import StrategyLibraryManager
+        from strategy.lab.strategy_lab_engine import StrategyLabEngine
+        from broker.broker_center import BrokerCenter
+        from execution.agent.strata_autonomous_agent import StrataAutonomousAgent
+        from execution.king.king_engine_contract import KingEngineAdapter
+
+        self.auth_service = AuthService()
+        self.strategy_library = StrategyLibraryManager()
+        self.strategy_lab = StrategyLabEngine()
+        self.broker_center = BrokerCenter()
+        self.agent = StrataAutonomousAgent(
+            account_manager=self.supervisor.account_manager,
+            strategy_library=self.strategy_library,
+        )
+        de = getattr(self.supervisor, "decision_engines", {}).get("BTCUSDT")
+        self.king_adapter = KingEngineAdapter(
+            symbol="BTCUSDT",
+            decision_engine=de,
+        )
+
+        # Load static pages
+        self._load_static_templates()
+
         from web.security_middleware import create_rate_limit_middleware, security_headers_middleware
         self.app = web.Application(middlewares=[
             security_headers_middleware,
@@ -1023,36 +1049,116 @@ class PhaseRWebServer:
         ])
         self._setup_routes()
 
-    def _setup_routes(self) -> None:
-        self.app.router.add_get("/", self.handle_index)
-        self.app.router.add_get("/dashboard", self.handle_index)
-        self.app.router.add_get("/markets", self.handle_index)
-        self.app.router.add_get("/fractal-state", self.handle_index)
-        self.app.router.add_get("/opportunities", self.handle_index)
-        self.app.router.add_get("/positions", self.handle_index)
-        self.app.router.add_get("/orders", self.handle_index)
-        self.app.router.add_get("/accounts", self.handle_index)
-        self.app.router.add_get("/risk", self.handle_index)
-        self.app.router.add_get("/performance", self.handle_index)
-        self.app.router.add_get("/drift", self.handle_index)
-        self.app.router.add_get("/decision-ledger", self.handle_index)
-        self.app.router.add_get("/reconciliation", self.handle_index)
-        self.app.router.add_get("/system-health", self.handle_index)
-        self.app.router.add_get("/settings", self.handle_index)
+    def _load_static_templates(self) -> None:
+        static_dir = Path(__file__).resolve().parent / "static"
+        pub_file = static_dir / "public_website.html"
+        app_file = static_dir / "app_terminal.html"
 
-        # REST API endpoints
+        self.public_html = pub_file.read_text(encoding="utf-8") if pub_file.exists() else HTML_TERMINAL_PAGE
+        self.app_html = app_file.read_text(encoding="utf-8") if app_file.exists() else HTML_TERMINAL_PAGE
+
+    def _setup_routes(self) -> None:
+        # Public website routes
+        self.app.router.add_get("/", self.handle_public_website)
+        self.app.router.add_get("/how-it-works", self.handle_public_website)
+        self.app.router.add_get("/technology", self.handle_public_website)
+        self.app.router.add_get("/pricing", self.handle_public_website)
+        self.app.router.add_get("/faq", self.handle_public_website)
+
+        # Authenticated Web Application Terminal routes
+        for path in [
+            "/app", "/dashboard", "/markets", "/fractal-state", "/opportunities",
+            "/king", "/strategies", "/strategy-lab", "/backtesting", "/forward",
+            "/positions", "/orders", "/accounts", "/brokers", "/risk",
+            "/performance", "/drift", "/decision-ledger", "/reconciliation",
+            "/system-health", "/settings", "/alerts"
+        ]:
+            self.app.router.add_get(path, self.handle_app_terminal)
+
+        # REST API: Authentication & Multi-Tenancy
+        self.app.router.add_post("/api/auth/register", self.handle_auth_register)
+        self.app.router.add_post("/api/auth/login", self.handle_auth_login)
+        self.app.router.add_post("/api/auth/logout", self.handle_auth_logout)
+        self.app.router.add_get("/api/auth/me", self.handle_auth_me)
+
+        # REST API: Core Health & Telemetry
         self.app.router.add_get("/api/health", self.handle_health)
         self.app.router.add_get("/api/telemetry", self.handle_telemetry)
+
+        # REST API: King Engine Core
+        self.app.router.add_get("/api/king/overview", self.handle_king_overview)
+
+        # REST API: Strategy Library & Strategy Lab
+        self.app.router.add_get("/api/strategies", self.handle_strategies_list)
+        self.app.router.add_post("/api/strategy-lab/parse", self.handle_strategy_lab_parse)
+        self.app.router.add_post("/api/strategy-lab/evaluate", self.handle_strategy_lab_evaluate)
+
+        # REST API: Accounts & Brokers
+        self.app.router.add_get("/api/accounts", self.handle_accounts)
+        self.app.router.add_get("/api/brokers", self.handle_brokers)
+        self.app.router.add_post("/api/accounts/suitability", self.handle_suitability)
+
+        # REST API: Autonomous Trading Agent
+        self.app.router.add_post("/api/agent/cycle", self.handle_agent_cycle)
+        self.app.router.add_post("/api/agent/style", self.handle_agent_style)
+        self.app.router.add_post("/api/agent/pause", self.handle_agent_pause)
+        self.app.router.add_post("/api/agent/resume", self.handle_agent_resume)
+
+        # REST API: Trading Blotters & Analytics
         self.app.router.add_get("/api/decisions", self.handle_decisions)
         self.app.router.add_get("/api/positions", self.handle_positions)
+        self.app.router.add_get("/api/orders", self.handle_orders)
         self.app.router.add_get("/api/reconciliation", self.handle_reconciliation)
         self.app.router.add_get("/api/drift", self.handle_drift)
         self.app.router.add_get("/api/alerts", self.handle_alerts)
-        self.app.router.add_get("/api/accounts", self.handle_accounts)
 
-    async def handle_index(self, request: web.Request) -> web.Response:
-        return web.Response(text=HTML_TERMINAL_PAGE, content_type="text/html")
+    async def handle_public_website(self, request: web.Request) -> web.Response:
+        return web.Response(text=self.public_html, content_type="text/html")
 
+    async def handle_app_terminal(self, request: web.Request) -> web.Response:
+        return web.Response(text=self.app_html, content_type="text/html")
+
+    # --- Authentication Handlers ---
+    async def handle_auth_register(self, request: web.Request) -> web.Response:
+        try:
+            data = await request.json()
+            user = self.auth_service.register_user(data.get("email", ""), data.get("password", ""))
+            session = self.auth_service.authenticate(data.get("email", ""), data.get("password", ""))
+            return web.json_response({
+                "user": user.to_safe_dict(),
+                "token": session.token if session else None,
+            })
+        except Exception as e:
+            return web.json_response({"error": str(e)}, status=400)
+
+    async def handle_auth_login(self, request: web.Request) -> web.Response:
+        try:
+            data = await request.json()
+            session = self.auth_service.authenticate(data.get("email", ""), data.get("password", ""))
+            if not session:
+                return web.json_response({"error": "Invalid email or password"}, status=401)
+            user = self.auth_service.validate_session(session.token)
+            return web.json_response({
+                "token": session.token,
+                "user": user.to_safe_dict() if user else None,
+            })
+        except Exception as e:
+            return web.json_response({"error": str(e)}, status=400)
+
+    async def handle_auth_logout(self, request: web.Request) -> web.Response:
+        token = request.headers.get("Authorization", "").replace("Bearer ", "").strip()
+        if token:
+            self.auth_service.logout(token)
+        return web.json_response({"status": "logged_out"})
+
+    async def handle_auth_me(self, request: web.Request) -> web.Response:
+        token = request.headers.get("Authorization", "").replace("Bearer ", "").strip()
+        user = self.auth_service.validate_session(token) if token else None
+        if not user:
+            return web.json_response({"error": "Unauthorized"}, status=401)
+        return web.json_response(user.to_safe_dict())
+
+    # --- Core & King Handlers ---
     async def handle_health(self, request: web.Request) -> web.Response:
         recon = self.supervisor.reconciliation_engine.last_report
         healthy = not recon or recon.is_reconciled
@@ -1061,12 +1167,101 @@ class PhaseRWebServer:
             "real_capital_authorized": SAFETY_GATE.real_capital_authorized_usd,
             "live_trading_status": "ENABLED" if SAFETY_GATE.is_live_execution else "DISABLED_FAIL_CLOSED",
             "execution_mode": SAFETY_GATE.current_mode.value,
+            "agent_state": self.agent.control_state.value,
+            "trading_style": self.agent.current_style.value,
             "timestamp": datetime.now(timezone.utc).isoformat(),
         })
 
     async def handle_telemetry(self, request: web.Request) -> web.Response:
         return web.json_response(self.supervisor.get_system_telemetry())
 
+    async def handle_king_overview(self, request: web.Request) -> web.Response:
+        states = getattr(self.supervisor, "last_fractal_states", {})
+        return web.json_response(self.king_adapter.get_market_structure_overview(states))
+
+    # --- Strategy Handlers ---
+    async def handle_strategies_list(self, request: web.Request) -> web.Response:
+        tenant_id = request.query.get("tenant_id")
+        entries = self.strategy_library.list_entries(tenant_id=tenant_id)
+        return web.json_response([e.to_dict() for e in entries])
+
+    async def handle_strategy_lab_parse(self, request: web.Request) -> web.Response:
+        try:
+            data = await request.json()
+            prompt = data.get("prompt", "")
+            tenant_id = data.get("tenant_id", "system")
+            spec = self.strategy_lab.parse_natural_language(prompt=prompt, tenant_id=tenant_id)
+            return web.json_response({"specification": spec.to_dict()})
+        except Exception as e:
+            return web.json_response({"error": str(e)}, status=400)
+
+    async def handle_strategy_lab_evaluate(self, request: web.Request) -> web.Response:
+        try:
+            from strategy.lab.strategy_specification import StrategySpecification
+            data = await request.json()
+            spec_data = data.get("specification", {})
+            spec = StrategySpecification.from_dict(spec_data)
+            evidence, report = self.strategy_lab.evaluate_strategy(spec)
+            return web.json_response(report)
+        except Exception as e:
+            return web.json_response({"error": str(e)}, status=400)
+
+    # --- Accounts, Brokers & Suitability ---
+    async def handle_accounts(self, request: web.Request) -> web.Response:
+        tenant_id = request.query.get("tenant_id")
+        return web.json_response(self.supervisor.account_manager.list_accounts(tenant_id=tenant_id))
+
+    async def handle_brokers(self, request: web.Request) -> web.Response:
+        return web.json_response([v.to_dict() for v in self.broker_center.list_venues()])
+
+    async def handle_suitability(self, request: web.Request) -> web.Response:
+        try:
+            from accounts.suitability_engine import AccountSuitabilityEngine, TradingStyle
+            data = await request.json()
+            style_str = data.get("style", "AUTONOMOUS")
+            equity = float(data.get("equity_usd", 100_000.0))
+            margin = float(data.get("margin_usd", 100_000.0))
+            risk_pct = float(data.get("risk_pct", 0.01))
+            verdict = AccountSuitabilityEngine.evaluate_suitability(
+                account_equity_usd=equity,
+                available_margin_usd=margin,
+                style=TradingStyle(style_str),
+                user_max_risk_pct=risk_pct,
+            )
+            return web.json_response(verdict.to_dict())
+        except Exception as e:
+            return web.json_response({"error": str(e)}, status=400)
+
+    # --- Agent Orchestration ---
+    async def handle_agent_cycle(self, request: web.Request) -> web.Response:
+        heat = getattr(self.supervisor.portfolio_governor, "total_heat", 0.0) if hasattr(self.supervisor, "portfolio_governor") else 0.0
+        pos_count = len(self.supervisor.active_positions)
+        report = self.agent.run_control_cycle(
+            symbol="BTCUSDT",
+            active_positions_count=pos_count,
+            current_portfolio_heat=heat,
+        )
+        return web.json_response(report.to_dict())
+
+    async def handle_agent_style(self, request: web.Request) -> web.Response:
+        try:
+            from accounts.suitability_engine import TradingStyle
+            data = await request.json()
+            style = TradingStyle(data.get("style", "AUTONOMOUS"))
+            self.agent.set_trading_style(style)
+            return web.json_response({"status": "updated", "style": style.value})
+        except Exception as e:
+            return web.json_response({"error": str(e)}, status=400)
+
+    async def handle_agent_pause(self, request: web.Request) -> web.Response:
+        self.agent.pause_trading("Operator trigger via REST API")
+        return web.json_response({"status": "PAUSED"})
+
+    async def handle_agent_resume(self, request: web.Request) -> web.Response:
+        self.agent.resume_trading()
+        return web.json_response({"status": "OBSERVING"})
+
+    # --- Blotters ---
     async def handle_decisions(self, request: web.Request) -> web.Response:
         decisions = [d.to_dict() for d in self.supervisor.decisions_history[-50:]]
         return web.json_response(decisions)
@@ -1078,6 +1273,10 @@ class PhaseRWebServer:
             "closed_positions": self.supervisor.closed_positions[-25:],
         })
 
+    async def handle_orders(self, request: web.Request) -> web.Response:
+        orders = [o.to_dict() if hasattr(o, "to_dict") else str(o) for o in getattr(self.supervisor, "orders_history", [])]
+        return web.json_response(orders)
+
     async def handle_reconciliation(self, request: web.Request) -> web.Response:
         recon = self.supervisor.run_reconciliation()
         return web.json_response(recon.to_dict())
@@ -1088,9 +1287,6 @@ class PhaseRWebServer:
 
     async def handle_alerts(self, request: web.Request) -> web.Response:
         return web.json_response(ALERTS.get_recent_alerts(limit=50))
-
-    async def handle_accounts(self, request: web.Request) -> web.Response:
-        return web.json_response(self.supervisor.account_manager.list_accounts())
 
     async def start(self) -> web.AppRunner:
         runner = web.AppRunner(self.app)
