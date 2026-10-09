@@ -166,7 +166,13 @@ class AutonomousTradingSupervisor:
         if checkpoint:
             self.simulated_equity = checkpoint.get("equity_usd", self.simulated_equity)
             self.peak_equity = checkpoint.get("peak_equity_usd", self.peak_equity)
-            logger.info(f"Restored equity from checkpoint: ${self.simulated_equity:.2f}")
+            recovered_keys = checkpoint.get("idempotency_keys", [])
+            if recovered_keys:
+                self.idempotency_guard.restore_keys(recovered_keys)
+            logger.info(
+                f"Restored equity from checkpoint: ${self.simulated_equity:.2f}, "
+                f"{len(recovered_keys)} idempotency keys restored"
+            )
 
     def seed_historical_state(self) -> Dict[str, int]:
         """Seeds continuous candle engine from existing disk cache."""
@@ -426,6 +432,7 @@ class AutonomousTradingSupervisor:
             metrics=metrics,
             candle_sync_timestamps=candle_sync,
             circuit_breakers_state=breaker_states,
+            idempotency_keys=self.idempotency_guard.get_keys(),
         )
 
     def _persist_decision_to_ledger(self, d: PhaseRDecisionRecord) -> None:

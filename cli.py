@@ -223,6 +223,36 @@ def cmd_leaderboard(top_n: int = 10) -> int:
     return 0
 
 
+def cmd_db_migrate(args: argparse.Namespace) -> int:
+    """Run database schema migrations."""
+    from core.persistence.database import get_db_manager
+    from core.persistence.migrations import MigrationManager
+    db_path = getattr(args, "db_path", None)
+    db_mgr = get_db_manager(db_path=db_path) if db_path else get_db_manager()
+    migrator = MigrationManager(db_mgr)
+    print(f"Applying database migrations to: {db_mgr.db_path}...")
+    applied = migrator.run_migrations()
+    print(f"Migrations applied successfully: {applied}")
+    status = migrator.get_status()
+    print(f"Current version: {status['current_version']}, pending: {status['pending_count']}")
+    return 0
+
+
+def cmd_db_status(args: argparse.Namespace) -> int:
+    """Display database migration status."""
+    from core.persistence.database import get_db_manager
+    from core.persistence.migrations import MigrationManager
+    db_path = getattr(args, "db_path", None)
+    db_mgr = get_db_manager(db_path=db_path) if db_path else get_db_manager()
+    migrator = MigrationManager(db_mgr)
+    status = migrator.get_status()
+    print(f"Database: {db_mgr.db_path}")
+    print(f"Current version: {status['current_version']}")
+    print(f"Applied migrations: {status['applied_versions']}")
+    print(f"Pending migrations: {status['pending_versions']}")
+    return 0
+
+
 def cmd_start(args: argparse.Namespace) -> int:
     """Start autonomous 24/7 platform."""
     from main import main as run_main
@@ -254,6 +284,12 @@ def main():
     lead_p = subparsers.add_parser("leaderboard", help="Display strategy leaderboard")
     lead_p.add_argument("--top", type=int, default=10)
 
+    db_mig_p = subparsers.add_parser("db-migrate", help="Run database schema migrations")
+    db_mig_p.add_argument("--db-path", type=str, default=None, help="Optional custom SQLite database file path")
+
+    db_stat_p = subparsers.add_parser("db-status", help="Show database migration status")
+    db_stat_p.add_argument("--db-path", type=str, default=None, help="Optional custom SQLite database file path")
+
     subparsers.add_parser("test", help="Execute test suite")
 
     args = parser.parse_args()
@@ -275,6 +311,10 @@ def main():
         rep = StartupValidator.validate_preflight(strict_fail_closed=False)
         print(json.dumps(rep.to_dict(), indent=2))
         sys.exit(0 if rep.is_valid else 1)
+    elif args.command == "db-migrate":
+        sys.exit(cmd_db_migrate(args))
+    elif args.command == "db-status":
+        sys.exit(cmd_db_status(args))
     elif args.command in ("start", "shadow"):
         from main import main as run_main
         run_main()
