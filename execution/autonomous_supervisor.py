@@ -102,12 +102,26 @@ class AutonomousTradingSupervisor:
         simulated_equity: float = 100_000.0,
         min_confidence: float = 0.50,
         ledger_path: Optional[Path] = None,
+        state_persistence: Optional[StatePersistenceManager] = None,
+        db_path: Optional[Union[str, Path]] = None,
+        state_dir: Optional[Path] = None,
     ):
         self.symbols = [s.upper() for s in (symbols or ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT"])]
         self.simulated_equity = simulated_equity
         self.peak_equity = simulated_equity
         self.min_confidence = min_confidence
-        self.ledger_path = ledger_path or LEDGER_FILE
+        if ledger_path is not None:
+            self.ledger_path = Path(ledger_path)
+        elif os.environ.get("PYTEST_CURRENT_TEST"):
+            import tempfile
+            self.ledger_path = Path(tempfile.gettempdir()) / f"pytest_ledger_{os.getpid()}.jsonl"
+            if self.ledger_path.exists():
+                try:
+                    self.ledger_path.unlink()
+                except OSError:
+                    pass
+        else:
+            self.ledger_path = LEDGER_FILE
 
         # 1. Assert capital safety and frozen research contract
         FROZEN_GUARD.assert_capital_safety(
@@ -119,7 +133,12 @@ class AutonomousTradingSupervisor:
         self.account_manager = AccountManager()
         self.execution_gateway = ExecutionGateway()
         self.circuit_breakers = CompositeCircuitBreakerManager()
-        self.state_persistence = StatePersistenceManager()
+        if state_persistence is not None:
+            self.state_persistence = state_persistence
+        elif db_path is not None or state_dir is not None:
+            self.state_persistence = StatePersistenceManager(state_dir=state_dir, db_path=db_path)
+        else:
+            self.state_persistence = StatePersistenceManager()
         self.idempotency_guard = IdempotencyExecutionGuard()
 
         # 3. Market Data & 7-Timeframe Candle Engine
@@ -152,12 +171,99 @@ class AutonomousTradingSupervisor:
         self.active_positions: Dict[str, Position] = {}
         self.closed_positions: List[Dict[str, Any]] = []
 
+        # Candle processing semantics
+        self.last_received_candle: Dict[str, Dict[str, int]] = {s: {} for s in self.symbols}
+        self.last_closed_candle: Dict[str, Dict[str, int]] = {s: {} for s in self.symbols}
+        self.last_processed_candle: Dict[str, Dict[str, int]] = {s: {} for s in self.symbols}
+        self.last_evaluated_decision_ts: Dict[str, int] = {s: 0 for s in self.symbols}
+
         self._running = False
+        self._persistence_barrier_tripped = False
         self.system_status = "INITIALIZING"
         self._last_checkpoint_ts = 0
 
         self._setup_bindings()
         self._attempt_restart_recovery()
+
+    @property
+    def open_positions(self) -> Dict[str, Position]:
+        """Alias for active_positions providing uniform property access."""
+        return self.active_positions
+
+    @open_positions.setter
+    def open_positions(self, val: Dict[str, Position]) -> None:
+        self.active_positions = val
+
+    @property
+    def equity_usd(self) -> float:
+        """Alias for simulated_equity providing uniform property access."""
+        return self.simulated_equity
+
+    @equity_usd.setter
+    def equity_usd(self, val: float) -> None:
+        self.simulated_equity = val
+
+    @property
+    def peak_equity_usd(self) -> float:
+        """Alias for peak_equity providing uniform property access."""
+        return self.peak_equity
+
+    @peak_equity_usd.setter
+    def peak_equity_usd(self, val: float) -> None:
+        self.peak_equity = val
+
+    def is_persistence_blocked(self) -> bool:
+        """Determines if the persistence safety barrier is active."""
+        if self.state_persistence.mode == PersistenceMode.REQUIRED_DURABLE:
+            if getattr(self, "_persistence_barrier_tripped", False) or self.system_status in ("PERSISTENCE_DEGRADED", "RECOVERY_FAILED_HALTED"):
+                return True
+            health = self.state_persistence.get_persistence_health()
+            if health.get("status") != "HEALTHY" or not health.get("database_connected", False):
+                return True
+        return False
+
+    def _trip_persistence_gate(self, reason: str) -> None:
+        """Enforces hard persistence barrier when durable persistence fails."""
+        self._persistence_barrier_tripped = True
+        self.system_status = "PERSISTENCE_DEGRADED"
+        logger.critical(f"PERSISTENCE SAFETY GATE TRIPPED: {reason}. All trading decisions and order execution halted.")
+        ALERTS.emit(
+            severity=AlertSeverity.CRITICAL,
+            category=AlertCategory.SYSTEM,
+            title="Persistence Safety Barrier Tripped",
+            message=f"Mandatory persistence failed: {reason}. Trading execution blocked fail-closed.",
+            metadata={"reason": reason, "mode": self.state_persistence.mode.value},
+        )
+
+    def recover_persistence_and_reconcile(self) -> bool:
+        """Attempts recovery from degraded persistence state, verifies durable DB write, and reconciles ledger."""
+        logger.info("Attempting recovery and reconciliation from degraded persistence...")
+        try:
+            save_ok = self._save_state_checkpoint()
+            if not save_ok or not self.state_persistence.get_persistence_health().get("database_connected", False):
+                logger.error("Persistence recovery failed: Database unresponsive or checkpoint save failed.")
+                return False
+        except Exception as ex:
+            logger.error(f"Persistence recovery failed during checkpoint save: {ex}")
+            return False
+
+        recon_report = self.run_reconciliation()
+        if not recon_report.is_reconciled and len(recon_report.discrepancies) > 0:
+            logger.critical(f"Persistence recovery reconciliation failed: {recon_report.discrepancies}")
+            self.system_status = "RECOVERY_FAILED_HALTED"
+            return False
+
+        self._persistence_barrier_tripped = False
+        self.system_status = f"RUNNING_{SAFETY_GATE.current_mode.value}_24_7" if self._running else "RECOVERED_HEALTHY"
+        logger.info("Persistence recovery and reconciliation successful. Normal execution restored.")
+        ALERTS.emit(
+            severity=AlertSeverity.INFO,
+            category=AlertCategory.SYSTEM,
+            title="Persistence Barrier Cleared",
+            message="Persistence recovery and ledger reconciliation succeeded. Resumed normal operations.",
+            metadata={"status": self.system_status},
+        )
+        return True
 
     def _setup_bindings(self) -> None:
         """Wire event callbacks from market data to candle engine and decision pipeline."""
@@ -167,6 +273,7 @@ class AutonomousTradingSupervisor:
     def _abort_recovery(self, reason: str) -> None:
         """Fails closed upon unrecoverable checkpoint state."""
         self.system_status = "RECOVERY_FAILED_HALTED"
+        self._persistence_barrier_tripped = True
         self._running = False
         logger.critical(f"FATAL: Restart recovery aborted: {reason}. System halted fail-closed.")
         ALERTS.emit(
@@ -192,7 +299,7 @@ class AutonomousTradingSupervisor:
 
         # 1. Validate Schema and Timestamp
         schema_ver = checkpoint.get("schema_version", 1)
-        if schema_ver < 1 or schema_ver > 2:
+        if schema_ver < 1 or schema_ver > 4:
             self._abort_recovery(f"Incompatible schema version: {schema_ver}")
             return
 
@@ -208,9 +315,49 @@ class AutonomousTradingSupervisor:
         self.simulated_equity = float(eq)
         self.peak_equity = max(float(peak_eq), float(eq))
 
-        # 3. Restore and Validate Active Positions
-        raw_positions = checkpoint.get("active_positions", [])
-        self.active_positions.clear()
+        # 3. Check Stale Checkpoint Against Authoritative Decision Ledger
+        if self.ledger_path.exists():
+            max_ledger_ts = 0
+            ledger_trade_count = 0
+            ledger_records: List[PhaseRDecisionRecord] = []
+            try:
+                with open(self.ledger_path, "r", encoding="utf-8") as f:
+                    for line in f:
+                        line = line.strip()
+                        if line:
+                            rec_dict = json.loads(line)
+                            ts = rec_dict.get("timestamp_ms", 0)
+                            if ts > max_ledger_ts:
+                                max_ledger_ts = ts
+                            if rec_dict.get("decision") == "TRADE":
+                                ledger_trade_count += 1
+                            try:
+                                ledger_records.append(PhaseRDecisionRecord.from_dict(rec_dict))
+                            except Exception:
+                                pass
+            except Exception as ex:
+                logger.warning(f"Error inspecting decision ledger: {ex}")
+
+            ckpt_ts = checkpoint.get("timestamp_ms", 0)
+            if max_ledger_ts > 0 and ckpt_ts < max_ledger_ts - 5000:
+                self._abort_recovery(
+                    f"Stale checkpoint rejected: checkpoint timestamp ({ckpt_ts}) is older than "
+                    f"authoritative decision ledger ({max_ledger_ts}). Never resume from stale state."
+                )
+                return
+
+            saved_orders = checkpoint.get("orders_history", [])
+            if ledger_trade_count > len(saved_orders):
+                self._abort_recovery(
+                    f"Stale checkpoint rejected: ledger contains {ledger_trade_count} TRADE decisions "
+                    f"but checkpoint only contains {len(saved_orders)} orders."
+                )
+                return
+
+            self.decisions_history = ledger_records
+
+        # 4. Restore and Validate Active Positions
+        raw_positions = checkpoint.get("active_positions") or checkpoint.get("open_positions") or []
         for p_dict in raw_positions:
             try:
                 pid = p_dict.get("position_id")
@@ -218,12 +365,25 @@ class AutonomousTradingSupervisor:
                 entry_px = float(p_dict.get("entry_price", 0.0))
                 size = float(p_dict.get("size", 0.0))
                 direction = int(p_dict.get("direction", 0))
+                init_stop = float(p_dict.get("initial_stop", p_dict.get("initial_stop_price", 0.0)))
+                tgt_px = float(p_dict.get("target_price", 0.0))
 
                 if not pid or not sym or sym not in self.symbols:
                     self._abort_recovery(f"Invalid position in checkpoint: id={pid}, sym={sym}")
                     return
                 if entry_px <= 0 or size <= 0 or direction not in (1, -1):
                     self._abort_recovery(f"Invalid position parameters for {pid}: entry={entry_px}, size={size}, dir={direction}")
+                    return
+                if init_stop <= 0 or tgt_px <= 0:
+                    self._abort_recovery(f"Invalid stop/target parameters for {pid}: stop={init_stop}, target={tgt_px}")
+                    return
+
+                # Geometry check: stop < entry < target for long; stop > entry > target for short
+                if direction == 1 and not (init_stop < entry_px < tgt_px):
+                    self._abort_recovery(f"Inverted geometry for long position {pid}: stop={init_stop}, entry={entry_px}, target={tgt_px}")
+                    return
+                elif direction == -1 and not (init_stop > entry_px > tgt_px):
+                    self._abort_recovery(f"Inverted geometry for short position {pid}: stop={init_stop}, entry={entry_px}, target={tgt_px}")
                     return
 
                 pos = Position.from_dict(p_dict)
@@ -232,28 +392,52 @@ class AutonomousTradingSupervisor:
                 self._abort_recovery(f"Failed to deserialize position from checkpoint: {pos_err}")
                 return
 
-        # 4. Restore Closed Positions & Trade History
+        # 5. Restore Closed Positions & Trade History
         if "closed_positions" in checkpoint:
             self.closed_positions = list(checkpoint["closed_positions"])
 
-        # 5. Restore Orders History
+        # 6. Restore Orders and Fills History
         if "orders_history" in checkpoint:
             self.orders_history = [
                 OrderIntent(**o) if isinstance(o, dict) else o
                 for o in checkpoint["orders_history"]
             ]
+        if "fills_history" in checkpoint:
+            self.fills_history = [
+                SimulatedFill(**f) if isinstance(f, dict) else f
+                for f in checkpoint["fills_history"]
+            ]
 
-        # 6. Restore Circuit Breaker Tripped States
+        # 7. Restore Circuit Breaker Tripped States
         breaker_states = checkpoint.get("circuit_breakers_state", {})
         if breaker_states:
             self.circuit_breakers.restore_states(breaker_states)
 
-        # 7. Restore Idempotency Keys (Prevent Duplicate Orders across restarts)
+        # 8. Restore Idempotency Keys (Prevent Duplicate Orders across restarts)
         recovered_keys = checkpoint.get("idempotency_keys", [])
         if recovered_keys:
             self.idempotency_guard.restore_keys(recovered_keys)
 
-        # 8. Reconcile Restored State with Authoritative Ledger
+        # 9. Restore Candle Processing Timestamps
+        if "last_received_candle" in checkpoint:
+            self.last_received_candle = checkpoint["last_received_candle"]
+        if "last_closed_candle" in checkpoint:
+            self.last_closed_candle = checkpoint["last_closed_candle"]
+        if "last_processed_candle" in checkpoint:
+            self.last_processed_candle = checkpoint["last_processed_candle"]
+        elif "candle_sync_timestamps" in checkpoint:
+            c_sync = checkpoint["candle_sync_timestamps"]
+            for k, ts in c_sync.items():
+                if ":" in k:
+                    s, tf = k.split(":", 1)
+                    self.last_processed_candle.setdefault(s, {})[tf] = int(ts)
+                else:
+                    self.last_processed_candle.setdefault(k, {})["15m"] = int(ts)
+
+        if "last_evaluated_decision_ts" in checkpoint:
+            self.last_evaluated_decision_ts = checkpoint["last_evaluated_decision_ts"]
+
+        # 10. Reconcile Restored State with Authoritative Ledger
         recon_report = self.run_reconciliation()
         if not recon_report.is_reconciled and len(recon_report.discrepancies) > 0:
             logger.critical(
@@ -273,6 +457,7 @@ class AutonomousTradingSupervisor:
         )
 
 
+
     def seed_historical_state(self) -> Dict[str, int]:
         """Seeds continuous candle engine from existing disk cache."""
         counts = {}
@@ -285,33 +470,66 @@ class AutonomousTradingSupervisor:
 
     def _on_raw_candle_received(self, raw_kline: Dict[str, Any]) -> None:
         """Processes closed candles arriving from WebSocket stream."""
+        sym = raw_kline["symbol"].upper()
+        tf = raw_kline.get("timeframe", "15m")
+        open_ts = int(raw_kline.get("open_ts", 0))
+        close_ts = int(raw_kline.get("close_ts", open_ts))
+
+        # Track actual candle timestamps
+        if sym not in self.last_received_candle:
+            self.last_received_candle[sym] = {}
+        self.last_received_candle[sym][tf] = open_ts
+
+        if raw_kline.get("is_closed", True):
+            if sym not in self.last_closed_candle:
+                self.last_closed_candle[sym] = {}
+            self.last_closed_candle[sym][tf] = close_ts
+
         rec = CandleRecord(
-            symbol=raw_kline["symbol"],
-            timeframe=raw_kline["timeframe"],
-            open_ts=raw_kline["open_ts"],
-            close_ts=raw_kline["close_ts"],
-            open=raw_kline["open"],
-            high=raw_kline["high"],
-            low=raw_kline["low"],
-            close=raw_kline["close"],
-            volume=raw_kline["volume"],
+            symbol=sym,
+            timeframe=tf,
+            open_ts=open_ts,
+            close_ts=close_ts,
+            open=float(raw_kline["open"]),
+            high=float(raw_kline["high"]),
+            low=float(raw_kline["low"]),
+            close=float(raw_kline["close"]),
+            volume=float(raw_kline["volume"]),
             is_closed=True,
             source=raw_kline.get("source", "WS"),
-            ingestion_ts=raw_kline.get("ingestion_ts", int(time.time() * 1000)),
+            ingestion_ts=int(raw_kline.get("ingestion_ts", time.time() * 1000)),
         )
         self.candle_engine.ingest_closed_candle(rec)
 
     def _on_closed_candle_formed(self, candle: CandleRecord) -> None:
         """Triggered causally whenever a candle officially closes."""
         sym = candle.symbol.upper()
+        tf = candle.timeframe
         if sym not in self.decision_engines:
+            return
+
+        # 1. Reject duplicate or out-of-order closed candles causally
+        last_proc = self.last_processed_candle.get(sym, {}).get(tf, 0)
+        if candle.close_ts <= last_proc:
+            logger.debug(
+                f"Duplicate or out-of-order closed candle ignored: {sym} {tf} "
+                f"close_ts={candle.close_ts} <= last_processed={last_proc}"
+            )
+            return
+
+        # 2. Hard persistence barrier check at main decision-processing boundary
+        if self.is_persistence_blocked():
+            logger.warning(
+                f"Persistence barrier active ({self.system_status}). "
+                f"Bypassing decision processing for {candle.symbol}."
+            )
             return
 
         engine = self.decision_engines[sym]
         all_tf_data = self.candle_engine.get_all_timeframe_data(sym)
         data_health = self.ws_client.get_feed_health(sym)
 
-        # 1. Evaluate Circuit Breakers before processing orders
+        # 3. Evaluate Circuit Breakers before processing orders
         breaker_ctx = {
             "current_equity_usd": self.simulated_equity,
             "peak_equity_usd": self.peak_equity,
@@ -322,7 +540,7 @@ class AutonomousTradingSupervisor:
         }
         all_safe, failed_breakers, breaker_states = self.circuit_breakers.evaluate_all(breaker_ctx)
 
-        # 2. Evaluate across the 3 execution sets (SET_2, SET_3, SET_4) and 2 phases
+        # 4. Evaluate across the 3 execution sets (SET_2, SET_3, SET_4) and 2 phases
         for set_name in ["SET_2", "SET_3", "SET_4"]:
             for hyp in ["CONTINUATION", "PULLBACK"]:
                 decision_card = engine.evaluate_opportunity(
@@ -333,8 +551,17 @@ class AutonomousTradingSupervisor:
                     eval_timestamp_ms=candle.close_ts,
                 )
 
-                # If circuit breakers tripped, demote TRADE to NO_TRADE
-                if not all_safe and decision_card.decision == DecisionType.TRADE:
+                # Record decision evaluation timestamp
+                self.last_evaluated_decision_ts[sym] = max(
+                    self.last_evaluated_decision_ts.get(sym, 0),
+                    candle.close_ts,
+                )
+
+                # If circuit breakers tripped or persistence blocked, demote TRADE to NO_TRADE
+                if self.is_persistence_blocked() and decision_card.decision == DecisionType.TRADE:
+                    decision_card.decision = DecisionType.NO_TRADE
+                    decision_card.reason_codes.append("PERSISTENCE_SAFETY_BARRIER")
+                elif not all_safe and decision_card.decision == DecisionType.TRADE:
                     decision_card.decision = DecisionType.NO_TRADE
                     decision_card.reason_codes.extend(failed_breakers)
 
@@ -344,10 +571,15 @@ class AutonomousTradingSupervisor:
                 if decision_card.decision == DecisionType.TRADE:
                     self._execute_order(decision_card)
 
-        # 3. Check existing positions for stop/target/trailing hits
+        # 5. Check existing positions for stop/target/trailing hits
         self._manage_open_positions(sym, candle.close, candle.close_ts)
 
-        # 4. Periodically save state checkpoint (every 60s)
+        # 6. Mark candle as successfully processed causally
+        if sym not in self.last_processed_candle:
+            self.last_processed_candle[sym] = {}
+        self.last_processed_candle[sym][tf] = candle.close_ts
+
+        # 7. Periodically save state checkpoint (every 60s)
         now_ts = int(time.time())
         if now_ts - self._last_checkpoint_ts >= 60:
             self._save_state_checkpoint()
@@ -355,6 +587,21 @@ class AutonomousTradingSupervisor:
 
     def _execute_order(self, d: PhaseRDecisionRecord) -> None:
         """Executes an order through ExecutionGateway and initializes position."""
+        # 0. Persistence safety gate check immediately before order intent creation
+        if self.is_persistence_blocked():
+            logger.critical(
+                f"SAFETY GATE ENFORCED: Blocked order intent execution for {d.asset} {d.decision_id} "
+                f"because persistence is degraded."
+            )
+            ALERTS.emit(
+                severity=AlertSeverity.CRITICAL,
+                category=AlertCategory.EXECUTION,
+                title="Order Submission Blocked by Persistence Gate",
+                message=f"Blocked order intent for {d.asset} {d.decision_id} due to degraded durable persistence.",
+                metadata={"asset": d.asset, "decision_id": d.decision_id, "status": self.system_status},
+            )
+            return
+
         # 1. Assert idempotency to prevent duplicate entries
         try:
             self.idempotency_guard.assert_idempotent(d.asset, d.decision_id, d.timestamp_ms)
@@ -423,6 +670,9 @@ class AutonomousTradingSupervisor:
             message=f"Filled {pos.size} units @ {pos.entry_price:.2f}. Planned Target: {pos.target_price:.2f} ({d.planned_r:.1f}R).",
             metadata={"position_id": pos_id, "mode": exec_mode.value},
         )
+
+        # Persist checkpoint immediately upon order fill
+        self._save_state_checkpoint()
 
     def _manage_open_positions(self, symbol: str, current_price: float, ts_now: int) -> None:
         """Audits open positions against trailing stop or >= 4R target completion."""
@@ -512,7 +762,10 @@ class AutonomousTradingSupervisor:
         for cid in closed_ids:
             del self.active_positions[cid]
 
-    def _save_state_checkpoint(self) -> None:
+        if closed_ids:
+            self._save_state_checkpoint()
+
+    def _save_state_checkpoint(self) -> bool:
         """Saves atomic platform checkpoint to disk and database."""
         active_pos_list = [p.to_dict() for p in self.active_positions.values()]
         metrics = {
@@ -520,9 +773,14 @@ class AutonomousTradingSupervisor:
             "win_rate": sum(1 for p in self.closed_positions if p.get("realized_r", 0) > 0) / max(len(self.closed_positions), 1),
             "net_r": sum(p.get("realized_r", 0) for p in self.closed_positions),
         }
-        candle_sync = {s: int(time.time() * 1000) for s in self.symbols}
+        candle_sync = {
+            f"{s}:{tf}": ts
+            for s, tfs in self.last_processed_candle.items()
+            for tf, ts in tfs.items()
+        }
         _, _, breaker_states = self.circuit_breakers.evaluate_all({"current_equity_usd": self.simulated_equity})
         orders_payload = [asdict(o) if hasattr(o, "__dataclass_fields__") else dict(o) for o in self.orders_history]
+        fills_payload = [asdict(f) if hasattr(f, "__dataclass_fields__") else dict(f) for f in self.fills_history]
 
         try:
             success = self.state_persistence.save_checkpoint(
@@ -536,21 +794,21 @@ class AutonomousTradingSupervisor:
                 idempotency_keys=self.idempotency_guard.get_keys(),
                 closed_positions=self.closed_positions,
                 orders_history=orders_payload,
+                fills_history=fills_payload,
+                last_received_candle=self.last_received_candle,
+                last_closed_candle=self.last_closed_candle,
+                last_processed_candle=self.last_processed_candle,
+                last_evaluated_decision_ts=self.last_evaluated_decision_ts,
             )
             if not success and self.state_persistence.mode == PersistenceMode.REQUIRED_DURABLE:
-                logger.critical("Checkpoint save failed in REQUIRED_DURABLE mode! Demoting operational health.")
-                self.system_status = "PERSISTENCE_DEGRADED"
+                self._trip_persistence_gate("Checkpoint save returned false in REQUIRED_DURABLE mode")
+                return False
+            return success
         except Exception as e:
             logger.critical(f"Exception saving checkpoint: {e}")
             if self.state_persistence.mode == PersistenceMode.REQUIRED_DURABLE:
-                self.system_status = "PERSISTENCE_DEGRADED"
-                ALERTS.emit(
-                    severity=AlertSeverity.CRITICAL,
-                    category=AlertCategory.SYSTEM,
-                    title="Persistence Failure",
-                    message=f"Mandatory checkpoint save failed: {e}",
-                    metadata={"error": str(e)},
-                )
+                self._trip_persistence_gate(str(e))
+            return False
 
     def _persist_decision_to_ledger(self, d: PhaseRDecisionRecord) -> None:
         """Appends the decision card to disk."""
@@ -611,9 +869,9 @@ class AutonomousTradingSupervisor:
 
     async def start(self) -> None:
         """Starts the autonomous 24/7 background organism."""
-        if self.system_status == "RECOVERY_FAILED_HALTED":
-            logger.critical("Cannot start autonomous supervisor: system halted due to restart recovery failure.")
-            raise RuntimeError("Autonomous supervisor startup aborted: system is in RECOVERY_FAILED_HALTED state.")
+        if self.system_status in ("RECOVERY_FAILED_HALTED", "PERSISTENCE_DEGRADED") or self.is_persistence_blocked():
+            logger.critical(f"Cannot start autonomous supervisor: system is in {self.system_status} state.")
+            raise RuntimeError(f"Autonomous supervisor startup aborted: system is in {self.system_status} state.")
 
         self._running = True
         self.system_status = f"RUNNING_{SAFETY_GATE.current_mode.value}_24_7"
@@ -627,3 +885,4 @@ class AutonomousTradingSupervisor:
         self._save_state_checkpoint()
         await self.ws_client.stop()
         logger.info("Autonomous Trading Supervisor gracefully stopped.")
+

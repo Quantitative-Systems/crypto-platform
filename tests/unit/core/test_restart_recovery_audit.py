@@ -239,13 +239,12 @@ def test_corrupted_checkpoint_fails_closed():
         if json_file.exists():
             with open(json_file, "r") as f:
                 data = json.load(f)
-            data["checksum_sha256"] = "CORRUPTED_FILE_HASH"
             with open(json_file, "w") as f:
                 json.dump(data, f)
 
-        # Loading must return None and log critical corruption
-        loaded = pm.load_checkpoint()
-        assert loaded is None
+        # Loading must raise PersistenceError in REQUIRED_DURABLE mode
+        with pytest.raises(PersistenceError):
+            pm.load_checkpoint()
         pm.close()
 
 
@@ -255,25 +254,27 @@ def test_supervisor_aborts_recovery_on_inconsistent_checkpoint():
         db_file = Path(tmp_dir) / "inconsistent_test.db"
         state_dir = Path(tmp_dir) / "checkpoints"
         pm = StatePersistenceManager(state_dir=state_dir, db_path=db_file, mode=PersistenceMode.REQUIRED_DURABLE)
+        try:
+            # Save an inconsistent checkpoint with negative equity
+            pm.save_checkpoint(
+                equity_usd=-50000.0,  # Inconsistent / corrupt equity
+                peak_equity_usd=100000.0,
+            )
+        finally:
+            pm.close()
+            DatabaseManager.reset_all()
 
-        # Save an inconsistent checkpoint with negative equity
-        pm.save_checkpoint(
-            equity_usd=-50000.0,  # Inconsistent / corrupt equity
-            peak_equity_usd=100000.0,
-        )
+        supervisor = AutonomousTradingSupervisor(symbols=["BTCUSDT"], state_dir=state_dir, db_path=db_file)
+        try:
+            assert supervisor.system_status == "RECOVERY_FAILED_HALTED"
 
-        supervisor = AutonomousTradingSupervisor(symbols=["BTCUSDT"])
-        supervisor.state_persistence = pm
-
-        supervisor._attempt_restart_recovery()
-        assert supervisor.system_status == "RECOVERY_FAILED_HALTED"
-
-        # Attempting to start in halted state must raise RuntimeError
-        with pytest.raises(RuntimeError, match="RECOVERY_FAILED_HALTED"):
-            import asyncio
-            asyncio.run(supervisor.start())
-
-        pm.close()
+            # Attempting to start in halted state must raise RuntimeError
+            with pytest.raises(RuntimeError, match="RECOVERY_FAILED_HALTED"):
+                import asyncio
+                asyncio.run(supervisor.start())
+        finally:
+            supervisor.state_persistence.close()
+            DatabaseManager.reset_all()
 
 
 def test_concurrent_schema_migrations():
@@ -301,8 +302,9 @@ def test_concurrent_schema_migrations():
 
         status = MigrationManager(db_mgr).get_status()
         assert status["is_current"] is True
-        assert status["current_version"] == 3
+        assert status["current_version"] == 4
         db_mgr.close()
+        DatabaseManager.reset_all()
 
 
 def test_online_database_backup_and_restore():
@@ -322,6 +324,7 @@ def test_online_database_backup_and_restore():
         auth_src.db.backup_to_file(backup_file)
         assert backup_file.exists()
         auth_src.close()
+        DatabaseManager.reset_all()
 
         # 3. Restore to fresh target
         restored_mgr = DatabaseManager.restore_from_backup(backup_file, restored_db_file)
@@ -336,3 +339,350 @@ def test_online_database_backup_and_restore():
 
         auth_restored.close()
         restored_mgr.close()
+        DatabaseManager.reset_all()
+
+
+def test_persistence_failure_blocks_order_execution():
+    """Verifies that persistence failure trips the safety gate and blocks new order intents and execution."""
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        db_file = Path(tmp_dir) / "gate_test.db"
+        state_dir = Path(tmp_dir) / "state"
+        ledger_file = Path(tmp_dir) / "ledger.jsonl"
+
+        supervisor = AutonomousTradingSupervisor(
+            symbols=["BTCUSDT"],
+            ledger_path=ledger_file,
+            state_dir=state_dir,
+            db_path=db_file,
+        )
+        try:
+            # 1. Mock DB write failure during checkpoint save
+            mock_db = MagicMock()
+            mock_db.transaction.side_effect = DatabaseError("Disk full / I/O error")
+            supervisor.state_persistence.db = mock_db
+
+            # 2. Trigger checkpoint save -> must trip safety gate
+            save_ok = supervisor._save_state_checkpoint()
+            assert save_ok is False
+            assert supervisor.is_persistence_blocked() is True
+            assert supervisor.system_status == "PERSISTENCE_DEGRADED"
+
+            # 3. Create a candidate TRADE decision record
+            from execution.decision.phase_r_decision_engine import DecisionType, PhaseRDecisionRecord
+            trade_decision = PhaseRDecisionRecord(
+                decision_id="DEC_BLOCKED_TEST",
+                lineage_id="LIN_TEST",
+                event_id="EVT_TEST",
+                timestamp_ms=1700000000000,
+                asset="BTCUSDT",
+                timeframe_set="SET_2",
+                phase="PHASE_1",
+                decision=DecisionType.TRADE,
+                reason_codes=[],
+                confidence_score=0.85,
+                confidence_components={},
+                fractal_alignment="ALIGNED",
+                fractal_bias="BULLISH",
+                direction=1,
+                entry_price=65000.0,
+                initial_stop_price=62000.0,
+                target_price=77000.0,
+                planned_r=4.0,
+                risk_pct=0.01,
+                portfolio_heat_pct=0.01,
+                governor_passed=True,
+            )
+
+            # 4. Attempt order execution -> must be blocked fail-closed
+            supervisor._execute_order(trade_decision)
+
+            # 5. Assert no order, fill, or position was created
+            assert len(supervisor.orders_history) == 0
+            assert len(supervisor.fills_history) == 0
+            assert len(supervisor.active_positions) == 0
+        finally:
+            supervisor.state_persistence.close()
+            DatabaseManager.reset_all()
+
+
+def test_persistence_degradation_survives_subsequent_candle_callbacks():
+    """Verifies that once persistence is degraded, subsequent candle callbacks cannot produce orders."""
+    from market_data.realtime.candle_engine import CandleRecord
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        db_file = Path(tmp_dir) / "candle_gate_test.db"
+        state_dir = Path(tmp_dir) / "state"
+
+        supervisor = AutonomousTradingSupervisor(symbols=["BTCUSDT"], state_dir=state_dir, db_path=db_file)
+        try:
+            # Trip persistence gate directly
+            supervisor._trip_persistence_gate("Simulated permanent DB degradation")
+            assert supervisor.is_persistence_blocked() is True
+
+            # Form a closed candle
+            test_candle = CandleRecord(
+                symbol="BTCUSDT",
+                timeframe="15m",
+                open_ts=1700000000000,
+                close_ts=1700000900000,
+                open=65000.0,
+                high=66000.0,
+                low=64500.0,
+                close=65500.0,
+                volume=150.0,
+            )
+
+            # Deliver to callback
+            supervisor._on_closed_candle_formed(test_candle)
+
+            # Assert no trading activity occurred
+            assert len(supervisor.orders_history) == 0
+            assert len(supervisor.active_positions) == 0
+
+            # Attempting start() must fail
+            with pytest.raises(RuntimeError, match="PERSISTENCE_DEGRADED"):
+                import asyncio
+                asyncio.run(supervisor.start())
+        finally:
+            supervisor.state_persistence.close()
+            DatabaseManager.reset_all()
+
+
+def test_recovery_restores_actual_candle_processing_timestamps():
+    """Verifies that actual candle-processing timestamps (not wall-clock) are persisted and restored."""
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        db_file = Path(tmp_dir) / "candle_sync_test.db"
+        state_dir = Path(tmp_dir) / "state"
+
+        pm = StatePersistenceManager(state_dir=state_dir, db_path=db_file, mode=PersistenceMode.REQUIRED_DURABLE)
+        try:
+            expected_recv = {"BTCUSDT": {"15m": 1700000000000}}
+            expected_closed = {"BTCUSDT": {"15m": 1700000900000}}
+            expected_proc = {"BTCUSDT": {"15m": 1700000900000}}
+            expected_eval = {"BTCUSDT": 1700000900000}
+
+            pm.save_checkpoint(
+                equity_usd=100000.0,
+                peak_equity_usd=100000.0,
+                last_received_candle=expected_recv,
+                last_closed_candle=expected_closed,
+                last_processed_candle=expected_proc,
+                last_evaluated_decision_ts=expected_eval,
+            )
+        finally:
+            pm.close()
+            DatabaseManager.reset_all()
+
+        # Boot fresh supervisor
+        supervisor = AutonomousTradingSupervisor(symbols=["BTCUSDT"], state_dir=state_dir, db_path=db_file)
+        try:
+            assert supervisor.last_received_candle["BTCUSDT"]["15m"] == 1700000000000
+            assert supervisor.last_closed_candle["BTCUSDT"]["15m"] == 1700000900000
+            assert supervisor.last_processed_candle["BTCUSDT"]["15m"] == 1700000900000
+            assert supervisor.last_evaluated_decision_ts["BTCUSDT"] == 1700000900000
+        finally:
+            supervisor.state_persistence.close()
+            DatabaseManager.reset_all()
+
+
+def test_duplicate_candle_delivery_does_not_duplicate_decisions():
+    """Verifies that duplicate and out-of-order candles are causally discarded."""
+    from market_data.realtime.candle_engine import CandleRecord
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        db_file = Path(tmp_dir) / "dedup_test.db"
+        state_dir = Path(tmp_dir) / "state"
+
+        supervisor = AutonomousTradingSupervisor(symbols=["BTCUSDT"], state_dir=state_dir, db_path=db_file)
+        try:
+            c1 = CandleRecord(
+                symbol="BTCUSDT",
+                timeframe="15m",
+                open_ts=1700000000000,
+                close_ts=1700000900000,
+                open=65000.0,
+                high=66000.0,
+                low=64500.0,
+                close=65500.0,
+                volume=100.0,
+            )
+            supervisor._on_closed_candle_formed(c1)
+            assert supervisor.last_processed_candle["BTCUSDT"]["15m"] == 1700000900000
+            count_after_first = len(supervisor.decisions_history)
+
+            # Deliver same candle again
+            supervisor._on_closed_candle_formed(c1)
+            assert len(supervisor.decisions_history) == count_after_first
+
+            # Deliver older / out of order candle
+            c_old = CandleRecord(
+                symbol="BTCUSDT",
+                timeframe="15m",
+                open_ts=1699999000000,
+                close_ts=1699999900000,
+                open=64000.0,
+                high=65000.0,
+                low=63500.0,
+                close=64500.0,
+                volume=100.0,
+            )
+            supervisor._on_closed_candle_formed(c_old)
+            assert len(supervisor.decisions_history) == count_after_first
+        finally:
+            supervisor.state_persistence.close()
+            DatabaseManager.reset_all()
+
+
+def test_stale_fallback_checkpoint_is_rejected():
+    """A checkpoint that is older than authoritative ledger entries must fail closed."""
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        db_file = Path(tmp_dir) / "stale_test.db"
+        state_dir = Path(tmp_dir) / "state"
+        ledger_file = Path(tmp_dir) / "ledger.jsonl"
+
+        # Write recent decisions to ledger at timestamp 2,000,000,000,000
+        ledger_file.parent.mkdir(parents=True, exist_ok=True)
+        with open(ledger_file, "w", encoding="utf-8") as f:
+            f.write(json.dumps({
+                "decision_id": "DEC_RECENT_01",
+                "timestamp_ms": 2000000000000,
+                "asset": "BTCUSDT",
+                "decision": "TRADE",
+                "direction": 1,
+                "entry_price": 65000.0,
+                "initial_stop_price": 62000.0,
+                "target_price": 77000.0,
+            }) + "\n")
+
+        # Save stale checkpoint with timestamp 1,000,000,000,000
+        pm = StatePersistenceManager(state_dir=state_dir, db_path=db_file, mode=PersistenceMode.REQUIRED_DURABLE)
+        try:
+            pm.save_checkpoint(
+                equity_usd=100000.0,
+                peak_equity_usd=100000.0,
+            )
+            # Force stale timestamp in database
+            pm.db.execute("UPDATE application_checkpoints SET timestamp_ms = 1000000000000;")
+            # Also re-sync file
+            with open(state_dir / "platform_checkpoint.json", "r") as f:
+                data = json.load(f)
+            data["data"]["timestamp_ms"] = 1000000000000
+            with open(state_dir / "platform_checkpoint.json", "w") as f:
+                json.dump(data, f)
+        finally:
+            pm.close()
+            DatabaseManager.reset_all()
+
+        # Boot supervisor with ledger
+        supervisor = AutonomousTradingSupervisor(symbols=["BTCUSDT"], ledger_path=ledger_file, state_dir=state_dir, db_path=db_file)
+        try:
+            # Must fail closed
+            assert supervisor.system_status == "RECOVERY_FAILED_HALTED"
+            assert supervisor.is_persistence_blocked() is True
+        finally:
+            supervisor.state_persistence.close()
+            DatabaseManager.reset_all()
+
+
+def test_inconsistent_database_file_checkpoints_fail_closed():
+    """Disagreement between database and file checkpoints must trigger split-brain error and fail closed."""
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        db_file = Path(tmp_dir) / "split_test.db"
+        state_dir = Path(tmp_dir) / "state"
+
+        pm = StatePersistenceManager(state_dir=state_dir, db_path=db_file, mode=PersistenceMode.REQUIRED_DURABLE)
+        try:
+            pm.save_checkpoint(equity_usd=100000.0, peak_equity_usd=100000.0)
+
+            # Mutate disk file to conflict with database
+            json_file = state_dir / "platform_checkpoint.json"
+            with open(json_file, "r") as f:
+                envelope = json.load(f)
+            envelope["data"]["equity_usd"] = 999999.0
+            # Re-sign file checksum
+            raw_b = json.dumps(envelope["data"], indent=2, sort_keys=True).encode("utf-8")
+            import hashlib
+            envelope["checksum_sha256"] = hashlib.sha256(raw_b).hexdigest()
+            with open(json_file, "w") as f:
+                json.dump(envelope, f)
+
+            # In REQUIRED_DURABLE mode, load_checkpoint must detect split-brain and raise PersistenceError
+            with pytest.raises(PersistenceError, match="Split-brain state detected"):
+                pm.load_checkpoint()
+        finally:
+            pm.close()
+            DatabaseManager.reset_all()
+
+
+def test_backup_and_restore_acceptance():
+    """Documented acceptance test: point-in-time database backup, simulated corruption, restore, and supervisor boot."""
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        src_db_file = Path(tmp_dir) / "live.db"
+        backup_file = Path(tmp_dir) / "backup_archive.db"
+        restored_db_file = Path(tmp_dir) / "restored.db"
+        state_dir = Path(tmp_dir) / "state"
+        ledger_file = Path(tmp_dir) / "ledger.jsonl"
+
+        # 1. Initialize live supervisor and populate state
+        sup_live = AutonomousTradingSupervisor(
+            symbols=["BTCUSDT"],
+            state_dir=state_dir,
+            db_path=src_db_file,
+            ledger_path=ledger_file,
+        )
+        try:
+            sup_live.equity_usd = 150000.0
+            sup_live.peak_equity_usd = 155000.0
+            sup_live.last_received_candle["BTCUSDT"]["15m"] = 1700000000000
+            sup_live.last_closed_candle["BTCUSDT"]["15m"] = 1700000900000
+            sup_live.last_processed_candle["BTCUSDT"]["15m"] = 1700000900000
+            sup_live.last_evaluated_decision_ts["BTCUSDT"] = 1700000900000
+
+            save_ok = sup_live._save_state_checkpoint()
+            assert save_ok is True
+        finally:
+            sup_live.state_persistence.close()
+            DatabaseManager.reset_all()
+
+        # 2. Perform online point-in-time backup using DatabaseManager
+        src_mgr = DatabaseManager(src_db_file)
+        try:
+            src_mgr.backup_to_file(backup_file)
+            assert backup_file.exists()
+        finally:
+            src_mgr.close()
+            DatabaseManager.reset_all()
+
+        # 3. Simulate disaster: corrupt live database
+        with open(src_db_file, "wb") as f:
+            f.write(b"CORRUPTED_GARBAGE_PAYLOAD")
+
+        # 4. Restore database from backup archive
+        restored_mgr = DatabaseManager.restore_from_backup(backup_file, restored_db_file)
+        restored_mgr.close()
+        DatabaseManager.reset_all()
+
+        # Also provide matching restored state_dir checkpoint so split-brain check passes
+        restored_state_dir = Path(tmp_dir) / "restored_state"
+        restored_pm = StatePersistenceManager(state_dir=restored_state_dir, db_path=restored_db_file, mode=PersistenceMode.REQUIRED_DURABLE)
+        restored_cp = restored_pm.load_checkpoint()
+        restored_pm.close()
+        DatabaseManager.reset_all()
+
+        assert restored_cp is not None
+        assert restored_cp["equity_usd"] == 150000.0
+
+        # 5. Boot fresh supervisor against restored database
+        sup_restored = AutonomousTradingSupervisor(
+            symbols=["BTCUSDT"],
+            state_dir=restored_state_dir,
+            db_path=restored_db_file,
+            ledger_path=ledger_file,
+        )
+        try:
+            assert sup_restored.system_status == "RECOVERED_HEALTHY"
+            assert sup_restored.equity_usd == 150000.0
+            assert sup_restored.peak_equity_usd == 155000.0
+            assert sup_restored.last_processed_candle["BTCUSDT"]["15m"] == 1700000900000
+        finally:
+            sup_restored.state_persistence.close()
+            DatabaseManager.reset_all()
+

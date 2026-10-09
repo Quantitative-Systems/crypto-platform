@@ -113,6 +113,15 @@ MIGRATIONS: List[Migration] = [
         """,
         down_sql=""
     ),
+    Migration(
+        version=4,
+        name="004_checkpoint_candle_semantics_and_fills",
+        up_sql="""
+        ALTER TABLE application_checkpoints ADD COLUMN fills_history_json TEXT NOT NULL DEFAULT '[]';
+        ALTER TABLE application_checkpoints ADD COLUMN candle_semantics_json TEXT NOT NULL DEFAULT '{}';
+        """,
+        down_sql=""
+    ),
 ]
 
 

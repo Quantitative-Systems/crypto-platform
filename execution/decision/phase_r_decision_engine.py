@@ -97,6 +97,14 @@ class PhaseRDecisionRecord:
         d["decision"] = self.decision.value
         return d
 
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> PhaseRDecisionRecord:
+        data = dict(d)
+        if isinstance(data.get("decision"), str):
+            data["decision"] = DecisionType(data["decision"])
+        valid_fields = {f.name for f in fields(cls)}
+        return cls(**{k: v for k, v in data.items() if k in valid_fields})
+
 
 class PhaseRDecisionEngine:
     """Production decision engine enforcing frozen Q.2 research contracts."""

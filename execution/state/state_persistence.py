@@ -50,11 +50,6 @@ class StatePersistenceManager:
         db_path: Optional[Union[str, Path]] = None,
         mode: Optional[Union[PersistenceMode, str]] = None,
     ):
-        self.state_dir = Path(state_dir) if state_dir else DEFAULT_STATE_DIR
-        self.state_dir.mkdir(parents=True, exist_ok=True)
-        self.checkpoint_file = self.state_dir / "platform_checkpoint.json"
-        self.checkpoint_prev_file = self.state_dir / "platform_checkpoint_prev.json"
-
         # Determine persistence mode
         if mode is None:
             raw_mode = os.environ.get("CRYPTO_PLATFORM_PERSISTENCE_MODE", PersistenceMode.REQUIRED_DURABLE.value)
@@ -92,6 +87,17 @@ class StatePersistenceManager:
                 logger.warning(f"Database unavailable in FILE_ONLY_DEV mode; using local disk only: {e}")
                 self.db = None
 
+        if state_dir is not None:
+            self.state_dir = Path(state_dir)
+        elif os.environ.get("PYTEST_CURRENT_TEST") and getattr(self.db, "_is_memory", False):
+            import tempfile
+            self.state_dir = Path(tempfile.gettempdir()) / f"pytest_state_{os.getpid()}"
+        else:
+            self.state_dir = DEFAULT_STATE_DIR
+        self.state_dir.mkdir(parents=True, exist_ok=True)
+        self.checkpoint_file = self.state_dir / "platform_checkpoint.json"
+        self.checkpoint_prev_file = self.state_dir / "platform_checkpoint_prev.json"
+
     def close(self) -> None:
         """Close persistence database handle."""
         if self.db:
@@ -116,6 +122,23 @@ class StatePersistenceManager:
             "status": "HEALTHY" if is_healthy else "DEGRADED",
         }
 
+    def _calculate_checksum(self, data: Dict[str, Any]) -> str:
+        """Compute SHA-256 checksum over deterministic canonical JSON."""
+        raw_bytes = json.dumps(data, indent=2, sort_keys=True).encode("utf-8")
+        return hashlib.sha256(raw_bytes).hexdigest()
+
+    def _heal_file_from_payload(self, payload: Dict[str, Any]) -> None:
+        """Heals local checkpoint file using verified payload."""
+        checksum = self._calculate_checksum(payload)
+        envelope = {
+            "checksum_sha256": checksum,
+            "data": payload,
+        }
+        temp_file = self.state_dir / f"checkpoint_heal_{os.getpid()}_{int(time.time()*1000)}.json"
+        with open(temp_file, "w", encoding="utf-8") as f:
+            json.dump(envelope, f, indent=2)
+        temp_file.replace(self.checkpoint_file)
+
     def save_checkpoint(
         self,
         equity_usd: float,
@@ -128,6 +151,11 @@ class StatePersistenceManager:
         idempotency_keys: Optional[List[str]] = None,
         closed_positions: Optional[List[Dict[str, Any]]] = None,
         orders_history: Optional[List[Dict[str, Any]]] = None,
+        fills_history: Optional[List[Dict[str, Any]]] = None,
+        last_received_candle: Optional[Dict[str, Dict[str, int]]] = None,
+        last_closed_candle: Optional[Dict[str, Dict[str, int]]] = None,
+        last_processed_candle: Optional[Dict[str, Dict[str, int]]] = None,
+        last_evaluated_decision_ts: Optional[Dict[str, int]] = None,
         schema_version: int = CURRENT_SCHEMA_VERSION,
     ) -> bool:
         """Atomically save platform state to database and disk with SHA-256 checksum."""
@@ -140,6 +168,18 @@ class StatePersistenceManager:
             breaker_dict = circuit_breakers_state or {}
             closed_pos_list = list(closed_positions or [])
             orders_list = list(orders_history or [])
+            fills_list = list(fills_history or [])
+            recv_candle = last_received_candle or {}
+            closed_candle = last_closed_candle or {}
+            proc_candle = last_processed_candle or {}
+            eval_dec = last_evaluated_decision_ts or {}
+
+            candle_semantics = {
+                "last_received_candle": recv_candle,
+                "last_closed_candle": closed_candle,
+                "last_processed_candle": proc_candle,
+                "last_evaluated_decision_ts": eval_dec,
+            }
 
             payload: Dict[str, Any] = {
                 "schema_version": schema_version,
@@ -147,6 +187,7 @@ class StatePersistenceManager:
                 "equity_usd": round(equity_usd, 2),
                 "peak_equity_usd": round(peak_equity_usd, 2),
                 "active_positions": pos_list,
+                "open_positions": pos_list,
                 "closed_trades_count": closed_trades_count,
                 "metrics": met_dict,
                 "candle_sync_timestamps": candle_dict,
@@ -154,11 +195,15 @@ class StatePersistenceManager:
                 "idempotency_keys": idemp_list,
                 "closed_positions": closed_pos_list,
                 "orders_history": orders_list,
+                "fills_history": fills_list,
+                "candle_semantics": candle_semantics,
+                "last_received_candle": recv_candle,
+                "last_closed_candle": closed_candle,
+                "last_processed_candle": proc_candle,
+                "last_evaluated_decision_ts": eval_dec,
             }
 
-            raw_bytes = json.dumps(payload, indent=2, sort_keys=True).encode("utf-8")
-            checksum = hashlib.sha256(raw_bytes).hexdigest()
-
+            checksum = self._calculate_checksum(payload)
             envelope = {
                 "checksum_sha256": checksum,
                 "data": payload,
@@ -180,9 +225,9 @@ class StatePersistenceManager:
                                 checkpoint_id, schema_version, timestamp_ms, equity_usd, peak_equity_usd,
                                 closed_trades_count, active_positions_json, metrics_json,
                                 candle_sync_timestamps_json, circuit_breakers_state_json, idempotency_keys_json,
-                                closed_positions_json, orders_history_json,
-                                checksum_sha256, created_at_ts
-                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                closed_positions_json, orders_history_json, fills_history_json,
+                                candle_semantics_json, checksum_sha256, created_at_ts
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             ON CONFLICT(checkpoint_id) DO UPDATE SET
                                 schema_version = excluded.schema_version,
                                 timestamp_ms = excluded.timestamp_ms,
@@ -196,6 +241,8 @@ class StatePersistenceManager:
                                 idempotency_keys_json = excluded.idempotency_keys_json,
                                 closed_positions_json = excluded.closed_positions_json,
                                 orders_history_json = excluded.orders_history_json,
+                                fills_history_json = excluded.fills_history_json,
+                                candle_semantics_json = excluded.candle_semantics_json,
                                 checksum_sha256 = excluded.checksum_sha256,
                                 created_at_ts = excluded.created_at_ts;
                             """,
@@ -213,6 +260,8 @@ class StatePersistenceManager:
                                 json.dumps(idemp_list),
                                 json.dumps(closed_pos_list),
                                 json.dumps(orders_list),
+                                json.dumps(fills_list),
+                                json.dumps(candle_semantics),
                                 checksum,
                                 time.time(),
                             )
@@ -232,9 +281,9 @@ class StatePersistenceManager:
                                 checkpoint_id, schema_version, timestamp_ms, equity_usd, peak_equity_usd,
                                 closed_trades_count, active_positions_json, metrics_json,
                                 candle_sync_timestamps_json, circuit_breakers_state_json, idempotency_keys_json,
-                                closed_positions_json, orders_history_json,
-                                checksum_sha256, created_at_ts
-                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                closed_positions_json, orders_history_json, fills_history_json,
+                                candle_semantics_json, checksum_sha256, created_at_ts
+                            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             ON CONFLICT(checkpoint_id) DO UPDATE SET
                                 schema_version = excluded.schema_version,
                                 timestamp_ms = excluded.timestamp_ms,
@@ -248,6 +297,8 @@ class StatePersistenceManager:
                                 idempotency_keys_json = excluded.idempotency_keys_json,
                                 closed_positions_json = excluded.closed_positions_json,
                                 orders_history_json = excluded.orders_history_json,
+                                fills_history_json = excluded.fills_history_json,
+                                candle_semantics_json = excluded.candle_semantics_json,
                                 checksum_sha256 = excluded.checksum_sha256,
                                 created_at_ts = excluded.created_at_ts;
                             """,
@@ -265,6 +316,8 @@ class StatePersistenceManager:
                                 json.dumps(idemp_list),
                                 json.dumps(closed_pos_list),
                                 json.dumps(orders_list),
+                                json.dumps(fills_list),
+                                json.dumps(candle_semantics),
                                 checksum,
                                 time.time(),
                             )
@@ -310,9 +363,7 @@ class StatePersistenceManager:
         if not stored_checksum or not isinstance(data, dict):
             return None
 
-        raw_bytes = json.dumps(data, indent=2, sort_keys=True).encode("utf-8")
-        calculated_checksum = hashlib.sha256(raw_bytes).hexdigest()
-
+        calculated_checksum = self._calculate_checksum(data)
         if stored_checksum != calculated_checksum:
             logger.critical(
                 f"CHECKPOINT CORRUPTION DETECTED: Stored hash {stored_checksum} != "
@@ -321,85 +372,204 @@ class StatePersistenceManager:
             return None
         return data
 
-    def load_checkpoint(self) -> Optional[Dict[str, Any]]:
-        """Load and verify platform checkpoint from database or disk with failover."""
-        if self.mode == PersistenceMode.REQUIRED_DURABLE and self.db is None:
-            raise PersistenceError("Database handle is None in REQUIRED_DURABLE mode; cannot load checkpoint safely.")
+    def _load_from_file(self, file_path: Path) -> Optional[Dict[str, Any]]:
+        """Reads and validates envelope from disk file."""
+        if not file_path.exists():
+            return None
+        with open(file_path, "r", encoding="utf-8") as f:
+            envelope = json.load(f)
+        return self._verify_envelope(envelope)
 
-        # 1. Attempt load from SQLite database
-        if self.db is not None:
-            try:
-                row = self.db.fetchone(
-                    """
-                    SELECT schema_version, timestamp_ms, equity_usd, peak_equity_usd,
-                           closed_trades_count, active_positions_json, metrics_json,
-                           candle_sync_timestamps_json, circuit_breakers_state_json,
-                           idempotency_keys_json,
-                           closed_positions_json, orders_history_json,
-                           checksum_sha256
-                    FROM application_checkpoints WHERE checkpoint_id = ?;
-                    """,
-                    ("latest",)
+    def _load_from_database(self) -> Optional[Dict[str, Any]]:
+        """Queries and validates checkpoint from database."""
+        if self.db is None:
+            return None
+
+        row = self.db.fetchone(
+            """
+            SELECT schema_version, timestamp_ms, equity_usd, peak_equity_usd,
+                   closed_trades_count, active_positions_json, metrics_json,
+                   candle_sync_timestamps_json, circuit_breakers_state_json,
+                   idempotency_keys_json,
+                   closed_positions_json, orders_history_json,
+                   fills_history_json, candle_semantics_json,
+                   checksum_sha256
+            FROM application_checkpoints WHERE checkpoint_id = ?;
+            """,
+            ("latest",)
+        )
+        if not row:
+            return None
+
+        # Reconstruct payload dictionary
+        row_keys = row.keys() if hasattr(row, "keys") else []
+        closed_pos = json.loads(row["closed_positions_json"]) if "closed_positions_json" in row_keys and row["closed_positions_json"] else []
+        orders_hist = json.loads(row["orders_history_json"]) if "orders_history_json" in row_keys and row["orders_history_json"] else []
+        fills_hist = json.loads(row["fills_history_json"]) if "fills_history_json" in row_keys and row["fills_history_json"] else []
+        c_semantics = json.loads(row["candle_semantics_json"]) if "candle_semantics_json" in row_keys and row["candle_semantics_json"] else {}
+
+        active_positions = json.loads(row["active_positions_json"])
+        payload = {
+            "schema_version": row["schema_version"],
+            "timestamp_ms": row["timestamp_ms"],
+            "equity_usd": row["equity_usd"],
+            "peak_equity_usd": row["peak_equity_usd"],
+            "active_positions": active_positions,
+            "open_positions": active_positions,
+            "closed_trades_count": row["closed_trades_count"],
+            "metrics": json.loads(row["metrics_json"]),
+            "candle_sync_timestamps": json.loads(row["candle_sync_timestamps_json"]),
+            "circuit_breakers_state": json.loads(row["circuit_breakers_state_json"]),
+            "idempotency_keys": json.loads(row["idempotency_keys_json"]),
+            "closed_positions": closed_pos,
+            "orders_history": orders_hist,
+            "fills_history": fills_hist,
+            "candle_semantics": c_semantics,
+            "last_received_candle": c_semantics.get("last_received_candle", {}),
+            "last_closed_candle": c_semantics.get("last_closed_candle", {}),
+            "last_processed_candle": c_semantics.get("last_processed_candle", {}),
+            "last_evaluated_decision_ts": c_semantics.get("last_evaluated_decision_ts", {}),
+        }
+
+        calc_checksum = self._calculate_checksum(payload)
+        stored_checksum = row["checksum_sha256"]
+        if calc_checksum != stored_checksum:
+            # Backward compatibility check for earlier schema versions (v1, v2, v3)
+            is_valid_legacy = False
+            if row["schema_version"] < 4:
+                legacy_payload = {
+                    "schema_version": row["schema_version"],
+                    "timestamp_ms": row["timestamp_ms"],
+                    "equity_usd": row["equity_usd"],
+                    "peak_equity_usd": row["peak_equity_usd"],
+                    "active_positions": active_positions,
+                    "closed_trades_count": row["closed_trades_count"],
+                    "metrics": json.loads(row["metrics_json"]),
+                    "candle_sync_timestamps": json.loads(row["candle_sync_timestamps_json"]),
+                    "circuit_breakers_state": json.loads(row["circuit_breakers_state_json"]),
+                    "idempotency_keys": json.loads(row["idempotency_keys_json"]),
+                }
+                if self._calculate_checksum(legacy_payload) == stored_checksum:
+                    is_valid_legacy = True
+                else:
+                    if "closed_positions_json" in row_keys and row["closed_positions_json"]:
+                        legacy_payload["closed_positions"] = closed_pos
+                    if "orders_history_json" in row_keys and row["orders_history_json"]:
+                        legacy_payload["orders_history"] = orders_hist
+                    if self._calculate_checksum(legacy_payload) == stored_checksum:
+                        is_valid_legacy = True
+
+            if not is_valid_legacy:
+                raise PersistenceError(
+                    f"Database checkpoint corruption detected: stored hash {stored_checksum} != calculated {calc_checksum}"
                 )
-                if row:
-                    payload = {
-                        "schema_version": row["schema_version"],
-                        "timestamp_ms": row["timestamp_ms"],
-                        "equity_usd": row["equity_usd"],
-                        "peak_equity_usd": row["peak_equity_usd"],
-                        "active_positions": json.loads(row["active_positions_json"]),
-                        "closed_trades_count": row["closed_trades_count"],
-                        "metrics": json.loads(row["metrics_json"]),
-                        "candle_sync_timestamps": json.loads(row["candle_sync_timestamps_json"]),
-                        "circuit_breakers_state": json.loads(row["circuit_breakers_state_json"]),
-                        "idempotency_keys": json.loads(row["idempotency_keys_json"]),
-                        "closed_positions": json.loads(row["closed_positions_json"]) if "closed_positions_json" in row.keys() else [],
-                        "orders_history": json.loads(row["orders_history_json"]) if "orders_history_json" in row.keys() else [],
-                    }
-                    raw_bytes = json.dumps(payload, indent=2, sort_keys=True).encode("utf-8")
-                    calc_checksum = hashlib.sha256(raw_bytes).hexdigest()
-                    if calc_checksum == row["checksum_sha256"]:
-                        logger.info(
-                            f"RESTART RECOVERY (SQL): Loaded checkpoint from {payload['timestamp_ms']} "
-                            f"with {len(payload['active_positions'])} active positions. Checksum verified."
-                        )
-                        return payload
-                    else:
-                        logger.warning("Database checkpoint failed checksum validation; falling back to disk.")
-            except Exception as db_err:
-                logger.warning(f"Error loading checkpoint from database: {db_err}")
-                if self.mode == PersistenceMode.REQUIRED_DURABLE and not self.checkpoint_file.exists() and not self.checkpoint_prev_file.exists():
-                    raise PersistenceError(f"Database checkpoint load failed in REQUIRED_DURABLE mode: {db_err}") from db_err
+        return payload
 
-        # 2. Attempt load from primary file
-        if self.checkpoint_file.exists():
+    def load_checkpoint(self, allow_disaster_recovery: bool = False) -> Optional[Dict[str, Any]]:
+        """Load and verify platform checkpoint from database or disk with failover.
+        
+        Enforces:
+        - In REQUIRED_DURABLE mode:
+          * Normal recovery requires database checkpoint.
+          * Checks for split-brain disagreement between DB and file checkpoints.
+          * Corrupt DB raises PersistenceError unless allow_disaster_recovery=True.
+          * Heals corrupt file checkpoint from healthy DB.
+        - In FILE_ONLY_DEV mode:
+          * File checkpoint is primary, with prev file fallback.
+        """
+        if self.mode == PersistenceMode.REQUIRED_DURABLE:
+            if self.db is None:
+                raise PersistenceError("Database handle is None in REQUIRED_DURABLE mode; cannot load checkpoint safely.")
+
+            # 1. Attempt database load
+            db_payload = None
+            db_err: Optional[Exception] = None
             try:
-                with open(self.checkpoint_file, "r", encoding="utf-8") as f:
-                    envelope = json.load(f)
-                verified_data = self._verify_envelope(envelope)
-                if verified_data is not None:
-                    logger.info(
-                        f"RESTART RECOVERY (File): Loaded checkpoint from {verified_data.get('timestamp_ms')} "
-                        f"with {len(verified_data.get('active_positions', []))} active positions. Checksum verified."
-                    )
-                    return verified_data
-                logger.warning("Primary checkpoint file corrupted; attempting previous backup checkpoint.")
-            except Exception as ex:
-                logger.warning(f"Failed to read primary checkpoint file: {ex}")
+                db_payload = self._load_from_database()
+            except Exception as e:
+                db_err = e
 
-        # 3. Attempt failover to previous checkpoint
-        if self.checkpoint_prev_file.exists():
-            try:
-                with open(self.checkpoint_prev_file, "r", encoding="utf-8") as f:
-                    envelope = json.load(f)
-                verified_data = self._verify_envelope(envelope)
-                if verified_data is not None:
-                    logger.info(
-                        f"RESTART RECOVERY (Backup File): Recovered from previous checkpoint timestamp {verified_data.get('timestamp_ms')}."
-                    )
-                    return verified_data
-            except Exception as ex:
-                logger.error(f"Failed to read backup checkpoint file: {ex}")
+            # 2. Attempt file load
+            file_payload = None
+            if self.checkpoint_file.exists():
+                try:
+                    file_payload = self._load_from_file(self.checkpoint_file)
+                except Exception:
+                    file_payload = None
 
-        logger.info("No valid existing checkpoint found. Starting with pristine state.")
-        return None
+            # 3. Check for split-brain conflict when both exist
+            if db_payload is not None and file_payload is not None:
+                db_ts = db_payload.get("timestamp_ms", 0)
+                file_ts = file_payload.get("timestamp_ms", 0)
+                db_eq = db_payload.get("equity_usd", 0.0)
+                file_eq = file_payload.get("equity_usd", 0.0)
+                db_hash = self._calculate_checksum(db_payload)
+                file_hash = self._calculate_checksum(file_payload)
+
+                if db_hash != file_hash and (abs(db_ts - file_ts) > 1000 or abs(db_eq - file_eq) > 0.01):
+                    err_msg = (
+                        f"Checkpoint conflict: Database and disk checkpoints disagree! "
+                        f"DB (ts={db_ts}, eq={db_eq}, hash={db_hash[:8]}) vs "
+                        f"File (ts={file_ts}, eq={file_eq}, hash={file_hash[:8]}). "
+                        f"Split-brain state detected."
+                    )
+                    logger.critical(err_msg)
+                    self._last_error = err_msg
+                    raise PersistenceError(err_msg)
+
+            # 4. Handle DB corruption / failure
+            if db_err is not None:
+                if not allow_disaster_recovery:
+                    err_msg = f"Database checkpoint corrupted or unreadable: {db_err}. Normal recovery aborted."
+                    logger.critical(err_msg)
+                    self._last_error = err_msg
+                    raise PersistenceError(err_msg) from db_err
+                else:
+                    logger.warning(f"DISASTER RECOVERY PATH ENGAGED: DB failed ({db_err}), attempting filesystem recovery.")
+                    if file_payload is not None:
+                        file_payload["_recovery_source"] = "DISASTER_RECOVERY_DISK"
+                        return file_payload
+                    if self.checkpoint_prev_file.exists():
+                        prev_payload = self._load_from_file(self.checkpoint_prev_file)
+                        if prev_payload is not None:
+                            prev_payload["_recovery_source"] = "DISASTER_RECOVERY_PREV_DISK"
+                            return prev_payload
+                    raise PersistenceError(f"Disaster recovery failed: no valid fallback checkpoint on disk ({db_err}).")
+
+            # 5. Handle file corruption when DB is healthy
+            if db_payload is not None and self.checkpoint_file.exists() and file_payload is None:
+                logger.warning("Primary file checkpoint corrupted but database is healthy. Healing disk checkpoint from database.")
+                try:
+                    self._heal_file_from_payload(db_payload)
+                except Exception as ex:
+                    logger.warning(f"Could not heal disk checkpoint: {ex}")
+
+            if db_payload is not None:
+                return db_payload
+
+            # 6. Database has no checkpoint
+            if file_payload is not None:
+                err_msg = "Database has no checkpoint but file checkpoint exists in REQUIRED_DURABLE mode. Inconsistent state."
+                logger.critical(err_msg)
+                raise PersistenceError(err_msg)
+
+            # Neither DB nor file exists
+            return None
+
+        else:
+            # FILE_ONLY_DEV Mode
+            if self.checkpoint_file.exists():
+                file_payload = self._load_from_file(self.checkpoint_file)
+                if file_payload is not None:
+                    return file_payload
+            if self.checkpoint_prev_file.exists():
+                prev_payload = self._load_from_file(self.checkpoint_prev_file)
+                if prev_payload is not None:
+                    return prev_payload
+            if self.db is not None:
+                try:
+                    return self._load_from_database()
+                except Exception:
+                    pass
+            return None
+
