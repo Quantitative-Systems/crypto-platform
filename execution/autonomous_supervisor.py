@@ -64,7 +64,11 @@ from execution.precision_engine import (
 )
 from execution.risk.circuit_breakers import CompositeCircuitBreakerManager
 from execution.safety.safety_gate import EnvironmentGateMode, SAFETY_GATE
-from execution.state.state_persistence import StatePersistenceManager
+from execution.state.state_persistence import (
+    PersistenceError,
+    PersistenceMode,
+    StatePersistenceManager,
+)
 from instrument.universe_manager import UNIVERSE_MANAGER
 from market_data.realtime.binance_ws_client import (
     BinanceRealtimeWSClient,
@@ -160,19 +164,114 @@ class AutonomousTradingSupervisor:
         self.ws_client.add_candle_listener(self._on_raw_candle_received)
         self.candle_engine.add_closed_candle_listener(self._on_closed_candle_formed)
 
+    def _abort_recovery(self, reason: str) -> None:
+        """Fails closed upon unrecoverable checkpoint state."""
+        self.system_status = "RECOVERY_FAILED_HALTED"
+        self._running = False
+        logger.critical(f"FATAL: Restart recovery aborted: {reason}. System halted fail-closed.")
+        ALERTS.emit(
+            severity=AlertSeverity.CRITICAL,
+            category=AlertCategory.SYSTEM,
+            title="Restart Recovery Aborted",
+            message=f"System failed-closed on startup: {reason}",
+            metadata={"reason": reason},
+        )
+
     def _attempt_restart_recovery(self) -> None:
-        """Attempt to restore state from disk checkpoint on boot."""
-        checkpoint = self.state_persistence.load_checkpoint()
-        if checkpoint:
-            self.simulated_equity = checkpoint.get("equity_usd", self.simulated_equity)
-            self.peak_equity = checkpoint.get("peak_equity_usd", self.peak_equity)
-            recovered_keys = checkpoint.get("idempotency_keys", [])
-            if recovered_keys:
-                self.idempotency_guard.restore_keys(recovered_keys)
-            logger.info(
-                f"Restored equity from checkpoint: ${self.simulated_equity:.2f}, "
-                f"{len(recovered_keys)} idempotency keys restored"
+        """Attempt to restore state from persistent checkpoint on boot with validation and reconciliation."""
+        try:
+            checkpoint = self.state_persistence.load_checkpoint()
+        except Exception as e:
+            self._abort_recovery(f"Fatal error loading checkpoint: {e}")
+            return
+
+        if not checkpoint:
+            logger.info("No prior checkpoint found. Initializing pristine supervisor state.")
+            self.system_status = "INITIALIZED_PRISTINE"
+            return
+
+        # 1. Validate Schema and Timestamp
+        schema_ver = checkpoint.get("schema_version", 1)
+        if schema_ver < 1 or schema_ver > 2:
+            self._abort_recovery(f"Incompatible schema version: {schema_ver}")
+            return
+
+        # 2. Equity & Peak Equity Validation
+        eq = checkpoint.get("equity_usd")
+        peak_eq = checkpoint.get("peak_equity_usd")
+        if eq is None or eq <= 0:
+            self._abort_recovery(f"Invalid equity in checkpoint: {eq}")
+            return
+        if peak_eq is None or peak_eq <= 0:
+            self._abort_recovery(f"Invalid peak equity in checkpoint: {peak_eq}")
+            return
+        self.simulated_equity = float(eq)
+        self.peak_equity = max(float(peak_eq), float(eq))
+
+        # 3. Restore and Validate Active Positions
+        raw_positions = checkpoint.get("active_positions", [])
+        self.active_positions.clear()
+        for p_dict in raw_positions:
+            try:
+                pid = p_dict.get("position_id")
+                sym = p_dict.get("symbol", "").upper()
+                entry_px = float(p_dict.get("entry_price", 0.0))
+                size = float(p_dict.get("size", 0.0))
+                direction = int(p_dict.get("direction", 0))
+
+                if not pid or not sym or sym not in self.symbols:
+                    self._abort_recovery(f"Invalid position in checkpoint: id={pid}, sym={sym}")
+                    return
+                if entry_px <= 0 or size <= 0 or direction not in (1, -1):
+                    self._abort_recovery(f"Invalid position parameters for {pid}: entry={entry_px}, size={size}, dir={direction}")
+                    return
+
+                pos = Position.from_dict(p_dict)
+                self.active_positions[pos.position_id] = pos
+            except Exception as pos_err:
+                self._abort_recovery(f"Failed to deserialize position from checkpoint: {pos_err}")
+                return
+
+        # 4. Restore Closed Positions & Trade History
+        if "closed_positions" in checkpoint:
+            self.closed_positions = list(checkpoint["closed_positions"])
+
+        # 5. Restore Orders History
+        if "orders_history" in checkpoint:
+            self.orders_history = [
+                OrderIntent(**o) if isinstance(o, dict) else o
+                for o in checkpoint["orders_history"]
+            ]
+
+        # 6. Restore Circuit Breaker Tripped States
+        breaker_states = checkpoint.get("circuit_breakers_state", {})
+        if breaker_states:
+            self.circuit_breakers.restore_states(breaker_states)
+
+        # 7. Restore Idempotency Keys (Prevent Duplicate Orders across restarts)
+        recovered_keys = checkpoint.get("idempotency_keys", [])
+        if recovered_keys:
+            self.idempotency_guard.restore_keys(recovered_keys)
+
+        # 8. Reconcile Restored State with Authoritative Ledger
+        recon_report = self.run_reconciliation()
+        if not recon_report.is_reconciled and len(recon_report.discrepancies) > 0:
+            logger.critical(
+                f"RESTART RECOVERY RECONCILIATION FAILED: {len(recon_report.discrepancies)} discrepancies detected: "
+                f"{recon_report.discrepancies}"
             )
+            self._abort_recovery(f"Reconciliation discrepancy after recovery: {recon_report.discrepancies}")
+            return
+
+        self.system_status = "RECOVERED_HEALTHY"
+        logger.info(
+            f"RESTART RECOVERY COMPLETE: Equity: ${self.simulated_equity:.2f}, "
+            f"Peak: ${self.peak_equity:.2f}, "
+            f"Active Positions: {len(self.active_positions)}, "
+            f"Idempotency Keys Restored: {len(recovered_keys)}, "
+            f"Reconciliation: RECONCILED"
+        )
+
 
     def seed_historical_state(self) -> Dict[str, int]:
         """Seeds continuous candle engine from existing disk cache."""
@@ -414,8 +513,8 @@ class AutonomousTradingSupervisor:
             del self.active_positions[cid]
 
     def _save_state_checkpoint(self) -> None:
-        """Saves atomic platform checkpoint to disk."""
-        active_pos_list = [asdict(p) for p in self.active_positions.values()]
+        """Saves atomic platform checkpoint to disk and database."""
+        active_pos_list = [p.to_dict() for p in self.active_positions.values()]
         metrics = {
             "total_trades": len(self.closed_positions),
             "win_rate": sum(1 for p in self.closed_positions if p.get("realized_r", 0) > 0) / max(len(self.closed_positions), 1),
@@ -423,17 +522,35 @@ class AutonomousTradingSupervisor:
         }
         candle_sync = {s: int(time.time() * 1000) for s in self.symbols}
         _, _, breaker_states = self.circuit_breakers.evaluate_all({"current_equity_usd": self.simulated_equity})
+        orders_payload = [asdict(o) if hasattr(o, "__dataclass_fields__") else dict(o) for o in self.orders_history]
 
-        self.state_persistence.save_checkpoint(
-            equity_usd=self.simulated_equity,
-            peak_equity_usd=self.peak_equity,
-            active_positions=active_pos_list,
-            closed_trades_count=len(self.closed_positions),
-            metrics=metrics,
-            candle_sync_timestamps=candle_sync,
-            circuit_breakers_state=breaker_states,
-            idempotency_keys=self.idempotency_guard.get_keys(),
-        )
+        try:
+            success = self.state_persistence.save_checkpoint(
+                equity_usd=self.simulated_equity,
+                peak_equity_usd=self.peak_equity,
+                active_positions=active_pos_list,
+                closed_trades_count=len(self.closed_positions),
+                metrics=metrics,
+                candle_sync_timestamps=candle_sync,
+                circuit_breakers_state=breaker_states,
+                idempotency_keys=self.idempotency_guard.get_keys(),
+                closed_positions=self.closed_positions,
+                orders_history=orders_payload,
+            )
+            if not success and self.state_persistence.mode == PersistenceMode.REQUIRED_DURABLE:
+                logger.critical("Checkpoint save failed in REQUIRED_DURABLE mode! Demoting operational health.")
+                self.system_status = "PERSISTENCE_DEGRADED"
+        except Exception as e:
+            logger.critical(f"Exception saving checkpoint: {e}")
+            if self.state_persistence.mode == PersistenceMode.REQUIRED_DURABLE:
+                self.system_status = "PERSISTENCE_DEGRADED"
+                ALERTS.emit(
+                    severity=AlertSeverity.CRITICAL,
+                    category=AlertCategory.SYSTEM,
+                    title="Persistence Failure",
+                    message=f"Mandatory checkpoint save failed: {e}",
+                    metadata={"error": str(e)},
+                )
 
     def _persist_decision_to_ledger(self, d: PhaseRDecisionRecord) -> None:
         """Appends the decision card to disk."""
@@ -454,9 +571,9 @@ class AutonomousTradingSupervisor:
         return self.reconciliation_engine.reconcile(
             candidate_count=len(self.decisions_history),
             decisions=[d.to_dict() for d in self.decisions_history],
-            orders=[asdict(o) for o in self.orders_history],
-            fills=[asdict(f) for f in self.fills_history],
-            active_positions=[asdict(p) for p in self.active_positions.values()],
+            orders=[asdict(o) if hasattr(o, "__dataclass_fields__") else o for o in self.orders_history],
+            fills=[asdict(f) if hasattr(f, "__dataclass_fields__") else f for f in self.fills_history],
+            active_positions=[p.to_dict() for p in self.active_positions.values()],
             closed_positions=self.closed_positions,
             ledger_count=ledger_lines,
         )
@@ -466,14 +583,15 @@ class AutonomousTradingSupervisor:
         recon = self.reconciliation_engine.last_report
         drift = self.drift_monitor.evaluate_drift()
         safety_status = SAFETY_GATE.get_status_report()
+        pers_health = self.state_persistence.get_persistence_health()
 
         return {
             "timestamp_utc": datetime.now(timezone.utc).isoformat(),
-            "product_name": "STRATA Digital Trading Platform",
+            "product_name": "Crypto Platform",
             "execution_mode": SAFETY_GATE.current_mode.value,
             "real_capital_authorized": SAFETY_GATE.real_capital_authorized_usd,
             "live_trading_status": "ENABLED" if SAFETY_GATE.is_live_execution else "DISABLED_FAIL_CLOSED",
-            "system_health": "HEALTHY" if (not recon or recon.is_reconciled) else "DEGRADED",
+            "system_health": "HEALTHY" if (not recon or recon.is_reconciled) and pers_health.get("status") == "HEALTHY" else "DEGRADED",
             "simulated_equity_usd": self.simulated_equity,
             "peak_equity_usd": self.peak_equity,
             "portfolio_heat_pct": sum(1.0 for _ in self.active_positions),
@@ -483,6 +601,7 @@ class AutonomousTradingSupervisor:
             "total_trades_executed": len(self.fills_history),
             "total_positions_closed": len(self.closed_positions),
             "safety_barrier": safety_status,
+            "persistence_health": pers_health,
             "feed_metrics": self.ws_client.get_metrics_snapshot(),
             "reconciliation": recon.to_dict() if recon else {"status": "INITIALIZED"},
             "drift_status": drift.to_dict(),
@@ -492,6 +611,10 @@ class AutonomousTradingSupervisor:
 
     async def start(self) -> None:
         """Starts the autonomous 24/7 background organism."""
+        if self.system_status == "RECOVERY_FAILED_HALTED":
+            logger.critical("Cannot start autonomous supervisor: system halted due to restart recovery failure.")
+            raise RuntimeError("Autonomous supervisor startup aborted: system is in RECOVERY_FAILED_HALTED state.")
+
         self._running = True
         self.system_status = f"RUNNING_{SAFETY_GATE.current_mode.value}_24_7"
         await self.ws_client.start()

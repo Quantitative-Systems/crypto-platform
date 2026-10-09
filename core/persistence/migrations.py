@@ -104,6 +104,15 @@ MIGRATIONS: List[Migration] = [
         DROP TABLE IF EXISTS application_checkpoints;
         """
     ),
+    Migration(
+        version=3,
+        name="003_checkpoint_history_extensions",
+        up_sql="""
+        ALTER TABLE application_checkpoints ADD COLUMN closed_positions_json TEXT NOT NULL DEFAULT '[]';
+        ALTER TABLE application_checkpoints ADD COLUMN orders_history_json TEXT NOT NULL DEFAULT '[]';
+        """,
+        down_sql=""
+    ),
 ]
 
 
@@ -131,16 +140,20 @@ class MigrationManager:
         return [row["version"] for row in rows]
 
     def apply_pending_migrations(self) -> List[int]:
-        """Apply all unapplied migrations in ascending order within individual transactions."""
-        applied = set(self.get_applied_versions())
+        """Apply all unapplied migrations in ascending order safely under transaction locks."""
         newly_applied = []
 
         for m in sorted(MIGRATIONS, key=lambda x: x.version):
-            if m.version in applied:
-                continue
-
-            logger.info(f"Applying migration {m.version}: {m.name}...")
             with self.db.transaction():
+                # Re-check under exclusive transaction lock to prevent concurrent double-application
+                existing = self.db.fetchone(
+                    "SELECT version FROM schema_migrations WHERE version = ?;",
+                    (m.version,)
+                )
+                if existing:
+                    continue
+
+                logger.info(f"Applying migration {m.version}: {m.name}...")
                 # Execute migration statements
                 for statement in m.up_sql.strip().split(";"):
                     stmt = statement.strip()
@@ -152,9 +165,8 @@ class MigrationManager:
                     "INSERT INTO schema_migrations (version, name, applied_at) VALUES (?, ?, ?);",
                     (m.version, m.name, time.time())
                 )
-
-            newly_applied.append(m.version)
-            logger.info(f"Migration {m.version} applied successfully.")
+                newly_applied.append(m.version)
+                logger.info(f"Migration {m.version} applied successfully.")
 
         return newly_applied
 

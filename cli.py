@@ -96,6 +96,18 @@ def cmd_health() -> int:
         print(f" [FAIL] Pre-flight Startup Validator: {e}")
         checks_passed = False
 
+    # 8. Durable Persistence Health
+    try:
+        from core.persistence.database import get_db_manager
+        from core.persistence.migrations import MigrationManager
+        db_mgr = get_db_manager()
+        migrator = MigrationManager(db_mgr)
+        m_status = migrator.get_status()
+        print(f" [PASS] Database Persistence (WAL active | schema v{m_status['current_version']} | {m_status['applied_count']} migrations applied)")
+    except Exception as e:
+        print(f" [FAIL] Database Persistence: {e}")
+        checks_passed = False
+
     if checks_passed:
         print("\nALL PLATFORM HEALTH CHECKS PASSED.")
         return 0

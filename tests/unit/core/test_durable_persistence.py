@@ -181,11 +181,11 @@ def test_database_initialization_on_empty_directory():
         try:
             migrator = MigrationManager(db_mgr)
             applied = migrator.apply_pending_migrations()
-            assert applied == [1, 2]
+            assert applied == [1, 2, 3]
 
             status = migrator.get_status()
             assert status["is_current"] is True
-            assert status["applied_count"] == 2
+            assert status["applied_count"] == 3
             assert status["pending_count"] == 0
         finally:
             db_mgr.close()
@@ -201,14 +201,14 @@ def test_migration_idempotency_and_retry():
             migrator = MigrationManager(db_mgr)
 
             first_run = migrator.apply_pending_migrations()
-            assert first_run == [1, 2]
+            assert first_run == [1, 2, 3]
 
             second_run = migrator.apply_pending_migrations()
             assert second_run == []
 
             status = migrator.get_status()
-            assert status["applied_versions"] == [1, 2]
-            assert status["current_version"] == 2
+            assert status["applied_versions"] == [1, 2, 3]
+            assert status["current_version"] == 3
         finally:
             db_mgr.close()
             DatabaseManager.reset_all()

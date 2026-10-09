@@ -81,8 +81,9 @@ class DatabaseManager:
 
             cursor = conn.cursor()
             if not self._is_memory:
+                sync_mode = os.environ.get("CRYPTO_PLATFORM_SQLITE_SYNCHRONOUS", "NORMAL").upper()
                 cursor.execute("PRAGMA journal_mode = WAL;")
-                cursor.execute("PRAGMA synchronous = NORMAL;")
+                cursor.execute(f"PRAGMA synchronous = {sync_mode};")
             cursor.execute("PRAGMA foreign_keys = ON;")
             cursor.execute("PRAGMA busy_timeout = 5000;")
             cursor.close()
@@ -188,6 +189,37 @@ class DatabaseManager:
             self.close()
         except Exception:
             pass
+
+    def backup_to_file(self, target_path: Union[str, Path]) -> Path:
+        """Performs a safe, non-blocking online backup using SQLite Backup API."""
+        dest_path = Path(target_path).resolve()
+        dest_path.parent.mkdir(parents=True, exist_ok=True)
+        with self._conn_lock:
+            source_conn = self.get_connection()
+            dest_conn = sqlite3.connect(str(dest_path))
+            try:
+                source_conn.backup(dest_conn)
+            finally:
+                dest_conn.close()
+        return dest_path
+
+    @classmethod
+    def restore_from_backup(cls, backup_path: Union[str, Path], target_db_path: Union[str, Path]) -> DatabaseManager:
+        """Restores a database from an online backup using SQLite Backup API."""
+        src_path = Path(backup_path).resolve()
+        tgt_path = Path(target_db_path).resolve()
+        if not src_path.exists():
+            raise FileNotFoundError(f"Backup file not found: {src_path}")
+        tgt_path.parent.mkdir(parents=True, exist_ok=True)
+        dest_mgr = cls(db_path=tgt_path, auto_migrate=False)
+        with dest_mgr._conn_lock:
+            src_conn = sqlite3.connect(str(src_path))
+            dest_conn = dest_mgr.get_connection()
+            try:
+                src_conn.backup(dest_conn)
+            finally:
+                src_conn.close()
+        return dest_mgr
 
     @classmethod
     def reset_all(cls) -> None:

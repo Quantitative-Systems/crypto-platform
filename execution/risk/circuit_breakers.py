@@ -219,3 +219,15 @@ class CompositeCircuitBreakerManager:
     def reset_all(self) -> None:
         for breaker in self.breakers:
             breaker.reset()
+
+    def restore_states(self, states: Dict[str, Any]) -> None:
+        """Restores circuit breaker states from checkpoint on restart recovery."""
+        if not states:
+            return
+        for breaker in self.breakers:
+            if breaker.name in states:
+                b_info = states[breaker.name]
+                if isinstance(b_info, dict) and b_info.get("status") == BreakerStatus.TRIPPED.value:
+                    reason = b_info.get("reason_code", "RESTORED_TRIPPED_FROM_CHECKPOINT")
+                    breaker.trip(reason)
+                    logger.warning(f"Restored circuit breaker {breaker.name} in TRIPPED state: {reason}")
