@@ -86,10 +86,10 @@ jobs:
           cd mobile/android
           ./gradlew test
 
-      - name: Compile and Assemble Debug & Staging APKs
+      - name: Compile and Assemble Debug, Staging & Release APKs
         run: |
           cd mobile/android
-          ./gradlew assembleDebug assembleStaging
+          ./gradlew assembleDebug assembleStaging assembleRelease
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
@@ -104,5 +104,13 @@ jobs:
         with:
           name: crypto-platform-staging-apk
           path: mobile/android/app/build/outputs/apk/staging/app-staging.apk
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload Release APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: crypto-platform-release-apk
+          path: mobile/android/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
           retention-days: 14
