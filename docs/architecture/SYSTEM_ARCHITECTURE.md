@@ -114,3 +114,9 @@ Enforced by `FrozenContractGuard`:
   - Explicit build flavors (`debug`, `staging`, `release`).
   - Runtime custom API endpoint override in the Account/Settings screen.
   - Cleartext HTTP allowed only for emulator loopback (`10.0.2.2`); HTTPS/WSS enforced for staging and release.
+
+---
+
+## 7. Diagram & Visual Specifications
+
+For the complete suite of sequence diagrams, state machines, and lifecycle models, see the dedicated [Architecture Diagrams Specification](file:///c:/Users/nares/Workspace/crypto-platform/docs/assets/diagrams/ARCHITECTURE_DIAGRAMS.md).

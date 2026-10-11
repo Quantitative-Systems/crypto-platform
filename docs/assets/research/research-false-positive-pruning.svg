@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" width="100%" height="100%">
+    <defs>
+        <linearGradient id="bgGrad3" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0f172a"/>
+            <stop offset="100%" stop-color="#090d16"/>
+        </linearGradient>
+    </defs>
+    <rect width="960" height="440" rx="12" fill="url(#bgGrad3)" stroke="#1e293b" stroke-width="1.5"/>
+    
+    <text x="40" y="44" fill="#f8fafc" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="20" font-weight="700">Mechanistic Attribution: False-Positive Loss Pruning</text>
+    <text x="40" y="68" fill="#94a3b8" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif" font-size="13">The Fractal State Engine acts as an institutional noise filter, eliminating 80.2% of baseline losses</text>
+
+    <!-- Losses Box -->
+    <rect x="40" y="105" width="420" height="290" rx="8" fill="#131d33" stroke="#f43f5e" stroke-width="1"/>
+    <text x="65" y="140" fill="#fb7185" font-family="monospace" font-size="15" font-weight="700">BASELINE LOSSES: 4,873 Trades</text>
+    
+    <rect x="65" y="170" width="370" height="50" rx="4" fill="#4c0519"/>
+    <text x="80" y="195" fill="#fecdd3" font-family="monospace" font-size="13" font-weight="700">Pruned by Fractal Engine: 3,907 Losses</text>
+    <text x="80" y="212" fill="#fda4af" font-family="monospace" font-size="11">80.2% of baseline losses eliminated (Avg return: -0.8806R)</text>
+
+    <rect x="65" y="240" width="100" height="50" rx="4" fill="#27272a"/>
+    <text x="80" y="265" fill="#e4e4e7" font-family="monospace" font-size="13" font-weight="700">Retained: 966</text>
+    <text x="80" y="282" fill="#a1a1aa" font-family="monospace" font-size="11">19.8% retained</text>
+
+    <text x="65" y="340" fill="#94a3b8" font-family="monospace" font-size="12">Result: Prevents destructive whipsaws during HTF</text>
+    <text x="65" y="360" fill="#94a3b8" font-family="monospace" font-size="12">consolidation and counter-trend exhaustion moves.</text>
+
+    <!-- Wins Box -->
+    <rect x="500" y="105" width="420" height="290" rx="8" fill="#131d33" stroke="#10b981" stroke-width="1"/>
+    <text x="525" y="140" fill="#34d399" font-family="monospace" font-size="15" font-weight="700">BASELINE WINS: 4,735 Trades</text>
+
+    <rect x="525" y="170" width="220" height="50" rx="4" fill="#064e3b"/>
+    <text x="540" y="195" fill="#a7f3d0" font-family="monospace" font-size="13" font-weight="700">Preserved Wins: 1,976 Trades</text>
+    <text x="540" y="212" fill="#6ee7b7" font-family="monospace" font-size="11">High-confluence multi-scale directional wins</text>
+
+    <rect x="525" y="240" width="160" height="50" rx="4" fill="#27272a"/>
+    <text x="540" y="265" fill="#e4e4e7" font-family="monospace" font-size="13" font-weight="700">Filtered: 2,759 Wins</text>
+    <text x="540" y="282" fill="#a1a1aa" font-family="monospace" font-size="11">Lower RR / unaligned</text>
+
+    <text x="525" y="340" fill="#34d399" font-family="monospace" font-size="12" font-weight="700">Win Rate Surges from 49.3% → 67.2%</text>
+    <text x="525" y="360" fill="#34d399" font-family="monospace" font-size="12" font-weight="700">Profit Factor Expands from 2.352 → 4.918</text>
+</svg>
