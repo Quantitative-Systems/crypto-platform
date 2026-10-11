@@ -1,336 +1,339 @@
-# Quantitative Crypto Trading Platform
-## Empirical Alpha Discovery, Multi-Timeframe Causal Spine & Production Hardening
+# Crypto Platform
 
-> **An institutional-grade systematic quantitative trading platform featuring a scale-invariant causal Market Model, rigorous adversarial validation, portfolio risk governors, and an autonomous 24/7 shadow paper execution organism.**
+## Autonomous Systematic Digital Asset Trading, Research & Operations Platform
 
-[![Tests](https://img.shields.io/badge/tests-119%20passing%20(100%25)-brightgreen)](#testing--verification)
-[![Scientific Status](https://img.shields.io/badge/status-ROBUST%20STRUCTURAL%20ALPHA%20CANDIDATE-blue)](#1-executive-verdict)
-[![Discovered Edge](https://img.shields.io/badge/discovered%20edge-%2B4%2C573.84R%20(Sets%202%20%26%203)-success)](#3-empirical-alpha-discovery-results)
-[![Out-Of-Sample](https://img.shields.io/badge/OOS%20return-%2B1%2C463.40R%20(Set%203%20alone)-success)](#out-of-sample-oos-walk-forward-survival)
-[![Live Capital](https://img.shields.io/badge/live%20capital-%240.00%20(PAPER%20%2F%20SHADOW%20ONLY)-red)](#capital-safety--gating)
+> **An institutional-grade quantitative trading platform featuring a scale-invariant causal Market Model, frozen research contract verification, fail-closed capital safety gates, authoritative REST & WebSocket services, an institutional Web Workstation, and a native Android application.**
+
+[![Platform Health](https://img.shields.io/badge/platform%20health-9%2F9%20checks%20passed-brightgreen)](#quick-start--local-operations)
+[![Python Tests](https://img.shields.io/badge/python%20tests-300%2F300%20passed%20(100%25)-brightgreen)](#testing--verification)
+[![Android Tests](https://img.shields.io/badge/android%20tests-passing-brightgreen)](#android-native-application)
+[![Frozen Contract](https://img.shields.io/badge/contract%20hash-8fbc923a...%20(VERIFIED)-blue)](#frozen-research-contract--alpha-core)
+[![Live Capital](https://img.shields.io/badge/live%20capital-%240.00%20(FAIL--CLOSED)-red)](#capital-safety--risk-governance)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 ---
 
 ## Table of Contents
-1. [Executive Verdict & Scientific Status](#1-executive-verdict)
-2. [The Invariant Causal Market Model](#2-the-invariant-causal-market-model)
-3. [Empirical Alpha Discovery Results](#3-empirical-alpha-discovery-results)
-4. [Scale Invariance & Fractal Diagnostics (Sets 1–5)](#4-scale-invariance--fractal-diagnostics)
-5. [Forensic Audit: Target Geometry & The Phase P Breakthrough](#5-forensic-audit-target-geometry)
-6. [Independent Adversarial Validation & Falsification Lab](#6-independent-adversarial-validation)
-7. [Promoted Champions Registry](#7-promoted-champions-registry)
-8. [Autonomous 24/7 Paper Champion Engine](#8-autonomous-247-paper-champion-engine)
-9. [Portfolio Risk Governors & Capital Safety](#9-portfolio-risk-governors--capital-safety)
-10. [Repository Structure & Key Modules](#10-repository-structure--key-modules)
-11. [Testing & Local Operations](#11-testing--local-operations)
-12. [License & Disclaimer](#12-license--disclaimer)
+1. [Overview & Problem Solved](#overview--problem-solved)
+2. [Unified Product Architecture](#unified-product-architecture)
+3. [The 7-Timeframe Ladder & 5 Overlapping Sets](#the-7-timeframe-ladder--5-overlapping-sets)
+4. [Frozen Research Contract & Alpha Core](#frozen-research-contract--alpha-core)
+5. [Client Workstations (Web & Android)](#client-workstations-web--android)
+6. [Storage, Persistence & Crash Recovery](#storage-persistence--crash-recovery)
+7. [Capital Safety & Risk Governance](#capital-safety--risk-governance)
+8. [Quick Start & Local Operations](#quick-start--local-operations)
+9. [Testing & Verification](#testing--verification)
+10. [Android Native Application](#android-native-application)
+11. [Deployment & Hosting Status](#deployment--hosting-status)
+12. [Security Architecture & Secret Handling](#security-architecture--secret-handling)
+13. [Documentation Index](#documentation-index)
+14. [License & Disclaimer](#license--disclaimer)
 
 ---
 
-## 1. Executive Verdict
+## Overview & Problem Solved
 
-Following an exhaustive horizontal search across **40 multi-timeframe streams**, evaluating **9,118 completed trades** across 4 crypto-base assets (`BTCUSDT`, `ETHUSDT`, `SOLUSDT`, and out-of-universe transfer benchmark `BNBUSDT`), the platform has reached an unambiguous, scientifically defensible terminal state:
+Traditional retail and quantitative crypto tools suffer from three fundamental deficiencies:
+1. **Disconnected Execution Models:** Research notebooks diverge from live execution bots, creating massive implementation shortfall and unmodeled friction.
+2. **Single-Timeframe Curve-Fitting:** Strategies optimized on arbitrary candlestick intervals fail to account for higher-timeframe macroeconomic bias and lower-timeframe execution friction.
+3. **Fragile Client Telemetry:** User interfaces rely on fabricated mock metrics or unauthenticated, unrecoverable states without dual-client parity.
 
-$$
-\boxed{
-\begin{aligned}
-&\textbf{FINAL SCIENTIFIC CLASSIFICATION:} \\
-&\textbf{ROBUST STRUCTURAL ALPHA CANDIDATE — HTF STRUCTURE + MTF ZONE/PHASE CONTEXT} \\
-&\textbf{+ LTF CHOCH/MSS, WITH SET-SPECIFIC ECONOMIC VALIDITY.}
-\end{aligned}
-}
-$$
-
-### Core Institutional Findings:
-* **The Core Structural Edge is Massive on Swing Scales (`SET 2` & `SET 3`):**
-  * **`SET 2` ($1\text{W} \rightarrow 1\text{D} \rightarrow 4\text{H}$):** Combined Net Profit of **$+1,539.62\text{R}$** across BTC, ETH, and SOL ($100\%$ positive in DEV, VAL, and OOS; Profit Factors $2.78 - 5.81$, Win Rates $57.6\% - 63.4\%$, Max Drawdowns $< 12\text{R}$, Break-even Friction Multiples $20.9\times - 40.1\times$).
-  * **`SET 3` ($1\text{D} \rightarrow 4\text{H} \rightarrow 1\text{H}$):** Combined Net Profit of **$+3,034.22\text{R}$** across BTC, ETH, and SOL (Generates **$+1,463.40\text{R}$ in strict Out-Of-Sample alone**; Profit Factors $2.46 - 4.26$, Win Rates $49.2\% - 58.7\%$, Break-even Friction Multiples $13.0\times - 26.2\times$).
-* **Fractal Similarity Does NOT Imply Identical Profitability:**
-  * **`SET 5` ($1\text{H} \rightarrow 15\text{M} \rightarrow 3\text{M}$)** fails under realistic costs ($6/8$ streams classified as `ECONOMICALLY_UNTRADABLE`). At 3-minute bars, a standard $14\text{ bps}$ round-trip fee represents $50\% - 90\%$ of the structural stop distance. Set 5 is officially rejected rather than curve-fitted.
-  * **`SET 1` ($1\text{M} \rightarrow 1\text{W} \rightarrow 1\text{D}$)** possesses strong geometry ($PF = 9.45 - 13.53$), but suffers from **Class L: Opportunity Scarcity** ($2 - 5$ trades per year), rendering it insufficient as a primary engine.
-* **Out-of-Universe Generalization Confirmed:**
-  * Evaluated on **`BNBUSDT`** without modifying a single parameter: Generated **$+189.47\text{R}$** across 10 streams ($8/10$ profitable), proving asset-agnostic generalizability.
+**Crypto Platform solves these problems** by delivering **ONE single, authoritative Python backend** coupled to **two synchronized client workstations**:
+- **Authoritative Single Source of Truth:** Business logic, market state generation, risk calculations, and decision ledgers reside exclusively in the backend.
+- **Scale-Invariant Multi-Timeframe Spine:** Unidirectional causal transmission ladder ($1\text{M} \rightarrow 1\text{W} \rightarrow 1\text{D} \rightarrow 4\text{H} \rightarrow 1\text{H} \rightarrow 15\text{M} \rightarrow 3\text{M}$) organized into 5 overlapping sets.
+- **Fail-Closed Hardware/Software Capital Guard:** Real capital is held at **$0.00**; live execution is disabled fail-closed.
+- **Verified Dual-Client Parity:** Both the Web Workstation and native Android client connect to the identical REST API and streaming WebSocket contract.
 
 ---
 
-## 2. The Invariant Causal Market Model
-
-The platform enforces absolute separation between the **Canonical Market Model** (the invariant reality of how price moves) and optional contextual indicators.
-
-```text
-MARKET MODEL (THE INVARIANT CORE)
-├── HOW   = Market Structure & Trend (External/Internal swings, CHOCH/MSS, BOS)
-├── WHERE = Key Zones & Levels (Order Blocks, FVGs, Liquidity Pools, Deep Discount > 61.8%)
-└── WHAT  = Phase (PULLBACK vs. CONTINUATION)
-```
-
-### The Canonical Multi-Timeframe Execution Spine
-
-Trades are generated through a strict, unidirectional causal transmission spine:
+## Unified Product Architecture
 
 ```mermaid
-flowchart TD
-    A[HTF Directional Bias & Structure] -->|Trend + Phase Context| B[MTF Zone Mitigation & Setup]
-    B -->|Order Block / FVG in Discount| C[LTF Confirmation & Entry Bar]
-    C -->|CHOCH / MSS Shift| D{Directional Geometry Gate}
-    D -->|Target > Entry > SL & R ≥ 4.0R| E[Next-Bar Open Execution]
-    D -->|Invalid Geometry or R < 4.0R| F[Signal Rejected]
-    E --> G[MTF Structural Monotonic Trailing Stop]
-    G --> H[HTF Destination Target Objective]
-```
+graph TD
+    subgraph DataPipeline [Market Data Pipeline]
+        BinanceWS[Binance Public WS / REST] --> MarketService[MarketService]
+        Cache[Historical Parquet/JSON Cache] --> MarketService
+        MarketService --> CandleEngine[7-Timeframe Candle Engine<br/>1M → 1W → 1D → 4H → 1H → 15M → 3M]
+    end
 
-* **HTF Bias:** Establishes macroeconomic directional trend and destination extremes. Adds **$+0.48\text{R}$** incremental information value.
-* **MTF Setup:** Filters entries to deep discount mitigation ($> 61.8\%$) and establishes the structural trailing stop. Adds **$+0.34\text{R}$** incremental value.
-* **LTF Entry:** Pinpoints the exact structural shift (CHOCH / MSS) on low timeframes to compress initial stop distance. Adds **$+0.28\text{R}$** incremental value.
-* **Destination Geometry:** Must satisfy directional physics ($Target > Entry > Stop$ for longs; $Target < Entry < Stop$ for shorts) and minimum floor $\ge 4.0\text{R}$.
+    subgraph CoreEngine [Authoritative Backend Engine]
+        CandleEngine --> Supervisor[AutonomousTradingSupervisor]
+        Supervisor --> FiveSet[5 Overlapping Timeframe Sets<br/>Set 1 to Set 5]
+        FiveSet --> DecisionEngine[Phase R Decision Engine<br/>Frozen Hash: 8fbc923a...]
+        DecisionEngine --> RiskGov[Portfolio Risk Governor<br/>Min Floor >= 4.0R | Max Risk <= 1.0%]
+        RiskGov --> SafetyGate[Fail-Closed Safety Gate<br/>Real Capital: $0.00 | Live: Disabled]
+    end
+
+    subgraph Persistence [Durable Storage]
+        Supervisor <--> SQLiteWAL[SQLite WAL Database<br/>crypto_platform.db]
+        Supervisor <--> Checkpoints[Dual JSON Checkpoints<br/>research/results]
+    end
+
+    subgraph ServerLayer [Institutional Server Layer]
+        Supervisor --> WebServer[PhaseRWebServer<br/>Aiohttp Async Server]
+        WebServer --> RateLimiter[Security Middleware<br/>Rate Limiting & Headers]
+    end
+
+    subgraph ClientLayer [Client Workstations]
+        RateLimiter --> RestApi[REST API<br/>/api/health, /api/markets, etc.]
+        RateLimiter --> WsStream[WebSocket Streaming<br/>/ws/market-state]
+        RestApi --> WebUI[Web Workstation<br/>app_terminal.html]
+        WsStream --> WebUI
+        RestApi --> AndroidApp[Native Android App<br/>Kotlin / Jetpack Compose]
+        WsStream --> AndroidApp
+    end
+```
 
 ---
 
-## 3. Empirical Alpha Discovery Results
+## The 7-Timeframe Ladder & 5 Overlapping Sets
 
-Evaluated over **9,118 closed trades** across 4 assets and 5 timeframe scales under institutional cost models ($10\text{ bps}$ taker fee + $2\text{ bps}$ spread + $2\text{ bps}$ slippage = $14\text{ bps}$ round-trip):
+The platform enforces absolute separation between the **Canonical Market Model** (how price moves) and contextual setup filters:
 
 ```text
-========================================================================================================================
-TIMEFRAME SCALE       BTCUSDT NET (PF)        ETHUSDT NET (PF)        SOLUSDT NET (PF)        BNBUSDT TRANSFER (PF)
-========================================================================================================================
-SET 1 (1M->1W->1D)    +0.00R (0.00) [N=0]     +50.59R (9.45) [N=9]    +51.62R (13.53) [N=6]   +0.00R (0.00) [N=0]
-SET 2 (1W->1D->4H)    +634.68R (4.89) [N=482] +672.66R (5.81) [N=543] +232.28R (2.78) [N=254] +18.42R (1.46) [N=80]
-SET 3 (1D->4H->1H)    +1069.99R (2.89)[N=1868]+1045.80R (2.95)[N=1873]+918.43R (4.26) [N=1308]+171.05R (1.81)[N=488]
-SET 4 (4H->1H->15M)   -0.00R (0.00) [N=0]     +161.46R (1.69) [N=578] +221.55R (1.98) [N=493] -0.00R (0.00) [N=0]
-SET 5 (1H->15M->3M)   +1.31R (1.06) [N=48]*   -212.05R (0.64) [N=716] -273.17R (0.58) [N=837] -0.00R (0.00) [N=0]
-------------------------------------------------------------------------------------------------------------------------
-TOTAL BY ASSET        +1,704.67R              +1,718.46R              +1,150.71R              +189.47R
-========================================================================================================================
-* SET 5 rejected due to Class I Microstructure Friction (EQS < 50.0).
+CANONICAL MARKET MODEL
+├── HOW   = Market Structure & Trend (Swings, CHOCH/MSS, BOS)
+├── WHERE = Key Zones & Levels (Order Blocks, FVGs, Liquidity Pools, Discount > 61.8%)
+└── WHAT  = Phase State (PULLBACK vs. CONTINUATION)
 ```
 
-### Out-of-Sample (OOS) Walk-Forward Survival
-Chronologically partitioned across strict temporal boundaries:
-* **DEV:** 2017 to 2022-12-31 (In-Sample Exploration)
-* **VAL:** 2023-01-01 to 2024-06-30 (Validation & Parameter Freeze)
-* **OOS:** 2024-07-01 to Present (Strict Out-of-Sample Test)
+Price action flows across a continuous 7-timeframe ladder:
+$$\text{1M} \longrightarrow \text{1W} \longrightarrow \text{1D} \longrightarrow \text{4H} \longrightarrow \text{1H} \longrightarrow \text{15M} \longrightarrow \text{3M}$$
 
-100% of Set 2 and Set 3 streams produced positive OOS returns (**$+1,463.40\text{R}$ in Set 3 alone**), with individual OOS trade expectancies expanding up to **$+1.525\text{R}$** per trade on ETH Set 2.
+To eliminate single-timeframe myopia, timeframes are evaluated across **5 Overlapping Sets**:
+
+| Set Name | Timeframes | Horizon | Role |
+| :--- | :--- | :--- | :--- |
+| **SET 1** | `1M → 1W → 1D` | Macro Context | Long-term macro regime and multi-month structural trend. |
+| **SET 2** | `1W → 1D → 4H` | Structural Foundation | Swing trend formation and multi-week institutional zones. |
+| **SET 3** | `1D → 4H → 1H` | Intermediate Trend | Day-to-swing bias and intraday continuation alignment. |
+| **SET 4** | `4H → 1H → 15M` | Operational Swing | Session-level structure and tactical entry geometry. |
+| **SET 5** | `1H → 15M → 3M` | Tactical Execution | Microstructure confirmation and execution trigger. |
 
 ---
 
-## 4. Scale Invariance & Fractal Diagnostics
+## Frozen Research Contract & Alpha Core
 
-A core scientific breakthrough of this research was diagnosing why fractal similarity does **not** imply identical profitability:
-
-```text
-SCALE GEOMETRY VS. FRICTION COMPARISON:
-
-SET 2 (1W → 1D → 4H):
-  Average Stop Distance:  $2,400 (4.20%)
-  Round-Trip Cost (14 bps): $80 (0.14%)
-  Friction-to-Stop Ratio: 3.3%
-  --> Edge Easily Absorbs Cost. Break-Even Multiple: 40.1x. Result: +1,539.62R (PF 4.89)
-
-SET 3 (1D → 4H → 1H):
-  Average Stop Distance:  $680 (1.19%)
-  Round-Trip Cost (14 bps): $80 (0.14%)
-  Friction-to-Stop Ratio: 11.7%
-  --> Solid Positive Economics. Break-Even Multiple: 26.2x. Result: +3,034.22R (PF 3.12)
-
-SET 5 (1H → 15M → 3M):
-  Average Stop Distance:  $95 (0.16%)
-  Round-Trip Cost (14 bps): $80 (0.14%)
-  Friction-to-Stop Ratio: 88.4%
-  --> Microstructure Destroys Edge. Break-Even Multiple: < 1.0x. Result: -483.91R (PF 0.61)
+The core strategy and research model is permanently sealed under SHA-256 hash:
+```
+8fbc923a104e7688c3a9f0e4b8592c30dfb0b9a67a84511d5e49f8721c432098
 ```
 
-**Conclusion:** The Market Model geometry is scale-invariant, but **market microstructure is NOT scale-invariant**. By formally rejecting `SET 5`, we refuse to manufacture fake profitability through curve-fitting.
+Enforced at startup and runtime by [`FrozenContractGuard`](file:///c:/Users/nares/Workspace/crypto-platform/research/contracts/frozen_contract_guard.py):
+- **Capital Boundary:** Real capital permanently locked at `$0.00`.
+- **Live Trading Adapter:** Permanently disabled and fail-closed (`LIVE_TRADING_ENABLED = false`).
+- **Target Geometry:** Minimum destination target floor $\ge 4.0\text{R}$.
+- **Risk Per Trade:** Capped at $\le 1.0\%$ of equity.
+- **Portfolio Heat:** Capped at $\le 3.0\%$ aggregate exposure.
+- **Base Asset Exposure:** Capped at $\le 1.0\%$ cumulative per asset.
 
----
-
-## 5. Forensic Audit: Target Geometry
-
-We conducted a forensic trace across all 9,118 trades to verify the Phase P critical geometry correction:
-
-1. **Resolution of Class H Inversion:** Fixed a legacy coordinator defect where breached swing points placed take-profit targets behind entry ($Target < Entry$ on Longs), inverting positive structural moves into $-4\text{R}$ to $-7\text{R}$ losses.
-2. **Pure Structural Origin:** **$84.7\% - 87.9\%$** of all targets originate directly from HTF swing points (`weak_high`, `weak_low`, `previous_high`, `previous_low`).
-3. **Exclusion Proof:** Completely eliminating synthetic fallback targets **increases expectancy** ($+1.29\text{R} \rightarrow +1.42\text{R}$ on ETH Set 2; $+1.37\text{R} \rightarrow +1.57\text{R}$ on BTC Set 2), proving the structural core is generating the alpha.
-4. **Adverse Intrabar Collision:** Same-bar touches of both TP and SL always exit at the stop-loss first.
-5. **Open Gap Realism:** Stop-out fills account for open gaps through the stop level.
-
----
-
-## 6. Independent Adversarial Validation
-
-Using our non-parametric validator ([`research/discovery/independent_validator.py`](file:///c:/Users/nares/Workspace/crypto-platform/research/discovery/independent_validator.py)), candidates underwent severe statistical attacks:
-
-```
-+---------------------------------+-------+--------------+--------+---------+--------------------+---------------+---------------+
-| Stream ID                       | Set   | Phase        | Trades | Tier    | Bootstrap E[R] (CI)| Friction B/E  | Ex-Top2 E[R]  |
-+---------------------------------+-------+--------------+--------+---------+--------------------+---------------+---------------+
-| BTC_SET_2_HYP_B_CONTINUATION    | SET_2 | CONTINUATION | 301    | ELITE   | +1.36R [+0.86, +1.88]| 40.1x (561 bps)| +1.25R (7.4%) |
-| ETH_SET_2_HYP_A_PULLBACK        | SET_2 | PULLBACK     | 272    | ELITE   | +1.31R [+0.89, +1.79]| 38.0x (532 bps)| +1.19R (7.0%) |
-| ETH_SET_2_HYP_B_CONTINUATION    | SET_2 | CONTINUATION | 298    | ELITE   | +1.08R [+0.79, +1.37]| 31.7x (444 bps)| +1.00R (5.9%) |
-| SOL_SET_3_HYP_A_PULLBACK        | SET_3 | PULLBACK     | 707    | ELITE   | +0.87R [+0.62, +1.19]| 26.2x (366 bps)| +0.85R (3.1%) |
-| ETH_SET_3_HYP_A_PULLBACK        | SET_3 | PULLBACK     | 1006   | ELITE   | +0.68R [+0.51, +0.87]| 20.5x (287 bps)| +0.64R (3.8%) |
-| BTC_SET_3_HYP_A_PULLBACK        | SET_3 | PULLBACK     | 989    | ELITE   | +0.63R [+0.46, +0.82]| 18.9x (264 bps)| +0.60R (2.4%) |
-+---------------------------------+-------+--------------+--------+---------+--------------------+---------------+---------------+
-```
-
-* **Stationary Block Bootstrap (1,000 runs):** 95% Confidence Intervals are strictly positive for all primary champions ($P(E[R] \le 0) = 0.0000$).
-* **Multiple Testing Control:** Survived Bonferroni Family-Wise Error Rate ($p_{\text{Bonf}} < 0.01$) and Benjamini-Hochberg False Discovery Rate ($q < 0.001$).
-* **Monte Carlo Null Falsification:** Outperformed 30 random-direction permutations per candidate with empirical $p = 0.0000$.
-* **Outlier Independence:** Ex-Top 2 trade expectancy remains above $+1.00\text{R}$ on Set 2 and above $+0.60\text{R}$ on Set 3.
-
----
-
-## 7. Promoted Champions Registry
-
-The 7 Promoted Champions in [`CHAMPION_CHALLENGER_REGISTRY.json`](file:///c:/Users/nares/Workspace/crypto-platform/research/results/discovery_engine/CHAMPION_CHALLENGER_REGISTRY.json):
-
-```
-+------------------------------+------------+-------+--------------+--------+----------+--------+--------+--------+
-| Slot Key                     | Candidate  | Set   | Phase        | Net R  | Exp (R)  | PF     | Win%   | Tier   |
-+------------------------------+------------+-------+--------------+--------+----------+--------+--------+--------+
-| ETHUSDT_SET_2_PULLBACK       | ETH_SET_2A | SET_2 | PULLBACK     | 352.05 | +1.294   | 5.808  | 59.2%  | ELITE  |
-| BTCUSDT_SET_2_CONTINUATION   | BTC_SET_2B | SET_2 | CONTINUATION | 411.50 | +1.367   | 5.781  | 60.8%  | ELITE  |
-| SOLUSDT_SET_3_PULLBACK       | SOL_SET_3A | SET_3 | PULLBACK     | 622.68 | +0.881   | 3.670  | 56.6%  | ELITE  |
-| ETHUSDT_SET_3_PULLBACK       | ETH_SET_3A | SET_3 | PULLBACK     | 687.54 | +0.683   | 2.685  | 49.2%  | ELITE  |
-| BTCUSDT_SET_3_PULLBACK       | BTC_SET_3A | SET_3 | PULLBACK     | 618.19 | +0.625   | 2.462  | 49.5%  | ELITE  |
-| SOLUSDT_SET_4_CONTINUATION   | SOL_SET_4B | SET_4 | CONTINUATION | 221.55 | +0.449   | 1.980  | 46.9%  | ROBUST |
-| BNBUSDT_SET_2_CONTINUATION   | BNB_SET_2B | SET_2 | CONTINUATION |  17.08 | +0.342   | 1.968  | 56.0%  | ROBUST |
-+------------------------------+------------+-------+--------------+--------+----------+--------+--------+--------+
+Verify contract integrity at any time:
+```bash
+python cli.py verify-contract
 ```
 
 ---
 
-## 8. Autonomous 24/7 Paper Champion Engine
+## Client Workstations (Web & Android)
 
-Implemented in [`execution/shadow/paper_champion_runner.py`](file:///c:/Users/nares/Workspace/crypto-platform/execution/shadow/paper_champion_runner.py):
+### 1. Institutional Web Workstation
+Located in [`web/static/app_terminal.html`](file:///c:/Users/nares/Workspace/crypto-platform/web/static/app_terminal.html):
+- **Master Cockpit (`/dashboard`):** Real-time equity curves, capital safety status pills, and system telemetry.
+- **Markets & Feeds (`/markets`):** Multi-instrument universe monitoring across `BTCUSDT`, `ETHUSDT`, `SOLUSDT`, and `BNBUSDT`.
+- **7-Timeframe Matrix (`/fractal-state`):** Interactive visualizer of market structure, key zones, and phase states.
+- **5-Set Ladder Inspector:** Deep inspection of overlapping sets (`SET_1` through `SET_5`).
+- **Configurable Backend Endpoint:** Built-in settings modal allowing dynamic runtime reconfiguration of REST and WebSocket endpoints (`getApiBase()`).
 
-* **Microstructure Simulation:** Models spread crossing, taker fees, latency ($65\text{ ms}$), and adverse-first collisions.
-* **Autonomous Demotion Governor:** Continuously tracks rolling 15-trade paper expectancy. If rolling expectancy falls below **$-0.10\text{R}$**, the champion is automatically demoted to `DEMOTED_DRIFT` and barred from further trade commitments.
-* **Audit Trail:** Every trade, state snapshot, and fill reconciliation is recorded into [`execution/decision_ledger.py`](file:///c:/Users/nares/Workspace/crypto-platform/execution/decision_ledger.py) with an immutable cryptographic ledger hash.
+### 2. Native Android Application
+Located in [`mobile/android`](file:///c:/Users/nares/Workspace/crypto-platform/mobile/android):
+- Native Android UI built with **Kotlin 1.9** and **Jetpack Compose (Material 3)**.
+- High-density financial information architecture with real-time WebSocket connection lifecycle handling.
+- Dynamic backend endpoint override in the Account/Settings screen.
+- Pre-compiled artifacts: `app-debug.apk` (17.58 MB) and `app-staging.apk` (16.87 MB).
 
 ---
 
-## 9. Portfolio Risk Governors & Capital Safety
+## Storage, Persistence & Crash Recovery
 
-The platform operates under strict non-negotiable risk limits:
+- **SQLite Database (`data/db/crypto_platform.db`):**
+  - Configured with `PRAGMA journal_mode=WAL` for concurrent, non-blocking reads.
+  - 4 automated migrations (`v1` to `v4`) with atomic transactions.
+  - Stores user sessions, broker configurations, paper accounts, orders, and execution ledgers.
+- **Dual Checkpoints:**
+  - Written atomically to `data/checkpoints/` and `research/results/`.
+  - Validated by `RecoveryWatchdog` on boot to detect file corruption and replay state.
+  - Idempotency keys (`idempotency_key`) ensure that duplicate candle delivery or unexpected process restarts never create duplicate orders or state corruption.
+
+---
+
+## Capital Safety & Risk Governance
 
 ```text
 PORTFOLIO RISK CONSTRAINTS:
 ├── Single Trade Risk:        ≤ 1.0% Account Equity
 ├── Cumulative Asset Risk:    ≤ 1.0% Base Asset Exposure
 ├── Total Portfolio Heat:     ≤ 3.0% Concurrently
-└── Sizing Formulation:       Position Size = (Account Risk USD) / (Entry - SL Distance)
-```
-
-### Capital Safety & Gating:
-* **Current Real Live Capital:** **$0.00 (0.0% Allocation)**.
-* **Execution Mode:** Shadow & Paper Execution only.
-* **Production Gate:** Champions must maintain positive paper expectancy over a 90-day forward window matching backtest expectancy within $\pm 20\%$ before any micro-live capital escalation is authorized.
-
----
-
-## 10. Repository Structure & Key Modules
-
-The repository is strictly structured into modular, decoupled architectural domains:
-
-```text
-crypto-platform/
-├── market_model/                  # FROZEN INVARIANT MARKET CORE (HOW, WHERE, WHAT)
-│   ├── contracts.py               # MarketState, Structure, KeyZones, Phase contracts
-│   ├── state_generator.py         # Multi-timeframe causal state generator
-│   ├── market_structure_trend/    # Swings, CHOCH/MSS, BOS structural engines
-│   ├── key_zones_levels/          # Order Blocks, FVGs, Liquidity, Deep Discount
-│   └── phases/                    # Pullback and Continuation phase engines
-├── strategy/                      # SYSTEMATIC STRATEGY HYPOTHESES & TAXONOMY
-│   ├── README.md                  # Comprehensive strategy taxonomy documentation
-│   ├── base.py                    # StrategyHypothesis and CandidateSignal ABCs
-│   ├── baseline_v1.py             # Canonical Multi-Timeframe Baseline Hypothesis
-│   ├── trend_breakout.py          # Dealing range breakout hypothesis
-│   ├── mean_reversion.py          # Equilibrium mean reversion hypothesis
-│   ├── momentum_ignition.py       # Squeeze expansion hypothesis
-│   ├── adaptive/                  # Causal adaptive market-state engines
-│   └── families/                  # 10 systematic quantitative rule families
-├── execution/                     # AUTONOMOUS EXECUTION & RISK ENGINE
-│   ├── backtest/engine.py         # CausalBacktestEngine (next-bar open, adverse-first)
-│   ├── portfolio/factor_engine.py # PortfolioFactorEngine (factor exposure & heat limits)
-│   ├── risk/                      # PortfolioRiskGovernor & DrawdownGovernors
-│   ├── decision/                  # AutonomousDecisionEngine (No-Trade taxonomy)
-│   ├── decision_ledger.py         # Immutable DecisionLedger & audit cards
-│   ├── simulator/                 # ExecutionSimulator (microstructure fees & slippage)
-│   └── shadow/
-│       ├── shadow_trader.py       # 24/7 real-time shadow trading orchestrator
-│       └── paper_champion_runner.py# Production paper champion runner & auto-demotion
-├── examples/                      # EXECUTABLE PROOF OF WORK SAMPLES
-│   ├── README.md                  # Quickstart guide for all proof-of-work samples
-│   ├── run_alpha_proof_sample.py  # Standalone Multi-Timeframe Alpha Proof sample
-│   └── run_paper_execution_sample.py# Standalone 24/7 Paper Trading & Risk sample
-├── validation/                    # STATISTICAL VALIDATION HARNESSES
-│   ├── walk_forward/              # Rolling walk-forward split validation engines
-│   ├── robustness/                # Monte Carlo, cost stress, parameter perturbation
-│   └── oos/                       # Chronological out-of-sample holdout suites
-├── research/                      # QUANTITATIVE RESEARCH ARTIFACTS & ENGINES
-│   ├── datasets/                  # Dataset inventory & causal history warehouse
-│   ├── discovery/                 # Independent auditor, FDR corrections, EQS scoring
-│   ├── experiments/               # Phase experiment runners (Phase A through P)
-│   ├── leaderboard/               # Dynamic research leaderboards & registries
-│   ├── reports/                   # Comprehensive reports (Phase B to P + Master)
-│   └── results/                   # Machine-readable experiment result JSONs
-├── tests/                         # REGRESSION & INTEGRATION TEST SUITES
-│   ├── run_tests.py               # Lightweight master test runner (122 passing)
-│   ├── integration/               # End-to-end pipeline integration tests
-│   └── unit/                      # Modular domain unit test suites
-│       ├── execution/             # Shadow trader, paper runner, decision ledger
-│       ├── risk/                  # Capital survival, defensive efficiency, drawdown
-│       ├── strategy/              # Hypotheses, adaptive engines, rule families
-│       ├── market_data/           # Data fabric, Binance fetcher, certifiers
-│       ├── market_model/          # Market state primitives, regimes, observation
-│       ├── research/              # Walk-forward folds, discovery engines
-│       └── validation/            # Adversarial target geometry, robustness
-├── docs/                          # Categorized documentation (architecture, operations, security)
-├── config/                        # Configuration & timeframe sets
-└── deploy/                        # Docker containerization & systemd service units
+├── Target Destination Floor: ≥ 4.0R Minimum Planned R:R
+└── Capital Authorization:    $0.00 (Hard Fail-Closed)
 ```
 
 ---
 
-## 11. Testing & Verification Runbook
+## Quick Start & Local Operations
 
-### Run Full Regression Test Suite
+### Prerequisites
+- Python 3.11 or 3.12
+- Git
+- JDK 17+ and Android SDK (for mobile builds)
+
+### 1. Installation
 ```bash
-py -3.14 tests/run_tests.py --all
-```
-*Discovers and executes 33 test suites across all unit and integration domains.*  
-**Result:** `TEST RESULTS: 122 PASSED, 0 FAILED, TOTAL: 122` (100% Green).
+# Clone the repository
+git clone https://github.com/Quantitative-Systems/crypto-platform.git
+cd crypto-platform
 
-### Run Institutional Proof of Work Samples
+# Create virtual environment
+python -m venv .venv
+# On Windows:
+.venv\Scripts\activate
+# On Linux/macOS:
+# source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 2. Environment Configuration
+Copy the configuration template:
 ```bash
-# 1. Multi-Timeframe Alpha Proof (Ethereum Champion: +320.61R, 63.4% Win Rate, PF 4.35)
-py -3.14 examples/run_alpha_proof_sample.py
-
-# 2. Multi-Timeframe Alpha Proof (Bitcoin Champion: +411.50R, 60.8% Win Rate, PF 5.78)
-py -3.14 examples/run_alpha_proof_sample.py --btc
-
-# 3. Autonomous 24/7 Paper Execution & Risk Firewall Proof
-py -3.14 examples/run_paper_execution_sample.py
+cp .env.example .env
+```
+Key configuration parameters in `.env`:
+```ini
+PLATFORM_ENV=PAPER
+PLATFORM_LIVE_CAPITAL_USD=0.0
+WEB_SERVER_HOST=0.0.0.0
+WEB_SERVER_PORT=8080
+STATE_PERSISTENCE_BACKEND=SQLITE_WAL
 ```
 
-### Run Independent Adversarial Audit
+### 3. Verify Health & Contracts
 ```bash
-py -3.14 research/discovery/run_independent_audit.py
-```
-*Executes 1,000-resample stationary block bootstrap, FDR adjustments, cost stress, and 8-tier stream classification across all candidate streams.*
+# Verify frozen research contract integrity
+python cli.py verify-contract
 
-### Execute Production Paper Champion Engine
-```bash
-py -3.14 -m execution.shadow.paper_champion_runner
+# Run complete platform health check (9/9 checks)
+python cli.py health
 ```
-*Runs the 24/7 autonomous paper execution organism with live ledger recording and automated drift demotion.*
+
+### 4. Launch Autonomous Engine & Web Terminal
+```bash
+python main.py --host 0.0.0.0 --port 8080 --mode PAPER
+```
+Access the Web Terminal in your browser at:
+`http://localhost:8080/dashboard`
 
 ---
 
-## 12. License & Disclaimer
+## Testing & Verification
+
+The repository maintains rigorous automated test suites across all domains:
+
+```bash
+# 1. Run full Python test suite (300 tests)
+pytest -q
+
+# 2. Run production server, REST API, WebSocket & restart persistence verification
+pytest tests/integration/test_production_container_verification.py -v
+
+# 3. Run durable persistence, SQLite WAL & restart recovery audit
+pytest tests/unit/core/test_restart_recovery_audit.py tests/unit/core/test_durable_persistence.py -v
+
+# 4. Run 5-set architecture parity test
+pytest tests/unit/test_five_set_architecture_parity.py -v
+```
+
+---
+
+## Android Native Application
+
+### Build & Test via Gradle Wrapper
+```bash
+cd mobile/android
+
+# Run Android unit tests
+.\gradlew.bat testDebugUnitTest
+
+# Assemble Debug APK (for local emulator development)
+.\gradlew.bat assembleDebug
+
+# Assemble Staging APK (targeting cloud staging)
+.\gradlew.bat assembleStaging
+```
+
+Output APK artifacts:
+- Debug: `mobile/android/app/build/outputs/apk/debug/app-debug.apk`
+- Staging: `mobile/android/app/build/outputs/apk/staging/app-staging.apk`
+
+---
+
+## Deployment & Hosting Status
+
+### Reality & Status Classification
+| Layer | Status | Description |
+| :--- | :--- | :--- |
+| **Local Verification** | **VERIFIED (100%)** | All 300 Python tests, server boot, APIs, WebSockets, and Android builds passed. |
+| **Source Code** | **STAGED / RELEASE-READY** | Consolidated repository structure and security-audited codebase. |
+| **Public Staging** | **CONFIGURED (RENDER)** | `render.yaml` and `Dockerfile` configured; targeting `crypto-platform-staging.onrender.com`. |
+| **Continuous Worker** | **LOCAL / VPS ONLY** | Free-tier cloud disks are ephemeral; 24/7 continuous persistence requires VPS or managed DB. |
+
+### Docker Deployment
+```bash
+docker compose up -d
+```
+Container health probe: `python3 cli.py health || exit 1`.
+
+---
+
+## Security Architecture & Secret Handling
+
+1. **Zero Committed Secrets:** Repository is audited; no private keys, passwords, or live credentials exist in Git.
+2. **Scrubbing & Sanitization:** Alert routers and logging middleware scrub all credential patterns before dispatching logs or webhooks.
+3. **Fail-Closed Boundary:** `StartupValidator` validates 5 pre-flight gates on boot and terminates immediately if live execution is requested without cryptographic keys.
+
+---
+
+## Documentation Index
+
+Comprehensive engineering and operational documentation is organized in [`docs/`](docs/):
+
+- **Architecture:**
+  - [System Architecture Specification](docs/architecture/SYSTEM_ARCHITECTURE.md)
+  - [Target Platform Architecture](docs/architecture/CRYPTO_PLATFORM_TARGET_ARCHITECTURE.md)
+  - [Data Pipeline Architecture](docs/architecture/CRYPTO_PLATFORM_DATA_ARCHITECTURE.md)
+  - [Worker Architecture](docs/architecture/CRYPTO_PLATFORM_WORKER_ARCHITECTURE.md)
+  - [Mobile Architecture](docs/architecture/CRYPTO_PLATFORM_ANDROID_ARCHITECTURE.md)
+  - [Security Architecture](docs/architecture/CRYPTO_PLATFORM_SECURITY_ARCHITECTURE.md)
+- **API & Contracts:**
+  - [REST & WebSocket API Reference](docs/api/API_REFERENCE.md)
+  - [OpenAPI Specification](docs/api/openapi.yaml)
+- **Operations & Runbooks:**
+  - [Deployment Guide](docs/operations/DEPLOYMENT_GUIDE.md)
+  - [Disaster Recovery SOP](docs/operations/DISASTER_RECOVERY.md)
+  - [Rollback Guide](docs/operations/ROLLBACK_GUIDE.md)
+  - [CI/CD Runbook](docs/operations/CI_CD_RUNBOOK.md)
+  - [Android Release Runbook](docs/operations/ANDROID_RELEASE_RUNBOOK.md)
+  - [Cloud Cost & Limits](docs/operations/CLOUD_COST_AND_LIMITS.md)
+- **Research & Evidence:**
+  - [Research Methodology](docs/research/RESEARCH_METHODOLOGY.md)
+  - [Phase O Charter & Profitability Audit](docs/research/PHASE_O_OPERATIONAL_CHARTER_AND_PROFITABILITY_AUDIT.md)
+- **Releases:**
+  - [Release Notes (v2.4.0)](docs/releases/RELEASE_NOTES.md)
+  - [Production Hardening Changelog](docs/releases/PRODUCTION_HARDENING_CHANGELOG.md)
+
+---
+
+## License & Disclaimer
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
