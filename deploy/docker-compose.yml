@@ -1,83 +1,73 @@
 version: "3.8"
 
 services:
-  # Forward-paper trading service (live market ingestion, paper execution)
-  forward-paper:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: crypto-platform-paper
-    restart: unless-stopped
-    command: ["forward-paper", "--duration-hours", "24"]
-    env_file:
-      - .env
-    volumes:
-      - ./research:/app/research
-      - ./market_data:/app/market_data
-    environment:
-      - PLATFORM_ENV=PAPER
-      - PLATFORM_LIVE_CAPITAL_USD=0.0
-      - PLATFORM_LOG_LEVEL=INFO
-    healthcheck:
-      test: ["CMD", "python3", "-m", "crypto_platform.cli", "health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
-
-  # Broker / Exchange Demo Trading service (Binance Testnet / Bybit Testnet)
-  demo-trading:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: crypto-platform-demo
-    restart: "no"
-    command: ["demo", "--venue", "binance", "--mock"]
-    env_file:
-      - .env
-    volumes:
-      - ./research:/app/research
-      - ./market_data:/app/market_data
-    environment:
-      - PLATFORM_ENV=DEMO
-      - PLATFORM_LIVE_CAPITAL_USD=0.0
-      - PLATFORM_LOG_LEVEL=INFO
-
-  # Periodic health check & telemetry reporter
-  health-check:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: crypto-platform-health
-    command: ["health"]
-    env_file:
-      - .env
-    environment:
-      - PLATFORM_ENV=PAPER
-      - PLATFORM_LIVE_CAPITAL_USD=0.0
-
-  # Institutional Web Dashboard & REST/WebSocket API Gateway
+  # STRATA Core Application — Autonomous Engine, Terminal & REST API Server
   web-dashboard:
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile
     container_name: crypto-platform-web
     restart: unless-stopped
-    command: ["web", "--host", "0.0.0.0", "--port", "8080"]
+    command: ["--host", "0.0.0.0", "--port", "8080", "--mode", "paper"]
     ports:
       - "8080:8080"
-    env_file:
-      - .env
-    volumes:
-      - ./research:/app/research
-      - ./market_data:/app/market_data
     environment:
-      - PLATFORM_ENV=PAPER
-      - PLATFORM_LIVE_CAPITAL_USD=0.0
-      - PLATFORM_LOG_LEVEL=INFO
+      - STRATA_ENV=paper
+      - REAL_CAPITAL_AUTHORIZED_USD=0.00
+      - LIVE_TRADING_ENABLED=false
+      - LOG_LEVEL=INFO
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.2"
+          memory: 128M
+    volumes:
+      - strata_data:/app/data
+      - strata_research:/app/research/results
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/api/status"]
+      test: ["CMD-SHELL", "python3 cli.py health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 5s
+      start_period: 15s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Autonomous Paper Ingestion & Strategy Execution Worker
+  forward-paper:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: crypto-platform-paper-worker
+    restart: unless-stopped
+    command: ["--mode", "paper", "--no-web"]
+    environment:
+      - STRATA_ENV=paper
+      - REAL_CAPITAL_AUTHORIZED_USD=0.00
+      - LIVE_TRADING_ENABLED=false
+      - LOG_LEVEL=INFO
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+    volumes:
+      - strata_data:/app/data
+      - strata_research:/app/research/results
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  strata_data:
+    driver: local
+  strata_research:
+    driver: local

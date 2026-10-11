@@ -17,6 +17,14 @@ services:
       - LOG_LEVEL=INFO
       - BIND_HOST=0.0.0.0
       - BIND_PORT=8080
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.2"
+          memory: 128M
     volumes:
       - strata_data:/app/data
       - strata_research:/app/research/results
@@ -27,8 +35,13 @@ services:
       timeout: 10s
       retries: 3
       start_period: 15s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
-  # Optional Production Reverse Proxy (Caddy with automatic TLS)
+  # Production Reverse Proxy (Caddy with automatic TLS & WebSocket streaming bypass)
   strata-gateway:
     image: caddy:2.8-alpine
     container_name: strata-gateway
@@ -40,9 +53,19 @@ services:
       - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 128M
     depends_on:
       strata-platform:
         condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   strata_data:
