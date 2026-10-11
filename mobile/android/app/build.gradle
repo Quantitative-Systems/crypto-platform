@@ -25,8 +25,8 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
-            buildConfigField "String", "BASE_URL", "\"https://api.cryptoplatform.io\""
-            buildConfigField "String", "ENVIRONMENT_NAME", "\"PRODUCTION\""
+            buildConfigField "String", "BASE_URL", "\"https://crypto-platform-staging.onrender.com\""
+            buildConfigField "String", "ENVIRONMENT_NAME", "\"STAGING_RELEASE\""
         }
         staging {
             initWith debug
