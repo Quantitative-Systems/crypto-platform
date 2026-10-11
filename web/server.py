@@ -20,6 +20,7 @@ Serves an institutional financial trading terminal:
 """
 from __future__ import annotations
 
+import asyncio
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -505,10 +506,10 @@ HTML_TERMINAL_PAGE = """<!DOCTYPE html>
                             <div class="ladder-node"><div class="ladder-tf">1M</div><div class="card-subtext">Macro Trend: BULLISH<br>Phase: CONTINUATION</div></div>
                             <div class="ladder-node"><div class="ladder-tf">1W</div><div class="card-subtext">Swing Trend: BULLISH<br>Phase: CONTINUATION</div></div>
                             <div class="ladder-node"><div class="ladder-tf">1D</div><div class="card-subtext">Daily Trend: RANGE<br>Phase: PULLBACK</div></div>
-                            <div class="ladder-node"><div class="ladder-tf">4H</div><div class="card-subtext">Intraday: EQUILIBRIUM<br>Phase: ACCUMULATION</div></div>
-                            <div class="ladder-node"><div class="ladder-tf">1H</div><div class="card-subtext">Structure: MSS_BULL<br>Phase: EXPANSION</div></div>
-                            <div class="ladder-node"><div class="ladder-tf">15M</div><div class="card-subtext">Trigger: CHOCH<br>Phase: ENTRY_SETUP</div></div>
-                            <div class="ladder-node"><div class="ladder-tf">3M</div><div class="card-subtext">Micro: REACTION<br>Phase: CONFIRMATION</div></div>
+                            <div class="ladder-node"><div class="ladder-tf">4H</div><div class="card-subtext">Intraday: EQUILIBRIUM<br>Phase: PULLBACK</div></div>
+                            <div class="ladder-node"><div class="ladder-tf">1H</div><div class="card-subtext">Structure: MSS_BULL<br>Phase: CONTINUATION</div></div>
+                            <div class="ladder-node"><div class="ladder-tf">15M</div><div class="card-subtext">Trigger: CHOCH<br>Phase: CONTINUATION</div></div>
+                            <div class="ladder-node"><div class="ladder-tf">3M</div><div class="card-subtext">Micro: REACTION<br>Phase: CONTINUATION</div></div>
                         </div>
                     </div>
                 </div>
@@ -1051,6 +1052,11 @@ class PhaseRWebServer:
             security_headers_middleware,
             create_rate_limit_middleware(max_requests=240, window_seconds=60.0),
         ])
+        self.ws_clients: set[web.WebSocketResponse] = set()
+        self._loop: Optional[asyncio.AbstractEventLoop] = None
+        if self.supervisor and hasattr(self.supervisor, "add_market_state_listener"):
+            self.supervisor.add_market_state_listener(self._on_supervisor_market_event)
+        self.app.on_shutdown.append(self._on_shutdown)
         self._setup_routes()
 
     def _load_static_templates(self) -> None:
@@ -1094,6 +1100,7 @@ class PhaseRWebServer:
         self.app.router.add_get("/ready", self.handle_ready)
         self.app.router.add_get("/version", self.handle_version)
         self.app.router.add_get("/api/health", self.handle_health)
+        self.app.router.add_get("/api/status", self.handle_health)
         self.app.router.add_get("/api/ready", self.handle_ready)
         self.app.router.add_get("/api/version", self.handle_version)
         self.app.router.add_get("/api/telemetry", self.handle_telemetry)
@@ -1104,7 +1111,12 @@ class PhaseRWebServer:
         # REST API: Markets & Universe
         self.app.router.add_get("/api/markets", self.handle_markets)
         self.app.router.add_get("/api/markets/{symbol}", self.handle_market_symbol)
+        self.app.router.add_get("/api/markets/{symbol}/five-set-ladder", self.handle_market_five_set_ladder)
+        self.app.router.add_get("/api/markets/{symbol}/parity-audit", self.handle_market_parity_audit)
         self.app.router.add_post("/api/markets/watchlist", self.handle_watchlist_toggle)
+
+        # Real-time WebSockets: Authoritative Market State
+        self.app.router.add_get("/ws/market-state", self.handle_ws_market_state)
 
         # REST API: Strategy Library & Strategy Lab
         self.app.router.add_get("/api/strategies", self.handle_strategies_list)
@@ -1279,6 +1291,123 @@ class PhaseRWebServer:
             return web.json_response({"error": f"Asset '{symbol}' not found in admitted crypto universe"}, status=404)
         return web.json_response(detail)
 
+    async def handle_market_five_set_ladder(self, request: web.Request) -> web.Response:
+        symbol = request.match_info.get("symbol", "").upper()
+        ladder = self.market_service.get_five_set_ladder(symbol)
+        if not ladder:
+            return web.json_response({"error": f"Asset '{symbol}' not found in admitted crypto universe"}, status=404)
+        return web.json_response(ladder)
+
+    async def handle_market_parity_audit(self, request: web.Request) -> web.Response:
+        symbol = request.match_info.get("symbol", "").upper()
+        parity = self.market_service.verify_five_set_parity(symbol)
+        if not parity.get("symbol"):
+            return web.json_response({"error": f"Asset '{symbol}' not found in admitted crypto universe"}, status=404)
+        return web.json_response(parity)
+
+    async def handle_ws_market_state(self, request: web.Request) -> web.WebSocketResponse:
+        self._loop = asyncio.get_running_loop()
+        ws = web.WebSocketResponse(heartbeat=30.0)
+        await ws.prepare(request)
+        self.ws_clients.add(ws)
+
+        try:
+            from market_data.realtime.event_contract import MarketStateEvent, MarketEventType
+            snapshot_assets = {}
+            market_data = self.market_service.list_market_assets()
+            for asset in market_data.get("all_assets", []):
+                sym = asset["symbol"]
+                snapshot_assets[sym] = {
+                    "asset": asset,
+                    "ladder": self.market_service.get_five_set_ladder(sym),
+                    "parity": self.market_service.verify_five_set_parity(sym),
+                }
+
+            init_event = MarketStateEvent(
+                event_type=MarketEventType.STATE_SNAPSHOT.value,
+                sequence_id=0,
+                state_version="2.2.0",
+                timestamp_utc=datetime.now(timezone.utc).isoformat(),
+                asset="UNIVERSE",
+                timeframe="ALL",
+                closed_candle_ts=int(datetime.now(timezone.utc).timestamp() * 1000),
+                is_closed_candle=True,
+                current_price=0.0,
+                structure="ALL_TIMEFRAMES_ACTIVE",
+                phase="SYSTEM_READY",
+                key_zone="EQUILIBRIUM",
+                support_level=0.0,
+                resistance_level=0.0,
+                premium_discount="EQUILIBRIUM",
+                confidence_score=1.0,
+                alignment="FULLY_ALIGNED",
+                active_sets=["SET_1", "SET_2", "SET_3", "SET_4", "SET_5"],
+                production_eligible=False,
+                data_freshness_ms=0,
+                metadata={
+                    "markets": snapshot_assets,
+                    "canonical_ladder": ["1M", "1W", "1D", "4H", "1H", "15M", "3M"],
+                    "production_sets": ["SET_2", "SET_3", "SET_4"],
+                    "observation_sets": ["SET_1", "SET_5"],
+                }
+            )
+            await ws.send_str(init_event.to_json())
+
+            async for msg in ws:
+                if msg.type == web.WSMsgType.TEXT:
+                    try:
+                        data = json.loads(msg.data)
+                        action = data.get("action")
+                        if action == "ping":
+                            await ws.send_str(json.dumps({"action": "pong", "timestamp": datetime.now(timezone.utc).isoformat()}))
+                        elif action == "subscribe":
+                            await ws.send_str(json.dumps({"status": "subscribed", "symbol": data.get("symbol", "ALL")}))
+                        elif action == "request_resync":
+                            await ws.send_str(init_event.to_json())
+                    except Exception:
+                        pass
+                elif msg.type == web.WSMsgType.ERROR:
+                    break
+        finally:
+            self.ws_clients.discard(ws)
+        return ws
+
+    def _on_supervisor_market_event(self, event: Any) -> None:
+        """Callback invoked by supervisor when a closed candle forms an authoritative state change."""
+        try:
+            loop = getattr(self, "_loop", None)
+            if loop and loop.is_running():
+                asyncio.run_coroutine_threadsafe(self.broadcast_market_event(event), loop)
+            else:
+                try:
+                    curr_loop = asyncio.get_running_loop()
+                    curr_loop.create_task(self.broadcast_market_event(event))
+                except RuntimeError:
+                    pass
+        except Exception as e:
+            logger.warning(f"Error forwarding market event from supervisor to WS broadcast: {e}")
+
+    async def broadcast_market_event(self, event: Any) -> None:
+        if not self.ws_clients:
+            return
+        payload = event.to_json() if hasattr(event, "to_json") else json.dumps(event)
+        dead = []
+        for ws in self.ws_clients:
+            try:
+                await ws.send_str(payload)
+            except Exception:
+                dead.append(ws)
+        for ws in dead:
+            self.ws_clients.discard(ws)
+
+    async def _on_shutdown(self, app: web.Application) -> None:
+        for ws in set(self.ws_clients):
+            try:
+                await ws.close(code=web.WSCloseCode.GOING_AWAY, message=b"Server shutting down")
+            except Exception:
+                pass
+        self.ws_clients.clear()
+
     async def handle_watchlist_toggle(self, request: web.Request) -> web.Response:
         try:
             data = await request.json()
@@ -1335,12 +1464,18 @@ class PhaseRWebServer:
     async def handle_backtests(self, request: web.Request) -> web.Response:
         return web.json_response({
             "benchmark_king": {
-                "total_trades": 9608,
+                "unfiltered_trades": 9608,
+                "unfiltered_expectancy_r": 0.5781,
+                "unfiltered_profit_factor": 2.352,
+                "unfiltered_win_rate": 0.493,
+                "total_trades": 2942,
+                "sample_size_filtered": 2942,
+                "confidence_threshold": ">= 0.60",
                 "expectancy_r": 0.8885,
                 "profit_factor": 4.918,
                 "win_rate": 0.672,
                 "max_drawdown_r": 10.89,
-                "tail_risk_cvar": 1.20,
+                "tail_risk_cvar": 1.284,
                 "target_floor": ">= 4.0R",
                 "status": "PROTECTED_BASELINE",
             },
@@ -1375,23 +1510,35 @@ class PhaseRWebServer:
     async def handle_forward_validation(self, request: web.Request) -> web.Response:
         return web.json_response({
             "environments": {
-                "HISTORICAL": {
+                "HISTORICAL_UNFILTERED": {
                     "trades_evaluated": 9608,
+                    "expectancy_r": 0.5781,
+                    "profit_factor": 2.352,
+                    "win_rate": 0.493,
+                    "max_drawdown_r": 33.81,
+                    "status": "CANONICAL_UNFILTERED",
+                    "provenance": "Phase P / Q.2 Full Mapped Opportunity Set",
+                },
+                "HISTORICAL": {
+                    "trades_evaluated": 2942,
+                    "unfiltered_universe": 9608,
+                    "filter_rule": "fractal_confidence >= 0.60",
                     "expectancy_r": 0.8885,
                     "profit_factor": 4.918,
                     "win_rate": 0.672,
                     "max_drawdown_r": 10.89,
                     "status": "CERTIFIED_REPLAY",
-                    "provenance": "Phase Q.2 Locked Dataset",
+                    "provenance": "Phase Q.2 Locked Dataset (Confidence >= 0.60)",
                 },
                 "OOS": {
                     "trades_evaluated": 1665,
-                    "expectancy_r": 0.745,
-                    "profit_factor": 3.82,
-                    "win_rate": 0.612,
-                    "max_drawdown_r": 12.4,
+                    "filter_rule": "is_oos == True AND production_eligible == True",
+                    "expectancy_r": 0.8097,
+                    "profit_factor": 4.024,
+                    "win_rate": 0.636,
+                    "max_drawdown_r": 14.99,
                     "status": "VALIDATED",
-                    "provenance": "Phase Q.2 Out-of-Sample Holdout",
+                    "provenance": "Phase Q.2 Out-of-Sample Holdout (July 2024 - Oct 2026)",
                 },
                 "PAPER": {
                     "trades_evaluated": len(getattr(self.supervisor, "orders_history", [])),

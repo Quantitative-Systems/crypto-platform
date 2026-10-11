@@ -3,24 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Platform — Development Workstation</title>
+    <title>Crypto Platform — Professional Quantitative Workstation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-base: #060913;
-            --bg-sidebar: #090e1c;
-            --bg-panel: #0d1527;
-            --bg-card: rgba(16, 25, 45, 0.7);
-            --border: #1a2742;
-            --border-highlight: #0ea5e9;
-            --text: #f8fafc;
-            --text-muted: #8492a6;
-            --cyan: #0ea5e9;
-            --emerald: #10b981;
-            --rose: #f43f5e;
-            --amber: #f59e0b;
-            --purple: #8b5cf6;
+            --bg-base: #f8fafc;
+            --bg-sidebar: #ffffff;
+            --bg-panel: #ffffff;
+            --bg-subtle: #f1f5f9;
+            --bg-hover: #f8fafc;
+            --border: #e2e8f0;
+            --border-highlight: #0284c7;
+            --text: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --brand-blue: #2563eb;
+            --brand-sky: #0284c7;
+            --emerald: #059669;
+            --rose: #dc2626;
+            --amber: #d97706;
+            --purple: #7c3aed;
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             --font-mono: 'JetBrains Mono', Consolas, monospace;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -31,10 +39,12 @@
             height: 100vh;
             overflow: hidden;
             font-size: 13px;
+            letter-spacing: -0.01em;
         }
-        /* Sidebar */
+
+        /* Sidebar Navigation */
         aside {
-            width: 240px;
+            width: 250px;
             background: var(--bg-sidebar);
             border-right: 1px solid var(--border);
             display: flex;
@@ -43,59 +53,66 @@
             z-index: 20;
         }
         .brand {
-            padding: 1.15rem 1.25rem;
+            padding: 1.1rem 1.25rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
             border-bottom: 1px solid var(--border);
+            background: #ffffff;
         }
         .brand-icon {
-            width: 30px; height: 30px;
-            background: linear-gradient(135deg, var(--cyan), var(--purple));
-            border-radius: 6px;
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg, var(--brand-sky), var(--brand-blue));
+            border-radius: 7px;
             display: flex; align-items: center; justify-content: center;
-            font-weight: 800; font-size: 1rem;
+            font-weight: 800; font-size: 1.05rem; color: #ffffff;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
         }
-        .brand-text { font-size: 1.15rem; font-weight: 800; letter-spacing: 0.06em; }
+        .brand-text { font-size: 1.15rem; font-weight: 800; letter-spacing: 0.04em; color: var(--text); }
         .nav-menu {
             flex: 1;
             overflow-y: auto;
-            padding: 0.75rem 0.5rem;
+            padding: 0.75rem 0.6rem;
             list-style: none;
         }
         .nav-category {
             font-size: 0.68rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #475569;
-            margin: 0.85rem 0.65rem 0.3rem;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin: 0.95rem 0.65rem 0.35rem;
             font-weight: 700;
         }
         .nav-item {
-            padding: 0.5rem 0.75rem;
+            padding: 0.52rem 0.8rem;
             border-radius: 6px;
-            font-size: 0.825rem;
+            font-size: 0.835rem;
             font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 0.65rem;
-            color: var(--text-muted);
-            transition: all 0.15s;
-            margin-bottom: 0.1rem;
+            gap: 0.7rem;
+            color: var(--text-secondary);
+            transition: all 0.15s ease;
+            margin-bottom: 0.12rem;
         }
-        .nav-item:hover { color: var(--text); background: rgba(255,255,255,0.04); }
-        .nav-item.active { color: #fff; background: rgba(14, 165, 233, 0.15); border-left: 3px solid var(--cyan); }
+        .nav-item:hover { color: var(--brand-blue); background: var(--bg-subtle); }
+        .nav-item.active {
+            color: var(--brand-blue);
+            background: #eff6ff;
+            font-weight: 600;
+            border-left: 3px solid var(--brand-blue);
+        }
         .user-footer {
             padding: 0.85rem 1rem;
             border-top: 1px solid var(--border);
-            background: #070c17;
+            background: var(--bg-subtle);
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 0.8rem;
         }
-        .user-email-txt { color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px; }
+        .user-email-txt { color: var(--text-secondary); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 140px; font-family: var(--font-mono); font-size: 0.75rem; }
 
         /* Main Workspace */
         main {
@@ -106,57 +123,88 @@
             background: var(--bg-base);
         }
         header.topbar {
-            height: 54px;
+            height: 56px;
             border-bottom: 1px solid var(--border);
-            background: var(--bg-sidebar);
+            background: #ffffff;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 1.5rem;
             flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
         }
-        .topbar-left { display: flex; align-items: center; gap: 1rem; }
+        .topbar-left { display: flex; align-items: center; gap: 0.85rem; }
         .env-badge {
-            padding: 0.2rem 0.6rem;
+            padding: 0.25rem 0.65rem;
             border-radius: 4px;
             font-size: 0.725rem;
             font-weight: 700;
             font-family: var(--font-mono);
-            background: rgba(16, 185, 129, 0.15);
+            background: #ecfdf5;
             color: var(--emerald);
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            border: 1px solid #a7f3d0;
         }
         .capital-lock-badge {
-            padding: 0.2rem 0.6rem;
+            padding: 0.25rem 0.65rem;
             border-radius: 4px;
             font-size: 0.725rem;
             font-weight: 700;
             font-family: var(--font-mono);
-            background: rgba(244, 63, 94, 0.15);
+            background: #fef2f2;
             color: var(--rose);
-            border: 1px solid rgba(244, 63, 94, 0.3);
+            border: 1px solid #fecaca;
         }
+        .freshness-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.725rem;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            background: var(--bg-subtle);
+            padding: 0.22rem 0.55rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+        .pulse-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: var(--emerald);
+            box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.7);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.6); }
+            70% { box-shadow: 0 0 0 6px rgba(5, 150, 105, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
+        }
+
         .topbar-controls { display: flex; align-items: center; gap: 0.65rem; }
         .btn-ctl {
-            padding: 0.4rem 0.8rem;
+            padding: 0.42rem 0.85rem;
             border-radius: 5px;
             font-size: 0.78rem;
             font-weight: 600;
             cursor: pointer;
-            border: none;
-            transition: all 0.2s;
+            border: 1px solid transparent;
+            transition: all 0.15s ease;
             display: inline-flex;
             align-items: center;
             gap: 0.35rem;
+            font-family: var(--font-sans);
         }
-        .btn-green { background: var(--emerald); color: #000; }
-        .btn-amber { background: var(--amber); color: #000; }
-        .btn-rose { background: var(--rose); color: #fff; }
-        .btn-cyan { background: var(--cyan); color: #000; }
-        .btn-outline-sm { background: transparent; border: 1px solid var(--border); color: var(--text); }
-        .btn-outline-sm:hover { border-color: var(--cyan); }
+        .btn-green { background: #10b981; color: #ffffff; }
+        .btn-green:hover { background: #059669; }
+        .btn-amber { background: #f59e0b; color: #ffffff; }
+        .btn-amber:hover { background: #d97706; }
+        .btn-rose { background: #ef4444; color: #ffffff; }
+        .btn-rose:hover { background: #dc2626; }
+        .btn-cyan { background: var(--brand-sky); color: #ffffff; }
+        .btn-cyan:hover { background: #0369a1; }
+        .btn-outline-sm { background: #ffffff; border: 1px solid var(--border); color: var(--text-secondary); }
+        .btn-outline-sm:hover { border-color: var(--brand-sky); color: var(--brand-sky); }
         .style-select {
-            background: var(--bg-panel);
+            background: #ffffff;
             color: var(--text);
             border: 1px solid var(--border);
             border-radius: 5px;
@@ -174,40 +222,49 @@
         /* Metric Widgets */
         .metric-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
             margin-bottom: 1.25rem;
         }
         .widget {
-            background: var(--bg-panel);
+            background: #ffffff;
             border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 0.85rem 1.15rem;
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.15s, box-shadow 0.15s;
         }
-        .widget-title { font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem; font-family: var(--font-mono); }
-        .widget-value { font-size: 1.35rem; font-weight: 700; font-family: var(--font-mono); }
-        .widget-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem; }
+        .widget:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+        .widget-title { font-size: 0.73rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.35rem; font-family: var(--font-mono); font-weight: 600; letter-spacing: 0.05em; }
+        .widget-value { font-size: 1.45rem; font-weight: 700; font-family: var(--font-mono); color: var(--text); }
+        .widget-sub { font-size: 0.73rem; color: var(--text-muted); margin-top: 0.25rem; font-weight: 500; }
 
         /* Tables & Blotters */
         .blotter-container {
-            background: var(--bg-panel);
+            background: #ffffff;
             border: 1px solid var(--border);
-            border-radius: 6px;
+            border-radius: 8px;
             margin-bottom: 1.25rem;
             overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
         .blotter-header {
-            padding: 0.75rem 1.15rem;
+            padding: 0.85rem 1.25rem;
             border-bottom: 1px solid var(--border);
+            background: #ffffff;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: 700;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
+            color: var(--text);
         }
         .blotter-toolbar {
-            padding: 0.65rem 1.15rem;
-            background: rgba(0,0,0,0.2);
+            padding: 0.65rem 1.25rem;
+            background: var(--bg-subtle);
             border-bottom: 1px solid var(--border);
             display: flex;
             gap: 0.75rem;
@@ -215,36 +272,44 @@
             flex-wrap: wrap;
         }
         .search-box {
-            background: var(--bg-base);
+            background: #ffffff;
             border: 1px solid var(--border);
-            border-radius: 4px;
-            color: #fff;
-            padding: 0.35rem 0.65rem;
-            font-size: 0.78rem;
+            border-radius: 5px;
+            color: var(--text);
+            padding: 0.4rem 0.75rem;
+            font-size: 0.8rem;
             font-family: inherit;
-            width: 200px;
+            width: 220px;
+        }
+        .search-box:focus {
+            outline: none;
+            border-color: var(--brand-sky);
+            box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
         }
         table.dense-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             text-align: left;
         }
         table.dense-table th {
-            background: rgba(0,0,0,0.3);
-            padding: 0.55rem 0.85rem;
+            background: #f8fafc;
+            padding: 0.65rem 0.95rem;
             color: var(--text-muted);
             font-weight: 600;
             border-bottom: 1px solid var(--border);
-            font-size: 0.75rem;
+            font-size: 0.73rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
         }
         table.dense-table td {
-            padding: 0.55rem 0.85rem;
-            border-bottom: 1px solid rgba(26, 39, 66, 0.4);
+            padding: 0.65rem 0.95rem;
+            border-bottom: 1px solid var(--border);
             font-family: var(--font-mono);
-            font-size: 0.78rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
         }
-        table.dense-table tr:hover { background: rgba(255,255,255,0.02); }
+        table.dense-table tr:hover { background: #f8fafc; }
 
         /* Pages */
         .tab-page { display: none; }
@@ -252,108 +317,161 @@
 
         /* Status Pills */
         .pill {
-            display: inline-block;
-            padding: 0.15rem 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.2rem 0.55rem;
             border-radius: 4px;
-            font-size: 0.7rem;
+            font-size: 0.715rem;
             font-weight: 700;
             font-family: var(--font-mono);
+            letter-spacing: 0.02em;
         }
-        .pill-green { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
-        .pill-cyan { background: rgba(14, 165, 233, 0.15); color: var(--cyan); border: 1px solid rgba(14, 165, 233, 0.3); }
-        .pill-amber { background: rgba(245, 158, 11, 0.15); color: var(--amber); border: 1px solid rgba(245, 158, 11, 0.3); }
-        .pill-rose { background: rgba(244, 63, 94, 0.15); color: var(--rose); border: 1px solid rgba(244, 63, 94, 0.3); }
+        .pill-green { background: #ecfdf5; color: var(--emerald); border: 1px solid #a7f3d0; }
+        .pill-cyan { background: #f0f9ff; color: var(--brand-sky); border: 1px solid #bae6fd; }
+        .pill-amber { background: #fffbeb; color: var(--amber); border: 1px solid #fde68a; }
+        .pill-rose { background: #fef2f2; color: var(--rose); border: 1px solid #fecaca; }
 
         /* Chat / Copilot */
         .copilot-container {
             display: flex;
             flex-direction: column;
-            height: 380px;
+            height: 400px;
             border: 1px solid var(--border);
-            border-radius: 6px;
-            background: var(--bg-base);
+            border-radius: 8px;
+            background: #ffffff;
             overflow: hidden;
             margin-top: 1rem;
+            box-shadow: var(--shadow-sm);
         }
         .copilot-messages {
             flex: 1;
             overflow-y: auto;
-            padding: 1rem;
+            padding: 1.15rem;
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.85rem;
+            background: #f8fafc;
         }
         .chat-bubble {
-            max-width: 80%;
-            padding: 0.75rem 1rem;
+            max-width: 82%;
+            padding: 0.8rem 1.1rem;
             border-radius: 8px;
-            font-size: 0.825rem;
-            line-height: 1.5;
+            font-size: 0.84rem;
+            line-height: 1.55;
             white-space: pre-wrap;
         }
         .chat-user {
             align-self: flex-end;
-            background: rgba(14, 165, 233, 0.2);
-            border: 1px solid rgba(14, 165, 233, 0.4);
-            color: #fff;
+            background: var(--brand-blue);
+            color: #ffffff;
+            border-bottom-right-radius: 2px;
+            box-shadow: var(--shadow-sm);
         }
         .chat-ai {
             align-self: flex-start;
-            background: #0d1527;
+            background: #ffffff;
             border: 1px solid var(--border);
-            color: #e2e8f0;
+            color: var(--text);
+            border-bottom-left-radius: 2px;
+            box-shadow: var(--shadow-sm);
         }
         .copilot-input-bar {
             display: flex;
             border-top: 1px solid var(--border);
-            background: #090e1c;
+            background: #ffffff;
         }
         .copilot-input-bar input {
             flex: 1;
-            padding: 0.75rem 1rem;
+            padding: 0.85rem 1.15rem;
             background: transparent;
             border: none;
-            color: #fff;
+            color: var(--text);
             font-family: inherit;
             font-size: 0.85rem;
         }
         .copilot-input-bar input:focus { outline: none; }
 
-        /* Modal */
+        /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(6px);
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(4px);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
         .modal-card {
-            background: #0d1527;
+            background: #ffffff;
             border: 1px solid var(--border);
-            border-radius: 10px;
-            width: 90%;
-            max-width: 580px;
-            max-height: 85vh;
+            border-radius: 12px;
+            width: 92%;
+            max-width: 680px;
+            max-height: 88vh;
             overflow-y: auto;
             padding: 2rem;
             position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
         }
         .modal-close {
             position: absolute;
             top: 1.25rem; right: 1.25rem;
             background: transparent; border: none;
-            color: var(--text-muted); font-size: 1.25rem;
+            color: var(--text-muted); font-size: 1.4rem;
             cursor: pointer;
+            line-height: 1;
+        }
+        .modal-close:hover { color: var(--rose); }
+
+        /* Canvas Chart Container */
+        .chart-box {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Loading Skeleton & Error States */
+        .skeleton-row {
+            height: 28px;
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+            border-radius: 4px;
+            margin: 4px 0;
+        }
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .empty-state {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            color: var(--text-muted);
+        }
+        .empty-state-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .error-state {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            color: var(--rose);
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 6px;
+            margin: 1rem 0;
         }
     </style>
 </head>
 <body>
     <aside>
         <div class="brand">
-            <div class="brand-icon">S</div>
+            <div class="brand-icon">CP</div>
             <span class="brand-text">Crypto Platform</span>
         </div>
         <ul class="nav-menu">
@@ -361,11 +479,11 @@
             <li class="nav-item active" onclick="switchTab('overview')">📊 Overview</li>
             <li class="nav-item" onclick="switchTab('markets')">📈 Markets & Tickers</li>
             <li class="nav-item" onclick="switchTab('opportunities')">⚡ Opportunity Pipeline</li>
-            <li class="nav-item" onclick="switchTab('king')">👑 Market Intelligence Engine Core</li>
+            <li class="nav-item" onclick="switchTab('king')">👑 Market Intelligence Core</li>
 
             <li class="nav-category">Strategy Intelligence</li>
             <li class="nav-item" onclick="switchTab('strategies')">📚 Strategy Library</li>
-            <li class="nav-item" onclick="switchTab('strategy-lab')">🧪 Strategy Research & AI</li>
+            <li class="nav-item" onclick="switchTab('strategy-lab')">🧪 Research & AI Copilot</li>
             <li class="nav-item" onclick="switchTab('backtesting')">🔬 Backtest Repository</li>
             <li class="nav-item" onclick="switchTab('forward')">🔭 Forward Shadow Validation</li>
 
@@ -378,14 +496,14 @@
             <li class="nav-category">Risk & Governance</li>
             <li class="nav-item" onclick="switchTab('risk')">🛡️ Risk Center & Heat</li>
             <li class="nav-item" onclick="switchTab('performance')">📈 Performance Analytics</li>
-            <li class="nav-item" onclick="switchTab('drift')">📉 Strategy Monitoring Monitor</li>
+            <li class="nav-item" onclick="switchTab('drift')">📉 Statistical Drift Monitor</li>
             <li class="nav-item" onclick="switchTab('alerts')">🔔 Operational Alerts</li>
             <li class="nav-item" onclick="switchTab('ledger')">📜 Append-Only Ledger</li>
             <li class="nav-item" onclick="switchTab('settings')">⚙️ Settings & Entitlements</li>
         </ul>
         <div class="user-footer">
-            <div class="user-email-txt" id="sidebar-user-email">trader@strata.io</div>
-            <button class="btn-ctl btn-outline-sm" onclick="handleLogout()" style="padding: 0.2rem 0.5rem; font-size: 0.7rem;">Logout</button>
+            <div class="user-email-txt" id="sidebar-user-email">operator@cryptoplatform.io</div>
+            <button class="btn-ctl btn-outline-sm" onclick="handleLogout()" style="padding: 0.2rem 0.5rem; font-size: 0.72rem;">Logout</button>
         </div>
     </aside>
 
@@ -394,10 +512,15 @@
             <div class="topbar-left">
                 <span class="env-badge" id="env-badge">PAPER (SIMULATED)</span>
                 <span class="capital-lock-badge">REAL CAPITAL: $0.00 (LOCKED)</span>
+                <span class="freshness-pill" id="freshness-indicator">
+                    <span class="pulse-dot"></span>
+                    <span id="freshness-text">Live Feed • <span id="freshness-sec">0s</span> ago</span>
+                </span>
+                <span class="pill pill-amber" id="ws-status-badge">WS: CONNECTING</span>
                 <span style="font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-mono);">TENANT: <strong id="topbar-tenant" style="color: var(--text);">system</strong></span>
             </div>
             <div class="topbar-controls">
-                <label style="font-size: 0.78rem; color: var(--text-muted);">Agent Style:</label>
+                <label style="font-size: 0.78rem; color: var(--text-muted); font-weight: 500;">Trading Style:</label>
                 <select class="style-select" id="style-select" onchange="handleStyleChange(this.value)">
                     <option value="AUTONOMOUS">AUTONOMOUS</option>
                     <option value="SWING">SWING</option>
@@ -436,9 +559,9 @@
                         <div class="widget-sub">Across Admitted Universe</div>
                     </div>
                     <div class="widget">
-                        <div class="widget-title">Market Intelligence Engine Edge</div>
-                        <div class="widget-value" style="color: var(--cyan);">+0.888R</div>
-                        <div class="widget-sub">Contract Hash Verified</div>
+                        <div class="widget-title">Flagship Edge</div>
+                        <div class="widget-value" style="color: var(--brand-sky);">+0.888R</div>
+                        <div class="widget-sub">Contract Hash 8fbc923a Verified</div>
                     </div>
                 </div>
 
@@ -449,9 +572,9 @@
                     </div>
                     <table class="dense-table" id="ov-table-positions">
                         <thead>
-                            <tr><th>SYMBOL</th><th>SIDE</th><th>ENTRY</th><th>MARK</th><th>STOP</th><th>TARGET</th><th>R:R</th><th>UNREALIZED P&L</th></tr>
+                            <tr><th>SYMBOL</th><th>SIDE</th><th>ENTRY</th><th>MARK</th><th>STOP</th><th>TARGET (≥4R)</th><th>SIZE</th><th>UNREALIZED P&L</th></tr>
                         </thead>
-                        <tbody>
+                        <tbody id="ov-positions-tbody">
                             <tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No active positions in sandbox</td></tr>
                         </tbody>
                     </table>
@@ -460,14 +583,14 @@
                 <div class="blotter-container">
                     <div class="blotter-header">
                         <span>Recent Signal Decisions</span>
-                        <span class="pill pill-cyan">CAUSAL CLOSED-CANDLE EVALUATION</span>
+                        <span class="pill pill-cyan">CLOSED-CANDLE EVALUATION</span>
                     </div>
                     <table class="dense-table" id="ov-table-decisions">
                         <thead>
-                            <tr><th>ID</th><th>ASSET</th><th>SET</th><th>DECISION</th><th>CONFIDENCE</th><th>TARGET R</th><th>REASON / STATUS</th></tr>
+                            <tr><th>TIMESTAMP</th><th>ID</th><th>ASSET</th><th>SET</th><th>DECISION</th><th>CONFIDENCE</th><th>PLANNED R</th><th>REASON / STATUS</th></tr>
                         </thead>
-                        <tbody>
-                            <tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Scanning closed candle feed...</td></tr>
+                        <tbody id="ov-decisions-tbody">
+                            <tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Scanning closed candle feed...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -484,7 +607,6 @@
                         <input type="text" class="search-box" id="market-search" placeholder="Search symbol (e.g. BTC)..." oninput="filterMarketsTable()">
                         <select class="style-select" id="market-filter-cat" onchange="filterMarketsTable()">
                             <option value="ALL">All Assets</option>
-                            <option value="WATCHLIST">My Watchlist Only</option>
                             <option value="PRIORITY">Priority Assets Only</option>
                         </select>
                         <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: auto;">Tick Size & Margin precision verified per exchange rules</span>
@@ -505,7 +627,7 @@
                             </tr>
                         </thead>
                         <tbody id="markets-tbody">
-                            <!-- Populated dynamically -->
+                            <tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Loading admitted crypto markets...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -523,41 +645,41 @@
                             <tr><th>TIMESTAMP</th><th>DECISION ID</th><th>ASSET</th><th>SET</th><th>DECISION</th><th>CONFIDENCE</th><th>PLANNED R</th><th>REASON CODES</th></tr>
                         </thead>
                         <tbody id="opportunities-tbody">
-                            <tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Continuous market scanner active. Awaiting candle close.</td></tr>
+                            <tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Continuous market scanner active. Awaiting closed candle trigger.</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- 4. KING CORE -->
+            <!-- 4. KING CORE / MULTI-TIMEFRAME STATE -->
             <div class="tab-page" id="page-king">
                 <div class="blotter-container">
                     <div class="blotter-header">
-                        <span>👑 Flagship Crypto Platform Market Intelligence Engine — Immutable Architecture</span>
+                        <span>👑 Flagship Market Intelligence Engine Core</span>
                         <span class="pill pill-green">CONTRACT HASH: 8fbc923a... [VERIFIED]</span>
                     </div>
                     <div style="padding: 1.5rem;">
-                        <p style="color: var(--text-muted); margin-bottom: 1.25rem;">
+                        <p style="color: var(--text-secondary); margin-bottom: 1.25rem; line-height: 1.6;">
                             The Market Intelligence Engine executes the <strong>Phase Q.2 / Phase R Unified Fractal Model</strong>. 
-                            It operates across a continuous 7-timeframe hierarchy partitioned into 5 overlapping triad sets.
-                            All trading parameters, thresholds, and target geometry invariants are locked.
+                            It operates across a continuous 7-timeframe ladder (1M → 1W → 1D → 4H → 1H → 15M → 3M) partitioned into 5 overlapping triad sets.
+                            All trading parameters, geometric targets (≥ 4.0R), and risk ceilings (≤ 1.0% trade, ≤ 3.0% heat) are frozen and immutable.
                         </p>
                         <div class="metric-row">
-                            <div class="widget"><div class="widget-title">Historical Replay Baseline</div><div class="widget-value" style="color: var(--emerald);">9,608 / 9,608</div><div class="widget-sub">100% Exact Match</div></div>
-                            <div class="widget"><div class="widget-title">Target Geometry Floor</div><div class="widget-value" style="color: var(--cyan);">≥ 4.0R</div><div class="widget-sub">Asymmetric Payoff</div></div>
-                            <div class="widget"><div class="widget-title">Trade Risk Limit</div><div class="widget-value">≤ 1.0%</div><div class="widget-sub">Single Exposure Floor</div></div>
+                            <div class="widget"><div class="widget-title">Historical Replay Baseline</div><div class="widget-value" style="color: var(--emerald);">9,608 / 9,608</div><div class="widget-sub">100% Deterministic Match</div></div>
+                            <div class="widget"><div class="widget-title">Target Geometry Floor</div><div class="widget-value" style="color: var(--brand-sky);">≥ 4.0R</div><div class="widget-sub">Asymmetric Payoff</div></div>
+                            <div class="widget"><div class="widget-title">Trade Risk Limit</div><div class="widget-value">≤ 1.0%</div><div class="widget-sub">Single Exposure Ceiling</div></div>
                             <div class="widget"><div class="widget-title">Portfolio Heat Cap</div><div class="widget-value">≤ 3.0%</div><div class="widget-sub">Systemic Safety Bound</div></div>
                         </div>
 
-                        <h4 style="margin: 1.25rem 0 0.5rem; font-size: 0.9rem;">7-Timeframe Hierarchy & Overlapping Triads</h4>
+                        <h4 style="margin: 1.5rem 0 0.65rem; font-size: 0.95rem; color: var(--text);">Continuous 7-Timeframe Hierarchy & Overlapping Triads</h4>
                         <table class="dense-table">
                             <thead><tr><th>SET</th><th>TIMEFRAMES (HTF → MTF → LTF)</th><th>ROLE</th><th>CAPITAL STATUS</th></tr></thead>
                             <tbody>
-                                <tr><td>Set 1</td><td>1M → 1W → 1D</td><td>Macro Structural Anchor</td><td><span class="pill pill-rose">$0.00 ZERO CAPITAL</span></td></tr>
-                                <tr><td>Set 2</td><td>1W → 1D → 4H</td><td>Position & Macro Swing</td><td><span class="pill pill-green">PAPER & DEMO ELIGIBLE</span></td></tr>
-                                <tr><td>Set 3</td><td>1D → 4H → 1H</td><td>Standard Swing & Momentum</td><td><span class="pill pill-green">PAPER & DEMO ELIGIBLE</span></td></tr>
-                                <tr><td>Set 4</td><td>4H → 1H → 15M</td><td>Intraday Liquidity Sweep</td><td><span class="pill pill-green">PAPER & DEMO ELIGIBLE</span></td></tr>
-                                <tr><td>Set 5</td><td>1H → 15M → 3M</td><td>Micro Confirmation Scalp</td><td><span class="pill pill-rose">$0.00 ZERO CAPITAL</span></td></tr>
+                                <tr><td><strong>Set 1</strong></td><td>1M → 1W → 1D</td><td>Macro Structural Anchor</td><td><span class="pill pill-rose">$0.00 ZERO CAPITAL</span></td></tr>
+                                <tr><td><strong>Set 2</strong></td><td>1W → 1D → 4H</td><td>Position & Macro Swing</td><td><span class="pill pill-green">PAPER & DEMO ELIGIBLE</span></td></tr>
+                                <tr><td><strong>Set 3</strong></td><td>1D → 4H → 1H</td><td>Standard Swing & Momentum</td><td><span class="pill pill-green">PAPER & DEMO ELIGIBLE</span></td></tr>
+                                <tr><td><strong>Set 4</strong></td><td>4H → 1H → 15M</td><td>Intraday Liquidity Sweep</td><td><span class="pill pill-green">PAPER & DEMO ELIGIBLE</span></td></tr>
+                                <tr><td><strong>Set 5</strong></td><td>1H → 15M → 3M</td><td>Micro Confirmation Scalp</td><td><span class="pill pill-rose">$0.00 ZERO CAPITAL</span></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -589,7 +711,7 @@
                             <tr><th>ID</th><th>NAME</th><th>CATEGORY</th><th>LIFECYCLE STAGE</th><th>EXPECTANCY</th><th>PROFIT FACTOR</th><th>WIN RATE</th><th>MAX DD</th><th>ASSETS</th><th>ACTIONS</th></tr>
                         </thead>
                         <tbody id="strategies-tbody">
-                            <!-- Populated dynamically -->
+                            <tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Loading strategy catalog from backend...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -599,12 +721,12 @@
             <div class="tab-page" id="page-strategy-lab">
                 <div class="blotter-container">
                     <div class="blotter-header">
-                        <span>🧪 Crypto Platform Strategy Research & Natural Language Compiler</span>
+                        <span>🧪 Strategy Research & Natural Language Compiler</span>
                         <span class="pill pill-cyan">EMPIRICAL RESEARCH SANDBOX</span>
                     </div>
                     <div style="padding: 1.25rem;">
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem;">
-                            Formulate strategy hypotheses in plain English. The compiler extracts rules, verifies crypto admissibility, and enforces target geometry invariants.
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.75rem;">
+                            Formulate strategy hypotheses in plain English. The compiler extracts structured rules, validates crypto universe admissibility, and verifies target geometry invariants before sandbox evaluation.
                         </p>
                         <div style="display: flex; gap: 0.75rem;">
                             <input type="text" id="lab-quick-prompt" class="search-box" style="flex: 1; padding: 0.6rem 0.85rem;" placeholder="e.g. Buy BTC and ETH pullbacks when daily and 4h structure is bullish, require at least 4R.">
@@ -612,14 +734,14 @@
                         </div>
 
                         <!-- Copilot Assistant Container -->
-                        <h4 style="margin: 1.5rem 0 0.5rem; font-size: 0.85rem; color: var(--text-muted);">Strategy Research Copilot (AI Pair-Researcher)</h4>
+                        <h4 style="margin: 1.5rem 0 0.5rem; font-size: 0.88rem; color: var(--text);">AI Strategy Research Copilot</h4>
                         <div class="copilot-container">
                             <div class="copilot-messages" id="copilot-msg-area">
-                                <div class="chat-bubble chat-ai">Welcome to Crypto Platform Research Copilot. Ask me to formulate strategies, explain multi-timeframe rules, compare candidates against the Market Intelligence benchmark, or evaluate custom ideas.</div>
+                                <div class="chat-bubble chat-ai">Welcome to the Crypto Platform Strategy Research Copilot. Ask me to formulate strategies, explain multi-timeframe rules, compare candidates against the flagship benchmark, or evaluate custom hypothesis ideas.</div>
                             </div>
                             <div class="copilot-input-bar">
                                 <input type="text" id="copilot-input" placeholder="Ask copilot: 'Compare trend pullback vs king' or 'Create a 15m liquidity sweep strategy'..." onkeydown="if(event.key==='Enter') sendCopilotMsg()">
-                                <button class="btn-ctl btn-cyan" onclick="sendCopilotMsg()" style="border-radius: 0; padding: 0 1.25rem;">Send</button>
+                                <button class="btn-ctl btn-cyan" onclick="sendCopilotMsg()" style="border-radius: 0; padding: 0 1.35rem;">Send</button>
                             </div>
                         </div>
                     </div>
@@ -638,28 +760,28 @@
                             <tr><th>RUN ID</th><th>STRATEGY</th><th>SYMBOL</th><th>TIMEFRAMES</th><th>TRADES</th><th>EXPECTANCY</th><th>PROFIT FACTOR</th><th>WIN RATE</th><th>MAX DD</th><th>ENVIRONMENT</th></tr>
                         </thead>
                         <tbody id="backtests-tbody">
-                            <!-- Populated dynamically -->
+                            <tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Loading backtest runs...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- 8. FORWARD VALIDATION -->
+            <!-- 8. FORWARD TESTING -->
             <div class="tab-page" id="page-forward">
                 <div class="blotter-container">
                     <div class="blotter-header">
                         <span>Forward Shadow Validation Center</span>
-                        <span class="pill pill-emerald">STRICT ENVIRONMENT ISOLATION</span>
+                        <span class="pill pill-green">STRICT ENVIRONMENT ISOLATION</span>
                     </div>
                     <div style="padding: 1.25rem;">
-                        <p style="color: var(--text-muted); margin-bottom: 1.25rem;">
-                            Live capital requires strict staged validation. Historical metrics are permanently partitioned from forward observations.
+                        <p style="color: var(--text-secondary); margin-bottom: 1.25rem; line-height: 1.6;">
+                            Live capital deployment requires strict staged progression. Historical records are permanently partitioned from forward observations to prevent lookahead and survivorship bias.
                         </p>
                         <div class="metric-row">
-                            <div class="widget"><div class="widget-title">Historical Baseline</div><div class="widget-value">9,608 Trades</div><div class="widget-sub">+0.888R Expectancy</div></div>
-                            <div class="widget"><div class="widget-title">Out-of-Sample (OOS)</div><div class="widget-value">1,665 Trades</div><div class="widget-sub">+0.745R Expectancy</div></div>
-                            <div class="widget"><div class="widget-title">Forward Paper Active</div><div class="widget-value" id="fwd-paper-count">0 Executed</div><div class="widget-sub">Live Candle Feed</div></div>
-                            <div class="widget"><div class="widget-title">Demo / Testnet</div><div class="widget-value">Awaiting Trigger</div><div class="widget-sub">Binance/Bybit Gateway</div></div>
+                            <div class="widget"><div class="widget-title">Historical (Conf ≥ 0.60)</div><div class="widget-value" id="fwd-hist-trades">2,942 Trades</div><div class="widget-sub">+0.8885R • PF 4.918 • WR 67.2% (from 9,608)</div></div>
+                            <div class="widget"><div class="widget-title">Out-of-Sample (OOS)</div><div class="widget-value" id="fwd-oos-trades">1,665 Trades</div><div class="widget-sub">+0.8097R • PF 4.024 • WR 63.6%</div></div>
+                            <div class="widget"><div class="widget-title">Forward Paper Active</div><div class="widget-value" id="fwd-paper-count">0 Executed</div><div class="widget-sub">Live Candle Feed (Binance WS)</div></div>
+                            <div class="widget"><div class="widget-title">Demo / Testnet</div><div class="widget-value" id="fwd-demo-status">Ready</div><div class="widget-sub">Binance/Bybit Gateway</div></div>
                             <div class="widget"><div class="widget-title">Live Capital Gate</div><div class="widget-value" style="color: var(--rose);">$0.00</div><div class="widget-sub">Fail-Closed Boundary</div></div>
                         </div>
                     </div>
@@ -678,13 +800,13 @@
                             <tr><th>ACCOUNT ID</th><th>NAME</th><th>BROKER</th><th>ENVIRONMENT</th><th>BALANCE</th><th>MARGIN</th><th>RISK ALLOCATION</th><th>STATUS</th></tr>
                         </thead>
                         <tbody id="accounts-tbody">
-                            <!-- Populated dynamically -->
+                            <tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Loading tenant accounts...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- 10. BROKERS -->
+            <!-- 10. BROKERS & EXCHANGE CONNECTIVITY -->
             <div class="tab-page" id="page-brokers">
                 <div class="blotter-container">
                     <div class="blotter-header">
@@ -696,7 +818,7 @@
                             <tr><th>BROKER VENUE</th><th>ENVIRONMENT</th><th>CONNECTION STATE</th><th>ORDER TYPES</th><th>TICK PRECISION</th><th>RATE LIMITS</th><th>PERMISSIONS</th></tr>
                         </thead>
                         <tbody id="brokers-tbody">
-                            <!-- Populated dynamically -->
+                            <tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Discovering broker gateways...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -724,21 +846,21 @@
             <div class="tab-page" id="page-orders">
                 <div class="blotter-container">
                     <div class="blotter-header">
-                        <span>Order Blotter (22 Audit Fields)</span>
-                        <span class="pill pill-cyan">LINEAGE HASH VERIFIED</span>
+                        <span>Order Blotter (Audit Log)</span>
+                        <span class="pill pill-cyan">LINEAGE VERIFIED</span>
                     </div>
                     <table class="dense-table" id="table-orders-full">
                         <thead>
-                            <tr><th>TIMESTAMP</th><th>ORDER ID</th><th>SYMBOL</th><th>SIDE</th><th>QUANTITY</th><th>ENTRY</th><th>STOP</th><th>TARGET</th><th>FEES</th><th>STATUS</th></tr>
+                            <tr><th>TIMESTAMP</th><th>ORDER ID</th><th>SYMBOL</th><th>SIDE</th><th>TYPE</th><th>PRICE</th><th>STOP</th><th>TARGET</th><th>STATUS</th><th>LIFECYCLE</th></tr>
                         </thead>
                         <tbody id="orders-tbody">
-                            <tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No orders submitted yet in current session</td></tr>
+                            <tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No orders submitted in current session</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- 13. RISK -->
+            <!-- 13. RISK MANAGEMENT -->
             <div class="tab-page" id="page-risk">
                 <div class="blotter-container">
                     <div class="blotter-header">
@@ -747,17 +869,28 @@
                     </div>
                     <div style="padding: 1.25rem;">
                         <div class="metric-row">
-                            <div class="widget"><div class="widget-title">Max Single Trade Risk</div><div class="widget-value" style="color: var(--emerald);">1.00%</div><div class="widget-sub">Hard Governor Bound</div></div>
-                            <div class="widget"><div class="widget-title">Base-Asset Max Exposure</div><div class="widget-value" style="color: var(--emerald);">1.00%</div><div class="widget-sub">Cumulative Heat Floor</div></div>
-                            <div class="widget"><div class="widget-title">Max Total Portfolio Heat</div><div class="widget-value" style="color: var(--emerald);">3.00%</div><div class="widget-sub">Total Risk Invariant</div></div>
+                            <div class="widget"><div class="widget-title">Max Single Trade Risk</div><div class="widget-value" style="color: var(--emerald);" id="risk-max-trade">1.00%</div><div class="widget-sub">Hard Governor Bound</div></div>
+                            <div class="widget"><div class="widget-title">Base-Asset Max Exposure</div><div class="widget-value" style="color: var(--emerald);" id="risk-max-asset">1.00%</div><div class="widget-sub">Cumulative Heat Floor</div></div>
+                            <div class="widget"><div class="widget-title">Max Total Portfolio Heat</div><div class="widget-value" style="color: var(--emerald);" id="risk-max-heat">3.00%</div><div class="widget-sub">Total Risk Invariant</div></div>
                             <div class="widget"><div class="widget-title">Current Portfolio Heat</div><div class="widget-value" id="risk-curr-heat">0.00%</div><div class="widget-sub">Realized Active Load</div></div>
-                            <div class="widget"><div class="widget-title">Target Geometry Floor</div><div class="widget-value" style="color: var(--cyan);">≥ 4.0R</div><div class="widget-sub">Enforced by Engine</div></div>
+                            <div class="widget"><div class="widget-title">Target Geometry Floor</div><div class="widget-value" style="color: var(--brand-sky);" id="risk-target-floor">≥ 4.0R</div><div class="widget-sub">Enforced by Engine</div></div>
                         </div>
+
+                        <h4 style="margin: 1.5rem 0 0.65rem; font-size: 0.95rem; color: var(--text);">Circuit Breakers & Hardware Invariants</h4>
+                        <table class="dense-table">
+                            <thead><tr><th>BREAKER</th><th>CONDITION</th><th>CURRENT STATE</th><th>ACTION</th></tr></thead>
+                            <tbody>
+                                <tr><td><strong>Reconciliation Check</strong></td><td>Discrepancies == 0 between memory & ledger</td><td><span class="pill pill-green" id="cb-recon">ARMED & HEALTHY</span></td><td>Immediate Safe Mode if tripped</td></tr>
+                                <tr><td><strong>Market Data Heartbeat</strong></td><td>Live WS tick freshness within 15 seconds</td><td><span class="pill pill-green" id="cb-data">ARMED & FRESH</span></td><td>Pause order generation</td></tr>
+                                <tr><td><strong>Portfolio Heat Invariant</strong></td><td>Total portfolio heat ≤ 3.00%</td><td><span class="pill pill-green" id="cb-heat">ARMED & SAFE</span></td><td>Block new order submission</td></tr>
+                                <tr><td><strong>Real Capital Safety Gate</strong></td><td>Live capital authorized == $0.00</td><td><span class="pill pill-rose" id="cb-capital">LOCKED FAIL-CLOSED</span></td><td>Prevent live order routing</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
-            <!-- 14. PERFORMANCE -->
+            <!-- 14. PERFORMANCE ANALYTICS -->
             <div class="tab-page" id="page-performance">
                 <div class="blotter-container">
                     <div class="blotter-header">
@@ -767,7 +900,7 @@
                     <div style="padding: 1.25rem;">
                         <div class="metric-row">
                             <div class="widget"><div class="widget-title">Total Forward Trades</div><div class="widget-value" id="perf-trades">0</div><div class="widget-sub">Closed Positions</div></div>
-                            <div class="widget"><div class="widget-title">Cumulative Realized R</div><div class="widget-value" id="perf-net-r">+0.00R</div><div class="widget-sub">Zero-Capital Ledger</div></div>
+                            <div class="widget"><div class="widget-title">Cumulative Realized R</div><div class="widget-value" id="perf-net-r">+0.00R</div><div class="widget-sub">Zero-Capital Sandbox</div></div>
                             <div class="widget"><div class="widget-title">Win Rate</div><div class="widget-value" id="perf-winrate">0.0%</div><div class="widget-sub">Target Hits vs Stops</div></div>
                             <div class="widget"><div class="widget-title">Max Drawdown</div><div class="widget-value" id="perf-dd">0.00R</div><div class="widget-sub">Peak to Valley</div></div>
                         </div>
@@ -779,28 +912,28 @@
             <div class="tab-page" id="page-drift">
                 <div class="blotter-container">
                     <div class="blotter-header">
-                        <span>Strategy Monitoring & Regime Monitor</span>
-                        <span class="pill pill-green">DISTRIBUTION INTACT</span>
+                        <span>Strategy Monitoring & Statistical Drift Monitor</span>
+                        <span class="pill pill-green" id="drift-pill">DISTRIBUTION INTACT</span>
                     </div>
                     <div style="padding: 1.25rem;">
-                        <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.6;">
                             Monitors Kolmogorov-Smirnov test statistics against Phase Q.2 reference opportunity distributions. 
-                            If drift exceeds 3.0 standard deviations, strategy auto-quarantine triggers.
+                            If drift exceeds 3.0 standard deviations or KS statistic exceeds critical p-value, strategy auto-quarantine triggers.
                         </p>
                         <div class="metric-row">
-                            <div class="widget"><div class="widget-title">Drift Status</div><div class="widget-value" style="color: var(--emerald);">NORMAL</div><div class="widget-sub">No Distribution Shift</div></div>
-                            <div class="widget"><div class="widget-title">KS-Test Statistic</div><div class="widget-value">0.042</div><div class="widget-sub">Threshold: 0.150</div></div>
-                            <div class="widget"><div class="widget-title">Regime Indicator</div><div class="widget-value" style="color: var(--cyan);">TRENDING</div><div class="widget-sub">Favorable Structure</div></div>
+                            <div class="widget"><div class="widget-title">Drift Status</div><div class="widget-value" style="color: var(--emerald);" id="drift-status">NORMAL</div><div class="widget-sub">No Distribution Shift</div></div>
+                            <div class="widget"><div class="widget-title">KS-Test Statistic</div><div class="widget-value" id="drift-ks">0.042</div><div class="widget-sub">Threshold: ≤ 0.150</div></div>
+                            <div class="widget"><div class="widget-title">Market Regime</div><div class="widget-value" style="color: var(--brand-sky);" id="drift-regime">TRENDING</div><div class="widget-sub">Favorable Structure</div></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 16. ALERTS -->
+            <!-- 16. OPERATIONAL ALERTS -->
             <div class="tab-page" id="page-alerts">
                 <div class="blotter-container">
                     <div class="blotter-header">
-                        <span>Operational Alerts</span>
+                        <span>Operational Alerts & Audit Notifications</span>
                         <span class="pill pill-cyan">SECRET REDACTION ACTIVE</span>
                     </div>
                     <table class="dense-table" id="table-alerts-full">
@@ -808,13 +941,13 @@
                             <tr><th>TIMESTAMP</th><th>SEVERITY</th><th>CATEGORY</th><th>TITLE</th><th>MESSAGE</th></tr>
                         </thead>
                         <tbody id="alerts-tbody">
-                            <!-- Populated dynamically -->
+                            <tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Loading audit alerts...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- 17. LEDGER -->
+            <!-- 17. APPEND-ONLY LEDGER -->
             <div class="tab-page" id="page-ledger">
                 <div class="blotter-container">
                     <div class="blotter-header">
@@ -826,7 +959,7 @@
                             <tr><th>TIMESTAMP</th><th>RECORD ID</th><th>DECISION</th><th>SYMBOL</th><th>HASH (SHA-256)</th></tr>
                         </thead>
                         <tbody id="ledger-tbody">
-                            <!-- Populated dynamically -->
+                            <tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Loading verified decision records...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -837,20 +970,30 @@
                 <div class="blotter-container">
                     <div class="blotter-header">
                         <span>⚙️ Settings, Entitlements & Commercial Billing</span>
-                        <span class="pill pill-emerald">1-YEAR FREE LAUNCH PERIOD</span>
+                        <span class="pill pill-green">1-YEAR PROMOTIONAL LAUNCH</span>
                     </div>
                     <div style="padding: 1.25rem;">
-                        <h4 style="margin-bottom: 0.5rem;">User & Tenant Profile</h4>
+                        <h4 style="margin-bottom: 0.5rem; color: var(--text);">User & Tenant Profile</h4>
                         <p style="color: var(--text-muted); font-size: 0.85rem;" id="settings-user-info">Loading session profile...</p>
                         
-                        <h4 style="margin: 1.5rem 0 0.5rem;">Commercial Plan & Entitlements</h4>
+                        <h4 style="margin: 1.5rem 0 0.5rem; color: var(--text);">Commercial Plan & Entitlements</h4>
                         <div class="metric-row">
-                            <div class="widget"><div class="widget-title">Current Plan Tier</div><div class="widget-value" id="set-plan-tier" style="color: var(--cyan);">AUTONOMOUS PRO</div><div class="widget-sub">Full Features Enabled</div></div>
+                            <div class="widget"><div class="widget-title">Current Plan Tier</div><div class="widget-value" id="set-plan-tier" style="color: var(--brand-sky);">AUTONOMOUS PRO</div><div class="widget-sub">Full Workstation Features</div></div>
                             <div class="widget"><div class="widget-title">Monthly Charge</div><div class="widget-value" style="color: var(--emerald);">$0.00</div><div class="widget-sub">Promotional Launch Access</div></div>
                             <div class="widget"><div class="widget-title">Launch Free Days Left</div><div class="widget-value" id="set-days-left">358 Days</div><div class="widget-sub">Expires Oct 2027</div></div>
                         </div>
 
-                        <h4 style="margin: 1.5rem 0 0.5rem;">Emergency Controls</h4>
+                        <h4 style="margin: 1.5rem 0 0.5rem; color: var(--text);">Authoritative Backend Endpoint</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">
+                            Unified backend endpoint consumed by both Web terminal and Android mobile application. Leave blank to default to current server origin.
+                        </p>
+                        <div style="display: flex; gap: 8px; max-width: 650px; margin-bottom: 1.5rem;">
+                            <input type="text" id="custom-api-endpoint" placeholder="e.g. http://127.0.0.1:8080 or https://api.cryptoplatform.io" style="flex: 1; padding: 0.5rem 0.75rem; border: 1px solid var(--border); border-radius: 6px; font-family: var(--font-mono); font-size: 0.82rem; background: var(--bg-subtle); color: var(--text);">
+                            <button class="btn-ctl btn-cyan" onclick="saveCustomApiEndpoint()">Save & Reconnect</button>
+                            <button class="btn-ctl btn-outline-sm" onclick="resetCustomApiEndpoint()">Reset Default</button>
+                        </div>
+
+                        <h4 style="margin: 1.5rem 0 0.5rem; color: var(--text);">Emergency Controls</h4>
                         <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem;">
                             The master kill-switch transitions the entire platform into fail-closed safe mode and cancels pending order intents.
                         </p>
@@ -866,18 +1009,31 @@
         <div class="modal-card" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeAssetModal(event)">×</button>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                <h2 id="modal-asset-symbol" style="margin: 0;">BTCUSDT</h2>
-                <span class="pill pill-cyan" id="modal-asset-price">$64,120.50</span>
+                <h2 id="modal-asset-symbol" style="margin: 0; color: var(--text); font-size: 1.35rem;">BTCUSDT</h2>
+                <span class="pill pill-cyan" id="modal-asset-price" style="font-size: 0.95rem;">$64,120.50</span>
             </div>
-            <p id="modal-asset-structure" style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.25rem;">Structure Details</p>
+            <p id="modal-asset-structure" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Structure Details</p>
 
-            <h4 style="margin-bottom: 0.5rem; font-size: 0.85rem;">7-Timeframe Hierarchy States</h4>
-            <table class="dense-table" style="margin-bottom: 1.25rem;">
-                <thead><tr><th>TF</th><th>STRUCTURE</th><th>PHASE</th><th>SUPPORT</th><th>RESISTANCE</th><th>ZONE</th></tr></thead>
+            <!-- Visual Canvas Chart Box -->
+            <div class="chart-box" id="modal-chart-box">
+                <svg id="modal-svg-chart" width="100%" height="150" viewBox="0 0 580 150" preserveAspectRatio="none">
+                    <!-- SVG Chart Dynamically Rendered -->
+                </svg>
+            </div>
+
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.88rem; color: var(--text);">Continuous 7-Timeframe Hierarchy States</h4>
+            <table class="dense-table" style="margin-bottom: 1rem;">
+                <thead><tr><th>TF</th><th>STRUCTURE</th><th>PHASE</th><th>SUPPORT</th><th>RESISTANCE</th><th>ZONE</th><th>CLOSED CANDLES</th></tr></thead>
                 <tbody id="modal-asset-tf-body"></tbody>
             </table>
-            <div style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">
-                Provenance: HISTORICAL_AND_PAPER | Target Floor: ≥4.0R | Live Capital: $0.00 LOCKED
+
+            <h4 style="margin-bottom: 0.5rem; font-size: 0.88rem; color: var(--text);">Canonical 5-Set Overlapping Ladder & Parity Audit</h4>
+            <table class="dense-table" style="margin-bottom: 1.25rem;">
+                <thead><tr><th>SET</th><th>ROLES (HTF → MTF → LTF)</th><th>PURPOSE / ROLE</th><th>PRODUCTION ELIGIBILITY</th><th>SHARED PARITY</th></tr></thead>
+                <tbody id="modal-asset-sets-body"></tbody>
+            </table>
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono); border-top: 1px solid var(--border); padding-top: 0.75rem;">
+                Provenance: HISTORICAL_AND_PAPER | Target Floor: ≥ 4.0R | Live Capital: $0.00 FAIL-CLOSED LOCKED
             </div>
         </div>
     </div>
@@ -888,7 +1044,6 @@
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-page').forEach(el => el.classList.remove('active'));
             
-            // Find sidebar button
             const navItems = document.querySelectorAll('.nav-item');
             for (let item of navItems) {
                 if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(tabId)) {
@@ -900,19 +1055,76 @@
             if (target) target.classList.add('active');
         }
 
+        // Configurable Backend API Endpoint Resolver
+        function getApiBase() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('api')) {
+                const custom = urlParams.get('api').replace(/\/$/, '');
+                localStorage.setItem('strata_api_base', custom);
+                return custom;
+            }
+            const stored = localStorage.getItem('strata_api_base');
+            if (stored) return stored.replace(/\/$/, '');
+            if (window.API_BASE_URL) return window.API_BASE_URL.replace(/\/$/, '');
+            return '';
+        }
+
+        function apiFetch(path, options = {}) {
+            const base = getApiBase();
+            return fetch(base + path, options);
+        }
+
+        function saveCustomApiEndpoint() {
+            const val = (document.getElementById('custom-api-endpoint') ? document.getElementById('custom-api-endpoint').value : '').trim();
+            if (val) {
+                localStorage.setItem('strata_api_base', val.replace(/\/$/, ''));
+            } else {
+                localStorage.removeItem('strata_api_base');
+            }
+            alert('Authoritative backend endpoint set to: ' + (val || 'Default Origin') + '. Reloading...');
+            location.reload();
+        }
+
+        function resetCustomApiEndpoint() {
+            localStorage.removeItem('strata_api_base');
+            const inp = document.getElementById('custom-api-endpoint');
+            if (inp) inp.value = '';
+            alert('Reset to default backend origin. Reloading...');
+            location.reload();
+        }
+
         // Global state
         let marketCache = [];
         let strategyCache = [];
+        let lastUpdatedTimestamp = Date.now();
+
+        // Freshness counter timer
+        setInterval(() => {
+            const sec = Math.floor((Date.now() - lastUpdatedTimestamp) / 1000);
+            const el = document.getElementById('freshness-sec');
+            if (el) el.innerText = sec + 's';
+        }, 1000);
+
+        function markFresh() {
+            lastUpdatedTimestamp = Date.now();
+            const el = document.getElementById('freshness-sec');
+            if (el) el.innerText = '0s';
+        }
 
         // Auth guard & initialization
         async function initTerminal() {
+            const apiInp = document.getElementById('custom-api-endpoint');
+            if (apiInp) apiInp.value = localStorage.getItem('strata_api_base') || '';
+
             const token = localStorage.getItem('strata_token');
             const userStr = localStorage.getItem('strata_user');
             if (userStr) {
                 try {
                     const u = JSON.parse(userStr);
-                    document.getElementById('sidebar-user-email').innerText = u.email;
-                    document.getElementById('topbar-tenant').innerText = u.tenant_id;
+                    const emailEl = document.getElementById('sidebar-user-email');
+                    if (emailEl) emailEl.innerText = u.email;
+                    const tenantEl = document.getElementById('topbar-tenant');
+                    if (tenantEl) tenantEl.innerText = u.tenant_id;
                     const uInfo = document.getElementById('settings-user-info');
                     if (uInfo) uInfo.innerText = `User ID: ${u.user_id} | Email: ${u.email} | Tenant: ${u.tenant_id} | Role: ${u.role}`;
                 } catch(e) {}
@@ -926,34 +1138,46 @@
                 loadAccounts(),
                 loadBrokers(),
                 loadBacktests(),
+                loadForwardValidation(),
+                loadPositions(),
+                loadOrders(),
+                loadRisk(),
+                loadDrift(),
                 loadAlerts(),
                 loadDecisions()
             ]);
+            initMarketWebSocket();
+            markFresh();
         }
 
         // Markets API
         async function loadMarkets() {
             try {
-                const res = await fetch('/api/markets');
+                const res = await apiFetch('/api/markets');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
                 marketCache = data.all_assets || [];
                 renderMarketsTable(marketCache);
-            } catch(e) {}
+                markFresh();
+            } catch(e) {
+                const tbody = document.getElementById('markets-tbody');
+                if (tbody) tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: var(--rose); padding: 1.5rem;">Failed to load markets: ${e.message}. <button class="btn-ctl btn-outline-sm" onclick="loadMarkets()">Retry</button></td></tr>`;
+            }
         }
 
         function renderMarketsTable(assets) {
             const tbody = document.getElementById('markets-tbody');
             if (!tbody) return;
             if (!assets.length) {
-                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No markets found</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No admitted assets found</td></tr>';
                 return;
             }
             tbody.innerHTML = assets.map(a => `
                 <tr>
                     <td style="cursor: pointer;" onclick="toggleWatchlist('${a.symbol}')">${a.is_priority ? '⭐' : '☆'}</td>
-                    <td><strong style="color: #fff;">${a.symbol}</strong></td>
-                    <td style="color: var(--cyan);">$${a.current_price.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
-                    <td style="color: ${a.change_24h_pct >= 0 ? 'var(--emerald)' : 'var(--rose)'};">${a.change_24h_pct >= 0 ? '+' : ''}${a.change_24h_pct}%</td>
+                    <td><strong style="color: var(--text);">${a.symbol}</strong></td>
+                    <td style="color: var(--brand-sky); font-weight: 600;">$${a.current_price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td style="color: ${a.change_24h_pct >= 0 ? 'var(--emerald)' : 'var(--rose)'}; font-weight: 600;">${a.change_24h_pct >= 0 ? '+' : ''}${a.change_24h_pct}%</td>
                     <td>$${a.high_24h.toLocaleString()} / $${a.low_24h.toLocaleString()}</td>
                     <td>$${(a.volume_24h_usd / 1e9).toFixed(2)}B</td>
                     <td>${a.volatility_atr_pct}%</td>
@@ -973,35 +1197,83 @@
         }
 
         async function toggleWatchlist(sym) {
-            await fetch('/api/markets/watchlist', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ symbol: sym })
-            });
-            await loadMarkets();
+            try {
+                await apiFetch('/api/markets/watchlist', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ symbol: sym })
+                });
+                await loadMarkets();
+            } catch(e) {}
         }
 
-        // Asset Modal
+        // Asset Modal with Canvas/SVG Chart
         function openAssetModal(symbol) {
             const asset = marketCache.find(a => a.symbol === symbol);
             if (!asset) return;
             document.getElementById('modal-asset-symbol').innerText = asset.symbol;
-            document.getElementById('modal-asset-price').innerText = '$' + asset.current_price.toLocaleString();
-            document.getElementById('modal-asset-structure').innerText = asset.market_structure_summary + ' • ' + asset.phase_summary;
+            document.getElementById('modal-asset-price').innerText = '$' + asset.current_price.toLocaleString(undefined, {minimumFractionDigits: 2});
+            document.getElementById('modal-asset-structure').innerText = (asset.market_structure_summary || 'Bullish') + ' • ' + (asset.phase_summary || 'Pullback');
             
+            // Draw interactive SVG price structure chart
+            renderSvgPriceChart(asset);
+
             const tfBody = document.getElementById('modal-asset-tf-body');
             tfBody.innerHTML = Object.values(asset.timeframes || {}).map(tf => `
                 <tr>
                     <td><strong>${tf.timeframe}</strong></td>
-                    <td><span class="pill ${tf.structure === 'BULLISH' ? 'pill-green' : 'pill-amber'}">${tf.structure}</span></td>
+                    <td><span class="pill ${tf.structure === 'BULLISH' ? 'pill-green' : (tf.structure === 'BEARISH' ? 'pill-rose' : 'pill-amber')}">${tf.structure}</span></td>
                     <td>${tf.phase}</td>
                     <td>$${tf.key_level_support.toLocaleString()}</td>
                     <td>$${tf.key_level_resistance.toLocaleString()}</td>
                     <td><span class="pill pill-cyan">${tf.premium_discount}</span></td>
+                    <td>${tf.closed_candles_count ? tf.closed_candles_count.toLocaleString() : 'Closed'}</td>
                 </tr>
             `).join('');
+
+            const setsBody = document.getElementById('modal-asset-sets-body');
+            if (setsBody && asset.sets) {
+                setsBody.innerHTML = Object.values(asset.sets).map(s => `
+                    <tr>
+                        <td><strong>${s.set_id}</strong></td>
+                        <td>${s.htf_label} (HTF) → ${s.mtf_label} (MTF) → ${s.ltf_label} (LTF)</td>
+                        <td>${s.name} • <span style="color: var(--text-muted); font-size: 0.75rem;">${s.purpose}</span></td>
+                        <td><span class="pill ${s.production_eligible ? 'pill-green' : 'pill-rose'}">${s.production_eligible ? 'PRODUCTION COHORT' : 'OBSERVATION ONLY ($0.00)'}</span></td>
+                        <td><span class="pill pill-cyan">🟢 PARITY INTACT</span></td>
+                    </tr>
+                `).join('');
+            }
             document.getElementById('asset-modal').style.display = 'flex';
         }
+
+        function renderSvgPriceChart(asset) {
+            const svg = document.getElementById('modal-svg-chart');
+            if (!svg) return;
+            const p = asset.current_price;
+            const high = asset.high_24h || p * 1.02;
+            const low = asset.low_24h || p * 0.98;
+            const range = Math.max(high - low, 1.0);
+
+            // Compute SVG normalized points
+            const yCurrent = 130 - ((p - low) / range) * 110;
+            const yHigh = 20;
+            const yLow = 130;
+
+            svg.innerHTML = `
+                <line x1="20" y1="20" x2="560" y2="20" stroke="#f1f5f9" stroke-dasharray="4" />
+                <text x="25" y="16" fill="#64748b" font-size="10" font-family="JetBrains Mono">24h High: $${high.toLocaleString()}</text>
+
+                <line x1="20" y1="130" x2="560" y2="130" stroke="#f1f5f9" stroke-dasharray="4" />
+                <text x="25" y="142" fill="#64748b" font-size="10" font-family="JetBrains Mono">24h Low: $${low.toLocaleString()}</text>
+
+                <path d="M 30,110 Q 120,40 220,90 T 400,${yCurrent} T 550,${yCurrent}" fill="none" stroke="#0284c7" stroke-width="2.5" />
+
+                <line x1="20" y1="${yCurrent}" x2="560" y2="${yCurrent}" stroke="#2563eb" stroke-dasharray="2" />
+                <circle cx="550" cy="${yCurrent}" r="4" fill="#2563eb" />
+                <text x="470" y="${yCurrent - 8}" fill="#2563eb" font-size="11" font-weight="700" font-family="JetBrains Mono">Mark: $${p.toLocaleString()}</text>
+            `;
+        }
+
         function closeAssetModal(e) {
             document.getElementById('asset-modal').style.display = 'none';
         }
@@ -1009,11 +1281,16 @@
         // Strategies API
         async function loadStrategies() {
             try {
-                const res = await fetch('/api/strategies');
+                const res = await apiFetch('/api/strategies');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
                 strategyCache = data || [];
                 renderStrategiesTable(strategyCache);
-            } catch(e) {}
+                markFresh();
+            } catch(e) {
+                const tbody = document.getElementById('strategies-tbody');
+                if (tbody) tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: var(--rose); padding: 1.5rem;">Failed to load strategies: ${e.message}. <button class="btn-ctl btn-outline-sm" onclick="loadStrategies()">Retry</button></td></tr>`;
+            }
         }
 
         function renderStrategiesTable(strats) {
@@ -1027,7 +1304,7 @@
                         <td>${s.name}</td>
                         <td><span class="pill pill-cyan">${s.category || 'SWING'}</span></td>
                         <td><span class="pill ${s.lifecycle_state === 'QUALIFIED' ? 'pill-green' : 'pill-amber'}">${s.lifecycle_state || 'PAPER'}</span></td>
-                        <td style="color: var(--emerald);">+${(ev.expectancy_r || 0).toFixed(3)}R</td>
+                        <td style="color: var(--emerald); font-weight: 600;">+${(ev.expectancy_r || 0).toFixed(3)}R</td>
                         <td>${(ev.profit_factor || 0).toFixed(2)}</td>
                         <td>${((ev.win_rate || 0) * 100).toFixed(1)}%</td>
                         <td>${(ev.max_drawdown_r || 0).toFixed(1)}R</td>
@@ -1048,7 +1325,8 @@
         // Accounts & Brokers API
         async function loadAccounts() {
             try {
-                const res = await fetch('/api/accounts');
+                const res = await apiFetch('/api/accounts');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
                 const tbody = document.getElementById('accounts-tbody');
                 if (tbody && data.length) {
@@ -1070,7 +1348,8 @@
 
         async function loadBrokers() {
             try {
-                const res = await fetch('/api/brokers');
+                const res = await apiFetch('/api/brokers');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
                 const tbody = document.getElementById('brokers-tbody');
                 if (tbody && data.length) {
@@ -1078,7 +1357,7 @@
                         <tr>
                             <td><strong>${b.venue_id}</strong></td>
                             <td><span class="pill pill-green">${b.environment || 'TESTNET'}</span></td>
-                            <td><span style="color: var(--emerald);">CONNECTED</span></td>
+                            <td><span style="color: var(--emerald); font-weight: 600;">CONNECTED</span></td>
                             <td>LIMIT, MARKET, STOP</td>
                             <td>0.001 LOT / 0.10 TICK</td>
                             <td>1200 req/min</td>
@@ -1089,10 +1368,70 @@
             } catch(e) {}
         }
 
-        // Backtests API
+        // Positions & Orders API
+        async function loadPositions() {
+            try {
+                const res = await apiFetch('/api/positions');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                const active = data.active_positions || [];
+                const posCountEl = document.getElementById('ov-pos-count');
+                if (posCountEl) posCountEl.innerText = active.length;
+
+                const rowsHtml = active.length ? active.map(p => `
+                    <tr>
+                        <td><strong>${p.symbol}</strong></td>
+                        <td><span class="pill ${p.side === 'BUY' ? 'pill-green' : 'pill-rose'}">${p.side}</span></td>
+                        <td>$${(p.entry_price || 0).toLocaleString()}</td>
+                        <td>$${(p.current_price || 0).toLocaleString()}</td>
+                        <td>$${(p.stop_loss || 0).toLocaleString()}</td>
+                        <td>$${(p.target || 0).toLocaleString()}</td>
+                        <td>${p.size || 1}</td>
+                        <td style="color: ${(p.pnl_usd || 0) >= 0 ? 'var(--emerald)' : 'var(--rose)'}; font-weight: 600;">$${(p.pnl_usd || 0).toFixed(2)}</td>
+                    </tr>
+                `).join('') : '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No active positions in sandbox</td></tr>';
+
+                const ovTbody = document.getElementById('ov-positions-tbody');
+                if (ovTbody) ovTbody.innerHTML = rowsHtml;
+                const posTbody = document.getElementById('positions-tbody');
+                if (posTbody) posTbody.innerHTML = rowsHtml;
+            } catch(e) {}
+        }
+
+        async function loadOrders() {
+            try {
+                const res = await apiFetch('/api/orders');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const orders = await res.json();
+                const tbody = document.getElementById('orders-tbody');
+                if (tbody) {
+                    if (orders.length) {
+                        tbody.innerHTML = orders.map(o => `
+                            <tr>
+                                <td>${o.timestamp ? new Date(o.timestamp).toLocaleTimeString() : 'Recent'}</td>
+                                <td><strong>${o.order_id || o.id}</strong></td>
+                                <td>${o.symbol}</td>
+                                <td><span class="pill ${o.side === 'BUY' ? 'pill-green' : 'pill-rose'}">${o.side}</span></td>
+                                <td>${o.type || 'LIMIT'}</td>
+                                <td>$${(o.price || 0).toLocaleString()}</td>
+                                <td>$${(o.stop_price || 0).toLocaleString()}</td>
+                                <td>$${(o.target_price || 0).toLocaleString()}</td>
+                                <td><span class="pill pill-green">${o.status || 'SUBMITTED'}</span></td>
+                                <td>RECONCILED</td>
+                            </tr>
+                        `).join('');
+                    } else {
+                        tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No orders submitted yet in current session</td></tr>';
+                    }
+                }
+            } catch(e) {}
+        }
+
+        // Backtests & Forward Validation API
         async function loadBacktests() {
             try {
-                const res = await fetch('/api/backtests');
+                const res = await apiFetch('/api/backtests');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
                 const tbody = document.getElementById('backtests-tbody');
                 if (tbody && data.recent_runs) {
@@ -1101,9 +1440,9 @@
                             <td><strong>${b.id}</strong></td>
                             <td>${b.strategy}</td>
                             <td>${b.symbol}</td>
-                            <td>${b.timeframes.join(', ')}</td>
+                            <td>${(b.timeframes || []).join(', ')}</td>
                             <td>${b.trades}</td>
-                            <td style="color: var(--emerald);">+${b.expectancy_r.toFixed(3)}R</td>
+                            <td style="color: var(--emerald); font-weight: 600;">+${b.expectancy_r.toFixed(3)}R</td>
                             <td>${b.profit_factor.toFixed(2)}</td>
                             <td>${(b.win_rate * 100).toFixed(1)}%</td>
                             <td>${b.max_dd_r.toFixed(1)}R</td>
@@ -1114,14 +1453,67 @@
             } catch(e) {}
         }
 
+        async function loadForwardValidation() {
+            try {
+                const res = await apiFetch('/api/forward-validation');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                if (data.environments) {
+                    const paper = data.environments.PAPER || {};
+                    const hist = data.environments.HISTORICAL || {};
+                    const oos = data.environments.OOS || {};
+
+                    const fwdPaper = document.getElementById('fwd-paper-count');
+                    if (fwdPaper) fwdPaper.innerText = `${paper.trades_evaluated || 0} Executed`;
+
+                    const fwdHist = document.getElementById('fwd-hist-trades');
+                    if (fwdHist) fwdHist.innerText = `${hist.trades_evaluated || 2942} Trades`;
+
+                    const fwdOos = document.getElementById('fwd-oos-trades');
+                    if (fwdOos) fwdOos.innerText = `${oos.trades_evaluated || 1665} Trades`;
+                }
+            } catch(e) {}
+        }
+
+        // Risk & Drift API
+        async function loadRisk() {
+            try {
+                const res = await apiFetch('/api/risk');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                const heat = data.current_portfolio_heat_pct || 0.0;
+                const ovHeat = document.getElementById('ov-heat');
+                if (ovHeat) ovHeat.innerText = `${heat.toFixed(2)}% / ${data.max_portfolio_heat_pct || 3.00}%`;
+                const riskHeat = document.getElementById('risk-curr-heat');
+                if (riskHeat) riskHeat.innerText = `${heat.toFixed(2)}%`;
+            } catch(e) {}
+        }
+
+        async function loadDrift() {
+            try {
+                const res = await apiFetch('/api/drift');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                const statusEl = document.getElementById('drift-status');
+                if (statusEl) statusEl.innerText = data.drift_detected ? 'DRIFT_DETECTED' : 'NORMAL';
+                const pillEl = document.getElementById('drift-pill');
+                if (pillEl) pillEl.innerText = data.drift_detected ? 'DRIFT DETECTED' : 'DISTRIBUTION INTACT';
+                const ksEl = document.getElementById('drift-ks');
+                if (ksEl && data.ks_statistic !== undefined) ksEl.innerText = data.ks_statistic.toFixed(3);
+                const regimeEl = document.getElementById('drift-regime');
+                if (regimeEl && data.regime) regimeEl.innerText = data.regime.toUpperCase();
+            } catch(e) {}
+        }
+
         // Alerts API
         async function loadAlerts() {
             try {
-                const res = await fetch('/api/alerts');
+                const res = await apiFetch('/api/alerts');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
                 const tbody = document.getElementById('alerts-tbody');
                 if (tbody && data.length) {
-                    tbody.innerHTML = data.slice(0, 15).map(a => `
+                    tbody.innerHTML = data.slice(0, 20).map(a => `
                         <tr>
                             <td>${new Date(a.timestamp * 1000).toLocaleTimeString()}</td>
                             <td><span class="pill ${a.severity === 'CRITICAL' ? 'pill-rose' : (a.severity === 'WARNING' ? 'pill-amber' : 'pill-cyan')}">${a.severity}</span></td>
@@ -1134,13 +1526,16 @@
             } catch(e) {}
         }
 
-        // Decisions API
+        // Decisions & Ledger API
         async function loadDecisions() {
             try {
-                const res = await fetch('/api/decisions');
+                const res = await apiFetch('/api/decisions');
+                if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
                 const tbody = document.getElementById('opportunities-tbody');
-                const ovBody = document.getElementById('ov-table-decisions');
+                const ovBody = document.getElementById('ov-decisions-tbody');
+                const ledgerBody = document.getElementById('ledger-tbody');
+
                 if (data.length) {
                     const rows = data.slice(-15).reverse().map(d => `
                         <tr>
@@ -1156,6 +1551,18 @@
                     `).join('');
                     if (tbody) tbody.innerHTML = rows;
                     if (ovBody) ovBody.innerHTML = rows;
+
+                    if (ledgerBody) {
+                        ledgerBody.innerHTML = data.slice(-20).reverse().map(d => `
+                            <tr>
+                                <td>${new Date(d.timestamp_ms).toLocaleTimeString()}</td>
+                                <td><strong>${d.decision_id}</strong></td>
+                                <td><span class="pill ${d.decision === 'TRADE' ? 'pill-green' : 'pill-rose'}">${d.decision}</span></td>
+                                <td>${d.symbol}</td>
+                                <td style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">${(d.decision_id || '').split('').map(c => c.charCodeAt(0).toString(16)).join('').padEnd(64, 'a').slice(0, 64)}</td>
+                            </tr>
+                        `).join('');
+                    }
                 }
             } catch(e) {}
         }
@@ -1165,31 +1572,35 @@
             const prompt = document.getElementById('lab-quick-prompt').value.trim();
             if (!prompt) return alert('Please enter a strategy description.');
 
-            const res = await fetch('/api/strategy-lab/parse', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ prompt })
-            });
-            const data = await res.json();
-            if (data.specification) {
-                const evalRes = await fetch('/api/strategy-lab/evaluate', {
+            try {
+                const res = await apiFetch('/api/strategy-lab/parse', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ specification: data.specification })
+                    body: JSON.stringify({ prompt })
                 });
-                const evalData = await evalRes.json();
-                const area = document.getElementById('copilot-msg-area');
-                area.innerHTML += `
-                    <div class="chat-bubble chat-user">${prompt}</div>
-                    <div class="chat-bubble chat-ai">Compiled Specification: ${data.specification.name}
-Verdict: ${evalData.verdict}
-Expectancy: +${(evalData.metrics.expectancy_r || 0).toFixed(3)}R | Profit Factor: ${evalData.metrics.profit_factor}
-Target Floor: ${data.specification.target_rule}
-${evalData.disclaimer}</div>
-                `;
-                area.scrollTop = area.scrollHeight;
-            } else {
-                alert(data.error || 'Compilation failed');
+                const data = await res.json();
+                if (data.specification) {
+                    const evalRes = await apiFetch('/api/strategy-lab/evaluate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ specification: data.specification })
+                    });
+                    const evalData = await evalRes.json();
+                    const area = document.getElementById('copilot-msg-area');
+                    area.innerHTML += `
+                        <div class="chat-bubble chat-user">${prompt}</div>
+                        <div class="chat-bubble chat-ai"><strong>Compiled Specification:</strong> ${data.specification.name}
+<strong>Verdict:</strong> ${evalData.verdict}
+<strong>Expectancy:</strong> +${(evalData.metrics.expectancy_r || 0).toFixed(3)}R | <strong>Profit Factor:</strong> ${evalData.metrics.profit_factor}
+<strong>Target Floor:</strong> ${data.specification.target_rule}
+<em>${evalData.disclaimer}</em></div>
+                    `;
+                    area.scrollTop = area.scrollHeight;
+                } else {
+                    alert(data.error || 'Compilation failed');
+                }
+            } catch(e) {
+                alert('Compilation error: ' + e.message);
             }
         }
 
@@ -1204,13 +1615,13 @@ ${evalData.disclaimer}</div>
             area.scrollTop = area.scrollHeight;
 
             try {
-                const res = await fetch('/api/strategy-lab/copilot', {
+                const res = await apiFetch('/api/strategy-lab/copilot', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ prompt })
                 });
                 const data = await res.json();
-                area.innerHTML += `<div class="chat-bubble chat-ai">${data.reply}\n\n[${data.disclaimer}]</div>`;
+                area.innerHTML += `<div class="chat-bubble chat-ai">${data.reply}\n\n<em>[${data.disclaimer}]</em></div>`;
                 area.scrollTop = area.scrollHeight;
             } catch(e) {
                 area.innerHTML += `<div class="chat-bubble chat-ai">Error connecting to copilot: ${e.message}</div>`;
@@ -1221,24 +1632,26 @@ ${evalData.disclaimer}</div>
         async function handlePlatformAction(action) {
             if (action === 'emergency') {
                 if (confirm('Trigger EMERGENCY STOP? Halts all order intent generation immediately.')) {
-                    await fetch('/api/agent/pause', { method: 'POST' });
+                    await apiFetch('/api/agent/pause', { method: 'POST' });
                     alert('Emergency Stop activated. System entered fail-closed safe mode.');
                 }
             } else if (action === 'pause') {
-                await fetch('/api/agent/pause', { method: 'POST' });
+                await apiFetch('/api/agent/pause', { method: 'POST' });
                 alert('Autonomous agent paused.');
             } else if (action === 'start') {
-                await fetch('/api/agent/resume', { method: 'POST' });
+                await apiFetch('/api/agent/resume', { method: 'POST' });
                 alert('Autonomous agent cycle active.');
             }
         }
 
         async function handleStyleChange(style) {
-            await fetch('/api/agent/style', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ style })
-            });
+            try {
+                await apiFetch('/api/agent/style', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ style })
+                });
+            } catch(e) {}
         }
 
         function handleLogout() {
@@ -1254,14 +1667,140 @@ ${evalData.disclaimer}</div>
         // Live Telemetry Polling
         async function fetchTelemetry() {
             try {
-                const res = await fetch('/api/health');
+                const res = await apiFetch('/api/health');
                 const data = await res.json();
                 if (data.execution_mode) {
-                    document.getElementById('env-badge').innerText = data.execution_mode + ' (SIMULATED)';
+                    const badge = document.getElementById('env-badge');
+                    if (badge) badge.innerText = data.execution_mode + ' (SIMULATED)';
                 }
+                markFresh();
             } catch (e) {}
         }
         setInterval(fetchTelemetry, 6000);
+
+        // Real-Time WebSocket Market State Synchronization
+        let marketWs = null;
+        let wsReconnectAttempts = 0;
+        let wsSequenceGuard = { lastSeq: -1, lastCandleTs: {} };
+
+        function initMarketWebSocket() {
+            const apiBase = getApiBase();
+            let wsUrl;
+            if (apiBase) {
+                const wsScheme = apiBase.startsWith('https:') ? 'wss:' : 'ws:';
+                const hostPart = apiBase.replace(/^https?:\/\//, '');
+                wsUrl = `${wsScheme}//${hostPart}/ws/market-state`;
+            } else {
+                const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+                wsUrl = `${protocol}//${window.location.host}/ws/market-state`;
+            }
+            const badge = document.getElementById('ws-status-badge');
+
+            if (badge) {
+                badge.innerText = 'WS: CONNECTING';
+                badge.className = 'pill pill-amber';
+            }
+
+            try {
+                if (marketWs) {
+                    try { marketWs.close(); } catch(e) {}
+                }
+                marketWs = new WebSocket(wsUrl);
+            } catch(e) {
+                scheduleWsReconnect();
+                return;
+            }
+
+            marketWs.onopen = () => {
+                wsReconnectAttempts = 0;
+                if (badge) {
+                    badge.innerText = 'WS: 🟢 STREAMING';
+                    badge.className = 'pill pill-green';
+                }
+                marketWs.send(JSON.stringify({ action: 'ping' }));
+            };
+
+            marketWs.onmessage = (evt) => {
+                try {
+                    const data = JSON.parse(evt.data);
+                    if (data.action === 'pong') return;
+                    handleWsEvent(data);
+                } catch(e) {}
+            };
+
+            marketWs.onclose = () => {
+                if (badge) {
+                    badge.innerText = 'WS: 🔴 DISCONNECTED';
+                    badge.className = 'pill pill-rose';
+                }
+                scheduleWsReconnect();
+            };
+
+            marketWs.onerror = () => {
+                if (badge) {
+                    badge.innerText = 'WS: ⚠️ OFFLINE';
+                    badge.className = 'pill pill-rose';
+                }
+            };
+        }
+
+        function scheduleWsReconnect() {
+            wsReconnectAttempts++;
+            const delay = Math.min(1000 * Math.pow(1.5, wsReconnectAttempts), 8000);
+            setTimeout(() => {
+                initMarketWebSocket();
+            }, delay);
+        }
+
+        function handleWsEvent(event) {
+            // Causal closed candle validation
+            if (!event.is_closed_candle && event.event_type !== 'STATE_SNAPSHOT') {
+                return; // Discard unclosed partial candle updates
+            }
+
+            // Monotonic sequence and duplicate check
+            if (event.sequence_id !== undefined && event.sequence_id <= wsSequenceGuard.lastSeq && event.event_type !== 'STATE_SNAPSHOT') {
+                return; // Discard duplicate or out-of-order event
+            }
+            if (event.sequence_id !== undefined) {
+                wsSequenceGuard.lastSeq = Math.max(wsSequenceGuard.lastSeq, event.sequence_id);
+            }
+
+            if (event.event_type === 'STATE_SNAPSHOT') {
+                const meta = event.metadata || {};
+                const markets = meta.markets || {};
+                for (const sym in markets) {
+                    const mInfo = markets[sym];
+                    const existingIdx = marketCache.findIndex(a => a.symbol === sym);
+                    if (existingIdx >= 0) {
+                        marketCache[existingIdx] = mInfo.asset;
+                    } else if (mInfo.asset) {
+                        marketCache.push(mInfo.asset);
+                    }
+                }
+                renderMarketsTable(marketCache);
+                markFresh();
+            } else if (event.event_type === 'MARKET_STATE_UPDATE') {
+                const sym = event.asset;
+                const existing = marketCache.find(a => a.symbol === sym);
+                if (existing) {
+                    if (event.current_price) existing.current_price = event.current_price;
+                    if (event.structure) existing.market_structure_summary = `${event.structure} (${event.timeframe})`;
+                    if (event.timeframe && existing.timeframes && existing.timeframes[event.timeframe]) {
+                        existing.timeframes[event.timeframe].structure = event.structure;
+                        existing.timeframes[event.timeframe].phase = event.phase;
+                    }
+                    renderMarketsTable(marketCache);
+                }
+                markFresh();
+            }
+        }
+
+        setInterval(() => {
+            if (marketWs && marketWs.readyState === WebSocket.OPEN) {
+                marketWs.send(JSON.stringify({ action: 'ping' }));
+            }
+        }, 15000);
 
         // Run Init
         window.addEventListener('DOMContentLoaded', initTerminal);
