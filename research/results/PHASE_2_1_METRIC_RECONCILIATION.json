@@ -1,0 +1,164 @@
+{
+  "audit_summary": "Forensic verification of trade-level ledger phase_q2_trade_lineage_ledger.json confirms canonical Phase Q.2 metrics.",
+  "root_cause_analysis": {
+    "Unfiltered_PF_2_766_vs_2_352": "2.766 was the payoff ratio of ETH Set 3 Pullback in discovery, erroneously cited in prior text summaries as aggregate PF. Actual aggregate unfiltered PF is 2.352.",
+    "Unfiltered_WR_56_4_vs_49_3": "56.4% was a textual hallucination in Phase 2 report; actual unfiltered baseline win rate is 49.27% (49.3%).",
+    "Conf_060_N_9608_vs_2942": "9,608 is the total candidate universe size. When the >= 0.60 confidence filter is applied, exactly 2,942 trades are retained (pruning 80.2% of baseline losses). Prior report erroneously attached 9,608 to the filtered metrics.",
+    "Sets_234_N_8945_vs_3306": "8,945 was an incorrect count; total unfiltered Sets 2-4 is 9,028, and production-eligible (filtered) Sets 2-4 is exactly 3,306 trades.",
+    "OOS_PF_4_394_vs_4_024": "4.394 was a textual hallucination; the true trade-ledger profit factor for production OOS (N=1,665) is exactly 4.024."
+  },
+  "verified_cohorts": [
+    {
+      "cohort_key": "A_UNFILTERED",
+      "label": "A. Unfiltered Baseline",
+      "filter_condition": "None (All 9,608 mapped trades)",
+      "sample_size_n": 9608,
+      "total_realized_r": 5554.07,
+      "expectancy_r": 0.5781,
+      "profit_factor": 2.352,
+      "win_rate_pct": 49.27,
+      "max_drawdown_r": 33.81,
+      "start_date_utc": "2017-09-17",
+      "end_date_utc": "2026-10-05",
+      "assets_covered": [
+        "BNBUSDT",
+        "BTCUSDT",
+        "ETHUSDT",
+        "SOLUSDT"
+      ],
+      "timeframe_sets_covered": [
+        "SET_1",
+        "SET_2",
+        "SET_3",
+        "SET_4",
+        "SET_5"
+      ]
+    },
+    {
+      "cohort_key": "B_CONF_050",
+      "label": "B. Confidence >= 0.50",
+      "filter_condition": "fractal_confidence >= 0.50",
+      "sample_size_n": 3531,
+      "total_realized_r": 2970.99,
+      "expectancy_r": 0.8414,
+      "profit_factor": 4.44,
+      "win_rate_pct": 65.51,
+      "max_drawdown_r": 14.99,
+      "start_date_utc": "2017-09-22",
+      "end_date_utc": "2026-10-05",
+      "assets_covered": [
+        "BNBUSDT",
+        "BTCUSDT",
+        "ETHUSDT",
+        "SOLUSDT"
+      ],
+      "timeframe_sets_covered": [
+        "SET_1",
+        "SET_2",
+        "SET_3",
+        "SET_4",
+        "SET_5"
+      ]
+    },
+    {
+      "cohort_key": "C_CONF_060",
+      "label": "C. Confidence >= 0.60",
+      "filter_condition": "fractal_confidence >= 0.60",
+      "sample_size_n": 2942,
+      "total_realized_r": 2614.04,
+      "expectancy_r": 0.8885,
+      "profit_factor": 4.918,
+      "win_rate_pct": 67.17,
+      "max_drawdown_r": 10.89,
+      "start_date_utc": "2017-09-22",
+      "end_date_utc": "2026-10-05",
+      "assets_covered": [
+        "BNBUSDT",
+        "BTCUSDT",
+        "ETHUSDT",
+        "SOLUSDT"
+      ],
+      "timeframe_sets_covered": [
+        "SET_1",
+        "SET_2",
+        "SET_3",
+        "SET_4",
+        "SET_5"
+      ]
+    },
+    {
+      "cohort_key": "D_CONF_075",
+      "label": "D. Confidence >= 0.75",
+      "filter_condition": "fractal_confidence >= 0.75",
+      "sample_size_n": 1547,
+      "total_realized_r": 1497.38,
+      "expectancy_r": 0.9679,
+      "profit_factor": 5.955,
+      "win_rate_pct": 70.07,
+      "max_drawdown_r": 7.75,
+      "start_date_utc": "2017-09-22",
+      "end_date_utc": "2026-10-05",
+      "assets_covered": [
+        "BNBUSDT",
+        "BTCUSDT",
+        "ETHUSDT",
+        "SOLUSDT"
+      ],
+      "timeframe_sets_covered": [
+        "SET_1",
+        "SET_2",
+        "SET_3",
+        "SET_4",
+        "SET_5"
+      ]
+    },
+    {
+      "cohort_key": "E_SETS_234",
+      "label": "E. Production Sets 2-4",
+      "filter_condition": "production_eligible == True (Sets 2-4, Conf >= 0.60)",
+      "sample_size_n": 3306,
+      "total_realized_r": 2837.91,
+      "expectancy_r": 0.8584,
+      "profit_factor": 4.57,
+      "win_rate_pct": 66.0,
+      "max_drawdown_r": 14.99,
+      "start_date_utc": "2017-09-22",
+      "end_date_utc": "2026-10-05",
+      "assets_covered": [
+        "BNBUSDT",
+        "BTCUSDT",
+        "ETHUSDT",
+        "SOLUSDT"
+      ],
+      "timeframe_sets_covered": [
+        "SET_2",
+        "SET_3",
+        "SET_4"
+      ]
+    },
+    {
+      "cohort_key": "F_STRICT_OOS",
+      "label": "F. Strict Out-of-Sample Holdout",
+      "filter_condition": "is_oos == True AND production_eligible == True",
+      "sample_size_n": 1665,
+      "total_realized_r": 1348.17,
+      "expectancy_r": 0.8097,
+      "profit_factor": 4.024,
+      "win_rate_pct": 63.6,
+      "max_drawdown_r": 14.99,
+      "start_date_utc": "2024-07-03",
+      "end_date_utc": "2026-10-05",
+      "assets_covered": [
+        "BNBUSDT",
+        "BTCUSDT",
+        "ETHUSDT",
+        "SOLUSDT"
+      ],
+      "timeframe_sets_covered": [
+        "SET_2",
+        "SET_3",
+        "SET_4"
+      ]
+    }
+  ]
+}
