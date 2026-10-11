@@ -116,7 +116,7 @@ async def async_main(args: argparse.Namespace) -> None:
 
 def main():
     parser = argparse.ArgumentParser(description="Crypto Platform Digital Trading Engine")
-    parser.add_argument("--mode", type=str, default="PAPER", choices=["PAPER", "SHADOW", "BROKER_DEMO", "MICRO_LIVE"], help="Execution mode")
+    parser.add_argument("--mode", type=lambda s: s.upper(), default="PAPER", choices=["PAPER", "SHADOW", "BROKER_DEMO", "MICRO_LIVE"], help="Execution mode")
     parser.add_argument("--symbols", type=str, default="BTCUSDT,ETHUSDT,SOLUSDT,BNBUSDT", help="Comma-separated assets")
     parser.add_argument("--equity", type=float, default=100_000.0, help="Initial simulated equity USD")
     parser.add_argument("--min-confidence", type=float, default=0.50, help="Minimum fractal confidence threshold")
