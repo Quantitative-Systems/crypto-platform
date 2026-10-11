@@ -75,9 +75,9 @@ jobs:
           name: crypto-platform-staging
           path: mobile/android/app/build/outputs/apk/staging/app-staging.apk
 
-      - name: Upload Unsigned Release APK
+      - name: Upload Release APK
         if: ${{ inputs.build_type == 'all' || inputs.build_type == 'releaseUnsigned' || startsWith(github.ref, 'refs/tags/') }}
         uses: actions/upload-artifact@v4
         with:
-          name: crypto-platform-release-unsigned
-          path: mobile/android/app/build/outputs/apk/release/app-release-unsigned.apk
+          name: crypto-platform-release
+          path: mobile/android/app/build/outputs/apk/release/*.apk
