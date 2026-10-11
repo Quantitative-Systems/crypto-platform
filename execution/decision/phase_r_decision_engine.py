@@ -63,6 +63,19 @@ class PhaseRNoTradeReason(str, Enum):
     CROSS_SET_EVENT_DUPLICATION = "CROSS_SET_EVENT_DUPLICATION"
 
 
+ELIGIBLE_PRODUCTION_SETS = {"SET_2", "SET_3", "SET_4"}
+
+
+def is_production_eligible(set_name: Any, confidence_score: float) -> bool:
+    """Canonical production eligibility rule from Phase Q.2:
+
+    Strictly: (set_name in ['SET_2', 'SET_3', 'SET_4']) AND (confidence_score >= 0.50).
+    Sets 1 & 5 remain active observation anchors (zero capital).
+    """
+    s = set_name.value if hasattr(set_name, "value") else str(set_name)
+    return (s in ELIGIBLE_PRODUCTION_SETS) and (confidence_score >= 0.50)
+
+
 @dataclass
 class PhaseRDecisionRecord:
     decision_id: str
@@ -96,6 +109,14 @@ class PhaseRDecisionRecord:
         d = asdict(self)
         d["decision"] = self.decision.value
         return d
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> PhaseRDecisionRecord:
+        data = dict(d)
+        if isinstance(data.get("decision"), str):
+            data["decision"] = DecisionType(data["decision"])
+        valid_fields = {f.name for f in fields(cls)}
+        return cls(**{k: v for k, v in data.items() if k in valid_fields})
 
 
 class PhaseRDecisionEngine:

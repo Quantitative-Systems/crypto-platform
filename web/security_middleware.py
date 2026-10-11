@@ -1,12 +1,12 @@
-"""STRATA Digital Trading Platform — Production Web Security Middleware.
+"""Crypto Platform — Production Web Security Middleware.
 
 Implements institutional web security:
-1. Hardened Security Headers:
+1. Hardened Security & CORS Headers:
    - X-Frame-Options: DENY (clickjacking protection)
    - X-Content-Type-Options: nosniff (MIME sniffing prevention)
    - X-XSS-Protection: 1; mode=block
-   - Content-Security-Policy: default-src 'self' 'unsafe-inline'
    - Referrer-Policy: strict-origin-when-cross-origin
+   - Access-Control-Allow-Origin: * (CORS support for cloud staging & mobile apps)
 2. Sliding-Window Rate Limiter per client IP (prevents DoS and brute-force).
 3. Structured Problem Details (RFC 7807) error handler without stack trace leakage.
 """
@@ -46,7 +46,16 @@ class RateLimiter:
 
 @web.middleware
 async def security_headers_middleware(request: web.Request, handler: Callable) -> web.Response:
-    """Appends OWASP-recommended security headers to all HTTP responses."""
+    """Appends OWASP-recommended security and CORS headers to all HTTP responses."""
+    if request.method == "OPTIONS":
+        # Handle CORS preflight
+        response = web.Response(status=204)
+        response.headers["Access-Control-Allow-Origin"] = "*"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Tenant-ID, Accept"
+        response.headers["Access-Control-Max-Age"] = "86400"
+        return response
+
     try:
         response = await handler(request)
     except web.HTTPException as http_ex:
@@ -67,7 +76,10 @@ async def security_headers_middleware(request: web.Request, handler: Callable) -
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-XSS-Protection"] = "1; mode=block"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-    response.headers["Server"] = "STRATA-Secure-Gateway"
+    response.headers["Server"] = "Crypto-Platform-Gateway"
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Tenant-ID, Accept"
     return response
 
 
@@ -81,7 +93,7 @@ def create_rate_limit_middleware(max_requests: int = 120, window_seconds: float 
             logger.warning(f"Rate limit exceeded for client IP: {client_ip}")
             return web.json_response(
                 {
-                    "type": "https://strata.trade/errors/rate-limit-exceeded",
+                    "type": "about:blank",
                     "title": "Too Many Requests",
                     "status": 429,
                     "detail": "Client rate limit exceeded. Please throttle request frequency.",

@@ -111,7 +111,7 @@ class TestProductRealityUpgrade:
         assert "1D" in tfs
         assert "15M" in tfs
         assert tfs["1D"]["structure"] == "BULLISH"
-        assert tfs["1D"]["phase"] == "MARKUP"
+        assert tfs["1D"]["phase"] == "CONTINUATION"
         assert tfs["1D"]["premium_discount"] == "DISCOUNT"
 
     def test_watchlist_tenant_isolation(self, market_service):

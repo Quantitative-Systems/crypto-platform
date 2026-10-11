@@ -75,5 +75,14 @@ class IdempotencyExecutionGuard:
         self._executed_keys.add(key)
         return key
 
+    def get_keys(self) -> list[str]:
+        """Returns snapshot of recorded idempotency keys."""
+        return list(self._executed_keys)
+
+    def restore_keys(self, keys: list[str]) -> None:
+        """Restores recorded idempotency keys into guard after restart recovery."""
+        if keys:
+            self._executed_keys.update(keys)
+
     def clear(self) -> None:
         self._executed_keys.clear()

@@ -1,0 +1,216 @@
+openapi: 3.1.0
+info:
+  title: Crypto Platform Unified REST API
+  description: Canonical API contract for Crypto Platform desktop web workstation and native Android mobile application.
+  version: 1.0.0-staging
+servers:
+  - url: http://127.0.0.1:8080
+    description: Local development workstation
+  - url: https://crypto-platform-staging.onrender.com
+    description: Cloud staging backend
+paths:
+  /health:
+    get:
+      summary: Liveness and Capital Safety Probe
+      operationId: getHealth
+      responses:
+        '200':
+          description: System healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /ready:
+    get:
+      summary: Readiness Probe
+      operationId: getReady
+      responses:
+        '200':
+          description: System ready
+        '503':
+          description: System initializing or degraded
+  /version:
+    get:
+      summary: Platform Version and Frozen Contract Hash
+      operationId: getVersion
+      responses:
+        '200':
+          description: Version metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
+  /api/auth/register:
+    post:
+      summary: Register User
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: User registered
+        '400':
+          description: Validation error
+  /api/auth/login:
+    post:
+      summary: Authenticate User
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+        '401':
+          description: Invalid credentials
+  /api/auth/me:
+    get:
+      summary: Get Current Session Profile
+      operationId: getAuthMe
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Active profile
+        '401':
+          description: Unauthorized
+  /api/king/overview:
+    get:
+      summary: Master Quantitative Overview & 7-TF Ladder
+      operationId: getKingOverview
+      responses:
+        '200':
+          description: Quantitative overview
+  /api/markets:
+    get:
+      summary: Admitted Perpetual Universe
+      operationId: getMarkets
+      responses:
+        '200':
+          description: Admitted markets list
+  /api/strategies:
+    get:
+      summary: Strategy Library Catalog
+      operationId: getStrategies
+      responses:
+        '200':
+          description: Strategy catalog
+  /api/strategy-lab/parse:
+    post:
+      summary: Parse Natural Language Strategy Spec
+      operationId: parseStrategySpec
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+              required: [prompt]
+      responses:
+        '200':
+          description: Parsed specification
+  /api/positions:
+    get:
+      summary: Active and Closed Simulated Positions
+      operationId: getPositions
+      responses:
+        '200':
+          description: Position blotter
+  /api/orders:
+    get:
+      summary: Simulated Order History
+      operationId: getOrders
+      responses:
+        '200':
+          description: Orders blotter
+  /api/risk:
+    get:
+      summary: Risk Governance and Heat Metrics
+      operationId: getRisk
+      responses:
+        '200':
+          description: Risk metrics
+  /api/alerts:
+    get:
+      summary: Recent Operational Alerts
+      operationId: getAlerts
+      responses:
+        '200':
+          description: Alerts list
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: HEALTHY
+        real_capital_authorized:
+          type: number
+          example: 0.00
+        live_trading_status:
+          type: string
+          example: DISABLED_FAIL_CLOSED
+        execution_mode:
+          type: string
+          example: PAPER
+        timestamp:
+          type: string
+      required: [status, real_capital_authorized, live_trading_status, execution_mode]
+    VersionResponse:
+      type: object
+      properties:
+        platform:
+          type: string
+          example: Crypto Platform
+        version:
+          type: string
+          example: 1.0.0-forward-validation
+        environment:
+          type: string
+          example: paper
+        king_contract_hash:
+          type: string
+          example: 8fbc923a104e7688c3a9f0e4b8592c30dfb0b9a67a84511d5e49f8721c432098
+        contract_status:
+          type: string
+          example: VERIFIED_IMMUTABLE
+        real_capital_authorized_usd:
+          type: number
+          example: 0.00
+      required: [platform, king_contract_hash, contract_status, real_capital_authorized_usd]
+    RegisterRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        name:
+          type: string
+      required: [email, password]
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required: [email, password]

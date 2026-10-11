@@ -161,7 +161,8 @@ async def test_full_programmatic_product_journey(test_server):
         resp_bt = await client.get("/api/backtests")
         assert resp_bt.status == 200
         bt_data = await resp_bt.json()
-        assert bt_data["benchmark_king"]["total_trades"] == 9608
+        assert bt_data["benchmark_king"]["total_trades"] == 2942
+        assert bt_data["benchmark_king"]["unfiltered_trades"] == 9608
 
         # 20. Forward validation
         resp_fv = await client.get("/api/forward-validation")

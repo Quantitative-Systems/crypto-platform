@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 data class HomeUiState(
     val portfolioEquity: Double = 100_000.00,
@@ -45,19 +46,25 @@ class HomeViewModel(private val marketRepo: MarketRepository) : ViewModel() {
     }
 }
 
+
+
 data class MarketsUiState(
     val assets: List<AssetQuote> = emptyList(),
     val filterType: String = "ALL", // ALL or WATCHLIST
     val searchQuery: String = "",
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val isStreaming: Boolean = false
 )
 
 class MarketsViewModel(private val marketRepo: MarketRepository) : ViewModel() {
     private val _uiState = MutableStateFlow(MarketsUiState())
     val uiState: StateFlow<MarketsUiState> = _uiState.asStateFlow()
+    private var webSocket: okhttp3.WebSocket? = null
+    private var isDisposed = false
 
     init {
         refresh()
+        startWebSocketStreaming()
     }
 
     fun refresh() {
@@ -66,6 +73,41 @@ class MarketsViewModel(private val marketRepo: MarketRepository) : ViewModel() {
             val quotes = marketRepo.getMarkets()
             _uiState.value = _uiState.value.copy(assets = quotes, isLoading = false)
         }
+    }
+
+    private fun startWebSocketStreaming() {
+        if (isDisposed) return
+        webSocket?.close(1000, "Reconnecting")
+        webSocket = marketRepo.connectMarketStateWebSocket(
+            onEvent = { json ->
+                val eventType = json.optString("event_type")
+                if (eventType == "MARKET_STATE_UPDATE") {
+                    val asset = json.optString("asset")
+                    val price = json.optDouble("current_price", 0.0)
+                    if (asset.isNotEmpty() && price > 0.0) {
+                        val currentList = _uiState.value.assets
+                        val updated = currentList.map {
+                            if (it.symbol.equals(asset, ignoreCase = true)) it.copy(price = price) else it
+                        }
+                        _uiState.value = _uiState.value.copy(assets = updated)
+                    }
+                }
+            },
+            onConnected = {
+                _uiState.value = _uiState.value.copy(isStreaming = true)
+            },
+            onDisconnected = {
+                _uiState.value = _uiState.value.copy(isStreaming = false)
+                if (!isDisposed) {
+                    viewModelScope.launch {
+                        kotlinx.coroutines.delay(4000)
+                        if (!isDisposed && !_uiState.value.isStreaming) {
+                            startWebSocketStreaming()
+                        }
+                    }
+                }
+            }
+        )
     }
 
     fun setFilter(type: String) {
@@ -82,14 +124,26 @@ class MarketsViewModel(private val marketRepo: MarketRepository) : ViewModel() {
             refresh()
         }
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        isDisposed = true
+        webSocket?.close(1000, "Markets screen disposed")
+        webSocket = null
+    }
 }
 
 data class MarketDetailUiState(
     val symbol: String = "BTCUSDT",
     val quote: AssetQuote? = null,
     val ladder: SevenTimeframeLadder = SevenTimeframeLadder(),
+    val fiveSetLadder: FiveSetLadder = FiveSetLadder(),
     val selectedTimeframe: String = "4H",
-    val orderMessage: String? = null
+    val orderMessage: String? = null,
+    val isStreamingConnected: Boolean = false,
+    val streamFreshnessMs: Long = 0L,
+    val lastEventSequence: Long = 0L,
+    val isDataStale: Boolean = false
 )
 
 class MarketDetailViewModel(
@@ -98,16 +152,131 @@ class MarketDetailViewModel(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MarketDetailUiState(symbol = initialSymbol))
     val uiState: StateFlow<MarketDetailUiState> = _uiState.asStateFlow()
+    private var webSocket: okhttp3.WebSocket? = null
+    private var isDisposed = false
 
     init {
         loadDetail()
+        startWebSocketStreaming()
     }
 
     private fun loadDetail() {
         viewModelScope.launch {
             val quotes = marketRepo.getMarkets()
             val match = quotes.find { it.symbol == initialSymbol } ?: quotes.firstOrNull()
-            _uiState.value = _uiState.value.copy(quote = match)
+            val fiveSet = marketRepo.getFiveSetLadder(initialSymbol)
+            _uiState.value = _uiState.value.copy(quote = match, fiveSetLadder = fiveSet)
+        }
+    }
+
+    fun startWebSocketStreaming() {
+        if (isDisposed) return
+        webSocket?.close(1000, "Reconnecting")
+        webSocket = marketRepo.connectMarketStateWebSocket(
+            onEvent = { json ->
+                handleMarketEvent(json)
+            },
+            onConnected = {
+                _uiState.value = _uiState.value.copy(
+                    isStreamingConnected = true,
+                    isDataStale = false
+                )
+            },
+            onDisconnected = {
+                _uiState.value = _uiState.value.copy(
+                    isStreamingConnected = false,
+                    isDataStale = true
+                )
+                if (!isDisposed) {
+                    viewModelScope.launch {
+                        kotlinx.coroutines.delay(3000)
+                        if (!isDisposed && !_uiState.value.isStreamingConnected) {
+                            startWebSocketStreaming()
+                        }
+                    }
+                }
+            }
+        )
+    }
+
+    private fun handleMarketEvent(json: JSONObject) {
+        val eventType = json.optString("event_type")
+        val seq = json.optLong("sequence_id", 0L)
+        val freshness = json.optLong("data_freshness_ms", 0L)
+
+        if (eventType == "STATE_SNAPSHOT") {
+            val meta = json.optJSONObject("metadata")
+            val markets = meta?.optJSONObject("markets")
+            val symData = markets?.optJSONObject(initialSymbol)
+            if (symData != null) {
+                val ladderObj = symData.optJSONObject("ladder")
+                if (ladderObj != null) {
+                    val setsObj = ladderObj.optJSONObject("sets")
+                    if (setsObj != null) {
+                        val list = mutableListOf<FiveSetEntity>()
+                        val keys = listOf("SET_1", "SET_2", "SET_3", "SET_4", "SET_5")
+                        for (k in keys) {
+                            val s = setsObj.optJSONObject(k) ?: continue
+                            list.add(
+                                FiveSetEntity(
+                                    setId = s.optString("set_id", k),
+                                    name = s.optString("name", k),
+                                    role = s.optString("role", ""),
+                                    htfLabel = s.optString("htf_label", ""),
+                                    mtfLabel = s.optString("mtf_label", ""),
+                                    ltfLabel = s.optString("ltf_label", ""),
+                                    productionEligible = s.optBoolean("production_eligible", false),
+                                    purpose = s.optString("purpose", "")
+                                )
+                            )
+                        }
+                        if (list.isNotEmpty()) {
+                            _uiState.value = _uiState.value.copy(
+                                fiveSetLadder = FiveSetLadder(symbol = initialSymbol, sets = list, parityVerified = true),
+                                isStreamingConnected = true,
+                                streamFreshnessMs = freshness,
+                                lastEventSequence = seq,
+                                isDataStale = false
+                            )
+                            return
+                        }
+                    }
+                }
+            }
+            _uiState.value = _uiState.value.copy(
+                isStreamingConnected = true,
+                streamFreshnessMs = freshness,
+                lastEventSequence = seq,
+                isDataStale = false
+            )
+        } else if (eventType == "MARKET_STATE_UPDATE") {
+            val asset = json.optString("asset")
+            if (asset.equals(initialSymbol, ignoreCase = true)) {
+                val currentPrice = json.optDouble("current_price", _uiState.value.quote?.price ?: 0.0)
+                val structure = json.optString("structure", "BULLISH")
+                val phase = json.optString("phase", "CONTINUATION")
+
+                val updatedQuote = _uiState.value.quote?.copy(
+                    price = currentPrice,
+                    marketStructure = structure,
+                    phase = phase
+                ) ?: AssetQuote(
+                    symbol = initialSymbol,
+                    name = initialSymbol.removeSuffix("USDT"),
+                    price = currentPrice,
+                    change24h = 0.0,
+                    marketStructure = structure,
+                    phase = phase
+                )
+
+                _uiState.value = _uiState.value.copy(
+                    quote = updatedQuote,
+                    isStreamingConnected = true,
+                    streamFreshnessMs = freshness,
+                    lastEventSequence = seq,
+                    isDataStale = false
+                )
+            }
         }
     }
 
@@ -123,6 +292,13 @@ class MarketDetailViewModel(
 
     fun clearOrderMessage() {
         _uiState.value = _uiState.value.copy(orderMessage = null)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        isDisposed = true
+        webSocket?.close(1000, "Screen destroyed")
+        webSocket = null
     }
 }
 
@@ -313,3 +489,85 @@ class AccountViewModel(private val authRepo: AuthRepository) : ViewModel() {
         _uiState.value = _uiState.value.copy(message = null)
     }
 }
+
+data class BacktestUiState(
+    val report: BacktestReport = BacktestReport(),
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null
+)
+
+class BacktestViewModel(private val researchRepo: ResearchRepository) : ViewModel() {
+    private val _uiState = MutableStateFlow(BacktestUiState())
+    val uiState: StateFlow<BacktestUiState> = _uiState.asStateFlow()
+
+    init {
+        loadBacktests()
+    }
+
+    fun loadBacktests() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
+            try {
+                val r = researchRepo.getBacktests()
+                _uiState.value = _uiState.value.copy(report = r, isLoading = false)
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(isLoading = false, errorMessage = e.message)
+            }
+        }
+    }
+}
+
+data class ForwardUiState(
+    val report: ForwardValidationReport = ForwardValidationReport(),
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null
+)
+
+class ForwardViewModel(private val researchRepo: ResearchRepository) : ViewModel() {
+    private val _uiState = MutableStateFlow(ForwardUiState())
+    val uiState: StateFlow<ForwardUiState> = _uiState.asStateFlow()
+
+    init {
+        loadForwardValidation()
+    }
+
+    fun loadForwardValidation() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
+            try {
+                val r = researchRepo.getForwardValidation()
+                _uiState.value = _uiState.value.copy(report = r, isLoading = false)
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(isLoading = false, errorMessage = e.message)
+            }
+        }
+    }
+}
+
+data class PerformanceUiState(
+    val telemetry: PerformanceTelemetry = PerformanceTelemetry(),
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null
+)
+
+class PerformanceViewModel(private val researchRepo: ResearchRepository) : ViewModel() {
+    private val _uiState = MutableStateFlow(PerformanceUiState())
+    val uiState: StateFlow<PerformanceUiState> = _uiState.asStateFlow()
+
+    init {
+        refresh()
+    }
+
+    fun refresh() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)
+            try {
+                val t = researchRepo.getTelemetry()
+                _uiState.value = _uiState.value.copy(telemetry = t, isLoading = false)
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(isLoading = false, errorMessage = e.message)
+            }
+        }
+    }
+}
+

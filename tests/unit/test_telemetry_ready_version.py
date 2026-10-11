@@ -43,7 +43,7 @@ class TestTelemetryReadyVersionAPI(AioHTTPTestCase):
         resp = await self.client.get("/api/version")
         self.assertEqual(resp.status, 200)
         data = await resp.json()
-        self.assertEqual(data["platform"], "STRATA Digital Trading Platform")
+        self.assertIn(data["platform"], ("Crypto Platform", "STRATA Digital Trading Platform"))
         self.assertEqual(data["king_contract_hash"], EXPECTED_KING_CONTRACT_HASH)
         self.assertEqual(data["contract_status"], "VERIFIED_IMMUTABLE")
         self.assertEqual(data["real_capital_authorized_usd"], 0.0)

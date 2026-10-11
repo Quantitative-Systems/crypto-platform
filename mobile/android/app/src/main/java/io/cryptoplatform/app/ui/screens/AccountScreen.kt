@@ -14,6 +14,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.cryptoplatform.app.BuildConfig
+import io.cryptoplatform.app.CryptoPlatformApp
 import io.cryptoplatform.app.ui.components.StatusBadge
 import io.cryptoplatform.app.ui.theme.*
 import io.cryptoplatform.app.ui.viewmodel.AccountViewModel
@@ -87,6 +89,77 @@ fun AccountScreen(
                     state.message?.let { msg ->
                         Spacer(modifier = Modifier.height(6.dp))
                         Text(msg, fontSize = 11.sp, color = BrandBlue, fontFamily = FontFamily.Monospace)
+                    }
+                }
+            }
+        }
+
+        // Authoritative Backend Endpoint Configuration Card
+        item {
+            var endpointInput by remember {
+                mutableStateOf(CryptoPlatformApp.instance.secureStorage.customApiUrl ?: "")
+            }
+            var saveFeedback by remember { mutableStateOf<String?>(null) }
+
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = BgSurface),
+                shape = RoundedCornerShape(8.dp),
+                border = CardDefaults.outlinedCardBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(BorderLight))
+            ) {
+                Column(modifier = Modifier.padding(14.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("Authoritative Backend Endpoint", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        StatusBadge("CONFIGURABLE", PositiveEmerald.copy(alpha = 0.1f), PositiveEmerald)
+                    }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        "Default: ${BuildConfig.BASE_URL}",
+                        fontSize = 11.sp,
+                        fontFamily = FontFamily.Monospace,
+                        color = TextMuted
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = endpointInput,
+                        onValueChange = { endpointInput = it },
+                        placeholder = { Text("e.g. http://10.0.2.2:8080 or https://api.cryptoplatform.io", fontSize = 12.sp) },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Button(
+                            onClick = {
+                                val trimmed = endpointInput.trim().trimEnd('/')
+                                CryptoPlatformApp.instance.secureStorage.customApiUrl = if (trimmed.isNotEmpty()) trimmed else null
+                                saveFeedback = if (trimmed.isNotEmpty()) "Endpoint set to: $trimmed" else "Reset to default endpoint"
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = BrandBlue),
+                            shape = RoundedCornerShape(6.dp),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("Save Endpoint", fontSize = 12.sp)
+                        }
+                        OutlinedButton(
+                            onClick = {
+                                CryptoPlatformApp.instance.secureStorage.customApiUrl = null
+                                endpointInput = ""
+                                saveFeedback = "Reset to default endpoint: ${BuildConfig.BASE_URL}"
+                            },
+                            shape = RoundedCornerShape(6.dp),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text("Reset Default", fontSize = 12.sp)
+                        }
+                    }
+                    saveFeedback?.let { fb ->
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(fb, fontSize = 11.sp, color = PositiveEmerald, fontFamily = FontFamily.Monospace)
                     }
                 }
             }

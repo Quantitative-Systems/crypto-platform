@@ -42,11 +42,15 @@ fun CryptoPlatformAppRoot(
     val riskRepo = remember { RiskRepository(api) }
     val monitoringRepo = remember { MonitoringRepository(api) }
     val authRepo = remember { AuthRepository(api) }
+    val researchRepo = remember { ResearchRepository(api) }
 
     val homeViewModel = remember { HomeViewModel(marketRepo) }
     val marketsViewModel = remember { MarketsViewModel(marketRepo) }
     val strategiesViewModel = remember { StrategiesViewModel(strategyRepo) }
     val researchViewModel = remember { ResearchViewModel(strategyRepo) }
+    val backtestViewModel = remember { BacktestViewModel(researchRepo) }
+    val forwardViewModel = remember { ForwardViewModel(researchRepo) }
+    val performanceViewModel = remember { PerformanceViewModel(researchRepo) }
     val tradingViewModel = remember { TradingViewModel(tradingRepo) }
     val riskViewModel = remember { RiskViewModel(riskRepo) }
     val monitoringViewModel = remember { MonitoringViewModel(monitoringRepo) }
@@ -131,7 +135,7 @@ fun CryptoPlatformAppRoot(
                         }
                     }
                 }
-                Divider(color = BorderLight, thickness = 1.dp)
+                HorizontalDivider(color = BorderLight, thickness = 1.dp)
             }
         },
         bottomBar = {
@@ -197,10 +201,10 @@ fun CryptoPlatformAppRoot(
                 )
             }
             composable(NavRoute.Backtesting.route) {
-                BacktestScreen()
+                BacktestScreen(viewModel = backtestViewModel)
             }
             composable(NavRoute.ForwardTesting.route) {
-                ForwardScreen()
+                ForwardScreen(viewModel = forwardViewModel)
             }
             composable(NavRoute.Trading.route) {
                 TradingScreen(viewModel = tradingViewModel)
@@ -209,7 +213,7 @@ fun CryptoPlatformAppRoot(
                 RiskScreen(viewModel = riskViewModel)
             }
             composable(NavRoute.Performance.route) {
-                PerformanceScreen()
+                PerformanceScreen(viewModel = performanceViewModel)
             }
             composable(NavRoute.Monitoring.route) {
                 MonitoringScreen(viewModel = monitoringViewModel)

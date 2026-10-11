@@ -58,8 +58,29 @@ fun StrategiesScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            items(state.strategies) { strat ->
+        if (state.strategies.isEmpty()) {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = BgSurface),
+                shape = RoundedCornerShape(8.dp),
+                border = CardDefaults.outlinedCardBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(BorderLight))
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "No strategies returned from backend or server unreachable.",
+                        fontSize = 12.sp,
+                        color = TextMuted
+                    )
+                }
+            }
+        } else {
+            LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                items(state.strategies) { strat ->
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(containerColor = BgSurface),
@@ -116,7 +137,7 @@ fun StrategiesScreen(
                             color = PositiveEmerald
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        Divider(color = BorderLight, thickness = 0.5.dp)
+                        HorizontalDivider(color = BorderLight, thickness = 0.5.dp)
                         Spacer(modifier = Modifier.height(6.dp))
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -142,6 +163,7 @@ fun StrategiesScreen(
             }
         }
     }
+}
 }
 
 @Composable
