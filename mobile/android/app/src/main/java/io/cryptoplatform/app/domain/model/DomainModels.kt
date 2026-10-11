@@ -32,6 +32,30 @@ data class SevenTimeframeLadder(
     )
 )
 
+data class FiveSetEntity(
+    val setId: String,
+    val name: String,
+    val role: String,
+    val htfLabel: String,
+    val mtfLabel: String,
+    val ltfLabel: String,
+    val productionEligible: Boolean,
+    val purpose: String,
+    val sharedTimeframes: List<String> = emptyList()
+)
+
+data class FiveSetLadder(
+    val symbol: String = "BTCUSDT",
+    val sets: List<FiveSetEntity> = listOf(
+        FiveSetEntity("SET_1", "Set 1: Macro Context", "Macro Structural Anchor", "1M", "1W", "1D", false, "Regime anchor ($0.00 capital)", listOf("1W", "1D")),
+        FiveSetEntity("SET_2", "Set 2: Higher-Timeframe Trading", "Higher-Timeframe Trading", "1W", "1D", "4H", true, "Macro swing trade generation (+1.05R)", listOf("1W", "1D", "4H")),
+        FiveSetEntity("SET_3", "Set 3: Daily / Swing Trading", "Daily / Swing Trading", "1D", "4H", "1H", true, "Core swing trade volume (+0.56R)", listOf("1D", "4H", "1H")),
+        FiveSetEntity("SET_4", "Set 4: Intraday Trading", "Intraday Trading", "4H", "1H", "15M", true, "High-probability intraday (+0.59R)", listOf("4H", "1H", "15M")),
+        FiveSetEntity("SET_5", "Set 5: Lower-Timeframe Observation", "Lower-Timeframe Observation", "1H", "15M", "3M", false, "Entry confirmation anchor ($0.00 capital)", listOf("1H", "15M"))
+    ),
+    val parityVerified: Boolean = true
+)
+
 data class TradeOpportunity(
     val symbol: String,
     val direction: String, // LONG, SHORT
@@ -167,3 +191,70 @@ data class AlertItem(
     val title: String,
     val message: String
 )
+
+data class BacktestBenchmark(
+    val unfilteredTrades: Int = 9608,
+    val unfilteredExpectancyR: Double = 0.5781,
+    val unfilteredProfitFactor: Double = 2.352,
+    val unfilteredWinRate: Double = 0.493,
+    val totalTrades: Int = 2942,
+    val sampleSizeFiltered: Int = 2942,
+    val confidenceThreshold: String = ">= 0.60",
+    val expectancyR: Double = 0.8885,
+    val profitFactor: Double = 4.918,
+    val winRate: Double = 0.672,
+    val maxDrawdownR: Double = 10.89,
+    val tailRiskCvar: Double = 1.284,
+    val targetFloor: String = ">= 4.0R",
+    val status: String = "PROTECTED_BASELINE"
+)
+
+data class BacktestRunItem(
+    val id: String,
+    val strategy: String,
+    val symbol: String,
+    val timeframes: List<String>,
+    val trades: Int,
+    val expectancyR: Double,
+    val profitFactor: Double,
+    val winRate: Double,
+    val maxDrawdownR: Double,
+    val environment: String
+)
+
+data class BacktestReport(
+    val benchmark: BacktestBenchmark = BacktestBenchmark(),
+    val recentRuns: List<BacktestRunItem> = emptyList()
+)
+
+data class EnvironmentValidation(
+    val name: String,
+    val tradesEvaluated: Int,
+    val expectancyR: Double = 0.0,
+    val profitFactor: Double = 0.0,
+    val winRate: Double = 0.0,
+    val maxDrawdownR: Double = 0.0,
+    val status: String,
+    val provenance: String
+)
+
+data class ForwardValidationReport(
+    val environments: List<EnvironmentValidation> = emptyList(),
+    val realCapitalAuthorized: Double = 0.00,
+    val minTargetR: Double = 4.0,
+    val maxTradeRiskPct: Double = 1.0,
+    val maxPortfolioHeatPct: Double = 3.0
+)
+
+data class PerformanceTelemetry(
+    val uptimeSeconds: Long = 0L,
+    val memoryUsageMb: Double = 0.0,
+    val eventLoopLagMs: Double = 0.0,
+    val openPositionsCount: Int = 0,
+    val closedPositionsCount: Int = 0,
+    val totalOrdersCount: Int = 0,
+    val decisionsCount: Int = 0,
+    val executionMode: String = "PAPER",
+    val realCapitalAuthorized: Double = 0.00
+)
+

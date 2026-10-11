@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import io.cryptoplatform.app.domain.model.FiveSetLadder
 import io.cryptoplatform.app.ui.components.FinancialCanvasChart
 import io.cryptoplatform.app.ui.components.SevenTimeframeLadderView
 import io.cryptoplatform.app.ui.components.StatusBadge
@@ -72,12 +73,27 @@ fun MarketDetailScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
-                            text = state.symbol,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = TextPrimary
-                        )
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Text(
+                                text = state.symbol,
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = TextPrimary
+                            )
+                            if (state.isStreamingConnected) {
+                                StatusBadge(
+                                    text = "LIVE WS #${state.lastEventSequence}",
+                                    backgroundColor = PositiveEmerald.copy(alpha = 0.15f),
+                                    textColor = PositiveEmerald
+                                )
+                            } else {
+                                StatusBadge(
+                                    text = if (state.isDataStale) "STALE / RECONNECTING" else "CONNECTING",
+                                    backgroundColor = AlertRed.copy(alpha = 0.15f),
+                                    textColor = AlertRed
+                                )
+                            }
+                        }
                         Column(horizontalAlignment = Alignment.End) {
                             Text(
                                 text = "$${String.format("%,.2f", quote?.price ?: 64850.0)}",
@@ -204,6 +220,11 @@ fun MarketDetailScreen(
             }
         }
 
+        // Five-Set Overlapping Ladder & Parity Card
+        item {
+            FiveSetLadderCard(ladder = state.fiveSetLadder)
+        }
+
         // Simulated Paper Order Action
         item {
             Card(
@@ -255,6 +276,61 @@ fun MarketDetailScreen(
                             fontFamily = FontFamily.Monospace
                         )
                     }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun FiveSetLadderCard(ladder: FiveSetLadder) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = BgSurface),
+        shape = RoundedCornerShape(8.dp),
+        border = CardDefaults.outlinedCardBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(BorderLight))
+    ) {
+        Column(modifier = Modifier.padding(14.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Five-Set Overlapping Ladder",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    color = TextPrimary
+                )
+                StatusBadge(
+                    text = if (ladder.parityVerified) "PARITY: VERIFIED" else "PARITY: PENDING",
+                    backgroundColor = PositiveEmerald.copy(alpha = 0.1f),
+                    textColor = PositiveEmerald
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            for (s in ladder.sets) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1.5f)) {
+                        Text(s.name, fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = TextPrimary)
+                        Text(
+                            "${s.htfLabel} (HTF) → ${s.mtfLabel} (MTF) → ${s.ltfLabel} (LTF)",
+                            fontSize = 10.sp,
+                            color = TextMuted,
+                            fontFamily = FontFamily.Monospace
+                        )
+                    }
+                    StatusBadge(
+                        text = if (s.productionEligible) "PROD ELIGIBLE" else "$0.00 OBS ONLY",
+                        backgroundColor = if (s.productionEligible) BrandBlue.copy(alpha = 0.1f) else AlertRed.copy(alpha = 0.1f),
+                        textColor = if (s.productionEligible) BrandBlue else AlertRed
+                    )
                 }
             }
         }

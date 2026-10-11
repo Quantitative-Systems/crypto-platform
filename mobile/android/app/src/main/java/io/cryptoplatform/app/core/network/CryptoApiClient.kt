@@ -104,4 +104,10 @@ class CryptoApiClient(
             Result.failure(e)
         }
     }
+
+    fun createWebSocket(path: String, listener: okhttp3.WebSocketListener): okhttp3.WebSocket {
+        val wsUrl = baseUrl.replaceFirst("http://", "ws://").replaceFirst("https://", "wss://") + path
+        val request = Request.Builder().url(wsUrl).build()
+        return client.newWebSocket(request, listener)
+    }
 }

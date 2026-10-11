@@ -132,30 +132,52 @@ fun TradingScreen(viewModel: TradingViewModel) {
                 }
             }
             "VENUES" -> {
-                LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(state.venues) { venue ->
-                        Card(
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = CardDefaults.cardColors(containerColor = BgSurface),
-                            shape = RoundedCornerShape(8.dp),
-                            border = CardDefaults.outlinedCardBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(BorderLight))
+                if (state.venues.isEmpty()) {
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(containerColor = BgSurface),
+                        shape = RoundedCornerShape(8.dp),
+                        border = CardDefaults.outlinedCardBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(BorderLight))
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(24.dp),
+                            contentAlignment = Alignment.Center
                         ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(12.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
+                            Text(
+                                text = "No execution venues configured or reachable.",
+                                fontSize = 12.sp,
+                                color = TextMuted
+                            )
+                        }
+                    }
+                } else {
+                    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        items(state.venues) { venue ->
+                            Card(
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = CardDefaults.cardColors(containerColor = BgSurface),
+                                shape = RoundedCornerShape(8.dp),
+                                border = CardDefaults.outlinedCardBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(BorderLight))
                             ) {
-                                Column {
-                                    Text(venue.name, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-                                    Text("Status: ${venue.status}", fontSize = 11.sp, color = TextMuted)
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(12.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Column {
+                                        Text(venue.name, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                                        Text("Status: ${venue.status}", fontSize = 11.sp, color = TextMuted)
+                                    }
+                                    StatusBadge(
+                                        text = if (venue.isLiveLocked) "DEMO / LOCKED" else "ACTIVE",
+                                        backgroundColor = BrandBlue.copy(alpha = 0.1f),
+                                        textColor = BrandBlue
+                                    )
                                 }
-                                StatusBadge(
-                                    text = if (venue.isLiveLocked) "DEMO / LOCKED" else "ACTIVE",
-                                    backgroundColor = BrandBlue.copy(alpha = 0.1f),
-                                    textColor = BrandBlue
-                                )
                             }
                         }
                     }
@@ -308,7 +330,7 @@ fun MonitoringScreen(viewModel: MonitoringViewModel) {
                                 textColor = if (status.contains("LOCKED")) AlertRed else PositiveEmerald
                             )
                         }
-                        Divider(color = BorderLight, thickness = 0.5.dp)
+                        HorizontalDivider(color = BorderLight, thickness = 0.5.dp)
                     }
                 }
             }
@@ -326,18 +348,22 @@ fun MonitoringScreen(viewModel: MonitoringViewModel) {
                     Text("Recent Operational Alerts", fontWeight = FontWeight.Bold, fontSize = 14.sp)
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    state.alerts.forEach { alert ->
-                        Column(modifier = Modifier.padding(vertical = 4.dp)) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                StatusBadge(alert.level, PositiveEmerald.copy(alpha = 0.1f), PositiveEmerald)
-                                Text(alert.timestamp, fontSize = 10.sp, color = TextMuted, fontFamily = FontFamily.Monospace)
+                    if (state.alerts.isEmpty()) {
+                        Text("No active alerts. System running nominally.", fontSize = 12.sp, color = TextMuted)
+                    } else {
+                        state.alerts.forEach { alert ->
+                            Column(modifier = Modifier.padding(vertical = 4.dp)) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    StatusBadge(alert.level, PositiveEmerald.copy(alpha = 0.1f), PositiveEmerald)
+                                    Text(alert.timestamp, fontSize = 10.sp, color = TextMuted, fontFamily = FontFamily.Monospace)
+                                }
+                                Text(alert.message, fontSize = 12.sp, color = TextSecondary)
                             }
-                            Text(alert.message, fontSize = 12.sp, color = TextSecondary)
+                            HorizontalDivider(color = BorderLight, thickness = 0.5.dp)
                         }
-                        Divider(color = BorderLight, thickness = 0.5.dp)
                     }
                 }
             }
@@ -346,7 +372,10 @@ fun MonitoringScreen(viewModel: MonitoringViewModel) {
 }
 
 @Composable
-fun PerformanceScreen() {
+fun PerformanceScreen(viewModel: io.cryptoplatform.app.ui.viewmodel.PerformanceViewModel) {
+    val state by viewModel.uiState.collectAsState()
+    val t = state.telemetry
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -354,6 +383,7 @@ fun PerformanceScreen() {
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
+        // Operational Telemetry Header
         item {
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -362,22 +392,110 @@ fun PerformanceScreen() {
                 border = CardDefaults.outlinedCardBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(BorderLight))
             ) {
                 Column(modifier = Modifier.padding(14.dp)) {
-                    Text("Performance Analytics", fontWeight = FontWeight.Bold, fontSize = 15.sp)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(BgSubtle, RoundedCornerShape(4.dp))
-                            .padding(12.dp)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
-                            text = "No observations available. The engine executes causal closed-candle paper simulation with strict historical truthfulness.",
-                            fontSize = 12.sp,
-                            color = TextSecondary
-                        )
+                        Text("Operational Performance & Telemetry", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = TextPrimary)
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                            if (state.isLoading) {
+                                CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp, color = BrandBlue)
+                            }
+                            StatusBadge("LIVE ENGINE", PositiveEmerald.copy(alpha = 0.1f), PositiveEmerald)
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text(
+                        text = "Real-time process telemetry from authoritative autonomous engine.",
+                        fontSize = 11.sp,
+                        color = TextMuted
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                        Button(
+                            onClick = { viewModel.refresh() },
+                            colors = ButtonDefaults.buttonColors(containerColor = BgSubtle),
+                            shape = RoundedCornerShape(6.dp),
+                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
+                            border = ButtonDefaults.outlinedButtonBorder.copy(brush = androidx.compose.ui.graphics.SolidColor(BorderLight))
+                        ) {
+                            Text("↻ Refresh Metrics", color = BrandBlue, fontSize = 11.sp, fontWeight = FontWeight.SemiBold)
+                        }
+                    }
+                }
+            }
+        }
+
+        // Gauges Row
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                val hours = t.uptimeSeconds / 3600
+                val mins = (t.uptimeSeconds % 3600) / 60
+                MetricCard(
+                    label = "Uptime",
+                    value = "${hours}h ${mins}m",
+                    subtext = "${t.uptimeSeconds}s Total",
+                    valueColor = BrandBlue,
+                    modifier = Modifier.weight(1f)
+                )
+                MetricCard(
+                    label = "Memory Heap",
+                    value = "${String.format("%.1f", t.memoryUsageMb)} MB",
+                    subtext = "Process Resident",
+                    valueColor = PositiveEmerald,
+                    modifier = Modifier.weight(1f)
+                )
+                MetricCard(
+                    label = "Loop Latency",
+                    value = "${String.format("%.1f", t.eventLoopLagMs)} ms",
+                    subtext = "Event Loop Lag",
+                    valueColor = BrandSky,
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        }
+
+        // Activity Matrix
+        item {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = BgSurface),
+                shape = RoundedCornerShape(8.dp),
+                border = CardDefaults.outlinedCardBorder().copy(brush = androidx.compose.ui.graphics.SolidColor(BorderLight))
+            ) {
+                Column(modifier = Modifier.padding(14.dp)) {
+                    Text("Execution Activity Metrics", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    val rows = listOf(
+                        "Execution Mode" to t.executionMode,
+                        "Authorized Real Capital" to "$${String.format("%.2f", t.realCapitalAuthorized)} (LOCKED)",
+                        "Open Positions" to "${t.openPositionsCount}",
+                        "Closed Positions" to "${t.closedPositionsCount}",
+                        "Total Orders Generated" to "${t.totalOrdersCount}",
+                        "Closed-Candle Decisions" to "${t.decisionsCount}"
+                    )
+
+                    rows.forEach { (label, value) ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 5.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(label, fontSize = 12.sp, color = TextPrimary)
+                            Text(value, fontSize = 12.sp, fontWeight = FontWeight.Bold, fontFamily = FontFamily.Monospace, color = if (value.contains("LOCKED")) AlertRed else TextSecondary)
+                        }
+                        HorizontalDivider(color = BorderLight, thickness = 0.5.dp)
                     }
                 }
             }
         }
     }
 }
+

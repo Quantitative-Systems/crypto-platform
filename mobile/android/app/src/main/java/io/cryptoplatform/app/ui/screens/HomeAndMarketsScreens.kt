@@ -184,7 +184,7 @@ fun HomeScreen(
                                 )
                             }
                         }
-                        Divider(color = BorderLight, thickness = 0.5.dp)
+                        HorizontalDivider(color = BorderLight, thickness = 0.5.dp)
                     }
                 }
             }
