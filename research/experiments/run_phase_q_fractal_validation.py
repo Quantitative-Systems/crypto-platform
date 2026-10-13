@@ -24,6 +24,7 @@ from __future__ import annotations
 import json
 import sys
 import time
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
@@ -54,7 +55,11 @@ from research.experiments.run_phase_p_fractal_discovery import (
     VAL_END_MS,
 )
 
-RESULTS_DIR = WORKSPACE_ROOT / "research" / "results" / "PHASE_Q_FRACTAL_VALIDATION"
+# Output directory isolation: defaults to PHASE_Q_CORRECTED to protect frozen Phase Q.2 artifacts
+RESULTS_DIR = Path(
+    os.getenv("PHASE_Q_RESULTS_DIR", str(WORKSPACE_ROOT / "research" / "results" / "PHASE_Q_CORRECTED"))
+)
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def load_all_timeframe_data(symbol: str) -> Dict[str, Dict[str, np.ndarray]]:

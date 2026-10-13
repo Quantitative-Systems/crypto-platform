@@ -1,0 +1,80 @@
+{
+  "timestamp_utc": "2026-10-13T17:13:38.948905+00:00",
+  "total_trades": 2545,
+  "win_rate_pct": 27.7,
+  "net_r": 626.41,
+  "profit_factor": 1.431,
+  "by_set": {
+    "SET_1": {
+      "trades": 158,
+      "wins": 46,
+      "total_r": 137.6557,
+      "gross_win_r": 236.95580000000004,
+      "gross_loss_r": 99.30010000000001
+    },
+    "SET_2": {
+      "trades": 504,
+      "wins": 138,
+      "total_r": 192.92880000000002,
+      "gross_win_r": 472.24920000000003,
+      "gross_loss_r": 279.32040000000006
+    },
+    "SET_3": {
+      "trades": 1883,
+      "wins": 521,
+      "total_r": 295.8265,
+      "gross_win_r": 1371.1338999999998,
+      "gross_loss_r": 1075.3073999999997
+    }
+  },
+  "by_asset": {
+    "BTCUSDT": {
+      "total_trades": 787,
+      "net_r": 137.71
+    },
+    "ETHUSDT": {
+      "total_trades": 801,
+      "net_r": 157.04
+    },
+    "SOLUSDT": {
+      "total_trades": 582,
+      "net_r": 145.65
+    },
+    "BNBUSDT": {
+      "total_trades": 166,
+      "net_r": 53.99
+    },
+    "XRPUSDT": {
+      "total_trades": 42,
+      "net_r": -2.03
+    },
+    "DOGEUSDT": {
+      "total_trades": 8,
+      "net_r": 4.48
+    },
+    "ADAUSDT": {
+      "total_trades": 6,
+      "net_r": 5.57
+    },
+    "AVAXUSDT": {
+      "total_trades": 43,
+      "net_r": 7.54
+    },
+    "LINKUSDT": {
+      "total_trades": 8,
+      "net_r": -0.82
+    },
+    "NEARUSDT": {
+      "total_trades": 23,
+      "net_r": 64.36
+    },
+    "SUIUSDT": {
+      "total_trades": 41,
+      "net_r": 33.56
+    },
+    "DOTUSDT": {
+      "total_trades": 38,
+      "net_r": 19.36
+    }
+  }
+}
