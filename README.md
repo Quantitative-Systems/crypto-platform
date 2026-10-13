@@ -1,4 +1,4 @@
-# STRATA Digital Trading Platform
+# Crypto Engine
 
 ## Autonomous Systematic Digital Asset Trading, Research & Operations Platform
 
@@ -13,8 +13,8 @@
 
 ---
 
-![STRATA Institutional Quantitative Trading Terminal](docs/assets/screenshots/hero-banner.jpg)
-*Figure 1: STRATA High-Institutional Quantitative Trading Terminal with Multi-Scale Fractal Engine, Order Flow Depth, and Automated Risk Governor.*
+![Crypto Engine Institutional Quantitative Trading Terminal](docs/assets/screenshots/hero-banner.jpg)
+*Figure 1: Crypto Engine Institutional Quantitative Trading Terminal with Multi-Scale Fractal Engine, Order Flow Depth, and Automated Risk Governor.*
 
 ---
 
@@ -38,7 +38,7 @@
 
 ## 01. Project Overview & Core Mission
 
-**STRATA** is a production-grade, 24/7/365 autonomous quantitative crypto fund and trading engine. Built to operate at institutional hedge-fund caliber, STRATA unifies retail and proprietary trading concepts (SMC, ICT, Price Action, Support/Resistance, Trendlines, EMAs, Order Blocks, FVGs) into a single, rigorous mathematical framework.
+**Crypto Engine** is a production-grade, 24/7/365 autonomous quantitative crypto fund and trading engine. Built to operate at institutional hedge-fund caliber, Crypto Engine unifies retail and proprietary trading concepts (SMC, ICT, Price Action, Support/Resistance, Trendlines, EMAs, Order Blocks, FVGs) into a single, rigorous mathematical framework.
 
 ### Why Most Crypto Trading Systems Fail
 1. **Single-Timeframe Myopia:** Trading off isolated 5m or 1h charts without anchoring to high-timeframe structural bias leads to chronic false breakouts.
@@ -46,7 +46,7 @@
 3. **Execution Shortfall & Friction Cannibalization:** Unchecked scalping without volatility stop floors suffers 100% fee bleed over long execution horizons.
 4. **Lack of Continuous Adaptation:** Static models degrade as market volatility regimes shift.
 
-STRATA resolves this by enforcing **one authoritative, scale-invariant Python engine** that models market physics from Monthly candles down to 3-Minute microstructure, dynamically trails stops, protects capital with hard mathematical limits, and continuously evolves its alpha models in the background.
+Crypto Engine resolves this by enforcing **one authoritative, scale-invariant Python engine** that models market physics from Monthly candles down to 3-Minute microstructure, dynamically trails stops, protects capital with hard mathematical limits, and continuously evolves its alpha models in the background.
 
 ---
 
@@ -88,7 +88,7 @@ python scripts/showcase_engine_power_across_crypto_sectors.py
 
 ## 03. The 3 Universal Primitives & Institutional Laws
 
-Rather than maintaining disjointed strategies, STRATA operates under the **3 Universal Primitives of Financial Markets**:
+Rather than maintaining disjointed strategies, Crypto Engine operates under the **3 Universal Primitives of Financial Markets**:
 
 ```
                        CANONICAL MARKET STATE
@@ -118,7 +118,7 @@ $$\text{HTF Bias} \longrightarrow \text{MTF KeyZone Setup} \longrightarrow \text
 
 ## 04. The 5 Multi-Horizon Fractal Sets
 
-STRATA partitions the continuous 7-timeframe ladder (`1M → 1W → 1D → 4H → 1H → 15M → 3M`) into **5 unified, overlapping observation sets**:
+Crypto Engine partitions the continuous 7-timeframe ladder (`1M → 1W → 1D → 4H → 1H → 15M → 3M`) into **5 unified, overlapping observation sets**:
 
 | Set Identifier | Timeframe Ladder (HTF → MTF → LTF) | Operational Horizon | Strategy Focus | Realized Alpha ($R$) | Profit Factor | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -150,11 +150,11 @@ Audited across 5 distinct cryptocurrency market sectors from July 2020 through O
 
 ## 06. Autonomous Self-Evolving Quantitative Fund Daemon
 
-STRATA features a dual-track autonomous daemon ([`execution/autonomous_self_evolving_daemon.py`](execution/autonomous_self_evolving_daemon.py)):
+Crypto Engine features a dual-track autonomous daemon ([`execution/autonomous_self_evolving_daemon.py`](execution/autonomous_self_evolving_daemon.py)):
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
-│                STRATA 24/7/365 SELF-EVOLVING FUND DAEMON                     │
+│             CRYPTO ENGINE 24/7/365 SELF-EVOLVING FUND DAEMON                 │
 └──────────────────────────────────────┬───────────────────────────────────────┘
                                        │
          ┌─────────────────────────────┴─────────────────────────────┐
@@ -184,7 +184,7 @@ graph TD
         ContinuousCandles --> Coordinator["Cascading Fractal Coordinator"]
     end
 
-    subgraph CoreEngine [STRATA Quantitative Engine]
+    subgraph CoreEngine [Crypto Engine Core]
         Coordinator --> MultiSet["5 Multi-Horizon Observation Sets<br/>Set 1 to Set 5"]
         MultiSet --> InvariantFilter["Invariant Transmission Filter<br/>HTF Bias → MTF Setup → LTF Entry"]
         InvariantFilter --> RiskGov["Portfolio Risk Governor<br/>1% Risk/Trade | 3% Portfolio Heat | 1.5x ATR Floor"]
@@ -208,7 +208,7 @@ graph TD
 
 ## 08. Institutional Risk Management & Capital Preservation
 
-STRATA is engineered with hardware and software capital boundaries:
+Crypto Engine is engineered with hardware and software capital boundaries:
 
 - **Strict 1.0% Risk Sizing:** Position size is dynamically derived from distance to the structural invalidation level:
   $$\text{Size (USD)} = \frac{\text{Account Equity} \times 0.01}{|\text{Entry Price} - \text{Stop Price}|}$$
@@ -274,7 +274,7 @@ crypto-platform/
 
 ## 12. Testing & Scientific Verification
 
-STRATA maintains an automated test suite verifying mathematical consistency, zero-lookahead, and order safety:
+Crypto Engine maintains an automated test suite verifying mathematical consistency, zero-lookahead, and order safety:
 
 ```bash
 # Run the complete test suite
