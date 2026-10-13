@@ -153,10 +153,15 @@ class MTFStrategyCoordinator:
                 continue
 
             # Track MTF trailing level for open trade management
+            # Trailing stops must be valid relative to current market price:
+            # Long support must be strictly below price; Short resistance must be strictly above price.
+            curr_px = float(ltf_data["c"][i])
             if expected_dir == 1 and mtf_state.structure.last_major_low:
-                mtf_trailing_map[t_curr] = mtf_state.structure.last_major_low.price
+                if mtf_state.structure.last_major_low.price < curr_px:
+                    mtf_trailing_map[t_curr] = mtf_state.structure.last_major_low.price
             elif expected_dir == -1 and mtf_state.structure.last_major_high:
-                mtf_trailing_map[t_curr] = mtf_state.structure.last_major_high.price
+                if mtf_state.structure.last_major_high.price > curr_px:
+                    mtf_trailing_map[t_curr] = mtf_state.structure.last_major_high.price
 
             # 4. MTF Validation Check
             # For Continuation: MTF price must be in Discount (for long) or Premium (for short)

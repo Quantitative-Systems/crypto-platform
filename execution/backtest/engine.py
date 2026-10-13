@@ -166,17 +166,24 @@ class CausalBacktestEngine:
             mae_r = 0.0
 
             for j in range(entry_bar, exit_bar + 1):
+                op = float(ltf_opens[j])
                 hi = float(ltf_highs[j])
                 lo = float(ltf_lows[j])
                 ts_j = int(ltf_timestamps[j])
 
                 # Update MTF Trailing SL if available
-                if mtf_trailing_levels and ts_j in mtf_trailing_levels:
-                    trail_lvl = mtf_trailing_levels[ts_j]
-                    if direction == 1 and trail_lvl > current_sl:
-                        current_sl = trail_lvl
-                    elif direction == -1 and trail_lvl < current_sl:
-                        current_sl = trail_lvl
+                # Invariants:
+                # 1. Trailing stops only apply on subsequent bars after entry (j > entry_bar)
+                # 2. Must tighten risk monotonically without crossing target
+                # 3. Must be valid relative to market price at bar open (cannot place stop at or past market price)
+                if j > entry_bar and mtf_trailing_levels and ts_j in mtf_trailing_levels:
+                    trail_lvl = float(mtf_trailing_levels[ts_j])
+                    if direction == 1:
+                        if trail_lvl > current_sl and trail_lvl < target_px and trail_lvl < op:
+                            current_sl = trail_lvl
+                    elif direction == -1:
+                        if trail_lvl < current_sl and trail_lvl > target_px and trail_lvl > op:
+                            current_sl = trail_lvl
 
                 if direction == 1:
                     mfe_r = max(mfe_r, (hi - fill_entry) / risk_dist)
@@ -184,12 +191,14 @@ class CausalBacktestEngine:
 
                     # Adverse-first collision rule: check SL before TP
                     if lo <= current_sl:
-                        exit_px = current_sl
+                        # Price traded down to current_sl, or opened with adverse gap past stop
+                        exit_px = min(current_sl, op)
                         exit_reason = "LTF_SL" if current_sl == initial_sl else "MTF_TRAIL"
                         exit_bar = j
                         break
                     if hi >= target_px:
-                        exit_px = target_px
+                        # Price traded up to target_px, or opened with favorable gap past target
+                        exit_px = max(target_px, op)
                         exit_reason = "HTF_TP"
                         exit_bar = j
                         break
@@ -199,12 +208,14 @@ class CausalBacktestEngine:
                     mae_r = max(mae_r, (hi - fill_entry) / risk_dist)
 
                     if hi >= current_sl:
-                        exit_px = current_sl
+                        # Price traded up to current_sl, or opened with adverse gap past stop
+                        exit_px = max(current_sl, op)
                         exit_reason = "LTF_SL" if current_sl == initial_sl else "MTF_TRAIL"
                         exit_bar = j
                         break
                     if lo <= target_px:
-                        exit_px = target_px
+                        # Price traded down to target_px, or opened with favorable gap past target
+                        exit_px = min(target_px, op)
                         exit_reason = "HTF_TP"
                         exit_bar = j
                         break
@@ -212,6 +223,18 @@ class CausalBacktestEngine:
             if exit_px is None:
                 exit_px = float(ltf_closes[exit_bar])
                 exit_reason = "TIME_EXIT"
+
+            # Explicit execution price invariant check:
+            # Assert raw modeled exit price strictly respects candle high/low bounds.
+            # Do NOT silently clamp an invalid exit price; raise an explicit RuntimeError.
+            bar_lo = float(ltf_lows[exit_bar])
+            bar_hi = float(ltf_highs[exit_bar])
+            if not (bar_lo - 1e-4 <= exit_px <= bar_hi + 1e-4):
+                raise RuntimeError(
+                    f"Causal backtest invariant violation: raw modeled exit price {exit_px:.4f} "
+                    f"is outside candle range [{bar_lo:.4f}, {bar_hi:.4f}] for symbol '{symbol}' "
+                    f"at bar {exit_bar} (exit_reason='{exit_reason}', direction={direction})"
+                )
 
             # Apply exit slippage
             fill_exit = exit_px * (1.0 - direction * slip_frac)
