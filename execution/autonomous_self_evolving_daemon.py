@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Self-Evolving Autonomous Quantitative Fund Daemon.
+"""Crypto Engine — Self-Evolving Autonomous Quantitative Fund Daemon.
 
 Operates 24/7/365 like an institutional quantitative hedge fund:
 1. LIVE EXECUTION ENGINE:

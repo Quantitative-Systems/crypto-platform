@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Intelligent 24/7/365 Autonomous Fractal Engine.
+"""Crypto Engine — Intelligent 24/7/365 Autonomous Fractal Engine.
 
 Orchestrates the complete institutional, top-down fractal trading lifecycle:
 1. 24/7/365 Continuous Market Surveillance across Crypto Assets (Binance Spot & Futures).
