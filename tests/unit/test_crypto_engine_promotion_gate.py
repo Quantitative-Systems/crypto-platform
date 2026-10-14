@@ -82,3 +82,20 @@ def test_promotion_gate_failed_candidate(tmp_path, monkeypatch):
 
     champions = ProductionPromotionGate.list_live_champions()
     assert "TEST_MODEL_FAILED" not in champions
+
+
+def test_master_fractal_coordinator_initialization():
+    from crypto_engine.core.coordinator import MasterFractalCoordinator
+    from crypto_engine.core.invariants import InstitutionalRiskInvariants
+
+    coord = MasterFractalCoordinator(
+        min_target_r=InstitutionalRiskInvariants.MIN_TARGET_R,
+        risk_per_trade_pct=InstitutionalRiskInvariants.RISK_PER_TRADE_PCT,
+        enable_tri_strategy_confluence=True,
+    )
+
+    assert coord.min_target_r == 4.0
+    assert coord.risk_per_trade_pct == 0.01
+    assert coord.enable_tri_strategy_confluence is True
+    assert len(coord.TIMEFRAME_SETS) == 5
+
