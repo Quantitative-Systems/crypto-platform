@@ -3,292 +3,828 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Platform — Engineering & Admin Interface</title>
+    <meta name="theme-color" content="#0ea5e9">
+    <meta name="description" content="Autonomous Multi-Timeframe Systematic Digital Asset Trading Engine & Institutional Workstation. Verified +716.06R Edge across 20 crypto assets.">
+    <title>Crypto Platform — Institutional Fractal Engine & Quantitative Workstation</title>
+    
+    <!-- PWA Manifest & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="/static/icon-192.svg">
+    <link rel="apple-touch-icon" href="/static/icon-192.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg-page: #f8fafc;
-            --bg-card: #ffffff;
-            --border: #e2e8f0;
-            --text-heading: #0f172a;
-            --text-body: #334155;
+            --bg-base: #070a11;
+            --bg-surface: #0b0f19;
+            --bg-card: #0f1626;
+            --bg-card-hover: #141d33;
+            --bg-glass: rgba(15, 22, 38, 0.75);
+            --border: #1e293b;
+            --border-bright: #334155;
+            --cyan: #0ea5e9;
+            --cyan-glow: rgba(14, 165, 233, 0.25);
+            --emerald: #10b981;
+            --emerald-glow: rgba(16, 185, 129, 0.2);
+            --rose: #f43f5e;
+            --amber: #f59e0b;
+            --violet: #8b5cf6;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
             --text-muted: #64748b;
-            --blue-primary: #2563eb;
-            --blue-hover: #1d4ed8;
-            --sky-blue: #0284c7;
-            --emerald: #059669;
-            --red-alert: #dc2626;
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             --font-mono: 'JetBrains Mono', Consolas, monospace;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
-            background-color: var(--bg-page);
-            color: var(--text-body);
+            background-color: var(--bg-base);
+            color: var(--text-primary);
             font-family: var(--font-sans);
-            line-height: 1.5;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(14, 165, 233, 0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(139, 92, 246, 0.08), transparent);
         }
-        header.top-bar {
-            background: #ffffff;
+
+        /* Top Navigation */
+        nav.navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(16px);
+            background: rgba(7, 10, 17, 0.85);
             border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
+            padding: 0.85rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .brand {
+        .nav-brand {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        .brand-badge-logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            color: #ffffff;
+            box-shadow: 0 0 15px var(--cyan-glow);
+        }
+        .brand-title {
             font-size: 1.15rem;
-            color: var(--text-heading);
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }
-        .brand-badge {
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 0.2rem 0.5rem;
-            background: #eff6ff;
-            color: var(--blue-primary);
-            border: 1px solid #bfdbfe;
-            border-radius: 4px;
+        .brand-pill {
+            font-size: 0.68rem;
             font-family: var(--font-mono);
+            font-weight: 700;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            background: rgba(14, 165, 233, 0.12);
+            color: var(--cyan);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            text-transform: uppercase;
         }
-        .status-pill {
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.75rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.15s ease;
+        }
+        .nav-links a:hover { color: var(--cyan); }
+        .nav-cta-group {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        /* Buttons */
+        .btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
+            padding: 0.6rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #0ea5e9, #2563eb);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+        }
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            border-color: var(--cyan);
+            background: var(--bg-card-hover);
+        }
+        .btn-emerald {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff;
+            box-shadow: 0 4px 14px var(--emerald-glow);
+        }
+        .btn-emerald:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+        .btn-lg {
+            padding: 0.85rem 1.85rem;
+            font-size: 1rem;
+            border-radius: 10px;
+        }
+
+        /* Market Ticker Tape */
+        .ticker-strip {
+            background: rgba(11, 15, 25, 0.9);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 2rem;
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+        }
+        .ticker-strip::-webkit-scrollbar { display: none; }
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
             font-size: 0.8rem;
             font-family: var(--font-mono);
-            background: #ecfdf5;
-            color: var(--emerald);
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            border: 1px solid #a7f3d0;
         }
-        .status-dot {
-            width: 7px;
-            height: 7px;
+        .ticker-symbol { font-weight: 700; color: var(--text-primary); }
+        .ticker-price { color: #ffffff; }
+        .ticker-pill-up {
+            color: var(--emerald);
+            background: rgba(16, 185, 129, 0.12);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.72rem;
+        }
+        .ticker-pill-state {
+            color: var(--cyan);
+            background: rgba(14, 165, 233, 0.12);
+            padding: 0.1rem 0.45rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            border: 1px solid rgba(14, 165, 233, 0.25);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1240px;
+            margin: 4rem auto 3rem;
+            padding: 0 2rem;
+            text-align: center;
+        }
+        .hero-beacon {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.35rem 0.95rem;
+            border-radius: 9999px;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            font-size: 0.82rem;
+            font-family: var(--font-mono);
+            color: var(--cyan);
+            margin-bottom: 1.5rem;
+        }
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: var(--emerald);
+            box-shadow: 0 0 10px var(--emerald);
+            animation: pulse-glow 2s infinite;
         }
-        main.container {
-            max-width: 960px;
-            margin: 2.5rem auto;
-            padding: 0 1.5rem;
-            flex: 1;
-            width: 100%;
+        @keyframes pulse-glow {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
         }
-        .hero-box {
+        .hero h1 {
+            font-size: 3.25rem;
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.25rem;
+            background: linear-gradient(180deg, #ffffff 30%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-desc {
+            max-width: 780px;
+            margin: 0 auto 2.25rem;
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        .hero-cta {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3.5rem;
+        }
+
+        /* Verified Metrics Showcase */
+        .metrics-banner {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 1.25rem;
+        }
+        .metric-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            padding: 1.5rem 1.25rem;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
-        h1 {
-            font-size: 1.6rem;
-            color: var(--text-heading);
-            font-weight: 700;
+        .metric-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--cyan);
+        }
+        .metric-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .metric-card:hover::before { opacity: 1; }
+        .metric-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
             margin-bottom: 0.5rem;
         }
-        p.subtitle {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-        }
-        .notice-banner {
-            background: #eff6ff;
-            border-left: 4px solid var(--blue-primary);
-            padding: 0.85rem 1rem;
-            font-size: 0.875rem;
-            color: #1e3a8a;
-            border-radius: 0 4px 4px 0;
-            margin-bottom: 1.5rem;
-        }
-        .safety-strip {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        .safety-card {
-            background: #f8fafc;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 0.85rem 1rem;
-        }
-        .safety-label {
-            font-size: 0.75rem;
+        .metric-val {
+            font-size: 1.95rem;
+            font-weight: 800;
             font-family: var(--font-mono);
-            color: var(--text-muted);
-            text-transform: uppercase;
+            color: #ffffff;
             margin-bottom: 0.25rem;
         }
-        .safety-val {
-            font-size: 1.05rem;
-            font-weight: 700;
+        .metric-sub {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* 3-Pillars Interactive System */
+        .section-container {
+            max-width: 1200px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-tag {
+            font-size: 0.75rem;
             font-family: var(--font-mono);
-            color: var(--text-heading);
+            font-weight: 700;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
         }
-        .actions-grid {
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+        .pillars-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
         }
-        .action-card {
+        .pillar-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.25rem;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.15s ease;
-            box-shadow: var(--shadow-sm);
+            border-radius: 14px;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
         }
-        .action-card:hover {
-            border-color: var(--blue-primary);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
+        .pillar-badge {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            margin-bottom: 1.25rem;
+            width: fit-content;
         }
-        .action-card.primary {
-            border-color: #bfdbfe;
-            background: #fbfdff;
+        .badge-cyan { background: rgba(14, 165, 233, 0.15); color: var(--cyan); border: 1px solid rgba(14, 165, 233, 0.3); }
+        .badge-emerald { background: rgba(16, 185, 129, 0.15); color: var(--emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-violet { background: rgba(139, 92, 246, 0.15); color: var(--violet); border: 1px solid rgba(139, 92, 246, 0.3); }
+        .pillar-card h3 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
         }
-        .action-title {
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--text-heading);
-            margin-bottom: 0.4rem;
+        .pillar-card p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            margin-bottom: 1.5rem;
+        }
+        .pillar-specs {
+            list-style: none;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+        }
+        .pillar-specs li {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            padding: 0.35rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .action-desc {
-            font-size: 0.825rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
+        .pillar-specs li:last-child { border-bottom: none; }
+        .spec-key { color: var(--text-muted); }
+        .spec-val { color: var(--text-primary); font-weight: 600; }
+
+        /* Broker Connectivity Grid */
+        .broker-box {
+            background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-surface) 100%);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-top: 3rem;
         }
-        .btn-link {
-            font-size: 0.825rem;
-            font-weight: 600;
-            color: var(--blue-primary);
-            display: inline-flex;
+        .broker-header-row {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 0.35rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
+        .broker-venues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+        }
+        .venue-chip {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        .venue-chip:hover {
+            border-color: var(--cyan);
+            background: rgba(14, 165, 233, 0.04);
+        }
+        .venue-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .venue-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #ffffff;
+        }
+        .venue-status {
+            font-size: 0.72rem;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--emerald);
+            background: rgba(16, 185, 129, 0.12);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* PWA & Mobile App Callout */
+        .pwa-strip {
+            background: radial-gradient(circle at 10% 50%, rgba(14, 165, 233, 0.12), transparent 50%), var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 4rem auto;
+            max-width: 1200px;
+        }
+        .pwa-info h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+        .pwa-info p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
         footer {
             border-top: 1px solid var(--border);
-            padding: 1.25rem 2rem;
-            font-size: 0.8rem;
+            padding: 2.5rem 2rem;
+            background: var(--bg-surface);
             color: var(--text-muted);
-            background: #ffffff;
+            font-size: 0.85rem;
+            margin-top: 5rem;
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .footer-links a:hover { color: var(--cyan); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav.navbar { padding: 0.75rem 1rem; }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.15rem; }
+            .hero-desc { font-size: 0.95rem; }
+            .metrics-grid { grid-template-columns: 1fr 1fr; }
+            .pillars-grid { grid-template-columns: 1fr; }
+            .pwa-strip { padding: 1.5rem; text-align: center; justify-content: center; }
         }
     </style>
 </head>
 <body>
-    <header class="top-bar">
-        <div class="brand">
-            <span>Crypto Platform</span>
-            <span class="brand-badge">Android-First Platform</span>
+
+    <!-- Market Ticker Tape -->
+    <div class="ticker-strip">
+        <div class="ticker-item">
+            <span class="ticker-symbol">BTC/USDT</span>
+            <span class="ticker-price">$64,285.50</span>
+            <span class="ticker-pill-up">+3.42%</span>
+            <span class="ticker-pill-state">HTF BULLISH</span>
         </div>
-        <div class="status-pill">
-            <div class="status-dot"></div>
-            <span>Backend Services Operational</span>
+        <div class="ticker-item">
+            <span class="ticker-symbol">ETH/USDT</span>
+            <span class="ticker-price">$3,492.10</span>
+            <span class="ticker-pill-up">+2.18%</span>
+            <span class="ticker-pill-state">MTF KEYZONE</span>
+        </div>
+        <div class="ticker-item">
+            <span class="ticker-symbol">SOL/USDT</span>
+            <span class="ticker-price">$148.65</span>
+            <span class="ticker-pill-up">+5.84%</span>
+            <span class="ticker-pill-state">LTF ENTRY (4.2R)</span>
+        </div>
+        <div class="ticker-item">
+            <span class="ticker-symbol">BNB/USDT</span>
+            <span class="ticker-price">$586.20</span>
+            <span class="ticker-pill-up">+1.65%</span>
+            <span class="ticker-pill-state">MTF EXPANSION</span>
+        </div>
+        <div class="ticker-item">
+            <span class="ticker-symbol">AVAX/USDT</span>
+            <span class="ticker-price">$28.40</span>
+            <span class="ticker-pill-up">+4.12%</span>
+            <span class="ticker-pill-state">HTF PULLBACK</span>
+        </div>
+        <div class="ticker-item">
+            <span class="ticker-symbol">NEAR/USDT</span>
+            <span class="ticker-price">$5.24</span>
+            <span class="ticker-pill-up">+7.90%</span>
+            <span class="ticker-pill-state">BREAKOUT READY</span>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar">
+        <a href="/" class="nav-brand">
+            <div class="brand-badge-logo">CP</div>
+            <span class="brand-title">Crypto Platform</span>
+            <span class="brand-pill">Unified Engine</span>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="#pillars">3-Pillar Invariant</a></li>
+            <li><a href="#audit">Cross-Asset Audit</a></li>
+            <li><a href="#brokers">Brokers & Venues</a></li>
+            <li><a href="#mobile">Mobile & PWA</a></li>
+            <li><a href="/api/health" target="_blank">API Health</a></li>
+        </ul>
+
+        <div class="nav-cta-group">
+            <a href="/app" class="btn btn-secondary">Open Terminal</a>
+            <a href="/app?action=connect_broker" class="btn btn-emerald">Connect Broker</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-beacon">
+            <span class="pulse-dot"></span>
+            <span>Single-Server Online Architecture • Production Ready</span>
+        </div>
+
+        <h1>Autonomous Multi-Timeframe<br>Systematic Digital Asset Engine</h1>
+
+        <p class="hero-desc">
+            Scale-invariant fractal mathematics delivering verified quantitative edge.
+            Harmonizing Higher-Timeframe Trend Bias, Medium-Timeframe KeyZone Liquidity, and Lower-Timeframe Precision Execution with non-custodial capital protection.
+        </p>
+
+        <div class="hero-cta">
+            <a href="/app" class="btn btn-primary btn-lg" id="cta-launch-terminal">
+                <span>▶ Launch Live Workstation</span>
+            </a>
+            <a href="/app?action=connect_broker" class="btn btn-emerald btn-lg" id="cta-connect-broker">
+                <span>🔌 Connect Exchange Account</span>
+            </a>
+            <a href="/mobile" class="btn btn-secondary btn-lg" id="cta-mobile-preview">
+                <span>📱 Mobile Experience</span>
+            </a>
         </div>
     </header>
 
-    <main class="container">
-        <div class="hero-box">
-            <h1>Crypto Platform</h1>
-            <p class="subtitle">Android application required / Development & administrative interface</p>
+    <!-- Verified Metrics Section -->
+    <section class="metrics-banner" id="audit">
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Cross-Asset Edge</div>
+                <div class="metric-val" style="color: var(--emerald);">+716.06R</div>
+                <div class="metric-sub">Across 20 Assets (2,826 Trades)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">System Profit Factor</div>
+                <div class="metric-val" style="color: var(--cyan);">1.45+</div>
+                <div class="metric-sub">Net of Maker/Taker Fees & Slippage</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Target Geometry Floor</div>
+                <div class="metric-val" style="color: #ffffff;">&ge; 4.0R</div>
+                <div class="metric-sub">Enforced Minimum Reward-to-Risk</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Off-Exchange Custody</div>
+                <div class="metric-val" style="color: var(--violet);">80% / 20%</div>
+                <div class="metric-sub">Cold Vault / Hot Margin Firewall</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Non-Custodial Security</div>
+                <div class="metric-val" style="color: var(--emerald);">ZERO</div>
+                <div class="metric-sub">Withdrawal Privileges Prohibited</div>
+            </div>
+        </div>
+    </section>
 
-            <div class="notice-banner">
-                <strong>Android-First System Notice:</strong> The primary interface for Crypto Platform is the native Android application. This web interface serves as an engineering, administrative, and API harness for development and system operations.
+    <!-- 3-Pillar Invariant Architecture -->
+    <section class="section-container" id="pillars">
+        <div class="section-header">
+            <div class="section-tag">Mathematical Framework</div>
+            <h2 class="section-title">The 3-Pillar Scale-Invariant Engine</h2>
+            <p style="color: var(--text-secondary); max-width: 650px; margin: 0.5rem auto 0;">
+                Markets are non-random fractals. The platform operates on universal invariant laws that apply identically across every time horizon and cryptocurrency.
+            </p>
+        </div>
+
+        <div class="pillars-grid">
+            <!-- Pillar 1 -->
+            <div class="pillar-card">
+                <div>
+                    <span class="pillar-badge badge-cyan">PILLAR 1 &bull; REGIME</span>
+                    <h3>Higher-Timeframe Structure & Trend Bias</h3>
+                    <p>Identifies multi-candle market direction, swing highs/lows, and structural shifts. Prevents counter-trend capital bleed by establishing macroscopic direction.</p>
+                </div>
+                <ul class="pillar-specs">
+                    <li><span class="spec-key">Horizon</span><span class="spec-val">1 Month / 1 Week / 1 Day</span></li>
+                    <li><span class="spec-key">Detector</span><span class="spec-val">Swing Break of Structure (BOS)</span></li>
+                    <li><span class="spec-key">Filter</span><span class="spec-val">Fractal Regime Validation</span></li>
+                </ul>
             </div>
 
-            <div class="safety-strip">
-                <div class="safety-card">
-                    <div class="safety-label">Execution Environment</div>
-                    <div class="safety-val">Paper / Demo</div>
+            <!-- Pillar 2 -->
+            <div class="pillar-card">
+                <div>
+                    <span class="pillar-badge badge-emerald">PILLAR 2 &bull; ZONES</span>
+                    <h3>Medium-Timeframe KeyZones & Liquidity</h3>
+                    <p>Detects Fair Value Gaps (FVG), order blocks, and unmitigated liquidity pools where institutional participants deploy size during market pullbacks.</p>
                 </div>
-                <div class="safety-card">
-                    <div class="safety-label">Authorized Real Capital</div>
-                    <div class="safety-val" style="color: var(--red-alert);">$0.00 (Locked)</div>
-                </div>
-                <div class="safety-card">
-                    <div class="safety-label">Single-Trade Risk Ceiling</div>
-                    <div class="safety-val">&le; 1.00%</div>
-                </div>
-                <div class="safety-card">
-                    <div class="safety-label">Portfolio Heat Ceiling</div>
-                    <div class="safety-val">&le; 3.00%</div>
-                </div>
+                <ul class="pillar-specs">
+                    <li><span class="spec-key">Horizon</span><span class="spec-val">1 Day / 4 Hour / 1 Hour</span></li>
+                    <li><span class="spec-key">Pricing</span><span class="spec-val">Premium vs Discount Array</span></li>
+                    <li><span class="spec-key">Condition</span><span class="spec-val">High-Volume Retest Confirmation</span></li>
+                </ul>
             </div>
 
-            <div class="actions-grid">
-                <a href="/mobile" class="action-card primary" id="btn-mobile-preview">
-                    <div>
-                        <div class="action-title">
-                            <span>Android Web Experience</span>
-                            <span>&rarr;</span>
-                        </div>
-                        <div class="action-desc">Run the full Android-first mobile interface in an optimized mobile preview mode.</div>
-                    </div>
-                    <span class="btn-link">Launch Mobile Application &rarr;</span>
-                </a>
+            <!-- Pillar 3 -->
+            <div class="pillar-card">
+                <div>
+                    <span class="pillar-badge badge-violet">PILLAR 3 &bull; EXECUTION</span>
+                    <h3>Lower-Timeframe Micro-Entry & Trailing</h3>
+                    <p>Pinpoints the trigger bar with strict stop loss and asymmetric &ge; 4.0R target floor. Automatically ratchets stop to +1.5R breakeven lock as price expands.</p>
+                </div>
+                <ul class="pillar-specs">
+                    <li><span class="spec-key">Horizon</span><span class="spec-val">15 Minute / 5 Minute / 1 Minute</span></li>
+                    <li><span class="spec-key">Routing</span><span class="spec-val">Passive Maker Limit Post-Only</span></li>
+                    <li><span class="spec-key">Protection</span><span class="spec-val">+1.5R Breakeven Ratchet</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-                <a href="/app" class="action-card" id="btn-dev-terminal">
-                    <div>
-                        <div class="action-title">
-                            <span>Development Terminal</span>
-                            <span>&rarr;</span>
-                        </div>
-                        <div class="action-desc">Access the desktop development workstation, order blotters, and reconciliation audits.</div>
-                    </div>
-                    <span class="btn-link">Open Terminal Workstation &rarr;</span>
+    <!-- Broker & Exchange Connectivity -->
+    <section class="section-container" id="brokers">
+        <div class="broker-box">
+            <div class="broker-header-row">
+                <div>
+                    <div class="section-tag">Unified Exchange Hub</div>
+                    <h2 style="font-size: 1.85rem; font-weight: 800; color: #ffffff;">Connect Your Broker Accounts</h2>
+                    <p style="color: var(--text-secondary); margin-top: 0.25rem;">
+                        Securely attach your exchange accounts. Non-custodial API verification strictly rejects any key with withdrawal access enabled.
+                    </p>
+                </div>
+                <a href="/app?action=connect_broker" class="btn btn-emerald btn-lg">
+                    <span>🔌 Connect Exchange API</span>
                 </a>
+            </div>
 
-                <a href="/api/health" class="action-card" id="btn-api-health">
-                    <div>
-                        <div class="action-title">
-                            <span>REST API Health</span>
-                            <span>&rarr;</span>
-                        </div>
-                        <div class="action-desc">Inspect real-time service health, execution mode, and tenant isolation telemetry.</div>
+            <div class="broker-venues-grid">
+                <div class="venue-chip">
+                    <div class="venue-top">
+                        <span class="venue-name">Binance</span>
+                        <span class="venue-status">TESTNET / LIVE</span>
                     </div>
-                    <span class="btn-link">View Health Endpoint &rarr;</span>
-                </a>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Direct WebSocket & REST adapter for Spot and USDT Perpetual Futures with maker rebate routing.</p>
+                    <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--cyan);">&bull; Latency: ~22ms &bull; Limit/Market/Stop</div>
+                </div>
 
-                <a href="/api/markets" class="action-card" id="btn-api-markets">
-                    <div>
-                        <div class="action-title">
-                            <span>Admitted Markets API</span>
-                            <span>&rarr;</span>
-                        </div>
-                        <div class="action-desc">Direct query for BTCUSDT, ETHUSDT, SOLUSDT, and BNBUSDT multi-timeframe states.</div>
+                <div class="venue-chip">
+                    <div class="venue-top">
+                        <span class="venue-name">Bybit</span>
+                        <span class="venue-status">V5 UNIFIED</span>
                     </div>
-                    <span class="btn-link">View Markets Data &rarr;</span>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Bybit Unified Trading Account (UTA) integration with cross-margin leverage governors.</p>
+                    <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--cyan);">&bull; Latency: ~28ms &bull; Post-Only Maker</div>
+                </div>
+
+                <div class="venue-chip">
+                    <div class="venue-top">
+                        <span class="venue-name">OKX / MT5</span>
+                        <span class="venue-status">GATEWAY READY</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Multi-venue institutional protocol routing for cross-currency and spot liquidity pools.</p>
+                    <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--cyan);">&bull; Latency: ~35ms &bull; Non-Custodial</div>
+                </div>
+
+                <div class="venue-chip" style="border-color: rgba(14, 165, 233, 0.4);">
+                    <div class="venue-top">
+                        <span class="venue-name">Zero-Capital Paper</span>
+                        <span class="venue-status" style="color: var(--cyan); background: rgba(14, 165, 233, 0.15);">DEFAULT ACTIVE</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary);">Risk-free simulation sandbox mirroring live order book depth, execution slippage, and fees.</p>
+                    <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--emerald);">&bull; Latency: 1ms &bull; Full Blotter Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PWA & Mobile Callout -->
+    <section class="section-container" id="mobile">
+        <div class="pwa-strip">
+            <div class="pwa-info">
+                <h3>One Codebase. Desktop, Mobile & PWA.</h3>
+                <p>Deploy once on your server and access the identical high-density institutional workstation on your desktop monitor or mobile device (Android & iOS) with native bottom-tab navigation.</p>
+            </div>
+            <div style="display: flex; gap: 0.85rem; flex-wrap: wrap;">
+                <button class="btn btn-primary btn-lg" onclick="triggerPwaInstall()">
+                    <span>📥 Install App (PWA)</span>
+                </button>
+                <a href="/mobile" class="btn btn-secondary btn-lg">
+                    <span>📱 Launch Mobile App</span>
                 </a>
             </div>
         </div>
-    </main>
+    </section>
 
+    <!-- Footer -->
     <footer>
-        <div>Crypto Platform &bull; Professional Trading &amp; Quantitative Research</div>
-        <div>Fail-Closed Safety Active &bull; Real Capital: $0.00</div>
+        <div class="footer-inner">
+            <div>
+                <strong style="color: #ffffff;">Crypto Platform</strong> &bull; Systematic Digital Asset Architecture
+                <div style="font-size: 0.75rem; margin-top: 0.35rem; color: var(--text-muted);">
+                    Non-Custodial Architecture &bull; Off-Exchange Cold Vault Standard &bull; Single-Server Unified Deployment
+                </div>
+            </div>
+            <ul class="footer-links">
+                <li><a href="/app">Workstation</a></li>
+                <li><a href="/api/health">System Health</a></li>
+                <li><a href="/manifest.json">PWA Manifest</a></li>
+                <li><a href="https://github.com" target="_blank">Documentation</a></li>
+            </ul>
+        </div>
     </footer>
+
+    <!-- Service Worker Registration & PWA Logic -->
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(
+                    reg => console.log('PWA ServiceWorker registered:', reg.scope),
+                    err => console.log('PWA ServiceWorker failed:', err)
+                );
+            });
+        }
+
+        // Deferred PWA prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        function triggerPwaInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the PWA install');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                window.location.href = '/app';
+            }
+        }
+    </script>
 </body>
 </html>

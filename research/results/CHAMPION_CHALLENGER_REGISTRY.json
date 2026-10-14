@@ -3,11 +3,108 @@
     "ETHUSDT_SET_2": {
       "symbol": "ETHUSDT",
       "set_id": "SET_2",
-      "discovered_at_utc": "2026-10-14T01:58:46.858551+00:00",
+      "discovered_at_utc": "2026-10-14T17:17:22.196284+00:00",
       "signal_count": 1630,
       "status": "LIVE_CHAMPION",
-      "promoted_at_utc": "2026-10-14T01:58:46.859619+00:00"
+      "promoted_at_utc": "2026-10-14T17:17:22.199781+00:00"
+    },
+    "XRPUSDT_SET_2": {
+      "symbol": "XRPUSDT",
+      "set_id": "SET_2",
+      "discovered_at_utc": "2026-10-14T02:26:39.935177+00:00",
+      "signal_count": 21,
+      "status": "LIVE_CHAMPION",
+      "promoted_at_utc": "2026-10-14T02:26:41.145095+00:00"
+    },
+    "DOGEUSDT_SET_2": {
+      "symbol": "DOGEUSDT",
+      "set_id": "SET_2",
+      "discovered_at_utc": "2026-10-14T02:26:41.141069+00:00",
+      "signal_count": 84,
+      "status": "LIVE_CHAMPION",
+      "promoted_at_utc": "2026-10-14T02:26:41.147105+00:00"
+    },
+    "STRATA_SET1_INVESTING": {
+      "set_id": "SET_1",
+      "style": "INVESTING",
+      "target_r": 10.0,
+      "full_profit_factor": 2.33,
+      "oos_profit_factor": 2.74,
+      "oos_net_r": 26.68,
+      "status": "CERTIFIED_CANDIDATE_PASS",
+      "certified_at_utc": "2026-10-14T09:16:30.000000+00:00"
+    },
+    "STRATA_SET1_POSITIONAL": {
+      "set_id": "SET_1",
+      "style": "POSITIONAL",
+      "target_r": 7.0,
+      "full_profit_factor": 2.0,
+      "oos_profit_factor": 2.04,
+      "oos_net_r": 19.36,
+      "status": "CERTIFIED_CANDIDATE_PASS",
+      "certified_at_utc": "2026-10-14T09:16:30.000000+00:00"
+    },
+    "STRATA_SET1_SWING": {
+      "set_id": "SET_1",
+      "style": "SWING",
+      "target_r": 4.5,
+      "full_profit_factor": 1.88,
+      "oos_profit_factor": 1.84,
+      "oos_net_r": 15.91,
+      "status": "CERTIFIED_CANDIDATE_PASS",
+      "certified_at_utc": "2026-10-14T09:16:30.000000+00:00"
+    },
+    "STRATA_SET1_INTRADAY": {
+      "set_id": "SET_1",
+      "style": "INTRADAY",
+      "target_r": 3.0,
+      "full_profit_factor": 1.52,
+      "oos_profit_factor": 1.64,
+      "oos_net_r": 16.47,
+      "status": "CERTIFIED_CANDIDATE_PASS",
+      "certified_at_utc": "2026-10-14T09:16:30.000000+00:00"
+    },
+    "STRATA_SET1_SCALP": {
+      "set_id": "SET_1",
+      "style": "SCALP",
+      "target_r": 2.0,
+      "full_profit_factor": 1.41,
+      "oos_profit_factor": 1.4,
+      "oos_net_r": 11.67,
+      "status": "CERTIFIED_CANDIDATE_PASS",
+      "certified_at_utc": "2026-10-14T09:16:30.000000+00:00"
+    },
+    "STRATA_SET2_POSITIONAL": {
+      "set_id": "SET_2",
+      "style": "POSITIONAL",
+      "target_r": 7.0,
+      "full_profit_factor": 1.44,
+      "oos_profit_factor": 1.45,
+      "oos_net_r": 37.51,
+      "status": "CERTIFIED_CANDIDATE_PASS",
+      "certified_at_utc": "2026-10-14T09:16:30.000000+00:00"
+    },
+    "STRATA_SET2_SWING": {
+      "set_id": "SET_2",
+      "style": "SWING",
+      "target_r": 4.5,
+      "full_profit_factor": 1.33,
+      "oos_profit_factor": 1.35,
+      "oos_net_r": 31.21,
+      "status": "CERTIFIED_CANDIDATE_PASS",
+      "certified_at_utc": "2026-10-14T09:16:30.000000+00:00"
     }
   },
-  "challengers": {}
+  "challengers": {
+    "STRATA_SET2_INVESTING": {
+      "set_id": "SET_2",
+      "style": "INVESTING",
+      "target_r": 10.0,
+      "full_profit_factor": 1.49,
+      "oos_profit_factor": 1.27,
+      "oos_net_r": 20.79,
+      "status": "MARGINAL_CANDIDATE",
+      "evaluated_at_utc": "2026-10-14T09:16:30.000000+00:00"
+    }
+  }
 }

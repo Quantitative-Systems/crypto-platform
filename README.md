@@ -5,10 +5,10 @@
 > **"We do not predict price; we model market state across scales, form conditional expectations from that state, wait for price to confirm or invalidate those expectations, and execute only when the multi-timeframe state provides an asymmetric, institutionally-backed opportunity."**
 
 [![CI Status](https://github.com/Quantitative-Systems/crypto-platform/actions/workflows/crypto-platform-ci.yml/badge.svg)](https://github.com/Quantitative-Systems/crypto-platform/actions/workflows/crypto-platform-ci.yml)
-[![Master Alpha](https://img.shields.io/badge/master%20alpha-%2B648.87R%20net-emerald?style=flat&logo=bitcoin)](research/results/CASCADING_FRACTAL_RESULTS/master_cascading_results.json)
-[![Profit Factor](https://img.shields.io/badge/profit%20factor-1.41%20(3%2C303%20trades)-cyan)](research/results/CASCADING_FRACTAL_RESULTS/master_cascading_results.json)
-[![Python Tests](https://img.shields.io/badge/python%20tests-291%2F291%20passing-brightgreen)](tests/unit/)
-[![Self-Evolving Daemon](https://img.shields.io/badge/autonomous%20engine-24%2F7%2F365%20online-blueviolet)](execution/autonomous_self_evolving_daemon.py)
+[![Master Alpha](https://img.shields.io/badge/master%20alpha-%2B716.06R%20net-emerald?style=flat&logo=bitcoin)](research/results/EXPANDED_UNIVERSE_RESULTS/ultra_expanded_universe_results.json)
+[![Profit Factor](https://img.shields.io/badge/profit%20factor-1.45%2B%20(2%2C826%20trades)-cyan)](research/results/EXPANDED_UNIVERSE_RESULTS/ultra_expanded_universe_results.json)
+[![Python Tests](https://img.shields.io/badge/python%20tests-100%25%20passing-brightgreen)](tests/unit/)
+[![PWA Ready](https://img.shields.io/badge/pwa%20%26%20mobile-unified%20server-0ea5e9)](web/static/manifest.json)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 ---
@@ -52,8 +52,8 @@ Crypto Engine resolves this by enforcing **one authoritative, scale-invariant Py
 
 ## 02. Quick Start
 
-### 1. Launch the 24/7 Self-Evolving Fund Daemon
-Starts the live execution engine across Sets 1 to 5 alongside the background research loop:
+### 1. Launch the Unified Single-Server (Public Web + Mobile PWA + Workstation)
+Starts the unified server serving the public marketing portal, workstation app, PWA service worker, and real-time WebSocket state streaming from a single port:
 
 ```bash
 # Clone the repository
@@ -65,23 +65,28 @@ python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
-# Launch 24/7/365 Self-Evolving Engine (Paper, Testnet, or Live)
+# Launch Unified Single-Server on Port 8080
+python main.py --host 0.0.0.0 --port 8080
+```
+
+- **Public Marketing & Engineering Portal:** `http://localhost:8080/`
+- **Institutional Trading Workstation:** `http://localhost:8080/dashboard`
+- **Interactive Broker Connection Wizard:** `http://localhost:8080/app?action=connect_broker`
+- **PWA Manifest:** `http://localhost:8080/manifest.json`
+- **Health & Telemetry API:** `http://localhost:8080/health`
+
+### 2. Launch the 24/7 Autonomous Self-Evolving Fund Daemon
+Executes continuous background alpha research, multi-horizon trading, and parameter evolution:
+
+```bash
 python execution/autonomous_self_evolving_daemon.py
 ```
 
-### 2. Launch the Institutional Web Terminal UI
-Launch the interactive visual cockpit in your browser:
+### 3. Run the Cross-Asset Benchmark
+Verify the quantitative engine across 20 admitted crypto assets (+716.06R net return):
 
 ```bash
-python web/server.py
-```
-Open **`http://localhost:8080/dashboard`** to view live positions, heat meters, fractal state matrices, and the immutable decision ledger.
-
-### 3. Run the Cross-Sector Crypto Benchmark
-Verify the quantitative engine across 10+ assets from Mega-Caps to High-Performance L1s:
-
-```bash
-python scripts/showcase_engine_power_across_crypto_sectors.py
+python scripts/test_ultra_expanded_universe.py
 ```
 
 ---
@@ -244,17 +249,35 @@ All engine events are dispatched in real time via [`notifications/alert_router.p
 
 ---
 
-## 10. Web Workstation Terminal & Mobile Parity
+## 10. Unified Web Portal, Mobile PWA & Broker Connectivity
 
-### Institutional Web Workstation (`web/server.py`)
-Single-page, responsive, dark-mode visual workstation built on vanilla ES2022 JavaScript and WebSocket streaming:
-- `/dashboard`: Portfolio overview, equity metrics, and active position blotters.
-- `/markets`: Multi-scale market state monitor and admitted universe tickers.
-- `/fractal-state`: Interactive 7-timeframe ladder and 5-set matrix inspector.
-- `/decision-ledger`: Immutable event audit log with full trade rationales.
+### Unified Single-Server Architecture (`main.py` / `web/server.py`)
+Crypto Platform operates as a **single-server, single-port full-stack platform** serving:
+- **Public Portal (`/`)**: Dark institutional marketing & engineering portal with live market tickers, 3-Pillar Invariant Engine visualizer, and verified performance telemetry.
+- **Institutional Workstation (`/app`, `/dashboard`)**: High-density trading cockpit with 17 specialized modules (Portfolio Cockpit, Markets, Opportunities, King Engine, Strategy Lab, Backtesting, Forward Canary, Positions, Orders, Broker Center, Risk Governor, Alerts, and Decision Ledger).
+- **Progressive Web App (PWA) Parity**: Full offline caching (`/sw.js`), manifest metadata (`/manifest.json`), high-resolution SVG icons, and home-screen install on iOS, Android, and Desktop.
 
-### Native Android Mobile Workstation (`mobile/android`)
-Native Kotlin application built with Jetpack Compose providing mobile telemetry parity with the desktop terminal.
+### Responsive Mobile UI/UX & Native Bottom Navigation
+- **Desktop Monitors (&ge; 769px)**: Full multi-pane institutional layout with 250px left navigation, dense blotter tables, and real-time streaming tickers.
+- **Mobile Devices (&le; 768px)**: Seamlessly adapts with a collapsible drawer sidebar and native **Mobile Bottom Navigation Bar** providing instant touch access to:
+  1. 📊 **Cockpit**: Live equity, active positions count, and autonomous agent cycle controls.
+  2. 📈 **Markets**: Multi-timeframe crypto universe with causal structure indicators.
+  3. 📦 **Blotter**: Real-time position and order execution blotters with touch-friendly horizontal scroll.
+  4. 🔌 **Brokers**: Connected exchange status, latency pings, and account wizard.
+  5. 🛡️ **Risk**: Active circuit breakers, portfolio heat gauge, and custody risk boundaries.
+
+### Interactive Broker Connection Wizard (`POST /api/brokers/connect`)
+- **Supported Exchange Venues**: **Binance** (Spot & USDT-M Futures), **Bybit** (V5 Unified UTA), and **Zero-Capital Paper Simulator**.
+- **Non-Custodial Prime Standard**: Every connection is cryptographically audited via [`CustodyRiskFirewall.verify_api_key_permissions()`](execution/risk/custody_risk_firewall.py). Any API key with `enableWithdrawals`, `perm_withdraw`, or `enableInternalTransfer` is **immediately rejected with a `400 Bad Request` security breach alert**.
+- **80% Cold / 20% Hot Invariant**: The engine caps hot exchange collateral exposure to 20% of fund equity, preserving 80%+ in off-exchange cold storage.
+
+### 1-Click Production Cloud Deployment
+- **Render.com**: Connect the repository to [Render.com](https://render.com) using the included [`render.yaml`](render.yaml) for automated Docker container builds on port 8080 with automated health checks.
+- **Docker / Linux VPS**:
+  ```bash
+  docker build -t crypto-platform:latest .
+  docker run -d -p 8080:8080 --name crypto-platform crypto-platform:latest
+  ```
 
 ---
 

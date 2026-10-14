@@ -1,0 +1,441 @@
+{
+  "timestamp_utc": "2026-10-14T03:00:36.925075+00:00",
+  "audit_version": "2.0.0-reconstruction-portfolio-constrained",
+  "parameters": {
+    "max_concurrent_positions": 3,
+    "val_end_ms": 1719791999000,
+    "val_end_iso": "2024-06-30T23:59:59+00:00",
+    "taker_fee_bps": 5.0,
+    "slippage_bps": 2.0,
+    "min_target_r": 4.0
+  },
+  "reconciliation": {
+    "unconstrained_trades_reconstructed": 2563,
+    "stored_reference_trades": 2563,
+    "stored_reference_net_r": 474.08,
+    "is_perfect_reproduction": true
+  },
+  "unconstrained_metrics": {
+    "full": {
+      "total_trades": 2563,
+      "win_count": 628,
+      "loss_count": 1934,
+      "win_rate_pct": 24.5,
+      "total_r": 474.08,
+      "profit_factor": 1.29,
+      "expectancy_r": 0.185,
+      "avg_win_r": 3.3642,
+      "avg_loss_r": -0.8473,
+      "max_drawdown_r": 153.02
+    },
+    "in_sample": {
+      "total_trades": 1243,
+      "win_count": 307,
+      "loss_count": 936,
+      "win_rate_pct": 24.7,
+      "total_r": 343.6,
+      "profit_factor": 1.42,
+      "expectancy_r": 0.2764,
+      "avg_win_r": 3.7596,
+      "avg_loss_r": -0.866,
+      "max_drawdown_r": 153.02
+    },
+    "out_of_sample": {
+      "total_trades": 1320,
+      "win_count": 321,
+      "loss_count": 998,
+      "win_rate_pct": 24.32,
+      "total_r": 130.48,
+      "profit_factor": 1.16,
+      "expectancy_r": 0.0988,
+      "avg_win_r": 2.9861,
+      "avg_loss_r": -0.8297,
+      "max_drawdown_r": 80.26
+    }
+  },
+  "portfolio_constrained_metrics": {
+    "full": {
+      "total_trades": 1919,
+      "win_count": 453,
+      "loss_count": 1465,
+      "win_rate_pct": 23.61,
+      "total_r": 201.63,
+      "profit_factor": 1.16,
+      "expectancy_r": 0.1051,
+      "avg_win_r": 3.1731,
+      "avg_loss_r": -0.8435,
+      "max_drawdown_r": 107.95
+    },
+    "in_sample": {
+      "total_trades": 989,
+      "win_count": 246,
+      "loss_count": 743,
+      "win_rate_pct": 24.87,
+      "total_r": 246.13,
+      "profit_factor": 1.38,
+      "expectancy_r": 0.2489,
+      "avg_win_r": 3.6072,
+      "avg_loss_r": -0.8631,
+      "max_drawdown_r": 106.56
+    },
+    "out_of_sample": {
+      "total_trades": 930,
+      "win_count": 207,
+      "loss_count": 722,
+      "win_rate_pct": 22.26,
+      "total_r": -44.5,
+      "profit_factor": 0.93,
+      "expectancy_r": -0.0478,
+      "avg_win_r": 2.6572,
+      "avg_loss_r": -0.8234,
+      "max_drawdown_r": 107.95
+    },
+    "rejection_rate_pct": 25.13
+  },
+  "portfolio_by_set": {
+    "SET_1": {
+      "FULL": {
+        "total_trades": 30,
+        "win_count": 6,
+        "loss_count": 24,
+        "win_rate_pct": 20.0,
+        "total_r": 14.67,
+        "profit_factor": 1.67,
+        "expectancy_r": 0.4888,
+        "avg_win_r": 6.0792,
+        "avg_loss_r": -0.9087,
+        "max_drawdown_r": 13.53
+      },
+      "IN_SAMPLE": {
+        "total_trades": 17,
+        "win_count": 3,
+        "loss_count": 14,
+        "win_rate_pct": 17.65,
+        "total_r": 9.17,
+        "profit_factor": 1.76,
+        "expectancy_r": 0.5394,
+        "avg_win_r": 7.093,
+        "avg_loss_r": -0.8649,
+        "max_drawdown_r": 10.75
+      },
+      "OUT_OF_SAMPLE": {
+        "total_trades": 13,
+        "win_count": 3,
+        "loss_count": 10,
+        "win_rate_pct": 23.08,
+        "total_r": 5.5,
+        "profit_factor": 1.57,
+        "expectancy_r": 0.4227,
+        "avg_win_r": 5.0654,
+        "avg_loss_r": -0.9701,
+        "max_drawdown_r": 5.41
+      }
+    },
+    "SET_2": {
+      "FULL": {
+        "total_trades": 179,
+        "win_count": 45,
+        "loss_count": 134,
+        "win_rate_pct": 25.14,
+        "total_r": 110.72,
+        "profit_factor": 1.99,
+        "expectancy_r": 0.6186,
+        "avg_win_r": 4.9376,
+        "avg_loss_r": -0.8319,
+        "max_drawdown_r": 22.99
+      },
+      "IN_SAMPLE": {
+        "total_trades": 117,
+        "win_count": 35,
+        "loss_count": 82,
+        "win_rate_pct": 29.91,
+        "total_r": 92.23,
+        "profit_factor": 2.33,
+        "expectancy_r": 0.7883,
+        "avg_win_r": 4.616,
+        "avg_loss_r": -0.8455,
+        "max_drawdown_r": 11.88
+      },
+      "OUT_OF_SAMPLE": {
+        "total_trades": 62,
+        "win_count": 10,
+        "loss_count": 52,
+        "win_rate_pct": 16.13,
+        "total_r": 18.49,
+        "profit_factor": 1.44,
+        "expectancy_r": 0.2982,
+        "avg_win_r": 6.0633,
+        "avg_loss_r": -0.8104,
+        "max_drawdown_r": 22.99
+      }
+    },
+    "SET_3": {
+      "FULL": {
+        "total_trades": 1112,
+        "win_count": 273,
+        "loss_count": 839,
+        "win_rate_pct": 24.55,
+        "total_r": 151.77,
+        "profit_factor": 1.21,
+        "expectancy_r": 0.1365,
+        "avg_win_r": 3.1805,
+        "avg_loss_r": -0.854,
+        "max_drawdown_r": 96.24
+      },
+      "IN_SAMPLE": {
+        "total_trades": 855,
+        "win_count": 208,
+        "loss_count": 647,
+        "win_rate_pct": 24.33,
+        "total_r": 144.73,
+        "profit_factor": 1.26,
+        "expectancy_r": 0.1693,
+        "avg_win_r": 3.3872,
+        "avg_loss_r": -0.8652,
+        "max_drawdown_r": 96.24
+      },
+      "OUT_OF_SAMPLE": {
+        "total_trades": 257,
+        "win_count": 65,
+        "loss_count": 192,
+        "win_rate_pct": 25.29,
+        "total_r": 7.04,
+        "profit_factor": 1.04,
+        "expectancy_r": 0.0274,
+        "avg_win_r": 2.5189,
+        "avg_loss_r": -0.8161,
+        "max_drawdown_r": 36.9
+      }
+    },
+    "SET_4": {
+      "FULL": {
+        "total_trades": 437,
+        "win_count": 97,
+        "loss_count": 340,
+        "win_rate_pct": 22.2,
+        "total_r": -34.72,
+        "profit_factor": 0.88,
+        "expectancy_r": -0.0795,
+        "avg_win_r": 2.7018,
+        "avg_loss_r": -0.8729,
+        "max_drawdown_r": 70.81
+      },
+      "IN_SAMPLE": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate_pct": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "expectancy_r": 0.0,
+        "avg_win_r": 0.0,
+        "avg_loss_r": 0.0,
+        "max_drawdown_r": 0.0
+      },
+      "OUT_OF_SAMPLE": {
+        "total_trades": 437,
+        "win_count": 97,
+        "loss_count": 340,
+        "win_rate_pct": 22.2,
+        "total_r": -34.72,
+        "profit_factor": 0.88,
+        "expectancy_r": -0.0795,
+        "avg_win_r": 2.7018,
+        "avg_loss_r": -0.8729,
+        "max_drawdown_r": 70.81
+      }
+    },
+    "SET_5": {
+      "FULL": {
+        "total_trades": 161,
+        "win_count": 32,
+        "loss_count": 128,
+        "win_rate_pct": 19.88,
+        "total_r": -40.81,
+        "profit_factor": 0.54,
+        "expectancy_r": -0.2535,
+        "avg_win_r": 1.5124,
+        "avg_loss_r": -0.6969,
+        "max_drawdown_r": 40.73
+      },
+      "IN_SAMPLE": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate_pct": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "expectancy_r": 0.0,
+        "avg_win_r": 0.0,
+        "avg_loss_r": 0.0,
+        "max_drawdown_r": 0.0
+      },
+      "OUT_OF_SAMPLE": {
+        "total_trades": 161,
+        "win_count": 32,
+        "loss_count": 128,
+        "win_rate_pct": 19.88,
+        "total_r": -40.81,
+        "profit_factor": 0.54,
+        "expectancy_r": -0.2535,
+        "avg_win_r": 1.5124,
+        "avg_loss_r": -0.6969,
+        "max_drawdown_r": 40.73
+      }
+    }
+  },
+  "portfolio_by_asset": {
+    "BTCUSDT": {
+      "FULL": {
+        "total_trades": 573,
+        "win_count": 132,
+        "loss_count": 441,
+        "win_rate_pct": 23.04,
+        "total_r": 86.31,
+        "profit_factor": 1.23,
+        "expectancy_r": 0.1506,
+        "avg_win_r": 3.503,
+        "avg_loss_r": -0.8528,
+        "max_drawdown_r": 58.34
+      },
+      "IN_SAMPLE": {
+        "total_trades": 354,
+        "win_count": 89,
+        "loss_count": 265,
+        "win_rate_pct": 25.14,
+        "total_r": 110.77,
+        "profit_factor": 1.47,
+        "expectancy_r": 0.3129,
+        "avg_win_r": 3.9082,
+        "avg_loss_r": -0.8945,
+        "max_drawdown_r": 40.47
+      },
+      "OUT_OF_SAMPLE": {
+        "total_trades": 219,
+        "win_count": 43,
+        "loss_count": 176,
+        "win_rate_pct": 19.63,
+        "total_r": -24.46,
+        "profit_factor": 0.82,
+        "expectancy_r": -0.1117,
+        "avg_win_r": 2.6643,
+        "avg_loss_r": -0.7899,
+        "max_drawdown_r": 35.16
+      }
+    },
+    "ETHUSDT": {
+      "FULL": {
+        "total_trades": 440,
+        "win_count": 109,
+        "loss_count": 331,
+        "win_rate_pct": 24.77,
+        "total_r": 90.4,
+        "profit_factor": 1.33,
+        "expectancy_r": 0.2055,
+        "avg_win_r": 3.3499,
+        "avg_loss_r": -0.83,
+        "max_drawdown_r": 34.99
+      },
+      "IN_SAMPLE": {
+        "total_trades": 335,
+        "win_count": 81,
+        "loss_count": 254,
+        "win_rate_pct": 24.18,
+        "total_r": 83.85,
+        "profit_factor": 1.4,
+        "expectancy_r": 0.2503,
+        "avg_win_r": 3.6506,
+        "avg_loss_r": -0.834,
+        "max_drawdown_r": 34.99
+      },
+      "OUT_OF_SAMPLE": {
+        "total_trades": 105,
+        "win_count": 28,
+        "loss_count": 77,
+        "win_rate_pct": 26.67,
+        "total_r": 6.55,
+        "profit_factor": 1.1,
+        "expectancy_r": 0.0624,
+        "avg_win_r": 2.4802,
+        "avg_loss_r": -0.8168,
+        "max_drawdown_r": 33.09
+      }
+    },
+    "SOLUSDT": {
+      "FULL": {
+        "total_trades": 729,
+        "win_count": 172,
+        "loss_count": 557,
+        "win_rate_pct": 23.59,
+        "total_r": 0.62,
+        "profit_factor": 1.0,
+        "expectancy_r": 0.0008,
+        "avg_win_r": 2.784,
+        "avg_loss_r": -0.8586,
+        "max_drawdown_r": 65.49
+      },
+      "IN_SAMPLE": {
+        "total_trades": 294,
+        "win_count": 75,
+        "loss_count": 219,
+        "win_rate_pct": 25.51,
+        "total_r": 52.1,
+        "profit_factor": 1.28,
+        "expectancy_r": 0.1772,
+        "avg_win_r": 3.2114,
+        "avg_loss_r": -0.8619,
+        "max_drawdown_r": 43.1
+      },
+      "OUT_OF_SAMPLE": {
+        "total_trades": 435,
+        "win_count": 97,
+        "loss_count": 338,
+        "win_rate_pct": 22.3,
+        "total_r": -51.49,
+        "profit_factor": 0.82,
+        "expectancy_r": -0.1184,
+        "avg_win_r": 2.4536,
+        "avg_loss_r": -0.8565,
+        "max_drawdown_r": 60.96
+      }
+    },
+    "BNBUSDT": {
+      "FULL": {
+        "total_trades": 177,
+        "win_count": 40,
+        "loss_count": 136,
+        "win_rate_pct": 22.6,
+        "total_r": 24.31,
+        "profit_factor": 1.23,
+        "expectancy_r": 0.1373,
+        "avg_win_r": 3.2758,
+        "avg_loss_r": -0.7847,
+        "max_drawdown_r": 23.09
+      },
+      "IN_SAMPLE": {
+        "total_trades": 6,
+        "win_count": 1,
+        "loss_count": 5,
+        "win_rate_pct": 16.67,
+        "total_r": -0.59,
+        "profit_factor": 0.84,
+        "expectancy_r": -0.0989,
+        "avg_win_r": 3.0077,
+        "avg_loss_r": -0.7203,
+        "max_drawdown_r": 3.6
+      },
+      "OUT_OF_SAMPLE": {
+        "total_trades": 171,
+        "win_count": 39,
+        "loss_count": 131,
+        "win_rate_pct": 22.81,
+        "total_r": 24.9,
+        "profit_factor": 1.24,
+        "expectancy_r": 0.1456,
+        "avg_win_r": 3.2826,
+        "avg_loss_r": -0.7872,
+        "max_drawdown_r": 23.09
+      }
+    }
+  }
+}
