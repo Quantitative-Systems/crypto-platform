@@ -1,0 +1,36 @@
+{
+  "model_id": "CASCADE_BTC_SET_2",
+  "symbol": "BTCUSDT",
+  "timeframe_set": "SET_2",
+  "status": "PASSED_PRODUCTION_CERTIFIED",
+  "profit_factor": 1.379,
+  "net_r": 29.85,
+  "total_trades": 137,
+  "win_rate_pct": 25.55,
+  "max_drawdown_r": 24.68,
+  "reasons": [
+    "PASSED ALL GATES: Certified for live autonomous execution."
+  ],
+  "evaluated_at_utc": "2026-10-14T01:57:11.256151+00:00",
+  "metrics_snapshot": {
+    "stream_id": "CASCADE_BTC_SET_2",
+    "symbol": "BTCUSDT",
+    "timeframe_set": "SET_2",
+    "hypothesis": "CASCADING_BATON",
+    "total_trades": 137,
+    "win_rate": 0.2555,
+    "loss_rate": 0.7445,
+    "expectancy_r": 0.2179,
+    "total_r": 29.85,
+    "profit_factor": 1.379,
+    "max_drawdown_r": 24.68,
+    "average_r": 0.2179,
+    "largest_win_r": 20.04,
+    "largest_loss_r": -1.14,
+    "target_4r_hit_rate": 0.0146,
+    "avg_bars_held": 44.4
+  },
+  "metadata": {
+    "origin": "master_cascading_results.json"
+  }
+}

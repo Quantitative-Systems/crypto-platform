@@ -1,0 +1,137 @@
+{
+  "SCALP": {
+    "total_trades": 6885,
+    "total_net_r": -466.35,
+    "profit_factor": 0.84,
+    "by_set": {
+      "SET_1": {
+        "trades": 215,
+        "net_r": 32.03
+      },
+      "SET_2": {
+        "trades": 1060,
+        "net_r": 20.45
+      },
+      "SET_3": {
+        "trades": 3737,
+        "net_r": -192.71
+      },
+      "SET_4": {
+        "trades": 1324,
+        "net_r": -205.79
+      },
+      "SET_5": {
+        "trades": 549,
+        "net_r": -120.33
+      }
+    }
+  },
+  "INTRADAY": {
+    "total_trades": 4779,
+    "total_net_r": -142.19,
+    "profit_factor": 0.94,
+    "by_set": {
+      "SET_1": {
+        "trades": 154,
+        "net_r": 35.23
+      },
+      "SET_2": {
+        "trades": 730,
+        "net_r": 70.88
+      },
+      "SET_3": {
+        "trades": 2626,
+        "net_r": -40.98
+      },
+      "SET_4": {
+        "trades": 908,
+        "net_r": -134.59
+      },
+      "SET_5": {
+        "trades": 361,
+        "net_r": -72.73
+      }
+    }
+  },
+  "SWING": {
+    "total_trades": 3438,
+    "total_net_r": 7.37,
+    "profit_factor": 1.0,
+    "by_set": {
+      "SET_1": {
+        "trades": 109,
+        "net_r": 47.93
+      },
+      "SET_2": {
+        "trades": 481,
+        "net_r": 80.1
+      },
+      "SET_3": {
+        "trades": 1944,
+        "net_r": 14.56
+      },
+      "SET_4": {
+        "trades": 661,
+        "net_r": -80.53
+      },
+      "SET_5": {
+        "trades": 243,
+        "net_r": -54.69
+      }
+    }
+  },
+  "POSITIONAL": {
+    "total_trades": 3226,
+    "total_net_r": 123.41,
+    "profit_factor": 1.07,
+    "by_set": {
+      "SET_1": {
+        "trades": 100,
+        "net_r": 50.46
+      },
+      "SET_2": {
+        "trades": 439,
+        "net_r": 100.93
+      },
+      "SET_3": {
+        "trades": 1829,
+        "net_r": 95.49
+      },
+      "SET_4": {
+        "trades": 625,
+        "net_r": -73.98
+      },
+      "SET_5": {
+        "trades": 233,
+        "net_r": -49.49
+      }
+    }
+  },
+  "INVESTING": {
+    "total_trades": 3124,
+    "total_net_r": 192.43,
+    "profit_factor": 1.11,
+    "by_set": {
+      "SET_1": {
+        "trades": 96,
+        "net_r": 63.54
+      },
+      "SET_2": {
+        "trades": 411,
+        "net_r": 109.17
+      },
+      "SET_3": {
+        "trades": 1776,
+        "net_r": 127.72
+      },
+      "SET_4": {
+        "trades": 613,
+        "net_r": -51.38
+      },
+      "SET_5": {
+        "trades": 228,
+        "net_r": -56.62
+      }
+    }
+  }
+}

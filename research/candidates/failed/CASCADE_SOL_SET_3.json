@@ -1,0 +1,37 @@
+{
+  "model_id": "CASCADE_SOL_SET_3",
+  "symbol": "SOLUSDT",
+  "timeframe_set": "SET_3",
+  "status": "FAILED_RESEARCH_QUARANTINED",
+  "profit_factor": 1.099,
+  "net_r": 26.22,
+  "total_trades": 466,
+  "win_rate_pct": 27.25,
+  "max_drawdown_r": 45.25,
+  "reasons": [
+    "Profit factor 1.10 below threshold 1.25",
+    "Max drawdown 45.2R exceeds allowable 30.0R"
+  ],
+  "evaluated_at_utc": "2026-10-14T01:57:11.287676+00:00",
+  "metrics_snapshot": {
+    "stream_id": "CASCADE_SOL_SET_3",
+    "symbol": "SOLUSDT",
+    "timeframe_set": "SET_3",
+    "hypothesis": "CASCADING_BATON",
+    "total_trades": 466,
+    "win_rate": 0.2725,
+    "loss_rate": 0.7275,
+    "expectancy_r": 0.0563,
+    "total_r": 26.22,
+    "profit_factor": 1.099,
+    "max_drawdown_r": 45.25,
+    "average_r": 0.0563,
+    "largest_win_r": 12.69,
+    "largest_loss_r": -1.28,
+    "target_4r_hit_rate": 0.0021,
+    "avg_bars_held": 37.7
+  },
+  "metadata": {
+    "origin": "master_cascading_results.json"
+  }
+}

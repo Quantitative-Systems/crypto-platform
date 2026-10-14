@@ -1,0 +1,218 @@
+{
+  "CASCADE_BTC_SET_1": {
+    "model_id": "CASCADE_BTC_SET_1",
+    "symbol": "BTCUSDT",
+    "timeframe_set": "SET_1",
+    "status": "PASSED_PRODUCTION_CERTIFIED",
+    "profit_factor": 1.827,
+    "net_r": 12.9,
+    "total_trades": 25,
+    "win_rate_pct": 32.0,
+    "max_drawdown_r": 11.27,
+    "reasons": [
+      "PASSED ALL GATES: Certified for live autonomous execution."
+    ],
+    "evaluated_at_utc": "2026-10-14T01:57:11.251128+00:00",
+    "metrics_snapshot": {
+      "stream_id": "CASCADE_BTC_SET_1",
+      "symbol": "BTCUSDT",
+      "timeframe_set": "SET_1",
+      "hypothesis": "CASCADING_BATON",
+      "total_trades": 25,
+      "win_rate": 0.32,
+      "loss_rate": 0.68,
+      "expectancy_r": 0.516,
+      "total_r": 12.9,
+      "profit_factor": 1.827,
+      "max_drawdown_r": 11.27,
+      "average_r": 0.516,
+      "largest_win_r": 16.91,
+      "largest_loss_r": -1.03,
+      "target_4r_hit_rate": 0.04,
+      "avg_bars_held": 30.4
+    },
+    "metadata": {
+      "origin": "master_cascading_results.json"
+    }
+  },
+  "CASCADE_BTC_SET_2": {
+    "model_id": "CASCADE_BTC_SET_2",
+    "symbol": "BTCUSDT",
+    "timeframe_set": "SET_2",
+    "status": "PASSED_PRODUCTION_CERTIFIED",
+    "profit_factor": 1.379,
+    "net_r": 29.85,
+    "total_trades": 137,
+    "win_rate_pct": 25.55,
+    "max_drawdown_r": 24.68,
+    "reasons": [
+      "PASSED ALL GATES: Certified for live autonomous execution."
+    ],
+    "evaluated_at_utc": "2026-10-14T01:57:11.256151+00:00",
+    "metrics_snapshot": {
+      "stream_id": "CASCADE_BTC_SET_2",
+      "symbol": "BTCUSDT",
+      "timeframe_set": "SET_2",
+      "hypothesis": "CASCADING_BATON",
+      "total_trades": 137,
+      "win_rate": 0.2555,
+      "loss_rate": 0.7445,
+      "expectancy_r": 0.2179,
+      "total_r": 29.85,
+      "profit_factor": 1.379,
+      "max_drawdown_r": 24.68,
+      "average_r": 0.2179,
+      "largest_win_r": 20.04,
+      "largest_loss_r": -1.14,
+      "target_4r_hit_rate": 0.0146,
+      "avg_bars_held": 44.4
+    },
+    "metadata": {
+      "origin": "master_cascading_results.json"
+    }
+  },
+  "CASCADE_ETH_SET_2": {
+    "model_id": "CASCADE_ETH_SET_2",
+    "symbol": "ETHUSDT",
+    "timeframe_set": "SET_2",
+    "status": "PASSED_PRODUCTION_CERTIFIED",
+    "profit_factor": 1.662,
+    "net_r": 55.16,
+    "total_trades": 142,
+    "win_rate_pct": 26.06,
+    "max_drawdown_r": 12.85,
+    "reasons": [
+      "PASSED ALL GATES: Certified for live autonomous execution."
+    ],
+    "evaluated_at_utc": "2026-10-14T01:57:11.273368+00:00",
+    "metrics_snapshot": {
+      "stream_id": "CASCADE_ETH_SET_2",
+      "symbol": "ETHUSDT",
+      "timeframe_set": "SET_2",
+      "hypothesis": "CASCADING_BATON",
+      "total_trades": 142,
+      "win_rate": 0.2606,
+      "loss_rate": 0.7394,
+      "expectancy_r": 0.3884,
+      "total_r": 55.16,
+      "profit_factor": 1.662,
+      "max_drawdown_r": 12.85,
+      "average_r": 0.3884,
+      "largest_win_r": 35.34,
+      "largest_loss_r": -1.16,
+      "target_4r_hit_rate": 0.007,
+      "avg_bars_held": 44.6
+    },
+    "metadata": {
+      "origin": "master_cascading_results.json"
+    }
+  },
+  "CASCADE_SOL_SET_2": {
+    "model_id": "CASCADE_SOL_SET_2",
+    "symbol": "SOLUSDT",
+    "timeframe_set": "SET_2",
+    "status": "PASSED_PRODUCTION_CERTIFIED",
+    "profit_factor": 2.522,
+    "net_r": 75.91,
+    "total_trades": 97,
+    "win_rate_pct": 29.9,
+    "max_drawdown_r": 10.82,
+    "reasons": [
+      "PASSED ALL GATES: Certified for live autonomous execution."
+    ],
+    "evaluated_at_utc": "2026-10-14T01:57:11.281648+00:00",
+    "metrics_snapshot": {
+      "stream_id": "CASCADE_SOL_SET_2",
+      "symbol": "SOLUSDT",
+      "timeframe_set": "SET_2",
+      "hypothesis": "CASCADING_BATON",
+      "total_trades": 97,
+      "win_rate": 0.299,
+      "loss_rate": 0.701,
+      "expectancy_r": 0.7825,
+      "total_r": 75.91,
+      "profit_factor": 2.522,
+      "max_drawdown_r": 10.82,
+      "average_r": 0.7825,
+      "largest_win_r": 30.64,
+      "largest_loss_r": -1.1,
+      "target_4r_hit_rate": 0.0,
+      "avg_bars_held": 51.1
+    },
+    "metadata": {
+      "origin": "master_cascading_results.json"
+    }
+  },
+  "CASCADE_BNB_SET_2": {
+    "model_id": "CASCADE_BNB_SET_2",
+    "symbol": "BNBUSDT",
+    "timeframe_set": "SET_2",
+    "status": "PASSED_PRODUCTION_CERTIFIED",
+    "profit_factor": 1.547,
+    "net_r": 16.09,
+    "total_trades": 60,
+    "win_rate_pct": 36.67,
+    "max_drawdown_r": 10.73,
+    "reasons": [
+      "PASSED ALL GATES: Certified for live autonomous execution."
+    ],
+    "evaluated_at_utc": "2026-10-14T01:57:11.299022+00:00",
+    "metrics_snapshot": {
+      "stream_id": "CASCADE_BNB_SET_2",
+      "symbol": "BNBUSDT",
+      "timeframe_set": "SET_2",
+      "hypothesis": "CASCADING_BATON",
+      "total_trades": 60,
+      "win_rate": 0.3667,
+      "loss_rate": 0.6333,
+      "expectancy_r": 0.2681,
+      "total_r": 16.09,
+      "profit_factor": 1.547,
+      "max_drawdown_r": 10.73,
+      "average_r": 0.2681,
+      "largest_win_r": 7.06,
+      "largest_loss_r": -1.08,
+      "target_4r_hit_rate": 0.0333,
+      "avg_bars_held": 55.0
+    },
+    "metadata": {
+      "origin": "master_cascading_results.json"
+    }
+  },
+  "CASCADE_BNB_SET_3": {
+    "model_id": "CASCADE_BNB_SET_3",
+    "symbol": "BNBUSDT",
+    "timeframe_set": "SET_3",
+    "status": "PASSED_PRODUCTION_CERTIFIED",
+    "profit_factor": 1.423,
+    "net_r": 19.16,
+    "total_trades": 82,
+    "win_rate_pct": 32.93,
+    "max_drawdown_r": 11.93,
+    "reasons": [
+      "PASSED ALL GATES: Certified for live autonomous execution."
+    ],
+    "evaluated_at_utc": "2026-10-14T01:57:11.303834+00:00",
+    "metrics_snapshot": {
+      "stream_id": "CASCADE_BNB_SET_3",
+      "symbol": "BNBUSDT",
+      "timeframe_set": "SET_3",
+      "hypothesis": "CASCADING_BATON",
+      "total_trades": 82,
+      "win_rate": 0.3293,
+      "loss_rate": 0.6707,
+      "expectancy_r": 0.2337,
+      "total_r": 19.16,
+      "profit_factor": 1.423,
+      "max_drawdown_r": 11.93,
+      "average_r": 0.2337,
+      "largest_win_r": 25.15,
+      "largest_loss_r": -1.23,
+      "target_4r_hit_rate": 0.0,
+      "avg_bars_held": 40.7
+    },
+    "metadata": {
+      "origin": "master_cascading_results.json"
+    }
+  }
+}

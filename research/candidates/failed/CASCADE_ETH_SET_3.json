@@ -1,0 +1,37 @@
+{
+  "model_id": "CASCADE_ETH_SET_3",
+  "symbol": "ETHUSDT",
+  "timeframe_set": "SET_3",
+  "status": "FAILED_RESEARCH_QUARANTINED",
+  "profit_factor": 1.233,
+  "net_r": 82.01,
+  "total_trades": 637,
+  "win_rate_pct": 28.41,
+  "max_drawdown_r": 46.84,
+  "reasons": [
+    "Profit factor 1.23 below threshold 1.25",
+    "Max drawdown 46.8R exceeds allowable 30.0R"
+  ],
+  "evaluated_at_utc": "2026-10-14T01:57:11.277890+00:00",
+  "metrics_snapshot": {
+    "stream_id": "CASCADE_ETH_SET_3",
+    "symbol": "ETHUSDT",
+    "timeframe_set": "SET_3",
+    "hypothesis": "CASCADING_BATON",
+    "total_trades": 637,
+    "win_rate": 0.2841,
+    "loss_rate": 0.7159,
+    "expectancy_r": 0.1287,
+    "total_r": 82.01,
+    "profit_factor": 1.233,
+    "max_drawdown_r": 46.84,
+    "average_r": 0.1287,
+    "largest_win_r": 48.77,
+    "largest_loss_r": -1.36,
+    "target_4r_hit_rate": 0.0016,
+    "avg_bars_held": 37.4
+  },
+  "metadata": {
+    "origin": "master_cascading_results.json"
+  }
+}

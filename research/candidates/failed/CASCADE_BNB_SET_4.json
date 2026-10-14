@@ -1,0 +1,36 @@
+{
+  "model_id": "CASCADE_BNB_SET_4",
+  "symbol": "BNBUSDT",
+  "timeframe_set": "SET_4",
+  "status": "FAILED_RESEARCH_QUARANTINED",
+  "profit_factor": 1.445,
+  "net_r": 23.19,
+  "total_trades": 79,
+  "win_rate_pct": 22.78,
+  "max_drawdown_r": 15.37,
+  "reasons": [
+    "Win rate 22.8% below minimum 24.0%"
+  ],
+  "evaluated_at_utc": "2026-10-14T01:57:11.307831+00:00",
+  "metrics_snapshot": {
+    "stream_id": "CASCADE_BNB_SET_4",
+    "symbol": "BNBUSDT",
+    "timeframe_set": "SET_4",
+    "hypothesis": "CASCADING_BATON",
+    "total_trades": 79,
+    "win_rate": 0.2278,
+    "loss_rate": 0.7722,
+    "expectancy_r": 0.2936,
+    "total_r": 23.19,
+    "profit_factor": 1.445,
+    "max_drawdown_r": 15.37,
+    "average_r": 0.2936,
+    "largest_win_r": 22.37,
+    "largest_loss_r": -1.94,
+    "target_4r_hit_rate": 0.0,
+    "avg_bars_held": 44.3
+  },
+  "metadata": {
+    "origin": "master_cascading_results.json"
+  }
+}

@@ -7,7 +7,7 @@
 [![CI Status](https://github.com/Quantitative-Systems/crypto-platform/actions/workflows/crypto-platform-ci.yml/badge.svg)](https://github.com/Quantitative-Systems/crypto-platform/actions/workflows/crypto-platform-ci.yml)
 [![Master Alpha](https://img.shields.io/badge/master%20alpha-%2B648.87R%20net-emerald?style=flat&logo=bitcoin)](research/results/CASCADING_FRACTAL_RESULTS/master_cascading_results.json)
 [![Profit Factor](https://img.shields.io/badge/profit%20factor-1.41%20(3%2C303%20trades)-cyan)](research/results/CASCADING_FRACTAL_RESULTS/master_cascading_results.json)
-[![Python Tests](https://img.shields.io/badge/python%20tests-289%2F289%20passing-brightgreen)](tests/unit/)
+[![Python Tests](https://img.shields.io/badge/python%20tests-291%2F291%20passing-brightgreen)](tests/unit/)
 [![Self-Evolving Daemon](https://img.shields.io/badge/autonomous%20engine-24%2F7%2F365%20online-blueviolet)](execution/autonomous_self_evolving_daemon.py)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
@@ -146,6 +146,20 @@ Audited across 5 distinct cryptocurrency market sectors from July 2020 through O
 
 > **Causal Simulation Integrity:** All metrics are audited with zero lookahead bias, strict next-bar open execution, realistic 10 bps taker fees, 4 bps slippage, and adverse intrabar stop collision rules.
 
+### Candle-Relative Trading Style Matrix (Scale Invariance)
+
+Trading styles are defined by **candle reaction geometry**, not by clock time. The engine tested all 5 styles across all 5 timeframe sets:
+
+| Trading Style | Target Geometry | SET 1 (Macro) | SET 2 (Swing) | SET 3 (Intraday) | SET 4 (Scalp) | SET 5 (Micro) | Total Alpha |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **SCALP** | 2.0R (1–15 bars) | **$+32.0\text{R}$ (49%)** | **$+20.5\text{R}$ (43%)** | $-192.7\text{R}$ | $-205.8\text{R}$ | $-120.3\text{R}$ | Friction drag on micro |
+| **INTRADAY** | 3.0R (10–40 bars) | **$+35.2\text{R}$ (44%)** | **$+70.9\text{R}$ (40%)** | $-41.0\text{R}$ | $-134.6\text{R}$ | $-72.7\text{R}$ | Solid on macro sets |
+| **SWING** | 4.5R (30–150 bars) | **$+47.9\text{R}$ (36%)** | **$+80.1\text{R}$ (30%)** | **$+14.6\text{R}$ (29%)** | $-80.5\text{R}$ | $-54.7\text{R}$ | Net profitable |
+| **POSITIONAL** | 7.0R (50–300 bars) | **$+50.5\text{R}$ (32%)** | **$+100.9\text{R}$ (29%)**| **$+95.5\text{R}$ (28%)** | $-74.0\text{R}$ | $-49.5\text{R}$ | **$+123.4\text{R}$ (PF 1.07)** |
+| **INVESTING** | 10.0R (100–1000 bars)| **$+63.5\text{R}$ (32%)** | **$+109.2\text{R}$ (29%)**| **$+127.7\text{R}$ (28%)**| $-51.4\text{R}$ | $-56.6\text{R}$ | **$+192.4\text{R}$ (PF 1.11)** |
+
+> **Key Discovery:** "Scalping" on Set 1 (Daily candles) is highly profitable ($+32.0\text{R}$, 49% Win Rate) because daily percentage swings dwarf exchange fees! On Sets 4 & 5, trades must be anchored to HTF Order Blocks with the $1.5\times\text{ATR}$ floor to overcome friction.
+
 ---
 
 ## 06. Autonomous Self-Evolving Quantitative Fund Daemon
@@ -248,26 +262,28 @@ Native Kotlin application built with Jetpack Compose providing mobile telemetry 
 
 ```text
 crypto-platform/
-├── accounts/                   # Multi-broker and sub-account management
-├── broker/                     # Exchange gateway adapters (Binance, Paper)
-├── data/                       # Local SQLite database and JSON checkpoints
-├── docs/                       # Institutional documentation & architectural diagrams
-│   └── assets/screenshots/     # UI preview captures & hero terminal graphics
-├── execution/                  # 24/7 Engine, Autonomous Daemon, Risk Governors
-│   ├── autonomous_self_evolving_daemon.py   # Dual-track self-evolving fund daemon
-│   ├── intelligent_24_7_fractal_engine.py   # Real-time multi-set trading engine
-│   └── adapters/               # Binance and paper broker adapters
-├── market_data/                # Real-time WebSocket clients and candle engines
-├── market_model/               # Canonical market model & 3 universal primitives
-│   ├── INSTITUTIONAL_KNOWLEDGE_CORE.md     # Codified institutional market laws
-│   └── cascading_fractal_coordinator.py    # Master multi-set coordinator
-├── notifications/              # Real-time multi-channel alert router
-├── research/                   # Quantitative research results, datasets, and reports
-│   ├── publications/           # Academic research whitepapers
-│   └── results/                # CASCADING_FRACTAL_RESULTS, REGISTRY, and ALERTS
-├── scripts/                    # Cross-sector benchmarking & empirical test scripts
-├── tests/                      # Master test suite (289 passing unit tests)
-└── web/                        # Institutional Web Terminal & aiohttp server
+├── crypto_engine/                  # PRODUCTION ONLY: Filter-Passed Certified Engine
+│   ├── core/                       # Canonical 3 Primitives & Institutional Invariants
+│   ├── execution/                  # 24/7/365 Live Engine & Autonomous Fund Daemon
+│   ├── pipeline/                   # Automated Promotion Gate (Passed vs. Failed)
+│   ├── registry/                   # Certified Production Champions (champions.json)
+│   └── risk/                       # Dynamic 1% risk sizing & portfolio heat governors
+├── research/                       # Research, Exploratory Experiments, Backtests
+│   ├── candidates/
+│   │   ├── passed/                 # Certified models promoted to production
+│   │   └── failed/                 # Quarantined models with forensic failure reasons
+│   ├── experiments/                # Candle-relative style & parameter experiments
+│   ├── publications/               # Academic research whitepapers
+│   └── results/                    # CASCADING_FRACTAL_RESULTS, REGISTRY, & ALERTS
+├── accounts/                       # Multi-broker and sub-account management
+├── broker/                         # Exchange gateway adapters (Binance, Paper)
+├── docs/assets/screenshots/        # UI preview captures & hero terminal graphics
+├── market_data/                    # Real-time WebSocket clients and candle engines
+├── market_model/                   # Canonical market model & 3 universal primitives
+├── notifications/                  # Real-time multi-channel alert router
+├── scripts/                        # Cross-sector benchmarking & empirical test scripts
+├── tests/unit/                     # 291 passing unit tests
+└── web/                            # Institutional Web Terminal & aiohttp server
 ```
 
 ---
