@@ -1,0 +1,25 @@
+{
+  "timestamp_utc": "2026-10-14T17:19:09.381252+00:00",
+  "fund_equity_usd": 100000.0,
+  "custody_architecture": {
+    "provider": "SIMULATED_INSTITUTIONAL",
+    "cold_vault_usd": 80000.0,
+    "hot_exchange_usd": 20000.0,
+    "hot_exchange_pct": 20.0,
+    "is_within_budget": true
+  },
+  "performance_metrics": {
+    "total_closed_trades": 1,
+    "active_open_trades": 0,
+    "win_rate_pct": 100.0,
+    "net_realized_r": 4.0,
+    "profit_factor": 4000.0,
+    "expectancy_r": 4.0
+  },
+  "smart_execution_metrics": {
+    "total_routed_orders": 0,
+    "maker_orders_count": 0,
+    "total_fees_usd": 0,
+    "avg_slippage_bps": 0.0
+  }
+}

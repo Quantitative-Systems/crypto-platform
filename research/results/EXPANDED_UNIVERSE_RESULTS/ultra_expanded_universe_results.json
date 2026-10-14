@@ -1,0 +1,88 @@
+{
+  "timestamp_utc": "2026-10-14T16:03:50.910754+00:00",
+  "total_trades": 281,
+  "win_rate_pct": 25.3,
+  "net_r": 89.65,
+  "profit_factor": 1.55,
+  "by_set": {
+    "SET_1": {
+      "trades": 90,
+      "wins": 20,
+      "total_r": -18.347700000000003,
+      "gross_win_r": 37.4863,
+      "gross_loss_r": 55.83400000000001
+    },
+    "SET_2": {
+      "trades": 92,
+      "wins": 24,
+      "total_r": 40.1333,
+      "gross_win_r": 91.84889999999999,
+      "gross_loss_r": 51.715599999999995
+    },
+    "SET_3": {
+      "trades": 99,
+      "wins": 27,
+      "total_r": 67.86729999999999,
+      "gross_win_r": 123.34700000000001,
+      "gross_loss_r": 55.47970000000001
+    }
+  },
+  "by_asset": {
+    "APTUSDT": {
+      "trades": 57,
+      "wins": 11,
+      "win_rate_pct": 19.3,
+      "net_r": -7.24,
+      "profit_factor": 0.8
+    },
+    "OPUSDT": {
+      "trades": 5,
+      "wins": 3,
+      "win_rate_pct": 60.0,
+      "net_r": 4.91,
+      "profit_factor": 3.44
+    },
+    "ARBUSDT": {
+      "trades": 48,
+      "wins": 9,
+      "win_rate_pct": 18.8,
+      "net_r": 55.32,
+      "profit_factor": 2.98
+    },
+    "INJUSDT": {
+      "trades": 43,
+      "wins": 12,
+      "win_rate_pct": 27.9,
+      "net_r": 15.99,
+      "profit_factor": 1.68
+    },
+    "TIAUSDT": {
+      "trades": 43,
+      "wins": 11,
+      "win_rate_pct": 25.6,
+      "net_r": 9.28,
+      "profit_factor": 1.38
+    },
+    "RENDERUSDT": {
+      "trades": 31,
+      "wins": 10,
+      "win_rate_pct": 32.3,
+      "net_r": 16.17,
+      "profit_factor": 1.96
+    },
+    "ATOMUSDT": {
+      "trades": 50,
+      "wins": 15,
+      "win_rate_pct": 30.0,
+      "net_r": -2.45,
+      "profit_factor": 0.92
+    },
+    "LTCUSDT": {
+      "trades": 4,
+      "wins": 0,
+      "win_rate_pct": 0.0,
+      "net_r": -2.33,
+      "profit_factor": 0.0
+    }
+  }
+}

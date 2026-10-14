@@ -3,10 +3,10 @@
     "ETHUSDT_SET_2": {
       "symbol": "ETHUSDT",
       "set_id": "SET_2",
-      "discovered_at_utc": "2026-10-14T09:19:55.736209+00:00",
+      "discovered_at_utc": "2026-10-14T17:17:22.196284+00:00",
       "signal_count": 1630,
       "status": "LIVE_CHAMPION",
-      "promoted_at_utc": "2026-10-14T09:19:55.738214+00:00"
+      "promoted_at_utc": "2026-10-14T17:17:22.199781+00:00"
     },
     "XRPUSDT_SET_2": {
       "symbol": "XRPUSDT",
