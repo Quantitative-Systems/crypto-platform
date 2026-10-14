@@ -7,6 +7,22 @@
       "signal_count": 1630,
       "status": "LIVE_CHAMPION",
       "promoted_at_utc": "2026-10-14T01:58:46.859619+00:00"
+    },
+    "XRPUSDT_SET_2": {
+      "symbol": "XRPUSDT",
+      "set_id": "SET_2",
+      "discovered_at_utc": "2026-10-14T02:26:39.935177+00:00",
+      "signal_count": 21,
+      "status": "LIVE_CHAMPION",
+      "promoted_at_utc": "2026-10-14T02:26:41.145095+00:00"
+    },
+    "DOGEUSDT_SET_2": {
+      "symbol": "DOGEUSDT",
+      "set_id": "SET_2",
+      "discovered_at_utc": "2026-10-14T02:26:41.141069+00:00",
+      "signal_count": 84,
+      "status": "LIVE_CHAMPION",
+      "promoted_at_utc": "2026-10-14T02:26:41.147105+00:00"
     }
   },
   "challengers": {}

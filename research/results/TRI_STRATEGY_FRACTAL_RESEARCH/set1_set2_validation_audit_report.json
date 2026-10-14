@@ -1,0 +1,486 @@
+{
+  "timestamp_utc": "2026-10-14T07:44:36.497447+00:00",
+  "tasks": {
+    "task_1_reconstruction_integrity": "PASS",
+    "task_2_portfolio_concurrency": "PASS",
+    "task_3_set1_set2_detailed_audit": "PASS",
+    "task_4_temporal_validity": "PASS",
+    "task_5_set1_set2_standalone_replay": "PASS"
+  },
+  "set1_metrics": {
+    "full": {
+      "total_trades": 30,
+      "win_count": 6,
+      "loss_count": 24,
+      "win_rate_pct": 20.0,
+      "total_r": 14.67,
+      "profit_factor": 1.67,
+      "expectancy_r": 0.4888,
+      "avg_win_r": 6.0792,
+      "avg_loss_r": -0.9087,
+      "max_drawdown_r": 13.53,
+      "longest_losing_streak": 9,
+      "boot_exp_ci_95": [
+        -0.5979,
+        1.894
+      ],
+      "boot_pf_ci_95": [
+        0.27,
+        4.07
+      ]
+    },
+    "in_sample": {
+      "total_trades": 17,
+      "win_count": 3,
+      "loss_count": 14,
+      "win_rate_pct": 17.65,
+      "total_r": 9.17,
+      "profit_factor": 1.76,
+      "expectancy_r": 0.5394,
+      "avg_win_r": 7.093,
+      "avg_loss_r": -0.8649,
+      "max_drawdown_r": 10.75,
+      "longest_losing_streak": 9,
+      "boot_exp_ci_95": [
+        -0.8703,
+        2.9769
+      ],
+      "boot_pf_ci_95": [
+        0.0,
+        6.38
+      ]
+    },
+    "out_of_sample": {
+      "total_trades": 13,
+      "win_count": 3,
+      "loss_count": 10,
+      "win_rate_pct": 23.08,
+      "total_r": 5.5,
+      "profit_factor": 1.57,
+      "expectancy_r": 0.4227,
+      "avg_win_r": 5.0654,
+      "avg_loss_r": -0.9701,
+      "max_drawdown_r": 5.41,
+      "longest_losing_streak": 4,
+      "boot_exp_ci_95": [
+        -0.9047,
+        2.3404
+      ],
+      "boot_pf_ci_95": [
+        0.0,
+        5.46
+      ]
+    }
+  },
+  "set2_metrics": {
+    "full": {
+      "total_trades": 179,
+      "win_count": 45,
+      "loss_count": 134,
+      "win_rate_pct": 25.14,
+      "total_r": 110.72,
+      "profit_factor": 1.99,
+      "expectancy_r": 0.6186,
+      "avg_win_r": 4.9376,
+      "avg_loss_r": -0.8319,
+      "max_drawdown_r": 22.99,
+      "longest_losing_streak": 20,
+      "boot_exp_ci_95": [
+        0.0479,
+        1.3147
+      ],
+      "boot_pf_ci_95": [
+        1.07,
+        3.23
+      ]
+    },
+    "in_sample": {
+      "total_trades": 117,
+      "win_count": 35,
+      "loss_count": 82,
+      "win_rate_pct": 29.91,
+      "total_r": 92.23,
+      "profit_factor": 2.33,
+      "expectancy_r": 0.7883,
+      "avg_win_r": 4.616,
+      "avg_loss_r": -0.8455,
+      "max_drawdown_r": 11.88,
+      "longest_losing_streak": 7,
+      "boot_exp_ci_95": [
+        0.0664,
+        1.7314
+      ],
+      "boot_pf_ci_95": [
+        1.1,
+        4.17
+      ]
+    },
+    "out_of_sample": {
+      "total_trades": 62,
+      "win_count": 10,
+      "loss_count": 52,
+      "win_rate_pct": 16.13,
+      "total_r": 18.49,
+      "profit_factor": 1.44,
+      "expectancy_r": 0.2982,
+      "avg_win_r": 6.0633,
+      "avg_loss_r": -0.8104,
+      "max_drawdown_r": 22.99,
+      "longest_losing_streak": 20,
+      "boot_exp_ci_95": [
+        -0.5147,
+        1.4042
+      ],
+      "boot_pf_ci_95": [
+        0.3,
+        3.24
+      ]
+    },
+    "annual": {
+      "2018": {
+        "total_trades": 4,
+        "win_count": 1,
+        "loss_count": 3,
+        "win_rate_pct": 25.0,
+        "total_r": -2.62,
+        "profit_factor": 0.16,
+        "expectancy_r": -0.6562,
+        "avg_win_r": 0.5169,
+        "avg_loss_r": -1.0472,
+        "max_drawdown_r": 2.01,
+        "longest_losing_streak": 3,
+        "boot_exp_ci_95": [
+          -1.1004,
+          0.1365
+        ],
+        "boot_pf_ci_95": [
+          0.0,
+          1.54
+        ]
+      },
+      "2019": {
+        "total_trades": 26,
+        "win_count": 8,
+        "loss_count": 18,
+        "win_rate_pct": 30.77,
+        "total_r": 32.02,
+        "profit_factor": 3.02,
+        "expectancy_r": 1.2315,
+        "avg_win_r": 5.9862,
+        "avg_loss_r": -0.8817,
+        "max_drawdown_r": 5.18,
+        "longest_losing_streak": 5,
+        "boot_exp_ci_95": [
+          -0.34,
+          3.6547
+        ],
+        "boot_pf_ci_95": [
+          0.52,
+          8.88
+        ]
+      },
+      "2020": {
+        "total_trades": 21,
+        "win_count": 7,
+        "loss_count": 14,
+        "win_rate_pct": 33.33,
+        "total_r": 6.7,
+        "profit_factor": 1.58,
+        "expectancy_r": 0.319,
+        "avg_win_r": 2.6132,
+        "avg_loss_r": -0.8281,
+        "max_drawdown_r": 3.9,
+        "longest_losing_streak": 3,
+        "boot_exp_ci_95": [
+          -0.5163,
+          1.4835
+        ],
+        "boot_pf_ci_95": [
+          0.3,
+          4.96
+        ]
+      },
+      "2021": {
+        "total_trades": 10,
+        "win_count": 2,
+        "loss_count": 8,
+        "win_rate_pct": 20.0,
+        "total_r": -3.55,
+        "profit_factor": 0.45,
+        "expectancy_r": -0.355,
+        "avg_win_r": 1.4375,
+        "avg_loss_r": -0.8032,
+        "max_drawdown_r": 5.38,
+        "longest_losing_streak": 7,
+        "boot_exp_ci_95": [
+          -0.8929,
+          0.3219
+        ],
+        "boot_pf_ci_95": [
+          0.0,
+          1.83
+        ]
+      },
+      "2022": {
+        "total_trades": 18,
+        "win_count": 6,
+        "loss_count": 12,
+        "win_rate_pct": 33.33,
+        "total_r": 31.69,
+        "profit_factor": 4.13,
+        "expectancy_r": 1.7607,
+        "avg_win_r": 6.9692,
+        "avg_loss_r": -0.8436,
+        "max_drawdown_r": 4.44,
+        "longest_losing_streak": 4,
+        "boot_exp_ci_95": [
+          -0.5853,
+          5.8707
+        ],
+        "boot_pf_ci_95": [
+          0.23,
+          15.83
+        ]
+      },
+      "2023": {
+        "total_trades": 28,
+        "win_count": 8,
+        "loss_count": 20,
+        "win_rate_pct": 28.57,
+        "total_r": 18.56,
+        "profit_factor": 2.17,
+        "expectancy_r": 0.6628,
+        "avg_win_r": 4.3066,
+        "avg_loss_r": -0.7947,
+        "max_drawdown_r": 11.88,
+        "longest_losing_streak": 7,
+        "boot_exp_ci_95": [
+          -0.3633,
+          1.9215
+        ],
+        "boot_pf_ci_95": [
+          0.42,
+          5.15
+        ]
+      },
+      "2024": {
+        "total_trades": 29,
+        "win_count": 8,
+        "loss_count": 21,
+        "win_rate_pct": 27.59,
+        "total_r": 13.57,
+        "profit_factor": 1.78,
+        "expectancy_r": 0.4679,
+        "avg_win_r": 3.8746,
+        "avg_loss_r": -0.8298,
+        "max_drawdown_r": 5.16,
+        "longest_losing_streak": 5,
+        "boot_exp_ci_95": [
+          -0.4139,
+          1.5392
+        ],
+        "boot_pf_ci_95": [
+          0.44,
+          4.37
+        ]
+      },
+      "2025": {
+        "total_trades": 34,
+        "win_count": 2,
+        "loss_count": 32,
+        "win_rate_pct": 5.88,
+        "total_r": -19.82,
+        "profit_factor": 0.25,
+        "expectancy_r": -0.5829,
+        "avg_win_r": 3.2217,
+        "avg_loss_r": -0.8207,
+        "max_drawdown_r": 18.87,
+        "longest_losing_streak": 20,
+        "boot_exp_ci_95": [
+          -0.8714,
+          -0.1696
+        ],
+        "boot_pf_ci_95": [
+          0.0,
+          0.74
+        ]
+      },
+      "2026": {
+        "total_trades": 9,
+        "win_count": 3,
+        "loss_count": 6,
+        "win_rate_pct": 33.33,
+        "total_r": 34.18,
+        "profit_factor": 8.22,
+        "expectancy_r": 3.7975,
+        "avg_win_r": 12.9708,
+        "avg_loss_r": -0.7891,
+        "max_drawdown_r": 2.09,
+        "longest_losing_streak": 3,
+        "boot_exp_ci_95": [
+          -0.7633,
+          9.9664
+        ],
+        "boot_pf_ci_95": [
+          0.01,
+          46.66
+        ]
+      }
+    },
+    "assets": {
+      "BNBUSDT": {
+        "total_trades": 30,
+        "win_count": 3,
+        "loss_count": 27,
+        "win_rate_pct": 10.0,
+        "total_r": -7.69,
+        "profit_factor": 0.66,
+        "expectancy_r": -0.2564,
+        "avg_win_r": 5.0397,
+        "avg_loss_r": -0.8449,
+        "max_drawdown_r": 18.9,
+        "longest_losing_streak": 13,
+        "boot_exp_ci_95": [
+          -0.8659,
+          0.7038
+        ],
+        "boot_pf_ci_95": [
+          0.0,
+          2.05
+        ]
+      },
+      "BTCUSDT": {
+        "total_trades": 52,
+        "win_count": 14,
+        "loss_count": 38,
+        "win_rate_pct": 26.92,
+        "total_r": 53.16,
+        "profit_factor": 2.69,
+        "expectancy_r": 1.0223,
+        "avg_win_r": 6.044,
+        "avg_loss_r": -0.8277,
+        "max_drawdown_r": 9.66,
+        "longest_losing_streak": 8,
+        "boot_exp_ci_95": [
+          -0.0966,
+          2.5412
+        ],
+        "boot_pf_ci_95": [
+          0.85,
+          5.68
+        ]
+      },
+      "ETHUSDT": {
+        "total_trades": 60,
+        "win_count": 17,
+        "loss_count": 43,
+        "win_rate_pct": 28.33,
+        "total_r": 37.46,
+        "profit_factor": 2.05,
+        "expectancy_r": 0.6243,
+        "avg_win_r": 4.3101,
+        "avg_loss_r": -0.8328,
+        "max_drawdown_r": 8.39,
+        "longest_losing_streak": 11,
+        "boot_exp_ci_95": [
+          -0.2573,
+          2.2623
+        ],
+        "boot_pf_ci_95": [
+          0.61,
+          4.9
+        ]
+      },
+      "SOLUSDT": {
+        "total_trades": 37,
+        "win_count": 11,
+        "loss_count": 26,
+        "win_rate_pct": 29.73,
+        "total_r": 27.79,
+        "profit_factor": 2.3,
+        "expectancy_r": 0.7512,
+        "avg_win_r": 4.4716,
+        "avg_loss_r": -0.8229,
+        "max_drawdown_r": 11.32,
+        "longest_losing_streak": 10,
+        "boot_exp_ci_95": [
+          -0.2194,
+          1.8313
+        ],
+        "boot_pf_ci_95": [
+          0.68,
+          4.7
+        ]
+      }
+    }
+  },
+  "standalone_set1_set2_portfolio": {
+    "full": {
+      "total_trades": 346,
+      "win_count": 95,
+      "loss_count": 251,
+      "win_rate_pct": 27.46,
+      "total_r": 225.42,
+      "profit_factor": 2.05,
+      "expectancy_r": 0.6515,
+      "avg_win_r": 4.6324,
+      "avg_loss_r": -0.8552,
+      "max_drawdown_r": 28.94,
+      "longest_losing_streak": 20,
+      "boot_exp_ci_95": [
+        0.2046,
+        1.1542
+      ],
+      "boot_pf_ci_95": [
+        1.31,
+        2.95
+      ]
+    },
+    "in_sample": {
+      "total_trades": 226,
+      "win_count": 65,
+      "loss_count": 161,
+      "win_rate_pct": 28.76,
+      "total_r": 174.44,
+      "profit_factor": 2.27,
+      "expectancy_r": 0.7719,
+      "avg_win_r": 4.8012,
+      "avg_loss_r": -0.8549,
+      "max_drawdown_r": 28.94,
+      "longest_losing_streak": 20,
+      "boot_exp_ci_95": [
+        0.1989,
+        1.469
+      ],
+      "boot_pf_ci_95": [
+        1.31,
+        3.54
+      ]
+    },
+    "out_of_sample": {
+      "total_trades": 120,
+      "win_count": 30,
+      "loss_count": 90,
+      "win_rate_pct": 25.0,
+      "total_r": 50.98,
+      "profit_factor": 1.66,
+      "expectancy_r": 0.4248,
+      "avg_win_r": 4.2666,
+      "avg_loss_r": -0.8557,
+      "max_drawdown_r": 22.64,
+      "longest_losing_streak": 11,
+      "boot_exp_ci_95": [
+        -0.1179,
+        1.115
+      ],
+      "boot_pf_ci_95": [
+        0.84,
+        2.91
+      ]
+    },
+    "total_candidates": 448,
+    "accepted_trades": 346,
+    "rejected_trades": 102,
+    "rejection_rate_pct": 22.77
+  }
+}
