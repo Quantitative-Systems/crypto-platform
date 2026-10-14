@@ -1,0 +1,1437 @@
+{
+  "SCALP": {
+    "SET_1": {
+      "full": {
+        "total_trades": 215,
+        "win_count": 105,
+        "loss_count": 110,
+        "win_rate_pct": 48.84,
+        "total_r": 32.03,
+        "profit_factor": 1.41,
+        "expectancy_r": 0.149,
+        "max_drawdown_r": 10.52,
+        "boot_pf_ci_95": [
+          1.01,
+          1.96
+        ],
+        "boot_exp_ci_95": [
+          0.005,
+          0.299
+        ]
+      },
+      "in_sample": {
+        "total_trades": 138,
+        "win_count": 69,
+        "loss_count": 69,
+        "win_rate_pct": 50.0,
+        "total_r": 20.36,
+        "profit_factor": 1.41,
+        "expectancy_r": 0.1475,
+        "max_drawdown_r": 10.52,
+        "boot_pf_ci_95": [
+          0.91,
+          2.08
+        ],
+        "boot_exp_ci_95": [
+          -0.036,
+          0.326
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 77,
+        "win_count": 36,
+        "loss_count": 41,
+        "win_rate_pct": 46.75,
+        "total_r": 11.67,
+        "profit_factor": 1.4,
+        "expectancy_r": 0.1515,
+        "max_drawdown_r": 6.94,
+        "boot_pf_ci_95": [
+          0.82,
+          2.39
+        ],
+        "boot_exp_ci_95": [
+          -0.08,
+          0.396
+        ]
+      },
+      "classification": "CERTIFIED_CANDIDATE_PASS"
+    },
+    "SET_2": {
+      "full": {
+        "total_trades": 1057,
+        "win_count": 458,
+        "loss_count": 599,
+        "win_rate_pct": 43.33,
+        "total_r": 19.85,
+        "profit_factor": 1.05,
+        "expectancy_r": 0.0188,
+        "max_drawdown_r": 47.21,
+        "boot_pf_ci_95": [
+          0.91,
+          1.21
+        ],
+        "boot_exp_ci_95": [
+          -0.036,
+          0.075
+        ]
+      },
+      "in_sample": {
+        "total_trades": 631,
+        "win_count": 272,
+        "loss_count": 359,
+        "win_rate_pct": 43.11,
+        "total_r": 11.58,
+        "profit_factor": 1.05,
+        "expectancy_r": 0.0183,
+        "max_drawdown_r": 47.21,
+        "boot_pf_ci_95": [
+          0.86,
+          1.27
+        ],
+        "boot_exp_ci_95": [
+          -0.053,
+          0.098
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 426,
+        "win_count": 186,
+        "loss_count": 240,
+        "win_rate_pct": 43.66,
+        "total_r": 8.27,
+        "profit_factor": 1.05,
+        "expectancy_r": 0.0194,
+        "max_drawdown_r": 20.3,
+        "boot_pf_ci_95": [
+          0.83,
+          1.31
+        ],
+        "boot_exp_ci_95": [
+          -0.07,
+          0.107
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    },
+    "SET_3": {
+      "full": {
+        "total_trades": 3737,
+        "win_count": 1556,
+        "loss_count": 2181,
+        "win_rate_pct": 41.64,
+        "total_r": -192.71,
+        "profit_factor": 0.88,
+        "expectancy_r": -0.0516,
+        "max_drawdown_r": 237.1,
+        "boot_pf_ci_95": [
+          0.81,
+          0.95
+        ],
+        "boot_exp_ci_95": [
+          -0.082,
+          -0.021
+        ]
+      },
+      "in_sample": {
+        "total_trades": 2474,
+        "win_count": 1022,
+        "loss_count": 1452,
+        "win_rate_pct": 41.31,
+        "total_r": -126.13,
+        "profit_factor": 0.88,
+        "expectancy_r": -0.051,
+        "max_drawdown_r": 172.27,
+        "boot_pf_ci_95": [
+          0.79,
+          0.97
+        ],
+        "boot_exp_ci_95": [
+          -0.09,
+          -0.013
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 1263,
+        "win_count": 534,
+        "loss_count": 729,
+        "win_rate_pct": 42.28,
+        "total_r": -66.58,
+        "profit_factor": 0.88,
+        "expectancy_r": -0.0527,
+        "max_drawdown_r": 100.96,
+        "boot_pf_ci_95": [
+          0.76,
+          1.0
+        ],
+        "boot_exp_ci_95": [
+          -0.107,
+          0.001
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    },
+    "SET_4": {
+      "full": {
+        "total_trades": 1324,
+        "win_count": 468,
+        "loss_count": 856,
+        "win_rate_pct": 35.35,
+        "total_r": -205.79,
+        "profit_factor": 0.65,
+        "expectancy_r": -0.1554,
+        "max_drawdown_r": 206.29,
+        "boot_pf_ci_95": [
+          0.56,
+          0.74
+        ],
+        "boot_exp_ci_95": [
+          -0.201,
+          -0.112
+        ]
+      },
+      "in_sample": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate_pct": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "expectancy_r": 0.0,
+        "max_drawdown_r": 0.0,
+        "boot_pf_ci_95": [
+          0.0,
+          0.0
+        ],
+        "boot_exp_ci_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 1324,
+        "win_count": 468,
+        "loss_count": 856,
+        "win_rate_pct": 35.35,
+        "total_r": -205.79,
+        "profit_factor": 0.65,
+        "expectancy_r": -0.1554,
+        "max_drawdown_r": 206.29,
+        "boot_pf_ci_95": [
+          0.56,
+          0.74
+        ],
+        "boot_exp_ci_95": [
+          -0.201,
+          -0.112
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    },
+    "SET_5": {
+      "full": {
+        "total_trades": 549,
+        "win_count": 152,
+        "loss_count": 397,
+        "win_rate_pct": 27.69,
+        "total_r": -120.33,
+        "profit_factor": 0.38,
+        "expectancy_r": -0.2192,
+        "max_drawdown_r": 125.98,
+        "boot_pf_ci_95": [
+          0.29,
+          0.49
+        ],
+        "boot_exp_ci_95": [
+          -0.268,
+          -0.17
+        ]
+      },
+      "in_sample": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate_pct": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "expectancy_r": 0.0,
+        "max_drawdown_r": 0.0,
+        "boot_pf_ci_95": [
+          0.0,
+          0.0
+        ],
+        "boot_exp_ci_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 549,
+        "win_count": 152,
+        "loss_count": 397,
+        "win_rate_pct": 27.69,
+        "total_r": -120.33,
+        "profit_factor": 0.38,
+        "expectancy_r": -0.2192,
+        "max_drawdown_r": 125.98,
+        "boot_pf_ci_95": [
+          0.29,
+          0.49
+        ],
+        "boot_exp_ci_95": [
+          -0.268,
+          -0.17
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    }
+  },
+  "INTRADAY": {
+    "SET_1": {
+      "full": {
+        "total_trades": 152,
+        "win_count": 68,
+        "loss_count": 84,
+        "win_rate_pct": 44.74,
+        "total_r": 35.76,
+        "profit_factor": 1.52,
+        "expectancy_r": 0.2353,
+        "max_drawdown_r": 12.55,
+        "boot_pf_ci_95": [
+          1.0,
+          2.2
+        ],
+        "boot_exp_ci_95": [
+          -0.003,
+          0.464
+        ]
+      },
+      "in_sample": {
+        "total_trades": 93,
+        "win_count": 41,
+        "loss_count": 52,
+        "win_rate_pct": 44.09,
+        "total_r": 19.29,
+        "profit_factor": 1.44,
+        "expectancy_r": 0.2074,
+        "max_drawdown_r": 12.55,
+        "boot_pf_ci_95": [
+          0.9,
+          2.24
+        ],
+        "boot_exp_ci_95": [
+          -0.052,
+          0.492
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 59,
+        "win_count": 27,
+        "loss_count": 32,
+        "win_rate_pct": 45.76,
+        "total_r": 16.47,
+        "profit_factor": 1.64,
+        "expectancy_r": 0.2792,
+        "max_drawdown_r": 6.49,
+        "boot_pf_ci_95": [
+          0.86,
+          2.93
+        ],
+        "boot_exp_ci_95": [
+          -0.078,
+          0.633
+        ]
+      },
+      "classification": "CERTIFIED_CANDIDATE_PASS"
+    },
+    "SET_2": {
+      "full": {
+        "total_trades": 725,
+        "win_count": 289,
+        "loss_count": 436,
+        "win_rate_pct": 39.86,
+        "total_r": 65.48,
+        "profit_factor": 1.19,
+        "expectancy_r": 0.0903,
+        "max_drawdown_r": 37.19,
+        "boot_pf_ci_95": [
+          0.98,
+          1.43
+        ],
+        "boot_exp_ci_95": [
+          -0.008,
+          0.193
+        ]
+      },
+      "in_sample": {
+        "total_trades": 437,
+        "win_count": 179,
+        "loss_count": 258,
+        "win_rate_pct": 40.96,
+        "total_r": 51.81,
+        "profit_factor": 1.25,
+        "expectancy_r": 0.1186,
+        "max_drawdown_r": 37.19,
+        "boot_pf_ci_95": [
+          0.97,
+          1.54
+        ],
+        "boot_exp_ci_95": [
+          -0.013,
+          0.24
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 288,
+        "win_count": 110,
+        "loss_count": 178,
+        "win_rate_pct": 38.19,
+        "total_r": 13.67,
+        "profit_factor": 1.1,
+        "expectancy_r": 0.0475,
+        "max_drawdown_r": 25.9,
+        "boot_pf_ci_95": [
+          0.81,
+          1.43
+        ],
+        "boot_exp_ci_95": [
+          -0.099,
+          0.186
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    },
+    "SET_3": {
+      "full": {
+        "total_trades": 2626,
+        "win_count": 919,
+        "loss_count": 1707,
+        "win_rate_pct": 35.0,
+        "total_r": -40.98,
+        "profit_factor": 0.97,
+        "expectancy_r": -0.0156,
+        "max_drawdown_r": 112.8,
+        "boot_pf_ci_95": [
+          0.88,
+          1.06
+        ],
+        "boot_exp_ci_95": [
+          -0.066,
+          0.034
+        ]
+      },
+      "in_sample": {
+        "total_trades": 1751,
+        "win_count": 604,
+        "loss_count": 1147,
+        "win_rate_pct": 34.49,
+        "total_r": -25.77,
+        "profit_factor": 0.97,
+        "expectancy_r": -0.0147,
+        "max_drawdown_r": 112.8,
+        "boot_pf_ci_95": [
+          0.87,
+          1.09
+        ],
+        "boot_exp_ci_95": [
+          -0.075,
+          0.044
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 875,
+        "win_count": 315,
+        "loss_count": 560,
+        "win_rate_pct": 36.0,
+        "total_r": -15.2,
+        "profit_factor": 0.97,
+        "expectancy_r": -0.0174,
+        "max_drawdown_r": 41.84,
+        "boot_pf_ci_95": [
+          0.81,
+          1.15
+        ],
+        "boot_exp_ci_95": [
+          -0.104,
+          0.079
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    },
+    "SET_4": {
+      "full": {
+        "total_trades": 908,
+        "win_count": 290,
+        "loss_count": 618,
+        "win_rate_pct": 31.94,
+        "total_r": -134.59,
+        "profit_factor": 0.73,
+        "expectancy_r": -0.1482,
+        "max_drawdown_r": 144.35,
+        "boot_pf_ci_95": [
+          0.62,
+          0.87
+        ],
+        "boot_exp_ci_95": [
+          -0.218,
+          -0.067
+        ]
+      },
+      "in_sample": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate_pct": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "expectancy_r": 0.0,
+        "max_drawdown_r": 0.0,
+        "boot_pf_ci_95": [
+          0.0,
+          0.0
+        ],
+        "boot_exp_ci_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 908,
+        "win_count": 290,
+        "loss_count": 618,
+        "win_rate_pct": 31.94,
+        "total_r": -134.59,
+        "profit_factor": 0.73,
+        "expectancy_r": -0.1482,
+        "max_drawdown_r": 144.35,
+        "boot_pf_ci_95": [
+          0.62,
+          0.87
+        ],
+        "boot_exp_ci_95": [
+          -0.218,
+          -0.067
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    },
+    "SET_5": {
+      "full": {
+        "total_trades": 361,
+        "win_count": 114,
+        "loss_count": 247,
+        "win_rate_pct": 31.58,
+        "total_r": -72.73,
+        "profit_factor": 0.52,
+        "expectancy_r": -0.2015,
+        "max_drawdown_r": 77.72,
+        "boot_pf_ci_95": [
+          0.38,
+          0.7
+        ],
+        "boot_exp_ci_95": [
+          -0.28,
+          -0.113
+        ]
+      },
+      "in_sample": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate_pct": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "expectancy_r": 0.0,
+        "max_drawdown_r": 0.0,
+        "boot_pf_ci_95": [
+          0.0,
+          0.0
+        ],
+        "boot_exp_ci_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 361,
+        "win_count": 114,
+        "loss_count": 247,
+        "win_rate_pct": 31.58,
+        "total_r": -72.73,
+        "profit_factor": 0.52,
+        "expectancy_r": -0.2015,
+        "max_drawdown_r": 77.72,
+        "boot_pf_ci_95": [
+          0.38,
+          0.7
+        ],
+        "boot_exp_ci_95": [
+          -0.28,
+          -0.113
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    }
+  },
+  "SWING": {
+    "SET_1": {
+      "full": {
+        "total_trades": 107,
+        "win_count": 39,
+        "loss_count": 68,
+        "win_rate_pct": 36.45,
+        "total_r": 48.46,
+        "profit_factor": 1.88,
+        "expectancy_r": 0.4529,
+        "max_drawdown_r": 12.9,
+        "boot_pf_ci_95": [
+          1.11,
+          2.88
+        ],
+        "boot_exp_ci_95": [
+          0.062,
+          0.836
+        ]
+      },
+      "in_sample": {
+        "total_trades": 68,
+        "win_count": 23,
+        "loss_count": 45,
+        "win_rate_pct": 33.82,
+        "total_r": 32.55,
+        "profit_factor": 1.9,
+        "expectancy_r": 0.4787,
+        "max_drawdown_r": 12.9,
+        "boot_pf_ci_95": [
+          0.94,
+          3.18
+        ],
+        "boot_exp_ci_95": [
+          -0.041,
+          0.999
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 39,
+        "win_count": 16,
+        "loss_count": 23,
+        "win_rate_pct": 41.03,
+        "total_r": 15.91,
+        "profit_factor": 1.84,
+        "expectancy_r": 0.4079,
+        "max_drawdown_r": 6.39,
+        "boot_pf_ci_95": [
+          0.79,
+          3.73
+        ],
+        "boot_exp_ci_95": [
+          -0.131,
+          0.977
+        ]
+      },
+      "classification": "CERTIFIED_CANDIDATE_PASS"
+    },
+    "SET_2": {
+      "full": {
+        "total_trades": 475,
+        "win_count": 143,
+        "loss_count": 332,
+        "win_rate_pct": 30.11,
+        "total_r": 82.27,
+        "profit_factor": 1.33,
+        "expectancy_r": 0.1732,
+        "max_drawdown_r": 38.21,
+        "boot_pf_ci_95": [
+          1.04,
+          1.66
+        ],
+        "boot_exp_ci_95": [
+          0.023,
+          0.328
+        ]
+      },
+      "in_sample": {
+        "total_trades": 294,
+        "win_count": 88,
+        "loss_count": 206,
+        "win_rate_pct": 29.93,
+        "total_r": 51.06,
+        "profit_factor": 1.32,
+        "expectancy_r": 0.1737,
+        "max_drawdown_r": 38.21,
+        "boot_pf_ci_95": [
+          0.97,
+          1.79
+        ],
+        "boot_exp_ci_95": [
+          -0.018,
+          0.393
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 181,
+        "win_count": 55,
+        "loss_count": 126,
+        "win_rate_pct": 30.39,
+        "total_r": 31.21,
+        "profit_factor": 1.35,
+        "expectancy_r": 0.1724,
+        "max_drawdown_r": 10.9,
+        "boot_pf_ci_95": [
+          0.89,
+          1.98
+        ],
+        "boot_exp_ci_95": [
+          -0.057,
+          0.442
+        ]
+      },
+      "classification": "CERTIFIED_CANDIDATE_PASS"
+    },
+    "SET_3": {
+      "full": {
+        "total_trades": 1944,
+        "win_count": 570,
+        "loss_count": 1374,
+        "win_rate_pct": 29.32,
+        "total_r": 14.56,
+        "profit_factor": 1.01,
+        "expectancy_r": 0.0075,
+        "max_drawdown_r": 110.01,
+        "boot_pf_ci_95": [
+          0.9,
+          1.15
+        ],
+        "boot_exp_ci_95": [
+          -0.057,
+          0.082
+        ]
+      },
+      "in_sample": {
+        "total_trades": 1314,
+        "win_count": 378,
+        "loss_count": 936,
+        "win_rate_pct": 28.77,
+        "total_r": 18.53,
+        "profit_factor": 1.03,
+        "expectancy_r": 0.0141,
+        "max_drawdown_r": 110.01,
+        "boot_pf_ci_95": [
+          0.88,
+          1.19
+        ],
+        "boot_exp_ci_95": [
+          -0.067,
+          0.103
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 630,
+        "win_count": 192,
+        "loss_count": 438,
+        "win_rate_pct": 30.48,
+        "total_r": -3.98,
+        "profit_factor": 0.99,
+        "expectancy_r": -0.0063,
+        "max_drawdown_r": 44.78,
+        "boot_pf_ci_95": [
+          0.78,
+          1.21
+        ],
+        "boot_exp_ci_95": [
+          -0.129,
+          0.109
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    },
+    "SET_4": {
+      "full": {
+        "total_trades": 661,
+        "win_count": 177,
+        "loss_count": 484,
+        "win_rate_pct": 26.78,
+        "total_r": -80.53,
+        "profit_factor": 0.8,
+        "expectancy_r": -0.1218,
+        "max_drawdown_r": 99.89,
+        "boot_pf_ci_95": [
+          0.63,
+          0.99
+        ],
+        "boot_exp_ci_95": [
+          -0.226,
+          -0.005
+        ]
+      },
+      "in_sample": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate_pct": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "expectancy_r": 0.0,
+        "max_drawdown_r": 0.0,
+        "boot_pf_ci_95": [
+          0.0,
+          0.0
+        ],
+        "boot_exp_ci_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 661,
+        "win_count": 177,
+        "loss_count": 484,
+        "win_rate_pct": 26.78,
+        "total_r": -80.53,
+        "profit_factor": 0.8,
+        "expectancy_r": -0.1218,
+        "max_drawdown_r": 99.89,
+        "boot_pf_ci_95": [
+          0.63,
+          0.99
+        ],
+        "boot_exp_ci_95": [
+          -0.226,
+          -0.005
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    },
+    "SET_5": {
+      "full": {
+        "total_trades": 243,
+        "win_count": 53,
+        "loss_count": 189,
+        "win_rate_pct": 21.81,
+        "total_r": -54.69,
+        "profit_factor": 0.5,
+        "expectancy_r": -0.2251,
+        "max_drawdown_r": 57.91,
+        "boot_pf_ci_95": [
+          0.32,
+          0.76
+        ],
+        "boot_exp_ci_95": [
+          -0.33,
+          -0.1
+        ]
+      },
+      "in_sample": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate_pct": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "expectancy_r": 0.0,
+        "max_drawdown_r": 0.0,
+        "boot_pf_ci_95": [
+          0.0,
+          0.0
+        ],
+        "boot_exp_ci_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 243,
+        "win_count": 53,
+        "loss_count": 189,
+        "win_rate_pct": 21.81,
+        "total_r": -54.69,
+        "profit_factor": 0.5,
+        "expectancy_r": -0.2251,
+        "max_drawdown_r": 57.91,
+        "boot_pf_ci_95": [
+          0.32,
+          0.76
+        ],
+        "boot_exp_ci_95": [
+          -0.33,
+          -0.1
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    }
+  },
+  "POSITIONAL": {
+    "SET_1": {
+      "full": {
+        "total_trades": 98,
+        "win_count": 32,
+        "loss_count": 66,
+        "win_rate_pct": 32.65,
+        "total_r": 50.99,
+        "profit_factor": 2.0,
+        "expectancy_r": 0.5203,
+        "max_drawdown_r": 12.34,
+        "boot_pf_ci_95": [
+          1.01,
+          3.3
+        ],
+        "boot_exp_ci_95": [
+          0.009,
+          1.036
+        ]
+      },
+      "in_sample": {
+        "total_trades": 61,
+        "win_count": 20,
+        "loss_count": 41,
+        "win_rate_pct": 32.79,
+        "total_r": 31.63,
+        "profit_factor": 1.97,
+        "expectancy_r": 0.5185,
+        "max_drawdown_r": 12.34,
+        "boot_pf_ci_95": [
+          0.89,
+          3.59
+        ],
+        "boot_exp_ci_95": [
+          -0.068,
+          1.151
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 37,
+        "win_count": 12,
+        "loss_count": 25,
+        "win_rate_pct": 32.43,
+        "total_r": 19.36,
+        "profit_factor": 2.04,
+        "expectancy_r": 0.5233,
+        "max_drawdown_r": 6.67,
+        "boot_pf_ci_95": [
+          0.64,
+          4.41
+        ],
+        "boot_exp_ci_95": [
+          -0.22,
+          1.332
+        ]
+      },
+      "classification": "CERTIFIED_CANDIDATE_PASS"
+    },
+    "SET_2": {
+      "full": {
+        "total_trades": 432,
+        "win_count": 125,
+        "loss_count": 307,
+        "win_rate_pct": 28.94,
+        "total_r": 101.79,
+        "profit_factor": 1.44,
+        "expectancy_r": 0.2356,
+        "max_drawdown_r": 34.74,
+        "boot_pf_ci_95": [
+          1.07,
+          1.85
+        ],
+        "boot_exp_ci_95": [
+          0.039,
+          0.44
+        ]
+      },
+      "in_sample": {
+        "total_trades": 269,
+        "win_count": 76,
+        "loss_count": 193,
+        "win_rate_pct": 28.25,
+        "total_r": 64.28,
+        "profit_factor": 1.43,
+        "expectancy_r": 0.2389,
+        "max_drawdown_r": 34.74,
+        "boot_pf_ci_95": [
+          0.99,
+          1.95
+        ],
+        "boot_exp_ci_95": [
+          -0.007,
+          0.498
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 163,
+        "win_count": 49,
+        "loss_count": 114,
+        "win_rate_pct": 30.06,
+        "total_r": 37.51,
+        "profit_factor": 1.45,
+        "expectancy_r": 0.2301,
+        "max_drawdown_r": 11.44,
+        "boot_pf_ci_95": [
+          0.9,
+          2.21
+        ],
+        "boot_exp_ci_95": [
+          -0.06,
+          0.566
+        ]
+      },
+      "classification": "CERTIFIED_CANDIDATE_PASS"
+    },
+    "SET_3": {
+      "full": {
+        "total_trades": 1829,
+        "win_count": 519,
+        "loss_count": 1310,
+        "win_rate_pct": 28.38,
+        "total_r": 95.49,
+        "profit_factor": 1.09,
+        "expectancy_r": 0.0522,
+        "max_drawdown_r": 108.34,
+        "boot_pf_ci_95": [
+          0.95,
+          1.25
+        ],
+        "boot_exp_ci_95": [
+          -0.028,
+          0.14
+        ]
+      },
+      "in_sample": {
+        "total_trades": 1235,
+        "win_count": 341,
+        "loss_count": 894,
+        "win_rate_pct": 27.61,
+        "total_r": 59.57,
+        "profit_factor": 1.08,
+        "expectancy_r": 0.0482,
+        "max_drawdown_r": 108.34,
+        "boot_pf_ci_95": [
+          0.91,
+          1.28
+        ],
+        "boot_exp_ci_95": [
+          -0.054,
+          0.155
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 594,
+        "win_count": 178,
+        "loss_count": 416,
+        "win_rate_pct": 29.97,
+        "total_r": 35.91,
+        "profit_factor": 1.11,
+        "expectancy_r": 0.0605,
+        "max_drawdown_r": 42.89,
+        "boot_pf_ci_95": [
+          0.85,
+          1.38
+        ],
+        "boot_exp_ci_95": [
+          -0.084,
+          0.199
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    },
+    "SET_4": {
+      "full": {
+        "total_trades": 625,
+        "win_count": 159,
+        "loss_count": 466,
+        "win_rate_pct": 25.44,
+        "total_r": -73.98,
+        "profit_factor": 0.8,
+        "expectancy_r": -0.1184,
+        "max_drawdown_r": 96.38,
+        "boot_pf_ci_95": [
+          0.62,
+          1.03
+        ],
+        "boot_exp_ci_95": [
+          -0.239,
+          0.015
+        ]
+      },
+      "in_sample": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate_pct": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "expectancy_r": 0.0,
+        "max_drawdown_r": 0.0,
+        "boot_pf_ci_95": [
+          0.0,
+          0.0
+        ],
+        "boot_exp_ci_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 625,
+        "win_count": 159,
+        "loss_count": 466,
+        "win_rate_pct": 25.44,
+        "total_r": -73.98,
+        "profit_factor": 0.8,
+        "expectancy_r": -0.1184,
+        "max_drawdown_r": 96.38,
+        "boot_pf_ci_95": [
+          0.62,
+          1.03
+        ],
+        "boot_exp_ci_95": [
+          -0.239,
+          0.015
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    },
+    "SET_5": {
+      "full": {
+        "total_trades": 233,
+        "win_count": 48,
+        "loss_count": 184,
+        "win_rate_pct": 20.6,
+        "total_r": -49.49,
+        "profit_factor": 0.54,
+        "expectancy_r": -0.2124,
+        "max_drawdown_r": 55.17,
+        "boot_pf_ci_95": [
+          0.29,
+          0.86
+        ],
+        "boot_exp_ci_95": [
+          -0.343,
+          -0.06
+        ]
+      },
+      "in_sample": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate_pct": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "expectancy_r": 0.0,
+        "max_drawdown_r": 0.0,
+        "boot_pf_ci_95": [
+          0.0,
+          0.0
+        ],
+        "boot_exp_ci_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 233,
+        "win_count": 48,
+        "loss_count": 184,
+        "win_rate_pct": 20.6,
+        "total_r": -49.49,
+        "profit_factor": 0.54,
+        "expectancy_r": -0.2124,
+        "max_drawdown_r": 55.17,
+        "boot_pf_ci_95": [
+          0.29,
+          0.86
+        ],
+        "boot_exp_ci_95": [
+          -0.343,
+          -0.06
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    }
+  },
+  "INVESTING": {
+    "SET_1": {
+      "full": {
+        "total_trades": 92,
+        "win_count": 30,
+        "loss_count": 62,
+        "win_rate_pct": 32.61,
+        "total_r": 64.61,
+        "profit_factor": 2.33,
+        "expectancy_r": 0.7022,
+        "max_drawdown_r": 12.34,
+        "boot_pf_ci_95": [
+          1.24,
+          3.88
+        ],
+        "boot_exp_ci_95": [
+          0.147,
+          1.342
+        ]
+      },
+      "in_sample": {
+        "total_trades": 61,
+        "win_count": 19,
+        "loss_count": 42,
+        "win_rate_pct": 31.15,
+        "total_r": 37.92,
+        "profit_factor": 2.14,
+        "expectancy_r": 0.6217,
+        "max_drawdown_r": 12.34,
+        "boot_pf_ci_95": [
+          0.84,
+          4.03
+        ],
+        "boot_exp_ci_95": [
+          -0.111,
+          1.435
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 31,
+        "win_count": 11,
+        "loss_count": 20,
+        "win_rate_pct": 35.48,
+        "total_r": 26.68,
+        "profit_factor": 2.74,
+        "expectancy_r": 0.8607,
+        "max_drawdown_r": 4.88,
+        "boot_pf_ci_95": [
+          0.73,
+          6.59
+        ],
+        "boot_exp_ci_95": [
+          -0.16,
+          2.102
+        ]
+      },
+      "classification": "CERTIFIED_CANDIDATE_PASS"
+    },
+    "SET_2": {
+      "full": {
+        "total_trades": 404,
+        "win_count": 117,
+        "loss_count": 287,
+        "win_rate_pct": 28.96,
+        "total_r": 104.91,
+        "profit_factor": 1.49,
+        "expectancy_r": 0.2597,
+        "max_drawdown_r": 31.78,
+        "boot_pf_ci_95": [
+          1.06,
+          1.99
+        ],
+        "boot_exp_ci_95": [
+          0.032,
+          0.503
+        ]
+      },
+      "in_sample": {
+        "total_trades": 251,
+        "win_count": 72,
+        "loss_count": 179,
+        "win_rate_pct": 28.69,
+        "total_r": 84.12,
+        "profit_factor": 1.61,
+        "expectancy_r": 0.3351,
+        "max_drawdown_r": 31.78,
+        "boot_pf_ci_95": [
+          1.06,
+          2.26
+        ],
+        "boot_exp_ci_95": [
+          0.034,
+          0.654
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 153,
+        "win_count": 45,
+        "loss_count": 108,
+        "win_rate_pct": 29.41,
+        "total_r": 20.79,
+        "profit_factor": 1.27,
+        "expectancy_r": 0.1359,
+        "max_drawdown_r": 14.52,
+        "boot_pf_ci_95": [
+          0.75,
+          2.01
+        ],
+        "boot_exp_ci_95": [
+          -0.131,
+          0.456
+        ]
+      },
+      "classification": "MARGINAL_CANDIDATE"
+    },
+    "SET_3": {
+      "full": {
+        "total_trades": 1776,
+        "win_count": 491,
+        "loss_count": 1285,
+        "win_rate_pct": 27.65,
+        "total_r": 127.72,
+        "profit_factor": 1.13,
+        "expectancy_r": 0.0719,
+        "max_drawdown_r": 112.27,
+        "boot_pf_ci_95": [
+          0.96,
+          1.3
+        ],
+        "boot_exp_ci_95": [
+          -0.02,
+          0.166
+        ]
+      },
+      "in_sample": {
+        "total_trades": 1199,
+        "win_count": 323,
+        "loss_count": 876,
+        "win_rate_pct": 26.94,
+        "total_r": 93.91,
+        "profit_factor": 1.14,
+        "expectancy_r": 0.0783,
+        "max_drawdown_r": 112.27,
+        "boot_pf_ci_95": [
+          0.91,
+          1.36
+        ],
+        "boot_exp_ci_95": [
+          -0.057,
+          0.204
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 577,
+        "win_count": 168,
+        "loss_count": 409,
+        "win_rate_pct": 29.12,
+        "total_r": 33.81,
+        "profit_factor": 1.1,
+        "expectancy_r": 0.0586,
+        "max_drawdown_r": 39.34,
+        "boot_pf_ci_95": [
+          0.83,
+          1.42
+        ],
+        "boot_exp_ci_95": [
+          -0.099,
+          0.227
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    },
+    "SET_4": {
+      "full": {
+        "total_trades": 613,
+        "win_count": 153,
+        "loss_count": 460,
+        "win_rate_pct": 24.96,
+        "total_r": -51.38,
+        "profit_factor": 0.86,
+        "expectancy_r": -0.0838,
+        "max_drawdown_r": 86.44,
+        "boot_pf_ci_95": [
+          0.65,
+          1.1
+        ],
+        "boot_exp_ci_95": [
+          -0.223,
+          0.058
+        ]
+      },
+      "in_sample": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate_pct": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "expectancy_r": 0.0,
+        "max_drawdown_r": 0.0,
+        "boot_pf_ci_95": [
+          0.0,
+          0.0
+        ],
+        "boot_exp_ci_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 613,
+        "win_count": 153,
+        "loss_count": 460,
+        "win_rate_pct": 24.96,
+        "total_r": -51.38,
+        "profit_factor": 0.86,
+        "expectancy_r": -0.0838,
+        "max_drawdown_r": 86.44,
+        "boot_pf_ci_95": [
+          0.65,
+          1.1
+        ],
+        "boot_exp_ci_95": [
+          -0.223,
+          0.058
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    },
+    "SET_5": {
+      "full": {
+        "total_trades": 228,
+        "win_count": 48,
+        "loss_count": 179,
+        "win_rate_pct": 21.05,
+        "total_r": -56.62,
+        "profit_factor": 0.44,
+        "expectancy_r": -0.2483,
+        "max_drawdown_r": 58.55,
+        "boot_pf_ci_95": [
+          0.26,
+          0.66
+        ],
+        "boot_exp_ci_95": [
+          -0.355,
+          -0.143
+        ]
+      },
+      "in_sample": {
+        "total_trades": 0,
+        "win_count": 0,
+        "loss_count": 0,
+        "win_rate_pct": 0.0,
+        "total_r": 0.0,
+        "profit_factor": 0.0,
+        "expectancy_r": 0.0,
+        "max_drawdown_r": 0.0,
+        "boot_pf_ci_95": [
+          0.0,
+          0.0
+        ],
+        "boot_exp_ci_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "out_of_sample": {
+        "total_trades": 228,
+        "win_count": 48,
+        "loss_count": 179,
+        "win_rate_pct": 21.05,
+        "total_r": -56.62,
+        "profit_factor": 0.44,
+        "expectancy_r": -0.2483,
+        "max_drawdown_r": 58.55,
+        "boot_pf_ci_95": [
+          0.26,
+          0.66
+        ],
+        "boot_exp_ci_95": [
+          -0.355,
+          -0.143
+        ]
+      },
+      "classification": "REJECTED_UNPROFITABLE"
+    }
+  }
+}
