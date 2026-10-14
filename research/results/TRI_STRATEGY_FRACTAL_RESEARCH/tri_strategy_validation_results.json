@@ -1,0 +1,39 @@
+{
+  "timestamp_utc": "2026-10-14T02:15:22.193606+00:00",
+  "total_trades": 2563,
+  "overall_win_rate_pct": 24.5,
+  "total_alpha_r": 474.08,
+  "overall_profit_factor": 1.29,
+  "by_set": {
+    "SET_1": {
+      "trades": 76,
+      "win_rate_pct": 28.95,
+      "net_r": 90.71,
+      "profit_factor": 2.88
+    },
+    "SET_2": {
+      "trades": 372,
+      "win_rate_pct": 26.61,
+      "net_r": 177.15,
+      "profit_factor": 1.77
+    },
+    "SET_3": {
+      "trades": 1438,
+      "win_rate_pct": 24.69,
+      "net_r": 268.33,
+      "profit_factor": 1.29
+    },
+    "SET_4": {
+      "trades": 498,
+      "win_rate_pct": 23.09,
+      "net_r": -24.26,
+      "profit_factor": 0.93
+    },
+    "SET_5": {
+      "trades": 179,
+      "win_rate_pct": 20.67,
+      "net_r": -37.85,
+      "profit_factor": 0.61
+    }
+  }
+}
