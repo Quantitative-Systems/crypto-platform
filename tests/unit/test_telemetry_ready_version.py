@@ -1,11 +1,11 @@
-"""STRATA — Telemetry, Readiness and Versioning API Unit Tests."""
+"""Crypto Engine — Telemetry, Readiness and Versioning API Unit Tests."""
 
 import unittest
 from unittest.mock import MagicMock
 from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
 from aiohttp import web
 
-from web.server import StrataInstitutionalWebServer
+from web.server import CryptoEngineWebServer, StrataInstitutionalWebServer
 from execution.king.king_engine_contract import EXPECTED_KING_CONTRACT_HASH
 
 
@@ -26,7 +26,7 @@ class TestTelemetryReadyVersionAPI(AioHTTPTestCase):
         self.mock_supervisor.orders_history = []
         self.mock_supervisor.decisions_history = []
         
-        server = StrataInstitutionalWebServer(supervisor=self.mock_supervisor, port=8899)
+        server = CryptoEngineWebServer(supervisor=self.mock_supervisor, port=8899)
         return server.app
 
     @unittest_run_loop
@@ -43,7 +43,7 @@ class TestTelemetryReadyVersionAPI(AioHTTPTestCase):
         resp = await self.client.get("/api/version")
         self.assertEqual(resp.status, 200)
         data = await resp.json()
-        self.assertIn(data["platform"], ("Crypto Platform", "STRATA Digital Trading Platform"))
+        self.assertIn(data["platform"], ("Crypto Engine", "Crypto Platform", "STRATA Digital Trading Platform"))
         self.assertEqual(data["king_contract_hash"], EXPECTED_KING_CONTRACT_HASH)
         self.assertEqual(data["contract_status"], "VERIFIED_IMMUTABLE")
         self.assertEqual(data["real_capital_authorized_usd"], 0.0)

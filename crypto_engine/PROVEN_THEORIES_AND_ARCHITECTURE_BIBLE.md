@@ -1,4 +1,4 @@
-# THE STRATA QUANTITATIVE TRADING BIBLE
+# THE CRYPTO ENGINE QUANTITATIVE TRADING BIBLE
 ## Proven Market Theories, Empirical Validations, Failed Hypotheses & Unified Master Architecture
 
 ---

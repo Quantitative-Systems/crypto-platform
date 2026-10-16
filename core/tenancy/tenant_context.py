@@ -1,4 +1,4 @@
-"""STRATA — Multi-Tenant Isolation & Context Management.
+"""Crypto Engine Platform — Multi-Tenant Isolation & Context Management.
 
 Guarantees tenant isolation:
 - User A can NEVER view or mutate User B accounts, orders, positions, strategies, or credentials.

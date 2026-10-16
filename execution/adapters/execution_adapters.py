@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Multi-Mode Execution Adapters & Safety Gateway.
+"""Crypto Engine Platform — Multi-Mode Execution Adapters & Safety Gateway.
 
 Provides execution abstraction across:
 - SimulatorAdapter: In-memory backtesting and causality validation

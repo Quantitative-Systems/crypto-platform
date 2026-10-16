@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Autonomous State & Broker Reconciliation Auditor.
+"""Crypto Engine Platform — Autonomous State & Broker Reconciliation Auditor.
 
 Audits end-to-end pipeline integrity across:
 candidates_evaluated

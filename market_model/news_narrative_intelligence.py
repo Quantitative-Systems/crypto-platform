@@ -1,4 +1,4 @@
-"""STRATA — Phase 4: Point-in-Time News & Narrative Macro Intelligence.
+"""Crypto Engine Platform — Phase 4: Point-in-Time News & Narrative Macro Intelligence.
 
 Implements:
 1. Canonical Point-in-Time Macro & Protocol Event Contracts:

@@ -1,4 +1,4 @@
-"""Unit tests for STRATA Multi-Broker Adapter Framework."""
+"""Unit tests for Crypto Engine Multi-Broker Adapter Framework."""
 import pytest
 from execution.adapters.broker_adapters import (
     BinanceBrokerAdapter,

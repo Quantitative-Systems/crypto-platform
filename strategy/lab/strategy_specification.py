@@ -1,4 +1,4 @@
-"""STRATA — Formal Strategy Specification Schema for Strategy Lab.
+"""Crypto Engine Platform — Formal Strategy Specification Schema for Strategy Lab.
 
 Defines the structured, machine-verifiable specification produced when natural language
 descriptions are parsed and compiled in the Strategy Lab.

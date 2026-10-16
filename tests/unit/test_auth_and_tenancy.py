@@ -1,4 +1,4 @@
-"""Unit tests for STRATA Authentication and Multi-Tenant Isolation."""
+"""Unit tests for Crypto Engine Authentication and Multi-Tenant Isolation."""
 import pytest
 from core.auth.auth_service import AuthService
 from core.auth.user_model import UserRole

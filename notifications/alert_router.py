@@ -49,7 +49,7 @@ class AlertCategory(str, Enum):
 
 
 class OperationalEventType(str, Enum):
-    """The 24 mandatory STRATA operational alert events."""
+    """The 24 mandatory Crypto Engine operational alert events."""
     SYSTEM_STARTED = "SYSTEM_STARTED"
     SYSTEM_STOPPED = "SYSTEM_STOPPED"
     BROKER_CONNECTED = "BROKER_CONNECTED"

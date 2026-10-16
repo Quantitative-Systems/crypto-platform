@@ -1,7 +1,7 @@
-# STRATA Android Mobile Architecture & Safety Guide
+# Crypto Engine Android Mobile Architecture & Safety Guide
 
 ## Overview
-The **STRATA Mobile Client** provides a hardened, cross-platform Android mobile interface targeting high-priority operational workflows:
+The **Crypto Engine Mobile Client** provides a hardened, cross-platform Android mobile interface targeting high-priority operational workflows:
 - Portfolio equity & available capital monitoring
 - Open positions & active risk blotter
 - Protected **KING Engine** state & opportunities
@@ -41,6 +41,6 @@ mobile/
 │   │   └── build.gradle          # Android Gradle packaging & dependency specification
 │   └── assets/
 │       └── www/
-│           └── index.html        # Responsive touch-optimized STRATA Mobile Terminal UI
+│           └── index.html        # Responsive touch-optimized Crypto Engine Mobile Terminal UI
 └── README.md                     # Architecture & security specifications
 ```

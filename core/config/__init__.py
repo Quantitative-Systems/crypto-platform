@@ -1,4 +1,4 @@
-"""STRATA — Production Configuration and Validation."""
+"""Crypto Engine Platform — Production Configuration and Validation."""
 
 from core.config.startup_validator import (
     StartupValidator,

@@ -1,4 +1,4 @@
-"""STRATA — Formal Strategy Evidence Lifecycle & State Machine.
+"""Crypto Engine Platform — Formal Strategy Evidence Lifecycle & State Machine.
 
 Enforces the non-negotiable 16-stage strategy maturation lifecycle:
 DRAFT → FORMALIZED → BACKTEST → FALSIFICATION → OOS → ADVERSARIAL → ROBUSTNESS →

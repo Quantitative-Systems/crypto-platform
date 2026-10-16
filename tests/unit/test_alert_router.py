@@ -1,4 +1,4 @@
-"""Unit tests for STRATA Alert Router & Credential Sanitizer."""
+"""Unit tests for Crypto Engine Alert Router & Credential Sanitizer."""
 import pytest
 from notifications.alert_router import (
     ALERTS,

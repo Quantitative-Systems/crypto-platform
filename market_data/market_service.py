@@ -1,4 +1,4 @@
-"""STRATA — Market Data & Asset State Service.
+"""Crypto Engine Platform — Market Data & Asset State Service.
 
 Provides consolidated market monitoring, watchlist management, and 7-timeframe
 causal market model diagnostics across admitted crypto assets:

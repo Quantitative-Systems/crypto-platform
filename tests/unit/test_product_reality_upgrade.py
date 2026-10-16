@@ -1,5 +1,5 @@
 """
-Unit & Integration Tests for STRATA Product Reality Upgrade.
+Unit & Integration Tests for Crypto Engine Product Reality Upgrade.
 Verifies:
 1. User registration with name and password confirmation + login + tenant isolation.
 2. Market service & endpoints: /api/markets, /api/markets/{symbol}, /api/markets/watchlist.

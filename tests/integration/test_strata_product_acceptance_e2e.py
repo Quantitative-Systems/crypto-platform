@@ -1,4 +1,4 @@
-"""STRATA — Product Acceptance & End-to-End User Journey Certification Test Suite.
+"""Crypto Engine — Product Acceptance & End-to-End User Journey Certification Test Suite.
 
 Simulates the complete user and operational journey across all platform layers:
 1. User Registration & PBKDF2 Password Hashing
@@ -46,7 +46,7 @@ class TestStrataProductAcceptanceE2E(unittest.TestCase):
         self.agent = StrataAutonomousAgent()
 
     def test_complete_user_journey_end_to_end(self):
-        """Simulate a full authentic user lifecycle through the STRATA platform."""
+        """Simulate a full authentic user lifecycle through the Crypto Engine platform."""
         # 1. Registration
         email = "lead_trader@quantdesk.io"
         password = "SecurePassword#2026!"

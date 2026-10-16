@@ -1,4 +1,4 @@
-"""Unit tests for STRATA Web Server, Public Website, Terminal, and REST APIs."""
+"""Unit tests for Crypto Engine Web Server, Public Website, Terminal, and REST APIs."""
 import pytest
 from aiohttp import web
 from aiohttp.test_utils import TestClient, TestServer
@@ -23,20 +23,20 @@ async def test_public_website_and_terminal_html_routes(test_server):
         resp = await client.get("/")
         assert resp.status == 200
         html = await resp.text()
-        assert "Crypto Platform" in html
+        assert any(b in html for b in ("Crypto Engine", "Crypto Platform"))
         assert "Android" in html
 
         # 2. Terminal app page
         resp_app = await client.get("/app")
         assert resp_app.status == 200
         app_html = await resp_app.text()
-        assert "Crypto Platform" in app_html
+        assert any(b in app_html for b in ("Crypto Engine", "Crypto Platform"))
 
         # 3. Mobile application route
         resp_mobile = await client.get("/mobile")
         assert resp_mobile.status == 200
         mobile_html = await resp_mobile.text()
-        assert "Crypto Platform" in mobile_html
+        assert any(b in mobile_html for b in ("Crypto Engine", "Crypto Platform"))
 
 
 

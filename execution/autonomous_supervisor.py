@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Autonomous 24/7/365 Production Supervisor.
+"""Crypto Engine Platform — Autonomous 24/7/365 Production Supervisor.
 
 Master production orchestrator coordinating:
 1. Real-time Market Data & Ingestion (Binance WebSocket Client)

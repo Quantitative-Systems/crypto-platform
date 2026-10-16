@@ -1,4 +1,4 @@
-// Service Worker for Crypto Platform PWA
+// Service Worker for Crypto Engine PWA
 const CACHE_NAME = 'crypto-platform-v2';
 const STATIC_ASSETS = [
   '/manifest.json',

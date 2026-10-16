@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Standardized Multi-Broker Adapters.
+"""Crypto Engine Platform — Standardized Multi-Broker Adapters.
 
 Provides clean, uniform broker and exchange gateway interfaces across:
 - BinanceBrokerAdapter (Spot and USDT-M Futures: Testnet & Production)

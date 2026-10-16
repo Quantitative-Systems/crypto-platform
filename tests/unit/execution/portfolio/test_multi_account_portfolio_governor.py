@@ -1,4 +1,4 @@
-"""Unit tests for STRATA Phase 5: Multi-Account Portfolio Risk Governor."""
+"""Unit tests for Crypto Engine Phase 5: Multi-Account Portfolio Risk Governor."""
 from __future__ import annotations
 
 import pytest

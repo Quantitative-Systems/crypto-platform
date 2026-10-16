@@ -43,7 +43,7 @@ class TestWebBrokerAndPwa(AioHTTPTestCase):
         self.assertEqual(resp.status, 200)
         self.assertEqual(resp.content_type, "text/html")
         text = await resp.text()
-        self.assertIn("Crypto Platform", text)
+        self.assertTrue(any(b in text for b in ("Crypto Engine", "Crypto Platform")))
         self.assertIn("connect-broker-modal", text)
         self.assertIn("mobile-bottom-nav", text)
 

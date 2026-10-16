@@ -1,5 +1,5 @@
 """
-Comprehensive Programmatic Acceptance Test Suite for STRATA Product Reality Upgrade.
+Comprehensive Programmatic Acceptance Test Suite for Crypto Engine Product Reality Upgrade.
 Exercises every single route, endpoint, validation gate, authentication state,
 and safety control in the platform.
 """
@@ -27,7 +27,7 @@ async def test_full_programmatic_product_journey(test_server):
         resp = await client.get("/")
         assert resp.status == 200
         html = await resp.text()
-        assert "Crypto Platform" in html
+        assert any(b in html for b in ("Crypto Engine", "Crypto Platform"))
         assert "Android" in html
         assert "$0.00" in html
 
@@ -35,7 +35,7 @@ async def test_full_programmatic_product_journey(test_server):
         resp_app = await client.get("/app")
         assert resp_app.status == 200
         app_html = await resp_app.text()
-        assert "Crypto Platform" in app_html
+        assert any(b in app_html for b in ("Crypto Engine", "Crypto Platform"))
 
         # 3. Dashboard redirect/view
         resp_dash = await client.get("/dashboard")
