@@ -1,5 +1,5 @@
 [Unit]
-Description=STRATA Digital Trading Platform — Production Execution Engine
+Description=Crypto Engine Platform — Production Execution Engine
 After=network.target network-online.target
 Wants=network-online.target
 

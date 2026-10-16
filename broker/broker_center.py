@@ -1,4 +1,4 @@
-"""STRATA — Broker Center & Unified Multi-Venue Architecture.
+"""Crypto Engine Platform — Broker Center & Unified Multi-Venue Architecture.
 
 Provides the institutional broker management facade:
 - BrokerRegistry

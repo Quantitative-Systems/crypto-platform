@@ -1,4 +1,4 @@
-"""STRATA — Research Evolution Engine (Controlled Self-Improvement).
+"""Crypto Engine Platform — Research Evolution Engine (Controlled Self-Improvement).
 
 Observes execution metrics, detects statistical degradation and regime drift,
 generates research hypotheses, and spawns offline backtest jobs.

@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Multi-Account and Broker Account Architecture.
+"""Crypto Engine Platform — Multi-Account and Broker Account Architecture.
 
 Manages multiple execution accounts across:
 - Virtual Paper Accounts
@@ -162,7 +162,7 @@ class AccountManager:
         # 1. Primary Paper Trading Account
         paper_acc = AccountConfig(
             account_id="ACC_PAPER_PRIMARY",
-            name="Strata Paper Primary (Simulated)",
+            name="Crypto Engine Paper Primary (Simulated)",
             venue=BrokerVenue.SIMULATED,
             environment=AccountEnvironment.PAPER,
             initial_equity_usd=100_000.0,

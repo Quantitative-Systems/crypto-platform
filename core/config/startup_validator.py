@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Production Startup Validator.
+"""Crypto Engine Platform — Production Startup Validator.
 
 Enforces fail-closed safety pre-flight verification before any trading,
 market ingestion, or server process is permitted to initialize:

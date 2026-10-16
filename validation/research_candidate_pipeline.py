@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Degradation to Research Candidate Pipeline.
+"""Crypto Engine Platform — Degradation to Research Candidate Pipeline.
 
 When the real-time drift monitor or execution auditor detects statistical degradation,
 slippage expansion, or structural regime changes:

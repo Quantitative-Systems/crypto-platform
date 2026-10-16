@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  # STRATA Core Application — Autonomous Engine, Terminal & REST API
+  # Crypto Engine Core Application — Autonomous Engine, Terminal & REST API
   strata-platform:
     build:
       context: .

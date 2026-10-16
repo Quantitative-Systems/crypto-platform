@@ -1647,10 +1647,11 @@
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('api')) {
                 const custom = urlParams.get('api').replace(/\/$/, '');
+                localStorage.setItem('crypto_api_base', custom);
                 localStorage.setItem('strata_api_base', custom);
                 return custom;
             }
-            const stored = localStorage.getItem('strata_api_base');
+            const stored = localStorage.getItem('crypto_api_base') || localStorage.getItem('strata_api_base');
             if (stored) return stored.replace(/\/$/, '');
             if (window.API_BASE_URL) return window.API_BASE_URL.replace(/\/$/, '');
             return '';
@@ -1664,8 +1665,10 @@
         function saveCustomApiEndpoint() {
             const val = (document.getElementById('custom-api-endpoint') ? document.getElementById('custom-api-endpoint').value : '').trim();
             if (val) {
+                localStorage.setItem('crypto_api_base', val.replace(/\/$/, ''));
                 localStorage.setItem('strata_api_base', val.replace(/\/$/, ''));
             } else {
+                localStorage.removeItem('crypto_api_base');
                 localStorage.removeItem('strata_api_base');
             }
             alert('Authoritative backend endpoint set to: ' + (val || 'Default Origin') + '. Reloading...');
@@ -1673,6 +1676,7 @@
         }
 
         function resetCustomApiEndpoint() {
+            localStorage.removeItem('crypto_api_base');
             localStorage.removeItem('strata_api_base');
             const inp = document.getElementById('custom-api-endpoint');
             if (inp) inp.value = '';
@@ -1701,10 +1705,10 @@
         // Auth guard & initialization
         async function initTerminal() {
             const apiInp = document.getElementById('custom-api-endpoint');
-            if (apiInp) apiInp.value = localStorage.getItem('strata_api_base') || '';
+            if (apiInp) apiInp.value = localStorage.getItem('crypto_api_base') || localStorage.getItem('strata_api_base') || '';
 
-            const token = localStorage.getItem('strata_token');
-            const userStr = localStorage.getItem('strata_user');
+            const token = localStorage.getItem('crypto_token') || localStorage.getItem('strata_token');
+            const userStr = localStorage.getItem('crypto_user') || localStorage.getItem('strata_user');
             if (userStr) {
                 try {
                     const u = JSON.parse(userStr);
@@ -2257,6 +2261,8 @@
         }
 
         function handleLogout() {
+            localStorage.removeItem('crypto_token');
+            localStorage.removeItem('crypto_user');
             localStorage.removeItem('strata_token');
             localStorage.removeItem('strata_user');
             window.location.href = '/';

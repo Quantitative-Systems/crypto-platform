@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Complete Order Lifecycle & Lineage Engine.
+"""Crypto Engine Platform — Complete Order Lifecycle & Lineage Engine.
 
 Governs the formal 15-stage order execution lifecycle:
 SIGNAL

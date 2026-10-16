@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Event-Driven Alert & Notification Router.
+"""Crypto Engine Platform — Event-Driven Alert & Notification Router.
 
 Dispatches operational, execution, and risk notifications across:
 - In-memory ring buffer (for live Web UI terminal streaming)
