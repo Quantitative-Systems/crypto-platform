@@ -183,7 +183,10 @@ def test_script_rollback_when_new_container_fails_to_start():
         mock_docker = tmp_path / "docker"
         mock_docker.write_text(f"""#!/usr/bin/env bash
 echo "$@" >> "{log_file.as_posix()}"
-if [[ "$*" == *"ps -q -f name=^/crypto-engine$"* ]]; then
+if [[ "$*" == *"pull"* ]]; then
+    echo "Mock pull: image pulled successfully"
+    exit 0
+elif [[ "$*" == *"ps -q -f name=^/crypto-engine$"* ]]; then
     echo "existing_container_id_123"
     exit 0
 elif [[ "$*" == *"compose"* ]] && [[ "$*" == *"up -d"* ]]; then
@@ -194,14 +197,16 @@ elif [[ "$*" == *"ps -aq -f name=^/crypto-engine-prev$"* ]]; then
     exit 0
 fi
 exit 0
-""", encoding="utf-8")
+""", encoding="utf-8", newline="\n")
+        mock_docker.chmod(0o755)
 
         # Mock curl
         mock_curl = tmp_path / "curl"
         mock_curl.write_text("""#!/usr/bin/env bash
 echo '{"status": "HEALTHY", "real_capital_authorized": 0.0}'
 exit 0
-""", encoding="utf-8")
+""", encoding="utf-8", newline="\n")
+        mock_curl.chmod(0o755)
 
         # Mock dummy compose file
         dummy_compose = tmp_path / "dummy_compose.yml"
@@ -210,6 +215,8 @@ exit 0
         script_path = REPO_ROOT / "scripts" / "deploy_oracle.sh"
         env = os.environ.copy()
         env["PATH"] = f"{tmp_path.as_posix()}{os.pathsep}{env['PATH']}"
+        env["DOCKER_BIN"] = mock_docker.as_posix()
+        env["CURL_BIN"] = mock_curl.as_posix()
         env["COMPOSE_FILE"] = dummy_compose.as_posix()
         env["HEALTH_ATTEMPTS"] = "2"
         env["HEALTH_SLEEP"] = "0"
@@ -230,6 +237,7 @@ exit 0
 
         # Verify docker log captured rollback sequence
         logged = log_file.read_text(encoding="utf-8")
+        assert "pull mock-image:test" in logged
         assert "stop crypto-engine" in logged
         assert "rename crypto-engine crypto-engine-prev" in logged
         assert "compose" in logged and "down" in logged
@@ -251,7 +259,10 @@ def test_script_rollback_when_health_check_fails():
         mock_docker = tmp_path / "docker"
         mock_docker.write_text(f"""#!/usr/bin/env bash
 echo "$@" >> "{log_file.as_posix()}"
-if [[ "$*" == *"ps -q -f name=^/crypto-engine$"* ]]; then
+if [[ "$*" == *"pull"* ]]; then
+    echo "Mock pull: image pulled successfully"
+    exit 0
+elif [[ "$*" == *"ps -q -f name=^/crypto-engine$"* ]]; then
     echo "existing_container_id_123"
     exit 0
 elif [[ "$*" == *"ps -aq -f name=^/crypto-engine-prev$"* ]]; then
@@ -259,14 +270,16 @@ elif [[ "$*" == *"ps -aq -f name=^/crypto-engine-prev$"* ]]; then
     exit 0
 fi
 exit 0
-""", encoding="utf-8")
+""", encoding="utf-8", newline="\n")
+        mock_docker.chmod(0o755)
 
         # Mock curl that returns DEGRADED status (or fails)
         mock_curl = tmp_path / "curl"
         mock_curl.write_text("""#!/usr/bin/env bash
 echo '{"status": "DEGRADED", "real_capital_authorized": 0.0}'
 exit 0
-""", encoding="utf-8")
+""", encoding="utf-8", newline="\n")
+        mock_curl.chmod(0o755)
 
         dummy_compose = tmp_path / "dummy_compose.yml"
         dummy_compose.write_text("version: '3.8'\nservices:\n  dummy:\n    image: dummy", encoding="utf-8")
@@ -274,6 +287,8 @@ exit 0
         script_path = REPO_ROOT / "scripts" / "deploy_oracle.sh"
         env = os.environ.copy()
         env["PATH"] = f"{tmp_path.as_posix()}{os.pathsep}{env['PATH']}"
+        env["DOCKER_BIN"] = mock_docker.as_posix()
+        env["CURL_BIN"] = mock_curl.as_posix()
         env["COMPOSE_FILE"] = dummy_compose.as_posix()
         env["HEALTH_ATTEMPTS"] = "2"
         env["HEALTH_SLEEP"] = "0"
@@ -293,6 +308,7 @@ exit 0
         assert "Restoring crypto-engine-prev -> crypto-engine" in res.stdout
 
         logged = log_file.read_text(encoding="utf-8")
+        assert "pull mock-image:test" in logged
         assert "rename crypto-engine crypto-engine-prev" in logged
         assert "compose" in logged and "down" in logged
         assert "rename crypto-engine-prev crypto-engine" in logged

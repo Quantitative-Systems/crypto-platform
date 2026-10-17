@@ -13,6 +13,7 @@ set -euo pipefail
 # ==============================================================================
 
 IMAGE_NAME="${1:-ghcr.io/quantitative-systems/crypto-platform:latest}"
+export IMAGE_NAME
 CONTAINER_NAME="crypto-engine"
 ROLLBACK_NAME="crypto-engine-prev"
 COMPOSE_FILE="${COMPOSE_FILE:-deploy/docker-compose.oracle.yml}"
@@ -22,6 +23,14 @@ HEALTH_ATTEMPTS="${HEALTH_ATTEMPTS:-15}"
 HEALTH_SLEEP="${HEALTH_SLEEP:-2}"
 ROLLBACK_ATTEMPTS="${ROLLBACK_ATTEMPTS:-10}"
 ROLLBACK_SLEEP="${ROLLBACK_SLEEP:-2}"
+
+# Optional command overrides for test harnesses
+if [ -n "${DOCKER_BIN:-}" ]; then
+    docker() { "${DOCKER_BIN}" "$@"; }
+fi
+if [ -n "${CURL_BIN:-}" ]; then
+    curl() { "${CURL_BIN}" "$@"; }
+fi
 
 # ------------------------------------------------------------------------------
 # Robust JSON Health Validator
