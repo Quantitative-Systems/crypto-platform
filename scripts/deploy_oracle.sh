@@ -23,6 +23,14 @@ HEALTH_SLEEP="${HEALTH_SLEEP:-2}"
 ROLLBACK_ATTEMPTS="${ROLLBACK_ATTEMPTS:-10}"
 ROLLBACK_SLEEP="${ROLLBACK_SLEEP:-2}"
 
+# Optional command overrides for test harnesses
+if [ -n "${DOCKER_BIN:-}" ]; then
+    docker() { "${DOCKER_BIN}" "$@"; }
+fi
+if [ -n "${CURL_BIN:-}" ]; then
+    curl() { "${CURL_BIN}" "$@"; }
+fi
+
 # ------------------------------------------------------------------------------
 # Robust JSON Health Validator
 # Strict: Rejects UNHEALTHY, DEGRADED, malformed, empty, or real_capital != 0.0
