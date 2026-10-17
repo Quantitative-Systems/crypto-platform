@@ -197,7 +197,7 @@ elif [[ "$*" == *"ps -aq -f name=^/crypto-engine-prev$"* ]]; then
     exit 0
 fi
 exit 0
-""", encoding="utf-8")
+""", encoding="utf-8", newline="\n")
         mock_docker.chmod(0o755)
 
         # Mock curl
@@ -205,7 +205,7 @@ exit 0
         mock_curl.write_text("""#!/usr/bin/env bash
 echo '{"status": "HEALTHY", "real_capital_authorized": 0.0}'
 exit 0
-""", encoding="utf-8")
+""", encoding="utf-8", newline="\n")
         mock_curl.chmod(0o755)
 
         # Mock dummy compose file
@@ -270,7 +270,7 @@ elif [[ "$*" == *"ps -aq -f name=^/crypto-engine-prev$"* ]]; then
     exit 0
 fi
 exit 0
-""", encoding="utf-8")
+""", encoding="utf-8", newline="\n")
         mock_docker.chmod(0o755)
 
         # Mock curl that returns DEGRADED status (or fails)
@@ -278,7 +278,7 @@ exit 0
         mock_curl.write_text("""#!/usr/bin/env bash
 echo '{"status": "DEGRADED", "real_capital_authorized": 0.0}'
 exit 0
-""", encoding="utf-8")
+""", encoding="utf-8", newline="\n")
         mock_curl.chmod(0o755)
 
         dummy_compose = tmp_path / "dummy_compose.yml"

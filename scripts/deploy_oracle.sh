@@ -13,6 +13,7 @@ set -euo pipefail
 # ==============================================================================
 
 IMAGE_NAME="${1:-ghcr.io/quantitative-systems/crypto-platform:latest}"
+export IMAGE_NAME
 CONTAINER_NAME="crypto-engine"
 ROLLBACK_NAME="crypto-engine-prev"
 COMPOSE_FILE="${COMPOSE_FILE:-deploy/docker-compose.oracle.yml}"
