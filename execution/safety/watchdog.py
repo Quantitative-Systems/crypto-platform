@@ -1,4 +1,4 @@
-"""STRATA — 24/7/365 Production Watchdog & Recovery Supervisor.
+"""Crypto Engine Platform — 24/7/365 Production Watchdog & Recovery Supervisor.
 
 Guarantees platform survival across crashes, network drops, and broker anomalies:
 - Startup reconciliation guard: verifies zero unmanaged or orphan broker positions before supervisor activation

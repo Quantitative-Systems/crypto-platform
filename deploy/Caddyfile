@@ -1,4 +1,4 @@
-# STRATA Digital Trading Platform — Caddyfile Configuration
+# Crypto Engine — Caddyfile Configuration
 # Automatic TLS Reverse Proxy with WebSocket & Streaming Buffer Bypass
 
 {
@@ -24,7 +24,7 @@
         Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
     }
 
-    # Reverse Proxy to STRATA application
+    # Reverse Proxy to Crypto Engine application
     reverse_proxy strata-platform:8080 {
         # WebSocket support
         header_up Upgrade {http.request.header.Upgrade}

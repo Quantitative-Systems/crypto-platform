@@ -1,4 +1,4 @@
-"""Tests for STRATA Production Startup Validator.
+"""Tests for Crypto Engine Production Startup Validator.
 Verifies fail-closed startup validation gates.
 """
 

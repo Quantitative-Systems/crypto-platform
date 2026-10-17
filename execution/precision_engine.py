@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Execution Precision & Idempotency Guard.
+"""Crypto Engine Platform — Execution Precision & Idempotency Guard.
 
 Implements critical institutional execution controls:
 1. Precise Step-Size & Tick-Size Rounding (eliminates precision errors at venue API boundaries).

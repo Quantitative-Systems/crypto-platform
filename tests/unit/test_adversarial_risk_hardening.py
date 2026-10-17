@@ -1,4 +1,4 @@
-"""Unit tests for STRATA Adversarial Risk Hardening & Invariant Defenses."""
+"""Unit tests for Crypto Engine Adversarial Risk Hardening & Invariant Defenses."""
 import pytest
 from execution.decision.phase_r_decision_engine import (
     DecisionType,

@@ -1,4 +1,4 @@
-"""Unit tests for STRATA Phase 4: Point-in-Time News and Macro Narrative Intelligence."""
+"""Unit tests for Crypto Engine Phase 4: Point-in-Time News and Macro Narrative Intelligence."""
 from __future__ import annotations
 
 import pytest

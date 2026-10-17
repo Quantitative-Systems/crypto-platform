@@ -1,4 +1,4 @@
-"""Unit tests for STRATA Automated Circuit Breakers & Capital Protection."""
+"""Unit tests for Crypto Engine Automated Circuit Breakers & Capital Protection."""
 import time
 import pytest
 from execution.risk.circuit_breakers import (

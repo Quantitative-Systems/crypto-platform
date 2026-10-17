@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Event-Driven Alert & Notification Router.
+"""Crypto Engine Platform — Event-Driven Alert & Notification Router.
 
 Dispatches operational, execution, and risk notifications across:
 - In-memory ring buffer (for live Web UI terminal streaming)
@@ -49,7 +49,7 @@ class AlertCategory(str, Enum):
 
 
 class OperationalEventType(str, Enum):
-    """The 24 mandatory STRATA operational alert events."""
+    """The 24 mandatory Crypto Engine operational alert events."""
     SYSTEM_STARTED = "SYSTEM_STARTED"
     SYSTEM_STOPPED = "SYSTEM_STOPPED"
     BROKER_CONNECTED = "BROKER_CONNECTED"

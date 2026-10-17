@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Institutional Web Terminal & REST API Server.
+"""Crypto Engine Platform — Institutional Web Terminal & REST API Server.
 
 Serves an institutional financial trading terminal:
 - Master Cockpit (/dashboard)
@@ -38,7 +38,7 @@ HTML_TERMINAL_PAGE = """<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STRATA Digital Trading Platform — Institutional Terminal</title>
+    <title>Crypto Engine — Institutional Terminal</title>
     <style>
         :root {
             --bg-primary: #070a11;
@@ -319,7 +319,7 @@ HTML_TERMINAL_PAGE = """<!DOCTYPE html>
 <body>
     <!-- Permanent Safety Guard Banner -->
     <div class="safety-banner">
-        <div>🔒 STRATA MULTI-TIER CAPITAL GATE: FAIL-CLOSED SAFETY BARRIER ENGAGED</div>
+        <div>🔒 CRYPTO ENGINE MULTI-TIER CAPITAL GATE: FAIL-CLOSED SAFETY BARRIER ENGAGED</div>
         <div id="safety-banner-detail">REAL CAPITAL AUTHORIZED: $0.00 | LIVE TRADING: HARD-DISABLED</div>
         <div>SHA-256 CONTRACT CERTIFIED</div>
     </div>
@@ -327,8 +327,8 @@ HTML_TERMINAL_PAGE = """<!DOCTYPE html>
     <!-- Header -->
     <div class="header">
         <div class="header-brand">
-            <h1>STRATA</h1>
-            <span class="brand-badge">DIGITAL TRADING PLATFORM</span>
+            <h1>CRYPTO ENGINE</h1>
+            <span class="brand-badge">INSTITUTIONAL PLATFORM</span>
             <span style="color: var(--text-secondary); font-size: 11px;">v2.0-PROD</span>
         </div>
         <div class="badges-group">
@@ -1295,7 +1295,7 @@ class PhaseRWebServer:
         return web.json_response({
             "platform": "Crypto Platform",
             "version": "1.0.0-forward-validation",
-            "environment": os.environ.get("STRATA_ENV", "paper").lower(),
+            "environment": os.environ.get("CRYPTO_ENGINE_ENV", os.environ.get("STRATA_ENV", "paper")).lower(),
             "king_contract_hash": EXPECTED_KING_CONTRACT_HASH,
             "contract_status": "VERIFIED_IMMUTABLE",
             "engine": "KING_Q2_PHASE_R",
@@ -1819,5 +1819,6 @@ class PhaseRWebServer:
         return runner
 
 
+CryptoEngineWebServer = PhaseRWebServer
 StrataInstitutionalWebServer = PhaseRWebServer
 

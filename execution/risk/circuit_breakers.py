@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Automated Circuit Breakers & Capital Protection.
+"""Crypto Engine Platform — Automated Circuit Breakers & Capital Protection.
 
 Hardware/software safeguards that protect capital against market shocks, systemic failures,
 and cascading losses:

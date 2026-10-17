@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Institutional Unified CLI.
+"""Crypto Engine Platform — Institutional Unified CLI.
 
 Provides unified command-line entrypoint for platform operations:
 - start: Start the 24/7 autonomous platform (Paper, Shadow, Demo, Micro-Live)
@@ -26,7 +26,7 @@ sys.path.insert(0, str(REPO_ROOT))
 
 def cmd_health() -> int:
     """Perform health checks on platform modules, data cache, and invariants."""
-    print("Checking STRATA Platform health...")
+    print("Checking Crypto Engine Platform health...")
     checks_passed = True
 
     # 1. Market model imports
@@ -273,7 +273,7 @@ def cmd_start(args: argparse.Namespace) -> int:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="STRATA Digital Trading Platform CLI")
+    parser = argparse.ArgumentParser(description="Crypto Engine Platform CLI")
     subparsers = parser.add_subparsers(dest="command", help="Command to run")
 
     subparsers.add_parser("health", help="Run comprehensive health check")

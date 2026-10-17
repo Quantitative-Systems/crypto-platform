@@ -1,4 +1,4 @@
-"""Unit tests for STRATA Platform Safety Gate & Multi-Tier Capital Barriers."""
+"""Unit tests for Crypto Engine Platform Safety Gate & Multi-Tier Capital Barriers."""
 import os
 import pytest
 from execution.safety.safety_gate import (

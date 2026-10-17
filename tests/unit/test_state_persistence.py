@@ -1,4 +1,4 @@
-"""Unit tests for STRATA State Checkpointing & Restart Recovery."""
+"""Unit tests for Crypto Engine State Checkpointing & Restart Recovery."""
 import tempfile
 from pathlib import Path
 import pytest

@@ -1,4 +1,4 @@
-"""STRATA — Phase 5: Multi-Account Portfolio Risk Governor & Sub-Account Engine.
+"""Crypto Engine Platform — Phase 5: Multi-Account Portfolio Risk Governor & Sub-Account Engine.
 
 Implements institutional multi-account management and aggregate risk safety:
 1. Sub-Account Isolation:

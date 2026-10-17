@@ -1,4 +1,4 @@
-"""Unit tests for STRATA Multi-Account & Broker Account Manager."""
+"""Unit tests for Crypto Engine Multi-Account & Broker Account Manager."""
 import os
 import pytest
 from accounts.account_manager import (

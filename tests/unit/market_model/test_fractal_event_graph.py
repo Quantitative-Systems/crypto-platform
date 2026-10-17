@@ -1,4 +1,4 @@
-"""Unit Test Suite for STRATA Fractal Event Graph and Canonical Event Contracts."""
+"""Unit Test Suite for Crypto Engine Fractal Event Graph and Canonical Event Contracts."""
 from __future__ import annotations
 
 import pytest

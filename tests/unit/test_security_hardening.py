@@ -1,4 +1,4 @@
-"""Unit tests for STRATA Security Hardening & Least-Privilege Controls."""
+"""Unit tests for Crypto Engine Security Hardening & Least-Privilege Controls."""
 import pytest
 from execution.safety.security_audit import (
     LeastPrivilegeGuard,

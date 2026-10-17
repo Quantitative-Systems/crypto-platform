@@ -1,4 +1,4 @@
-"""Unit tests for STRATA Degradation to Research Candidate Pipeline."""
+"""Unit tests for Crypto Engine Degradation to Research Candidate Pipeline."""
 import tempfile
 from pathlib import Path
 import pytest

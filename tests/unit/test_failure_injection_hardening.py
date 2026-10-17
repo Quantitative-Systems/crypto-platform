@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Failure Injection & Fail-Closed Hardening Test Suite.
+"""Crypto Engine Platform — Failure Injection & Fail-Closed Hardening Test Suite.
 
 Rigorously verifies platform resilience and fail-closed behavior under hostile failure conditions:
 1. Duplicate Order Injection (Idempotency Protection)

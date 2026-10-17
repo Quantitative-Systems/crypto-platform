@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Autonomous Production Application Main Entrypoint.
+"""Crypto Engine Platform — Autonomous Production Application Main Entrypoint.
 
 Starts the 24/7/365 autonomous trading platform:
 - Multi-Tier Capital Safety Gate (Fail-Closed)
@@ -36,7 +36,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
-logger = logging.getLogger("STRATA_Platform")
+logger = logging.getLogger("CryptoEngine_Platform")
 
 
 async def async_main(args: argparse.Namespace) -> None:
@@ -49,7 +49,7 @@ async def async_main(args: argparse.Namespace) -> None:
         )
 
     logger.info("=" * 80)
-    logger.info("STARTING CRYPTO PLATFORM DIGITAL TRADING ENGINE")
+    logger.info("STARTING CRYPTO ENGINE DIGITAL TRADING PLATFORM")
     logger.info(f"ENVIRONMENT: {SAFETY_GATE.current_mode.value}")
     logger.info(f"REAL CAPITAL AUTHORIZED: ${SAFETY_GATE.real_capital_authorized_usd:.2f}")
     logger.info(f"LIVE ADAPTER STATUS: {'ENABLED' if SAFETY_GATE.is_live_execution else 'HARD-DISABLED (FAIL-CLOSED)'}")
@@ -82,7 +82,7 @@ async def async_main(args: argparse.Namespace) -> None:
     # 5. Start web application dashboard
     web_server = PhaseRWebServer(supervisor=supervisor, host=args.host, port=args.port)
     runner = await web_server.start()
-    logger.info(f"Crypto Platform Terminal live at: http://{args.host}:{args.port}/dashboard")
+    logger.info(f"Crypto Engine Terminal live at: http://{args.host}:{args.port}/dashboard")
 
     # 6. Keep running until shutdown signal
     stop_event = asyncio.Event()
@@ -111,11 +111,11 @@ async def async_main(args: argparse.Namespace) -> None:
         logger.info("Shutting down web server and streaming clients...")
         await supervisor.stop()
         await runner.cleanup()
-        logger.info("Crypto Platform engine terminated cleanly. State checkpointed.")
+        logger.info("Crypto Engine terminated cleanly. State checkpointed.")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Crypto Platform Digital Trading Engine")
+    parser = argparse.ArgumentParser(description="Crypto Engine Digital Trading Platform")
     parser.add_argument("--mode", type=lambda s: s.upper(), default="PAPER", choices=["PAPER", "SHADOW", "BROKER_DEMO", "MICRO_LIVE"], help="Execution mode")
     parser.add_argument("--symbols", type=str, default="BTCUSDT,ETHUSDT,SOLUSDT,BNBUSDT", help="Comma-separated assets")
     parser.add_argument("--equity", type=float, default=100_000.0, help="Initial simulated equity USD")
@@ -124,6 +124,7 @@ def main():
     parser.add_argument("--port", type=int, default=int(os.getenv("PORT", "8080")), help="Web dashboard port")
     parser.add_argument("--dry-run-seconds", type=int, default=0, help="Optional duration in seconds for automated test runs")
     parser.add_argument("--auth-passkey", type=str, default=None, help="Cryptographic passkey for live modes")
+    parser.add_argument("--no-research", action="store_true", default=False, help="Disable autonomous research daemon")
 
     args = parser.parse_args()
     try:

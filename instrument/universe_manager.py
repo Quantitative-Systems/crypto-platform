@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Multi-Instrument Universe & Venue Registry.
+"""Crypto Engine Platform — Multi-Instrument Universe & Venue Registry.
 
 Coordinates the active trading universe across multiple crypto instruments and venues:
 - Enforces the 11-step institutional admission gate (instrument/instrument_registry.py)

@@ -1,4 +1,4 @@
-name: STRATA CI — Production Hardening & Baseline Verification
+name: Crypto Engine CI — Production Hardening & Baseline Verification
 
 on:
   push:

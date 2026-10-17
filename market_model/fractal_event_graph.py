@@ -1,4 +1,4 @@
-"""STRATA — Fractal Event Graph and Canonical Structural Event Contracts.
+"""Crypto Engine Platform — Fractal Event Graph and Canonical Structural Event Contracts.
 
 Version: 1.0.0-strata-phase1
 Implements:

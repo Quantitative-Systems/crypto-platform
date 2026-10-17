@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Five-Set Architecture & Parity Unit Tests.
+"""Crypto Engine Platform — Five-Set Architecture & Parity Unit Tests.
 
 Certifies:
 1. Canonical 7-timeframe ladder (1M -> 1W -> 1D -> 4H -> 1H -> 15M -> 3M).

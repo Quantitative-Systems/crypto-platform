@@ -1,4 +1,4 @@
-"""STRATA — Account-Suitability Engine & Trading Style Selector.
+"""Crypto Engine Platform — Account-Suitability Engine & Trading Style Selector.
 
 Evaluates whether a given account and risk profile is suitable for specific strategy families.
 The Autonomous Trading Agent may ONLY execute strategies that pass this suitability governor.

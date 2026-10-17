@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Security Audit & Least-Privilege Guard.
+"""Crypto Engine Platform — Security Audit & Least-Privilege Guard.
 
 Provides production security controls:
 1. Automated Secret Scanner: Scans strings, configs, and payloads for leaked private keys, API secrets, tokens.

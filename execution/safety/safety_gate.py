@@ -1,4 +1,4 @@
-"""STRATA Digital Trading Platform — Multi-Tier Capital Safety Gate & Hardware/Software Barrier.
+"""Crypto Engine Platform — Multi-Tier Capital Safety Gate & Hardware/Software Barrier.
 
 Enforces deterministic gating across five operational execution environments:
 1. SHADOW: Virtual order routing against live market data ($0.00 capital).
@@ -88,7 +88,7 @@ class PlatformSafetyGate:
 
         self._initialized = True
         logger.info(
-            f"STRATA Safety Gate initialized. Mode: {self._current_mode.value} | "
+            f"Crypto Engine Safety Gate initialized. Mode: {self._current_mode.value} | "
             f"Real Capital: ${self._real_capital_authorized_usd:.2f} | Live Unlocked: {self._live_gate_unlocked}"
         )
 

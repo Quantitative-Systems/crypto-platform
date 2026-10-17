@@ -1,4 +1,4 @@
-"""Unit tests for STRATA Autonomous Trading Agent and Research Evolution Engine."""
+"""Unit tests for Crypto Engine Autonomous Trading Agent and Research Evolution Engine."""
 import pytest
 from accounts.suitability_engine import TradingStyle
 from execution.agent.research_evolution_engine import DriftSeverity, ResearchEvolutionEngine

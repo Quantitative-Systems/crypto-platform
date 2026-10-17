@@ -1,4 +1,4 @@
-"""Unit tests for STRATA Execution Precision & Idempotency Hardening."""
+"""Unit tests for Crypto Engine Execution Precision & Idempotency Hardening."""
 import pytest
 from execution.precision_engine import (
     DuplicateOrderIntentError,
