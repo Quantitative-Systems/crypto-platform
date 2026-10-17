@@ -124,6 +124,7 @@ def main():
     parser.add_argument("--port", type=int, default=int(os.getenv("PORT", "8080")), help="Web dashboard port")
     parser.add_argument("--dry-run-seconds", type=int, default=0, help="Optional duration in seconds for automated test runs")
     parser.add_argument("--auth-passkey", type=str, default=None, help="Cryptographic passkey for live modes")
+    parser.add_argument("--no-research", action="store_true", default=False, help="Disable autonomous research daemon")
 
     args = parser.parse_args()
     try:

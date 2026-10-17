@@ -27,8 +27,8 @@ ENV PATH=/home/cryptoplatform/.local/bin:$PATH
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONPATH=/app
-ENV ENVIRONMENT=STAGING
-ENV PLATFORM_ENV=staging
+ENV ENVIRONMENT=production
+ENV PLATFORM_ENV=production
 ENV REAL_CAPITAL_AUTHORIZED_USD=0.00
 ENV LIVE_TRADING_ENABLED=false
 ENV HOST=0.0.0.0
@@ -38,8 +38,8 @@ ENV PORT=8080
 COPY --chown=cryptoplatform:cryptoplatform . /app
 
 # Create persistent state directories
-RUN mkdir -p /app/data/checkpoints /app/data/db /app/data/logs /app/research/results \
-    && chown -R cryptoplatform:cryptoplatform /app/data /app/research/results
+RUN mkdir -p /app/data/checkpoints /app/data/db /app/data/logs /app/research/results /app/market_data/cache \
+    && chown -R cryptoplatform:cryptoplatform /app/data /app/research/results /app/market_data
 
 USER cryptoplatform
 
@@ -50,4 +50,4 @@ HEALTHCHECK --interval=20s --timeout=5s --start-period=10s --retries=3 \
 EXPOSE 8080
 
 ENTRYPOINT ["python3", "main.py"]
-CMD ["--host", "0.0.0.0", "--port", "8080"]
+CMD ["--mode", "PAPER", "--host", "0.0.0.0", "--port", "8080", "--no-research"]
