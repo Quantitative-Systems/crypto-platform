@@ -1,6 +1,8 @@
 """Unit tests for Oracle automated Docker deployment, configuration, and safety invariants."""
+import base64
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -170,17 +172,24 @@ def test_github_workflow_dispatch_and_ghcr_registry():
 
 
 def test_deploy_oracle_workflow_git_strictness_and_revision_lock():
-    """Verify deploy-oracle.yml enforces strict git revision locking and safe secret handling."""
+    """Verify deploy-oracle.yml enforces strict git revision locking, canonical sync script invocation, and safe secret handling."""
     wf_path = REPO_ROOT / ".github" / "workflows" / "deploy-oracle.yml"
     content = wf_path.read_text(encoding="utf-8")
+    sync_script_path = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
+    sync_content = sync_script_path.read_text(encoding="utf-8")
 
     # Unsafe mkdir before git sync must be removed to avoid clone conflict
     ssh_section = content.split("Execute Remote Deployment via SSH")[1]
     assert 'mkdir -p "$APP_DIR/deploy" "$APP_DIR/scripts"' not in ssh_section
 
-    # Must checkout and cryptographically verify the intended commit SHA
-    assert 'git -C "${target_dir}" checkout "${target_sha}"' in content or 'git checkout "${{ github.sha }}"' in content
-    assert 'if [ "${current_sha}" != "${target_sha}" ]; then' in content
+    # Workflow must prepare and pass canonical sync_deployment_repo.sh
+    assert "scripts/sync_deployment_repo.sh" in content
+    assert "SYNC_SCRIPT_B64" in content
+    assert 'bash "$SYNC_TMP" "$APP_DIR" "${{ github.repository }}" "${{ github.ref_name }}" "${{ github.sha }}"' in content
+
+    # Canonical sync script must checkout and cryptographically verify the intended commit SHA
+    assert 'git -C "${target_dir}" checkout "${target_sha}"' in sync_content
+    assert 'if [ "${current_sha}" != "${target_sha}" ]; then' in sync_content
 
     # SSH action must stop immediately on failure
     assert "script_stop: true" in content
@@ -189,6 +198,88 @@ def test_deploy_oracle_workflow_git_strictness_and_revision_lock():
     # Secret tokens must not be echoed in cleartext
     assert 'echo "${{ secrets.GHCR_READ_TOKEN }}"' not in content
     assert "set +x" in content
+
+
+def test_deploy_oracle_workflow_drone_ssh_compatibility():
+    """Regression test: verify deploy-oracle.yml SSH script does not fail under drone-ssh script_stop line-injection."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Bash not found in environment")
+
+    wf_path = REPO_ROOT / ".github" / "workflows" / "deploy-oracle.yml"
+    content = wf_path.read_text(encoding="utf-8")
+    ssh_section = content.split("Execute Remote Deployment via SSH")[1].split("script: |")[1]
+    # Extract script lines indented under script: |
+    script_lines = []
+    for line in ssh_section.splitlines():
+        if line.startswith("            "):
+            script_lines.append(line[12:])
+        elif line.strip() == "":
+            script_lines.append("")
+        else:
+            break
+
+    # Simulate drone-ssh's scriptCommands with script_stop: true
+    commands = []
+    for cmd in script_lines:
+        cmd_stripped = cmd.strip()
+        if not cmd_stripped:
+            continue
+        commands.append(cmd_stripped)
+        if not cmd_stripped.endswith("\\"):
+            commands.append(
+                "DRONE_SSH_PREV_COMMAND_EXIT_CODE=$? ; if [ $DRONE_SSH_PREV_COMMAND_EXIT_CODE -ne 0 ]; then exit $DRONE_SSH_PREV_COMMAND_EXIT_CODE; fi;"
+            )
+
+    transformed_script = "\n".join(commands)
+
+    # 1. Verify syntax under bash -n after GitHub Actions expression expansion
+    rendered_script = re.sub(r"\$\{\{\s*[^}]+\s*\}\}", "mock_val", transformed_script)
+    with tempfile.NamedTemporaryFile("w", suffix=".sh", delete=False, encoding="utf-8") as f:
+        f.write(rendered_script)
+        temp_sh = Path(f.name)
+    try:
+        syntax_res = subprocess.run([bash, "-n", str(temp_sh)], capture_output=True, text=True)
+        assert syntax_res.returncode == 0, f"drone-ssh simulated script failed syntax check: {syntax_res.stderr}"
+    finally:
+        temp_sh.unlink(missing_ok=True)
+
+    # 2. Functional execution under drone-ssh simulation
+    import base64
+    sync_script_path = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
+    sync_b64 = base64.b64encode(sync_script_path.read_bytes()).decode("ascii")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        origin_dir, sha1, sha2 = setup_test_git_repo(tmp_path)
+        bootstrap_dir = tmp_path / "bootstrap_target"
+        (bootstrap_dir / "deploy").mkdir(parents=True)
+        (bootstrap_dir / "scripts").mkdir(parents=True)
+
+        # Mock runtime execution of transformed script with expanded expressions
+        exec_lines = []
+        for cmd in commands:
+            cmd_rendered = re.sub(r"\$\{\{\s*[^}]+\s*\}\}", "", cmd)
+            if cmd_rendered.startswith("APP_DIR="):
+                exec_lines.append(f'APP_DIR="{bootstrap_dir.as_posix()}"')
+            elif cmd_rendered.startswith('bash "$SYNC_TMP"'):
+                exec_lines.append(f'bash "$SYNC_TMP" "$APP_DIR" "{origin_dir.as_posix()}" "main" "{sha2}"')
+            elif "deploy_oracle.sh" in cmd_rendered or "chmod +x $APP_DIR" in cmd_rendered:
+                # Mock deploy_oracle.sh execution
+                continue
+            else:
+                exec_lines.append(cmd_rendered)
+
+        run_sh = tmp_path / "run_transformed.sh"
+        run_sh.write_text("\n".join(exec_lines), encoding="utf-8")
+
+        env = os.environ.copy()
+        env["SYNC_SCRIPT_B64"] = sync_b64
+        exec_res = subprocess.run([bash, str(run_sh)], env=env, capture_output=True, text=True)
+        assert exec_res.returncode == 0, f"drone-ssh execution failed with returncode {exec_res.returncode}: {exec_res.stderr}\nstdout: {exec_res.stdout}"
+        assert (bootstrap_dir / ".git").exists()
+        assert f"Verified deployment revision: {sha2}" in exec_res.stdout
+
 
 
 def setup_test_git_repo(tmp_path: Path):
@@ -203,11 +294,71 @@ def setup_test_git_repo(tmp_path: Path):
     subprocess.run(["git", "commit", "-m", "commit 1"], cwd=str(origin_dir), capture_output=True, check=True)
     sha1 = subprocess.run(["git", "rev-parse", "HEAD"], cwd=str(origin_dir), capture_output=True, text=True, check=True).stdout.strip()
 
-    (origin_dir / "deploy.sh").write_text("echo deploying", encoding="utf-8")
+    (origin_dir / "deploy").mkdir(exist_ok=True)
+    (origin_dir / "scripts").mkdir(exist_ok=True)
+    (origin_dir / "deploy" / "compose.yml").write_text("version: '3.8'", encoding="utf-8")
+    (origin_dir / "scripts" / "deploy.sh").write_text("echo deploying", encoding="utf-8")
     subprocess.run(["git", "add", "."], cwd=str(origin_dir), capture_output=True, check=True)
     subprocess.run(["git", "commit", "-m", "commit 2"], cwd=str(origin_dir), capture_output=True, check=True)
     sha2 = subprocess.run(["git", "rev-parse", "HEAD"], cwd=str(origin_dir), capture_output=True, text=True, check=True).stdout.strip()
     return origin_dir, sha1, sha2
+
+
+def test_sync_repo_existing_empty_bootstrap_directory():
+    """Verify sync_repo safely initializes an existing bootstrap directory containing empty deploy/ and scripts/."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Bash not found in environment")
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        origin_dir, sha1, sha2 = setup_test_git_repo(tmp_path)
+        bootstrap_dir = tmp_path / "bootstrap_target"
+        (bootstrap_dir / "deploy").mkdir(parents=True)
+        (bootstrap_dir / "scripts").mkdir(parents=True)
+        sync_script = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
+        res = subprocess.run([bash, sync_script.as_posix(), bootstrap_dir.as_posix(), origin_dir.as_posix(), "main", sha2], capture_output=True, text=True)
+        assert res.returncode == 0, f"bootstrap sync failed: {res.stderr}\nstdout: {res.stdout}"
+        assert f"Verified deployment revision: {sha2}" in res.stdout
+        assert (bootstrap_dir / ".git").exists()
+        assert (bootstrap_dir / "deploy" / "compose.yml").exists()
+        assert (bootstrap_dir / "scripts" / "deploy.sh").exists()
+
+
+def test_sync_repo_unexpected_file_in_bootstrap_directory():
+    """Verify sync_repo fails closed when directory contains unexpected files, preserving them."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Bash not found in environment")
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        origin_dir, sha1, sha2 = setup_test_git_repo(tmp_path)
+        target_dir = tmp_path / "target_with_unexpected"
+        (target_dir / "deploy").mkdir(parents=True)
+        (target_dir / "scripts").mkdir(parents=True)
+        (target_dir / "unexpected.txt").write_text("do not overwrite", encoding="utf-8")
+        sync_script = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
+        res = subprocess.run([bash, sync_script.as_posix(), target_dir.as_posix(), origin_dir.as_posix(), "main", sha2], capture_output=True, text=True)
+        assert res.returncode != 0
+        assert "unexpected files/directories" in res.stderr or "unexpected" in res.stderr
+        assert (target_dir / "unexpected.txt").exists(), "Must not delete existing unexpected files"
+        assert not (target_dir / ".git").exists(), "Must not initialize git over unexpected files"
+
+
+def test_sync_repo_existing_non_git_directory():
+    """Verify sync_repo fails safely when destination exists but is not a Git repo and contains arbitrary files."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Bash not found in environment")
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        nongit_dir = tmp_path / "nongit"
+        nongit_dir.mkdir()
+        (nongit_dir / "preserve_me.txt").write_text("critical data", encoding="utf-8")
+        sync_script = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
+        res = subprocess.run([bash, sync_script.as_posix(), nongit_dir.as_posix(), "Quantitative-Systems/crypto-platform", "main", "abc1234"], capture_output=True, text=True)
+        assert res.returncode != 0
+        assert "unexpected files/directories" in res.stderr or "FATAL" in res.stderr
+        assert (nongit_dir / "preserve_me.txt").exists(), "Existing files must not be deleted or destroyed"
 
 
 def test_sync_repo_existing_valid_git_checkout():
@@ -240,23 +391,6 @@ def test_sync_repo_missing_directory():
         assert res.returncode == 0, f"clone failed: {res.stderr}"
         assert missing_dir.exists()
         assert f"Verified deployment revision: {sha1}" in res.stdout
-
-
-def test_sync_repo_existing_non_git_directory():
-    """Verify sync_repo fails safely when destination exists but is not a Git repo, preserving contents."""
-    bash = get_git_bash()
-    if not bash:
-        pytest.skip("Bash not found in environment")
-    with tempfile.TemporaryDirectory() as tmpdir:
-        tmp_path = Path(tmpdir)
-        nongit_dir = tmp_path / "nongit"
-        nongit_dir.mkdir()
-        (nongit_dir / "preserve_me.txt").write_text("critical data", encoding="utf-8")
-        sync_script = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
-        res = subprocess.run([bash, sync_script.as_posix(), nongit_dir.as_posix(), "Quantitative-Systems/crypto-platform", "main", "abc1234"], capture_output=True, text=True)
-        assert res.returncode != 0
-        assert "not a valid Git repository" in res.stderr
-        assert (nongit_dir / "preserve_me.txt").exists(), "Existing files must not be deleted or destroyed"
 
 
 def test_sync_repo_wrong_git_origin():
@@ -306,6 +440,28 @@ def test_sync_repo_exact_commit_sha_verification():
         sync_script = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
         res = subprocess.run([bash, sync_script.as_posix(), target_dir.as_posix(), origin_dir.as_posix(), "main", "0123456789abcdef0123456789abcdef01234567"], capture_output=True, text=True)
         assert res.returncode != 0
+
+
+def test_sync_repo_initialization_failure_preserves_existing_content():
+    """Verify initialization failure (e.g. invalid SHA) does not destroy existing bootstrap content."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Bash not found in environment")
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        origin_dir, sha1, sha2 = setup_test_git_repo(tmp_path)
+        bootstrap_dir = tmp_path / "bootstrap_target"
+        (bootstrap_dir / "deploy").mkdir(parents=True)
+        (bootstrap_dir / "scripts").mkdir(parents=True)
+        sync_script = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
+        # Pass non-existent SHA to force failure during staging checkout
+        res = subprocess.run([bash, sync_script.as_posix(), bootstrap_dir.as_posix(), origin_dir.as_posix(), "main", "deadbeef00000000000000000000000000000000"], capture_output=True, text=True)
+        assert res.returncode != 0
+        # Verify original directory structure is preserved and not destroyed
+        assert bootstrap_dir.exists()
+        assert (bootstrap_dir / "deploy").is_dir()
+        assert (bootstrap_dir / "scripts").is_dir()
+        assert not (bootstrap_dir / ".git").exists()
 
 
 def test_script_rollback_when_new_container_fails_to_start():

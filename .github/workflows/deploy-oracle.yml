@@ -121,94 +121,38 @@ jobs:
           IMAGE_NAME="ghcr.io/${{ github.repository }}"
           echo "image_name=${IMAGE_NAME,,}" >> $GITHUB_OUTPUT
 
+      - name: Prepare Deployment Synchronizer Script
+        id: sync-script
+        run: |
+          SYNC_B64=$(base64 -w 0 scripts/sync_deployment_repo.sh 2>/dev/null || base64 scripts/sync_deployment_repo.sh | tr -d '\r\n')
+          echo "sync_b64=$SYNC_B64" >> $GITHUB_OUTPUT
+
       - name: Execute Remote Deployment via SSH
         uses: appleboy/ssh-action@v1.2.0
+        env:
+          SYNC_SCRIPT_B64: ${{ steps.sync-script.outputs.sync_b64 }}
         with:
           host: ${{ secrets.ORACLE_SSH_HOST }}
           username: ${{ secrets.ORACLE_SSH_USER || 'ubuntu' }}
           key: ${{ secrets.ORACLE_SSH_KEY }}
           port: ${{ secrets.ORACLE_SSH_PORT || 22 }}
+          envs: SYNC_SCRIPT_B64
           script_stop: true
           script: |
             set -euo pipefail
             APP_DIR="/home/${{ secrets.ORACLE_SSH_USER || 'ubuntu' }}/crypto-platform"
 
             # Secure GHCR authentication without echoing token to stdout/stderr
-            if [ -n "${{ secrets.GHCR_READ_TOKEN }}" ]; then
-              set +x
-              printf '%s' "${{ secrets.GHCR_READ_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME || github.actor }}" --password-stdin > /dev/null 2>&1
-            fi
+            set +x
+            [ -z "${{ secrets.GHCR_READ_TOKEN }}" ] || printf '%s' "${{ secrets.GHCR_READ_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME || github.actor }}" --password-stdin > /dev/null 2>&1
 
-            sync_repo() {
-                local target_dir="$1"
-                local expected_repo="$2"
-                local target_ref="$3"
-                local target_sha="$4"
-
-                # 1. Missing directory: perform initial clone safely
-                if [ ! -e "${target_dir}" ]; then
-                    echo "Destination '${target_dir}' does not exist. Performing initial clone..."
-                    if [[ "${expected_repo}" == https://* ]] || [[ "${expected_repo}" == git@* ]] || [[ "${expected_repo}" == file://* ]] || [[ -d "${expected_repo}" ]]; then
-                        git clone "${expected_repo}" "${target_dir}"
-                    else
-                        git clone "https://github.com/${expected_repo}.git" "${target_dir}"
-                    fi
-                fi
-
-                # 2. Destination exists but is not a directory
-                if [ ! -d "${target_dir}" ]; then
-                    echo "FATAL: Destination '${target_dir}' exists but is not a directory!" >&2
-                    return 1
-                fi
-
-                # 3. Existing directory must be a valid Git repository; fail safely if not
-                if ! git -C "${target_dir}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-                    echo "FATAL: Destination directory '${target_dir}' exists but is not a valid Git repository!" >&2
-                    return 1
-                fi
-
-                # 4. Verify remote origin matches expected repository
-                local remote_url
-                remote_url=$(git -C "${target_dir}" config --get remote.origin.url || true)
-                if [ -z "${remote_url}" ]; then
-                    echo "FATAL: Existing repository at '${target_dir}' has no remote.origin.url configured!" >&2
-                    return 1
-                fi
-
-                local lower_url lower_expected
-                lower_url=$(echo "${remote_url}" | tr '[:upper:]' '[:lower:]' | sed -e 's/\.git$//')
-                lower_expected=$(echo "${expected_repo}" | tr '[:upper:]' '[:lower:]' | sed -e 's/\.git$//')
-                if [[ "${lower_url}" != *"${lower_expected}"* ]]; then
-                    echo "FATAL: Repository origin '${remote_url}' does not match expected repository '${expected_repo}'!" >&2
-                    return 1
-                fi
-
-                # 5. Fail if working tree has unexpected local changes in tracked files
-                if [ -n "$(git -C "${target_dir}" status --porcelain -uno)" ]; then
-                    echo "FATAL: Repository at '${target_dir}' has unexpected local modifications in tracked files!" >&2
-                    git -C "${target_dir}" status --short -uno >&2
-                    return 1
-                fi
-
-                # 6. Fetch intended ref and checkout exact target commit SHA
-                echo "Fetching revision '${target_ref}' from origin..."
-                git -C "${target_dir}" fetch origin "${target_ref}"
-
-                echo "Checking out target commit '${target_sha}'..."
-                git -C "${target_dir}" checkout "${target_sha}"
-
-                # 7. Cryptographic confirmation of current HEAD matching target_sha
-                local current_sha
-                current_sha=$(git -C "${target_dir}" rev-parse HEAD)
-                echo "Verified deployment revision: ${current_sha}"
-                if [ "${current_sha}" != "${target_sha}" ]; then
-                    echo "FATAL: Deployment revision mismatch! Expected '${target_sha}' but checked out '${current_sha}'." >&2
-                    return 1
-                fi
-                return 0
-            }
-
-            sync_repo "$APP_DIR" "${{ github.repository }}" "${{ github.ref_name }}" "${{ github.sha }}"
+            # Execute canonical repository synchronizer and safe bootstrap initializer
+            SYNC_TMP=$(mktemp /tmp/sync_repo_XXXXXX.sh)
+            printf '%s' "$SYNC_SCRIPT_B64" | base64 -d > "$SYNC_TMP"
+            chmod +x "$SYNC_TMP"
+            bash "$SYNC_TMP" "$APP_DIR" "${{ github.repository }}" "${{ github.ref_name }}" "${{ github.sha }}"
+            rm -f "$SYNC_TMP"
 
             chmod +x "$APP_DIR/scripts/deploy_oracle.sh"
             bash "$APP_DIR/scripts/deploy_oracle.sh" "${{ steps.repo-name.outputs.image_name }}:${{ github.sha }}"
+
