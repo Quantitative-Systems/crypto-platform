@@ -128,20 +128,34 @@ jobs:
           username: ${{ secrets.ORACLE_SSH_USER || 'ubuntu' }}
           key: ${{ secrets.ORACLE_SSH_KEY }}
           port: ${{ secrets.ORACLE_SSH_PORT || 22 }}
+          script_stop: true
           script: |
-            set -e
+            set -euo pipefail
             APP_DIR="/home/${{ secrets.ORACLE_SSH_USER || 'ubuntu' }}/crypto-platform"
             mkdir -p "$APP_DIR/deploy" "$APP_DIR/scripts"
 
-            # Optional GHCR authentication for secure private package pulling without public visibility
+            # Secure GHCR authentication without echoing token to stdout/stderr
             if [ -n "${{ secrets.GHCR_READ_TOKEN }}" ]; then
-              echo "${{ secrets.GHCR_READ_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME || github.actor }}" --password-stdin
+              set +x
+              printf '%s' "${{ secrets.GHCR_READ_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME || github.actor }}" --password-stdin > /dev/null 2>&1
             fi
 
+            if [ ! -d "$APP_DIR/.git" ]; then
+              git clone "https://github.com/${{ github.repository }}.git" "$APP_DIR"
+            fi
             cd "$APP_DIR"
-            git fetch origin feature/crypto-platform-cloud-deployment || true
-            git checkout feature/crypto-platform-cloud-deployment || true
-            git pull origin feature/crypto-platform-cloud-deployment || true
+
+            # Strict git synchronization: halt immediately on failure without silent fallback
+            git fetch origin "${{ github.ref_name }}"
+            git checkout "${{ github.sha }}"
+
+            # Cryptographic confirmation: guarantee deployment executes the exact intended commit
+            CURRENT_SHA=$(git rev-parse HEAD)
+            echo "Verified deployment revision: ${CURRENT_SHA}"
+            if [ "${CURRENT_SHA}" != "${{ github.sha }}" ]; then
+              echo "FATAL: Deployment revision mismatch! Expected ${{ github.sha }} but found ${CURRENT_SHA}"
+              exit 1
+            fi
 
             chmod +x scripts/deploy_oracle.sh
             bash scripts/deploy_oracle.sh "${{ steps.repo-name.outputs.image_name }}:${{ github.sha }}"

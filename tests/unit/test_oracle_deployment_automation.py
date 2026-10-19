@@ -169,6 +169,28 @@ def test_github_workflow_dispatch_and_ghcr_registry():
     assert "ORACLE_SSH_KEY" in content
 
 
+def test_deploy_oracle_workflow_git_strictness_and_revision_lock():
+    """Verify deploy-oracle.yml enforces strict git revision locking and safe secret handling."""
+    wf_path = REPO_ROOT / ".github" / "workflows" / "deploy-oracle.yml"
+    content = wf_path.read_text(encoding="utf-8")
+
+    # Unsafe || true fallbacks must be removed from git commands
+    ssh_section = content.split("Execute Remote Deployment via SSH")[1]
+    assert "|| true" not in ssh_section
+
+    # Must checkout and cryptographically verify the intended commit SHA
+    assert 'git checkout "${{ github.sha }}"' in content
+    assert 'if [ "${CURRENT_SHA}" != "${{ github.sha }}" ]; then' in content
+
+    # SSH action must stop immediately on failure
+    assert "script_stop: true" in content
+    assert "set -euo pipefail" in content
+
+    # Secret tokens must not be echoed in cleartext
+    assert 'echo "${{ secrets.GHCR_READ_TOKEN }}"' not in content
+    assert "set +x" in content
+
+
 def test_script_rollback_when_new_container_fails_to_start():
     """Verify scripts/deploy_oracle.sh catches startup failure and executes rollback without set -e crash."""
     bash = get_git_bash()
