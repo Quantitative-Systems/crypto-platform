@@ -144,7 +144,7 @@ jobs:
 
             # Secure GHCR authentication without echoing token to stdout/stderr
             set +x
-            [ -z "${{ secrets.GHCR_READ_TOKEN }}" ] || printf '%s' "${{ secrets.GHCR_READ_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME || github.actor }}" --password-stdin > /dev/null 2>&1
+            [ -z "${{ secrets.GHCR_READ_TOKEN || secrets.GITHUB_TOKEN }}" ] || printf '%s' "${{ secrets.GHCR_READ_TOKEN || secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USERNAME || github.actor }}" --password-stdin > /dev/null 2>&1
 
             # Execute canonical repository synchronizer and safe bootstrap initializer
             SYNC_TMP=$(mktemp /tmp/sync_repo_XXXXXX.sh)
