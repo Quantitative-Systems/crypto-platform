@@ -100,19 +100,35 @@ async def test_api_strategy_lab_parse_and_evaluate(test_server):
 @pytest.mark.asyncio
 async def test_api_brokers_and_agent_controls(test_server):
     async with TestClient(TestServer(test_server.app)) as client:
-        # List brokers
+        # List brokers (public catalog)
         brk_resp = await client.get("/api/brokers")
         assert brk_resp.status == 200
         brokers = await brk_resp.json()
         assert len(brokers) == 3
 
-        # Agent style update
-        style_resp = await client.post("/api/agent/style", json={"style": "SWING"})
+        # Unauthenticated calls to agent controls MUST fail with 401
+        unauth_style = await client.post("/api/agent/style", json={"style": "SWING"})
+        assert unauth_style.status == 401
+
+        unauth_cycle = await client.post("/api/agent/cycle")
+        assert unauth_cycle.status == 401
+
+        # Register and authenticate a trader operator
+        reg_resp = await client.post("/api/auth/register", json={
+            "email": "operator_agent@fund.com",
+            "password": "SecurePassword2026!",
+        })
+        assert reg_resp.status == 200
+        token = (await reg_resp.json())["token"]
+        headers = {"Authorization": f"Bearer {token}"}
+
+        # Agent style update with authentication
+        style_resp = await client.post("/api/agent/style", json={"style": "SWING"}, headers=headers)
         assert style_resp.status == 200
         assert (await style_resp.json())["style"] == "SWING"
 
-        # Agent cycle
-        cycle_resp = await client.post("/api/agent/cycle")
+        # Agent cycle with authentication
+        cycle_resp = await client.post("/api/agent/cycle", headers=headers)
         assert cycle_resp.status == 200
         cycle_data = await cycle_resp.json()
         assert cycle_data["market_health"] == "HEALTHY"

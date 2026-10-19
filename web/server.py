@@ -32,6 +32,13 @@ from aiohttp import web
 from execution.autonomous_supervisor import AutonomousTradingSupervisor
 from notifications.alert_router import ALERTS
 from execution.safety.safety_gate import SAFETY_GATE
+from core.auth.user_model import UserRole
+from web.auth_guard import (
+    extract_bearer_token,
+    get_authenticated_tenant_id,
+    get_authenticated_user,
+    require_auth,
+)
 
 HTML_TERMINAL_PAGE = """<!DOCTYPE html>
 <html lang="en">
@@ -1067,6 +1074,9 @@ class PhaseRWebServer:
             }
         }
 
+        # Multi-Tenant Isolated Broker Registry: tenant_id -> {venue -> broker_info}
+        self.tenant_connected_brokers: Dict[str, Dict[str, Dict[str, Any]]] = {}
+
         # Load static pages
         self._load_static_templates()
 
@@ -1240,15 +1250,16 @@ class PhaseRWebServer:
         except Exception as e:
             return web.json_response({"error": str(e)}, status=400)
 
+    @require_auth()
     async def handle_auth_logout(self, request: web.Request) -> web.Response:
-        token = request.headers.get("Authorization", "").replace("Bearer ", "").strip()
+        token = extract_bearer_token(request)
         if token:
             self.auth_service.logout(token)
         return web.json_response({"status": "logged_out"})
 
+    @require_auth()
     async def handle_auth_me(self, request: web.Request) -> web.Response:
-        token = request.headers.get("Authorization", "").replace("Bearer ", "").strip()
-        user = self.auth_service.validate_session(token) if token else None
+        user = get_authenticated_user(request)
         if not user:
             return web.json_response({"error": "Unauthorized"}, status=401)
         return web.json_response(user.to_safe_dict())
@@ -1440,35 +1451,42 @@ class PhaseRWebServer:
                 pass
         self.ws_clients.clear()
 
+    @require_auth()
     async def handle_watchlist_toggle(self, request: web.Request) -> web.Response:
         try:
             data = await request.json()
             symbol = data.get("symbol", "")
-            tenant_id = data.get("tenant_id", "default")
+            user = get_authenticated_user(request)
+            tenant_id = user.tenant_id if user else "default"
             new_wl = self.market_service.toggle_watchlist(tenant_id, symbol)
             return web.json_response({"status": "updated", "watchlist": new_wl})
         except Exception as e:
             return web.json_response({"error": str(e)}, status=400)
 
     # --- Commercial Billing Handlers ---
+    @require_auth()
     async def handle_billing_status(self, request: web.Request) -> web.Response:
-        tenant_id = request.query.get("tenant_id", "default")
+        user = get_authenticated_user(request)
+        tenant_id = user.tenant_id if user else "default"
         return web.json_response({
             "status": self.billing_engine.get_tenant_billing_status(tenant_id),
             "available_plans": self.billing_engine.list_available_plans(),
         })
 
+    @require_auth(required_roles=[UserRole.TRADER, UserRole.ADMIN])
     async def handle_billing_plan_change(self, request: web.Request) -> web.Response:
         try:
+            user = get_authenticated_user(request)
+            tenant_id = user.tenant_id if user else "default"
             data = await request.json()
             plan_tier = data.get("tier", "AUTONOMOUS")
-            tenant_id = data.get("tenant_id", "default")
             res = self.billing_engine.assign_plan(tenant_id, plan_tier)
             return web.json_response(res)
         except Exception as e:
             return web.json_response({"error": str(e)}, status=400)
 
     # --- Risk Center Handlers ---
+    @require_auth()
     async def handle_risk(self, request: web.Request) -> web.Response:
         heat = getattr(self.supervisor.portfolio_governor, "total_heat", 0.0) if hasattr(self.supervisor, "portfolio_governor") else 0.0
         return web.json_response({
@@ -1601,19 +1619,23 @@ class PhaseRWebServer:
             }
         })
 
+    @require_auth()
     async def handle_strategy_lab_copilot(self, request: web.Request) -> web.Response:
         try:
+            user = get_authenticated_user(request)
+            tenant_id = user.tenant_id if user else "system"
             data = await request.json()
             prompt = data.get("prompt", "")
-            tenant_id = data.get("tenant_id", "system")
             res = self.strategy_lab.research_copilot_chat(prompt=prompt, tenant_id=tenant_id)
             return web.json_response(res)
         except Exception as e:
             return web.json_response({"error": str(e)}, status=400)
 
     # --- Strategy Handlers ---
+    @require_auth()
     async def handle_strategies_list(self, request: web.Request) -> web.Response:
-        tenant_id = request.query.get("tenant_id")
+        user = get_authenticated_user(request)
+        tenant_id = user.tenant_id if user else "system"
         entries = self.strategy_library.list_entries(tenant_id=tenant_id)
         return web.json_response([e.to_dict() for e in entries])
 
@@ -1621,7 +1643,9 @@ class PhaseRWebServer:
         try:
             data = await request.json()
             prompt = data.get("prompt", "")
-            tenant_id = data.get("tenant_id", "system")
+            token = extract_bearer_token(request)
+            user = self.auth_service.validate_session(token) if token else None
+            tenant_id = user.tenant_id if user else "system"
             spec = self.strategy_lab.parse_natural_language(prompt=prompt, tenant_id=tenant_id)
             return web.json_response({"specification": spec.to_dict()})
         except Exception as e:
@@ -1639,8 +1663,10 @@ class PhaseRWebServer:
             return web.json_response({"error": str(e)}, status=400)
 
     # --- Accounts, Brokers & Suitability ---
+    @require_auth()
     async def handle_accounts(self, request: web.Request) -> web.Response:
-        tenant_id = request.query.get("tenant_id")
+        user = get_authenticated_user(request)
+        tenant_id = user.tenant_id if user else "system"
         return web.json_response(self.supervisor.account_manager.list_accounts(tenant_id=tenant_id))
 
     async def handle_brokers(self, request: web.Request) -> web.Response:
@@ -1664,16 +1690,18 @@ class PhaseRWebServer:
         except Exception as e:
             return web.json_response({"error": str(e)}, status=400)
 
+    @require_auth(required_roles=[UserRole.TRADER, UserRole.ADMIN])
     async def handle_broker_connect(self, request: web.Request) -> web.Response:
         """Connects a live or testnet exchange broker account with strict non-custodial API verification."""
         try:
+            user = get_authenticated_user(request)
+            tenant_id = user.tenant_id if user else "default"
             data = await request.json()
             venue = str(data.get("venue", "BINANCE")).upper()
             api_key = str(data.get("api_key", "")).strip()
             api_secret = str(data.get("api_secret", "")).strip()
             is_testnet = bool(data.get("is_testnet", True))
             permissions = data.get("permissions", {})
-            tenant_id = str(data.get("tenant_id", "default"))
 
             # 1. Non-custodial risk firewall verification
             from execution.risk.custody_risk_firewall import CustodyRiskFirewall
@@ -1682,10 +1710,10 @@ class PhaseRWebServer:
             if not is_safe:
                 return web.json_response({"error": safety_msg, "status": "REJECTED_UNSAFE_PERMISSIONS"}, status=400)
 
-            # Masked API key for UI display
+            # Masked API key for UI display (credentials are never logged or echoed)
             masked_key = f"{api_key[:4]}...{api_key[-4:]}" if len(api_key) >= 8 else "DEMO_SANDBOX_KEY"
 
-            self.connected_brokers[venue] = {
+            broker_entry = {
                 "venue": venue,
                 "name": f"{venue} {'Testnet' if is_testnet else 'Production'}",
                 "environment": "TESTNET" if is_testnet else "PRODUCTION",
@@ -1698,8 +1726,14 @@ class PhaseRWebServer:
                 "balance_usd": 100_000.0,
                 "margin_available_usd": 100_000.0,
                 "status": "CONNECTED",
-                "permissions": ["TRADE_ONLY", "ZERO_WITHDRAWALS"]
+                "permissions": ["TRADE_ONLY", "ZERO_WITHDRAWALS"],
+                "tenant_id": tenant_id,
             }
+
+            if tenant_id not in self.tenant_connected_brokers:
+                self.tenant_connected_brokers[tenant_id] = {}
+            self.tenant_connected_brokers[tenant_id][venue] = broker_entry
+            self.connected_brokers[venue] = broker_entry
 
             # Register account in account manager if available
             if hasattr(self.supervisor, "account_manager"):
@@ -1723,23 +1757,39 @@ class PhaseRWebServer:
         except Exception as e:
             return web.json_response({"error": str(e)}, status=400)
 
+    @require_auth(required_roles=[UserRole.TRADER, UserRole.ADMIN])
     async def handle_broker_disconnect(self, request: web.Request) -> web.Response:
         """Disconnects an active broker account."""
         try:
+            user = get_authenticated_user(request)
+            tenant_id = user.tenant_id if user else "default"
             data = await request.json()
             venue = str(data.get("venue", "")).upper()
-            if venue in self.connected_brokers and venue != "PAPER":
-                del self.connected_brokers[venue]
-                return web.json_response({"status": "DISCONNECTED", "venue": venue})
-            elif venue == "PAPER":
+            if venue == "PAPER":
                 return web.json_response({"status": "CANNOT_DISCONNECT_PAPER", "message": "Default paper sandbox must remain accessible."}, status=400)
-            return web.json_response({"error": f"Broker {venue} not found or not active"}, status=404)
+
+            tenant_brokers = self.tenant_connected_brokers.get(tenant_id, {})
+            if venue in tenant_brokers:
+                del tenant_brokers[venue]
+                self.connected_brokers.pop(venue, None)
+                return web.json_response({"status": "DISCONNECTED", "venue": venue})
+            return web.json_response({"error": f"Broker {venue} not found or not active for this tenant"}, status=404)
         except Exception as e:
             return web.json_response({"error": str(e)}, status=400)
 
+    @require_auth()
     async def handle_broker_active(self, request: web.Request) -> web.Response:
-        """Returns list of currently active and verified broker connections."""
-        return web.json_response(list(self.connected_brokers.values()))
+        """Returns list of currently active and verified broker connections for the authenticated tenant."""
+        user = get_authenticated_user(request)
+        tenant_id = user.tenant_id if user else "default"
+        active_list = []
+        if "PAPER" in self.connected_brokers:
+            active_list.append(self.connected_brokers["PAPER"])
+        tenant_brokers = self.tenant_connected_brokers.get(tenant_id, {})
+        for b in tenant_brokers.values():
+            if b.get("venue") != "PAPER":
+                active_list.append(b)
+        return web.json_response(active_list)
 
     async def handle_manifest(self, request: web.Request) -> web.Response:
         """Serves the Progressive Web App (PWA) manifest."""
@@ -1756,6 +1806,7 @@ class PhaseRWebServer:
         return web.Response(text="// No SW", content_type="application/javascript")
 
     # --- Agent Orchestration ---
+    @require_auth(required_roles=[UserRole.TRADER, UserRole.ADMIN])
     async def handle_agent_cycle(self, request: web.Request) -> web.Response:
         heat = getattr(self.supervisor.portfolio_governor, "total_heat", 0.0) if hasattr(self.supervisor, "portfolio_governor") else 0.0
         pos_count = len(self.supervisor.active_positions)
@@ -1766,6 +1817,7 @@ class PhaseRWebServer:
         )
         return web.json_response(report.to_dict())
 
+    @require_auth(required_roles=[UserRole.TRADER, UserRole.ADMIN])
     async def handle_agent_style(self, request: web.Request) -> web.Response:
         try:
             from accounts.suitability_engine import TradingStyle
@@ -1776,19 +1828,23 @@ class PhaseRWebServer:
         except Exception as e:
             return web.json_response({"error": str(e)}, status=400)
 
+    @require_auth(required_roles=[UserRole.TRADER, UserRole.ADMIN])
     async def handle_agent_pause(self, request: web.Request) -> web.Response:
         self.agent.pause_trading("Operator trigger via REST API")
         return web.json_response({"status": "PAUSED"})
 
+    @require_auth(required_roles=[UserRole.TRADER, UserRole.ADMIN])
     async def handle_agent_resume(self, request: web.Request) -> web.Response:
         self.agent.resume_trading()
         return web.json_response({"status": "OBSERVING"})
 
     # --- Blotters ---
+    @require_auth()
     async def handle_decisions(self, request: web.Request) -> web.Response:
         decisions = [d.to_dict() for d in self.supervisor.decisions_history[-50:]]
         return web.json_response(decisions)
 
+    @require_auth()
     async def handle_positions(self, request: web.Request) -> web.Response:
         active = [p.to_dict() if hasattr(p, "to_dict") else str(p) for p in self.supervisor.active_positions.values()]
         return web.json_response({
@@ -1796,18 +1852,22 @@ class PhaseRWebServer:
             "closed_positions": self.supervisor.closed_positions[-25:],
         })
 
+    @require_auth()
     async def handle_orders(self, request: web.Request) -> web.Response:
         orders = [o.to_dict() if hasattr(o, "to_dict") else str(o) for o in getattr(self.supervisor, "orders_history", [])]
         return web.json_response(orders)
 
+    @require_auth()
     async def handle_reconciliation(self, request: web.Request) -> web.Response:
         recon = self.supervisor.run_reconciliation()
         return web.json_response(recon.to_dict())
 
+    @require_auth()
     async def handle_drift(self, request: web.Request) -> web.Response:
         drift = self.supervisor.drift_monitor.evaluate_drift()
         return web.json_response(drift.to_dict())
 
+    @require_auth()
     async def handle_alerts(self, request: web.Request) -> web.Response:
         return web.json_response(ALERTS.get_recent_alerts(limit=50))
 
