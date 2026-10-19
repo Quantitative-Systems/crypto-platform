@@ -15,6 +15,7 @@ import asyncio
 import json
 import subprocess
 import sys
+import os
 from pathlib import Path
 import pytest
 import aiohttp
@@ -65,12 +66,17 @@ async def test_production_server_api_websocket_and_restart_persistence():
     base_url = f"http://{host}:{port}"
     ws_url = f"ws://{host}:{port}/ws/market-state"
 
+    # Ensure child process does not inherit pytest internal env that forces in-memory DB
+    child_env = os.environ.copy()
+    child_env.pop("PYTEST_CURRENT_TEST", None)
+
     # Step 1: Start production server process and capture stdout/stderr for diagnostics
     proc1 = subprocess.Popen(
         [sys.executable, str(REPO_ROOT / "main.py"), "--host", host, "--port", str(port), "--mode", "PAPER"],
         cwd=str(REPO_ROOT),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
+        env=child_env,
     )
 
     try:
@@ -194,6 +200,7 @@ async def test_production_server_api_websocket_and_restart_persistence():
         cwd=str(REPO_ROOT),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
+        env=child_env,
     )
 
     try:
