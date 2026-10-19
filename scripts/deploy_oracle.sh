@@ -12,16 +12,29 @@ set -euo pipefail
 # 5. Automated health check with instant rollback on failure
 # ==============================================================================
 
+# Determine script location and project root
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+# Always execute with working directory set to project root
+cd "${PROJECT_ROOT}"
+
 IMAGE_NAME="${1:-ghcr.io/quantitative-systems/crypto-platform:latest}"
 export IMAGE_NAME
 CONTAINER_NAME="crypto-engine"
 ROLLBACK_NAME="crypto-engine-prev"
+
+# If COMPOSE_FILE is not provided, default to deploy/docker-compose.oracle.yml
 COMPOSE_FILE="${COMPOSE_FILE:-deploy/docker-compose.oracle.yml}"
+# If COMPOSE_FILE is relative, make it absolute anchored at PROJECT_ROOT
+if [[ "${COMPOSE_FILE}" != /* ]] && [[ "${COMPOSE_FILE}" != [a-zA-Z]:/* ]] && [[ "${COMPOSE_FILE}" != [a-zA-Z]:\\* ]]; then
+    COMPOSE_FILE="${PROJECT_ROOT}/${COMPOSE_FILE}"
+fi
 
 # Probe Timing Configurations (Overridable for fast test suites)
 HEALTH_ATTEMPTS="${HEALTH_ATTEMPTS:-15}"
 HEALTH_SLEEP="${HEALTH_SLEEP:-2}"
-ROLLBACK_ATTEMPTS="${ROLLBACK_ATTEMPTS:-10}"
+ROLLBACK_ATTEMPTS="${ROLLBACK_ATTEMPTS:-15}"
 ROLLBACK_SLEEP="${ROLLBACK_SLEEP:-2}"
 
 # Optional command overrides for test harnesses
@@ -60,7 +73,23 @@ except Exception:
 echo "======================================================================"
 echo "CRYPTO ENGINE — DEPLOYMENT TO ORACLE HOST"
 echo "Target Image: ${IMAGE_NAME}"
+echo "Project Root: ${PROJECT_ROOT}"
+echo "Compose File: ${COMPOSE_FILE}"
 echo "======================================================================"
+
+# Step 0: Pre-flight validation of Compose file and Docker config
+# Invariant: Must fail closed BEFORE stopping or renaming the running container!
+echo "[0/5] Pre-flight validation of Compose file and Docker environment..."
+if [ ! -f "${COMPOSE_FILE}" ]; then
+    echo "FATAL: Deployment compose file does not exist: ${COMPOSE_FILE}" >&2
+    exit 1
+fi
+
+if ! IMAGE_NAME="${IMAGE_NAME}" docker compose -f "${COMPOSE_FILE}" config >/dev/null 2>&1; then
+    echo "FATAL: Docker Compose configuration validation failed for ${COMPOSE_FILE}!" >&2
+    IMAGE_NAME="${IMAGE_NAME}" docker compose -f "${COMPOSE_FILE}" config >&2 || true
+    exit 1
+fi
 
 # Step 1: Pull updated image (fails closed before touching running containers)
 echo "[1/5] Pulling verified container image from registry..."
@@ -127,29 +156,43 @@ else
     echo "======================================================================"
     # Tear down failed new container (without touching named volumes)
     IMAGE_NAME="${IMAGE_NAME}" docker compose -f "${COMPOSE_FILE}" down 2>/dev/null || true
+    docker rm -f "${CONTAINER_NAME}" 2>/dev/null || true
     
     if [ "${HAD_PREV_CONTAINER}" = true ] && [ "$(docker ps -aq -f name=^/${ROLLBACK_NAME}$)" ]; then
         echo "Restoring ${ROLLBACK_NAME} -> ${CONTAINER_NAME}..."
         docker rename "${ROLLBACK_NAME}" "${CONTAINER_NAME}" 2>/dev/null || true
         docker start "${CONTAINER_NAME}"
         
+        # Verify restored container status
+        CONTAINER_STATUS=$(docker inspect --format '{{.State.Status}}' "${CONTAINER_NAME}" 2>/dev/null || echo "unknown")
+        echo "Restored container status: ${CONTAINER_STATUS}"
+
+        # Verify port binding
+        PORT_BINDING=$(docker port "${CONTAINER_NAME}" 2>/dev/null || echo "none")
+        echo "Restored container port binding: ${PORT_BINDING}"
+
         # Verify restored container health
         echo "Verifying health of restored rollback container..."
         ROLLBACK_HEALTHY=false
         for attempt in $(seq 1 "${ROLLBACK_ATTEMPTS}"); do
             RESTORED_HEALTH=$(curl -fsS --max-time 5 http://127.0.0.1:8080/api/health 2>/dev/null || true)
             if [ -n "${RESTORED_HEALTH}" ] && validate_health_json "${RESTORED_HEALTH}"; then
-                echo "Rollback verification attempt ${attempt}: PASS (Restored container healthy)"
+                echo "Rollback verification attempt ${attempt}: PASS (Restored container healthy & Real Capital=\$0.00)"
                 ROLLBACK_HEALTHY=true
                 break
             fi
+            echo "Rollback health check attempt ${attempt}: waiting for container (sleeping ${ROLLBACK_SLEEP}s)..."
             sleep "${ROLLBACK_SLEEP}"
         done
         
         if [ "${ROLLBACK_HEALTHY}" = true ]; then
             echo "Rollback successfully restored previous working container."
+            echo "WARNING: Deployment failed, but previous version is confirmed healthy."
         else
-            echo "CRITICAL: Restored container is running but health check did not pass within window."
+            echo "CRITICAL: Rollback failed! Restored container did not pass health check within window."
+            echo "--- Restored Container Logs (last 50 lines) ---"
+            docker logs --tail 50 "${CONTAINER_NAME}" 2>&1 || true
+            echo "-----------------------------------------------"
         fi
     else
         echo "No prior running container was available to rollback."

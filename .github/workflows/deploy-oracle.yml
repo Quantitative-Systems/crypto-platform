@@ -153,6 +153,7 @@ jobs:
             bash "$SYNC_TMP" "$APP_DIR" "${{ github.repository }}" "${{ github.ref_name }}" "${{ github.sha }}"
             rm -f "$SYNC_TMP"
 
+            cd "$APP_DIR"
             chmod +x "$APP_DIR/scripts/deploy_oracle.sh"
             bash "$APP_DIR/scripts/deploy_oracle.sh" "${{ steps.repo-name.outputs.image_name }}:${{ github.sha }}"
 

@@ -608,3 +608,235 @@ exit 0
         assert "compose" in logged and "down" in logged
         assert "rename crypto-engine-prev crypto-engine" in logged
         assert "start crypto-engine" in logged
+
+
+def test_script_fails_closed_when_compose_file_missing_without_stopping_existing_container():
+    """Verify scripts/deploy_oracle.sh fails closed when Compose file is missing, leaving existing container running."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Git Bash not found in environment")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        log_file = tmp_path / "mock_docker.log"
+
+        # Mock docker CLI that records commands and simulates an existing running container
+        mock_docker = tmp_path / "docker"
+        mock_docker.write_text(f"""#!/usr/bin/env bash
+echo "$@" >> "{log_file.as_posix()}"
+if [[ "$*" == *"ps -q -f name=^/crypto-engine$"* ]]; then
+    echo "running_container_999"
+    exit 0
+fi
+exit 0
+""", encoding="utf-8", newline="\n")
+        mock_docker.chmod(0o755)
+
+        script_path = REPO_ROOT / "scripts" / "deploy_oracle.sh"
+        env = os.environ.copy()
+        env["PATH"] = f"{tmp_path.as_posix()}{os.pathsep}{env['PATH']}"
+        env["DOCKER_BIN"] = mock_docker.as_posix()
+        # Non-existent compose file
+        env["COMPOSE_FILE"] = (tmp_path / "nonexistent_compose.yml").as_posix()
+
+        res = subprocess.run(
+            [bash, script_path.as_posix(), "mock-image:test"],
+            cwd=str(REPO_ROOT),
+            env=env,
+            capture_output=True,
+            text=True,
+        )
+
+        assert res.returncode == 1, "Script should exit 1 when Compose file does not exist"
+        assert "Deployment compose file does not exist" in res.stderr
+
+        # Crucial invariant: The existing running container was NEVER stopped or renamed
+        if log_file.exists():
+            logged = log_file.read_text(encoding="utf-8")
+            assert "stop crypto-engine" not in logged, "Existing container must not be stopped when Compose file is missing"
+            assert "rename crypto-engine" not in logged, "Existing container must not be renamed when Compose file is missing"
+
+
+def test_script_fails_closed_when_compose_config_invalid_without_stopping_existing_container():
+    """Verify scripts/deploy_oracle.sh validates Docker Compose config before touching existing container."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Git Bash not found in environment")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        log_file = tmp_path / "mock_docker.log"
+
+        # Mock docker CLI that simulates compose config failure
+        mock_docker = tmp_path / "docker"
+        mock_docker.write_text(f"""#!/usr/bin/env bash
+echo "$@" >> "{log_file.as_posix()}"
+if [[ "$*" == *"compose"* ]] && [[ "$*" == *"config"* ]]; then
+    echo "Simulated compose config error: syntax invalid" >&2
+    exit 1
+elif [[ "$*" == *"ps -q -f name=^/crypto-engine$"* ]]; then
+    echo "running_container_999"
+    exit 0
+fi
+exit 0
+""", encoding="utf-8", newline="\n")
+        mock_docker.chmod(0o755)
+
+        dummy_compose = tmp_path / "dummy_compose.yml"
+        dummy_compose.write_text("version: '3.8'\nservices:\n  dummy:\n    image: dummy", encoding="utf-8")
+
+        script_path = REPO_ROOT / "scripts" / "deploy_oracle.sh"
+        env = os.environ.copy()
+        env["PATH"] = f"{tmp_path.as_posix()}{os.pathsep}{env['PATH']}"
+        env["DOCKER_BIN"] = mock_docker.as_posix()
+        env["COMPOSE_FILE"] = dummy_compose.as_posix()
+
+        res = subprocess.run(
+            [bash, script_path.as_posix(), "mock-image:test"],
+            cwd=str(REPO_ROOT),
+            env=env,
+            capture_output=True,
+            text=True,
+        )
+
+        assert res.returncode == 1, "Script should exit 1 when Compose config validation fails"
+        assert "Docker Compose configuration validation failed" in res.stderr
+
+        # Crucial invariant: existing container must NOT be touched
+        logged = log_file.read_text(encoding="utf-8")
+        assert "stop crypto-engine" not in logged
+        assert "rename crypto-engine" not in logged
+
+
+def test_script_rollback_reports_failure_and_dumps_logs_when_health_fails():
+    """Verify rollback failure is accurately reported with status, port binding, and container logs."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Git Bash not found in environment")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        log_file = tmp_path / "mock_docker.log"
+
+        mock_docker = tmp_path / "docker"
+        mock_docker.write_text(f"""#!/usr/bin/env bash
+echo "$@" >> "{log_file.as_posix()}"
+if [[ "$*" == *"pull"* ]]; then
+    exit 0
+elif [[ "$*" == *"ps -q -f name=^/crypto-engine$"* ]]; then
+    echo "existing_container_id_123"
+    exit 0
+elif [[ "$*" == *"ps -aq -f name=^/crypto-engine-prev$"* ]]; then
+    echo "existing_prev_id_456"
+    exit 0
+elif [[ "$*" == *"inspect --format"* ]]; then
+    echo "restarting"
+    exit 0
+elif [[ "$*" == *"port crypto-engine"* ]]; then
+    echo "8080/tcp -> 127.0.0.1:8080"
+    exit 0
+elif [[ "$*" == *"logs --tail 50 crypto-engine"* ]]; then
+    echo "CRITICAL: Database corruption detected on startup"
+    exit 0
+fi
+exit 0
+""", encoding="utf-8", newline="\n")
+        mock_docker.chmod(0o755)
+
+        # Mock curl that always fails
+        mock_curl = tmp_path / "curl"
+        mock_curl.write_text("""#!/usr/bin/env bash
+echo "curl: (7) Failed to connect to localhost port 8080" >&2
+exit 7
+""", encoding="utf-8", newline="\n")
+        mock_curl.chmod(0o755)
+
+        dummy_compose = tmp_path / "dummy_compose.yml"
+        dummy_compose.write_text("version: '3.8'\nservices:\n  dummy:\n    image: dummy", encoding="utf-8")
+
+        script_path = REPO_ROOT / "scripts" / "deploy_oracle.sh"
+        env = os.environ.copy()
+        env["PATH"] = f"{tmp_path.as_posix()}{os.pathsep}{env['PATH']}"
+        env["DOCKER_BIN"] = mock_docker.as_posix()
+        env["CURL_BIN"] = mock_curl.as_posix()
+        env["COMPOSE_FILE"] = dummy_compose.as_posix()
+        env["HEALTH_ATTEMPTS"] = "2"
+        env["HEALTH_SLEEP"] = "0"
+        env["ROLLBACK_ATTEMPTS"] = "2"
+        env["ROLLBACK_SLEEP"] = "0"
+
+        res = subprocess.run(
+            [bash, script_path.as_posix(), "mock-image:test"],
+            cwd=str(REPO_ROOT),
+            env=env,
+            capture_output=True,
+            text=True,
+        )
+
+        assert res.returncode == 1, "Script should exit 1 when rollback verification fails"
+        assert "CRITICAL: Rollback failed! Restored container did not pass health check within window." in res.stdout
+        assert "Restored container status: restarting" in res.stdout
+        assert "Restored container port binding: 8080/tcp -> 127.0.0.1:8080" in res.stdout
+        assert "--- Restored Container Logs (last 50 lines) ---" in res.stdout
+        assert "CRITICAL: Database corruption detected on startup" in res.stdout
+        assert "Rollback successfully restored previous working container." not in res.stdout
+
+
+def test_script_resolves_compose_file_when_invoked_from_outside_app_dir():
+    """Verify scripts/deploy_oracle.sh resolves deploy/docker-compose.oracle.yml when run from outside REPO_ROOT."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Git Bash not found in environment")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        log_file = tmp_path / "mock_docker.log"
+
+        # Mock docker CLI that succeeds on pull, config, ps, and up
+        mock_docker = tmp_path / "docker"
+        mock_docker.write_text(f"""#!/usr/bin/env bash
+echo "$@" >> "{log_file.as_posix()}"
+if [[ "$*" == *"compose"* ]] && [[ "$*" == *"config"* ]]; then
+    exit 0
+elif [[ "$*" == *"pull"* ]]; then
+    exit 0
+elif [[ "$*" == *"ps"* ]]; then
+    exit 0
+elif [[ "$*" == *"compose"* ]] && [[ "$*" == *"up -d"* ]]; then
+    exit 0
+fi
+exit 0
+""", encoding="utf-8", newline="\n")
+        mock_docker.chmod(0o755)
+
+        # Mock curl that reports HEALTHY
+        mock_curl = tmp_path / "curl"
+        mock_curl.write_text("""#!/usr/bin/env bash
+echo '{"status": "HEALTHY", "real_capital_authorized": 0.0}'
+exit 0
+""", encoding="utf-8", newline="\n")
+        mock_curl.chmod(0o755)
+
+        script_path = REPO_ROOT / "scripts" / "deploy_oracle.sh"
+        env = os.environ.copy()
+        env["PATH"] = f"{tmp_path.as_posix()}{os.pathsep}{env['PATH']}"
+        env["DOCKER_BIN"] = mock_docker.as_posix()
+        env["CURL_BIN"] = mock_curl.as_posix()
+        # Do not set COMPOSE_FILE so it defaults to deploy/docker-compose.oracle.yml
+        env.pop("COMPOSE_FILE", None)
+        env["HEALTH_ATTEMPTS"] = "2"
+        env["HEALTH_SLEEP"] = "0"
+
+        # Execute from outside REPO_ROOT (tmp_path)
+        res = subprocess.run(
+            [bash, script_path.as_posix(), "mock-image:test"],
+            cwd=str(tmp_path),
+            env=env,
+            capture_output=True,
+            text=True,
+        )
+
+        assert res.returncode == 0, f"Script should succeed from outside REPO_ROOT: {res.stderr}"
+        assert "CRYPTO ENGINE IS LIVE & HEALTHY ON 127.0.0.1:8080" in res.stdout
+        assert "deploy/docker-compose.oracle.yml" in res.stdout
+
