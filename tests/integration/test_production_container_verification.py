@@ -93,8 +93,7 @@ async def test_production_server_api_websocket_and_restart_persistence():
                 out, err = _cleanup_and_get_output(proc1, "production_server")
                 # Ensure process is fully cleaned up
                 raise AssertionError(
-                    "Production server failed to report READY state within 15 seconds\n
-Captured stdout:\n" + out + "\nCaptured stderr:\n" + err
+                    "Production server failed to report READY state within 15 seconds\nCaptured stdout:\n" + out + "\nCaptured stderr:\n" + err
                 )
 
             # Step 3: Test Health and Invariant Endpoints
@@ -215,8 +214,7 @@ Captured stdout:\n" + out + "\nCaptured stderr:\n" + err
             if not ready_after_restart:
                 out, err = _cleanup_and_get_output(proc2, "production_server_restart")
                 raise AssertionError(
-                    "Server failed to recover and become READY after restart\n
-Captured stdout:\n" + out + "\nCaptured stderr:\n" + err
+                    "Server failed to recover and become READY after restart\nCaptured stdout:\n" + out + "\nCaptured stderr:\n" + err
                 )
 
             # Check that database and state persisted
