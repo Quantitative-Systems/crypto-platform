@@ -21,7 +21,7 @@ from __future__ import annotations
 
 import time
 import uuid
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, fields
 from enum import Enum
 from typing import Any, Dict, List, Optional, Set, Tuple
 
@@ -115,6 +115,31 @@ class PhaseRDecisionRecord:
         data = dict(d)
         if isinstance(data.get("decision"), str):
             data["decision"] = DecisionType(data["decision"])
+        # Backward compatibility for historical decision ledger keys
+        if "asset" not in data and "symbol" in data:
+            data["asset"] = data["symbol"]
+        if "decision_id" not in data and "trade_id" in data:
+            data["decision_id"] = data["trade_id"]
+        if "timeframe_set" not in data and "set_id" in data:
+            data["timeframe_set"] = data["set_id"]
+        if "initial_stop_price" not in data and "stop_price" in data:
+            data["initial_stop_price"] = data["stop_price"]
+        if isinstance(data.get("direction"), str):
+            dir_str = data["direction"].upper()
+            data["direction"] = 1 if dir_str in ("BUY", "LONG") else (-1 if dir_str in ("SELL", "SHORT") else 0)
+        data.setdefault("lineage_id", f"LIN_{data.get('decision_id', 'HIST')}")
+        data.setdefault("event_id", f"EVT_{data.get('decision_id', 'HIST')}")
+        data.setdefault("phase", "CONTINUATION")
+        data.setdefault("reason_codes", [])
+        data.setdefault("confidence_score", 0.50)
+        data.setdefault("confidence_components", {})
+        data.setdefault("fractal_alignment", "FULLY_ALIGNED")
+        data.setdefault("fractal_bias", "BULLISH" if data.get("direction", 1) == 1 else "BEARISH")
+        data.setdefault("planned_r", float(data.get("target_r", 4.0)))
+        data.setdefault("risk_pct", 0.01)
+        data.setdefault("portfolio_heat_pct", 0.01)
+        data.setdefault("governor_passed", True)
+
         valid_fields = {f.name for f in fields(cls)}
         return cls(**{k: v for k, v in data.items() if k in valid_fields})
 
@@ -221,7 +246,24 @@ class PhaseRDecisionEngine:
                 reasons=reasons,
             )
 
-        if ltf_data is None or len(ltf_data["c"]) < 60:
+        htf_tf = cfg["htf"]
+        mtf_tf = cfg["mtf"]
+        htf_data = all_timeframe_data.get(htf_tf)
+        mtf_data = all_timeframe_data.get(mtf_tf)
+
+        if (
+            ltf_data is None
+            or "c" not in ltf_data
+            or len(ltf_data["c"]) < 60
+            or htf_data is None
+            or "close_ts" not in htf_data
+            or "c" not in htf_data
+            or len(htf_data["c"]) < 30
+            or mtf_data is None
+            or "close_ts" not in mtf_data
+            or "c" not in mtf_data
+            or len(mtf_data["c"]) < 30
+        ):
             reasons.append(PhaseRNoTradeReason.NO_STRUCTURAL_SETUP.value)
             return self._build_no_trade(
                 decision_id=decision_id,
@@ -287,10 +329,19 @@ class PhaseRDecisionEngine:
         hyp = self.fractal_engine.hypothesis_engine.evaluate_hypothesis(node, set_name, hypothesis_type)
         confidence = hyp.confidence_score if hyp else 0.35
 
+        mtf_ctx = getattr(hyp, "mtf_context", None) if hyp else None
+        target_dest = getattr(hyp, "target_destination", None) if hyp else None
+        has_location = bool(
+            hyp and (
+                (mtf_ctx and ("DISCOUNT" in str(mtf_ctx) or "PREMIUM" in str(mtf_ctx)))
+                or (target_dest and ("DISCOUNT" in str(target_dest) or "PREMIUM" in str(target_dest)))
+            )
+        )
+
         conf_components = {
             "base": 0.35,
             "alignment": 0.25 if node.get_alignment_for_set(set_name) == FractalAlignment.FULLY_ALIGNED else 0.10,
-            "location": 0.20 if (hyp and "DISCOUNT" in str(hyp.target_zone or "") or "PREMIUM" in str(hyp.target_zone or "")) else 0.0,
+            "location": 0.20 if has_location else 0.0,
             "macro_htf": 0.15 if node.fractal_bias in (FractalBias.BULLISH, FractalBias.STRONG_BULLISH) and direction == 1 else 0.0,
             "cross_support": 0.05 * min(self.fractal_engine.hypothesis_engine._count_cross_set_support(node, set_name, direction), 2),
         }

@@ -357,10 +357,21 @@ class AutonomousTradingSupervisor:
             ledger_records: List[PhaseRDecisionRecord] = []
             try:
                 with open(self.ledger_path, "r", encoding="utf-8") as f:
-                    for line in f:
+                    for line_num, line in enumerate(f, 1):
                         line = line.strip()
                         if line:
-                            rec_dict = json.loads(line)
+                            try:
+                                rec_dict = json.loads(line)
+                            except Exception as json_err:
+                                logger.critical(
+                                    f"Decision ledger JSON parse failure on line {line_num} "
+                                    f"in {self.ledger_path}: {json_err}"
+                                )
+                                self._abort_recovery(
+                                    f"Decision ledger corruption on line {line_num}: {json_err}"
+                                )
+                                return
+
                             ts = rec_dict.get("timestamp_ms", 0)
                             if ts > max_ledger_ts:
                                 max_ledger_ts = ts
@@ -368,10 +379,19 @@ class AutonomousTradingSupervisor:
                                 ledger_trade_count += 1
                             try:
                                 ledger_records.append(PhaseRDecisionRecord.from_dict(rec_dict))
-                            except Exception:
-                                pass
+                            except Exception as parse_err:
+                                logger.critical(
+                                    f"Decision ledger record deserialization error on line {line_num} "
+                                    f"in {self.ledger_path}: {parse_err}"
+                                )
+                                self._abort_recovery(
+                                    f"Decision ledger deserialization failure on line {line_num}: {parse_err}"
+                                )
+                                return
             except Exception as ex:
-                logger.warning(f"Error inspecting decision ledger: {ex}")
+                logger.critical(f"Fatal error reading decision ledger {self.ledger_path}: {ex}")
+                self._abort_recovery(f"Fatal error reading decision ledger: {ex}")
+                return
 
             ckpt_ts = checkpoint.get("timestamp_ms", 0)
             if max_ledger_ts > 0 and ckpt_ts < max_ledger_ts - 5000:
@@ -495,6 +515,12 @@ class AutonomousTradingSupervisor:
 
     def seed_historical_state(self) -> Dict[str, int]:
         """Seeds continuous candle engine from existing disk cache."""
+        if self.system_status == "RECOVERY_FAILED_HALTED" or self.is_persistence_blocked():
+            logger.warning(
+                f"Skipping candle cache seeding: supervisor is halted in state "
+                f"'{self.system_status}' (persistence barrier blocked: {self.is_persistence_blocked()})."
+            )
+            return {sym: 0 for sym in self.symbols}
         counts = {}
         for sym in self.symbols:
             loaded = self.candle_engine.seed_from_disk_cache(sym)
@@ -579,13 +605,20 @@ class AutonomousTradingSupervisor:
         evaluated_cards: List[PhaseRDecisionRecord] = []
         for set_name in ["SET_2", "SET_3", "SET_4"]:
             for hyp in ["CONTINUATION", "PULLBACK"]:
-                decision_card = engine.evaluate_opportunity(
-                    set_name=set_name,
-                    hypothesis_type=hyp,
-                    all_timeframe_data=all_tf_data,
-                    data_health=data_health,
-                    eval_timestamp_ms=candle.close_ts,
-                )
+                try:
+                    decision_card = engine.evaluate_opportunity(
+                        set_name=set_name,
+                        hypothesis_type=hyp,
+                        all_timeframe_data=all_tf_data,
+                        data_health=data_health,
+                        eval_timestamp_ms=candle.close_ts,
+                    )
+                except Exception as ex:
+                    logger.error(
+                        f"Error evaluating opportunity for {sym} {set_name} {hyp} @ {candle.close_ts}: {ex}",
+                        exc_info=True,
+                    )
+                    continue
                 evaluated_cards.append(decision_card)
 
                 # Record decision evaluation timestamp

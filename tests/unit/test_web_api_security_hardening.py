@@ -298,3 +298,135 @@ async def test_fail_closed_safety_parameters_preserved():
     """Fail-closed safeguards must remain locked at $0.00 capital."""
     assert SAFETY_GATE.real_capital_authorized_usd == 0.00
     assert SAFETY_GATE.is_live_execution is False
+
+
+def test_terminal_html_security_and_auth_modal():
+    """Verify that app_terminal.html contains Bearer token injection and the Auth modal."""
+    from pathlib import Path
+    terminal_path = Path(__file__).resolve().parent.parent.parent / "web" / "static" / "app_terminal.html"
+    assert terminal_path.exists(), f"app_terminal.html must exist at {terminal_path}"
+    content = terminal_path.read_text(encoding="utf-8")
+
+    # 1. Bearer token injection in apiFetch
+    assert "headers.set('Authorization', `Bearer ${token}`)" in content or 'headers.set("Authorization", `Bearer ${token}`)' in content
+    assert "getAuthToken()" in content
+
+    # 2. Auth Modal elements
+    assert 'id="auth-modal"' in content
+    assert 'id="auth-email"' in content
+    assert 'id="auth-password"' in content
+    assert 'id="auth-name"' in content
+    assert 'id="auth-confirm"' in content
+    assert 'id="btn-submit-auth"' in content
+
+    # 3. Modal control functions
+    assert "function openAuthModal" in content
+    assert "function closeAuthModal" in content
+    assert "function switchAuthMode" in content
+    assert "async function submitAuth" in content
+    assert "async function handleLogout" in content
+    assert "function updateAuthUI" in content
+
+    # 4. Auth trigger buttons in UI
+    assert 'id="topbar-auth-btn"' in content
+    assert 'id="btn-auth-action"' in content
+
+
+@pytest.mark.asyncio
+async def test_auth_api_lifecycle_and_session_flow(server):
+    """Test full registration, authentication, authenticated endpoint access, and logout invalidation."""
+    async with TestClient(TestServer(server.app)) as client:
+        # 1. Register a new user
+        reg_payload = {
+            "email": "lead_quant@institutional.fund",
+            "password": "UltraSecurePassword999!",
+            "name": "Lead Quant",
+            "password_confirmation": "UltraSecurePassword999!",
+        }
+        reg_resp = await client.post("/api/auth/register", json=reg_payload)
+        assert reg_resp.status == 200
+        reg_data = await reg_resp.json()
+        assert reg_data["status"] == "registered"
+        token = reg_data["token"]
+        assert token is not None
+
+        headers = {"Authorization": f"Bearer {token}"}
+
+        # 2. Verify identity with /api/auth/me
+        me_resp = await client.get("/api/auth/me", headers=headers)
+        assert me_resp.status == 200
+        me_data = await me_resp.json()
+        assert me_data["email"] == "lead_quant@institutional.fund"
+        assert me_data["role"] in ["VIEWER", "TRADER", "ADMIN"]
+
+        # 3. Verify access to protected blotters
+        accts_resp = await client.get("/api/accounts", headers=headers)
+        assert accts_resp.status == 200
+
+        pos_resp = await client.get("/api/positions", headers=headers)
+        assert pos_resp.status == 200
+
+        dec_resp = await client.get("/api/decisions", headers=headers)
+        assert dec_resp.status == 200
+
+        # 4. Perform logout
+        logout_resp = await client.post("/api/auth/logout", headers=headers)
+        assert logout_resp.status == 200
+        logout_data = await logout_resp.json()
+        assert logout_data["status"] == "logged_out"
+
+        # 5. Token is now invalidated: subsequent call must return 401
+        revoked_resp = await client.get("/api/auth/me", headers=headers)
+        assert revoked_resp.status == 401
+        revoked_data = await revoked_resp.json()
+        assert "Invalid, expired, or revoked" in revoked_data["error"]
+
+
+@pytest.mark.asyncio
+async def test_strategy_lab_and_analytics_endpoint_tenant_isolation(server):
+    """Verify authenticated vs unauthenticated behavior for /api/backtests, /api/forward-validation,
+    /api/strategy-lab/parse, and /api/strategy-lab/evaluate.
+    """
+    async with TestClient(TestServer(server.app)) as client:
+        # 1. /api/backtests is public canonical benchmark
+        bt_resp = await client.get("/api/backtests")
+        assert bt_resp.status == 200
+        bt_data = await bt_resp.json()
+        assert "benchmark_king" in bt_data
+        assert bt_data["benchmark_king"]["expectancy_r"] == 0.8885
+
+        # 2. /api/forward-validation is public validation matrix
+        fwd_resp = await client.get("/api/forward-validation")
+        assert fwd_resp.status == 200
+        fwd_data = await fwd_resp.json()
+        assert "HISTORICAL" in fwd_data["environments"]
+        assert "OOS" in fwd_data["environments"]
+
+        # 3. Unauthenticated /api/strategy-lab/parse defaults to system tenant
+        parse_unauth = await client.post("/api/strategy-lab/parse", json={"prompt": "Swing 4h breakout with 4.5R target"})
+        assert parse_unauth.status == 200
+        spec_unauth = (await parse_unauth.json())["specification"]
+        assert spec_unauth["tenant_id"] == "system"
+
+        # 4. Authenticated /api/strategy-lab/parse binds to caller tenant
+        user = server.auth_service.register_user("tenant_tester@fund.com", "SecurePass1234!")
+        session = server.auth_service.authenticate(user.email, "SecurePass1234!")
+        auth_headers = {"Authorization": f"Bearer {session.token}"}
+
+        parse_auth = await client.post("/api/strategy-lab/parse", json={"prompt": "Swing 4h breakout with 4.5R target"}, headers=auth_headers)
+        assert parse_auth.status == 200
+        spec_auth = (await parse_auth.json())["specification"]
+        assert spec_auth["tenant_id"] == user.tenant_id
+
+        # 5. Evaluate strategy without token -> succeeds with system tenant
+        eval_unauth = await client.post("/api/strategy-lab/evaluate", json={"specification": spec_unauth})
+        assert eval_unauth.status == 200
+        report_unauth = await eval_unauth.json()
+        assert report_unauth.get("tenant_id") == "system"
+
+        # 6. Evaluate strategy with token -> succeeds with authenticated tenant
+        eval_auth = await client.post("/api/strategy-lab/evaluate", json={"specification": spec_auth}, headers=auth_headers)
+        assert eval_auth.status == 200
+        report_auth = await eval_auth.json()
+        assert report_auth.get("tenant_id") == user.tenant_id
+
