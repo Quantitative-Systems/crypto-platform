@@ -12,12 +12,15 @@ Guarantees:
 from __future__ import annotations
 
 import json
+import logging
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 
 import numpy as np
+
+logger = logging.getLogger(__name__)
 
 WORKSPACE_ROOT = Path(__file__).resolve().parent.parent.parent
 CACHE_DIR = WORKSPACE_ROOT / "market_data" / "cache"
@@ -62,6 +65,8 @@ class ContinuousCandleEngine:
         # Storage: symbol -> timeframe -> {ts, close_ts, o, h, l, c, v}
         self._series: Dict[str, Dict[str, Dict[str, np.ndarray]]] = {}
         self._subscribers: List[Callable[[CandleRecord], None]] = []
+        self.listener_errors: int = 0
+        self.last_listener_error: Optional[str] = None
 
         for s in self.symbols:
             self._series[s] = {}
@@ -171,8 +176,14 @@ class ContinuousCandleEngine:
         for sub in self._subscribers:
             try:
                 sub(candle)
-            except Exception:
-                pass
+            except Exception as ex:
+                self.listener_errors += 1
+                self.last_listener_error = f"{type(ex).__name__}: {str(ex)}"
+                logger.error(
+                    f"Error in closed candle subscriber [{getattr(sub, '__name__', str(sub))}] "
+                    f"for {candle.symbol} {candle.timeframe} (ts={candle.close_ts}): {ex}",
+                    exc_info=True,
+                )
 
     def get_timeframe_data(self, symbol: str, timeframe: str) -> Optional[Dict[str, np.ndarray]]:
         sym = symbol.upper()
@@ -194,9 +205,13 @@ class ContinuousCandleEngine:
 
     def get_summary_status(self) -> Dict[str, Any]:
         return {
-            sym: {
-                tf: len(self._series[sym][tf]["c"])
-                for tf in CANONICAL_TIMEFRAMES
-            }
-            for sym in self.symbols
+            "timeframe_bars": {
+                sym: {
+                    tf: len(self._series[sym][tf]["c"])
+                    for tf in CANONICAL_TIMEFRAMES
+                }
+                for sym in self.symbols
+            },
+            "listener_errors": self.listener_errors,
+            "last_listener_error": self.last_listener_error,
         }

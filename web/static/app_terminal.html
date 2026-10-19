@@ -750,9 +750,9 @@
             <li class="nav-item" onclick="switchTab('ledger')">📜 Append-Only Ledger</li>
             <li class="nav-item" onclick="switchTab('settings')">⚙️ Settings & Entitlements</li>
         </ul>
-        <div class="user-footer">
-            <div class="user-email-txt" id="sidebar-user-email">operator@cryptoplatform.io</div>
-            <button class="btn-ctl btn-outline-sm" onclick="handleLogout()" style="padding: 0.2rem 0.5rem; font-size: 0.72rem;">Logout</button>
+        <div class="user-footer" id="sidebar-user-footer">
+            <div class="user-email-txt" id="sidebar-user-email">Guest Operator</div>
+            <button class="btn-ctl btn-cyan" id="btn-auth-action" onclick="openAuthModal('login')" style="padding: 0.2rem 0.5rem; font-size: 0.72rem;">Sign In</button>
         </div>
     </aside>
 
@@ -771,6 +771,7 @@
             </div>
             <div class="topbar-controls">
                 <a href="/" class="btn-ctl btn-outline-sm" style="text-decoration:none; padding: 0.35rem 0.65rem;" title="Go to Public Website">🌐 Website</a>
+                <button class="btn-ctl btn-outline-sm" id="topbar-auth-btn" onclick="openAuthModal('login')" title="Account / Authentication">🔐 Sign In</button>
                 <button class="btn-ctl btn-cyan" onclick="openConnectBrokerModal()" title="Connect Exchange Account">🔌 Connect Broker</button>
                 <label style="font-size: 0.78rem; color: var(--text-muted); font-weight: 500;">Trading Style:</label>
                 <select class="style-select" id="style-select" onchange="handleStyleChange(this.value)">
@@ -1398,6 +1399,58 @@
         </div>
     </div>
 
+    <!-- Terminal Authentication Modal (Login / Register) -->
+    <div class="modal-overlay" id="auth-modal" onclick="handleAuthModalOutside(event)">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div style="display:flex; align-items:center; gap:0.5rem;">
+                    <span style="font-size: 1.25rem;">🔐</span>
+                    <h3 style="margin:0; font-size: 1.05rem; font-weight: 700; color: var(--text);" id="auth-modal-title">Terminal Sign In</h3>
+                </div>
+                <button class="modal-close-btn" onclick="closeAuthModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Mode Switcher Tabs -->
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem; background: var(--bg-subtle); padding: 4px; border-radius: 8px; border: 1px solid var(--border);">
+                    <button type="button" id="auth-tab-login" class="btn-ctl btn-cyan" onclick="switchAuthMode('login')" style="flex: 1; justify-content: center; font-size: 0.8rem; padding: 0.45rem;">
+                        Sign In
+                    </button>
+                    <button type="button" id="auth-tab-register" class="btn-ctl btn-outline-sm" onclick="switchAuthMode('register')" style="flex: 1; justify-content: center; font-size: 0.8rem; padding: 0.45rem;">
+                        Create Account
+                    </button>
+                </div>
+
+                <div id="auth-name-container" style="margin-bottom: 0.85rem; display: none;">
+                    <label class="form-label" for="auth-name">Operator Name / Call-Sign</label>
+                    <input type="text" id="auth-name" class="form-input" placeholder="e.g. Chief Quant / Operator A" autocomplete="name">
+                </div>
+
+                <div style="margin-bottom: 0.85rem;">
+                    <label class="form-label" for="auth-email">Email Address</label>
+                    <input type="email" id="auth-email" class="form-input" placeholder="operator@cryptoplatform.io" autocomplete="email">
+                </div>
+
+                <div style="margin-bottom: 0.85rem;">
+                    <label class="form-label" for="auth-password">Password</label>
+                    <input type="password" id="auth-password" class="form-input" placeholder="Enter secure password..." autocomplete="current-password" onkeydown="if(event.key==='Enter') submitAuth()">
+                </div>
+
+                <div id="auth-confirm-container" style="margin-bottom: 0.85rem; display: none;">
+                    <label class="form-label" for="auth-confirm">Confirm Password</label>
+                    <input type="password" id="auth-confirm" class="form-input" placeholder="Re-enter password..." autocomplete="new-password" onkeydown="if(event.key==='Enter') submitAuth()">
+                </div>
+
+                <div id="auth-feedback" style="margin-top: 0.75rem; font-size: 0.8rem; font-family: var(--font-mono); display: none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-ctl btn-outline-sm" onclick="closeAuthModal()">Cancel</button>
+                <button class="btn-ctl btn-cyan" id="btn-submit-auth" onclick="submitAuth()">
+                    <span id="btn-submit-auth-txt">Sign In</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Mobile Bottom Navigation Bar (Visible on mobile screens) -->
     <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
         <button class="mob-nav-item active" onclick="switchTab('overview')">
@@ -1571,6 +1624,11 @@
         async function loadActiveBrokers() {
             try {
                 const res = await apiFetch('/api/brokers/active');
+                if (res.status === 401) {
+                    const listEl = document.getElementById('active-brokers-list');
+                    if (listEl) listEl.innerHTML = '<div style="padding: 1.5rem; text-align: center; color: var(--text-muted);">🔒 Sign in to view active broker connections. <button class="btn-ctl btn-cyan" onclick="openAuthModal(\'login\')" style="margin-left: 0.5rem; padding: 0.2rem 0.6rem;">Sign In</button></div>';
+                    return;
+                }
                 if (!res.ok) return;
                 const brokers = await res.json();
                 const listEl = document.getElementById('active-brokers-list');
@@ -1657,9 +1715,239 @@
             return '';
         }
 
+        function getAuthToken() {
+            return localStorage.getItem('crypto_token') || localStorage.getItem('strata_token') || '';
+        }
+
         function apiFetch(path, options = {}) {
             const base = getApiBase();
-            return fetch(base + path, options);
+            const token = getAuthToken();
+            const opts = { ...options };
+            const headers = new Headers(opts.headers || {});
+            if (token && !headers.has('Authorization')) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            opts.headers = headers;
+            return fetch(base + path, opts);
+        }
+
+        async function ensureAuthSession() {
+            if (!getAuthToken()) {
+                try {
+                    const base = getApiBase();
+                    const res = await fetch(base + '/api/auth/guest-session', { method: 'POST' });
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.token) {
+                            localStorage.setItem('crypto_token', data.token);
+                            localStorage.setItem('strata_token', data.token);
+                            if (data.user) {
+                                localStorage.setItem('crypto_user', JSON.stringify(data.user));
+                                localStorage.setItem('strata_user', JSON.stringify(data.user));
+                                updateAuthUI(data.user);
+                            }
+                        }
+                    }
+                } catch(e) {}
+            }
+        }
+
+        // Authentication Modal & State Management
+        let authMode = 'login';
+
+        function openAuthModal(mode = 'login') {
+            authMode = mode;
+            switchAuthMode(mode);
+            const modal = document.getElementById('auth-modal');
+            if (modal) modal.classList.add('active');
+            const feedback = document.getElementById('auth-feedback');
+            if (feedback) feedback.style.display = 'none';
+        }
+
+        function closeAuthModal() {
+            const modal = document.getElementById('auth-modal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        function handleAuthModalOutside(e) {
+            if (e.target && e.target.id === 'auth-modal') {
+                closeAuthModal();
+            }
+        }
+
+        function switchAuthMode(mode) {
+            authMode = mode;
+            const tabLogin = document.getElementById('auth-tab-login');
+            const tabRegister = document.getElementById('auth-tab-register');
+            const nameContainer = document.getElementById('auth-name-container');
+            const confirmContainer = document.getElementById('auth-confirm-container');
+            const titleEl = document.getElementById('auth-modal-title');
+            const btnTxt = document.getElementById('btn-submit-auth-txt');
+            const feedback = document.getElementById('auth-feedback');
+            if (feedback) feedback.style.display = 'none';
+
+            if (mode === 'register') {
+                if (tabLogin) tabLogin.className = 'btn-ctl btn-outline-sm';
+                if (tabRegister) tabRegister.className = 'btn-ctl btn-cyan';
+                if (nameContainer) nameContainer.style.display = 'block';
+                if (confirmContainer) confirmContainer.style.display = 'block';
+                if (titleEl) titleEl.innerText = 'Register Operator Account';
+                if (btnTxt) btnTxt.innerText = 'Create Account';
+            } else {
+                if (tabLogin) tabLogin.className = 'btn-ctl btn-cyan';
+                if (tabRegister) tabRegister.className = 'btn-ctl btn-outline-sm';
+                if (nameContainer) nameContainer.style.display = 'none';
+                if (confirmContainer) confirmContainer.style.display = 'none';
+                if (titleEl) titleEl.innerText = 'Terminal Sign In';
+                if (btnTxt) btnTxt.innerText = 'Sign In';
+            }
+        }
+
+        async function submitAuth() {
+            const emailInp = document.getElementById('auth-email');
+            const passInp = document.getElementById('auth-password');
+            const nameInp = document.getElementById('auth-name');
+            const confirmInp = document.getElementById('auth-confirm');
+            const feedback = document.getElementById('auth-feedback');
+            const submitBtn = document.getElementById('btn-submit-auth');
+
+            const email = (emailInp ? emailInp.value : '').trim();
+            const password = (passInp ? passInp.value : '').trim();
+            const name = (nameInp ? nameInp.value : '').trim();
+            const confirm = (confirmInp ? confirmInp.value : '').trim();
+
+            if (!email || !password) {
+                if (feedback) {
+                    feedback.style.display = 'block';
+                    feedback.style.color = 'var(--rose)';
+                    feedback.innerText = 'Please enter both email and password.';
+                }
+                return;
+            }
+
+            if (authMode === 'register' && password !== confirm) {
+                if (feedback) {
+                    feedback.style.display = 'block';
+                    feedback.style.color = 'var(--rose)';
+                    feedback.innerText = 'Passwords do not match.';
+                }
+                return;
+            }
+
+            if (feedback) {
+                feedback.style.display = 'block';
+                feedback.style.color = 'var(--text-muted)';
+                feedback.innerText = authMode === 'register' ? 'Registering operator...' : 'Authenticating...';
+            }
+            if (submitBtn) submitBtn.disabled = true;
+
+            try {
+                const endpoint = authMode === 'register' ? '/api/auth/register' : '/api/auth/login';
+                const payload = authMode === 'register'
+                    ? { email, password, name, password_confirmation: confirm }
+                    : { email, password };
+
+                const base = getApiBase();
+                const res = await fetch(base + endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+                if (!res.ok || data.error) {
+                    throw new Error(data.error || 'Authentication failed');
+                }
+
+                if (data.token) {
+                    localStorage.setItem('crypto_token', data.token);
+                    localStorage.setItem('strata_token', data.token);
+                }
+                if (data.user) {
+                    localStorage.setItem('crypto_user', JSON.stringify(data.user));
+                    localStorage.setItem('strata_user', JSON.stringify(data.user));
+                    updateAuthUI(data.user);
+                }
+
+                if (feedback) {
+                    feedback.style.color = 'var(--emerald)';
+                    feedback.innerText = `✓ Successfully ${authMode === 'register' ? 'registered' : 'signed in'}!`;
+                }
+
+                setTimeout(() => {
+                    closeAuthModal();
+                    loadAccounts();
+                    loadActiveBrokers();
+                    loadPositions();
+                    loadOrders();
+                    loadRisk();
+                    loadDrift();
+                    loadAlerts();
+                    loadDecisions();
+                    loadStrategies();
+                }, 700);
+
+            } catch (err) {
+                if (feedback) {
+                    feedback.style.display = 'block';
+                    feedback.style.color = 'var(--rose)';
+                    feedback.innerText = '✕ ' + err.message;
+                }
+            } finally {
+                if (submitBtn) submitBtn.disabled = false;
+            }
+        }
+
+        async function handleLogout() {
+            try {
+                await apiFetch('/api/auth/logout', { method: 'POST' });
+            } catch(e) {}
+            localStorage.removeItem('crypto_token');
+            localStorage.removeItem('strata_token');
+            localStorage.removeItem('crypto_user');
+            localStorage.removeItem('strata_user');
+            updateAuthUI(null);
+            location.reload();
+        }
+
+        function updateAuthUI(user) {
+            const emailEl = document.getElementById('sidebar-user-email');
+            const tenantEl = document.getElementById('topbar-tenant');
+            const authBtn = document.getElementById('btn-auth-action');
+            const topbarAuthBtn = document.getElementById('topbar-auth-btn');
+            const uInfo = document.getElementById('settings-user-info');
+
+            if (user) {
+                if (emailEl) emailEl.innerText = user.email || 'operator@cryptoplatform.io';
+                if (tenantEl) tenantEl.innerText = user.tenant_id || 'system';
+                if (authBtn) {
+                    authBtn.innerText = 'Logout';
+                    authBtn.onclick = handleLogout;
+                    authBtn.className = 'btn-ctl btn-outline-sm';
+                }
+                if (topbarAuthBtn) {
+                    topbarAuthBtn.innerText = `👤 ${user.email.split('@')[0]}`;
+                    topbarAuthBtn.onclick = () => switchTab('settings');
+                }
+                if (uInfo) {
+                    uInfo.innerText = `User ID: ${user.user_id} | Email: ${user.email} | Tenant: ${user.tenant_id} | Role: ${user.role}`;
+                }
+            } else {
+                if (emailEl) emailEl.innerText = 'Guest Operator';
+                if (tenantEl) tenantEl.innerText = 'public';
+                if (authBtn) {
+                    authBtn.innerText = 'Sign In';
+                    authBtn.onclick = () => openAuthModal('login');
+                    authBtn.className = 'btn-ctl btn-cyan';
+                }
+                if (topbarAuthBtn) {
+                    topbarAuthBtn.innerText = '🔐 Sign In';
+                    topbarAuthBtn.onclick = () => openAuthModal('login');
+                }
+                if (uInfo) {
+                    uInfo.innerText = 'Unauthenticated Guest. Please sign in to access operator features.';
+                }
+            }
         }
 
         function saveCustomApiEndpoint() {
@@ -1707,19 +1995,38 @@
             const apiInp = document.getElementById('custom-api-endpoint');
             if (apiInp) apiInp.value = localStorage.getItem('crypto_api_base') || localStorage.getItem('strata_api_base') || '';
 
-            const token = localStorage.getItem('crypto_token') || localStorage.getItem('strata_token');
+            const token = getAuthToken();
             const userStr = localStorage.getItem('crypto_user') || localStorage.getItem('strata_user');
+            let currentUser = null;
             if (userStr) {
                 try {
-                    const u = JSON.parse(userStr);
-                    const emailEl = document.getElementById('sidebar-user-email');
-                    if (emailEl) emailEl.innerText = u.email;
-                    const tenantEl = document.getElementById('topbar-tenant');
-                    if (tenantEl) tenantEl.innerText = u.tenant_id;
-                    const uInfo = document.getElementById('settings-user-info');
-                    if (uInfo) uInfo.innerText = `User ID: ${u.user_id} | Email: ${u.email} | Tenant: ${u.tenant_id} | Role: ${u.role}`;
+                    currentUser = JSON.parse(userStr);
                 } catch(e) {}
             }
+
+            // Verify session with backend if token present, or acquire read-only guest session
+            if (!token) {
+                await ensureAuthSession();
+            } else {
+                try {
+                    const meRes = await apiFetch('/api/auth/me');
+                    if (meRes.ok) {
+                        currentUser = await meRes.json();
+                        localStorage.setItem('crypto_user', JSON.stringify(currentUser));
+                        localStorage.setItem('strata_user', JSON.stringify(currentUser));
+                    } else if (meRes.status === 401) {
+                        // Stale or revoked token - refresh with guest session
+                        localStorage.removeItem('crypto_token');
+                        localStorage.removeItem('strata_token');
+                        localStorage.removeItem('crypto_user');
+                        localStorage.removeItem('strata_user');
+                        currentUser = null;
+                        await ensureAuthSession();
+                    }
+                } catch(e) {}
+            }
+
+            updateAuthUI(currentUser);
 
             // Sync all blotters
             await Promise.all([
@@ -1751,6 +2058,10 @@
             if (params.get('action') === 'connect_broker') {
                 switchTab('brokers');
                 openConnectBrokerModal();
+            } else if (params.get('action') === 'login') {
+                openAuthModal('login');
+            } else if (params.get('action') === 'register') {
+                openAuthModal('register');
             } else if (params.get('tab')) {
                 switchTab(params.get('tab'));
             }
@@ -1888,6 +2199,11 @@
         async function loadStrategies() {
             try {
                 const res = await apiFetch('/api/strategies');
+                const tbody = document.getElementById('strategies-tbody');
+                if (res.status === 401) {
+                    if (tbody) tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">🔒 Operator authentication required. <button class="btn-ctl btn-cyan" onclick="openAuthModal(\'login\')" style="margin-left: 0.5rem; padding: 0.2rem 0.6rem;">Sign In</button></td></tr>';
+                    return;
+                }
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
                 strategyCache = data || [];
@@ -1932,9 +2248,13 @@
         async function loadAccounts() {
             try {
                 const res = await apiFetch('/api/accounts');
+                const tbody = document.getElementById('accounts-tbody');
+                if (res.status === 401) {
+                    if (tbody) tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">🔒 Operator authentication required. <button class="btn-ctl btn-cyan" onclick="openAuthModal(\'login\')" style="margin-left: 0.5rem; padding: 0.2rem 0.6rem;">Sign In</button></td></tr>';
+                    return;
+                }
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
-                const tbody = document.getElementById('accounts-tbody');
                 if (tbody && data.length) {
                     tbody.innerHTML = data.map(a => `
                         <tr>
@@ -1978,6 +2298,14 @@
         async function loadPositions() {
             try {
                 const res = await apiFetch('/api/positions');
+                if (res.status === 401) {
+                    const authMsg = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">🔒 Operator authentication required. <button class="btn-ctl btn-cyan" onclick="openAuthModal(\'login\')" style="margin-left: 0.5rem; padding: 0.2rem 0.6rem;">Sign In</button></td></tr>';
+                    const ovTbody = document.getElementById('ov-positions-tbody');
+                    if (ovTbody) ovTbody.innerHTML = authMsg;
+                    const posTbody = document.getElementById('positions-tbody');
+                    if (posTbody) posTbody.innerHTML = authMsg;
+                    return;
+                }
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
                 const active = data.active_positions || [];
@@ -2007,9 +2335,13 @@
         async function loadOrders() {
             try {
                 const res = await apiFetch('/api/orders');
+                const tbody = document.getElementById('orders-tbody');
+                if (res.status === 401) {
+                    if (tbody) tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">🔒 Operator authentication required. <button class="btn-ctl btn-cyan" onclick="openAuthModal(\'login\')" style="margin-left: 0.5rem; padding: 0.2rem 0.6rem;">Sign In</button></td></tr>';
+                    return;
+                }
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 const orders = await res.json();
-                const tbody = document.getElementById('orders-tbody');
                 if (tbody) {
                     if (orders.length) {
                         tbody.innerHTML = orders.map(o => `
@@ -2132,45 +2464,84 @@
             } catch(e) {}
         }
 
-        // Decisions & Ledger API
+        // Decisions & Ledger API with non-overlapping request guard
+        let isDecisionsLoading = false;
+
         async function loadDecisions() {
+            if (isDecisionsLoading) return;
+            isDecisionsLoading = true;
             try {
+                if (!getAuthToken()) {
+                    await ensureAuthSession();
+                }
                 const res = await apiFetch('/api/decisions');
+                if (res.status === 401) {
+                    const authMsg = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">🔒 Operator authentication required. <button class="btn-ctl btn-cyan" onclick="openAuthModal(\'login\')" style="margin-left: 0.5rem; padding: 0.2rem 0.6rem;">Sign In</button></td></tr>';
+                    const tbody = document.getElementById('opportunities-tbody');
+                    if (tbody) tbody.innerHTML = authMsg;
+                    const ovBody = document.getElementById('ov-decisions-tbody');
+                    if (ovBody) ovBody.innerHTML = authMsg;
+                    const ledgerBody = document.getElementById('ledger-tbody');
+                    if (ledgerBody) ledgerBody.innerHTML = authMsg;
+                    return;
+                }
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 const data = await res.json();
                 const tbody = document.getElementById('opportunities-tbody');
                 const ovBody = document.getElementById('ov-decisions-tbody');
                 const ledgerBody = document.getElementById('ledger-tbody');
 
-                if (data.length) {
-                    const rows = data.slice(-15).reverse().map(d => `
+                if (Array.isArray(data) && data.length) {
+                    const rows = data.slice(-15).reverse().map(d => {
+                        const sym = d.symbol || d.asset || 'CRYPTO';
+                        const setStr = d.set_name || d.timeframe_set || '-';
+                        const decision = d.decision || 'NO_TRADE';
+                        const conf = Number(d.confidence_score != null ? d.confidence_score : 0).toFixed(2);
+                        const plannedR = Number(d.planned_r != null ? d.planned_r : 0).toFixed(1);
+                        const reasons = (d.reason_codes && d.reason_codes.length) ? d.reason_codes.slice(0, 2).join('; ') : 'MARKET_MONITORED';
+                        const timeStr = d.timestamp_ms ? new Date(d.timestamp_ms).toLocaleTimeString() : (d.created_at_utc || 'Just now');
+                        return `
                         <tr>
-                            <td>${new Date(d.timestamp_ms).toLocaleTimeString()}</td>
-                            <td>${d.decision_id}</td>
-                            <td><strong>${d.symbol}</strong></td>
-                            <td>${d.set_name}</td>
-                            <td><span class="pill ${d.decision === 'TRADE' ? 'pill-green' : 'pill-rose'}">${d.decision}</span></td>
-                            <td>${(d.confidence_score || 0).toFixed(2)}</td>
-                            <td>${(d.planned_r || 0).toFixed(1)}R</td>
-                            <td>${(d.reason_codes || []).slice(0, 2).join('; ')}</td>
+                            <td>${timeStr}</td>
+                            <td>${d.decision_id || '-'}</td>
+                            <td><strong>${sym}</strong></td>
+                            <td>${setStr}</td>
+                            <td><span class="pill ${decision === 'TRADE' ? 'pill-green' : 'pill-rose'}">${decision}</span></td>
+                            <td>${conf}</td>
+                            <td>${plannedR}R</td>
+                            <td>${reasons}</td>
                         </tr>
-                    `).join('');
+                    `}).join('');
                     if (tbody) tbody.innerHTML = rows;
                     if (ovBody) ovBody.innerHTML = rows;
 
                     if (ledgerBody) {
-                        ledgerBody.innerHTML = data.slice(-20).reverse().map(d => `
+                        ledgerBody.innerHTML = data.slice(-20).reverse().map(d => {
+                            const sym = d.symbol || d.asset || 'CRYPTO';
+                            const decision = d.decision || 'NO_TRADE';
+                            const timeStr = d.timestamp_ms ? new Date(d.timestamp_ms).toLocaleTimeString() : (d.created_at_utc || 'Just now');
+                            const hash = (d.decision_id || '').split('').map(c => c.charCodeAt(0).toString(16)).join('').padEnd(64, 'a').slice(0, 64);
+                            return `
                             <tr>
-                                <td>${new Date(d.timestamp_ms).toLocaleTimeString()}</td>
-                                <td><strong>${d.decision_id}</strong></td>
-                                <td><span class="pill ${d.decision === 'TRADE' ? 'pill-green' : 'pill-rose'}">${d.decision}</span></td>
-                                <td>${d.symbol}</td>
-                                <td style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">${(d.decision_id || '').split('').map(c => c.charCodeAt(0).toString(16)).join('').padEnd(64, 'a').slice(0, 64)}</td>
+                                <td>${timeStr}</td>
+                                <td><strong>${d.decision_id || '-'}</strong></td>
+                                <td><span class="pill ${decision === 'TRADE' ? 'pill-green' : 'pill-rose'}">${decision}</span></td>
+                                <td>${sym}</td>
+                                <td style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">${hash}</td>
                             </tr>
-                        `).join('');
+                        `}).join('');
+                    }
+                } else if (Array.isArray(data) && data.length === 0) {
+                    const emptyMsg = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Scanning closed candle feed (awaiting next 15m candle close)...</td></tr>';
+                    if (ovBody && ovBody.innerHTML.includes('Scanning closed candle feed...')) {
+                        ovBody.innerHTML = emptyMsg;
                     }
                 }
-            } catch(e) {}
+            } catch(e) {
+                console.error("loadDecisions error:", e);
+            } finally {
+                isDecisionsLoading = false;
+            }
         }
 
         // Strategy Research Compiler & Copilot
@@ -2236,17 +2607,36 @@
 
         // Platform Actions
         async function handlePlatformAction(action) {
-            if (action === 'emergency') {
-                if (confirm('Trigger EMERGENCY STOP? Halts all order intent generation immediately.')) {
-                    await apiFetch('/api/agent/pause', { method: 'POST' });
-                    alert('Emergency Stop activated. System entered fail-closed safe mode.');
+            try {
+                if (action === 'emergency') {
+                    if (confirm('Trigger EMERGENCY STOP? Halts all order intent generation immediately.')) {
+                        const res = await apiFetch('/api/agent/pause', { method: 'POST' });
+                        if (res.status === 401 || res.status === 403) {
+                            alert('Trader authorization required to pause platform.');
+                            openAuthModal('login');
+                            return;
+                        }
+                        alert('Emergency Stop activated. System entered fail-closed safe mode.');
+                    }
+                } else if (action === 'pause') {
+                    const res = await apiFetch('/api/agent/pause', { method: 'POST' });
+                    if (res.status === 401 || res.status === 403) {
+                        alert('Trader authorization required to pause platform.');
+                        openAuthModal('login');
+                        return;
+                    }
+                    alert('Autonomous agent paused.');
+                } else if (action === 'start') {
+                    const res = await apiFetch('/api/agent/resume', { method: 'POST' });
+                    if (res.status === 401 || res.status === 403) {
+                        alert('Trader authorization required to start agent cycle.');
+                        openAuthModal('login');
+                        return;
+                    }
+                    alert('Autonomous agent cycle active.');
                 }
-            } else if (action === 'pause') {
-                await apiFetch('/api/agent/pause', { method: 'POST' });
-                alert('Autonomous agent paused.');
-            } else if (action === 'start') {
-                await apiFetch('/api/agent/resume', { method: 'POST' });
-                alert('Autonomous agent cycle active.');
+            } catch(e) {
+                alert('Action failed: ' + e.message);
             }
         }
 
@@ -2258,14 +2648,6 @@
                     body: JSON.stringify({ style })
                 });
             } catch(e) {}
-        }
-
-        function handleLogout() {
-            localStorage.removeItem('crypto_token');
-            localStorage.removeItem('crypto_user');
-            localStorage.removeItem('strata_token');
-            localStorage.removeItem('strata_user');
-            window.location.href = '/';
         }
 
         function openAddAccountModal() {
@@ -2401,8 +2783,22 @@
                     renderMarketsTable(marketCache);
                 }
                 markFresh();
+
+                // Trigger live decisions refresh on closed-candle updates
+                if (event.is_closed_candle) {
+                    loadDecisions();
+                    loadPositions();
+                    loadOrders();
+                }
             }
         }
+
+        // 15-second continuous polling fallback for decisions, positions, and orders
+        setInterval(() => {
+            loadDecisions();
+            loadPositions();
+            loadOrders();
+        }, 15000);
 
         setInterval(() => {
             if (marketWs && marketWs.readyState === WebSocket.OPEN) {

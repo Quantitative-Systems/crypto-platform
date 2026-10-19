@@ -233,6 +233,67 @@ class AuthService:
             created_at_ts=row["created_at_ts"],
         )
 
+    def get_user_by_email(self, email: str) -> Optional[User]:
+        """Fetch user by email."""
+        clean_email = email.strip().lower()
+        row = self.db.fetchone("SELECT * FROM users WHERE email = ?;", (clean_email,))
+        if not row:
+            return None
+        user_role = UserRole(row["role"]) if row["role"] in UserRole.__members__ else UserRole.TRADER
+        return User(
+            user_id=row["user_id"],
+            name=row["name"],
+            email=row["email"],
+            password_hash=row["password_hash"],
+            salt=row["salt"],
+            tenant_id=row["tenant_id"],
+            role=user_role,
+            is_active=bool(row["is_active"]),
+            created_at_ts=row["created_at_ts"],
+        )
+
+    def create_session_for_user(self, user: User) -> SessionToken:
+        """Directly issues a new session token for an authenticated user."""
+        token_str = f"strata_{secrets.token_urlsafe(32)}"
+        token_hash = self.hash_token(token_str)
+        now = time.time()
+        expires_at = now + self.session_ttl_seconds
+        prefix = token_str[:12]
+
+        session = SessionToken(
+            token=token_str,
+            user_id=user.user_id,
+            tenant_id=user.tenant_id,
+            role=user.role,
+            created_at_ts=now,
+            expires_at_ts=expires_at,
+        )
+
+        with self.db.transaction():
+            self.db.execute(
+                """
+                INSERT INTO sessions (token_hash, user_id, tenant_id, role, created_at_ts, expires_at_ts, revoked, raw_token_prefix)
+                VALUES (?, ?, ?, ?, ?, ?, 0, ?);
+                """,
+                (token_hash, session.user_id, session.tenant_id, session.role.value, session.created_at_ts, session.expires_at_ts, prefix)
+            )
+
+        return session
+
+    def create_guest_session(self) -> Tuple[User, SessionToken]:
+        """Provisions or retrieves a guest observer account with read-only RESEARCHER role."""
+        guest_email = "guest@cryptoplatform.io"
+        user = self.get_user_by_email(guest_email)
+        if not user:
+            user = self.register_user(
+                email=guest_email,
+                password=f"GuestObserver_{secrets.token_hex(16)}!",
+                name="Guest Observer",
+                role=UserRole.RESEARCHER,
+            )
+        session = self.create_session_for_user(user)
+        return user, session
+
     def get_user_watchlist(self, user_id: str) -> Set[str]:
         """Retrieve watchlist symbols for user."""
         rows = self.db.fetchall("SELECT symbol FROM user_watchlists WHERE user_id = ?;", (user_id,))

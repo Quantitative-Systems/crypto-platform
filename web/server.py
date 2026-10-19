@@ -1126,6 +1126,7 @@ class PhaseRWebServer:
         self.app.router.add_post("/api/auth/register", self.handle_auth_register)
         self.app.router.add_post("/api/auth/login", self.handle_auth_login)
         self.app.router.add_post("/api/auth/logout", self.handle_auth_logout)
+        self.app.router.add_post("/api/auth/guest-session", self.handle_auth_guest_session)
         self.app.router.add_get("/api/auth/me", self.handle_auth_me)
 
         # REST API: Core Health & Telemetry (Both /api/* and root aliases for cloud load balancers)
@@ -1256,6 +1257,19 @@ class PhaseRWebServer:
         if token:
             self.auth_service.logout(token)
         return web.json_response({"status": "logged_out"})
+
+    async def handle_auth_guest_session(self, request: web.Request) -> web.Response:
+        """Issues an unprivileged read-only observer session for dashboard monitoring."""
+        try:
+            user, session = self.auth_service.create_guest_session()
+            return web.json_response({
+                "status": "authenticated",
+                "token": session.token,
+                "user": user.to_safe_dict(),
+            })
+        except Exception as e:
+            logger.error(f"Failed to issue guest observer session: {e}", exc_info=True)
+            return web.json_response({"error": str(e)}, status=500)
 
     @require_auth()
     async def handle_auth_me(self, request: web.Request) -> web.Response:
@@ -1655,9 +1669,16 @@ class PhaseRWebServer:
         try:
             from strategy.lab.strategy_specification import StrategySpecification
             data = await request.json()
+            token = extract_bearer_token(request)
+            user = self.auth_service.validate_session(token) if token else None
+            tenant_id = user.tenant_id if user else "system"
             spec_data = data.get("specification", {})
+            if "tenant_id" not in spec_data or not spec_data.get("tenant_id"):
+                spec_data["tenant_id"] = tenant_id
             spec = StrategySpecification.from_dict(spec_data)
             evidence, report = self.strategy_lab.evaluate_strategy(spec)
+            if isinstance(report, dict) and "tenant_id" not in report:
+                report["tenant_id"] = tenant_id
             return web.json_response(report)
         except Exception as e:
             return web.json_response({"error": str(e)}, status=400)
@@ -1841,8 +1862,13 @@ class PhaseRWebServer:
     # --- Blotters ---
     @require_auth()
     async def handle_decisions(self, request: web.Request) -> web.Response:
-        decisions = [d.to_dict() for d in self.supervisor.decisions_history[-50:]]
-        return web.json_response(decisions)
+        records = []
+        for d in self.supervisor.decisions_history[-50:]:
+            item = d.to_dict()
+            item["symbol"] = item.get("symbol") or item.get("asset")
+            item["set_name"] = item.get("set_name") or item.get("timeframe_set")
+            records.append(item)
+        return web.json_response(records)
 
     @require_auth()
     async def handle_positions(self, request: web.Request) -> web.Response:

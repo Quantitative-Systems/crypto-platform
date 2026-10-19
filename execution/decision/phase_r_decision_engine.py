@@ -312,10 +312,19 @@ class PhaseRDecisionEngine:
         hyp = self.fractal_engine.hypothesis_engine.evaluate_hypothesis(node, set_name, hypothesis_type)
         confidence = hyp.confidence_score if hyp else 0.35
 
+        mtf_ctx = getattr(hyp, "mtf_context", None) if hyp else None
+        target_dest = getattr(hyp, "target_destination", None) if hyp else None
+        has_location = bool(
+            hyp and (
+                (mtf_ctx and ("DISCOUNT" in str(mtf_ctx) or "PREMIUM" in str(mtf_ctx)))
+                or (target_dest and ("DISCOUNT" in str(target_dest) or "PREMIUM" in str(target_dest)))
+            )
+        )
+
         conf_components = {
             "base": 0.35,
             "alignment": 0.25 if node.get_alignment_for_set(set_name) == FractalAlignment.FULLY_ALIGNED else 0.10,
-            "location": 0.20 if (hyp and "DISCOUNT" in str(hyp.target_zone or "") or "PREMIUM" in str(hyp.target_zone or "")) else 0.0,
+            "location": 0.20 if has_location else 0.0,
             "macro_htf": 0.15 if node.fractal_bias in (FractalBias.BULLISH, FractalBias.STRONG_BULLISH) and direction == 1 else 0.0,
             "cross_support": 0.05 * min(self.fractal_engine.hypothesis_engine._count_cross_set_support(node, set_name, direction), 2),
         }

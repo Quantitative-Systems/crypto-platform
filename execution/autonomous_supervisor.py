@@ -605,13 +605,27 @@ class AutonomousTradingSupervisor:
         evaluated_cards: List[PhaseRDecisionRecord] = []
         for set_name in ["SET_2", "SET_3", "SET_4"]:
             for hyp in ["CONTINUATION", "PULLBACK"]:
-                decision_card = engine.evaluate_opportunity(
-                    set_name=set_name,
-                    hypothesis_type=hyp,
-                    all_timeframe_data=all_tf_data,
-                    data_health=data_health,
-                    eval_timestamp_ms=candle.close_ts,
-                )
+                try:
+                    decision_card = engine.evaluate_opportunity(
+                        set_name=set_name,
+                        hypothesis_type=hyp,
+                        all_timeframe_data=all_tf_data,
+                        data_health=data_health,
+                        eval_timestamp_ms=candle.close_ts,
+                    )
+                except Exception as ex:
+                    logger.error(
+                        f"Error evaluating opportunity for {sym} {set_name} {hyp} @ {candle.close_ts}: {ex}",
+                        exc_info=True,
+                    )
+                    ALERTS.emit(
+                        severity=AlertSeverity.ERROR,
+                        category=AlertCategory.STRATEGY,
+                        title=f"Strategy Evaluation Error: {sym} {set_name}",
+                        message=f"Evaluation failed for {sym} {set_name} {hyp}: {str(ex)[:100]}",
+                        metadata={"symbol": sym, "set": set_name, "hyp": hyp, "error": str(ex)},
+                    )
+                    continue
                 evaluated_cards.append(decision_card)
 
                 # Record decision evaluation timestamp
