@@ -17,9 +17,14 @@ on:
         default: "dry-run"
         type: string
 
+concurrency:
+  group: oracle-deployment
+  cancel-in-progress: false
+
 permissions:
   contents: read
   packages: write
+  issues: write
 
 jobs:
   build-and-test-image:
@@ -156,4 +161,47 @@ jobs:
             cd "$APP_DIR"
             chmod +x "$APP_DIR/scripts/deploy_oracle.sh"
             bash "$APP_DIR/scripts/deploy_oracle.sh" "${{ steps.repo-name.outputs.image_name }}:${{ github.sha }}"
+
+      - name: Record Deployment Failure Evidence to GitHub Issues
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const sha = context.sha.substring(0, 7);
+            const title = `🚨 Oracle Deployment Failure: ${sha}`;
+            const body = `### Oracle Deployment Failure Diagnostics\n\n` +
+              `- **Run:** [Workflow Run #${context.runNumber}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})\n` +
+              `- **Commit SHA:** \`${context.sha}\`\n` +
+              `- **Branch:** \`${context.refName || context.ref}\`\n` +
+              `- **Triggered By:** @${context.actor}\n\n` +
+              `The Oracle host deployment verification failed.\n` +
+              `Container health/readiness checks or invariants did not pass within the verification window.\n` +
+              `Consult the workflow run logs for full container state, logs, and reconciliation details.`;
+            try {
+              const issues = await github.rest.issues.listForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                labels: ['deployment-failure']
+              });
+              const existing = issues.data.find(i => i.title.includes(sha));
+              if (existing) {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: existing.number,
+                  body: `Deployment failed again in run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+                });
+              } else {
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: title,
+                  body: body,
+                  labels: ['deployment-failure']
+                });
+              }
+            } catch (err) {
+              console.log("Could not record failure issue:", err);
+            }
 
