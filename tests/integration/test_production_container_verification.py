@@ -22,6 +22,42 @@ import aiohttp
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 
 
+def _cleanup_and_get_output(proc: subprocess.Popen, name: str, timeout: float = 2.0) -> tuple[str, str]:
+    """Terminate (or kill) the child process and return (stdout, stderr) decoded.
+
+    This avoids deadlocks by ensuring we terminate the child before calling communicate
+    when we expect it to be shutting down. We decode safely and return empty strings
+    on any unexpected error.
+    """
+    try:
+        if proc.poll() is None:
+            proc.terminate()
+            try:
+                proc.wait(timeout=timeout)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+                proc.wait(timeout=timeout)
+    except Exception:
+        pass
+
+    try:
+        out_bytes, err_bytes = proc.communicate(timeout=timeout)
+    except Exception:
+        try:
+            out_bytes, err_bytes = proc.communicate()
+        except Exception:
+            out_bytes, err_bytes = b"", b""
+
+    try:
+        out = out_bytes.decode("utf-8", errors="replace") if out_bytes else ""
+        err = err_bytes.decode("utf-8", errors="replace") if err_bytes else ""
+    except Exception:
+        out, err = "", ""
+
+    header = f"--- Captured output for {name} (exit_code={proc.returncode}) ---\n"
+    return header + out, err
+
+
 @pytest.mark.asyncio
 async def test_production_server_api_websocket_and_restart_persistence():
     port = 8089
@@ -29,12 +65,12 @@ async def test_production_server_api_websocket_and_restart_persistence():
     base_url = f"http://{host}:{port}"
     ws_url = f"ws://{host}:{port}/ws/market-state"
 
-    # Step 1: Start production server process with DEVNULL to avoid pipe buffer blocking
+    # Step 1: Start production server process and capture stdout/stderr for diagnostics
     proc1 = subprocess.Popen(
         [sys.executable, str(REPO_ROOT / "main.py"), "--host", host, "--port", str(port), "--mode", "PAPER"],
         cwd=str(REPO_ROOT),
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
     )
 
     try:
@@ -53,7 +89,13 @@ async def test_production_server_api_websocket_and_restart_persistence():
                 except Exception:
                     pass
 
-            assert ready, "Production server failed to report READY state within 15 seconds"
+            if not ready:
+                out, err = _cleanup_and_get_output(proc1, "production_server")
+                # Ensure process is fully cleaned up
+                raise AssertionError(
+                    "Production server failed to report READY state within 15 seconds\n
+Captured stdout:\n" + out + "\nCaptured stderr:\n" + err
+                )
 
             # Step 3: Test Health and Invariant Endpoints
             async with session.get(f"{base_url}/api/health") as resp:
@@ -126,12 +168,13 @@ async def test_production_server_api_websocket_and_restart_persistence():
                 assert "timestamp" in pong
 
     finally:
-        # Graceful shutdown of first process
-        proc1.terminate()
-        try:
-            proc1.wait(timeout=5)
-        except subprocess.TimeoutExpired:
-            proc1.kill()
+        # Graceful shutdown of first process and capture output
+        out1, err1 = _cleanup_and_get_output(proc1, "production_server")
+        if out1 or err1:
+            # print so pytest captures the diagnostics
+            print(out1)
+            print("--- stderr ---")
+            print(err1)
 
     # Step 7: Verify SQLite & Research Artifacts Survival across Restart
     db_file = REPO_ROOT / "data" / "crypto_platform.db"
@@ -150,8 +193,8 @@ async def test_production_server_api_websocket_and_restart_persistence():
     proc2 = subprocess.Popen(
         [sys.executable, str(REPO_ROOT / "main.py"), "--host", host, "--port", str(port), "--mode", "PAPER"],
         cwd=str(REPO_ROOT),
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
     )
 
     try:
@@ -169,7 +212,12 @@ async def test_production_server_api_websocket_and_restart_persistence():
                 except Exception:
                     pass
 
-            assert ready_after_restart, "Server failed to recover and become READY after restart"
+            if not ready_after_restart:
+                out, err = _cleanup_and_get_output(proc2, "production_server_restart")
+                raise AssertionError(
+                    "Server failed to recover and become READY after restart\n
+Captured stdout:\n" + out + "\nCaptured stderr:\n" + err
+                )
 
             # Check that database and state persisted
             async with session.get(f"{base_url}/api/health") as resp:
@@ -179,8 +227,8 @@ async def test_production_server_api_websocket_and_restart_persistence():
                 assert health["real_capital_authorized"] == 0.0
 
     finally:
-        proc2.terminate()
-        try:
-            proc2.wait(timeout=5)
-        except subprocess.TimeoutExpired:
-            proc2.kill()
+        out2, err2 = _cleanup_and_get_output(proc2, "production_server_restart")
+        if out2 or err2:
+            print(out2)
+            print("--- stderr (restart) ---")
+            print(err2)
