@@ -203,11 +203,71 @@ def setup_test_git_repo(tmp_path: Path):
     subprocess.run(["git", "commit", "-m", "commit 1"], cwd=str(origin_dir), capture_output=True, check=True)
     sha1 = subprocess.run(["git", "rev-parse", "HEAD"], cwd=str(origin_dir), capture_output=True, text=True, check=True).stdout.strip()
 
-    (origin_dir / "deploy.sh").write_text("echo deploying", encoding="utf-8")
+    (origin_dir / "deploy").mkdir(exist_ok=True)
+    (origin_dir / "scripts").mkdir(exist_ok=True)
+    (origin_dir / "deploy" / "compose.yml").write_text("version: '3.8'", encoding="utf-8")
+    (origin_dir / "scripts" / "deploy.sh").write_text("echo deploying", encoding="utf-8")
     subprocess.run(["git", "add", "."], cwd=str(origin_dir), capture_output=True, check=True)
     subprocess.run(["git", "commit", "-m", "commit 2"], cwd=str(origin_dir), capture_output=True, check=True)
     sha2 = subprocess.run(["git", "rev-parse", "HEAD"], cwd=str(origin_dir), capture_output=True, text=True, check=True).stdout.strip()
     return origin_dir, sha1, sha2
+
+
+def test_sync_repo_existing_empty_bootstrap_directory():
+    """Verify sync_repo safely initializes an existing bootstrap directory containing empty deploy/ and scripts/."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Bash not found in environment")
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        origin_dir, sha1, sha2 = setup_test_git_repo(tmp_path)
+        bootstrap_dir = tmp_path / "bootstrap_target"
+        (bootstrap_dir / "deploy").mkdir(parents=True)
+        (bootstrap_dir / "scripts").mkdir(parents=True)
+        sync_script = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
+        res = subprocess.run([bash, sync_script.as_posix(), bootstrap_dir.as_posix(), origin_dir.as_posix(), "main", sha2], capture_output=True, text=True)
+        assert res.returncode == 0, f"bootstrap sync failed: {res.stderr}\nstdout: {res.stdout}"
+        assert f"Verified deployment revision: {sha2}" in res.stdout
+        assert (bootstrap_dir / ".git").exists()
+        assert (bootstrap_dir / "deploy" / "compose.yml").exists()
+        assert (bootstrap_dir / "scripts" / "deploy.sh").exists()
+
+
+def test_sync_repo_unexpected_file_in_bootstrap_directory():
+    """Verify sync_repo fails closed when directory contains unexpected files, preserving them."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Bash not found in environment")
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        origin_dir, sha1, sha2 = setup_test_git_repo(tmp_path)
+        target_dir = tmp_path / "target_with_unexpected"
+        (target_dir / "deploy").mkdir(parents=True)
+        (target_dir / "scripts").mkdir(parents=True)
+        (target_dir / "unexpected.txt").write_text("do not overwrite", encoding="utf-8")
+        sync_script = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
+        res = subprocess.run([bash, sync_script.as_posix(), target_dir.as_posix(), origin_dir.as_posix(), "main", sha2], capture_output=True, text=True)
+        assert res.returncode != 0
+        assert "unexpected files/directories" in res.stderr or "unexpected" in res.stderr
+        assert (target_dir / "unexpected.txt").exists(), "Must not delete existing unexpected files"
+        assert not (target_dir / ".git").exists(), "Must not initialize git over unexpected files"
+
+
+def test_sync_repo_existing_non_git_directory():
+    """Verify sync_repo fails safely when destination exists but is not a Git repo and contains arbitrary files."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Bash not found in environment")
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        nongit_dir = tmp_path / "nongit"
+        nongit_dir.mkdir()
+        (nongit_dir / "preserve_me.txt").write_text("critical data", encoding="utf-8")
+        sync_script = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
+        res = subprocess.run([bash, sync_script.as_posix(), nongit_dir.as_posix(), "Quantitative-Systems/crypto-platform", "main", "abc1234"], capture_output=True, text=True)
+        assert res.returncode != 0
+        assert "unexpected files/directories" in res.stderr or "FATAL" in res.stderr
+        assert (nongit_dir / "preserve_me.txt").exists(), "Existing files must not be deleted or destroyed"
 
 
 def test_sync_repo_existing_valid_git_checkout():
@@ -240,23 +300,6 @@ def test_sync_repo_missing_directory():
         assert res.returncode == 0, f"clone failed: {res.stderr}"
         assert missing_dir.exists()
         assert f"Verified deployment revision: {sha1}" in res.stdout
-
-
-def test_sync_repo_existing_non_git_directory():
-    """Verify sync_repo fails safely when destination exists but is not a Git repo, preserving contents."""
-    bash = get_git_bash()
-    if not bash:
-        pytest.skip("Bash not found in environment")
-    with tempfile.TemporaryDirectory() as tmpdir:
-        tmp_path = Path(tmpdir)
-        nongit_dir = tmp_path / "nongit"
-        nongit_dir.mkdir()
-        (nongit_dir / "preserve_me.txt").write_text("critical data", encoding="utf-8")
-        sync_script = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
-        res = subprocess.run([bash, sync_script.as_posix(), nongit_dir.as_posix(), "Quantitative-Systems/crypto-platform", "main", "abc1234"], capture_output=True, text=True)
-        assert res.returncode != 0
-        assert "not a valid Git repository" in res.stderr
-        assert (nongit_dir / "preserve_me.txt").exists(), "Existing files must not be deleted or destroyed"
 
 
 def test_sync_repo_wrong_git_origin():
@@ -306,6 +349,28 @@ def test_sync_repo_exact_commit_sha_verification():
         sync_script = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
         res = subprocess.run([bash, sync_script.as_posix(), target_dir.as_posix(), origin_dir.as_posix(), "main", "0123456789abcdef0123456789abcdef01234567"], capture_output=True, text=True)
         assert res.returncode != 0
+
+
+def test_sync_repo_initialization_failure_preserves_existing_content():
+    """Verify initialization failure (e.g. invalid SHA) does not destroy existing bootstrap content."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Bash not found in environment")
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        origin_dir, sha1, sha2 = setup_test_git_repo(tmp_path)
+        bootstrap_dir = tmp_path / "bootstrap_target"
+        (bootstrap_dir / "deploy").mkdir(parents=True)
+        (bootstrap_dir / "scripts").mkdir(parents=True)
+        sync_script = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
+        # Pass non-existent SHA to force failure during staging checkout
+        res = subprocess.run([bash, sync_script.as_posix(), bootstrap_dir.as_posix(), origin_dir.as_posix(), "main", "deadbeef00000000000000000000000000000000"], capture_output=True, text=True)
+        assert res.returncode != 0
+        # Verify original directory structure is preserved and not destroyed
+        assert bootstrap_dir.exists()
+        assert (bootstrap_dir / "deploy").is_dir()
+        assert (bootstrap_dir / "scripts").is_dir()
+        assert not (bootstrap_dir / ".git").exists()
 
 
 def test_script_rollback_when_new_container_fails_to_start():
