@@ -115,27 +115,29 @@ async def test_full_programmatic_product_journey(test_server):
         assert btc_data["symbol"] == "BTCUSDT"
         assert len(btc_data["timeframes"]) == 7
 
+        auth_headers = {"Authorization": f"Bearer {auth_token}"}
+
         # 13. Watchlist toggle
-        resp_wl = await client.post("/api/markets/watchlist", json={"symbol": "SOLUSDT"})
+        resp_wl = await client.post("/api/markets/watchlist", json={"symbol": "SOLUSDT"}, headers=auth_headers)
         assert resp_wl.status == 200
         wl_data = await resp_wl.json()
         assert "SOLUSDT" in wl_data["watchlist"]
 
         # 14. Billing status
-        resp_bill = await client.get("/api/billing")
+        resp_bill = await client.get("/api/billing", headers=auth_headers)
         assert resp_bill.status == 200
         bill_data = await resp_bill.json()
         assert bill_data["status"]["is_launch_period"] is True
         assert bill_data["status"]["current_charge_usd"] == 0.00
 
         # 15. Billing plan update
-        resp_plan = await client.post("/api/billing/plan", json={"tier": "INSTITUTIONAL"})
+        resp_plan = await client.post("/api/billing/plan", json={"tier": "INSTITUTIONAL"}, headers=auth_headers)
         assert resp_plan.status == 200
         plan_res = await resp_plan.json()
         assert plan_res["current_plan"]["tier"] == "INSTITUTIONAL"
 
         # 16. Strategies list
-        resp_strats = await client.get("/api/strategies")
+        resp_strats = await client.get("/api/strategies", headers=auth_headers)
         assert resp_strats.status == 200
         strats_data = await resp_strats.json()
         assert len(strats_data) >= 7
@@ -151,7 +153,7 @@ async def test_full_programmatic_product_journey(test_server):
         # 18. Strategy Lab Copilot Chat
         resp_copilot = await client.post("/api/strategy-lab/copilot", json={
             "prompt": "Explain the 7-timeframe ladder and how risk is controlled."
-        })
+        }, headers=auth_headers)
         assert resp_copilot.status == 200
         copilot_res = await resp_copilot.json()
         assert "reply" in copilot_res
@@ -171,14 +173,14 @@ async def test_full_programmatic_product_journey(test_server):
         assert fv_data["environments"]["LIVE"]["authorized_capital_usd"] == 0.00
 
         # 21. Risk Center
-        resp_risk = await client.get("/api/risk")
+        resp_risk = await client.get("/api/risk", headers=auth_headers)
         assert resp_risk.status == 200
         risk_res = await resp_risk.json()
         assert risk_res["max_trade_risk_pct"] <= 1.00
         assert risk_res["max_portfolio_heat_pct"] <= 3.00
 
         # 22. Accounts list
-        resp_accs = await client.get("/api/accounts")
+        resp_accs = await client.get("/api/accounts", headers=auth_headers)
         assert resp_accs.status == 200
 
         # 23. Brokers list
@@ -188,37 +190,37 @@ async def test_full_programmatic_product_journey(test_server):
         assert len(brks_data) == 3
 
         # 24. Positions blotter
-        resp_pos = await client.get("/api/positions")
+        resp_pos = await client.get("/api/positions", headers=auth_headers)
         assert resp_pos.status == 200
 
         # 25. Orders blotter
-        resp_ords = await client.get("/api/orders")
+        resp_ords = await client.get("/api/orders", headers=auth_headers)
         assert resp_ords.status == 200
 
         # 26. Decisions blotter
-        resp_decs = await client.get("/api/decisions")
+        resp_decs = await client.get("/api/decisions", headers=auth_headers)
         assert resp_decs.status == 200
 
         # 27. Reconciliation
-        resp_recon = await client.get("/api/reconciliation")
+        resp_recon = await client.get("/api/reconciliation", headers=auth_headers)
         assert resp_recon.status == 200
         recon_data = await resp_recon.json()
         assert recon_data["is_reconciled"] is True
 
         # 28. Drift
-        resp_drift = await client.get("/api/drift")
+        resp_drift = await client.get("/api/drift", headers=auth_headers)
         assert resp_drift.status == 200
 
         # 29. Alerts
-        resp_alerts = await client.get("/api/alerts")
+        resp_alerts = await client.get("/api/alerts", headers=auth_headers)
         assert resp_alerts.status == 200
 
         # 30. Agent Pause / Resume (Emergency Halt)
-        resp_pause = await client.post("/api/agent/pause")
+        resp_pause = await client.post("/api/agent/pause", headers=auth_headers)
         assert resp_pause.status == 200
         assert (await resp_pause.json())["status"] == "PAUSED"
 
-        resp_resume = await client.post("/api/agent/resume")
+        resp_resume = await client.post("/api/agent/resume", headers=auth_headers)
         assert resp_resume.status == 200
         assert (await resp_resume.json())["status"] == "OBSERVING"
 

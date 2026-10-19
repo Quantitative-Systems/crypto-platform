@@ -67,6 +67,17 @@ class TestWebBrokerAndPwa(AioHTTPTestCase):
         self.assertIn("CACHE_NAME", text)
 
     @unittest_run_loop
+    async def _get_auth_headers(self) -> dict:
+        import uuid
+        email = f"trader_{uuid.uuid4().hex[:8]}@strata.io"
+        reg_resp = await self.client.post("/api/auth/register", json={
+            "email": email,
+            "password": "StrongPassword2026!"
+        })
+        data = await reg_resp.json()
+        return {"Authorization": f"Bearer {data['token']}"}
+
+    @unittest_run_loop
     async def test_broker_connect_non_custodial_success(self):
         """Tests successful connection of Binance testnet broker with trade-only permissions."""
         payload = {
@@ -80,15 +91,21 @@ class TestWebBrokerAndPwa(AioHTTPTestCase):
                 "enableWithdrawals": False
             }
         }
-        resp = await self.client.post("/api/brokers/connect", json=payload)
+        # 1. Unauthenticated request must be rejected with 401
+        unauth_resp = await self.client.post("/api/brokers/connect", json=payload)
+        self.assertEqual(unauth_resp.status, 401)
+
+        # 2. Authenticated request succeeds with 200
+        headers = await self._get_auth_headers()
+        resp = await self.client.post("/api/brokers/connect", json=payload, headers=headers)
         self.assertEqual(resp.status, 200)
         data = await resp.json()
         self.assertEqual(data["status"], "CONNECTED")
         self.assertEqual(data["venue"], "BINANCE")
         self.assertTrue(data["non_custodial_verified"])
 
-        # Check that it appears in active brokers
-        active_resp = await self.client.get("/api/brokers/active")
+        # Check that it appears in active brokers for this authenticated tenant
+        active_resp = await self.client.get("/api/brokers/active", headers=headers)
         self.assertEqual(active_resp.status, 200)
         active_list = await active_resp.json()
         venues = [b["venue"] for b in active_list]
@@ -97,6 +114,7 @@ class TestWebBrokerAndPwa(AioHTTPTestCase):
     @unittest_run_loop
     async def test_broker_connect_security_firewall_rejection(self):
         """Tests that an API key with withdrawal permissions is strictly rejected."""
+        headers = await self._get_auth_headers()
         unsafe_payload = {
             "venue": "BYBIT",
             "api_key": "unsafe_bybit_key_1234",
@@ -107,7 +125,7 @@ class TestWebBrokerAndPwa(AioHTTPTestCase):
                 "enableWithdrawals": True  # FORBIDDEN
             }
         }
-        resp = await self.client.post("/api/brokers/connect", json=unsafe_payload)
+        resp = await self.client.post("/api/brokers/connect", json=unsafe_payload, headers=headers)
         self.assertEqual(resp.status, 400)
         data = await resp.json()
         self.assertEqual(data["status"], "REJECTED_UNSAFE_PERMISSIONS")
@@ -116,6 +134,7 @@ class TestWebBrokerAndPwa(AioHTTPTestCase):
     @unittest_run_loop
     async def test_broker_disconnect_flow(self):
         """Tests disconnecting an active exchange account."""
+        headers = await self._get_auth_headers()
         # Connect first
         payload = {
             "venue": "BYBIT",
@@ -124,15 +143,15 @@ class TestWebBrokerAndPwa(AioHTTPTestCase):
             "is_testnet": True,
             "permissions": {"enableWithdrawals": False}
         }
-        await self.client.post("/api/brokers/connect", json=payload)
+        await self.client.post("/api/brokers/connect", json=payload, headers=headers)
 
         # Disconnect
-        disc_resp = await self.client.post("/api/brokers/disconnect", json={"venue": "BYBIT"})
+        disc_resp = await self.client.post("/api/brokers/disconnect", json={"venue": "BYBIT"}, headers=headers)
         self.assertEqual(disc_resp.status, 200)
         data = await disc_resp.json()
         self.assertEqual(data["status"], "DISCONNECTED")
         self.assertEqual(data["venue"], "BYBIT")
 
         # Verify default Paper Sandbox cannot be disconnected
-        paper_disc = await self.client.post("/api/brokers/disconnect", json={"venue": "PAPER"})
+        paper_disc = await self.client.post("/api/brokers/disconnect", json={"venue": "PAPER"}, headers=headers)
         self.assertEqual(paper_disc.status, 400)
