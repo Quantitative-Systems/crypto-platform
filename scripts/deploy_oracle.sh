@@ -70,6 +70,27 @@ except Exception:
 " "$raw_json" 2>/dev/null
 }
 
+validate_ready_json() {
+    local raw_json="${1:-}"
+    python3 -c "
+import sys, json
+try:
+    raw = sys.argv[1].strip()
+    if not raw:
+        sys.exit(1)
+    data = json.loads(raw)
+    if data.get('status') != 'READY':
+        sys.exit(1)
+    if not data.get('reconciliation_intact', False):
+        sys.exit(1)
+    if not data.get('supervisor_running', False):
+        sys.exit(1)
+    sys.exit(0)
+except Exception:
+    sys.exit(1)
+" "$raw_json" 2>/dev/null
+}
+
 echo "======================================================================"
 echo "CRYPTO ENGINE — DEPLOYMENT TO ORACLE HOST"
 echo "Target Image: ${IMAGE_NAME}"
@@ -80,6 +101,14 @@ echo "======================================================================"
 # Step 0: Pre-flight validation of Compose file and Docker config
 # Invariant: Must fail closed BEFORE stopping or renaming the running container!
 echo "[0/5] Pre-flight validation of Compose file and Docker environment..."
+LOCK_FILE="${DEPLOY_LOCK_FILE:-/tmp/crypto_engine_deploy.lock}"
+if command -v flock >/dev/null 2>&1; then
+    exec 200>"${LOCK_FILE}" 2>/dev/null || true
+    if ! flock -n 200 2>/dev/null; then
+        echo "FATAL: Another deployment is currently in progress on this host." >&2
+        exit 1
+    fi
+fi
 if [ ! -f "${COMPOSE_FILE}" ]; then
     echo "FATAL: Deployment compose file does not exist: ${COMPOSE_FILE}" >&2
     exit 1
@@ -137,9 +166,12 @@ if [ "${NEW_CONTAINER_STARTED}" = true ]; then
 
         HEALTH_OUTPUT=$(curl -fsS --max-time 5 http://127.0.0.1:8080/api/health 2>/dev/null || true)
         if [ -n "${HEALTH_OUTPUT}" ] && validate_health_json "${HEALTH_OUTPUT}"; then
-            echo "Health check attempt ${attempt}/${HEALTH_ATTEMPTS}: PASS (Status=HEALTHY & Real Capital=$0.00)"
-            HEALTHY=true
-            break
+            READY_OUTPUT=$(curl -fsS --max-time 5 http://127.0.0.1:8080/api/ready 2>/dev/null || true)
+            if [ -z "${READY_OUTPUT}" ] || validate_ready_json "${READY_OUTPUT}" || validate_health_json "${READY_OUTPUT}"; then
+                echo "Health check attempt ${attempt}/${HEALTH_ATTEMPTS}: PASS (Status=HEALTHY & Real Capital=$0.00)"
+                HEALTHY=true
+                break
+            fi
         fi
         echo "Health check attempt ${attempt}/${HEALTH_ATTEMPTS}: waiting for engine startup (sleeping ${HEALTH_SLEEP}s)..."
         sleep "${HEALTH_SLEEP}"
@@ -151,6 +183,7 @@ fi
 # Step 5: Verification verdict & conditional rollback
 if [ "${HEALTHY}" = true ]; then
     echo "[5/5] Deployment SUCCESSFUL. Purging temporary rollback container..."
+    echo "${IMAGE_NAME}" > "${PROJECT_ROOT}/.last_known_good_image" 2>/dev/null || true
     if [ "$(docker ps -aq -f name=^/${ROLLBACK_NAME}$)" ]; then
         docker rm -f "${ROLLBACK_NAME}" 2>/dev/null || true
     fi
@@ -182,6 +215,14 @@ else
         elif [ -n "${PREV_IMAGE}" ]; then
             echo "Rollback container ${ROLLBACK_NAME} was removed during recreation; redeploying previous verified image: ${PREV_IMAGE}..."
             IMAGE_NAME="${PREV_IMAGE}" docker compose -f "${COMPOSE_FILE}" up -d
+        elif [ -f "${PROJECT_ROOT}/.last_known_good_image" ]; then
+            LAST_GOOD=$(cat "${PROJECT_ROOT}/.last_known_good_image" 2>/dev/null || echo "")
+            if [ -n "${LAST_GOOD}" ] && [ "${LAST_GOOD}" != "${IMAGE_NAME}" ]; then
+                echo "Rollback container missing; redeploying last known good image from disk: ${LAST_GOOD}..."
+                IMAGE_NAME="${LAST_GOOD}" docker compose -f "${COMPOSE_FILE}" up -d
+            else
+                echo "ERROR: Previous container snapshot missing and image name unknown."
+            fi
         else
             echo "ERROR: Previous container snapshot missing and image name unknown."
         fi
