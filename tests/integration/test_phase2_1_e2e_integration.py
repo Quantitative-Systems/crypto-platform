@@ -56,12 +56,26 @@ async def test_flow_a_markets_and_timeframe_state(test_server):
             assert "premium_discount" in timeframes[tf]
 
 
+async def _get_auth_headers(client: TestClient) -> dict:
+    import uuid
+    reg = await client.post("/api/auth/register", json={
+        "email": f"integration_{uuid.uuid4().hex[:8]}@strata.fund",
+        "password": "Password12345!"
+    })
+    token = (await reg.json())["token"]
+    return {"Authorization": f"Bearer {token}"}
+
+
 @pytest.mark.asyncio
 async def test_flow_b_strategy_list_parsing_and_rule_validation(test_server):
     """Flow B: Strategy list -> strategy parsing -> rule validation."""
     async with TestClient(TestServer(test_server.app)) as client:
-        # 1. Fetch strategy list
-        resp = await client.get("/api/strategies")
+        # Unauthenticated request returns 401
+        assert (await client.get("/api/strategies")).status == 401
+
+        # Authenticated fetch of strategy list
+        headers = await _get_auth_headers(client)
+        resp = await client.get("/api/strategies", headers=headers)
         assert resp.status == 200
         strategies = await resp.json()
         assert isinstance(strategies, list)
@@ -133,7 +147,8 @@ async def test_flow_d_paper_position_and_risk_validation(test_server):
     """Flow D: Paper position -> risk validation -> position/order display."""
     async with TestClient(TestServer(test_server.app)) as client:
         # 1. Risk parameters
-        risk_resp = await client.get("/api/risk")
+        headers = await _get_auth_headers(client)
+        risk_resp = await client.get("/api/risk", headers=headers)
         assert risk_resp.status == 200
         risk_data = await risk_resp.json()
         assert risk_data["max_trade_risk_pct"] <= 1.0
@@ -167,12 +182,12 @@ async def test_flow_d_paper_position_and_risk_validation(test_server):
         assert valid_compliant is True
 
         # 3. Check blotter endpoints
-        orders_resp = await client.get("/api/orders")
+        orders_resp = await client.get("/api/orders", headers=headers)
         assert orders_resp.status == 200
         orders = await orders_resp.json()
         assert isinstance(orders, list)
 
-        pos_resp = await client.get("/api/positions")
+        pos_resp = await client.get("/api/positions", headers=headers)
         assert pos_resp.status == 200
         pos_data = await pos_resp.json()
         assert "active_positions" in pos_data
@@ -196,8 +211,9 @@ async def test_flow_e_monitoring_and_alerts(test_server):
         status_data = await status_resp.json()
         assert status_data["status"].upper() == "HEALTHY"
 
-        # 3. Alerts endpoint
-        alerts_resp = await client.get("/api/alerts")
+        # 3. Alerts endpoint (Protected)
+        headers = await _get_auth_headers(client)
+        alerts_resp = await client.get("/api/alerts", headers=headers)
         assert alerts_resp.status == 200
         alerts = await alerts_resp.json()
         assert isinstance(alerts, list)

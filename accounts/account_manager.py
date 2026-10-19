@@ -222,6 +222,34 @@ class AccountManager:
         )
         logger.info(f"Account registered: {config.account_id} ({config.name}) [{config.environment.value}] for tenant [{config.tenant_id}]")
 
+    def create_account(
+        self,
+        tenant_id: str,
+        name: str,
+        broker: str = "BINANCE",
+        environment: str = "TESTNET",
+        initial_balance: float = 100_000.0,
+        margin_allocation_pct: float = 0.20,
+        risk_ceiling_pct: float = 0.01,
+    ) -> AccountConfig:
+        """Dynamically creates and registers a tenant-isolated account."""
+        env_enum = AccountEnvironment.BROKER_DEMO if str(environment).upper() == "TESTNET" else AccountEnvironment.CONTROLLED_LIVE
+        venue_enum = BrokerVenue.BINANCE_TESTNET if str(broker).upper() == "BINANCE" and str(environment).upper() == "TESTNET" else BrokerVenue.SIMULATED
+        acc_id = f"ACC_{tenant_id}_{broker}_{uuid.uuid4().hex[:6]}".upper()
+        cfg = AccountConfig(
+            account_id=acc_id,
+            name=name,
+            venue=venue_enum,
+            environment=env_enum,
+            tenant_id=tenant_id,
+            user_id=tenant_id,
+            broker_id=broker,
+            initial_equity_usd=initial_balance,
+            max_leverage=1.0,
+        )
+        self.register_account(cfg)
+        return cfg
+
     def get_account_config(self, account_id: str) -> Optional[AccountConfig]:
         return self._accounts.get(account_id)
 
@@ -243,8 +271,10 @@ class AccountManager:
         """Return list of accounts with current snapshot data, filtered by tenant visibility."""
         results = []
         for acc_id, config in self._accounts.items():
-            if tenant_id and config.tenant_id != "system" and config.tenant_id != tenant_id:
-                continue
+            # System accounts are available globally; non-system accounts strictly require matching tenant_id
+            if config.tenant_id != "system":
+                if not tenant_id or config.tenant_id != tenant_id:
+                    continue
             snap = self._snapshots.get(acc_id)
             d = snap.to_dict() if snap else {}
             d["is_active_account"] = (acc_id == self._active_account_id)

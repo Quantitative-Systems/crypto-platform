@@ -179,7 +179,7 @@ def test_server(test_supervisor):
 @pytest.mark.asyncio
 async def test_rest_api_markets_endpoints(test_server):
     async with TestClient(TestServer(test_server.app)) as client:
-        # 1. /api/markets
+        # 1. /api/markets (Public)
         resp = await client.get("/api/markets")
         assert resp.status == 200
         data = await resp.json()
@@ -187,15 +187,24 @@ async def test_rest_api_markets_endpoints(test_server):
         assert "watchlist" in data
         assert len(data["all_assets"]) >= 4
 
-        # 2. /api/markets/BTCUSDT
+        # 2. /api/markets/BTCUSDT (Public)
         resp_btc = await client.get("/api/markets/BTCUSDT")
         assert resp_btc.status == 200
         btc = await resp_btc.json()
         assert btc["symbol"] == "BTCUSDT"
         assert "timeframes" in btc
 
-        # 3. Toggle watchlist
-        resp_wl = await client.post("/api/markets/watchlist", json={"symbol": "SOLUSDT"})
+        # 3. Toggle watchlist (Protected: unauthenticated must fail with 401)
+        unauth_wl = await client.post("/api/markets/watchlist", json={"symbol": "SOLUSDT"})
+        assert unauth_wl.status == 401
+
+        # Register user and authenticate
+        reg = await client.post("/api/auth/register", json={"email": "market_trader@strata.io", "password": "Password1234!"})
+        token = (await reg.json())["token"]
+        headers = {"Authorization": f"Bearer {token}"}
+
+        # Toggle watchlist (Authenticated succeeds)
+        resp_wl = await client.post("/api/markets/watchlist", json={"symbol": "SOLUSDT"}, headers=headers)
         assert resp_wl.status == 200
         wl_data = await resp_wl.json()
         assert "SOLUSDT" in wl_data["watchlist"]
@@ -204,8 +213,17 @@ async def test_rest_api_markets_endpoints(test_server):
 @pytest.mark.asyncio
 async def test_rest_api_billing_endpoints(test_server):
     async with TestClient(TestServer(test_server.app)) as client:
+        # Unauthenticated calls must fail with 401
+        assert (await client.get("/api/billing")).status == 401
+        assert (await client.post("/api/billing/plan", json={"tier": "INSTITUTIONAL"})).status == 401
+
+        # Authenticate
+        reg = await client.post("/api/auth/register", json={"email": "billing_user@strata.io", "password": "Password1234!"})
+        token = (await reg.json())["token"]
+        headers = {"Authorization": f"Bearer {token}"}
+
         # 1. /api/billing
-        resp = await client.get("/api/billing")
+        resp = await client.get("/api/billing", headers=headers)
         assert resp.status == 200
         data = await resp.json()
         assert "status" in data
@@ -214,7 +232,7 @@ async def test_rest_api_billing_endpoints(test_server):
         assert data["status"]["charges_enabled"] is False
 
         # 2. /api/billing/plan
-        resp_plan = await client.post("/api/billing/plan", json={"tier": "INSTITUTIONAL"})
+        resp_plan = await client.post("/api/billing/plan", json={"tier": "INSTITUTIONAL"}, headers=headers)
         assert resp_plan.status == 200
         plan_data = await resp_plan.json()
         assert plan_data["current_plan"]["tier"] == "INSTITUTIONAL"
@@ -224,18 +242,27 @@ async def test_rest_api_billing_endpoints(test_server):
 @pytest.mark.asyncio
 async def test_rest_api_copilot_and_risk_endpoints(test_server):
     async with TestClient(TestServer(test_server.app)) as client:
-        # 1. /api/strategy-lab/copilot
+        # Unauthenticated calls to protected copilot & risk must fail with 401
+        assert (await client.post("/api/strategy-lab/copilot", json={"prompt": "BTC swing"})).status == 401
+        assert (await client.get("/api/risk")).status == 401
+
+        # Authenticate
+        reg = await client.post("/api/auth/register", json={"email": "copilot_user@strata.io", "password": "Password1234!"})
+        token = (await reg.json())["token"]
+        headers = {"Authorization": f"Bearer {token}"}
+
+        # 1. /api/strategy-lab/copilot (Authenticated)
         resp_copilot = await client.post("/api/strategy-lab/copilot", json={
             "prompt": "Create a BTC swing strategy using market structure, pullbacks and minimum 4R."
-        })
+        }, headers=headers)
         assert resp_copilot.status == 200
         copilot_data = await resp_copilot.json()
         assert "reply" in copilot_data
         assert "disclaimer" in copilot_data
         assert "$0.00" in copilot_data["disclaimer"]
 
-        # 2. /api/risk
-        resp_risk = await client.get("/api/risk")
+        # 2. /api/risk (Authenticated)
+        resp_risk = await client.get("/api/risk", headers=headers)
         assert resp_risk.status == 200
         risk_data = await resp_risk.json()
         assert risk_data["max_trade_risk_pct"] <= 1.0
@@ -243,7 +270,7 @@ async def test_rest_api_copilot_and_risk_endpoints(test_server):
         assert risk_data["capital_safety_gate"]["real_capital_authorized_usd"] == 0.00
         assert risk_data["capital_safety_gate"]["live_execution_locked"] is True
 
-        # 3. /api/forward-validation
+        # 3. /api/forward-validation (Public baseline)
         resp_fv = await client.get("/api/forward-validation")
         assert resp_fv.status == 200
         fv_data = await resp_fv.json()

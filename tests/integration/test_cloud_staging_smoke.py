@@ -95,9 +95,21 @@ class TestCloudStagingSmoke(AioHTTPTestCase):
         detail = await resp.json()
         assert detail["symbol"] == "BTCUSDT"
 
+    async def _get_auth_headers(self) -> dict:
+        import uuid
+        email = f"staging_{uuid.uuid4().hex[:8]}@cryptoplatform.io"
+        reg_payload = {"email": email, "password": "SecurePassword123!", "name": "Smoke Tester"}
+        resp = await self.client.post("/api/auth/register", json=reg_payload)
+        data = await resp.json()
+        return {"Authorization": f"Bearer {data['token']}"}
+
     async def test_06_strategies(self):
         """Phase 14.6 — STRATEGIES: Verify strategy library catalog."""
-        resp = await self.client.get("/api/strategies")
+        # Unauthenticated access must fail with 401
+        assert (await self.client.get("/api/strategies")).status == 401
+
+        headers = await self._get_auth_headers()
+        resp = await self.client.get("/api/strategies", headers=headers)
         assert resp.status == 200
         strategies = await resp.json()
         assert isinstance(strategies, list)
@@ -128,24 +140,31 @@ class TestCloudStagingSmoke(AioHTTPTestCase):
 
     async def test_10_trading_positions_and_orders(self):
         """Phase 14.10 — TRADING: Verify positions, orders blotter, and fail-closed safety."""
-        # Positions
-        resp_pos = await self.client.get("/api/positions")
+        # Unauthenticated access must fail with 401
+        assert (await self.client.get("/api/positions")).status == 401
+        assert (await self.client.get("/api/orders")).status == 401
+        assert (await self.client.get("/api/decisions")).status == 401
+
+        headers = await self._get_auth_headers()
+        resp_pos = await self.client.get("/api/positions", headers=headers)
         assert resp_pos.status == 200
         pos_data = await resp_pos.json()
         assert "active_positions" in pos_data
         assert "closed_positions" in pos_data
 
         # Orders
-        resp_orders = await self.client.get("/api/orders")
+        resp_orders = await self.client.get("/api/orders", headers=headers)
         assert resp_orders.status == 200
 
         # Decisions
-        resp_dec = await self.client.get("/api/decisions")
+        resp_dec = await self.client.get("/api/decisions", headers=headers)
         assert resp_dec.status == 200
 
     async def test_11_risk_management(self):
         """Phase 14.11 — RISK MANAGEMENT: Verify risk metrics & circuit breakers."""
-        resp = await self.client.get("/api/risk")
+        assert (await self.client.get("/api/risk")).status == 401
+        headers = await self._get_auth_headers()
+        resp = await self.client.get("/api/risk", headers=headers)
         assert resp.status == 200
         risk = await resp.json()
         assert "capital_safety" in risk or "max_portfolio_heat_pct" in risk or "circuit_breaker_active" in risk
@@ -160,27 +179,35 @@ class TestCloudStagingSmoke(AioHTTPTestCase):
 
     async def test_13_monitoring_and_alerts(self):
         """Phase 14.13 — MONITORING: Verify reconciliation, drift, and alerts."""
+        assert (await self.client.get("/api/reconciliation")).status == 401
+        assert (await self.client.get("/api/drift")).status == 401
+        assert (await self.client.get("/api/alerts")).status == 401
+
+        headers = await self._get_auth_headers()
         # Reconciliation
-        resp_rec = await self.client.get("/api/reconciliation")
+        resp_rec = await self.client.get("/api/reconciliation", headers=headers)
         assert resp_rec.status == 200
 
         # Drift
-        resp_drift = await self.client.get("/api/drift")
+        resp_drift = await self.client.get("/api/drift", headers=headers)
         assert resp_drift.status == 200
 
         # Alerts
-        resp_alerts = await self.client.get("/api/alerts")
+        resp_alerts = await self.client.get("/api/alerts", headers=headers)
         assert resp_alerts.status == 200
 
     async def test_14_accounts_and_brokers(self):
         """Phase 14.14 — ACCOUNT: Verify accounts and broker connections."""
-        # Accounts
-        resp_acc = await self.client.get("/api/accounts")
+        # Unauthenticated accounts query must fail with 401
+        assert (await self.client.get("/api/accounts")).status == 401
+
+        headers = await self._get_auth_headers()
+        resp_acc = await self.client.get("/api/accounts", headers=headers)
         assert resp_acc.status == 200
         accs = await resp_acc.json()
         assert isinstance(accs, list)
 
-        # Brokers
+        # Brokers catalog (Public)
         resp_brok = await self.client.get("/api/brokers")
         assert resp_brok.status == 200
         brokers = await resp_brok.json()
