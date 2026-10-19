@@ -1061,3 +1061,67 @@ exit 7
         assert "attempt 2/50" not in res.stdout, "Should not continue probing after container exited"
 
 
+def test_script_fails_closed_when_flock_detects_concurrent_deployment():
+    """Verify scripts/deploy_oracle.sh aborts fail-closed if flock indicates an active deployment."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Git Bash not found in environment")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        mock_flock = tmp_path / "flock"
+        mock_flock.write_text("""#!/usr/bin/env bash
+exit 1
+""", encoding="utf-8", newline="\n")
+        mock_flock.chmod(0o755)
+
+        script_path = REPO_ROOT / "scripts" / "deploy_oracle.sh"
+        env = os.environ.copy()
+        env["FLOCK_BIN"] = mock_flock.as_posix()
+        env["DEPLOY_LOCK_FILE"] = (tmp_path / "test.lock").as_posix()
+
+        res = subprocess.run(
+            [bash, script_path.as_posix(), "mock-image:test"],
+            cwd=str(REPO_ROOT),
+            env=env,
+            capture_output=True,
+            text=True,
+        )
+
+        assert res.returncode == 1
+        assert "Another deployment is currently in progress on this host" in res.stderr
+
+
+def test_script_preserves_stderr_when_flock_succeeds():
+    """Verify scripts/deploy_oracle.sh does not redirect or swallow stderr when flock lock succeeds."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Git Bash not found in environment")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        mock_flock = tmp_path / "flock"
+        mock_flock.write_text("""#!/usr/bin/env bash
+exit 0
+""", encoding="utf-8", newline="\n")
+        mock_flock.chmod(0o755)
+
+        script_path = REPO_ROOT / "scripts" / "deploy_oracle.sh"
+        env = os.environ.copy()
+        env["FLOCK_BIN"] = mock_flock.as_posix()
+        env["DEPLOY_LOCK_FILE"] = (tmp_path / "test.lock").as_posix()
+        env["COMPOSE_FILE"] = (tmp_path / "nonexistent_compose.yml").as_posix()
+
+        res = subprocess.run(
+            [bash, script_path.as_posix(), "mock-image:test"],
+            cwd=str(REPO_ROOT),
+            env=env,
+            capture_output=True,
+            text=True,
+        )
+
+        assert res.returncode == 1
+        assert "Deployment compose file does not exist" in res.stderr
+
+
+

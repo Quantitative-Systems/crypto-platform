@@ -44,6 +44,9 @@ fi
 if [ -n "${CURL_BIN:-}" ]; then
     curl() { "${CURL_BIN}" "$@"; }
 fi
+if [ -n "${FLOCK_BIN:-}" ]; then
+    flock() { "${FLOCK_BIN}" "$@"; }
+fi
 
 # ------------------------------------------------------------------------------
 # Robust JSON Health Validator
@@ -102,11 +105,13 @@ echo "======================================================================"
 # Invariant: Must fail closed BEFORE stopping or renaming the running container!
 echo "[0/5] Pre-flight validation of Compose file and Docker environment..."
 LOCK_FILE="${DEPLOY_LOCK_FILE:-/tmp/crypto_engine_deploy.lock}"
-if command -v flock >/dev/null 2>&1; then
-    exec 200>"${LOCK_FILE}" 2>/dev/null || true
-    if ! flock -n 200 2>/dev/null; then
-        echo "FATAL: Another deployment is currently in progress on this host." >&2
-        exit 1
+if [ -n "${FLOCK_BIN:-}" ] || command -v flock >/dev/null 2>&1; then
+    if ( : > "${LOCK_FILE}" ) 2>/dev/null; then
+        exec 200>"${LOCK_FILE}"
+        if ! flock -n 200; then
+            echo "FATAL: Another deployment is currently in progress on this host." >&2
+            exit 1
+        fi
     fi
 fi
 if [ ! -f "${COMPOSE_FILE}" ]; then
