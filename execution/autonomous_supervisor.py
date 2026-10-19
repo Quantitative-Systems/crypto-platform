@@ -618,13 +618,6 @@ class AutonomousTradingSupervisor:
                         f"Error evaluating opportunity for {sym} {set_name} {hyp} @ {candle.close_ts}: {ex}",
                         exc_info=True,
                     )
-                    ALERTS.emit(
-                        severity=AlertSeverity.ERROR,
-                        category=AlertCategory.STRATEGY,
-                        title=f"Strategy Evaluation Error: {sym} {set_name}",
-                        message=f"Evaluation failed for {sym} {set_name} {hyp}: {str(ex)[:100]}",
-                        metadata={"symbol": sym, "set": set_name, "hyp": hyp, "error": str(ex)},
-                    )
                     continue
                 evaluated_cards.append(decision_card)
 

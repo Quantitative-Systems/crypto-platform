@@ -246,7 +246,24 @@ class PhaseRDecisionEngine:
                 reasons=reasons,
             )
 
-        if ltf_data is None or len(ltf_data["c"]) < 60:
+        htf_tf = cfg["htf"]
+        mtf_tf = cfg["mtf"]
+        htf_data = all_timeframe_data.get(htf_tf)
+        mtf_data = all_timeframe_data.get(mtf_tf)
+
+        if (
+            ltf_data is None
+            or "c" not in ltf_data
+            or len(ltf_data["c"]) < 60
+            or htf_data is None
+            or "close_ts" not in htf_data
+            or "c" not in htf_data
+            or len(htf_data["c"]) < 30
+            or mtf_data is None
+            or "close_ts" not in mtf_data
+            or "c" not in mtf_data
+            or len(mtf_data["c"]) < 30
+        ):
             reasons.append(PhaseRNoTradeReason.NO_STRUCTURAL_SETUP.value)
             return self._build_no_trade(
                 decision_id=decision_id,

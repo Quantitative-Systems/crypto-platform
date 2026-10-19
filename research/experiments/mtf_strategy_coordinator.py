@@ -58,6 +58,22 @@ class MTFStrategyCoordinator:
             candidates: List of trade candidates ready for backtest execution.
             mtf_trailing_map: Map of LTF timestamp -> MTF trailing stop price.
         """
+        if (
+            not isinstance(htf_data, dict)
+            or "close_ts" not in htf_data
+            or "c" not in htf_data
+            or len(htf_data["c"]) < 30
+            or not isinstance(mtf_data, dict)
+            or "close_ts" not in mtf_data
+            or "c" not in mtf_data
+            or len(mtf_data["c"]) < 30
+            or not isinstance(ltf_data, dict)
+            or "c" not in ltf_data
+            or "ts" not in ltf_data
+            or len(ltf_data["c"]) < 60
+        ):
+            return [], {}
+
         ltf_closes = ltf_data["c"]
         ltf_ts = ltf_data["ts"]
         n_ltf = len(ltf_closes)
