@@ -159,7 +159,7 @@ class TestDecisionEngineHypothesisSafety:
             engine = PhaseRDecisionEngine(symbol=sym)
             now_ms = int(time.time() * 1000)
 
-            # Test both seeded (synthetic history) and unseeded (empty/short) data
+            # Test seeded (synthetic history), unseeded (short), and partially seeded (missing HTF/MTF)
             all_tf_seeded = {
                 tf: _make_dummy_tf_series(80, base_price=1000.0)
                 for tf in ["15m", "1h", "4h", "1d", "1w", "1M", "3m"]
@@ -167,8 +167,11 @@ class TestDecisionEngineHypothesisSafety:
             all_tf_unseeded = {
                 "15m": _make_dummy_tf_series(5, base_price=1000.0)
             }
+            all_tf_partially_seeded = {
+                "15m": _make_dummy_tf_series(80, base_price=1000.0)
+            }
 
-            for dataset in [all_tf_seeded, all_tf_unseeded]:
+            for dataset in [all_tf_seeded, all_tf_unseeded, all_tf_partially_seeded]:
                 for set_name in ["SET_2", "SET_3", "SET_4"]:
                     for hyp in ["CONTINUATION", "PULLBACK"]:
                         rec = engine.evaluate_opportunity(
