@@ -840,3 +840,224 @@ exit 0
         assert "CRYPTO ENGINE IS LIVE & HEALTHY ON 127.0.0.1:8080" in res.stdout
         assert "deploy/docker-compose.oracle.yml" in res.stdout
 
+
+def test_script_rollback_recovers_via_prev_image_when_compose_recreates_container():
+    """Regression test for Run #18: verify rollback falls back to redeploying PREV_IMAGE via Compose when crypto-engine-prev was deleted during compose recreation."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Git Bash not found in environment")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        log_file = tmp_path / "mock_docker.log"
+
+        # Mock docker CLI:
+        # 1. Existing container running previous image sha-607c397
+        # 2. Compose up recreates container (deleting crypto-engine-prev)
+        # 3. Rollback triggers docker compose up -d with PREV_IMAGE
+        mock_docker = tmp_path / "docker"
+        mock_docker.write_text(f"""#!/usr/bin/env bash
+echo "$@" >> "{log_file.as_posix()}"
+if [[ "$*" == *"compose"* ]] && [[ "$*" == *"config"* ]]; then
+    exit 0
+elif [[ "$*" == *"pull"* ]]; then
+    exit 0
+elif [[ "$*" == *"inspect --format"* ]] && [[ "$*" == *"{{.Config.Image}}"* ]]; then
+    echo "ghcr.io/quantitative-systems/crypto-platform:sha-607c397"
+    exit 0
+elif [[ "$*" == *"ps -q -f name=^/crypto-engine$"* ]]; then
+    echo "existing_container_id_123"
+    exit 0
+elif [[ "$*" == *"ps -aq -f name=^/crypto-engine-prev$"* ]]; then
+    # Simulate Docker Compose recreate: crypto-engine-prev was deleted!
+    exit 0
+elif [[ "$*" == *"inspect --format"* ]] && [[ "$*" == *"{{.State.Status}}"* ]]; then
+    echo "running"
+    exit 0
+elif [[ "$*" == *"port crypto-engine"* ]]; then
+    echo "8080/tcp -> 127.0.0.1:8080"
+    exit 0
+fi
+exit 0
+""", encoding="utf-8", newline="\n")
+        mock_docker.chmod(0o755)
+
+        # Mock curl: fails during initial deployment, succeeds during rollback verification
+        curl_calls_file = tmp_path / "curl_calls.txt"
+        mock_curl = tmp_path / "curl"
+        mock_curl.write_text(f"""#!/usr/bin/env bash
+count=0
+if [ -f "{curl_calls_file.as_posix()}" ]; then
+    count=$(cat "{curl_calls_file.as_posix()}")
+fi
+count=$((count + 1))
+echo "$count" > "{curl_calls_file.as_posix()}"
+
+# Attempts 1-2 (initial deploy): fail
+# Attempt 3+ (rollback): succeed
+if [ "$count" -le 2 ]; then
+    exit 7
+else
+    echo '{{"status": "HEALTHY", "real_capital_authorized": 0.0}}'
+    exit 0
+fi
+""", encoding="utf-8", newline="\n")
+        mock_curl.chmod(0o755)
+
+        dummy_compose = tmp_path / "dummy_compose.yml"
+        dummy_compose.write_text("services:\n  crypto-engine:\n    image: test", encoding="utf-8")
+
+        script_path = REPO_ROOT / "scripts" / "deploy_oracle.sh"
+        env = os.environ.copy()
+        env["PATH"] = f"{tmp_path.as_posix()}{os.pathsep}{env['PATH']}"
+        env["DOCKER_BIN"] = mock_docker.as_posix()
+        env["CURL_BIN"] = mock_curl.as_posix()
+        env["COMPOSE_FILE"] = dummy_compose.as_posix()
+        env["HEALTH_ATTEMPTS"] = "2"
+        env["HEALTH_SLEEP"] = "0"
+        env["ROLLBACK_ATTEMPTS"] = "2"
+        env["ROLLBACK_SLEEP"] = "0"
+
+        res = subprocess.run(
+            [bash, script_path.as_posix(), "mock-image:failing"],
+            cwd=str(REPO_ROOT),
+            env=env,
+            capture_output=True,
+            text=True,
+        )
+
+        assert res.returncode == 1, "Script should exit 1 when deployment failed, even after rollback"
+        assert "Rollback container crypto-engine-prev was removed during recreation; redeploying previous verified image: ghcr.io/quantitative-systems/crypto-platform:sha-607c397" in res.stdout
+        assert "Rollback successfully restored previous working container." in res.stdout
+
+        logged = log_file.read_text(encoding="utf-8")
+        assert "pull mock-image:failing" in logged
+        # Verifies PREV_IMAGE was passed to docker compose up during rollback
+        assert "compose" in logged and "down" in logged
+        assert "compose" in logged and "up -d" in logged
+
+
+def test_script_dumps_failed_container_state_and_logs_before_teardown():
+    """Verify scripts/deploy_oracle.sh logs container state and logs before tearing down the failed container."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Git Bash not found in environment")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        log_file = tmp_path / "mock_docker.log"
+
+        mock_docker = tmp_path / "docker"
+        mock_docker.write_text(f"""#!/usr/bin/env bash
+echo "$@" >> "{log_file.as_posix()}"
+if [[ "$*" == *"inspect --format Status="* ]]; then
+    echo "Status=running ExitCode=0 OOMKilled=false Error="
+    exit 0
+elif [[ "$*" == *"logs --tail 100 crypto-engine"* ]]; then
+    echo "FATAL: Startup timeout waiting for websocket connection"
+    exit 0
+elif [[ "$*" == *"ps -aq -f name=^/crypto-engine-prev$"* ]]; then
+    echo "prev_id"
+    exit 0
+fi
+exit 0
+""", encoding="utf-8", newline="\n")
+        mock_docker.chmod(0o755)
+
+        mock_curl = tmp_path / "curl"
+        mock_curl.write_text("""#!/usr/bin/env bash
+exit 7
+""", encoding="utf-8", newline="\n")
+        mock_curl.chmod(0o755)
+
+        dummy_compose = tmp_path / "dummy_compose.yml"
+        dummy_compose.write_text("services:\n  crypto-engine:\n    image: test", encoding="utf-8")
+
+        script_path = REPO_ROOT / "scripts" / "deploy_oracle.sh"
+        env = os.environ.copy()
+        env["PATH"] = f"{tmp_path.as_posix()}{os.pathsep}{env['PATH']}"
+        env["DOCKER_BIN"] = mock_docker.as_posix()
+        env["CURL_BIN"] = mock_curl.as_posix()
+        env["COMPOSE_FILE"] = dummy_compose.as_posix()
+        env["HEALTH_ATTEMPTS"] = "1"
+        env["HEALTH_SLEEP"] = "0"
+        env["ROLLBACK_ATTEMPTS"] = "1"
+        env["ROLLBACK_SLEEP"] = "0"
+
+        res = subprocess.run(
+            [bash, script_path.as_posix(), "mock-image:test"],
+            cwd=str(REPO_ROOT),
+            env=env,
+            capture_output=True,
+            text=True,
+        )
+
+        assert res.returncode == 1
+        assert "--- Failed Container State ---" in res.stdout
+        assert "Status=running ExitCode=0 OOMKilled=false Error=" in res.stdout
+        assert "--- Failed Container Logs (last 100 lines) ---" in res.stdout
+        assert "FATAL: Startup timeout waiting for websocket connection" in res.stdout
+        assert "Tearing down failed container..." in res.stdout
+
+        logged = log_file.read_text(encoding="utf-8")
+        inspect_idx = logged.find("inspect --format Status=")
+        logs_idx = logged.find("logs --tail 100 crypto-engine")
+        down_idx = logged.find("down")
+        assert inspect_idx != -1 and logs_idx != -1 and down_idx != -1
+        assert inspect_idx < down_idx, "Inspection must happen before compose down teardown"
+        assert logs_idx < down_idx, "Logs capture must happen before compose down teardown"
+
+
+def test_script_fast_fails_when_container_status_is_exited_or_dead():
+    """Verify health check loop aborts immediately without waiting for remaining attempts if container exits or dies."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Git Bash not found in environment")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+
+        mock_docker = tmp_path / "docker"
+        mock_docker.write_text("""#!/usr/bin/env bash
+if [[ "$*" == *"inspect --format"* ]] && [[ "$*" == *"{{.State.Status}}"* ]]; then
+    echo "exited"
+    exit 0
+fi
+exit 0
+""", encoding="utf-8", newline="\n")
+        mock_docker.chmod(0o755)
+
+        mock_curl = tmp_path / "curl"
+        mock_curl.write_text("""#!/usr/bin/env bash
+exit 7
+""", encoding="utf-8", newline="\n")
+        mock_curl.chmod(0o755)
+
+        dummy_compose = tmp_path / "dummy_compose.yml"
+        dummy_compose.write_text("services:\n  crypto-engine:\n    image: test", encoding="utf-8")
+
+        script_path = REPO_ROOT / "scripts" / "deploy_oracle.sh"
+        env = os.environ.copy()
+        env["PATH"] = f"{tmp_path.as_posix()}{os.pathsep}{env['PATH']}"
+        env["DOCKER_BIN"] = mock_docker.as_posix()
+        env["CURL_BIN"] = mock_curl.as_posix()
+        env["COMPOSE_FILE"] = dummy_compose.as_posix()
+        # Even with 50 attempts, it should fast-fail on attempt 1
+        env["HEALTH_ATTEMPTS"] = "50"
+        env["HEALTH_SLEEP"] = "0"
+        env["ROLLBACK_ATTEMPTS"] = "1"
+        env["ROLLBACK_SLEEP"] = "0"
+
+        res = subprocess.run(
+            [bash, script_path.as_posix(), "mock-image:test"],
+            cwd=str(REPO_ROOT),
+            env=env,
+            capture_output=True,
+            text=True,
+        )
+
+        assert res.returncode == 1
+        assert "Health check aborting early: container 'crypto-engine' status is 'exited'." in res.stdout
+        assert "attempt 2/50" not in res.stdout, "Should not continue probing after container exited"
+
+

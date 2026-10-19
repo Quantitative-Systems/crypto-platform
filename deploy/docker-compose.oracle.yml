@@ -1,4 +1,3 @@
-version: "3.8"
 
 # Crypto Engine — Dedicated Production Docker Compose for Oracle Free Tier (1 GB VPS)
 # Invariants: Localhost Loopback Only (127.0.0.1:8080), Memory Cap (512MB), Zero Capital ($0.00)

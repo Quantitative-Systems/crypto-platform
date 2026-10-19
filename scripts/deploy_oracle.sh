@@ -32,9 +32,9 @@ if [[ "${COMPOSE_FILE}" != /* ]] && [[ "${COMPOSE_FILE}" != [a-zA-Z]:/* ]] && [[
 fi
 
 # Probe Timing Configurations (Overridable for fast test suites)
-HEALTH_ATTEMPTS="${HEALTH_ATTEMPTS:-15}"
+HEALTH_ATTEMPTS="${HEALTH_ATTEMPTS:-30}"
 HEALTH_SLEEP="${HEALTH_SLEEP:-2}"
-ROLLBACK_ATTEMPTS="${ROLLBACK_ATTEMPTS:-15}"
+ROLLBACK_ATTEMPTS="${ROLLBACK_ATTEMPTS:-30}"
 ROLLBACK_SLEEP="${ROLLBACK_SLEEP:-2}"
 
 # Optional command overrides for test harnesses
@@ -98,13 +98,16 @@ docker pull "${IMAGE_NAME}"
 # Step 2: Prepare rollback container snapshot
 echo "[2/5] Creating rollback backup snapshot..."
 HAD_PREV_CONTAINER=false
+PREV_IMAGE=""
 if [ "$(docker ps -q -f name=^/${CONTAINER_NAME}$)" ]; then
-    echo "Stopping existing ${CONTAINER_NAME} and preserving as ${ROLLBACK_NAME}..."
+    PREV_IMAGE=$(docker inspect --format '{{.Config.Image}}' "${CONTAINER_NAME}" 2>/dev/null || echo "")
+    echo "Existing running ${CONTAINER_NAME} found (Image: ${PREV_IMAGE:-unknown}). Stopping and preserving as ${ROLLBACK_NAME}..."
     docker stop "${CONTAINER_NAME}" || true
     docker rename "${CONTAINER_NAME}" "${ROLLBACK_NAME}" 2>/dev/null || true
     HAD_PREV_CONTAINER=true
 elif [ "$(docker ps -aq -f name=^/${CONTAINER_NAME}$)" ]; then
-    echo "Existing ${CONTAINER_NAME} found in stopped state. Preserving as ${ROLLBACK_NAME}..."
+    PREV_IMAGE=$(docker inspect --format '{{.Config.Image}}' "${CONTAINER_NAME}" 2>/dev/null || echo "")
+    echo "Existing ${CONTAINER_NAME} found in stopped state (Image: ${PREV_IMAGE:-unknown}). Preserving as ${ROLLBACK_NAME}..."
     docker rename "${CONTAINER_NAME}" "${ROLLBACK_NAME}" 2>/dev/null || true
     HAD_PREV_CONTAINER=true
 fi
@@ -125,13 +128,20 @@ HEALTHY=false
 if [ "${NEW_CONTAINER_STARTED}" = true ]; then
     echo "[4/5] Running health verification probes against http://127.0.0.1:8080/api/health..."
     for attempt in $(seq 1 "${HEALTH_ATTEMPTS}"); do
+        # Fast-fail if container has terminated (e.g. exited, dead)
+        CURRENT_STATUS=$(docker inspect --format '{{.State.Status}}' "${CONTAINER_NAME}" 2>/dev/null || echo "")
+        if [ "${CURRENT_STATUS}" = "exited" ] || [ "${CURRENT_STATUS}" = "dead" ]; then
+            echo "Health check aborting early: container '${CONTAINER_NAME}' status is '${CURRENT_STATUS}'."
+            break
+        fi
+
         HEALTH_OUTPUT=$(curl -fsS --max-time 5 http://127.0.0.1:8080/api/health 2>/dev/null || true)
         if [ -n "${HEALTH_OUTPUT}" ] && validate_health_json "${HEALTH_OUTPUT}"; then
-            echo "Health check attempt ${attempt}: PASS (Status=HEALTHY & Real Capital=$0.00)"
+            echo "Health check attempt ${attempt}/${HEALTH_ATTEMPTS}: PASS (Status=HEALTHY & Real Capital=$0.00)"
             HEALTHY=true
             break
         fi
-        echo "Health check attempt ${attempt}: waiting for engine startup (sleeping ${HEALTH_SLEEP}s)..."
+        echo "Health check attempt ${attempt}/${HEALTH_ATTEMPTS}: waiting for engine startup (sleeping ${HEALTH_SLEEP}s)..."
         sleep "${HEALTH_SLEEP}"
     done
 else
@@ -154,14 +164,27 @@ else
     echo "CRITICAL WARNING: Health check failed or invariants breached!"
     echo "Initiating automatic rollback to previous container..."
     echo "======================================================================"
-    # Tear down failed new container (without touching named volumes)
+    echo "--- Failed Container State ---"
+    docker inspect --format 'Status={{.State.Status}} ExitCode={{.State.ExitCode}} OOMKilled={{.State.OOMKilled}} Error={{.State.Error}}' "${CONTAINER_NAME}" 2>/dev/null || echo "Inspection unavailable"
+    echo "--- Failed Container Logs (last 100 lines) ---"
+    docker logs --tail 100 "${CONTAINER_NAME}" 2>&1 || true
+    echo "-----------------------------------------------"
+
+    echo "Tearing down failed container..."
     IMAGE_NAME="${IMAGE_NAME}" docker compose -f "${COMPOSE_FILE}" down 2>/dev/null || true
     docker rm -f "${CONTAINER_NAME}" 2>/dev/null || true
     
-    if [ "${HAD_PREV_CONTAINER}" = true ] && [ "$(docker ps -aq -f name=^/${ROLLBACK_NAME}$)" ]; then
-        echo "Restoring ${ROLLBACK_NAME} -> ${CONTAINER_NAME}..."
-        docker rename "${ROLLBACK_NAME}" "${CONTAINER_NAME}" 2>/dev/null || true
-        docker start "${CONTAINER_NAME}"
+    if [ "${HAD_PREV_CONTAINER}" = true ]; then
+        if [ "$(docker ps -aq -f name=^/${ROLLBACK_NAME}$)" ]; then
+            echo "Restoring ${ROLLBACK_NAME} -> ${CONTAINER_NAME}..."
+            docker rename "${ROLLBACK_NAME}" "${CONTAINER_NAME}" 2>/dev/null || true
+            docker start "${CONTAINER_NAME}"
+        elif [ -n "${PREV_IMAGE}" ]; then
+            echo "Rollback container ${ROLLBACK_NAME} was removed during recreation; redeploying previous verified image: ${PREV_IMAGE}..."
+            IMAGE_NAME="${PREV_IMAGE}" docker compose -f "${COMPOSE_FILE}" up -d
+        else
+            echo "ERROR: Previous container snapshot missing and image name unknown."
+        fi
         
         # Verify restored container status
         CONTAINER_STATUS=$(docker inspect --format '{{.State.Status}}' "${CONTAINER_NAME}" 2>/dev/null || echo "unknown")
@@ -177,11 +200,11 @@ else
         for attempt in $(seq 1 "${ROLLBACK_ATTEMPTS}"); do
             RESTORED_HEALTH=$(curl -fsS --max-time 5 http://127.0.0.1:8080/api/health 2>/dev/null || true)
             if [ -n "${RESTORED_HEALTH}" ] && validate_health_json "${RESTORED_HEALTH}"; then
-                echo "Rollback verification attempt ${attempt}: PASS (Restored container healthy & Real Capital=\$0.00)"
+                echo "Rollback verification attempt ${attempt}/${ROLLBACK_ATTEMPTS}: PASS (Restored container healthy & Real Capital=\$0.00)"
                 ROLLBACK_HEALTHY=true
                 break
             fi
-            echo "Rollback health check attempt ${attempt}: waiting for container (sleeping ${ROLLBACK_SLEEP}s)..."
+            echo "Rollback health check attempt ${attempt}/${ROLLBACK_ATTEMPTS}: waiting for container (sleeping ${ROLLBACK_SLEEP}s)..."
             sleep "${ROLLBACK_SLEEP}"
         done
         
