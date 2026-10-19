@@ -1655,9 +1655,16 @@ class PhaseRWebServer:
         try:
             from strategy.lab.strategy_specification import StrategySpecification
             data = await request.json()
+            token = extract_bearer_token(request)
+            user = self.auth_service.validate_session(token) if token else None
+            tenant_id = user.tenant_id if user else "system"
             spec_data = data.get("specification", {})
+            if "tenant_id" not in spec_data or not spec_data.get("tenant_id"):
+                spec_data["tenant_id"] = tenant_id
             spec = StrategySpecification.from_dict(spec_data)
             evidence, report = self.strategy_lab.evaluate_strategy(spec)
+            if isinstance(report, dict) and "tenant_id" not in report:
+                report["tenant_id"] = tenant_id
             return web.json_response(report)
         except Exception as e:
             return web.json_response({"error": str(e)}, status=400)
