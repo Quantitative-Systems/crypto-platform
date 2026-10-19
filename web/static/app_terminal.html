@@ -1731,6 +1731,27 @@
             return fetch(base + path, opts);
         }
 
+        async function ensureAuthSession() {
+            if (!getAuthToken()) {
+                try {
+                    const base = getApiBase();
+                    const res = await fetch(base + '/api/auth/guest-session', { method: 'POST' });
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (data.token) {
+                            localStorage.setItem('crypto_token', data.token);
+                            localStorage.setItem('strata_token', data.token);
+                            if (data.user) {
+                                localStorage.setItem('crypto_user', JSON.stringify(data.user));
+                                localStorage.setItem('strata_user', JSON.stringify(data.user));
+                                updateAuthUI(data.user);
+                            }
+                        }
+                    }
+                } catch(e) {}
+            }
+        }
+
         // Authentication Modal & State Management
         let authMode = 'login';
 
@@ -1983,8 +2004,10 @@
                 } catch(e) {}
             }
 
-            // Verify session with backend if token present
-            if (token) {
+            // Verify session with backend if token present, or acquire read-only guest session
+            if (!token) {
+                await ensureAuthSession();
+            } else {
                 try {
                     const meRes = await apiFetch('/api/auth/me');
                     if (meRes.ok) {
@@ -1992,12 +2015,13 @@
                         localStorage.setItem('crypto_user', JSON.stringify(currentUser));
                         localStorage.setItem('strata_user', JSON.stringify(currentUser));
                     } else if (meRes.status === 401) {
-                        // Stale or revoked token
+                        // Stale or revoked token - refresh with guest session
                         localStorage.removeItem('crypto_token');
                         localStorage.removeItem('strata_token');
                         localStorage.removeItem('crypto_user');
                         localStorage.removeItem('strata_user');
                         currentUser = null;
+                        await ensureAuthSession();
                     }
                 } catch(e) {}
             }
@@ -2440,9 +2464,16 @@
             } catch(e) {}
         }
 
-        // Decisions & Ledger API
+        // Decisions & Ledger API with non-overlapping request guard
+        let isDecisionsLoading = false;
+
         async function loadDecisions() {
+            if (isDecisionsLoading) return;
+            isDecisionsLoading = true;
             try {
+                if (!getAuthToken()) {
+                    await ensureAuthSession();
+                }
                 const res = await apiFetch('/api/decisions');
                 if (res.status === 401) {
                     const authMsg = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">🔒 Operator authentication required. <button class="btn-ctl btn-cyan" onclick="openAuthModal(\'login\')" style="margin-left: 0.5rem; padding: 0.2rem 0.6rem;">Sign In</button></td></tr>';
@@ -2460,35 +2491,57 @@
                 const ovBody = document.getElementById('ov-decisions-tbody');
                 const ledgerBody = document.getElementById('ledger-tbody');
 
-                if (data.length) {
-                    const rows = data.slice(-15).reverse().map(d => `
+                if (Array.isArray(data) && data.length) {
+                    const rows = data.slice(-15).reverse().map(d => {
+                        const sym = d.symbol || d.asset || 'CRYPTO';
+                        const setStr = d.set_name || d.timeframe_set || '-';
+                        const decision = d.decision || 'NO_TRADE';
+                        const conf = Number(d.confidence_score != null ? d.confidence_score : 0).toFixed(2);
+                        const plannedR = Number(d.planned_r != null ? d.planned_r : 0).toFixed(1);
+                        const reasons = (d.reason_codes && d.reason_codes.length) ? d.reason_codes.slice(0, 2).join('; ') : 'MARKET_MONITORED';
+                        const timeStr = d.timestamp_ms ? new Date(d.timestamp_ms).toLocaleTimeString() : (d.created_at_utc || 'Just now');
+                        return `
                         <tr>
-                            <td>${new Date(d.timestamp_ms).toLocaleTimeString()}</td>
-                            <td>${d.decision_id}</td>
-                            <td><strong>${d.symbol}</strong></td>
-                            <td>${d.set_name}</td>
-                            <td><span class="pill ${d.decision === 'TRADE' ? 'pill-green' : 'pill-rose'}">${d.decision}</span></td>
-                            <td>${(d.confidence_score || 0).toFixed(2)}</td>
-                            <td>${(d.planned_r || 0).toFixed(1)}R</td>
-                            <td>${(d.reason_codes || []).slice(0, 2).join('; ')}</td>
+                            <td>${timeStr}</td>
+                            <td>${d.decision_id || '-'}</td>
+                            <td><strong>${sym}</strong></td>
+                            <td>${setStr}</td>
+                            <td><span class="pill ${decision === 'TRADE' ? 'pill-green' : 'pill-rose'}">${decision}</span></td>
+                            <td>${conf}</td>
+                            <td>${plannedR}R</td>
+                            <td>${reasons}</td>
                         </tr>
-                    `).join('');
+                    `}).join('');
                     if (tbody) tbody.innerHTML = rows;
                     if (ovBody) ovBody.innerHTML = rows;
 
                     if (ledgerBody) {
-                        ledgerBody.innerHTML = data.slice(-20).reverse().map(d => `
+                        ledgerBody.innerHTML = data.slice(-20).reverse().map(d => {
+                            const sym = d.symbol || d.asset || 'CRYPTO';
+                            const decision = d.decision || 'NO_TRADE';
+                            const timeStr = d.timestamp_ms ? new Date(d.timestamp_ms).toLocaleTimeString() : (d.created_at_utc || 'Just now');
+                            const hash = (d.decision_id || '').split('').map(c => c.charCodeAt(0).toString(16)).join('').padEnd(64, 'a').slice(0, 64);
+                            return `
                             <tr>
-                                <td>${new Date(d.timestamp_ms).toLocaleTimeString()}</td>
-                                <td><strong>${d.decision_id}</strong></td>
-                                <td><span class="pill ${d.decision === 'TRADE' ? 'pill-green' : 'pill-rose'}">${d.decision}</span></td>
-                                <td>${d.symbol}</td>
-                                <td style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">${(d.decision_id || '').split('').map(c => c.charCodeAt(0).toString(16)).join('').padEnd(64, 'a').slice(0, 64)}</td>
+                                <td>${timeStr}</td>
+                                <td><strong>${d.decision_id || '-'}</strong></td>
+                                <td><span class="pill ${decision === 'TRADE' ? 'pill-green' : 'pill-rose'}">${decision}</span></td>
+                                <td>${sym}</td>
+                                <td style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);">${hash}</td>
                             </tr>
-                        `).join('');
+                        `}).join('');
+                    }
+                } else if (Array.isArray(data) && data.length === 0) {
+                    const emptyMsg = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Scanning closed candle feed (awaiting next 15m candle close)...</td></tr>';
+                    if (ovBody && ovBody.innerHTML.includes('Scanning closed candle feed...')) {
+                        ovBody.innerHTML = emptyMsg;
                     }
                 }
-            } catch(e) {}
+            } catch(e) {
+                console.error("loadDecisions error:", e);
+            } finally {
+                isDecisionsLoading = false;
+            }
         }
 
         // Strategy Research Compiler & Copilot
@@ -2730,8 +2783,22 @@
                     renderMarketsTable(marketCache);
                 }
                 markFresh();
+
+                // Trigger live decisions refresh on closed-candle updates
+                if (event.is_closed_candle) {
+                    loadDecisions();
+                    loadPositions();
+                    loadOrders();
+                }
             }
         }
+
+        // 15-second continuous polling fallback for decisions, positions, and orders
+        setInterval(() => {
+            loadDecisions();
+            loadPositions();
+            loadOrders();
+        }, 15000);
 
         setInterval(() => {
             if (marketWs && marketWs.readyState === WebSocket.OPEN) {
