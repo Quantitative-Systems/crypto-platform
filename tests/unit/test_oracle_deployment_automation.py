@@ -1,6 +1,8 @@
 """Unit tests for Oracle automated Docker deployment, configuration, and safety invariants."""
+import base64
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -170,17 +172,24 @@ def test_github_workflow_dispatch_and_ghcr_registry():
 
 
 def test_deploy_oracle_workflow_git_strictness_and_revision_lock():
-    """Verify deploy-oracle.yml enforces strict git revision locking and safe secret handling."""
+    """Verify deploy-oracle.yml enforces strict git revision locking, canonical sync script invocation, and safe secret handling."""
     wf_path = REPO_ROOT / ".github" / "workflows" / "deploy-oracle.yml"
     content = wf_path.read_text(encoding="utf-8")
+    sync_script_path = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
+    sync_content = sync_script_path.read_text(encoding="utf-8")
 
     # Unsafe mkdir before git sync must be removed to avoid clone conflict
     ssh_section = content.split("Execute Remote Deployment via SSH")[1]
     assert 'mkdir -p "$APP_DIR/deploy" "$APP_DIR/scripts"' not in ssh_section
 
-    # Must checkout and cryptographically verify the intended commit SHA
-    assert 'git -C "${target_dir}" checkout "${target_sha}"' in content or 'git checkout "${{ github.sha }}"' in content
-    assert 'if [ "${current_sha}" != "${target_sha}" ]; then' in content
+    # Workflow must prepare and pass canonical sync_deployment_repo.sh
+    assert "scripts/sync_deployment_repo.sh" in content
+    assert "SYNC_SCRIPT_B64" in content
+    assert 'bash "$SYNC_TMP" "$APP_DIR" "${{ github.repository }}" "${{ github.ref_name }}" "${{ github.sha }}"' in content
+
+    # Canonical sync script must checkout and cryptographically verify the intended commit SHA
+    assert 'git -C "${target_dir}" checkout "${target_sha}"' in sync_content
+    assert 'if [ "${current_sha}" != "${target_sha}" ]; then' in sync_content
 
     # SSH action must stop immediately on failure
     assert "script_stop: true" in content
@@ -189,6 +198,88 @@ def test_deploy_oracle_workflow_git_strictness_and_revision_lock():
     # Secret tokens must not be echoed in cleartext
     assert 'echo "${{ secrets.GHCR_READ_TOKEN }}"' not in content
     assert "set +x" in content
+
+
+def test_deploy_oracle_workflow_drone_ssh_compatibility():
+    """Regression test: verify deploy-oracle.yml SSH script does not fail under drone-ssh script_stop line-injection."""
+    bash = get_git_bash()
+    if not bash:
+        pytest.skip("Bash not found in environment")
+
+    wf_path = REPO_ROOT / ".github" / "workflows" / "deploy-oracle.yml"
+    content = wf_path.read_text(encoding="utf-8")
+    ssh_section = content.split("Execute Remote Deployment via SSH")[1].split("script: |")[1]
+    # Extract script lines indented under script: |
+    script_lines = []
+    for line in ssh_section.splitlines():
+        if line.startswith("            "):
+            script_lines.append(line[12:])
+        elif line.strip() == "":
+            script_lines.append("")
+        else:
+            break
+
+    # Simulate drone-ssh's scriptCommands with script_stop: true
+    commands = []
+    for cmd in script_lines:
+        cmd_stripped = cmd.strip()
+        if not cmd_stripped:
+            continue
+        commands.append(cmd_stripped)
+        if not cmd_stripped.endswith("\\"):
+            commands.append(
+                "DRONE_SSH_PREV_COMMAND_EXIT_CODE=$? ; if [ $DRONE_SSH_PREV_COMMAND_EXIT_CODE -ne 0 ]; then exit $DRONE_SSH_PREV_COMMAND_EXIT_CODE; fi;"
+            )
+
+    transformed_script = "\n".join(commands)
+
+    # 1. Verify syntax under bash -n after GitHub Actions expression expansion
+    rendered_script = re.sub(r"\$\{\{\s*[^}]+\s*\}\}", "mock_val", transformed_script)
+    with tempfile.NamedTemporaryFile("w", suffix=".sh", delete=False, encoding="utf-8") as f:
+        f.write(rendered_script)
+        temp_sh = Path(f.name)
+    try:
+        syntax_res = subprocess.run([bash, "-n", str(temp_sh)], capture_output=True, text=True)
+        assert syntax_res.returncode == 0, f"drone-ssh simulated script failed syntax check: {syntax_res.stderr}"
+    finally:
+        temp_sh.unlink(missing_ok=True)
+
+    # 2. Functional execution under drone-ssh simulation
+    import base64
+    sync_script_path = REPO_ROOT / "scripts" / "sync_deployment_repo.sh"
+    sync_b64 = base64.b64encode(sync_script_path.read_bytes()).decode("ascii")
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        origin_dir, sha1, sha2 = setup_test_git_repo(tmp_path)
+        bootstrap_dir = tmp_path / "bootstrap_target"
+        (bootstrap_dir / "deploy").mkdir(parents=True)
+        (bootstrap_dir / "scripts").mkdir(parents=True)
+
+        # Mock runtime execution of transformed script with expanded expressions
+        exec_lines = []
+        for cmd in commands:
+            cmd_rendered = re.sub(r"\$\{\{\s*[^}]+\s*\}\}", "", cmd)
+            if cmd_rendered.startswith("APP_DIR="):
+                exec_lines.append(f'APP_DIR="{bootstrap_dir.as_posix()}"')
+            elif cmd_rendered.startswith('bash "$SYNC_TMP"'):
+                exec_lines.append(f'bash "$SYNC_TMP" "$APP_DIR" "{origin_dir.as_posix()}" "main" "{sha2}"')
+            elif "deploy_oracle.sh" in cmd_rendered or "chmod +x $APP_DIR" in cmd_rendered:
+                # Mock deploy_oracle.sh execution
+                continue
+            else:
+                exec_lines.append(cmd_rendered)
+
+        run_sh = tmp_path / "run_transformed.sh"
+        run_sh.write_text("\n".join(exec_lines), encoding="utf-8")
+
+        env = os.environ.copy()
+        env["SYNC_SCRIPT_B64"] = sync_b64
+        exec_res = subprocess.run([bash, str(run_sh)], env=env, capture_output=True, text=True)
+        assert exec_res.returncode == 0, f"drone-ssh execution failed with returncode {exec_res.returncode}: {exec_res.stderr}\nstdout: {exec_res.stdout}"
+        assert (bootstrap_dir / ".git").exists()
+        assert f"Verified deployment revision: {sha2}" in exec_res.stdout
+
 
 
 def setup_test_git_repo(tmp_path: Path):
