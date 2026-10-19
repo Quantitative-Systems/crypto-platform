@@ -41,6 +41,7 @@ pytestdebug.log
 *.sqlite3
 logs/
 *.log
+.last_known_good_image
 
 # Secrets, credentials & private keys (never commit)
 *.pem

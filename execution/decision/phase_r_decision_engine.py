@@ -115,6 +115,31 @@ class PhaseRDecisionRecord:
         data = dict(d)
         if isinstance(data.get("decision"), str):
             data["decision"] = DecisionType(data["decision"])
+        # Backward compatibility for historical decision ledger keys
+        if "asset" not in data and "symbol" in data:
+            data["asset"] = data["symbol"]
+        if "decision_id" not in data and "trade_id" in data:
+            data["decision_id"] = data["trade_id"]
+        if "timeframe_set" not in data and "set_id" in data:
+            data["timeframe_set"] = data["set_id"]
+        if "initial_stop_price" not in data and "stop_price" in data:
+            data["initial_stop_price"] = data["stop_price"]
+        if isinstance(data.get("direction"), str):
+            dir_str = data["direction"].upper()
+            data["direction"] = 1 if dir_str in ("BUY", "LONG") else (-1 if dir_str in ("SELL", "SHORT") else 0)
+        data.setdefault("lineage_id", f"LIN_{data.get('decision_id', 'HIST')}")
+        data.setdefault("event_id", f"EVT_{data.get('decision_id', 'HIST')}")
+        data.setdefault("phase", "CONTINUATION")
+        data.setdefault("reason_codes", [])
+        data.setdefault("confidence_score", 0.50)
+        data.setdefault("confidence_components", {})
+        data.setdefault("fractal_alignment", "FULLY_ALIGNED")
+        data.setdefault("fractal_bias", "BULLISH" if data.get("direction", 1) == 1 else "BEARISH")
+        data.setdefault("planned_r", float(data.get("target_r", 4.0)))
+        data.setdefault("risk_pct", 0.01)
+        data.setdefault("portfolio_heat_pct", 0.01)
+        data.setdefault("governor_passed", True)
+
         valid_fields = {f.name for f in fields(cls)}
         return cls(**{k: v for k, v in data.items() if k in valid_fields})
 
