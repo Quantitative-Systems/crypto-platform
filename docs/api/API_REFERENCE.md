@@ -33,12 +33,13 @@ Every API endpoint across the Crypto Platform is strictly classified as:
 
 | Route | Method | Classification | Description | Request Body | Response Payload Summary |
 | :--- | :---: | :---: | :--- | :--- | :--- |
-| `/api/auth/register` | POST | `PARTIALLY_IMPLEMENTED` | Registers user (In-memory storage) | `{"email": str, "password": str, "name": str}` | `{"token": str, "user": {"user_id": str, "tenant_id": str}}` |
-| `/api/auth/login` | POST | `PARTIALLY_IMPLEMENTED` | Verifies credentials & issues session token | `{"email": str, "password": str}` | `{"token": str, "user": {"user_id": str, "tenant_id": str}}` |
-| `/api/auth/logout` | POST | `PARTIALLY_IMPLEMENTED` | Revokes active bearer session | None | `{"status": "logged_out"}` |
-| `/api/auth/me` | GET | `PARTIALLY_IMPLEMENTED` | Returns authenticated user & tenant profile | None (Auth header) | `{"user_id": str, "email": str, "tenant_id": str, "role": str}` |
+| `/api/auth/register` | POST | `IMPLEMENTED` | Registers user (Persistent SQLite storage) | `{"email": str, "password": str, "name": str}` | `{"token": str, "user": {"user_id": str, "tenant_id": str, "role": str}}` |
+| `/api/auth/login` | POST | `IMPLEMENTED` | Verifies credentials & issues session token | `{"email": str, "password": str}` | `{"token": str, "user": {"user_id": str, "tenant_id": str, "role": str}}` |
+| `/api/auth/guest-session` | POST | `IMPLEMENTED` | Issues ephemeral guest token (Role: RESEARCHER) | None | `{"token": str, "user": {"user_id": str, "tenant_id": str, "role": "RESEARCHER"}}` |
+| `/api/auth/logout` | POST | `IMPLEMENTED` | Revokes active bearer session from SQLite | None | `{"status": "logged_out"}` |
+| `/api/auth/me` | GET | `IMPLEMENTED` | Returns authenticated user & tenant profile | None (Auth header) | `{"user_id": str, "email": str, "tenant_id": str, "role": str}` |
 
-*Note: Classified as PARTIALLY_IMPLEMENTED because user accounts currently reside in memory (`AuthService._users_by_email`) rather than persistent SQLite.*
+*Security & RBAC Enforcement:* User and session persistence is fully backed by SQLite (`users` and `sessions` tables via `DatabaseManager`). Authenticated sessions bearing role `RESEARCHER` (such as guest sessions) are granted read-only telemetry and decision ledger access, but are strictly rejected (HTTP 403 Forbidden) from executing broker connections, agent state changes, or emergency halts. Trading operations require role `TRADER` or `ADMIN`.*
 
 ---
 
