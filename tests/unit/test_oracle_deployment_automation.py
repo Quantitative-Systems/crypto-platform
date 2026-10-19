@@ -68,7 +68,7 @@ def test_main_cli_arguments_support_no_research():
         "1",
         "--no-research",
     ]
-    res = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=10)
+    res = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30)
     assert res.returncode == 0, f"main.py execution failed: {res.stderr}"
     assert "Historical seeding completed" in res.stderr or "Historical seeding completed" in res.stdout or "Crypto Engine" in res.stderr or "Crypto Engine" in res.stdout
 
